@@ -14,4 +14,4 @@ Steps to setup Kerry Dashboard on Windows
 10. mkdir actions components constants dispatchers stores
 11. cd ..
 12. mkdir assets
- 
+13. npm install --save react react-dom

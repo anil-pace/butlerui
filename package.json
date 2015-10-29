@@ -17,5 +17,8 @@
   ],
   "author": "Aatif Bandey",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/aatifbandey/butlerui#readme"
+  "homepage": "https://bitbucket.org/aatifbandey/butlerui#readme",
+  "devDependencies": {
+    "gulp-less": "^3.0.3"
+  }
 }

@@ -1,0 +1,21 @@
+{
+  "name": "butlerui",
+  "version": "1.5.0",
+  "description": "Pick Put Station user interface to perform pick put operations in the warehouse.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/aatifbandey/butlerui.git"
+  },
+  "keywords": [
+    "PPS",
+    "UI",
+    "Butlerui"
+  ],
+  "author": "Aatif Bandey",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/aatifbandey/butlerui#readme"
+}

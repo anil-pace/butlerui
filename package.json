@@ -20,5 +20,9 @@
   "homepage": "https://bitbucket.org/aatifbandey/butlerui#readme",
   "devDependencies": {
     "gulp-less": "^3.0.3"
+  },
+  "dependencies": {
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1"
   }
 }

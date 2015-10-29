@@ -41,11 +41,13 @@ var LoginForm = React.createClass({
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.flag === false){
         return (
-          <div>
-            GREY ORANGE
-            <input type="text" ref="username" className="form-control" placeholder="Username" value="admin"   />
-            <input type="password" ref="password" className="form-control" placeholder="Password" value="apj0702"  />
-            <input type="submit" class="btn btn-default" onClick={this.handleLogin} value="Login" />
+          <div className='container'>
+            <form className="form-signin">
+              <h2 className="form-signin-heading">Please sign in</h2>
+              <input type="email" ref="username" onChange={this.onChange} className="form-control" placeholder="Username" value="admin"   />
+              <input type="password" ref="password" onChange={this.onChange} className="form-control" placeholder="Password" value="apj0702"  />
+              <input type="submit" className="btn btn-default" onClick={this.handleLogin} value="Login" />
+            </form>
           </div>
         )
     }

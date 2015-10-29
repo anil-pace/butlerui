@@ -1,5 +1,4 @@
-Steps to setup Kerry Dashboard on Windows
-
+Steps to setup Butler UI Development Env. on Linux / Win
     Clone the repository from bitbucket to your working directory.
 ### Steps to follow : 
 1. sudo nmp init

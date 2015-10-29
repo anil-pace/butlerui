@@ -1,7 +1,7 @@
 Steps to setup Kerry Dashboard on Windows
 
     Clone the repository from bitbucket to your working directory.
-### Steps to follow : ### 
+### Steps to follow : 
 1. sudo nmp init
 2. npm install gulp browserify reactify vinyl-source-stream react
 3. npm install history react-router@latest

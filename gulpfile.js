@@ -17,11 +17,14 @@ gulp.task('browserify', function(){
 gulp.task('copy', function(){
 	gulp.src('src/index.html')
 		.pipe(gulp.dest('dist'));
+	gulp.src('src/assets/images/*.*')
+		.pipe(gulp.dest('dist/assets/images'));		
+
 });
 gulp.task('build-less', function(){
-    return gulp.src('src/assets/styles.less')
+    return gulp.src('src/assets/css/styles.less')
         .pipe(less())
-        .pipe(gulp.dest('dist/assets'));
+        .pipe(gulp.dest('dist/assets/css'));
 });
 gulp.task('default',['browserify', 'build-less' , 'copy'], function(){
 	return gulp.watch('src/**/*.*', ['browserify','build-less','copy'])

@@ -14,3 +14,8 @@ Steps to setup Butler UI Development Env. on Linux / Win
 11. cd ..
 12. mkdir assets
 13. npm install --save react react-dom
+
+If you want to install react add ons :
+npm install react-addons-linked-state-mixin etc
+
+For reference :[React-Add-ons](https://facebook.github.io/react/docs/addons.html)

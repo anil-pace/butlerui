@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/aatifbandey/butlerui.git"
+    "url": "git+ssh://git@bitbucket.org/gorcode/butlerui.git"
   },
   "keywords": [
     "PPS",
@@ -17,7 +17,7 @@
   ],
   "author": "Aatif Bandey",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/aatifbandey/butlerui#readme",
+  "homepage": "https://bitbucket.org/gorcode/butlerui#readme",
   "devDependencies": {
     "gulp-less": "^3.0.3"
   },

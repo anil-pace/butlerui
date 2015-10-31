@@ -14,6 +14,10 @@ Steps to setup Butler UI Development Env. on Linux / Win
 11. cd ..
 12. mkdir assets
 13. npm install --save react react-dom
+14. npm install flux
+
+Do make sure Gulp is installed globally 
+   npm install -g gulp
 
 If you want to install react add ons :
 npm install react-addons-linked-state-mixin etc

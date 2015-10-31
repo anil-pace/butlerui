@@ -23,3 +23,8 @@ If you want to install react add ons :
 npm install react-addons-linked-state-mixin etc
 
 For reference :[React-Add-ons](https://facebook.github.io/react/docs/addons.html)
+
+## How to start gulp ##
+
+1. Go to you directory 
+2. gulp

@@ -19,7 +19,8 @@ gulp.task('copy', function(){
 		.pipe(gulp.dest('dist'));
 	gulp.src('src/assets/images/*.*')
 		.pipe(gulp.dest('dist/assets/images'));		
-
+	gulp.src('src/assets/css/bootstrap.css')
+		.pipe(gulp.dest('dist/assets/css'));
 });
 gulp.task('build-less', function(){
     return gulp.src('src/assets/css/styles.less')

@@ -1,8 +1,9 @@
 var appConstants = {
   LOGIN: "LOGIN",
-  SHOW_ERROR: "SHOW_ERROR",
+  OPERATOR_SEAT: "OPERATOR_SEAT",
   REMOVE_ITEM: "REMOVE_ITEM",
-  SCAN_BARCODE: "SCAN_BARCODE"
+  SCAN_ITEMS: "Scan the item(s)",
+  PLACE_ITEMS: "Place"
 };
 
 module.exports = appConstants;

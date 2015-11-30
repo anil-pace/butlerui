@@ -2,7 +2,7 @@ var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
-var todoActions = require('../actions/todoActions');
+var Actions = require('../actions/Actions');
 
 var CHANGE_EVENT = 'change';
 var flag = false;
@@ -16,27 +16,10 @@ if(retrieved_token != null){
           xhr.setRequestHeader("Authentication-Token", authentication_token)
   }
 }
-var url_root = "http://192.168.2.103:5000/api";
-var loginRedirect = function(data){
-    
-  $.ajax({
-    type: 'POST',
-    url: url_root+"/auth/token",
-    data: data
-  }).done(function(response) {
-   
-      var store_data = {
-              'auth_token' : response.auth_token 
-      };
-      // Put the object into storage
-      sessionStorage.setItem('store_data', JSON.stringify(store_data));
-      var retrievedObject = sessionStorage.getItem('store_data');
 
-    getReceiveKeys(); 
-  }).fail(function(jqXhr) {
-     todoActions.showBox(true);
-    console.log('failed to register');
-  });
+var loginRedirect = function(data){
+
+   setTimeout(Actions.operatorSeat, 0, true);
 };
 
 var showBox = function(index){
@@ -80,19 +63,7 @@ var getBoxDetails = function(itemIndex){
 
     });
 }
-var getReceiveKeys = function(){
- 
-     $.ajax({
-      type: 'GET',
-      url: url_root+"/receive_keys?filter=pending",
-      beforeSend : xhrConfig 
-    }).done(function(response) {
-     responseOfApi.push(response.receive_keys); 
-     todoActions.showBox(true);
-    }).fail(function(jqXhr) {
-       responseOfApi = null;
-    });
-}
+
 var todoStore = objectAssign({}, EventEmitter.prototype, {
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
@@ -114,14 +85,14 @@ var todoStore = objectAssign({}, EventEmitter.prototype, {
   }
 });
 
-AppDispatcher.register(function(payload){
+AppDispatcher.register(function(payload){ console.log(payload);
   var action = payload.action;
   switch(action.actionType){
     case appConstants.LOGIN:
       loginRedirect(action.data);
       todoStore.emit(CHANGE_EVENT);
       break;
-    case appConstants.SHOW_ERROR:
+    case appConstants.OPERATOR_SEAT:
       showBox(action.data);
       todoStore.emit(CHANGE_EVENT);
       break;

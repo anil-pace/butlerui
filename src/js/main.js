@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var ModComponents = require('./components/LoginForm'); 
+var LoginForm = require('./components/LoginForm'); 
 
 var App = React.createClass({
   getInitialState: function(){
@@ -9,10 +9,8 @@ var App = React.createClass({
   },
   render: function(){
     return (
-      <div className="container">
-        <div className="row">
-          <ModComponents />
-        </div>
+      <div className="body-container">
+        <LoginForm />
       </div>
     );
   }

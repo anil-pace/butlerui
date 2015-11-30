@@ -2,7 +2,7 @@ var React = require('react');
 var AddItem = require('./LoginForm');
 var List = require('./List');
 var todoStore = require('../stores/todoStore');
-var todoActions = require('../actions/todoActions');
+var todoActions = require('../actions/Actions');
 
 var ListContainer = React.createClass({
   getInitialState: function(){

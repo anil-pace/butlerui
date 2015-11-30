@@ -3,10 +3,8 @@ var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
 var todoStore = require('../stores/todoStore');
-var todoActions = require('../actions/todoActions');
-var BoxDiv = require('./BoxDiv');
-
-var url_root = "http://192.168.2.103:5000/api";
+var Actions = require('../actions/Actions');
+var Operator = require('../components/Operator');
 
 
 var LoginForm = React.createClass({
@@ -24,7 +22,7 @@ var LoginForm = React.createClass({
           "username" : this.state.username,
           "password" : this.state.password 
         };
-      todoActions.login(data);
+    Actions.login(data);
 
   },
   componentDidMount: function(){
@@ -50,15 +48,16 @@ var LoginForm = React.createClass({
               <input type="password" valueLink={this.linkState('password')} className="form-control" placeholder="Password" />
               <input type="submit" className="btn btn-default" onClick={this.handleLogin} value="Login" />
             </form>
+
           </div>
         )
     }
     else{ 
       return(
-        <div>
-          
-          <BoxDiv receivedData={this.state.data1} />
-        </div>
+         <div>
+            <Operator />
+          </div>
+        
       )
     }
   }

@@ -2,15 +2,15 @@ var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
 var todoActions = {
-  login: function(data){;
+  login: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOGIN, 
       data: data
     });
   },
-  showBox: function(data){;
+  operatorSeat: function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.SHOW_ERROR, 
+      actionType: appConstants.OPERATOR_SEAT, 
       data: data
     });
   },

@@ -6,9 +6,6 @@ var Actions = require('../actions/Actions');
 
 var CHANGE_EVENT = 'change';
 var flag = false;
-var store = {
-  list: []
-};
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
   var xhrConfig = function(xhr) {
@@ -16,10 +13,33 @@ if(retrieved_token != null){
           xhr.setRequestHeader("Authentication-Token", authentication_token)
   }
 }
+var ws = new WebSocket(appConstants.WEBSOCKET_URL);
+function connectToWebSocket(data){
+    if ("WebSocket" in window) {
+      
+       ws.onopen = function(){
+         console.log("connected");
+        };     
+        ws.onmessage = function (evt){
 
-var loginRedirect = function(data){
-
+          var received_msg = evt.data;
+          console.log(evt);
+        };
+        ws.onclose = function(){ 
+         alert("Connection is closed..."); 
+        };
+    }
+    else
+    {
+      alert("WebSocket NOT supported by your Browser!");
+    }
+}
+function postDataToWebsockets(){
+   ws.send(JSON.stringify(data));
    setTimeout(Actions.operatorSeat, 0, true);
+}
+var loginRedirect = function(data){ console.log(data);
+    postDataToWebsockets(data);
 };
 
 var showBox = function(index){
@@ -58,13 +78,13 @@ var getBoxDetails = function(itemIndex){
       beforeSend: xhrConfig
       }).done(function(response) {
         boxData.push(response.data);
-        todoStore.emit(CHANGE_EVENT);
+        store.emit(CHANGE_EVENT);
       }).fail(function(jqXhr){
 
     });
 }
 
-var todoStore = objectAssign({}, EventEmitter.prototype, {
+var store = objectAssign({}, EventEmitter.prototype, {
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
@@ -88,13 +108,17 @@ var todoStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){ console.log(payload);
   var action = payload.action;
   switch(action.actionType){
+    case appConstants.WEBSOCKET_CONNECT:
+      connectToWebSocket();
+      store.emit(CHANGE_EVENT);
+      break;
     case appConstants.LOGIN:
       loginRedirect(action.data);
-      todoStore.emit(CHANGE_EVENT);
+      store.emit(CHANGE_EVENT);
       break;
     case appConstants.OPERATOR_SEAT:
       showBox(action.data);
-      todoStore.emit(CHANGE_EVENT);
+      store.emit(CHANGE_EVENT);
       break;
     case appConstants.SCAN_BARCODE:
       scanBarcode(action.data, action.receiveKey);
@@ -104,4 +128,4 @@ AppDispatcher.register(function(payload){ console.log(payload);
   }
 });
 
-module.exports = todoStore;
+module.exports = store;

@@ -1,5 +1,5 @@
 var React = require('react');
-var todoStore = require('../stores/todoStore');
+var store = require('../stores/store');
 var todoActions = require('../actions/Actions');
 
 var CreateBox = React.createClass({

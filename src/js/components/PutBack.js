@@ -1,19 +1,18 @@
 
 var React = require('react');
-var todoStore = require('../stores/todoStore');
+var store = require('../stores/store');
 var todoActions = require('../actions/Actions');
 var PutBack = React.createClass({
   getInitialState: function(){
     return {
-      ppsMode : null,
-      seatType : null,
+      
     }
   },
   componentWillMount: function(){
-    todoStore.addChangeListener(this.onChange);
+    store.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    todoStore.removeChangeListener(this.onChange);
+    store.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
   },

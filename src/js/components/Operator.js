@@ -1,6 +1,6 @@
 
 var React = require('react');
-var todoStore = require('../stores/todoStore');
+var store = require('../stores/store');
 var todoActions = require('../actions/Actions');
 var PutBack = require('./PutBack');
 var PutBackNav = require('./PutBackNav');
@@ -38,10 +38,10 @@ var Operator = React.createClass({
   },
    */
   componentWillMount: function(){
-    todoStore.addChangeListener(this.onChange);
+    store.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    todoStore.removeChangeListener(this.onChange);
+    store.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
  /*   this.setState({

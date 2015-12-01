@@ -2,7 +2,7 @@
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
-var todoStore = require('../stores/todoStore');
+var store = require('../stores/store');
 var Actions = require('../actions/Actions');
 var Operator = require('../components/Operator');
 
@@ -11,30 +11,36 @@ var LoginForm = React.createClass({
   mixins:[LinkedStateMixin],
   getInitialState: function(){
     return {
-      flag: todoStore.getFlag(),
+      flag: store.getFlag(),
       data1 : '',
-      username : '',
-      password : ''
+      username : 'kerry',
+      password : 'gorapj',
+      seat_name : 'pps_front_20'
     }
   },
   handleLogin: function(newItem){
       var data = {
-          "username" : this.state.username,
-          "password" : this.state.password 
-        };
+        'data_type': 'auth',
+        'data': {
+              'username': this.state.username,
+              'password': this.state.password,
+              'seat_name': this.state.seat_name
+          }
+      }
     Actions.login(data);
 
   },
   componentDidMount: function(){
-    todoStore.addChangeListener(this.onChange);
+    store.addChangeListener(this.onChange);
+    Actions.webSocketConnection();
   },
   componentWillUnmount: function(){
-    todoStore.removeChangeListener(this.onChange);
+    store.removeChangeListener(this.onChange);
   },
   onChange: function(){
     this.setState({
-      flag: todoStore.getFlag(),
-      data1 : todoStore.getReceiveKeys()
+      flag: store.getFlag(),
+      data1 : store.getReceiveKeys()
     });
   },
   render: function(){

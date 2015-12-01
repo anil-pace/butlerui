@@ -1,20 +1,20 @@
 var React = require('react');
 var AddItem = require('./LoginForm');
 var List = require('./List');
-var todoStore = require('../stores/todoStore');
+var store = require('../stores/store');
 var todoActions = require('../actions/Actions');
 
 var ListContainer = React.createClass({
   getInitialState: function(){
     return {
-      list: todoStore.getList()
+      list: store.getList()
     }
   },
   componentDidMount: function(){
-    todoStore.addChangeListener(this._onChange);
+    store.addChangeListener(this._onChange);
   },
   componentWillUnmount: function(){
-    todoStore.removeChangeListener(this._onChange);
+    store.removeChangeListener(this._onChange);
   },
   handleAddItem: function(newItem){
     todoActions.addItem(newItem);
@@ -24,7 +24,7 @@ var ListContainer = React.createClass({
   },
   _onChange: function(){
     this.setState({
-      list: todoStore.getList()
+      list: store.getList()
     })
   },
   render: function(){

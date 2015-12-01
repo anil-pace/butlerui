@@ -2,6 +2,12 @@ var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
 var todoActions = {
+  webSocketConnection: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.WEBSOCKET_CONNECT, 
+      data: data
+    });
+  },
   login: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOGIN, 

@@ -1,6 +1,6 @@
 
 var React = require('react');
-var todoStore = require('../stores/todoStore');
+var store = require('../stores/store');
 var todoActions = require('../actions/Actions');
 var appConstants = require('../constants/appConstants');
 var allSvgConstants = require('../constants/svgConstants');
@@ -23,10 +23,10 @@ var PutBackNav = React.createClass({
          this.state.message_02 = appConstants.PLACE_ITEMS;
          this.state.level = 1;
        }
-    todoStore.addChangeListener(this.onChange);
+    store.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    todoStore.removeChangeListener(this.onChange);
+    store.removeChangeListener(this.onChange);
   },
   onChange: function(){
   },
@@ -40,7 +40,9 @@ var PutBackNav = React.createClass({
                 <div className='circle_current level-margin_01 orange'>
                   {this.state.level}
                 </div>
-                 <img src={allSvgConstants.putBackScan}  className='icon-postion'/>
+                <div className='current-icon'>
+                    <img src={allSvgConstants.putBackScan}  className='icon-postion'/>
+                </div>    
               </div> 
               <div className='col-md-10 col-sm-10 nav-messages'>
                   <h1>{this.state.message_01} </h1>
@@ -53,7 +55,7 @@ var PutBackNav = React.createClass({
                 </div>
                </div> 
               <div className='col-md-12 col-sm-12 text-align-center'> 
-                  <img src={allSvgConstants.putBackPlace}  className='icon-postion'/>
+                  <img src={allSvgConstants.putBackPlace}  className='icon-postion next-icon'/>
               </div>
               <div className='col-md-12 col-sm-12 text-align-center'>    
                   <h3>{this.state.message_02} </h3>

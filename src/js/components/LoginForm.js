@@ -52,7 +52,7 @@ var LoginForm = React.createClass({
               <h2 className="form-signin-heading">Please sign in</h2>
               <input type="email"  valueLink={this.linkState('username')} className="form-control" placeholder="Username"   />
               <input type="password" valueLink={this.linkState('password')} className="form-control" placeholder="Password" />
-              <input type="submit" className="btn btn-default" onClick={this.handleLogin} value="Login" />
+              <input type="button" className="btn btn-default" onClick={this.handleLogin} value="Login" />
             </form>
 
           </div>

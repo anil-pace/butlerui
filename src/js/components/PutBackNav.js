@@ -18,7 +18,7 @@ var PutBackNav = React.createClass({
   componentWillMount: function(){
       if(this.state.screen_id === "put_back_stage"){
          this.state.classVariable_stage01 = 'col-lg-11 col-md-11 jumbotron-bg1 nav-box-shadow';
-         this.state.classVariable_stage02 = 'col-lg-1 col-md-1 jumbotron-bg2 nav-box-shadow';
+         this.state.classVariable_stage02 = 'col-lg-1 col-md-1 jumbotron-bg2 nav-box-shadow text-align-center';
          this.state.message_01 = appConstants.SCAN_ITEMS;
          this.state.message_02 = appConstants.PLACE_ITEMS;
          this.state.level = 1;
@@ -49,17 +49,17 @@ var PutBackNav = React.createClass({
               </div>    
             </div>
             <div className={this.state.classVariable_stage02}>
-              <div className='col-md-12 col-sm-12 text-align-center'>
+             
                 <div className='circle_next dark-blue level-margin_02'>
                     {this.state.level + 1}
-                </div>
+               
                </div> 
-              <div className='col-md-12 col-sm-12 text-align-center'> 
+              
                   <img src={allSvgConstants.putBackPlace}  className='icon-postion next-icon'/>
-              </div>
-              <div className='col-md-12 col-sm-12 text-align-center'>    
+            
+              
                   <h3>{this.state.message_02} </h3>
-              </div>   
+             
             </div>
         </div>  
       )

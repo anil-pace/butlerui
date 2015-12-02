@@ -13,40 +13,50 @@ if(retrieved_token != null){
           xhr.setRequestHeader("Authentication-Token", authentication_token)
   }
 }
+var seatData = [];
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 var ws = new WebSocket(appConstants.WEBSOCKET_URL);
 function connectToWebSocket(data){
     if ("WebSocket" in window) {
-      
-       ws.onopen = function(){
+      ws.onopen = function(){
          console.log("connected");
-        };     
-        ws.onmessage = function (evt){
+      };     
+      ws.onmessage = function (evt){
 
-          var received_msg = evt.data;
-          console.log(evt);
-        };
-        ws.onclose = function(){ 
+        var received_msg = evt.data;
+          parseSeatData(evt.data);
+          console.log(evt.data);
+      };
+      ws.onclose = function(){ 
          alert("Connection is closed..."); 
-        };
+      };
     }
     else
     {
       alert("WebSocket NOT supported by your Browser!");
     }
 }
-function postDataToWebsockets(){
+
+function postDataToWebsockets(data){
    ws.send(JSON.stringify(data));
    setTimeout(Actions.operatorSeat, 0, true);
 }
 var loginRedirect = function(data){ console.log(data);
     postDataToWebsockets(data);
 };
+function parseSeatData(data){
+    seatData.push()
+}
 
 var showBox = function(index){
   flag = true;
 }
 var responseOfApi = [];
-var responseOfitemDetails = [];
 var boxData = [];
 var scanBarcode = function(data,receiveKey){ 
    $("#barcode").unbind('keyup').keyup(function(e) {
@@ -110,6 +120,7 @@ AppDispatcher.register(function(payload){ console.log(payload);
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
       connectToWebSocket();
+      getParameterByName("seat_name");
       store.emit(CHANGE_EVENT);
       break;
     case appConstants.LOGIN:

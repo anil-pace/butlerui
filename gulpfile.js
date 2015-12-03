@@ -1,5 +1,5 @@
 var gulp = require('gulp'); //  The less work you have to do when performing repetitive tasks like minification, compilation, unit testing, etc 
-var browerify  = require('browserify');
+var browserify  = require('browserify');
 var reactify = require('reactify'); // Reactify is needed to convert JSX to JS
 var source  = require('vinyl-source-stream'); // when we use browserify with gulp, gulp requires input that pipes through a stream
 											  // browserify ends about putting up a string so we require vinyl source to convert strings into stream  

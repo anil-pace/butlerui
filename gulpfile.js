@@ -6,7 +6,7 @@ var source  = require('vinyl-source-stream'); // when we use browserify with gul
 
 less = require('gulp-less');
 gulp.task('browserify', function(){
-	browerify('./src/js/main.js')
+	browserify('./src/js/main.js')
 		.transform('reactify') // transform JSX to JS
 		.bundle() // output in bundle
 		.pipe(source('main.js')) // pipe into main.js

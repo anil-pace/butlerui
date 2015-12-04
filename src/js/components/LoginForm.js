@@ -2,7 +2,7 @@
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
-var store = require('../stores/store');
+var mainstore = require('../stores/mainstore');
 var Actions = require('../actions/Actions');
 var Operator = require('../components/Operator');
 
@@ -11,7 +11,7 @@ var LoginForm = React.createClass({
   mixins:[LinkedStateMixin],
   getInitialState: function(){
     return {
-      flag: store.getFlag(),
+      flag: mainstore.getFlag(),
       data1 : '',
       username : 'kerry',
       password : 'gorapj',
@@ -31,16 +31,16 @@ var LoginForm = React.createClass({
 
   },
   componentDidMount: function(){
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
     Actions.webSocketConnection();
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
     this.setState({
-      flag: store.getFlag(),
-      data1 : store.getReceiveKeys()
+      flag: mainstore.getFlag(),
+      data1 : mainstore.getReceiveKeys()
     });
   },
   render: function(){

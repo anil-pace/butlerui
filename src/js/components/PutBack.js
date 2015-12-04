@@ -1,6 +1,6 @@
 
 var React = require('react');
-var store = require('../stores/store');
+var mainstore = require('../stores/mainstore');
 var todoActions = require('../actions/Actions');
 var PutBack = React.createClass({
   getInitialState: function(){
@@ -9,10 +9,10 @@ var PutBack = React.createClass({
     }
   },
   componentWillMount: function(){
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
   },

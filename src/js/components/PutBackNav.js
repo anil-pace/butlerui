@@ -1,6 +1,6 @@
 
 var React = require('react');
-var store = require('../stores/store');
+var mainstore = require('../stores/mainstore');
 var todoActions = require('../actions/Actions');
 var appConstants = require('../constants/appConstants');
 var allSvgConstants = require('../constants/svgConstants');
@@ -23,10 +23,10 @@ var PutBackNav = React.createClass({
          this.state.message_02 = appConstants.PLACE_ITEMS;
          this.state.level = 1;
        }
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
   },

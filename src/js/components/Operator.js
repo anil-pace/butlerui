@@ -3,6 +3,7 @@ var React = require('react');
 var store = require('../stores/store');
 var todoActions = require('../actions/Actions');
 var PutBack = require('./PutBack');
+var Header = require('./Header');
 var PutBackNav = require('./PutBackNav');
 var Operator = React.createClass({
   getInitialState: function(){
@@ -59,8 +60,7 @@ var Operator = React.createClass({
     
     return (
       <div>
-        <nav className='navbar'>
-        </nav>
+        <Header />
         <div className='row'>
         {navigation}
         </div>

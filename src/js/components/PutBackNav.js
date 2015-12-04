@@ -34,34 +34,24 @@ var PutBackNav = React.createClass({
   },
   render: function(data){ 
       return (
-        <div >
-            <div className={this.state.classVariable_stage01}>
-              <div className='col-md-2 col-sm-2 level-representation'>
-                <div className='circle_current level-margin_01 orange'>
-                  {this.state.level}
+        <div className="navigation">
+              <div className="active-navigation">
+                <div className = "nav-detail">
+                  <div className="index"><span>1</span></div>
+                  <img src={allSvgConstants.putBackPlace} />
                 </div>
-                <div className='current-icon'>
-                    <img src={allSvgConstants.putBackScan}  className='icon-postion'/>
-                </div>    
-              </div> 
-              <div className='col-md-10 col-sm-10 nav-messages'>
-                  <h1>{this.state.message_01} </h1>
-              </div>    
-            </div>
-            <div className={this.state.classVariable_stage02}>
-             
-                <div className='circle_next dark-blue level-margin_02'>
-                    {this.state.level + 1}
-               
-               </div> 
-              
-                  <img src={allSvgConstants.putBackPlace}  className='icon-postion next-icon'/>
-            
-              
-                  <h3>{this.state.message_02} </h3>
-             
-            </div>
-        </div>  
+                <div className = "action">
+                 {this.state.message_01}
+                </div>
+              </div>
+              <div className="passive-navigation">
+                    <div className = "nav-detail">
+                        <div className="index"><span>2</span></div>
+                        <img src={allSvgConstants.putBackScan} />
+                        <div className = "info">Pick</div>
+                    </div>
+              </div>
+          </div>
       )
   }
 });

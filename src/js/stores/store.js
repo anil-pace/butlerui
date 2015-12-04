@@ -22,7 +22,7 @@ function getParameterByName(name) {
 }
 var ws = new WebSocket(appConstants.WEBSOCKET_URL);
 function connectToWebSocket(data){
-   /* if ("WebSocket" in window) {
+    if ("WebSocket" in window) {
       ws.onopen = function(){
          console.log("connected");
       };     
@@ -39,11 +39,11 @@ function connectToWebSocket(data){
     else
     {
       alert("WebSocket NOT supported by your Browser!");
-    }*/
+    }
 }
 
 function postDataToWebsockets(data){
-   //ws.send(JSON.stringify(data));
+   ws.send(JSON.stringify(data));
    setTimeout(Actions.operatorSeat, 0, true);
 }
 var loginRedirect = function(data){ console.log(data);

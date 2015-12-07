@@ -3,8 +3,8 @@ var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var CommonActions = require('../actions/CommonActions');
-var mainstore = require('./mainstore');
-console.log(mainstore);
+var utils  = require('../utils/utils.js');
+
 
 var CHANGE_EVENT = 'change';
 var flag = false;
@@ -46,7 +46,7 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   removeChangeListener: function(cb){
     this.removeListener(CHANGE_EVENT, cb);
   },
-  getFlag : function(){
+  getFlag : function(){ console.log(flag);
     return flag;
   },
   seatList : function(){ 
@@ -65,11 +65,11 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){ console.log(payload);
   var action = payload.action;
   switch(action.actionType){
-    case appConstants.LOGIN: console.log(mainstore);
-      mainstore.postDataToWebsockets(action.data);
+    case appConstants.LOGIN:
+      utils.postDataToWebsockets(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.OPERATOR_SEAT:
+    case appConstants.OPERATOR_SEAT: console.log(action.data);
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;

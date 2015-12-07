@@ -43,9 +43,9 @@ var PutBackNav = React.createClass({
                  {this.state.message_01}
                 </div>
               </div>
-              <div className={this.state.classVariable_stage01}>
+              <div className={this.state.classVariable_stage02}>
                     <div className = "nav-detail">
-                        <div className="index"><span>{this.state.leve + 1}</span></div>
+                        <div className="index"><span>{this.state.level + 1}</span></div>
                         <img src={allSvgConstants.putBackScan} />
                         <div className = "info">{this.state.message_02}</div>
                     </div>

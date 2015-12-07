@@ -14,7 +14,7 @@ var commonActions = {
       data: data
     });
   },
-  operatorSeat: function(data){
+  operatorSeat: function(data){ console.log(data)
     AppDispatcher.handleAction({
       actionType: appConstants.OPERATOR_SEAT, 
       data: data

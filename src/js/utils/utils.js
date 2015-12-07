@@ -1,6 +1,8 @@
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
+var CommonActions = require('../actions/CommonActions');
+
 
 var seatData = [];
 var ws = new WebSocket(appConstants.WEBSOCKET_IP);
@@ -26,7 +28,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	    {
 	      alert("WebSocket NOT supported by your Browser!");
 	    }
-	}
+	},
+	postDataToWebsockets: function(data){
+      ws.send(JSON.stringify(data));
+      setTimeout(CommonActions.operatorSeat, 0, true);
+  	}
 }); 
 
 function parseSeatData(data){

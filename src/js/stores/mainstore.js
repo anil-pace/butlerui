@@ -14,10 +14,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   removeChangeListener: function(cb){
     this.removeListener(CHANGE_EVENT, cb);
-  },
-  postDataToWebsockets: function(data){
-      ws.send(JSON.stringify(data));
-      setTimeout(CommonActions.operatorSeat, 0, true);
   }
 });
 
@@ -27,9 +23,6 @@ AppDispatcher.register(function(payload){
     case appConstants.WEBSOCKET_CONNECT:
       utils.connectToWebSocket();
       loginstore.getParameterByName('seat_name');
-      mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.OPERATOR_SEAT:
       mainstore.emit(CHANGE_EVENT);
       break;
     default:

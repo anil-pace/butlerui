@@ -49,7 +49,7 @@ var LoginForm = React.createClass({
     });
 
   },
-  render: function(){
+  render: function(){ console.log(this.state.flag);
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){

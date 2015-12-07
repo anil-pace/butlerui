@@ -3,20 +3,23 @@ var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
 var mainstore = require('../stores/mainstore');
-var Actions = require('../actions/Actions');
+var loginstore = require('../stores/loginstore');
+var CommonActions = require('../actions/CommonActions');
 var Operator = require('../components/Operator');
 
-
-var LoginForm = React.createClass({
-  mixins:[LinkedStateMixin],
-  getInitialState: function(){
-    return {
-      flag: mainstore.getFlag(),
-      data1 : '',
+function getState(){
+  return {
+      flag: loginstore.getFlag(),
+      seatList : loginstore.seatList(),
       username : 'kerry',
       password : 'gorapj',
       seat_name : 'pps_front_20'
-    }
+  }
+}
+var LoginForm = React.createClass({
+  mixins:[LinkedStateMixin],
+  getInitialState: function(){
+    return getState();
   },
   handleLogin: function(newItem){
       var data = {
@@ -27,29 +30,43 @@ var LoginForm = React.createClass({
               'seat_name': this.state.seat_name
           }
       }
-    Actions.login(data);
+    CommonActions.login(data);
 
   },
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
-    Actions.webSocketConnection();
+    loginstore.addChangeListener(this.onChange);
+    CommonActions.webSocketConnection();  
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
+    loginstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
     this.setState({
-      flag: mainstore.getFlag(),
-      data1 : mainstore.getReceiveKeys()
+      flag: loginstore.getFlag(),
+      seatList : loginstore.seatList()
     });
+
   },
   render: function(){
+      var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
+      if(this.state.seatList.length > 0){
+          seatData = this.state.seatList[0].map(function(data, index){
+           return (
+                  <option key={'pps' + index}>PPS {data.seat_type} {data.pps_id}</option>
+            )
+          });
+      }
       if(this.state.flag === false){
         return (
           <div className='container'>
             <form className="form-signin">
               <h2 className="form-signin-heading">Please sign in</h2>
+              <select className='form-control'>
+                {seatData}
+              </select>   
               <input type="email"  valueLink={this.linkState('username')} className="form-control" placeholder="Username"   />
               <input type="password" valueLink={this.linkState('password')} className="form-control" placeholder="Password" />
               <input type="button" className="btn btn-default" onClick={this.handleLogin} value="Login" />

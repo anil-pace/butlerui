@@ -1,7 +1,6 @@
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var todoActions = require('../actions/Actions');
 var appConstants = require('../constants/appConstants');
 var allSvgConstants = require('../constants/svgConstants');
 
@@ -17,8 +16,8 @@ var PutBackNav = React.createClass({
   },
   componentWillMount: function(){
       if(this.state.screen_id === "put_back_stage"){
-         this.state.classVariable_stage01 = 'col-lg-11 col-md-11 jumbotron-bg1 nav-box-shadow no-padding';
-         this.state.classVariable_stage02 = 'col-lg-1 col-md-1 jumbotron-bg2 nav-box-shadow text-align-center no-padding';
+         this.state.classVariable_stage01 = "active-navigation";
+         this.state.classVariable_stage02 = "passive-navigation";
          this.state.message_01 = appConstants.SCAN_ITEMS;
          this.state.message_02 = appConstants.PLACE_ITEMS;
          this.state.level = 1;
@@ -35,20 +34,20 @@ var PutBackNav = React.createClass({
   render: function(data){ 
       return (
         <div className="navigation">
-              <div className="active-navigation">
+              <div className={this.state.classVariable_stage01}>
                 <div className = "nav-detail">
-                  <div className="index"><span>1</span></div>
+                  <div className="index"><span>{this.state.level}</span></div>
                   <img src={allSvgConstants.putBackPlace} />
                 </div>
                 <div className = "action">
                  {this.state.message_01}
                 </div>
               </div>
-              <div className="passive-navigation">
+              <div className={this.state.classVariable_stage01}>
                     <div className = "nav-detail">
-                        <div className="index"><span>2</span></div>
+                        <div className="index"><span>{this.state.leve + 1}</span></div>
                         <img src={allSvgConstants.putBackScan} />
-                        <div className = "info">Pick</div>
+                        <div className = "info">{this.state.message_02}</div>
                     </div>
               </div>
           </div>

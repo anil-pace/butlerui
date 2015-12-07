@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
-var todoActions = {
+var commonActions = {
   webSocketConnection: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.WEBSOCKET_CONNECT, 
@@ -30,4 +30,4 @@ var todoActions = {
   }
 };
 
-module.exports = todoActions;
+module.exports = commonActions;

@@ -24397,7 +24397,7 @@ module.exports = Header;
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
-var store = require('../stores/store');
+var mainstore = require('../stores/mainstore');
 var Actions = require('../actions/Actions');
 var Operator = require('../components/Operator');
 
@@ -24406,7 +24406,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
   mixins:[LinkedStateMixin],
   getInitialState: function(){
     return {
-      flag: store.getFlag(),
+      flag: mainstore.getFlag(),
       data1 : '',
       username : 'kerry',
       password : 'gorapj',
@@ -24426,16 +24426,16 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
   },
   componentDidMount: function(){
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
     Actions.webSocketConnection();
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
     this.setState({
-      flag: store.getFlag(),
-      data1 : store.getReceiveKeys()
+      flag: mainstore.getFlag(),
+      data1 : mainstore.getReceiveKeys()
     });
   },
   render: function(){
@@ -24467,10 +24467,10 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../actions/Actions":216,"../components/Operator":219,"../stores/store":226,"react":214,"react-addons-linked-state-mixin":57,"react-router":78}],219:[function(require,module,exports){
+},{"../actions/Actions":216,"../components/Operator":219,"../stores/mainstore":226,"react":214,"react-addons-linked-state-mixin":57,"react-router":78}],219:[function(require,module,exports){
 
 var React = require('react');
-var store = require('../stores/store');
+var mainstore = require('../stores/mainstore');
 var todoActions = require('../actions/Actions');
 var PutBack = require('./PutBack');
 var Header = require('./Header');
@@ -24509,10 +24509,10 @@ var Operator = React.createClass({displayName: "Operator",
   },
    */
   componentWillMount: function(){
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
  /*   this.setState({
@@ -24545,10 +24545,10 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../actions/Actions":216,"../stores/store":226,"./Header":217,"./PutBack":220,"./PutBackNav":221,"react":214}],220:[function(require,module,exports){
+},{"../actions/Actions":216,"../stores/mainstore":226,"./Header":217,"./PutBack":220,"./PutBackNav":221,"react":214}],220:[function(require,module,exports){
 
 var React = require('react');
-var store = require('../stores/store');
+var mainstore = require('../stores/mainstore');
 var todoActions = require('../actions/Actions');
 var PutBack = React.createClass({displayName: "PutBack",
   getInitialState: function(){
@@ -24557,10 +24557,10 @@ var PutBack = React.createClass({displayName: "PutBack",
     }
   },
   componentWillMount: function(){
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
   },
@@ -24580,10 +24580,10 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../actions/Actions":216,"../stores/store":226,"react":214}],221:[function(require,module,exports){
+},{"../actions/Actions":216,"../stores/mainstore":226,"react":214}],221:[function(require,module,exports){
 
 var React = require('react');
-var store = require('../stores/store');
+var mainstore = require('../stores/mainstore');
 var todoActions = require('../actions/Actions');
 var appConstants = require('../constants/appConstants');
 var allSvgConstants = require('../constants/svgConstants');
@@ -24606,10 +24606,10 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
          this.state.message_02 = appConstants.PLACE_ITEMS;
          this.state.level = 1;
        }
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
   },
@@ -24641,11 +24641,13 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
 
 module.exports = PutBackNav;
 
-},{"../actions/Actions":216,"../constants/appConstants":222,"../constants/svgConstants":223,"../stores/store":226,"react":214}],222:[function(require,module,exports){
+},{"../actions/Actions":216,"../constants/appConstants":222,"../constants/svgConstants":223,"../stores/mainstore":226,"react":214}],222:[function(require,module,exports){
 var appConstants = {
-	WEBSOCKET_URL : "ws://192.168.2.187:8888/ws",
+	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
+	INTERFACE_IP : "http://192.168.2.110:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LOGIN: "LOGIN",
+	PPS_SEATS : "/pps_seats/",
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	REMOVE_ITEM: "REMOVE_ITEM",
 	SCAN_ITEMS: "Scan the item(s)",
@@ -24720,15 +24722,31 @@ if(retrieved_token != null){
   }
 }
 var seatData = [];
+var currentSeat = [];
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); 
+    listPpsSeat(currentSeat[0]);
 }
-var ws = new WebSocket(appConstants.WEBSOCKET_URL);
+function listPpsSeat(seat){
+    if(seat === null){console.log(seat);
+      $.ajax({
+        type: 'GET',
+        url: appConstants.INTERFACE_IP+appConstants.PPS_SEATS,
+        dataType : "json",
+        beforeSend : xhrConfig 
+        }).done(function(response) {
+          console.log(response);  
+        }).fail(function(jqXhr) {
+                     
+      });
+    }
+}
+var ws = new WebSocket(appConstants.WEBSOCKET_IP);
 function connectToWebSocket(data){
-   /* if ("WebSocket" in window) {
+    if ("WebSocket" in window) {
       ws.onopen = function(){
          console.log("connected");
       };     
@@ -24745,11 +24763,11 @@ function connectToWebSocket(data){
     else
     {
       alert("WebSocket NOT supported by your Browser!");
-    }*/
+    }
 }
 
 function postDataToWebsockets(data){
-   //ws.send(JSON.stringify(data));
+   ws.send(JSON.stringify(data));
    setTimeout(Actions.operatorSeat, 0, true);
 }
 var loginRedirect = function(data){ console.log(data);

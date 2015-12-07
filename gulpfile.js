@@ -6,7 +6,7 @@ var source  = require('vinyl-source-stream'); // when we use browserify with gul
 
 less = require('gulp-less');
 gulp.task('browserify', function(){
-	browserify('./src/js/main.js')
+	browserify('./src/assets/js/main.js')
 		.transform('reactify') // transform JSX to JS
 		.bundle() // output in bundle
 		.pipe(source('main.js')) // pipe into main.js
@@ -19,8 +19,8 @@ gulp.task('copy', function(){
 		.pipe(gulp.dest('dist'));
 	gulp.src('src/assets/images/*.*')
 		.pipe(gulp.dest('dist/assets/images'));		
-	gulp.src('src/assets/css/bootstrap.css')
-		.pipe(gulp.dest('dist/assets/css'));
+	//gulp.src('src/assets/css/bootstrap.css')
+	//	.pipe(gulp.dest('dist/assets/css'));
 });
 gulp.task('build-less', function(){
     return gulp.src('src/assets/css/styles.less')

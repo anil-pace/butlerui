@@ -24600,8 +24600,8 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
   },
   componentWillMount: function(){
       if(this.state.screen_id === "put_back_stage"){
-         this.state.classVariable_stage01 = "active-navigation";
-         this.state.classVariable_stage02 = "passive-navigation";
+         this.state.classVariable_stage01 = 'col-lg-11 col-md-11 jumbotron-bg1 nav-box-shadow no-padding';
+         this.state.classVariable_stage02 = 'col-lg-1 col-md-1 jumbotron-bg2 nav-box-shadow text-align-center no-padding';
          this.state.message_01 = appConstants.SCAN_ITEMS;
          this.state.message_02 = appConstants.PLACE_ITEMS;
          this.state.level = 1;
@@ -24618,7 +24618,7 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
   render: function(data){ 
       return (
         React.createElement("div", {className: "navigation"}, 
-              React.createElement("div", {className: this.state.classVariable_stage01}, 
+              React.createElement("div", {className: "active-navigation"}, 
                 React.createElement("div", {className: "nav-detail"}, 
                   React.createElement("div", {className: "index"}, React.createElement("span", null, "1")), 
                   React.createElement("img", {src: allSvgConstants.putBackPlace})
@@ -24627,7 +24627,7 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
                  this.state.message_01
                 )
               ), 
-              React.createElement("div", {className: this.state.classVariable_stage02}, 
+              React.createElement("div", {className: "passive-navigation"}, 
                     React.createElement("div", {className: "nav-detail"}, 
                         React.createElement("div", {className: "index"}, React.createElement("span", null, "2")), 
                         React.createElement("img", {src: allSvgConstants.putBackScan}), 

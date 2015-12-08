@@ -1,7 +1,6 @@
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var todoActions = require('../actions/Actions');
 var appConstants = require('../constants/appConstants');
 var allSvgConstants = require('../constants/svgConstants');
 
@@ -37,7 +36,7 @@ var PutBackNav = React.createClass({
         <div className="navigation">
               <div className={this.state.classVariable_stage01}>
                 <div className = "nav-detail">
-                  <div className="index"><span>1</span></div>
+                  <div className="index"><span>{this.state.level}</span></div>
                   <img src={allSvgConstants.putBackPlace} />
                 </div>
                 <div className = "action">
@@ -46,9 +45,9 @@ var PutBackNav = React.createClass({
               </div>
               <div className={this.state.classVariable_stage02}>
                     <div className = "nav-detail">
-                        <div className="index"><span>2</span></div>
+                        <div className="index"><span>{this.state.level + 1}</span></div>
                         <img src={allSvgConstants.putBackScan} />
-                        <div className = "info">Pick</div>
+                        <div className = "info">{this.state.message_02}</div>
                     </div>
               </div>
           </div>

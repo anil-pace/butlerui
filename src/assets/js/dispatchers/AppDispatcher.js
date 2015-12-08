@@ -6,7 +6,6 @@ AppDispatcher.handleAction = function(action){
     source: 'VIEW_ACTION',
     action: action
   });
-  console.log(action);
 };
 
 

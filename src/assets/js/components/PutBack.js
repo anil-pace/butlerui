@@ -1,7 +1,6 @@
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var todoActions = require('../actions/Actions');
 var PutBack = React.createClass({
   getInitialState: function(){
     return {

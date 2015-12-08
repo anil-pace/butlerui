@@ -24340,7 +24340,7 @@ module.exports = warning;
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
-var todoActions = {
+var commonActions = {
   webSocketConnection: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.WEBSOCKET_CONNECT, 
@@ -24353,7 +24353,7 @@ var todoActions = {
       data: data
     });
   },
-  operatorSeat: function(data){
+  operatorSeat: function(data){ console.log(data)
     AppDispatcher.handleAction({
       actionType: appConstants.OPERATOR_SEAT, 
       data: data
@@ -24369,7 +24369,7 @@ var todoActions = {
   }
 };
 
-module.exports = todoActions;
+module.exports = commonActions;
 
 },{"../constants/appConstants":222,"../dispatchers/AppDispatcher":224}],217:[function(require,module,exports){
 var React = require('react');
@@ -24397,21 +24397,24 @@ module.exports = Header;
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
-var store = require('../stores/store');
-var Actions = require('../actions/Actions');
+var mainstore = require('../stores/mainstore');
+var loginstore = require('../stores/loginstore');
+var CommonActions = require('../actions/CommonActions');
 var Operator = require('../components/Operator');
 
-
-var LoginForm = React.createClass({displayName: "LoginForm",
-  mixins:[LinkedStateMixin],
-  getInitialState: function(){
-    return {
-      flag: store.getFlag(),
-      data1 : '',
+function getState(){
+  return {
+      flag: loginstore.getFlag(),
+      seatList : loginstore.seatList(),
       username : 'kerry',
       password : 'gorapj',
       seat_name : 'pps_front_20'
-    }
+  }
+}
+var LoginForm = React.createClass({displayName: "LoginForm",
+  mixins:[LinkedStateMixin],
+  getInitialState: function(){
+    return getState();
   },
   handleLogin: function(newItem){
       var data = {
@@ -24422,29 +24425,43 @@ var LoginForm = React.createClass({displayName: "LoginForm",
               'seat_name': this.state.seat_name
           }
       }
-    Actions.login(data);
+    CommonActions.login(data);
 
   },
   componentDidMount: function(){
-    store.addChangeListener(this.onChange);
-    Actions.webSocketConnection();
+    mainstore.addChangeListener(this.onChange);
+    loginstore.addChangeListener(this.onChange);
+    CommonActions.webSocketConnection();  
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
+    loginstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
     this.setState({
-      flag: store.getFlag(),
-      data1 : store.getReceiveKeys()
+      flag: loginstore.getFlag(),
+      seatList : loginstore.seatList()
     });
+
   },
-  render: function(){
+  render: function(){ console.log(this.state.flag);
+      var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
+      if(this.state.seatList.length > 0){
+          seatData = this.state.seatList[0].map(function(data, index){
+           return (
+                  React.createElement("option", {key: 'pps' + index}, "PPS ", data.seat_type, " ", data.pps_id)
+            )
+          });
+      }
       if(this.state.flag === false){
         return (
           React.createElement("div", {className: "container"}, 
             React.createElement("form", {className: "form-signin"}, 
               React.createElement("h2", {className: "form-signin-heading"}, "Please sign in"), 
+              React.createElement("select", {className: "form-control"}, 
+                seatData
+              ), 
               React.createElement("input", {type: "email", valueLink: this.linkState('username'), className: "form-control", placeholder: "Username"}), 
               React.createElement("input", {type: "password", valueLink: this.linkState('password'), className: "form-control", placeholder: "Password"}), 
               React.createElement("input", {type: "button", className: "btn btn-default", onClick: this.handleLogin, value: "Login"})
@@ -24467,11 +24484,10 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../actions/Actions":216,"../components/Operator":219,"../stores/store":226,"react":214,"react-addons-linked-state-mixin":57,"react-router":78}],219:[function(require,module,exports){
+},{"../actions/CommonActions":216,"../components/Operator":219,"../stores/loginstore":226,"../stores/mainstore":227,"react":214,"react-addons-linked-state-mixin":57,"react-router":78}],219:[function(require,module,exports){
 
 var React = require('react');
-var store = require('../stores/store');
-var todoActions = require('../actions/Actions');
+var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
 var Header = require('./Header');
 var PutBackNav = require('./PutBackNav');
@@ -24509,10 +24525,10 @@ var Operator = React.createClass({displayName: "Operator",
   },
    */
   componentWillMount: function(){
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
  /*   this.setState({
@@ -24545,11 +24561,10 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../actions/Actions":216,"../stores/store":226,"./Header":217,"./PutBack":220,"./PutBackNav":221,"react":214}],220:[function(require,module,exports){
+},{"../stores/mainstore":227,"./Header":217,"./PutBack":220,"./PutBackNav":221,"react":214}],220:[function(require,module,exports){
 
 var React = require('react');
-var store = require('../stores/store');
-var todoActions = require('../actions/Actions');
+var mainstore = require('../stores/mainstore');
 var PutBack = React.createClass({displayName: "PutBack",
   getInitialState: function(){
     return {
@@ -24557,10 +24572,10 @@ var PutBack = React.createClass({displayName: "PutBack",
     }
   },
   componentWillMount: function(){
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
   },
@@ -24580,11 +24595,10 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../actions/Actions":216,"../stores/store":226,"react":214}],221:[function(require,module,exports){
+},{"../stores/mainstore":227,"react":214}],221:[function(require,module,exports){
 
 var React = require('react');
-var store = require('../stores/store');
-var todoActions = require('../actions/Actions');
+var mainstore = require('../stores/mainstore');
 var appConstants = require('../constants/appConstants');
 var allSvgConstants = require('../constants/svgConstants');
 
@@ -24600,16 +24614,16 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
   },
   componentWillMount: function(){
       if(this.state.screen_id === "put_back_stage"){
-         this.state.classVariable_stage01 = 'col-lg-11 col-md-11 jumbotron-bg1 nav-box-shadow no-padding';
-         this.state.classVariable_stage02 = 'col-lg-1 col-md-1 jumbotron-bg2 nav-box-shadow text-align-center no-padding';
+         this.state.classVariable_stage01 = "active-navigation";
+         this.state.classVariable_stage02 = "passive-navigation";
          this.state.message_01 = appConstants.SCAN_ITEMS;
          this.state.message_02 = appConstants.PLACE_ITEMS;
          this.state.level = 1;
        }
-    store.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    store.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
   },
@@ -24618,20 +24632,20 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
   render: function(data){ 
       return (
         React.createElement("div", {className: "navigation"}, 
-              React.createElement("div", {className: "active-navigation"}, 
+              React.createElement("div", {className: this.state.classVariable_stage01}, 
                 React.createElement("div", {className: "nav-detail"}, 
-                  React.createElement("div", {className: "index"}, React.createElement("span", null, "1")), 
+                  React.createElement("div", {className: "index"}, React.createElement("span", null, this.state.level)), 
                   React.createElement("img", {src: allSvgConstants.putBackPlace})
                 ), 
                 React.createElement("div", {className: "action"}, 
                  this.state.message_01
                 )
               ), 
-              React.createElement("div", {className: "passive-navigation"}, 
+              React.createElement("div", {className: this.state.classVariable_stage02}, 
                     React.createElement("div", {className: "nav-detail"}, 
-                        React.createElement("div", {className: "index"}, React.createElement("span", null, "2")), 
+                        React.createElement("div", {className: "index"}, React.createElement("span", null, this.state.level + 1)), 
                         React.createElement("img", {src: allSvgConstants.putBackScan}), 
-                        React.createElement("div", {className: "info"}, "Pick")
+                        React.createElement("div", {className: "info"}, this.state.message_02)
                     )
               )
           )
@@ -24641,11 +24655,13 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
 
 module.exports = PutBackNav;
 
-},{"../actions/Actions":216,"../constants/appConstants":222,"../constants/svgConstants":223,"../stores/store":226,"react":214}],222:[function(require,module,exports){
+},{"../constants/appConstants":222,"../constants/svgConstants":223,"../stores/mainstore":227,"react":214}],222:[function(require,module,exports){
 var appConstants = {
-	WEBSOCKET_URL : "ws://192.168.2.187:8888/ws",
+	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
+	INTERFACE_IP : "http://192.168.2.110:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LOGIN: "LOGIN",
+	PPS_SEATS : "/pps_seats/",
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	REMOVE_ITEM: "REMOVE_ITEM",
 	SCAN_ITEMS: "Scan the item(s)",
@@ -24673,7 +24689,6 @@ AppDispatcher.handleAction = function(action){
     source: 'VIEW_ACTION',
     action: action
   });
-  console.log(action);
 };
 
 
@@ -24703,12 +24718,15 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
+
 },{"./components/LoginForm":218,"react":214,"react-dom":58}],226:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
-var Actions = require('../actions/Actions');
+var CommonActions = require('../actions/CommonActions');
+var utils  = require('../utils/utils.js');
+
 
 var CHANGE_EVENT = 'change';
 var flag = false;
@@ -24719,123 +24737,63 @@ if(retrieved_token != null){
           xhr.setRequestHeader("Authentication-Token", authentication_token)
   }
 }
-var seatData = [];
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-var ws = new WebSocket(appConstants.WEBSOCKET_URL);
-function connectToWebSocket(data){
-   /* if ("WebSocket" in window) {
-      ws.onopen = function(){
-         console.log("connected");
-      };     
-      ws.onmessage = function (evt){
+var currentSeat = [];
 
-        var received_msg = evt.data;
-          parseSeatData(evt.data);
-          console.log(evt.data);
-      };
-      ws.onclose = function(){ 
-         alert("Connection is closed..."); 
-      };
+function listPpsSeat(seat){
+    if(seat === null){
+      currentSeat = []; 
+      $.ajax({
+        type: 'GET',
+        url: appConstants.INTERFACE_IP+appConstants.PPS_SEATS,
+        dataType : "json",
+        beforeSend : xhrConfig 
+        }).done(function(response) {
+          currentSeat.push(response.pps_seats);
+          loginstore.emit(CHANGE_EVENT); 
+        }).fail(function(jqXhr) {
+                     
+      });
     }
-    else
-    {
-      alert("WebSocket NOT supported by your Browser!");
-    }*/
-}
-
-function postDataToWebsockets(data){
-   //ws.send(JSON.stringify(data));
-   setTimeout(Actions.operatorSeat, 0, true);
-}
-var loginRedirect = function(data){ console.log(data);
-    postDataToWebsockets(data);
-};
-function parseSeatData(data){
-    seatData.push()
 }
 
 var showBox = function(index){
   flag = true;
 }
-var responseOfApi = [];
-var boxData = [];
-var scanBarcode = function(data,receiveKey){ 
-   $("#barcode").unbind('keyup').keyup(function(e) {
-        if (e.keyCode == 13) {
-                $.ajax({
-                  type: 'GET',
-                  url: url_root + "/qc/barcode/" + escape(data) + "/" + escape(receiveKey),
-                  beforeSend : xhrConfig 
-                  }).done(function(response) {
-                    responseOfitemDetails.push(response.product_data[0]);
-                    getBoxDetails(0);
-                  }).fail(function(jqXhr) {
-                     
-                });
-        }
-    });
-}
-var getBoxDetails = function(itemIndex){
-  var data = {
-      "item_uid": responseOfitemDetails[itemIndex].item_uid,
-      "box_type": 'storage'
-  };
-    $.ajax({
-      type: 'POST',
-      url: url_root + "/boxes/find_box_type",
-      dataType: 'json',
-      contentType: "application/json",
-      data:JSON.stringify(data),
-      beforeSend: xhrConfig
-      }).done(function(response) {
-        boxData.push(response.data);
-        store.emit(CHANGE_EVENT);
-      }).fail(function(jqXhr){
 
-    });
-}
 
-var store = objectAssign({}, EventEmitter.prototype, {
+var loginstore = objectAssign({}, EventEmitter.prototype, {
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
   removeChangeListener: function(cb){
     this.removeListener(CHANGE_EVENT, cb);
   },
-  getFlag : function(){
+  getFlag : function(){ console.log(flag);
     return flag;
   },
-  getReceiveKeys : function(){
-    return responseOfApi;
+  seatList : function(){ 
+    return currentSeat;
   },
-  scanBarcode : function(){
-    return responseOfitemDetails;
-  },
-  boxData : function(){
-    return boxData;
+  getParameterByName: function(name){
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search); console.log(name);
+    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
+    listPpsSeat(currentSeat[0]);
   }
 });
+
 
 AppDispatcher.register(function(payload){ console.log(payload);
   var action = payload.action;
   switch(action.actionType){
-    case appConstants.WEBSOCKET_CONNECT:
-      connectToWebSocket();
-      getParameterByName("seat_name");
-      store.emit(CHANGE_EVENT);
-      break;
     case appConstants.LOGIN:
-      loginRedirect(action.data);
-      store.emit(CHANGE_EVENT);
+      utils.postDataToWebsockets(action.data);
+      loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.OPERATOR_SEAT:
+    case appConstants.OPERATOR_SEAT: console.log(action.data);
       showBox(action.data);
-      store.emit(CHANGE_EVENT);
+      loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SCAN_BARCODE:
       scanBarcode(action.data, action.receiveKey);
@@ -24845,6 +24803,85 @@ AppDispatcher.register(function(payload){ console.log(payload);
   }
 });
 
-module.exports = store;
+module.exports = loginstore;
 
-},{"../actions/Actions":216,"../constants/appConstants":222,"../dispatchers/AppDispatcher":224,"events":1,"react/lib/Object.assign":105}]},{},[225]);
+},{"../actions/CommonActions":216,"../constants/appConstants":222,"../dispatchers/AppDispatcher":224,"../utils/utils.js":228,"events":1,"react/lib/Object.assign":105}],227:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/AppDispatcher');
+var appConstants = require('../constants/appConstants');
+var objectAssign = require('react/lib/Object.assign');
+var EventEmitter = require('events').EventEmitter;
+var CommonActions = require('../actions/CommonActions');
+var loginstore = require('./loginstore');
+var utils  = require('../utils/utils.js');
+
+var CHANGE_EVENT = 'change';
+
+var mainstore = objectAssign({}, EventEmitter.prototype, {
+  addChangeListener: function(cb){
+    this.on(CHANGE_EVENT, cb);
+  },
+  removeChangeListener: function(cb){
+    this.removeListener(CHANGE_EVENT, cb);
+  }
+});
+
+AppDispatcher.register(function(payload){ 
+  var action = payload.action;
+  switch(action.actionType){
+    case appConstants.WEBSOCKET_CONNECT:
+      utils.connectToWebSocket();
+      loginstore.getParameterByName('seat_name');
+      mainstore.emit(CHANGE_EVENT);
+      break;
+    default:
+      return true;
+  }
+});
+
+module.exports = mainstore;
+
+},{"../actions/CommonActions":216,"../constants/appConstants":222,"../dispatchers/AppDispatcher":224,"../utils/utils.js":228,"./loginstore":226,"events":1,"react/lib/Object.assign":105}],228:[function(require,module,exports){
+var objectAssign = require('react/lib/Object.assign');
+var EventEmitter = require('events').EventEmitter;
+var appConstants = require('../constants/appConstants');
+var CommonActions = require('../actions/CommonActions');
+
+
+var seatData = [];
+var ws = new WebSocket(appConstants.WEBSOCKET_IP);
+
+
+var utils = objectAssign({}, EventEmitter.prototype, {
+	connectToWebSocket : function(data){
+		if ("WebSocket" in window) {
+	      ws.onopen = function(){
+	         console.log("connected");
+	      };     
+	      ws.onmessage = function (evt){
+
+	        var received_msg = evt.data;
+	          parseSeatData(evt.data);
+	          console.log(evt.data);
+	      };
+	      ws.onclose = function(){ 
+	         alert("Connection is closed..."); 
+	      };
+	    }
+	    else
+	    {
+	      alert("WebSocket NOT supported by your Browser!");
+	    }
+	},
+	postDataToWebsockets: function(data){
+      ws.send(JSON.stringify(data));
+      setTimeout(CommonActions.operatorSeat, 0, true);
+  	}
+}); 
+
+function parseSeatData(data){
+    seatData.push()
+}
+
+module.exports = utils;
+
+},{"../actions/CommonActions":216,"../constants/appConstants":222,"events":1,"react/lib/Object.assign":105}]},{},[225]);

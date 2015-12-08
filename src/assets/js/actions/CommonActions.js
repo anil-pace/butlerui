@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
-var todoActions = {
+var commonActions = {
   webSocketConnection: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.WEBSOCKET_CONNECT, 
@@ -14,7 +14,7 @@ var todoActions = {
       data: data
     });
   },
-  operatorSeat: function(data){
+  operatorSeat: function(data){ console.log(data)
     AppDispatcher.handleAction({
       actionType: appConstants.OPERATOR_SEAT, 
       data: data
@@ -30,4 +30,4 @@ var todoActions = {
   }
 };
 
-module.exports = todoActions;
+module.exports = commonActions;

@@ -10,7 +10,7 @@ gulp.task('browserify', function(){
 		.transform('reactify') // transform JSX to JS
 		.bundle() // output in bundle
 		.pipe(source('main.js')) // pipe into main.js
-		.pipe(gulp.dest('dist/js')); // move into destination
+		.pipe(gulp.dest('dist/assets/js')); // move into destination
 
 });
 

@@ -2,7 +2,8 @@ var gulp = require('gulp'); //  The less work you have to do when performing rep
 var browserify  = require('browserify');
 var reactify = require('reactify'); // Reactify is needed to convert JSX to JS
 var source  = require('vinyl-source-stream'); // when we use browserify with gulp, gulp requires input that pipes through a stream
-											  // browserify ends about putting up a string so we require vinyl source to convert strings into stream  
+var minifyCss = require('gulp-minify-css');	
+var uglify = require('gulp-uglify');										  // browserify ends about putting up a string so we require vinyl source to convert strings into stream  
 
 less = require('gulp-less');
 gulp.task('browserify', function(){
@@ -20,12 +21,19 @@ gulp.task('copy', function(){
 	gulp.src('src/assets/images/*.*')
 		.pipe(gulp.dest('dist/assets/images'));		
 });
+
 gulp.task('build-less', function(){
     return gulp.src('src/assets/css/styles.less')
         .pipe(less())
+        .pipe(minifyCss())
         .pipe(gulp.dest('dist/assets/css'));
 });
-gulp.task('default',['browserify', 'build-less' , 'copy'], function(){
-	return gulp.watch('src/**/*.*', ['browserify','build-less','copy'])
+gulp.task('compress', function() {
+  return gulp.src('dist/assets/js/*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/assets/js'));
+});
+gulp.task('default',['browserify', 'build-less' , 'copy', 'compress'], function(){
+	return gulp.watch('src/**/*.*', ['browserify','build-less','copy', 'compress'])
 });
 

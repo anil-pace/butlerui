@@ -13,7 +13,7 @@ function getState(){
       seatList : loginstore.seatList(),
       username : 'kerry',
       password : 'gorapj',
-      seat_name : 'pps_front_20'
+      seat_name : '10_front_1'
   }
 }
 var LoginForm = React.createClass({
@@ -49,7 +49,7 @@ var LoginForm = React.createClass({
     });
 
   },
-  render: function(){ console.log(this.state.flag);
+  render: function(){ 
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){

@@ -46,7 +46,7 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   removeChangeListener: function(cb){
     this.removeListener(CHANGE_EVENT, cb);
   },
-  getFlag : function(){ console.log(flag);
+  getFlag : function(){ 
     return flag;
   },
   seatList : function(){ 

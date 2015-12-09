@@ -15,10 +15,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	         console.log("connected");
 	      };     
 	      ws.onmessage = function (evt){
-
 	        var received_msg = evt.data;
 	          parseSeatData(evt.data);
 	          console.log(evt.data);
+	          
 	      };
 	      ws.onclose = function(){ 
 	         alert("Connection is closed..."); 
@@ -29,7 +29,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      alert("WebSocket NOT supported by your Browser!");
 	    }
 	},
-	postDataToWebsockets: function(data){
+	postDataToWebsockets: function(data){ console.log(data);
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	}

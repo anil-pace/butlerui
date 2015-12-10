@@ -8,24 +8,28 @@ var commonActions = {
       data: data
     });
   },
+  listSeats: function(data){
+    AppDispatcher.handleAction({
+      actionType : appConstants.LIST_SEATS,
+      data: data
+    })
+  },
   login: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOGIN, 
       data: data
     });
   },
-  operatorSeat: function(data){ console.log(data)
+  operatorSeat: function(data){ 
     AppDispatcher.handleAction({
       actionType: appConstants.OPERATOR_SEAT, 
       data: data
     });
   },
-  
-  scanBarcode : function(data, receiveKey){
+  seatData : function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.SCAN_BARCODE,
-      data:data,
-      receiveKey : receiveKey
+      actionType: appConstants.SEAT_DATA,
+      data : data
     })
   }
 };

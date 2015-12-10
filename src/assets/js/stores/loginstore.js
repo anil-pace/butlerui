@@ -8,6 +8,14 @@ var utils  = require('../utils/utils.js');
 
 var CHANGE_EVENT = 'change';
 var flag = false;
+
+function getParameterByName(name){
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search); console.log(name);
+    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
+    listPpsSeat(currentSeat[0]);
+}
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
   var xhrConfig = function(xhr) {
@@ -19,7 +27,7 @@ var currentSeat = [];
 
 function listPpsSeat(seat){
     if(seat === null){
-      currentSeat = []; 
+      currentSeat.length = 0; 
       $.ajax({
         type: 'GET',
         url: appConstants.INTERFACE_IP+appConstants.PPS_SEATS,
@@ -31,6 +39,8 @@ function listPpsSeat(seat){
         }).fail(function(jqXhr) {
                      
       });
+    }else{
+      loginstore.emit(CHANGE_EVENT); 
     }
 }
 
@@ -51,25 +61,21 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   seatList : function(){ 
     return currentSeat;
-  },
-  getParameterByName: function(name){
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search); console.log(name);
-    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
-    listPpsSeat(currentSeat[0]);
   }
 });
 
 
-AppDispatcher.register(function(payload){ console.log(payload);
+AppDispatcher.register(function(payload){
   var action = payload.action;
   switch(action.actionType){
+    case appConstants.LIST_SEATS:
+      getParameterByName('seat_name');
+      break;
     case appConstants.LOGIN:
       utils.postDataToWebsockets(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.OPERATOR_SEAT: console.log(action.data);
+    case appConstants.OPERATOR_SEAT: 
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;

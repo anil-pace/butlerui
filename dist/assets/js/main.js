@@ -24375,14 +24375,33 @@ module.exports = commonActions;
 var React = require('react');
 
 var Bin = React.createClass({displayName: "Bin",
-    render: function() {
-        return (
-            	 React.createElement("div", {className: "bin"}, 
-                    React.createElement("div", {className: "item-count"}, "0"), 
-                     React.createElement("div", {className: "pptl"}, "2")
-                )
-        );
+    _selectBin:function(){
+        console.log("ashish");
     },
+    render: function() {
+        var compData = this.props.binData;
+    	if(compData.ppsbin_state == "IN USE")
+    		return (
+                React.createElement("div", {className: "bin use", onClick: this._selectBin}, 
+                    React.createElement("div", {className: "item-count"}, compData.all_items.length), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+    	else if(compData.ppsbin_state == "empty")
+            return (
+                React.createElement("div", {className: "bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.all_items.length), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_state == "selected")
+            return (
+                React.createElement("div", {className: "bin use selected"}, 
+                    React.createElement("div", {className: "item-count"}, compData.all_items.length), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+    }
 });
 
 module.exports = Bin;
@@ -24393,30 +24412,21 @@ var Bin = require('./Bin.react');
 
 var Bins = React.createClass({displayName: "Bins",
 	 componentDidMount: function() {
-	 	var clientHeight = /*window.innerHeight - document.getElementsByClassName('head')[0].clientHeight -*/ document.getElementsByClassName('bins')[0].clientHeight;
-	 	var clientWidth = document.getElementsByClassName('bins')[0].clientWidth;
-	 	console.log(Math.min((clientHeight/window.innerHeight)*100/8,(clientWidth/window.innerWidth)*100/4));
-    	console.log("offset-height  "+ clientHeight);
-    	var y = Math.min((clientHeight)/2,(clientWidth)/8);
-    	var myElements = document.querySelectorAll(".bin");
-    	for (var i = 0; i < myElements.length; i++) {
-    		//myElements[i].style.height = y + "%";
-    		myElements[i].style.height = y-15 + "px";
-    		myElements[i].style.width = y-15 + "px";
-		}
+        this._calculateAndSetBinDimensions(this.props.binsData["max_coordinates"]);
   	},
     render: function() {
-    	
+    	console.log(this.props.binsData);
+        var compData = this.props.binsData;
         return (
             	 React.createElement("div", {className: "bins"}, 
             	 	
             	 		(function(){
             	 			var l =[];
-            	 			for(var j = 0 ;j<2 ;j++){
+            	 			for(var j = 0 ;j<compData["max_coordinates"][0] ;j++){
             	 			var list = [];
             	 			var i = 0;
-            	 			for( i = i ; i<8 ; i++){
-            	 				list.push(React.createElement(Bin, null));
+            	 			for( i = i ; i<compData["max_coordinates"][1] ; i++){
+            	 				list.push(React.createElement(Bin, {binData: compData.ppsbins[j*compData["max_coordinates"][1] + i]}));
             	 			}
             	 			l.push((
             	 				React.createElement("div", {className: "bin-row"}, 
@@ -24430,6 +24440,18 @@ var Bins = React.createClass({displayName: "Bins",
             	 )
         );
     },
+
+    _calculateAndSetBinDimensions: function(dimension){
+        var clientHeight = $('.bins').height();
+        var clientWidth = $('.bins').width();
+        console.log(clientHeight + " " + clientWidth);
+        var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
+        var myElements = document.querySelectorAll(".bin");
+        for (var i = 0; i < myElements.length; i++) {
+            myElements[i].style.height = boxSize - 15 + "px";
+            myElements[i].style.width = boxSize - 15 + "px";
+        }
+    }
 });
 
 module.exports = Bins;
@@ -24547,7 +24569,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../actions/CommonActions":216,"../components/Operator":224,"../stores/loginstore":231,"../stores/mainstore":232,"react":214,"react-addons-linked-state-mixin":57,"react-router":78}],221:[function(require,module,exports){
+},{"../actions/CommonActions":216,"../components/Operator":224,"../stores/loginstore":232,"../stores/mainstore":233,"react":214,"react-addons-linked-state-mixin":57,"react-router":78}],221:[function(require,module,exports){
 var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -24632,6 +24654,7 @@ var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
 var PutBackNav = require('./PutBackNav');
+var SampleData = require('../sample_data/sample');
 
 var Operator = React.createClass({displayName: "Operator",
   getInitialState: function(){
@@ -24682,16 +24705,16 @@ var Operator = React.createClass({displayName: "Operator",
     var d = [
         {
           "id":"1",
+          "type":"passive",
+          "action":"Pick",
+          "image":"assets/images/nav3.png"
+        },
+        {
+          "id":"2",
           "type":"active",
           "action":"Stage Bins or Scan the Item(s)",
           "image":"assets/images/nav2.png",
           "showImage":true
-        },
-        {
-          "id":"2",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
         },
         {
           "id":"3",
@@ -24712,7 +24735,7 @@ var Operator = React.createClass({displayName: "Operator",
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
         React.createElement(Navigation, {navData: d}), 
-        React.createElement(Bins, null)
+        React.createElement(Bins, {binsData: SampleData.PutBack_1.state_data})
       ) 
      
     )
@@ -24721,7 +24744,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../stores/mainstore":232,"./Bins/Bins.react":218,"./Header":219,"./Navigation/Navigation.react":222,"./PutBack":225,"./PutBackNav":226,"react":214}],225:[function(require,module,exports){
+},{"../sample_data/sample":231,"../stores/mainstore":233,"./Bins/Bins.react":218,"./Header":219,"./Navigation/Navigation.react":222,"./PutBack":225,"./PutBackNav":226,"react":214}],225:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -24755,7 +24778,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../stores/mainstore":232,"react":214}],226:[function(require,module,exports){
+},{"../stores/mainstore":233,"react":214}],226:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -24815,7 +24838,7 @@ var PutBackNav = React.createClass({displayName: "PutBackNav",
 
 module.exports = PutBackNav;
 
-},{"../constants/appConstants":227,"../constants/svgConstants":228,"../stores/mainstore":232,"react":214}],227:[function(require,module,exports){
+},{"../constants/appConstants":227,"../constants/svgConstants":228,"../stores/mainstore":233,"react":214}],227:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
 	INTERFACE_IP : "http://192.168.2.110:5000",
@@ -24879,6 +24902,273 @@ ReactDOM.render(
     document.getElementById('app')
 )
 },{"./components/LoginForm":220,"react":214,"react-dom":58}],231:[function(require,module,exports){
+var SampleData = {
+    "PutBack_1": {
+        "alert_data": {
+            "code": "PtB.A.012",
+            "description": "Please put the box in 7",
+            "details": [],
+            "level": "info"
+        },
+        "state": "waiting_for_pptl_event",
+        "state_data": {
+            "current_scanned": {
+                "barcode": "FtYWny6YDC",
+                "box_uid": "hSCmcPgDAd",
+                "description": "Some Really really long longggg description",
+                "dimension": [
+                    4.1,
+                    5.5,
+                    5.5
+                ],
+                "image_url": "http://172.18.91.1/product_images/b23ab8d9-dfcb-4649-8c02-c88fe30f5e5f.png",
+                "item_quantity": 2,
+                "name": null,
+                "weight": 0.25
+            },
+            "max_coordinates": [
+                2,
+                4
+            ],
+            "possible_exceptions": [],
+            "ppsbins": [{
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    1
+                ],
+                "ppsbin_id": "4",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    2
+                ],
+                "ppsbin_id": "3",
+                "ppsbin_state": "IN USE"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    3
+                ],
+                "ppsbin_id": "2",
+                "ppsbin_state": "IN USE"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    4
+                ],
+                "ppsbin_id": "1",
+                "ppsbin_state": "IN USE"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    2,
+                    1
+                ],
+                "ppsbin_id": "8",
+                "ppsbin_state": "selected"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    2,
+                    2
+                ],
+                "ppsbin_id": "7",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    2,
+                    3
+                ],
+                "ppsbin_id": "6",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    2,
+                    4
+                ],
+                "ppsbin_id": "5",
+                "ppsbin_state": "empty"
+            }],
+            "selected_bin": "7",
+            "time_stamp": [
+                [
+                    123, [
+                        [
+                            49,
+                            52,
+                            51,
+                            52
+                        ],
+                        44, [
+                            52,
+                            51,
+                            56,
+                            48,
+                            49,
+                            53
+                        ],
+                        44, [
+                            49,
+                            51,
+                            56,
+                            55,
+                            52,
+                            52
+                        ]
+                    ],
+                    125
+                ]
+            ]
+        }
+    },
+
+
+    "PutBack_2": {
+        "alert_data": {
+            "code": "PtB.A.021",
+            "description": "Please scan te box to be removed",
+            "details": [],
+            "level": "info"
+        },
+        "state": "remove_box_mode",
+        "state_data": {
+            "max_coordinates": [
+                2,
+                4
+            ],
+            "possible_exceptions": [],
+            "ppsbins": [{
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    1
+                ],
+                "ppsbin_id": "4",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    2
+                ],
+                "ppsbin_id": "3",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    3
+                ],
+                "ppsbin_id": "2",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    1,
+                    4
+                ],
+                "ppsbin_id": "1",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    2,
+                    1
+                ],
+                "ppsbin_id": "8",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    2,
+                    2
+                ],
+                "ppsbin_id": "7",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [],
+                "coordinate": [
+                    2,
+                    3
+                ],
+                "ppsbin_id": "6",
+                "ppsbin_state": "empty"
+            }, {
+                "all_items": [{
+                    "barcode": "A000000358",
+                    "box_uid": "1",
+                    "description": null,
+                    "dimension": [
+                        2.8,
+                        2.93,
+                        3.96
+                    ],
+                    "image_url": null,
+                    "item_quantity": 5,
+                    "name": null,
+                    "weight": 0.5
+                }, {
+                    "barcode": "A000000361",
+                    "box_uid": "1",
+                    "description": null,
+                    "dimension": [
+                        2.8,
+                        2.93,
+                        3.96
+                    ],
+                    "image_url": null,
+                    "item_quantity": 5,
+                    "name": null,
+                    "weight": 0.5
+                }],
+                "coordinate": [
+                    2,
+                    4
+                ],
+                "ppsbin_id": "5",
+                "ppsbin_state": "IN USE"
+            }],
+            "time_stamp": [
+                [
+                    123, [
+                        [
+                            49,
+                            52,
+                            52,
+                            48
+                        ],
+                        44, [
+                            53,
+                            49,
+                            52,
+                            52,
+                            53
+                        ],
+                        44, [
+                            49,
+                            55,
+                            57,
+                            55,
+                            57,
+                            56
+                        ]
+                    ],
+                    125
+                ]
+            ]
+        }
+    }
+};
+
+module.exports = SampleData;
+},{}],232:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -24964,7 +25254,7 @@ AppDispatcher.register(function(payload){ console.log(payload);
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":216,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":233,"events":1,"react/lib/Object.assign":105}],232:[function(require,module,exports){
+},{"../actions/CommonActions":216,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":234,"events":1,"react/lib/Object.assign":105}],233:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -24999,7 +25289,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../actions/CommonActions":216,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":233,"./loginstore":231,"events":1,"react/lib/Object.assign":105}],233:[function(require,module,exports){
+},{"../actions/CommonActions":216,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":234,"./loginstore":232,"events":1,"react/lib/Object.assign":105}],234:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');

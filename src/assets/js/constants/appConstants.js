@@ -8,7 +8,8 @@ var appConstants = {
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	SEAT_DATA: "SEAT_DATA",
 	SCAN_ITEMS: "Scan the item(s)",
-	PLACE_ITEMS: "Place"
+	PLACE_ITEMS: "Place",
+	BACK : "back"
 };
 
 module.exports = appConstants;

@@ -6,6 +6,7 @@ var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
 var PutBackNav = require('./PutBackNav');
+var SampleData = require('../sample_data/sample');
 
 var Operator = React.createClass({
   getInitialState: function(){
@@ -56,16 +57,16 @@ var Operator = React.createClass({
     var d = [
         {
           "id":"1",
+          "type":"passive",
+          "action":"Pick",
+          "image":"assets/images/nav3.png"
+        },
+        {
+          "id":"2",
           "type":"active",
           "action":"Stage Bins or Scan the Item(s)",
           "image":"assets/images/nav2.png",
           "showImage":true
-        },
-        {
-          "id":"2",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
         },
         {
           "id":"3",
@@ -86,7 +87,7 @@ var Operator = React.createClass({
       <div className="main">
         <Header />
         <Navigation navData = {d} />
-        <Bins />
+        <Bins binsData = {SampleData.PutBack_1.state_data} />
       </div> 
      
     )

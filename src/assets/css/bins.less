@@ -22,12 +22,23 @@
         justify-content:center;
         .bin {
             position: relative;
-            border: 1px solid #939598;
+            border: 2px solid @bin_normal_border;
+            &.use{
+                background: @bin_in_use_background;
+                color: white;
+            }
+            &.empty{
+                background: white;
+                color:@bin_qty;
+            }
+            &.selected{
+                border: 5px solid @bin_select_border;
+            }
             .pptl {
                 position: absolute;
                 bottom: 0;
                 width: 100%;
-                min-height: 20%;
+                min-height: 15%;
                 display: flex;
                 align-items:center;
                 justify-content:center;
@@ -35,7 +46,7 @@
                 background: #939598;
                 text-align: center;
                 color: white;
-                font-size: 1.2em;
+                font-size: 1.5em;
             }
             .item-count {
                 position: absolute;
@@ -48,10 +59,9 @@
                 justify-content:center;
                 align-items:center;
                 text-align: center;
-                color: black;
                 left: 0;
                 right: 0;
-                font-size: 2em;
+                font-size: 3em;
             }
         }
     }

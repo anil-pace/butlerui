@@ -77,7 +77,7 @@ var LoginForm = React.createClass({
     }
     else{ 
       return(
-         <div>
+         <div className="main">
             <Operator />
           </div>
         

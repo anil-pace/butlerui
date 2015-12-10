@@ -1,0 +1,59 @@
+.bins {
+    padding-top: 3.75em;
+    padding-bottom: 3.75em;
+    padding-left: 3.75em;
+    padding-right: 3.75em;
+    display: flex;
+    order: 1;
+    flex-flow:column;
+    flex-grow:1;
+    flex-shrink:1;
+    width: 100%;
+    flex-wrap:nowrap;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    .bin-row {
+        display: flex;
+        flex-flow: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        flex:0 1 auto;
+        justify-content:center;
+        .bin {
+            position: relative;
+            border: 1px solid #939598;
+            .pptl {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                min-height: 20%;
+                display: flex;
+                align-items:center;
+                justify-content:center;
+                align-items:center;
+                background: #939598;
+                text-align: center;
+                color: white;
+                font-size: 1.2em;
+            }
+            .item-count {
+                position: absolute;
+                top: 0;
+                bottom: 20%;
+                height: 50%;
+                width: 50%;
+                margin: auto;
+                display: flex;
+                justify-content:center;
+                align-items:center;
+                text-align: center;
+                color: black;
+                left: 0;
+                right: 0;
+                font-size: 2em;
+            }
+        }
+    }
+}
+

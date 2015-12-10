@@ -3,7 +3,10 @@ var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
 var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var Bins = require("./Bins/Bins.react");
 var PutBackNav = require('./PutBackNav');
+
 var Operator = React.createClass({
   getInitialState: function(){
     return {
@@ -50,6 +53,28 @@ var Operator = React.createClass({
     });*/
   },
   render: function(data){ 
+    var d = [
+        {
+          "id":"1",
+          "type":"active",
+          "action":"Stage Bins or Scan the Item(s)",
+          "image":"assets/images/nav2.png",
+          "showImage":true
+        },
+        {
+          "id":"2",
+          "type":"passive",
+          "action":"Pick",
+          "image":"assets/images/nav3.png"
+        },
+        {
+          "id":"3",
+          "type":"passive",
+          "action":"Pick",
+          "image":"assets/images/nav3.png"
+        }
+      ];
+
     var moduleToLoad,navigation;
 
      if(this.state.ppsMode === 'put' && this.state.seatType === 'back'){console.log('o');
@@ -58,14 +83,10 @@ var Operator = React.createClass({
      }
     
     return (
-      <div>
+      <div className="main">
         <Header />
-        <div className='row'>
-        {navigation}
-        </div>
-      	<div className="container">
-          {moduleToLoad}
-        </div>
+        <Navigation navData = {d} />
+        <Bins />
       </div> 
      
     )

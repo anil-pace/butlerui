@@ -4,7 +4,7 @@ var allSvgConstants = require('../constants/svgConstants');
 var Header = React.createClass({
     render: function() {
         return (
-            <div className="header">
+            <div className="head">
             	<div className="logo">
             	<img src={allSvgConstants.logo} />
             	</div>

@@ -3,8 +3,6 @@ var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 
-
-var seatData = [];
 var ws = new WebSocket(appConstants.WEBSOCKET_IP);
 
 
@@ -16,8 +14,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      };     
 	      ws.onmessage = function (evt){
 	        var received_msg = evt.data;
-	          parseSeatData(evt.data);
-	          console.log(evt.data);
+	        setTimeout(CommonActions.seatData, 0, evt.data)
+
+	          //mainstore.seatData(evt.data)
 	          
 	      };
 	      ws.onclose = function(){ 
@@ -29,14 +28,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      alert("WebSocket NOT supported by your Browser!");
 	    }
 	},
-	postDataToWebsockets: function(data){ console.log(data);
+	postDataToWebsockets: function(data){ 
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	}
 }); 
-
-function parseSeatData(data){
-    seatData.push()
-}
 
 module.exports = utils;

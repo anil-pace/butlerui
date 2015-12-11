@@ -36,7 +36,8 @@ var LoginForm = React.createClass({
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
-    CommonActions.webSocketConnection();  
+    CommonActions.webSocketConnection(); 
+    CommonActions.listSeats(); 
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -49,14 +50,18 @@ var LoginForm = React.createClass({
     });
 
   },
-  render: function(){ 
+  render: function(){
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
-          seatData = this.state.seatList[0].map(function(data, index){
-           return (
-                  <option key={'pps' + index}>PPS {data.seat_type} {data.pps_id}</option>
-            )
+          seatData = this.state.seatList.map(function(data, index){ 
+            if(data[0].hasOwnProperty('seat_type')){
+               return (
+                  <option key={'pps' + index}>PPS {data[0].seat_type} {data[0].pps_id}</option>
+                )
+            }else{console.log(data);
+                 return( <option key={index} value={data} >{data}</option>)
+            }
           });
       }
       if(this.state.flag === false){

@@ -24414,12 +24414,19 @@ var commonActions = {
       actionType: appConstants.TOGGLE_BIN_SELECTION,
       bin_id:bin_id
     })
+  },
+
+  setPutData:function(data){
+     AppDispatcher.handleAction({
+      actionType: appConstants.SET_PUT_DATA,
+      data:data
+    })
   }
 };
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":228,"../dispatchers/AppDispatcher":230}],218:[function(require,module,exports){
+},{"../constants/appConstants":227,"../dispatchers/AppDispatcher":229}],218:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -24427,6 +24434,7 @@ var Bin = React.createClass({displayName: "Bin",
     _toggleBinSelection:function(bin_id){
         ActionCreators.toggleBinSelection(bin_id);
     },
+   
     render: function() {
         var compData = this.props.binData;
         console.log(compData);
@@ -24507,7 +24515,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":233,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
+},{"../../stores/PutBackStore":232,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 
@@ -24528,7 +24536,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../constants/svgConstants":229,"react":215}],221:[function(require,module,exports){
+},{"../constants/svgConstants":228,"react":215}],221:[function(require,module,exports){
 
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
@@ -24620,7 +24628,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../actions/CommonActions":217,"../components/Operator":225,"../stores/loginstore":234,"../stores/mainstore":235,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],222:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../components/Operator":225,"../stores/loginstore":233,"../stores/mainstore":234,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],222:[function(require,module,exports){
 var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -24697,15 +24705,78 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 module.exports = PassiveNavigation;
 
 },{"react":215}],225:[function(require,module,exports){
-
 var React = require('react');
 var mainstore = require('../stores/mainstore');
+var PutBack = require('./PutBack.react');
+/*var PutFront = require('./PutFront');
+var PickBack = require('./PickBack');
+var PickFront = require('./PutFront');*/
+var Header = require('./Header');
+var appConstants = require('../constants/appConstants');
+var ActionCreators = require('../actions/CommonActions');
+
+var currentSeat;
+console.log(currentSeat);
+function getState(){
+  return {
+      seatData: mainstore.seatData()
+  }
+}
+var Operator = React.createClass({displayName: "Operator",
+  getInitialState: function(){
+    return getState();
+  },
+  componentWillMount: function(){
+     mainstore.addChangeListener(this.onChange);
+  },
+  componentWillUnmount: function(){
+    mainstore.removeChangeListener(this.onChange);
+  },
+  onChange: function(){ 
+   this.setState(getState());
+   this.checkSeatType();
+  },
+  checkSeatType : function(){
+    switch(this.state.seatData.mode){
+      case appConstants.PUT:
+        if(this.state.seatData.seat_type === appConstants.BACK){
+          currentSeat = React.createElement(PutBack, null);
+          ActionCreators.setPutData(this.state.seatData);
+        }/*else{
+          currentSeat = <PutFront data={this.state.seatData}/>;
+        }*/
+        break;
+      /*case appConstants.PICK:
+        if(this.state.seatData.seat_type === appConstants.BACK){
+          currentSeat = <PickBack data={this.state.seatData} />;
+        }else{
+          currentSeat = <PickFront data={this.state.seatData}/>;
+        }
+        break; */
+      default:
+        return true;   
+    }
+    this.forceUpdate();
+  },
+  render: function(data){ 
+    return (
+      React.createElement("div", null, 
+        currentSeat
+      ) 
+
+    )
+  }
+});
+
+module.exports = Operator;
+
+},{"../actions/CommonActions":217,"../constants/appConstants":227,"../stores/mainstore":234,"./Header":220,"./PutBack.react":226,"react":215}],226:[function(require,module,exports){
+
+var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
-var PutBack = require('./PutBack');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
-var PutBackNav = require('./PutBackNav');
 var SampleData = require('../sample_data/sample');
 
 function getStateData(){
@@ -24718,32 +24789,6 @@ var Operator = React.createClass({displayName: "Operator",
   getInitialState: function(){
     return getStateData();
   },
- /* showRKlinetable : function(index){
-  	this.setState({
-  	   index : index
-  	});
-  },
-  openForm: function(){
-  	this.setState({
-  		stageLevel: 3
-  	})
-  },
-  generalFunctions : function(arg, e){
-      if(arg === 'scan_barcode'){
-        var receivekeySelected = this.props.receivedData[0].receive_keys[this.state.index].receive_key;
-         todoActions.scanBarcode(this.refs.barcode.getDOMNode().value, receivekeySelected);
-      }else if(arg === 'search_receive_key'){ console.log(e);
-        if(e.keyCode == 13){
-         
-        }
-      } 
-
-  },
- 
-  searchReceiveKey : function(event){
-    console.log(event);
-  },
-   */
   componentWillMount: function(){
     PutBackStore.addChangeListener(this.onChange);
   },
@@ -24775,14 +24820,6 @@ var Operator = React.createClass({displayName: "Operator",
           "image":"assets/images/nav3.png"
         }
       ];
-
-    var moduleToLoad,navigation;
-
-    /* if(this.state.ppsMode === 'put' && this.state.seatType === 'back'){console.log('o');
-        moduleToLoad =  <PutBack />
-        navigation = <PutBackNav />
-     }*/
-    
     return (
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
@@ -24796,101 +24833,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../sample_data/sample":232,"../stores/PutBackStore":233,"../stores/mainstore":235,"./Bins/Bins.react":219,"./Header":220,"./Navigation/Navigation.react":223,"./PutBack":226,"./PutBackNav":227,"react":215}],226:[function(require,module,exports){
-
-var React = require('react');
-var mainstore = require('../stores/mainstore');
-var PutBack = React.createClass({displayName: "PutBack",
-  getInitialState: function(){
-    return {
-      
-    }
-  },
-  componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
-  },
-  componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
-  },
-  onChange: function(){ 
-  },
-  render: function(data){ 
-    
-      return (
-        React.createElement("div", {className: "row row-offcanvas row-offcanvas-right"}, 
-        	React.createElement("div", {className: "col-xs-12 col-sm-12"}, 
-              React.createElement("div", {className: "row"}, 
-                "Body area"
-              )
-          )
-        )  
-      )
-  }
-});
-
-module.exports = PutBack;
-
-},{"../stores/mainstore":235,"react":215}],227:[function(require,module,exports){
-
-var React = require('react');
-var mainstore = require('../stores/mainstore');
-var appConstants = require('../constants/appConstants');
-var allSvgConstants = require('../constants/svgConstants');
-
-var PutBackNav = React.createClass({displayName: "PutBackNav",
-  getInitialState: function(){
-    return {
-      screen_id : "put_back_stage",
-      classVariable_stage01 : null,
-      level : 1,
-      message_01 : null,
-      message_02 : null,
-    }
-  },
-  componentWillMount: function(){
-      if(this.state.screen_id === "put_back_stage"){
-         this.state.classVariable_stage01 = "active-navigation";
-         this.state.classVariable_stage02 = "passive-navigation";
-         this.state.message_01 = appConstants.SCAN_ITEMS;
-         this.state.message_02 = appConstants.PLACE_ITEMS;
-         this.state.level = 1;
-       }
-    mainstore.addChangeListener(this.onChange);
-  },
-  componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
-  },
-  onChange: function(){
-  },
-  condtionalChecks : function(){
-  },
-  render: function(data){ 
-      return (
-        React.createElement("div", {className: "navigation"}, 
-              React.createElement("div", {className: this.state.classVariable_stage01}, 
-                React.createElement("div", {className: "nav-detail"}, 
-                  React.createElement("div", {className: "index"}, React.createElement("span", null, this.state.level)), 
-                  React.createElement("img", {src: allSvgConstants.putBackPlace})
-                ), 
-                React.createElement("div", {className: "action"}, 
-                 this.state.message_01
-                )
-              ), 
-              React.createElement("div", {className: this.state.classVariable_stage02}, 
-                    React.createElement("div", {className: "nav-detail"}, 
-                        React.createElement("div", {className: "index"}, React.createElement("span", null, this.state.level + 1)), 
-                        React.createElement("img", {src: allSvgConstants.putBackScan}), 
-                        React.createElement("div", {className: "info"}, this.state.message_02)
-                    )
-              )
-          )
-      )
-  }
-});
-
-module.exports = PutBackNav;
-
-},{"../constants/appConstants":228,"../constants/svgConstants":229,"../stores/mainstore":235,"react":215}],228:[function(require,module,exports){
+},{"../sample_data/sample":231,"../stores/PutBackStore":232,"./Bins/Bins.react":219,"./Header":220,"./Navigation/Navigation.react":223,"react":215}],227:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
 	INTERFACE_IP : "http://192.168.2.110:5000",
@@ -24901,12 +24844,13 @@ var appConstants = {
 	REMOVE_ITEM: "REMOVE_ITEM",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
-	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION"
+	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
+	SET_PUT_DATA:"SET_PUT_DATA"
 };
 
 module.exports = appConstants;
 
-},{}],229:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -24916,7 +24860,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],230:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -24930,7 +24874,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":33}],231:[function(require,module,exports){
+},{"flux":33}],230:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -24954,7 +24898,7 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
-},{"./components/LoginForm":221,"react":215,"react-dom":59}],232:[function(require,module,exports){
+},{"./components/LoginForm":221,"react":215,"react-dom":59}],231:[function(require,module,exports){
 var SampleData = {
     "PutBack_1": {
         "alert_data": {
@@ -25213,7 +25157,7 @@ var SampleData = {
 };
 
 module.exports = SampleData;
-},{}],233:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -25249,6 +25193,10 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     });
   },
 
+  setPutBackData:function(data){
+    _PutBackData = data;
+  },
+
   getStateData:function(){
     return _PutBackData;
   }
@@ -25263,6 +25211,12 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PutBackStore.toggleBinSelection(action.action.bin_id);
       PutBackStore.emitChange();
       break;
+
+     case ActionTypes.SET_PUT_DATA:
+      PutBackStore.setPutBackData(action.action.data);
+      PutBackStore.emitChange();
+      break;
+    
     
     default:
       // do nothing
@@ -25271,7 +25225,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
-},{"../constants/appConstants":228,"../dispatchers/AppDispatcher":230,"../sample_data/sample":232,"events":1,"object-assign":53}],234:[function(require,module,exports){
+},{"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../sample_data/sample":231,"events":1,"object-assign":53}],233:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -25357,7 +25311,7 @@ AppDispatcher.register(function(payload){ console.log(payload);
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":217,"../constants/appConstants":228,"../dispatchers/AppDispatcher":230,"../utils/utils.js":236,"events":1,"react/lib/Object.assign":106}],235:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":235,"events":1,"react/lib/Object.assign":106}],234:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -25392,7 +25346,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../actions/CommonActions":217,"../constants/appConstants":228,"../dispatchers/AppDispatcher":230,"../utils/utils.js":236,"./loginstore":234,"events":1,"react/lib/Object.assign":106}],236:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":235,"./loginstore":233,"events":1,"react/lib/Object.assign":106}],235:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
@@ -25436,4 +25390,4 @@ function parseSeatData(data){
 
 module.exports = utils;
 
-},{"../actions/CommonActions":217,"../constants/appConstants":228,"events":1,"react/lib/Object.assign":106}]},{},[231]);
+},{"../actions/CommonActions":217,"../constants/appConstants":227,"events":1,"react/lib/Object.assign":106}]},{},[230]);

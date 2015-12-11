@@ -7,7 +7,7 @@ var uglify = require('gulp-uglify');										  // browserify ends about putting
 var watchify = require('watchify');										
 
 var less = require('gulp-less');
-var bundler = watchify(browserify('./src/assets/js/main.js', watchify.args));
+/*var bundler = watchify(browserify('./src/assets/js/main.js', watchify.args));
 // add any other browserify options or transforms here
 bundler.transform('reactify');
 
@@ -19,16 +19,16 @@ function bundle() {
     .pipe(source('main.js'))
     .pipe(gulp.dest('dist/assets/js'));
 }
+*/
 
-
-/*gulp.task('browserify', function(){
+gulp.task('browserify', function(){
 	browserify('./src/assets/js/main.js')
 		.transform('reactify') // transform JSX to JS
 		.bundle() // output in bundle
 		.pipe(source('main.js')) // pipe into main.js
 		.pipe(gulp.dest('dist/assets/js')); // move into destination
 
-});*/
+});
 
 gulp.task('copy', function(){
 	gulp.src('src/index.html')

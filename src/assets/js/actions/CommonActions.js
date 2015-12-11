@@ -34,6 +34,13 @@ var commonActions = {
       actionType: appConstants.TOGGLE_BIN_SELECTION,
       bin_id:bin_id
     })
+  },
+
+  setPutData:function(data){
+     AppDispatcher.handleAction({
+      actionType: appConstants.SET_PUT_DATA,
+      data:data
+    })
   }
 };
 

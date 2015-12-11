@@ -8,7 +8,8 @@ var appConstants = {
 	REMOVE_ITEM: "REMOVE_ITEM",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
-	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION"
+	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
+	SET_PUT_DATA:"SET_PUT_DATA"
 };
 
 module.exports = appConstants;

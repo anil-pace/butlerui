@@ -6,6 +6,7 @@ var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
 var PutBackNav = require('./PutBackNav');
+var MsuRack = require('./Rack/MsuRack');
 var SampleData = require('../sample_data/sample');
 var appConstants = require('../constants/appConstants');
 
@@ -66,7 +67,7 @@ var Operator = React.createClass({
       <div className="main">
         <Header />
         <Navigation navData = {d} />
-        <Bins binsData = {SampleData.PutBack_1.state_data} />
+        <MsuRack />
       </div> 
      
     )

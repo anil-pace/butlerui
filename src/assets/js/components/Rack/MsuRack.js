@@ -112,7 +112,7 @@ var MsuRack = React.createClass({
                             "03", 
                             "04"
                         ], 
-                        100, 
+                        50, 
                         48
                     ], 
                     [
@@ -120,7 +120,7 @@ var MsuRack = React.createClass({
                             "05", 
                             "06"
                         ], 
-                        100, 
+                        50, 
                         48
                     ]
                 ]
@@ -133,7 +133,7 @@ var MsuRack = React.createClass({
                             "01", 
                             "02"
                         ], 
-                        25, 
+                        55, 
                         48
                     ], 
                     [
@@ -141,7 +141,7 @@ var MsuRack = React.createClass({
                             "03", 
                             "04"
                         ], 
-                        25, 
+                        55, 
                         48
                     ], 
                     [
@@ -149,7 +149,7 @@ var MsuRack = React.createClass({
                             "05", 
                             "06"
                         ], 
-                        25, 
+                        55, 
                         48
                     ]
                 ]
@@ -163,7 +163,7 @@ var MsuRack = React.createClass({
                             "02",
                             "03"
                         ], 
-                        110, 
+                        60, 
                         48
                     ], 
                     [
@@ -171,7 +171,7 @@ var MsuRack = React.createClass({
                             
                             "04"
                         ], 
-                        110, 
+                        60, 
                         48
                     ], 
                     [
@@ -179,7 +179,7 @@ var MsuRack = React.createClass({
                             "05", 
                             "06"
                         ], 
-                        110, 
+                        60, 
                         48
                     ]
                 ]
@@ -192,8 +192,7 @@ var MsuRack = React.createClass({
         alert(b%10);
 */
         var compartment_details = [
-                "005.1.B.01", 
-                "005.1.B.05"
+                "005.1.C.03"
             ];
 
         var slotStart;
@@ -201,6 +200,7 @@ var MsuRack = React.createClass({
 
         if(compartment_details.length === 1){
             slotStart = (compartment_details[0].split(".")[3])%10;
+            slotEnd = (compartment_details[0].split(".")[3])%10;
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else if(compartment_details.length === 2){
@@ -215,6 +215,7 @@ var MsuRack = React.createClass({
         for (var i = slotStart; i <= slotEnd; i++) {
             slotIndexList.push(i);
         };
+        console.log(slotIndexList);
         //eachSlot={this.state.eachSlot}
         //console.log("rackDetails = " + rackDetails[0][1].length);
         var eachRow =[];

@@ -4,9 +4,24 @@ var reactify = require('reactify'); // Reactify is needed to convert JSX to JS
 var source  = require('vinyl-source-stream'); // when we use browserify with gulp, gulp requires input that pipes through a stream
 var minifyCss = require('gulp-minify-css');	
 var uglify = require('gulp-uglify');										  // browserify ends about putting up a string so we require vinyl source to convert strings into stream  
+var watchify = require('watchify');										
 
-less = require('gulp-less');
-gulp.task('browserify', function(){
+var less = require('gulp-less');
+var bundler = watchify(browserify('./src/assets/js/main.js', watchify.args));
+// add any other browserify options or transforms here
+bundler.transform('reactify');
+
+gulp.task('browserify', bundle); // so you can run `gulp js` to build the file
+bundler.on('update', bundle); // on any dep update, runs the bundler
+
+function bundle() {
+  return bundler.bundle()
+    .pipe(source('main.js'))
+    .pipe(gulp.dest('dist/assets/js'));
+}
+
+
+/*gulp.task('browserify', function(){
 	browserify('./src/assets/js/main.js')
 		.transform('reactify') // transform JSX to JS
 		.bundle() // output in bundle
@@ -14,7 +29,7 @@ gulp.task('browserify', function(){
 		.pipe(gulp.dest('dist/assets/js')); // move into destination
 
 });
-
+*/
 gulp.task('copy', function(){
 	gulp.src('src/index.html')
 		.pipe(gulp.dest('dist'));
@@ -28,12 +43,12 @@ gulp.task('build-less', function(){
         .pipe(minifyCss())
         .pipe(gulp.dest('dist/assets/css'));
 });
-gulp.task('compress', function() {
+/*gulp.task('compress', function() {
   return gulp.src('dist/assets/js/*.js')
     .pipe(uglify())
     .pipe(gulp.dest('dist/assets/js'));
 });
-gulp.task('default',['browserify', 'build-less' , 'copy', 'compress'], function(){
-	return gulp.watch('src/**/*.*', ['browserify','build-less','copy', 'compress'])
+*/gulp.task('default',['browserify', 'build-less' , 'copy'], function(){
+	return gulp.watch('src/**/*.*', ['browserify','build-less','copy'])
 });
 

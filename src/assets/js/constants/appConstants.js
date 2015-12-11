@@ -9,7 +9,10 @@ var appConstants = {
 	SEAT_DATA: "SEAT_DATA",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
-	BACK : "back"
+	BACK : "back",
+	PUT : "put",
+	FRONT : "front",
+	PICK : "pick"
 };
 
 module.exports = appConstants;

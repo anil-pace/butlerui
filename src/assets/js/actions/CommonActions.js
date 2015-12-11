@@ -31,6 +31,13 @@ var commonActions = {
       actionType: appConstants.SEAT_DATA,
       data : data
     })
+  },
+
+  toggleBinSelection:function(bin_id){
+     AppDispatcher.handleAction({
+      actionType: appConstants.TOGGLE_BIN_SELECTION,
+      bin_id:bin_id
+    })
   }
 };
 

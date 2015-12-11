@@ -12,7 +12,8 @@ var appConstants = {
 	BACK : "back",
 	PUT : "put",
 	FRONT : "front",
-	PICK : "pick"
+	PICK : "pick",
+	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION"
 };
 
 module.exports = appConstants;

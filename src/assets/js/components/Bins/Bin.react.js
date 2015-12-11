@@ -1,29 +1,32 @@
 var React = require('react');
+var ActionCreators = require('../../actions/CommonActions');
 
 var Bin = React.createClass({
-    _selectBin:function(){
-        console.log("jindal");
+    _toggleBinSelection:function(bin_id){
+        ActionCreators.toggleBinSelection(bin_id);
     },
+   
     render: function() {
         var compData = this.props.binData;
-    	if(compData.ppsbin_state == "IN USE")
+        console.log(compData);
+    	if(compData.node_list.length > 0 && compData.selected_state == false )
     		return (
-                <div className = "bin use" onClick={this._selectBin}>
-                    <div className ="item-count">{compData.all_items.length}</div>
+                <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                    <div className ="item-count">{compData.node_list.length}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-    	else if(compData.ppsbin_state == "empty")
+    	else if(compData.node_list.length == 0)
             return (
                 <div className = "bin empty">
-                    <div className ="item-count">{compData.all_items.length}</div>
+                    <div className ="item-count">{compData.node_list.length}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_state == "selected")
+        else if(compData.node_list.length > 0 && compData.selected_state == true)
             return (
-                <div className = "bin use selected">
-                    <div className ="item-count">{compData.all_items.length}</div>
+                <div className = "bin use selected" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                    <div className ="item-count">{compData.node_list.length}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );

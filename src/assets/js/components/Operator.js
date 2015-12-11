@@ -1,19 +1,17 @@
-
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
+var PutFront = require('./PutFront');
+var PickBack = require('./PutBack');
+var PickFront = require('./PutFront');
 var Header = require('./Header');
-var Navigation = require("./Navigation/Navigation.react");
-var Bins = require("./Bins/Bins.react");
-var PutBackNav = require('./PutBackNav');
-var SampleData = require('../sample_data/sample');
 var appConstants = require('../constants/appConstants');
 
+var currentSeat;
+console.log(currentSeat);
 function getState(){
   return {
-      seatData: mainstore.seatData(),
-      seatType : null,
-      mode : null
+      seatData: mainstore.seatData()
   }
 }
 var Operator = React.createClass({
@@ -27,48 +25,36 @@ var Operator = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
-   this.setState({
-      seatData :mainstore.seatData()
-    });
+   this.setState(getState());
+   this.checkSeatType();
   },
   checkSeatType : function(){
-    if(this.state.seatData.seat_type === appConstants.BACK){}
-  },
-  render: function(data){ console.log(this.state.seatData);
-
-    var d = [
-        {
-          "id":"1",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
-        },
-        {
-          "id":"2",
-          "type":"active",
-          "action":"Stage Bins or Scan the Item(s)",
-          "image":"assets/images/nav2.png",
-          "showImage":true
-        },
-        {
-          "id":"3",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
+    switch(this.state.seatData.mode){
+      case appConstants.PUT:
+        if(this.state.seatData.seat_type === appConstants.BACK){
+          currentSeat = <PutBack data={this.state.seatData}/>;
+        }else{
+          currentSeat = <PutFront data={this.state.seatData}/>;
         }
-      ];
-
-    var moduleToLoad,navigation;
-
-     
-    
+        break;
+      case appConstants.PICK:
+        if(this.state.seatData.seat_type === appConstants.BACK){
+          currentSeat = <PickBack data={this.state.seatData} />;
+        }else{
+          currentSeat = <PickFront data={this.state.seatData}/>;
+        }
+        break; 
+      default:
+        return true;   
+    }
+    this.forceUpdate();
+  },
+  render: function(data){ 
     return (
-      <div className="main">
-        <Header />
-        <Navigation navData = {d} />
-        <Bins binsData = {SampleData.PutBack_1.state_data} />
+      <div>
+        {currentSeat}
       </div> 
-     
+
     )
   }
 });

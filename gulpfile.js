@@ -35,7 +35,9 @@ gulp.task('copy', function(){
 	gulp.src('src/index.html')
 		.pipe(gulp.dest('dist'));
 	gulp.src('src/assets/images/*.*')
-		.pipe(gulp.dest('dist/assets/images'));		
+		.pipe(gulp.dest('dist/assets/images'));
+  gulp.src('src/assets/fonts/*.*')
+    .pipe(gulp.dest('dist/assets/fonts'));		
 });
 
 gulp.task('build-less', function(){

@@ -24376,7 +24376,7 @@ var React = require('react');
 
 var Bin = React.createClass({displayName: "Bin",
     _selectBin:function(){
-        console.log("ashish");
+        console.log("jindal");
     },
     render: function() {
         var compData = this.props.binData;

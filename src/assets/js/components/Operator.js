@@ -32,7 +32,7 @@ var Operator = React.createClass({
     });
   },
   checkSeatType : function(){
-    if(this.state.seatData.seat_type === appConstants.BACK)
+    if(this.state.seatData.seat_type === appConstants.BACK){}
   },
   render: function(data){ console.log(this.state.seatData);
 

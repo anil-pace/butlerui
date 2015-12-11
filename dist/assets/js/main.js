@@ -24347,24 +24347,28 @@ var commonActions = {
       data: data
     });
   },
+  listSeats: function(data){
+    AppDispatcher.handleAction({
+      actionType : appConstants.LIST_SEATS,
+      data: data
+    })
+  },
   login: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOGIN, 
       data: data
     });
   },
-  operatorSeat: function(data){ console.log(data)
+  operatorSeat: function(data){ 
     AppDispatcher.handleAction({
       actionType: appConstants.OPERATOR_SEAT, 
       data: data
     });
   },
-  
-  scanBarcode : function(data, receiveKey){
+  seatData : function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.SCAN_BARCODE,
-      data:data,
-      receiveKey : receiveKey
+      actionType: appConstants.SEAT_DATA,
+      data : data
     })
   }
 };
@@ -24516,7 +24520,8 @@ var LoginForm = React.createClass({displayName: "LoginForm",
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
-    CommonActions.webSocketConnection();  
+    CommonActions.webSocketConnection(); 
+    CommonActions.listSeats(); 
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -24529,14 +24534,18 @@ var LoginForm = React.createClass({displayName: "LoginForm",
     });
 
   },
-  render: function(){ 
+  render: function(){
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
-          seatData = this.state.seatList[0].map(function(data, index){
-           return (
-                  React.createElement("option", {key: 'pps' + index}, "PPS ", data.seat_type, " ", data.pps_id)
-            )
+          seatData = this.state.seatList.map(function(data, index){ 
+            if(data[0].hasOwnProperty('seat_type')){
+               return (
+                  React.createElement("option", {key: 'pps' + index}, "PPS ", data[0].seat_type, " ", data[0].pps_id)
+                )
+            }else{console.log(data);
+                 return( React.createElement("option", {key: index, value: data}, data))
+            }
           });
       }
       if(this.state.flag === false){
@@ -24655,53 +24664,35 @@ var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
 var PutBackNav = require('./PutBackNav');
 var SampleData = require('../sample_data/sample');
+var appConstants = require('../constants/appConstants');
 
+function getState(){
+  return {
+      seatData: mainstore.seatData(),
+      seatType : null,
+      mode : null
+  }
+}
 var Operator = React.createClass({displayName: "Operator",
   getInitialState: function(){
-    return {
-      ppsMode : 'put',
-      seatType : 'back'
-    }
+    return getState();
   },
- /* showRKlinetable : function(index){
-  	this.setState({
-  	   index : index
-  	});
-  },
-  openForm: function(){
-  	this.setState({
-  		stageLevel: 3
-  	})
-  },
-  generalFunctions : function(arg, e){
-      if(arg === 'scan_barcode'){
-        var receivekeySelected = this.props.receivedData[0].receive_keys[this.state.index].receive_key;
-         todoActions.scanBarcode(this.refs.barcode.getDOMNode().value, receivekeySelected);
-      }else if(arg === 'search_receive_key'){ console.log(e);
-        if(e.keyCode == 13){
-         
-        }
-      } 
-
-  },
- 
-  searchReceiveKey : function(event){
-    console.log(event);
-  },
-   */
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
+     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
- /*   this.setState({
-      itemData :todoStore.scanBarcode(),
-      boxData :todoStore.boxData()
-    });*/
+   this.setState({
+      seatData :mainstore.seatData()
+    });
   },
-  render: function(data){ 
+  checkSeatType : function(){
+    if(this.state.seatData.seat_type === appConstants.BACK){}
+  },
+  render: function(data){ console.log(this.state.seatData);
+
     var d = [
         {
           "id":"1",
@@ -24726,10 +24717,7 @@ var Operator = React.createClass({displayName: "Operator",
 
     var moduleToLoad,navigation;
 
-     if(this.state.ppsMode === 'put' && this.state.seatType === 'back'){console.log('o');
-        moduleToLoad =  React.createElement(PutBack, null)
-        navigation = React.createElement(PutBackNav, null)
-     }
+     
     
     return (
       React.createElement("div", {className: "main"}, 
@@ -24744,7 +24732,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../sample_data/sample":231,"../stores/mainstore":233,"./Bins/Bins.react":218,"./Header":219,"./Navigation/Navigation.react":222,"./PutBack":225,"./PutBackNav":226,"react":214}],225:[function(require,module,exports){
+},{"../constants/appConstants":227,"../sample_data/sample":231,"../stores/mainstore":233,"./Bins/Bins.react":218,"./Header":219,"./Navigation/Navigation.react":222,"./PutBack":225,"./PutBackNav":226,"react":214}],225:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -24843,12 +24831,14 @@ var appConstants = {
 	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
 	INTERFACE_IP : "http://192.168.2.110:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
+	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
 	PPS_SEATS : "/pps_seats/",
 	OPERATOR_SEAT: "OPERATOR_SEAT",
-	REMOVE_ITEM: "REMOVE_ITEM",
+	SEAT_DATA: "SEAT_DATA",
 	SCAN_ITEMS: "Scan the item(s)",
-	PLACE_ITEMS: "Place"
+	PLACE_ITEMS: "Place",
+	BACK : "back"
 };
 
 module.exports = appConstants;
@@ -25179,6 +25169,14 @@ var utils  = require('../utils/utils.js');
 
 var CHANGE_EVENT = 'change';
 var flag = false;
+
+function getParameterByName(name){
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search); console.log(name);
+    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
+    listPpsSeat(currentSeat[0]);
+}
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
   var xhrConfig = function(xhr) {
@@ -25190,7 +25188,7 @@ var currentSeat = [];
 
 function listPpsSeat(seat){
     if(seat === null){
-      currentSeat = []; 
+      currentSeat.length = 0; 
       $.ajax({
         type: 'GET',
         url: appConstants.INTERFACE_IP+appConstants.PPS_SEATS,
@@ -25202,6 +25200,8 @@ function listPpsSeat(seat){
         }).fail(function(jqXhr) {
                      
       });
+    }else{
+      loginstore.emit(CHANGE_EVENT); 
     }
 }
 
@@ -25222,25 +25222,21 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   seatList : function(){ 
     return currentSeat;
-  },
-  getParameterByName: function(name){
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search); console.log(name);
-    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
-    listPpsSeat(currentSeat[0]);
   }
 });
 
 
-AppDispatcher.register(function(payload){ console.log(payload);
+AppDispatcher.register(function(payload){
   var action = payload.action;
   switch(action.actionType){
+    case appConstants.LIST_SEATS:
+      getParameterByName('seat_name');
+      break;
     case appConstants.LOGIN:
       utils.postDataToWebsockets(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.OPERATOR_SEAT: console.log(action.data);
+    case appConstants.OPERATOR_SEAT: 
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
@@ -25259,28 +25255,39 @@ var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
-var CommonActions = require('../actions/CommonActions');
-var loginstore = require('./loginstore');
-var utils  = require('../utils/utils.js');
+var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-
+var seatData;
 var mainstore = objectAssign({}, EventEmitter.prototype, {
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
   removeChangeListener: function(cb){
     this.removeListener(CHANGE_EVENT, cb);
+  },
+  seatData : function(data){
+    console.log(data);
+    return seatData;
   }
 });
-
+function pasreSeatData(data){console.log(data);
+  var parseData = JSON.parse(data);
+  if(parseData.hasOwnProperty('state_data')){
+    seatData = parseData.state_data;
+  }
+  console.log(seatData);
+  mainstore.emit(CHANGE_EVENT);
+}
 AppDispatcher.register(function(payload){ 
   var action = payload.action;
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
       utils.connectToWebSocket();
-      loginstore.getParameterByName('seat_name');
       mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.SEAT_DATA:
+      pasreSeatData(action.data);
       break;
     default:
       return true;
@@ -25289,14 +25296,12 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../actions/CommonActions":216,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":234,"./loginstore":232,"events":1,"react/lib/Object.assign":105}],234:[function(require,module,exports){
+},{"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils":234,"events":1,"react/lib/Object.assign":105}],234:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 
-
-var seatData = [];
 var ws = new WebSocket(appConstants.WEBSOCKET_IP);
 
 
@@ -25308,8 +25313,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      };     
 	      ws.onmessage = function (evt){
 	        var received_msg = evt.data;
-	          parseSeatData(evt.data);
-	          console.log(evt.data);
+	        setTimeout(CommonActions.seatData, 0, evt.data)
+
+	          //mainstore.seatData(evt.data)
 	          
 	      };
 	      ws.onclose = function(){ 
@@ -25321,15 +25327,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      alert("WebSocket NOT supported by your Browser!");
 	    }
 	},
-	postDataToWebsockets: function(data){ console.log(data);
+	postDataToWebsockets: function(data){ 
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	}
 }); 
-
-function parseSeatData(data){
-    seatData.push()
-}
 
 module.exports = utils;
 

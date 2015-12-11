@@ -7,53 +7,35 @@ var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
 var PutBackNav = require('./PutBackNav');
 var SampleData = require('../sample_data/sample');
+var appConstants = require('../constants/appConstants');
 
+function getState(){
+  return {
+      seatData: mainstore.seatData(),
+      seatType : null,
+      mode : null
+  }
+}
 var Operator = React.createClass({
   getInitialState: function(){
-    return {
-      ppsMode : 'put',
-      seatType : 'back'
-    }
+    return getState();
   },
- /* showRKlinetable : function(index){
-  	this.setState({
-  	   index : index
-  	});
-  },
-  openForm: function(){
-  	this.setState({
-  		stageLevel: 3
-  	})
-  },
-  generalFunctions : function(arg, e){
-      if(arg === 'scan_barcode'){
-        var receivekeySelected = this.props.receivedData[0].receive_keys[this.state.index].receive_key;
-         todoActions.scanBarcode(this.refs.barcode.getDOMNode().value, receivekeySelected);
-      }else if(arg === 'search_receive_key'){ console.log(e);
-        if(e.keyCode == 13){
-         
-        }
-      } 
-
-  },
- 
-  searchReceiveKey : function(event){
-    console.log(event);
-  },
-   */
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
+     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
- /*   this.setState({
-      itemData :todoStore.scanBarcode(),
-      boxData :todoStore.boxData()
-    });*/
+   this.setState({
+      seatData :mainstore.seatData()
+    });
   },
-  render: function(data){ 
+  checkSeatType : function(){
+    if(this.state.seatData.seat_type === appConstants.BACK)
+  },
+  render: function(data){ console.log(this.state.seatData);
+
     var d = [
         {
           "id":"1",
@@ -78,10 +60,7 @@ var Operator = React.createClass({
 
     var moduleToLoad,navigation;
 
-     if(this.state.ppsMode === 'put' && this.state.seatType === 'back'){console.log('o');
-        moduleToLoad =  <PutBack />
-        navigation = <PutBackNav />
-     }
+     
     
     return (
       <div className="main">

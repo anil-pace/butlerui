@@ -14,7 +14,7 @@ var commonActions = {
       data: data
     });
   },
-  operatorSeat: function(data){ console.log(data)
+  operatorSeat: function(data){ console.log(data);
     AppDispatcher.handleAction({
       actionType: appConstants.OPERATOR_SEAT, 
       data: data
@@ -26,6 +26,13 @@ var commonActions = {
       actionType: appConstants.SCAN_BARCODE,
       data:data,
       receiveKey : receiveKey
+    })
+  },
+
+  toggleBinSelection:function(bin_id){
+     AppDispatcher.handleAction({
+      actionType: appConstants.TOGGLE_BIN_SELECTION,
+      bin_id:bin_id
     })
   }
 };

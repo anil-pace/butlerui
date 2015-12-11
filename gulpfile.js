@@ -28,8 +28,8 @@ function bundle() {
 		.pipe(source('main.js')) // pipe into main.js
 		.pipe(gulp.dest('dist/assets/js')); // move into destination
 
-});
-*/
+});*/
+
 gulp.task('copy', function(){
 	gulp.src('src/index.html')
 		.pipe(gulp.dest('dist'));

@@ -28,70 +28,62 @@ var SampleData = {
             ],
             "possible_exceptions": [],
             "ppsbins": [{
-                "all_items": [],
-                "coordinate": [
-                    1,
-                    1
-                ],
-                "ppsbin_id": "4",
-                "ppsbin_state": "empty"
-            }, {
-                "all_items": [],
-                "coordinate": [
-                    1,
-                    2
-                ],
-                "ppsbin_id": "3",
-                "ppsbin_state": "IN USE"
-            }, {
-                "all_items": [],
-                "coordinate": [
-                    1,
-                    3
-                ],
-                "ppsbin_id": "2",
-                "ppsbin_state": "IN USE"
-            }, {
-                "all_items": [],
-                "coordinate": [
-                    1,
-                    4
-                ],
-                "ppsbin_id": "1",
-                "ppsbin_state": "IN USE"
-            }, {
-                "all_items": [],
-                "coordinate": [
-                    2,
-                    1
-                ],
-                "ppsbin_id": "8",
-                "ppsbin_state": "selected"
-            }, {
-                "all_items": [],
-                "coordinate": [
-                    2,
-                    2
-                ],
-                "ppsbin_id": "7",
-                "ppsbin_state": "empty"
-            }, {
-                "all_items": [],
-                "coordinate": [
-                    2,
-                    3
-                ],
-                "ppsbin_id": "6",
-                "ppsbin_state": "empty"
-            }, {
-                "all_items": [],
-                "coordinate": [
-                    2,
-                    4
-                ],
-                "ppsbin_id": "5",
-                "ppsbin_state": "empty"
-            }],
+            "ppsbin_id": "4",
+            "node_list": [1,2],
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 1]
+        }, {
+            "ppsbin_id": "3",
+            "node_list": [],
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 2]
+        }, {
+            "ppsbin_id": "2",
+            "node_list": [],
+            "selected_state":false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 3]
+        }, {
+            "ppsbin_id": "1",
+            "node_list": ["c050cc141e2d432291d394f95417f5d2", "c050cc141e2d432291d394f95417f5d2"],
+            "selected_state":false,
+            "ppsbin_state": "IN USE",
+            "ppsbin_count": "2",
+            "coordinate": [1, 4]
+        }, {
+            "ppsbin_id": "8",
+            "node_list": [],
+            "selected_state":false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 1]
+        }, {
+            "ppsbin_id": "7",
+            "node_list": [],
+            "selected_state":false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 2]
+        }, {
+            "ppsbin_id": "6",
+            "node_list": [],
+            "selected_state":false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 3]
+        }, {
+            "ppsbin_id": "5",
+            "node_list": [],
+            "selected_state":false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 4]
+        }],
             "selected_bin": "7",
             "time_stamp": [
                 [

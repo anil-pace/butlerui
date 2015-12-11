@@ -1,6 +1,6 @@
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var PutBack = require('./PutBack');
+var PutBack = require('./PutBack.react');
 var PutFront = require('./PutFront');
 var PickBack = require('./PutBack');
 var PickFront = require('./PutFront');

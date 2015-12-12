@@ -7,7 +7,7 @@ var ActionTypes = AppConstants;
 var sampleData = require('../sample_data/sample');
 var CHANGE_EVENT = 'change';
 
-var _PutBackData = sampleData.PutBack_1;
+var _PutBackData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -33,6 +33,10 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     });
   },
 
+  setPutBackData:function(data){
+    _PutBackData = data;
+  },
+
   getStateData:function(){
     return _PutBackData;
   }
@@ -47,6 +51,12 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PutBackStore.toggleBinSelection(action.action.bin_id);
       PutBackStore.emitChange();
       break;
+
+     case ActionTypes.SET_PUT_BACK_DATA:
+      PutBackStore.setPutBackData(action.action.data);
+      PutBackStore.emitChange();
+      break;
+
     
     default:
       // do nothing

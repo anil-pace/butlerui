@@ -1,7 +1,6 @@
 var React = require('react');
-var mainstore = require('../stores/mainstore');
-var allSvgConstants = require('../constants/svgConstants');
-var CommonActions = require('../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
 
 function getPopUpState(){
@@ -15,7 +14,6 @@ var ProductInfo = React.createClass({
     return getPopUpState();
   },
   showPopUp: function(){
-    console.log(this.state.popupVisible);
     if(this.state.popupVisible === false){
         CommonActions.updateCardVisible(true);
     }

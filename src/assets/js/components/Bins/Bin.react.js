@@ -8,25 +8,24 @@ var Bin = React.createClass({
    
     render: function() {
         var compData = this.props.binData;
-        console.log(compData);
-    	if(compData.node_list.length > 0 && compData.selected_state == false )
+    	if(compData.bin_info.length > 0 && compData.selected_state == false )
     		return (
                 <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <div className ="item-count">{compData.node_list.length}</div>
+                    <div className ="item-count">{compData.bin_info.length}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-    	else if(compData.node_list.length == 0)
+    	else if(compData.bin_info.length == 0)
             return (
                 <div className = "bin empty">
-                    <div className ="item-count">{compData.node_list.length}</div>
+                    <div className ="item-count">{compData.bin_info.length}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.node_list.length > 0 && compData.selected_state == true)
+        else if(compData.bin_info.length > 0 && compData.selected_state == true)
             return (
                 <div className = "bin use selected" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <div className ="item-count">{compData.node_list.length}</div>
+                    <div className ="item-count">{compData.bin_info.length}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );

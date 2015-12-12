@@ -4,7 +4,6 @@ var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var ActionTypes = AppConstants;
-var sampleData = require('../sample_data/sample');
 var CHANGE_EVENT = 'change';
 
 var _PutBackData;

@@ -4,8 +4,12 @@ var PutBackStore = require('../stores/PutBackStore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
-var SampleData = require('../sample_data/sample');
+var KQ = require('./ProductDetails/KQ');
+var ProductInfo = require('./ProductDetails/ProductInfo');
+var PopUp = require('./ProductDetails/PopUp');
+var appConstants = require('../constants/appConstants');
 
+var _componentBin, _componentProduct, _componentKQ;
 function getStateData(){
   return {
            PutBackStateData:PutBackStore.getStateData()
@@ -25,7 +29,23 @@ var Operator = React.createClass({
   onChange: function(){ 
     this.setState(getStateData());
   },
+  getScreenId : function(screen_id){console.log(screen_id);
+    switch(screen_id){
+      case appConstants.PUT_BACK_STAGE:
+          _componentBin = <Bins binsData={this.state.PutBackStateData}/>;
+          _componentProduct = <ProductInfo />;
+        break;
+      case appConstants.PUT_BACK_SCAN:
+          _componentBin = <Bins binsData={this.state.PutBackStateData}/>;
+          _componentProduct = <ProductInfo />;
+          _componentKQ = <KQ />
+        break;
+      default:
+        return true; 
+    }
+  },
   render: function(data){ 
+    this.getScreenId(this.state.PutBackStateData.screen_id);
     console.log(this.state.PutBackStateData);
     var d = [
         {
@@ -51,8 +71,13 @@ var Operator = React.createClass({
     return (
       <div className="main">
         <Header />
-        <Navigation navData = {d} />
-        <Bins binsData = {this.state.PutBackStateData} />
+        <Navigation navData ={d}/>
+        <div className='grid-container'>
+          {_componentBin}
+          {_componentProduct}
+          {_componentKQ}
+          
+        </div>
       </div> 
      
     )

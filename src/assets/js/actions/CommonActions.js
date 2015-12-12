@@ -59,7 +59,28 @@ var commonActions = {
       actionType: appConstants.SET_PUT_BACK_DATA,
       data:data
     })
-  }
+  },
+   increment : function(data){    
+    alert("increment");  
+    AppDispatcher.handleAction({
+      actionType: appConstants.INCREMENT, 
+      data: data
+    });
+  },
+  decrement : function(data){ 
+    alert("decrement");    
+    AppDispatcher.handleAction({
+      actionType: appConstants.DECREMENT, 
+      data: data
+    });
+  },
+   updatePopupVisible:function(status){   
+   console.log("i  am i commonactionss"); 
+    AppDispatcher.handleAction({
+      actionType: appConstants.POPUP_VISIBLE,
+      status: status
+    })
+  },
 };
 
 module.exports = commonActions;

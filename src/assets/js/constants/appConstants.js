@@ -9,11 +9,16 @@ var appConstants = {
 	SEAT_DATA: "SEAT_DATA",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
-	BACK : "back",
-	PUT : "put",
-	FRONT : "front",
+	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
+	SET_PUT_DATA:"SET_PUT_DATA",
+	PICK_BACK : "pick_back",
+	PICK_FRONT:"pick_front",
+	PUT_BACK : "put_back",
+	PUT_FRONT : "put_front",
 	PICK : "pick",
-	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION"
+	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
+	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
+	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA"
 };
 
 module.exports = appConstants;

@@ -38,6 +38,27 @@ var commonActions = {
       actionType: appConstants.TOGGLE_BIN_SELECTION,
       bin_id:bin_id
     })
+  },
+
+  setPutData:function(data){
+     AppDispatcher.handleAction({
+      actionType: appConstants.SET_PUT_DATA,
+      data:data
+    })
+  },
+
+  setCurrentSeat:function(seat){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_CURRENT_SEAT,
+      data:seat
+    })
+  },
+
+  setPutBackData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PUT_BACK_DATA,
+      data:data
+    })
   }
 };
 

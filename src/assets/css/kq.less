@@ -7,42 +7,37 @@
     justify-content: center;
 }
 
-.thirdRow {
-    align-items: center;
-    display: flex;
-    flex: 1 1 auto;
-    flex-flow: row nowrap;
-    justify-content: center;
-    .rightWrapper {
-        height: 73.71%; //575px;
-        width: 12.5%; //240px;        
-        .kQableContainer {
-            margin-top:14%; // 35px;   
-            height: 46.9%; //50%; //270px;
-            width: 100%; //240px;                
-            .topArrow {
-                height: 18.5%; //50px;
-                width: 100%;
-                border: 1px solid grey;
-                &:extend(.centerAlign);
-                color: rgb(204, 204, 204);
-            }
+
+.rightWrapper {
+    height: 73.71%; //575px;
+    width: 12.5%; //240px;        
+    .kQableContainer {
+        margin-top: 14%; // 35px;   
+        height: 46.9%; //50%; //270px;
+        width: 100%; //240px;                
+        .topArrow {
+            height: 18.5%; //50px;
+            width: 100%;
+            border: 1px solid grey;
+            &:extend(.centerAlign);
+            color: rgb(204, 204, 204);
+        }
             .itemCount {
-                height: 62.96%; //170px;
-                width: 100%;
-                border-left: 1px solid grey;
-                border-right: 1px solid grey;
-                font-size: 3em;
-                color: rgba(26, 37, 45, 1);
+            height: 62.96%; //170px;
+            width: 100%;
+            border-left: 1px solid grey;
+            border-right: 1px solid grey;
+            font-size: 3em;
+            color: rgba(26, 37, 45, 1);
                 &:extend(.centerAlign);
-            }
-            .downArrow {
-                height: 18.5%; //50px;
-                width: 100%;
-                border: 1px solid grey;
-                &:extend(.centerAlign);
-                color: rgb(204, 204, 204);
-            }
+        }
+        .downArrow {
+            width: 100%;
+            border: 1px solid grey;
+            &:extend(.centerAlign);
+            color: rgb(204, 204, 204);
         }
     }
 }
+
+

@@ -24425,16 +24425,26 @@ var commonActions = {
       actionType: appConstants.SET_PUT_DATA,
       data:data
     })
+  },
+
+  setCurrentSeat:function(seat){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_CURRENT_SEAT,
+      data:seat
+    })
+  },
+
+  setPutBackData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PUT_BACK_DATA,
+      data:data
+    })
   }
 };
 
 module.exports = commonActions;
 
-<<<<<<< HEAD
-},{"../constants/appConstants":227,"../dispatchers/AppDispatcher":229}],218:[function(require,module,exports){
-=======
 },{"../constants/appConstants":229,"../dispatchers/AppDispatcher":231}],218:[function(require,module,exports){
->>>>>>> staging
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -24479,7 +24489,7 @@ var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({displayName: "Bins",
 	 componentDidMount: function() {
-        this._calculateAndSetBinDimensions(this.props.binsData["max_coordinates"]);
+        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
     render: function() {
     	console.log(this.props.binsData);
@@ -24488,12 +24498,13 @@ var Bins = React.createClass({displayName: "Bins",
             	 React.createElement("div", {className: "bins"}, 
             	 	
             	 		(function(){
-            	 			var l =[];
-            	 			for(var j = 0 ;j<compData["max_coordinates"][0] ;j++){
+            	 			var l =[];        console.log(compData.structure);
+
+            	 			for(var j = 0 ;j<compData.structure[0] ;j++){
             	 			var list = [];
             	 			var i = 0;
-            	 			for( i = i ; i<compData["max_coordinates"][1] ; i++){
-            	 				list.push(React.createElement(Bin, {binData: compData.ppsbins[j*compData["max_coordinates"][1] + i]}));
+            	 			for( i = i ; i<compData.structure[1] ; i++){
+            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[j*compData.structure[1] + i]}));
             	 			}
             	 			l.push((
             	 				React.createElement("div", {className: "bin-row"}, 
@@ -24523,11 +24534,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-<<<<<<< HEAD
-},{"../../stores/PutBackStore":232,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
-=======
-},{"../../stores/PutBackStore":234,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
->>>>>>> staging
+},{"../../stores/PutBackStore":235,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 
@@ -24548,11 +24555,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-<<<<<<< HEAD
-},{"../constants/svgConstants":228,"react":215}],221:[function(require,module,exports){
-=======
 },{"../constants/svgConstants":230,"react":215}],221:[function(require,module,exports){
->>>>>>> staging
 
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
@@ -24649,11 +24652,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-<<<<<<< HEAD
-},{"../actions/CommonActions":217,"../components/Operator":225,"../stores/loginstore":233,"../stores/mainstore":234,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],222:[function(require,module,exports){
-=======
-},{"../actions/CommonActions":217,"../components/Operator":225,"../stores/loginstore":235,"../stores/mainstore":236,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],222:[function(require,module,exports){
->>>>>>> staging
+},{"../actions/CommonActions":217,"../components/Operator":225,"../stores/loginstore":236,"../stores/mainstore":237,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],222:[function(require,module,exports){
 var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -24730,45 +24729,18 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 module.exports = PassiveNavigation;
 
 },{"react":215}],225:[function(require,module,exports){
-<<<<<<< HEAD
 var React = require('react');
-var mainstore = require('../stores/mainstore');
-var PutBack = require('./PutBack.react');
-/*var PutFront = require('./PutFront');
-var PickBack = require('./PickBack');
-var PickFront = require('./PutFront');*/
-var Header = require('./Header');
-var appConstants = require('../constants/appConstants');
-var ActionCreators = require('../actions/CommonActions');
-
-var currentSeat;
-console.log(currentSeat);
-function getState(){
-  return {
-      seatData: mainstore.seatData()
-  }
-}
-var Operator = React.createClass({displayName: "Operator",
-  getInitialState: function(){
-    return getState();
-  },
-  componentWillMount: function(){
-     mainstore.addChangeListener(this.onChange);
-=======
-var React = require('react');
-var mainstore = require('../stores/mainstore');
+var OperatorStore = require('../stores/OperatorStore');
 var PutBack = require('./PutBack.react');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
-var Header = require('./Header');
 var appConstants = require('../constants/appConstants');
 
-var currentSeat;
-console.log(currentSeat);
+var _currentSeat;
 function getState(){
   return {
-      seatData: mainstore.seatData()
+      currentSeat: OperatorStore.getCurrentSeat()
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -24776,40 +24748,39 @@ var Operator = React.createClass({displayName: "Operator",
     return getState();
   },
   componentWillMount: function(){
-     mainstore.addChangeListener(this.onChange);
+     OperatorStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
+    OperatorStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
    this.setState(getState());
-   this.checkSeatType();
+  
   },
-  checkSeatType : function(){
-    switch(this.state.seatData.mode){
-      case appConstants.PUT:
-        if(this.state.seatData.seat_type === appConstants.BACK){
-          currentSeat = React.createElement(PutBack, {data: this.state.seatData});
-        }else{
-          currentSeat = React.createElement(PutFront, {data: this.state.seatData});
-        }
+  getSeatType:function(seat){
+     switch(seat){
+      case appConstants.PUT_BACK:
+          _currentSeat = React.createElement(PutBack, null);
         break;
-      case appConstants.PICK:
-        if(this.state.seatData.seat_type === appConstants.BACK){
-          currentSeat = React.createElement(PickBack, {data: this.state.seatData});
-        }else{
-          currentSeat = React.createElement(PickFront, {data: this.state.seatData});
-        }
-        break; 
+      case appConstants.PUT_FRONT:
+          _currentSeat = React.createElement(PutFront, null);
+        break;
+      case appConstants.PICK_BACK:
+          _currentSeat = React.createElement(PickBack, null);
+        break;
+      case appConstants.PICK_FRONT:
+          _currentSeat = React.createElement(PickFront, null);
+        break;
       default:
-        return true;   
-    }
-    this.forceUpdate();
+        return true; 
+      }
   },
+
   render: function(data){ 
+     this.getSeatType(this.state.currentSeat);
     return (
       React.createElement("div", null, 
-        currentSeat
+        _currentSeat
       ) 
 
     )
@@ -24818,7 +24789,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":229,"../stores/mainstore":236,"./Header":220,"./PickBack":226,"./PutBack.react":227,"./PutFront":228,"react":215}],226:[function(require,module,exports){
+},{"../constants/appConstants":229,"../stores/OperatorStore":234,"./PickBack":226,"./PutBack.react":227,"./PutFront":228,"react":215}],226:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -24830,52 +24801,11 @@ var PutBack = React.createClass({displayName: "PutBack",
   },
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
->>>>>>> staging
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
-<<<<<<< HEAD
-   this.setState(getState());
-   this.checkSeatType();
-  },
-  checkSeatType : function(){
-    switch(this.state.seatData.mode){
-      case appConstants.PUT:
-        if(this.state.seatData.seat_type === appConstants.BACK){
-          currentSeat = React.createElement(PutBack, null);
-          ActionCreators.setPutData(this.state.seatData);
-        }/*else{
-          currentSeat = <PutFront data={this.state.seatData}/>;
-        }*/
-        break;
-      /*case appConstants.PICK:
-        if(this.state.seatData.seat_type === appConstants.BACK){
-          currentSeat = <PickBack data={this.state.seatData} />;
-        }else{
-          currentSeat = <PickFront data={this.state.seatData}/>;
-        }
-        break; */
-      default:
-        return true;   
-    }
-    this.forceUpdate();
-  },
-  render: function(data){ 
-    return (
-      React.createElement("div", null, 
-        currentSeat
-      ) 
-
-    )
-  }
-});
-
-module.exports = Operator;
-
-},{"../actions/CommonActions":217,"../constants/appConstants":227,"../stores/mainstore":234,"./Header":220,"./PutBack.react":226,"react":215}],226:[function(require,module,exports){
-=======
   },
   render: function(data){ 
     
@@ -24893,8 +24823,7 @@ module.exports = Operator;
 
 module.exports = PutBack;
 
-},{"../stores/mainstore":236,"react":215}],227:[function(require,module,exports){
->>>>>>> staging
+},{"../stores/mainstore":237,"react":215}],227:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -24923,6 +24852,7 @@ var Operator = React.createClass({displayName: "Operator",
     this.setState(getStateData());
   },
   render: function(data){ 
+    console.log(this.state.PutBackStateData);
     var d = [
         {
           "id":"1",
@@ -24948,7 +24878,7 @@ var Operator = React.createClass({displayName: "Operator",
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
         React.createElement(Navigation, {navData: d}), 
-        React.createElement(Bins, {binsData: this.state.PutBackStateData.state_data})
+        React.createElement(Bins, {binsData: this.state.PutBackStateData})
       ) 
      
     )
@@ -24957,10 +24887,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-<<<<<<< HEAD
-},{"../sample_data/sample":231,"../stores/PutBackStore":232,"./Bins/Bins.react":219,"./Header":220,"./Navigation/Navigation.react":223,"react":215}],227:[function(require,module,exports){
-=======
-},{"../sample_data/sample":233,"../stores/PutBackStore":234,"./Bins/Bins.react":219,"./Header":220,"./Navigation/Navigation.react":223,"react":215}],228:[function(require,module,exports){
+},{"../sample_data/sample":233,"../stores/PutBackStore":235,"./Bins/Bins.react":219,"./Header":220,"./Navigation/Navigation.react":223,"react":215}],228:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -24994,8 +24921,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../stores/mainstore":236,"react":215}],229:[function(require,module,exports){
->>>>>>> staging
+},{"../stores/mainstore":237,"react":215}],229:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
 	INTERFACE_IP : "http://192.168.2.110:5000",
@@ -25007,25 +24933,21 @@ var appConstants = {
 	SEAT_DATA: "SEAT_DATA",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
-<<<<<<< HEAD
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
-	SET_PUT_DATA:"SET_PUT_DATA"
-=======
-	BACK : "back",
-	PUT : "put",
-	FRONT : "front",
+	SET_PUT_DATA:"SET_PUT_DATA",
+	PICK_BACK : "pick_back",
+	PICK_FRONT:"pick_front",
+	PUT_BACK : "put_back",
+	PUT_FRONT : "put_front",
 	PICK : "pick",
-	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION"
->>>>>>> staging
+	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
+	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
+	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA"
 };
 
 module.exports = appConstants;
 
-<<<<<<< HEAD
-},{}],228:[function(require,module,exports){
-=======
 },{}],230:[function(require,module,exports){
->>>>>>> staging
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -25035,11 +24957,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-<<<<<<< HEAD
-},{}],229:[function(require,module,exports){
-=======
 },{}],231:[function(require,module,exports){
->>>>>>> staging
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -25053,11 +24971,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-<<<<<<< HEAD
-},{"flux":33}],230:[function(require,module,exports){
-=======
 },{"flux":33}],232:[function(require,module,exports){
->>>>>>> staging
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -25081,11 +24995,7 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
-<<<<<<< HEAD
-},{"./components/LoginForm":221,"react":215,"react-dom":59}],231:[function(require,module,exports){
-=======
 },{"./components/LoginForm":221,"react":215,"react-dom":59}],233:[function(require,module,exports){
->>>>>>> staging
 var SampleData = {
     "PutBack_1": {
         "alert_data": {
@@ -25344,11 +25254,56 @@ var SampleData = {
 };
 
 module.exports = SampleData;
-<<<<<<< HEAD
-},{}],232:[function(require,module,exports){
-=======
 },{}],234:[function(require,module,exports){
->>>>>>> staging
+var AppDispatcher = require('../dispatchers/AppDispatcher');
+var objectAssign = require('react/lib/Object.assign');
+var EventEmitter = require('events').EventEmitter;
+var utils = require('../utils/utils');
+var appConstants = require('../constants/appConstants');
+
+var CHANGE_EVENT = 'change';
+var _currentSeat;
+
+var OperatorStore = objectAssign({}, EventEmitter.prototype, {
+
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
+
+  addChangeListener: function(callback) {
+    this.on(CHANGE_EVENT, callback);
+  },
+
+  removeChangeListener: function(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  setCurrentSeat:function(seat){
+    _currentSeat  = seat;
+  },
+
+  getCurrentSeat:function(){
+    return _currentSeat;
+  }
+
+});
+
+AppDispatcher.register(function(payload){ 
+  var action = payload.action;
+  switch(action.actionType){
+      case appConstants.SET_CURRENT_SEAT:
+        OperatorStore.setCurrentSeat(action.data);
+        OperatorStore.emitChange();
+      break;
+
+      default:
+      return true;
+  }
+});
+
+module.exports = OperatorStore;
+
+},{"../constants/appConstants":229,"../dispatchers/AppDispatcher":231,"../utils/utils":238,"events":1,"react/lib/Object.assign":106}],235:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -25358,7 +25313,7 @@ var ActionTypes = AppConstants;
 var sampleData = require('../sample_data/sample');
 var CHANGE_EVENT = 'change';
 
-var _PutBackData = sampleData.PutBack_1;
+var _PutBackData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -25403,11 +25358,11 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PutBackStore.emitChange();
       break;
 
-     case ActionTypes.SET_PUT_DATA:
+     case ActionTypes.SET_PUT_BACK_DATA:
       PutBackStore.setPutBackData(action.action.data);
       PutBackStore.emitChange();
       break;
-    
+
     
     default:
       // do nothing
@@ -25416,11 +25371,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
-<<<<<<< HEAD
-},{"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../sample_data/sample":231,"events":1,"object-assign":53}],233:[function(require,module,exports){
-=======
-},{"../constants/appConstants":229,"../dispatchers/AppDispatcher":231,"../sample_data/sample":233,"events":1,"object-assign":53}],235:[function(require,module,exports){
->>>>>>> staging
+},{"../constants/appConstants":229,"../dispatchers/AppDispatcher":231,"../sample_data/sample":233,"events":1,"object-assign":53}],236:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -25512,11 +25463,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-<<<<<<< HEAD
-},{"../actions/CommonActions":217,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":235,"events":1,"react/lib/Object.assign":106}],234:[function(require,module,exports){
-=======
-},{"../actions/CommonActions":217,"../constants/appConstants":229,"../dispatchers/AppDispatcher":231,"../utils/utils.js":237,"events":1,"react/lib/Object.assign":106}],236:[function(require,module,exports){
->>>>>>> staging
+},{"../actions/CommonActions":217,"../constants/appConstants":229,"../dispatchers/AppDispatcher":231,"../utils/utils.js":238,"events":1,"react/lib/Object.assign":106}],237:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -25562,11 +25509,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-<<<<<<< HEAD
-},{"../actions/CommonActions":217,"../constants/appConstants":227,"../dispatchers/AppDispatcher":229,"../utils/utils.js":235,"./loginstore":233,"events":1,"react/lib/Object.assign":106}],235:[function(require,module,exports){
-=======
-},{"../constants/appConstants":229,"../dispatchers/AppDispatcher":231,"../utils/utils":237,"events":1,"react/lib/Object.assign":106}],237:[function(require,module,exports){
->>>>>>> staging
+},{"../constants/appConstants":229,"../dispatchers/AppDispatcher":231,"../utils/utils":238,"events":1,"react/lib/Object.assign":106}],238:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
@@ -25583,10 +25526,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      };     
 	      ws.onmessage = function (evt){
 	        var received_msg = evt.data;
-	        setTimeout(CommonActions.seatData, 0, evt.data)
-
-	          //mainstore.seatData(evt.data)
-	          
+	        //setTimeout(CommonActions.seatData, 0, evt.data);
+	        var data = JSON.parse(evt.data);
+	        console.log(data);
+	        putSeatData(data);
+	        CommonActions.setCurrentSeat(data.state_data.mode + "_" + data.state_data.seat_type);
+	        
 	      };
 	      ws.onclose = function(){ 
 	         alert("Connection is closed..."); 
@@ -25603,10 +25548,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   	}
 }); 
 
+var putSeatData = function(data){
+	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
+      case appConstants.PUT_BACK:
+           CommonActions.setPutBackData(data.state_data);
+      break;
+      case appConstants.PUT_FRONT:
+        break;
+      case appConstants.PICK_BACK:
+        break;
+      case appConstants.PICK_FRONT:
+        break;
+      default:
+        return true; 
+      }
+}
+
 module.exports = utils;
 
-<<<<<<< HEAD
-},{"../actions/CommonActions":217,"../constants/appConstants":227,"events":1,"react/lib/Object.assign":106}]},{},[230]);
-=======
 },{"../actions/CommonActions":217,"../constants/appConstants":229,"events":1,"react/lib/Object.assign":106}]},{},[232]);
->>>>>>> staging

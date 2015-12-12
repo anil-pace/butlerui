@@ -4,7 +4,7 @@ var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({
 	 componentDidMount: function() {
-        this._calculateAndSetBinDimensions(this.props.binsData["max_coordinates"]);
+        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
     render: function() {
     	console.log(this.props.binsData);
@@ -13,12 +13,13 @@ var Bins = React.createClass({
             	 <div className="bins">
             	 	{
             	 		(function(){
-            	 			var l =[];
-            	 			for(var j = 0 ;j<compData["max_coordinates"][0] ;j++){
+            	 			var l =[];        console.log(compData.structure);
+
+            	 			for(var j = 0 ;j<compData.structure[0] ;j++){
             	 			var list = [];
             	 			var i = 0;
-            	 			for( i = i ; i<compData["max_coordinates"][1] ; i++){
-            	 				list.push(<Bin binData={compData.ppsbins[j*compData["max_coordinates"][1] + i]} />);
+            	 			for( i = i ; i<compData.structure[1] ; i++){
+            	 				list.push(<Bin binData={compData.ppsbin_list[j*compData.structure[1] + i]} />);
             	 			}
             	 			l.push((
             	 				<div className="bin-row">

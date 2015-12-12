@@ -26,6 +26,7 @@ var Operator = React.createClass({
     this.setState(getStateData());
   },
   render: function(data){ 
+    console.log(this.state.PutBackStateData);
     var d = [
         {
           "id":"1",
@@ -51,7 +52,7 @@ var Operator = React.createClass({
       <div className="main">
         <Header />
         <Navigation navData = {d} />
-        <Bins binsData = {this.state.PutBackStateData.state_data} />
+        <Bins binsData = {this.state.PutBackStateData} />
       </div> 
      
     )

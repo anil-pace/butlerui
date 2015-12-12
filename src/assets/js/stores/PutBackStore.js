@@ -7,7 +7,7 @@ var ActionTypes = AppConstants;
 var sampleData = require('../sample_data/sample');
 var CHANGE_EVENT = 'change';
 
-var _PutBackData = sampleData.PutBack_1;
+var _PutBackData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -52,11 +52,11 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PutBackStore.emitChange();
       break;
 
-     case ActionTypes.SET_PUT_DATA:
+     case ActionTypes.SET_PUT_BACK_DATA:
       PutBackStore.setPutBackData(action.action.data);
       PutBackStore.emitChange();
       break;
-    
+
     
     default:
       // do nothing

@@ -11,11 +11,14 @@ var appConstants = {
 	PLACE_ITEMS: "Place",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	SET_PUT_DATA:"SET_PUT_DATA",
-	BACK : "back",
-	PUT : "put",
-	FRONT : "front",
+	PICK_BACK : "pick_back",
+	PICK_FRONT:"pick_front",
+	PUT_BACK : "put_back",
+	PUT_FRONT : "put_front",
 	PICK : "pick",
-	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION"
+	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
+	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
+	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA"
 };
 
 module.exports = appConstants;

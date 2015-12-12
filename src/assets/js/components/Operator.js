@@ -1,18 +1,15 @@
 var React = require('react');
-var mainstore = require('../stores/mainstore');
+var OperatorStore = require('../stores/OperatorStore');
 var PutBack = require('./PutBack.react');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
-var Header = require('./Header');
 var appConstants = require('../constants/appConstants');
-var ActionCreators = require('../actions/CommonActions');
 
-var currentSeat;
-console.log(currentSeat);
+var _currentSeat;
 function getState(){
   return {
-      seatData: mainstore.seatData()
+      currentSeat: OperatorStore.getCurrentSeat()
   }
 }
 var Operator = React.createClass({
@@ -20,41 +17,39 @@ var Operator = React.createClass({
     return getState();
   },
   componentWillMount: function(){
-     mainstore.addChangeListener(this.onChange);
+     OperatorStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
+    OperatorStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
    this.setState(getState());
-   this.checkSeatType();
+  
   },
-  checkSeatType : function(){
-    switch(this.state.seatData.mode){
-      case appConstants.PUT:
-        if(this.state.seatData.seat_type === appConstants.BACK){
-          currentSeat = <PutBack />;
-          ActionCreators.setPutData(this.state.seatData);
-        }/*else{
-          currentSeat = <PutFront data={this.state.seatData}/>;
-        }*/
+  getSeatType:function(seat){
+     switch(seat){
+      case appConstants.PUT_BACK:
+          _currentSeat = <PutBack />;
         break;
-      /*case appConstants.PICK:
-        if(this.state.seatData.seat_type === appConstants.BACK){
-          currentSeat = <PickBack data={this.state.seatData} />;
-        }else{
-          currentSeat = <PickFront data={this.state.seatData}/>;
-        }
-        break; */
+      case appConstants.PUT_FRONT:
+          _currentSeat = <PutFront />;
+        break;
+      case appConstants.PICK_BACK:
+          _currentSeat = <PickBack />;
+        break;
+      case appConstants.PICK_FRONT:
+          _currentSeat = <PickFront />;
+        break;
       default:
-        return true;   
-    }
-    this.forceUpdate();
+        return true; 
+      }
   },
+
   render: function(data){ 
+     this.getSeatType(this.state.currentSeat);
     return (
       <div>
-        {currentSeat}
+        {_currentSeat}
       </div> 
 
     )

@@ -14,7 +14,7 @@
 @gray-light:             lighten(@gray-base, 46.7%); // #777
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:         darken(#428bca, 6.5%); // #337ab7
+@brand-primary:         #f8961f;
 @brand-success:         #5cb85c;
 @brand-info:            #5bc0de;
 @brand-warning:         #f0ad4e;
@@ -28,7 +28,11 @@
 //** Background color for `<body>`.
 @body-bg:               #fff;
 //** Global text color on `<body>`.
-@text-color:            @gray-dark;
+@text-color:            #939598;
+
+//** Navigation
+@active-nav-bck:        @primary-brand;
+@passive-nav-bck:       #1a252d;
 
 //** Global textual link color.
 @link-color:            @brand-primary;
@@ -47,16 +51,6 @@
 	src: url('../fonts/SourceSansPro-Regular.otf.woff') format('woff')
 }
 
-@font-face {
-	font-family: 'SourceSansProBold';
-	src: url('../fonts/SourceSansPro-Bold.otf.woff') format('woff')
-}
-
-@font-face {
-	font-family: 'SourceSansProSemiBold';
-	src: url('../fonts/SourceSansPro-Semibold.otf.woff') format('woff')
-}
-
 @font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
@@ -73,6 +67,17 @@
 @font-size-h4:            ceil((@font-size-base * 1.25)); // ~18px
 @font-size-h5:            @font-size-base;
 @font-size-h6:            ceil((@font-size-base * 0.85)); // ~12px
+
+//** PPS font sizes
+@font-size-active-navigation:    5.286rem;  //74px
+@font-size-body-small:           1.571rem;  //22px
+@font-size-body-medium:          2.143rem;  //30px
+@font-size-body-large:           2.857rem;  //40px
+@font-size-body-modal-heading:   3.286rem;  //46px
+@font-size-body-bin-item:        4rem;      //56px
+@font-size-body-kq:              4.714rem;  //66px
+@font-weight-bold:               bold;
+@font-weight-semi-bold:          600;
 
 //** Unit-less `line-height` for use in components like buttons.
 @line-height-base:        1.428571429; // 20/14
@@ -890,3 +895,32 @@
 @bin_select_border:#f8961f;
 @bin_qty:#d8d9d9;
 
+
+// PPS Components
+//** Bins
+@bin-selected-bck: #0090ff;
+@bin-selected-item: @body-text-color;
+@bin-staged-bck: #c9cacb;
+@bin-inactive-bck: @body-text-color;
+@bin-inactive-text: #d8d9d9;
+
+//**MSU
+@msu-outer-border: @body-text-color;
+@msu-slots-border: #ebebeb;
+@msu-slot-highlighted-bck: #6d6d6d;
+
+//**KQ
+@kq-number: @passive-nav-bck;
+@kq-border-color: #e7e7e7;
+@kq-arrow-enabled : @passive-nav-bck;
+@kq-arrow-disabled: @cccccc;
+
+//**Buttons
+@btn-default-bck: #444f54
+@view-more-btn-bck: @passive-nav-bck;
+@cancel-scan-bck: @btn-default-bck;
+@stage-all-bck: @btn-default-bck;
+
+//**Notifications
+@notification-light-bck: #66bb6a;
+@notification-dark-bck: #4caf50;

@@ -13,8 +13,8 @@ var Bins = React.createClass({
             	 <div className="bins">
             	 	{
             	 		(function(){
-            	 			var l =[];        console.log(compData.structure);
-
+            	 			var l =[];        
+                            console.log(compData.structure);
             	 			for(var j = 0 ;j<compData.structure[0] ;j++){
             	 			var list = [];
             	 			var i = 0;

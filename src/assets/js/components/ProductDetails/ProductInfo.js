@@ -46,7 +46,7 @@ var ProductInfo = React.createClass({
     var d1 = 
         {
           "heading":"DETAILS",
-          "img_src":"../images/nav2.png",
+          "img_src":"assets/images/logo.png",
           "product_name":"abc",
           "product_type":"active",
           "product_serial_no":"1234",

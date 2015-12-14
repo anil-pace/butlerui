@@ -70,8 +70,10 @@ var Operator = React.createClass({
         <Header />
         <Navigation navData ={d}/>
         <div className='grid-container'>
-          {_componentBin}          
-          {_componentWrapper} 
+          <div className='main-container'>
+            {_componentBin}          
+            {_componentWrapper} 
+          </div>
         </div>
       </div> 
      

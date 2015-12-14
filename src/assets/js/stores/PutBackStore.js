@@ -7,7 +7,7 @@ var ActionTypes = AppConstants;
 var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 
-var _PutBackData, _NavData;
+var _PutBackData, _NavData, _NotificationData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -68,6 +68,12 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getNavData : function (argument) {
     return _NavData;
   },
+  setNotificationData : function(data){
+    _NotificationData = data.notification_list[0];console.log(_NotificationData);
+  },
+  getNotificationData : function() {
+    return _NotificationData;
+  },
   setPutBackData:function(data){
     _PutBackData = data;
   },
@@ -90,6 +96,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
      case ActionTypes.SET_PUT_BACK_DATA:
       PutBackStore.setPutBackData(action.action.data);
       PutBackStore.setNavData(action.action.data);
+      PutBackStore.setNotificationData(action.action.data);
       PutBackStore.emitChange();
       break;
 

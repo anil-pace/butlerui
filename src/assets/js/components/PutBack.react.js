@@ -14,7 +14,8 @@ function getStateData(){
            PutBackStateData:PutBackStore.getStateData(),
            StageActive:PutBackStore.getStageActiveStatus(),
            StageAllActive:PutBackStore.getStageAllActiveStatus(),
-           PutBackNavData : PutBackStore.getNavData()
+           PutBackNavData : PutBackStore.getNavData(),
+           PutBackNotification : PutBackStore.getNotificationData()
     };
 }
 
@@ -68,7 +69,7 @@ var Operator = React.createClass({
         <Header />
         <Navigation navData ={this.state.PutBackNavData}/>
         {this._component}
-        <Notification />
+        <Notification notification={this.state.PutBackNotification} />
       </div> 
      
     )

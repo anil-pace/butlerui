@@ -24465,7 +24465,7 @@ var commonActions = {
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":233,"../dispatchers/AppDispatcher":235}],218:[function(require,module,exports){
+},{"../constants/appConstants":234,"../dispatchers/AppDispatcher":236}],218:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -24554,7 +24554,26 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":238,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
+},{"../../stores/PutBackStore":239,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
+var React = require('react');
+var ActionCreators = require('../../actions/CommonActions');
+
+var Button1 = React.createClass({displayName: "Button1",
+    render: function() {
+        if(this.props.disabled == false)
+            return (
+                React.createElement("a", {className: "custom-button active"}, this.props.text)
+            );        
+        else
+            return (
+                React.createElement("a", {className: "custom-button disabled"}, this.props.text)
+            );        
+    }
+});
+
+module.exports = Button1;
+
+},{"../../actions/CommonActions":217,"react":215}],221:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 
@@ -24575,7 +24594,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../constants/svgConstants":234,"react":215}],221:[function(require,module,exports){
+},{"../constants/svgConstants":235,"react":215}],222:[function(require,module,exports){
 
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
@@ -24672,7 +24691,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../actions/CommonActions":217,"../components/Operator":225,"../stores/loginstore":239,"../stores/mainstore":240,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],222:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../components/Operator":226,"../stores/loginstore":240,"../stores/mainstore":241,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],223:[function(require,module,exports){
 var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -24701,7 +24720,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"react":215}],223:[function(require,module,exports){
+},{"react":215}],224:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -24729,7 +24748,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
 
-},{"./ActiveNavigation.react":222,"./PassiveNavigation.react":224,"react":215}],224:[function(require,module,exports){
+},{"./ActiveNavigation.react":223,"./PassiveNavigation.react":225,"react":215}],225:[function(require,module,exports){
 var React = require('react');
 
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
@@ -24748,7 +24767,7 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 
 module.exports = PassiveNavigation;
 
-},{"react":215}],225:[function(require,module,exports){
+},{"react":215}],226:[function(require,module,exports){
 var React = require('react');
 var OperatorStore = require('../stores/OperatorStore');
 var PutBack = require('./PutBack.react');
@@ -24809,7 +24828,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":233,"../stores/OperatorStore":237,"./PickBack":226,"./PutBack.react":231,"./PutFront":232,"react":215}],226:[function(require,module,exports){
+},{"../constants/appConstants":234,"../stores/OperatorStore":238,"./PickBack":227,"./PutBack.react":232,"./PutFront":233,"react":215}],227:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -24843,7 +24862,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../stores/mainstore":240,"react":215}],227:[function(require,module,exports){
+},{"../stores/mainstore":241,"react":215}],228:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var CommonActions = require('../../actions/CommonActions');
@@ -24917,7 +24936,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":240,"react":215}],228:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../stores/mainstore":241,"react":215}],229:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var CommonActions = require('../../actions/CommonActions');
@@ -24997,7 +25016,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":240,"react":215}],229:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../stores/mainstore":241,"react":215}],230:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var CommonActions = require('../../actions/CommonActions');
@@ -25077,7 +25096,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":240,"./PopUp":228,"react":215}],230:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../stores/mainstore":241,"./PopUp":229,"react":215}],231:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -25111,17 +25130,18 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":240,"./KQ":227,"./PopUp":228,"./ProductInfo":229,"react":215}],231:[function(require,module,exports){
+},{"../../stores/mainstore":241,"./KQ":228,"./PopUp":229,"./ProductInfo":230,"react":215}],232:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Bins = require("./Bins/Bins.react");
+var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 
-var _componentBin, _componentWrapper;
+var _componentBin, _componentWrapper,_component;
 function getStateData(){
   return {
            PutBackStateData:PutBackStore.getStateData()
@@ -25144,12 +25164,27 @@ var Operator = React.createClass({displayName: "Operator",
   getScreenId : function(screen_id){console.log(screen_id);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
-          _componentBin = React.createElement(Bins, {binsData: this.state.PutBackStateData});
-          _componentWrapper = React.createElement(Wrapper, null);
+          _component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Bins, {binsData: this.state.PutBackStateData})
+                ), 
+                React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "Stage"}), 
+                  React.createElement(Button1, {disabled: true, text: "Stage All"})
+                )
+              )
+            );
         break;
       case appConstants.PUT_BACK_SCAN:
-          _componentBin = React.createElement(Bins, {binsData: this.state.PutBackStateData});
-          _componentWrapper = React.createElement(Wrapper, null);
+          _component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Bins, {binsData: this.state.PutBackStateData}), 
+                    React.createElement(Wrapper, null)
+                )
+              )
+            );
         break;
       default:
         return true; 
@@ -25183,12 +25218,7 @@ var Operator = React.createClass({displayName: "Operator",
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
         React.createElement(Navigation, {navData: d}), 
-        React.createElement("div", {className: "grid-container"}, 
-          React.createElement("div", {className: "main-container"}, 
-            _componentBin, 
-            _componentWrapper
-          )
-        )
+        _component
       ) 
      
     )
@@ -25197,7 +25227,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":233,"../stores/PutBackStore":238,"./Bins/Bins.react":219,"./Header":220,"./Navigation/Navigation.react":223,"./ProductDetails/Wrapper":230,"react":215}],232:[function(require,module,exports){
+},{"../constants/appConstants":234,"../stores/PutBackStore":239,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Navigation/Navigation.react":224,"./ProductDetails/Wrapper":231,"react":215}],233:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -25231,7 +25261,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../stores/mainstore":240,"react":215}],233:[function(require,module,exports){
+},{"../stores/mainstore":241,"react":215}],234:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
 	INTERFACE_IP : "http://192.168.2.110:5000",
@@ -25259,7 +25289,7 @@ var appConstants = {
 
 module.exports = appConstants;
 
-},{}],234:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -25269,7 +25299,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],235:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -25283,7 +25313,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":33}],236:[function(require,module,exports){
+},{"flux":33}],237:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -25307,7 +25337,7 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
-},{"./components/LoginForm":221,"react":215,"react-dom":59}],237:[function(require,module,exports){
+},{"./components/LoginForm":222,"react":215,"react-dom":59}],238:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
@@ -25356,7 +25386,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = OperatorStore;
 
-},{"../constants/appConstants":233,"../dispatchers/AppDispatcher":235,"../utils/utils":241,"events":1,"react/lib/Object.assign":106}],238:[function(require,module,exports){
+},{"../constants/appConstants":234,"../dispatchers/AppDispatcher":236,"../utils/utils":242,"events":1,"react/lib/Object.assign":106}],239:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -25423,7 +25453,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
-},{"../constants/appConstants":233,"../dispatchers/AppDispatcher":235,"events":1,"object-assign":53}],239:[function(require,module,exports){
+},{"../constants/appConstants":234,"../dispatchers/AppDispatcher":236,"events":1,"object-assign":53}],240:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -25515,7 +25545,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":217,"../constants/appConstants":233,"../dispatchers/AppDispatcher":235,"../utils/utils.js":241,"events":1,"react/lib/Object.assign":106}],240:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../constants/appConstants":234,"../dispatchers/AppDispatcher":236,"../utils/utils.js":242,"events":1,"react/lib/Object.assign":106}],241:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -25575,7 +25605,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":233,"../dispatchers/AppDispatcher":235,"../utils/utils":241,"events":1,"react/lib/Object.assign":106}],241:[function(require,module,exports){
+},{"../constants/appConstants":234,"../dispatchers/AppDispatcher":236,"../utils/utils":242,"events":1,"react/lib/Object.assign":106}],242:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
@@ -25632,4 +25662,4 @@ var putSeatData = function(data){
 
 module.exports = utils;
 
-},{"../actions/CommonActions":217,"../constants/appConstants":233,"events":1,"react/lib/Object.assign":106}]},{},[236]);
+},{"../actions/CommonActions":217,"../constants/appConstants":234,"events":1,"react/lib/Object.assign":106}]},{},[237]);

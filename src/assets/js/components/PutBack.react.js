@@ -3,6 +3,7 @@ var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
+var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
@@ -10,7 +11,9 @@ var appConstants = require('../constants/appConstants');
 
 function getStateData(){
   return {
-           PutBackStateData:PutBackStore.getStateData()
+           PutBackStateData:PutBackStore.getStateData(),
+           StageActive:PutBackStore.getStageActiveStatus(),
+           StageAllActive:PutBackStore.getStageAllActiveStatus()
     };
 }
 
@@ -37,8 +40,8 @@ var Operator = React.createClass({
                     <Bins binsData={this.state.PutBackStateData}/>
                 </div>
                 <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"Stage"}/>
-                  <Button1 disabled = {true} text = {"Stage All"}/>  
+                  <Button1 disabled = {!this.state.StageActive} text = {"Stage"}/>
+                  <Button1 disabled = {!this.state.StageAllActive} text = {"Stage All"}/>  
                 </div>
               </div>
             );
@@ -86,6 +89,7 @@ var Operator = React.createClass({
         <Header />
         <Navigation navData ={d}/>
         {this._component}
+        <Notification />
       </div> 
      
     )

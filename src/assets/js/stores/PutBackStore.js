@@ -24,13 +24,33 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
 
   toggleBinSelection:function(bin_id){
-    _PutBackData["state_data"]["ppsbins"].map(function(value,index){
+    _PutBackData["ppsbin_list"].map(function(value,index){
       if(value.ppsbin_id == bin_id){
         value.selected_state = !value.selected_state;
       }else
         value.selected_state = false;
     });
   },
+
+  getStageActiveStatus:function(){
+    console.log(_PutBackData);
+    var flag = false;
+    _PutBackData["ppsbin_list"].map(function(value,index){
+      if(value.selected_state == true)
+        flag = true;
+    });
+    return flag;
+  },
+
+  getStageAllActiveStatus:function(){
+    var flag = false;
+    _PutBackData["ppsbin_list"].map(function(value,index){
+      if(value.ppsbin_count > 0 && ppsbin_state != "staged")
+        flag = true;
+    });
+    return flag;
+  },
+
 
   setPutBackData:function(data){
     _PutBackData = data;

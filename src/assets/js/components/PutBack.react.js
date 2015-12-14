@@ -8,7 +8,6 @@ var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 
-var _componentBin, _componentWrapper,_component;
 function getStateData(){
   return {
            PutBackStateData:PutBackStore.getStateData()
@@ -16,6 +15,7 @@ function getStateData(){
 }
 
 var Operator = React.createClass({
+  _component:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -31,7 +31,7 @@ var Operator = React.createClass({
   getScreenId : function(screen_id){console.log(screen_id);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
-          _component = (
+          this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
                     <Bins binsData={this.state.PutBackStateData}/>
@@ -44,7 +44,7 @@ var Operator = React.createClass({
             );
         break;
       case appConstants.PUT_BACK_SCAN:
-          _component = (
+          this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
                     <Bins binsData={this.state.PutBackStateData}/>
@@ -85,7 +85,7 @@ var Operator = React.createClass({
       <div className="main">
         <Header />
         <Navigation navData ={d}/>
-        {_component}
+        {this._component}
       </div> 
      
     )

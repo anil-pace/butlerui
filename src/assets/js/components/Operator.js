@@ -6,13 +6,13 @@ var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
 var appConstants = require('../constants/appConstants');
 
-var _currentSeat;
 function getState(){
   return {
       currentSeat: OperatorStore.getCurrentSeat()
   }
 }
 var Operator = React.createClass({
+  _currentSeat:'',
   getInitialState: function(){
     return getState();
   },
@@ -29,16 +29,16 @@ var Operator = React.createClass({
   getSeatType:function(seat){
      switch(seat){
       case appConstants.PUT_BACK:
-          _currentSeat = <PutBack />;
+          this._currentSeat = <PutBack />;
         break;
       case appConstants.PUT_FRONT:
-          _currentSeat = <PutFront />;
+          this._currentSeat = <PutFront />;
         break;
       case appConstants.PICK_BACK:
-          _currentSeat = <PickBack />;
+          this._currentSeat = <PickBack />;
         break;
       case appConstants.PICK_FRONT:
-          _currentSeat = <PickFront />;
+          this._currentSeat = <PickFront />;
         break;
       default:
         return true; 
@@ -49,7 +49,7 @@ var Operator = React.createClass({
      this.getSeatType(this.state.currentSeat);
     return (
       <div>
-        {_currentSeat}
+        {this._currentSeat}
       </div> 
 
     )

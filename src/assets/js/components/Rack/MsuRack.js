@@ -192,12 +192,13 @@ var MsuRack = React.createClass({
         alert(b%10);
 */
         var compartment_details = [
-                "005.1.C.03"
+                "005.1.B.02",
+                "005.1.B.06"
             ];
 
-        var slotStart;
-        var slotEnd;
-
+        var slotStart,slotEnd,i;
+        var slotIndexList = [];
+        var eachRow =[];
         if(compartment_details.length === 1){
             slotStart = (compartment_details[0].split(".")[3])%10;
             slotEnd = (compartment_details[0].split(".")[3])%10;
@@ -211,24 +212,25 @@ var MsuRack = React.createClass({
         else {
             console.log('No Slots to be highlited!!!');
         }
-        var slotIndexList = [];
-        for (var i = slotStart; i <= slotEnd; i++) {
+        
+        for (i = slotStart; i <= slotEnd; i++) {
             slotIndexList.push(i);
         };
-        console.log(slotIndexList);
+
+       // var rackRange = (selectedRackRow + slotStart + " - " + selectedRackRow + slotEnd);
+        var rackRange = selectedRackRow;
         //eachSlot={this.state.eachSlot}
         //console.log("rackDetails = " + rackDetails[0][1].length);
-        var eachRow =[];
         
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)
                 return (
-                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} selectedRackRow ={true} />
+                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} />
                     );
 
             else
                 return (
-        				<RackRow slots={row[1]} key={index}  />
+        				<RackRow slots={row[1]} key={index} rackRange={rackRange} />
         			);
         	});
 

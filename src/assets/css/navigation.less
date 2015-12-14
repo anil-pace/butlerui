@@ -61,13 +61,17 @@
         background: @passive_navigation;
         order: 1;
         display: flex;
-        padding-left:30px;
-        padding-right:30px;
+        //padding-left:30px;
+        //padding-right:30px;
         max-width: 15%;
         justify-content: center;
         align-items:center;
         border-right: 2px solid white;
         .nav-detail {
+            display: flex;
+            flex-flow:column;
+            justify-content:center;
+            align-items:center;
             padding-top: 1em;
             padding-bottom: 1em;
             text-align: center;
@@ -85,7 +89,7 @@
                 vertical-align: middle;
                 font-size: 1.5em;
                 color: black;
-                margin-left: 1em;
+                margin-left: 0;
                 margin-bottom: 0.3125em;
                 span {
                     padding-top: 0.312em;

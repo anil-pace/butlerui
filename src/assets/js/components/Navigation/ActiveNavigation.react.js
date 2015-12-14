@@ -10,14 +10,14 @@ var ActiveNavigation = React.createClass({
                             if(compData.showImage)
                             return (
                                     <div className = "nav-detail">
-                                        <div className="index"><span>{compData.id}</span></div>
+                                        <div className="index"><span>{compData.level}</span></div>
                                         <img src={compData.image} />
                                     </div>
                                 );
                         })()
                     }
             		<div className = "action">
-            			{compData.action}
+            			{compData.message}
             		</div>
             	</div>
         );

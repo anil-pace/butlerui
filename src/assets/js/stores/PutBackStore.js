@@ -5,8 +5,9 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var ActionTypes = AppConstants;
 var CHANGE_EVENT = 'change';
+var navConfig = require('../config/navConfig');
 
-var _PutBackData;
+var _PutBackData, _NavData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -31,7 +32,23 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         value.selected_state = false;
     });
   },
-
+  setNavData: function (screenId){ 
+    _NavData = navConfig.putBack;
+    console.log(_NavData);
+    navConfig.putBack.map(function(data,index){
+       if(screenId.screen_id === data.screen_id ){
+          _NavData[index].type = 'active'; 
+          _NavData[index].showImage = true; 
+        }else{
+          _NavData[index].type = 'passive';
+          _NavData[index].showImage = false; 
+        }
+    });
+    console.log(_NavData);
+  },
+  getNavData : function (argument) {
+    return _NavData;
+  },
   setPutBackData:function(data){
     _PutBackData = data;
   },
@@ -53,6 +70,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
      case ActionTypes.SET_PUT_BACK_DATA:
       PutBackStore.setPutBackData(action.action.data);
+      PutBackStore.setNavData(action.action.data);
       PutBackStore.emitChange();
       break;
 

@@ -10,7 +10,8 @@ var appConstants = require('../constants/appConstants');
 
 function getStateData(){
   return {
-           PutBackStateData:PutBackStore.getStateData()
+           PutBackStateData:PutBackStore.getStateData(),
+           PutBackNavData : PutBackStore.getNavData()
     };
 }
 
@@ -59,32 +60,10 @@ var Operator = React.createClass({
   },
   render: function(data){ 
     this.getScreenId(this.state.PutBackStateData.screen_id);
-    console.log(this.state.PutBackStateData);
-    var d = [
-        {
-          "id":"1",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
-        },
-        {
-          "id":"2",
-          "type":"active",
-          "action":"Stage Bins or Scan the Item(s)",
-          "image":"assets/images/nav2.png",
-          "showImage":true
-        },
-        {
-          "id":"3",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
-        }
-      ];
     return (
       <div className="main">
         <Header />
-        <Navigation navData ={d}/>
+        <Navigation navData ={this.state.PutBackNavData}/>
         {this._component}
       </div> 
      

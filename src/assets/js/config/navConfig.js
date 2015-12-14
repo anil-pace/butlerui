@@ -8,7 +8,8 @@ var navData ={
           "image":svgConstants.stage,
           "message" : "Stage Bin or Scan Item",
           "showImage" : true,
-          "level" : 1
+          "level" : 1,
+          "type" : 'passive'
         },
         {
           "screen_id":"put_back_scan",
@@ -16,7 +17,8 @@ var navData ={
           "image":svgConstants.scan,
           "message" : "Scan & Confirm",
           "showImage" : true,
-          "level" : 2
+          "level" : 2,
+          "type" : 'passive'
         }
   ],
   "putFront" : [
@@ -26,7 +28,8 @@ var navData ={
           "image":svgConstants.stage,
           "message" : "Stage Bin or Scan Item",
           "showImage" : true,
-          "level" : 1
+          "level" : 1,
+          "type" : 'passive'
         },
         {
           "screen_id":"put_back_scan",
@@ -34,7 +37,8 @@ var navData ={
           "image":svgConstants.scan,
           "message" : "Scan & Confirm",
           "showImage" : true,
-          "level" : 2
+          "level" : 2,
+          "type" : 'passive'
         }
   ],
   "pickFront" : [
@@ -44,7 +48,8 @@ var navData ={
           "image":svgConstants.stage,
           "message" : "Stage Bin or Scan Item",
           "showImage" : true,
-          "level" : 1
+          "level" : 1,
+          "type" : 'passive'
         },
         {
           "screen_id":"put_back_scan",
@@ -52,7 +57,8 @@ var navData ={
           "image":svgConstants.scan,
           "message" : "Scan & Confirm",
           "showImage" : true,
-          "level" : 2
+          "level" : 2,
+          "type" : 'passive'
         }
   ],
   "pickBack" : [
@@ -62,7 +68,8 @@ var navData ={
           "image":svgConstants.stage,
           "message" : "Stage Bin or Scan Item",
           "showImage" : true,
-          "level" : 1
+          "level" : 1,
+          "type" : 'passive'
         },
         {
           "screen_id":"put_back_scan",
@@ -70,7 +77,8 @@ var navData ={
           "image":svgConstants.scan,
           "message" : "Scan & Confirm",
           "showImage" : true,
-          "level" : 2
+          "level" : 2,
+          "type" : 'passive'
         }
   ]
 

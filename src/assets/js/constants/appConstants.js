@@ -20,7 +20,8 @@ var appConstants = {
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
 	POPUP_VISIBLE:"POPUP_VISIBLE",
-	PUT_BACK_STAGE:"put_back_stage"
+	PUT_BACK_STAGE:"put_back_stage",
+	PUT_BACK_SCAN : "put_back_scan"
 };
 
 module.exports = appConstants;

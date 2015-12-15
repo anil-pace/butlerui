@@ -4,10 +4,10 @@ var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({
     performAction:function(module,action){
-        switch(action){
+        switch(module){
              case appConstants.PUT_BACK:
                 switch(action){
-                     case appConstants.STAGE_ONE_BIN:
+                     case appConstants.STAGE_ONE_BIN: console.log(action);
                         ActionCreators.stageOneBin();
                         break;
                      case appConstants.STAGE_ALL:

@@ -33,12 +33,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
-  	postDataToInterface : function(data){
+  	postDataToInterface : function(data){ 
   		$.ajax({
         type: 'POST',
         url: appConstants.INTERFACE_IP,
-        dataType:"json",
-        data: data
+        data: data,
+        dataType : 'json'
         }).done(function(response) {
 
         }).fail(function(jqXhr) {

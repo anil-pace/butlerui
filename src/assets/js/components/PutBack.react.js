@@ -22,6 +22,7 @@ function getStateData(){
 
 var Operator = React.createClass({
   _component:'',
+  _notification:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -63,14 +64,22 @@ var Operator = React.createClass({
         return true; 
     }
   },
-  render: function(data){ 
+
+  getNotificationComponent:function(){
+    if(this.state.PutBackNotification.description != "")
+      this._notification = <Notification notification={this.state.PutBackNotification} />
+    else
+      this._notification = "";
+  },
+  render: function(data){
+    this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
     return (
       <div className="main">
         <Header />
         <Navigation navData ={this.state.PutBackNavData}/>
         {this._component}
-        <Notification notification={this.state.PutBackNotification} />
+        {this._notification}
       </div> 
      
     )

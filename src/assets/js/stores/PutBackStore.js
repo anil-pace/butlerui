@@ -66,8 +66,8 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     });
     return _NavData;
   },
-  getNotificationData : function() {
-    return _PutBackData.notification_list[0];
+  getNotificationData : function() { 
+      return _PutBackData.notification_list[0];
   },
   setPutBackData:function(data){
     _PutBackData = data;
@@ -104,6 +104,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   stageAllBin:function(){
     var data ={};
     data["event_name"] = "stage_all";
+    data["event_data"]= '';
      utils.postDataToInterface(data);
   }
 

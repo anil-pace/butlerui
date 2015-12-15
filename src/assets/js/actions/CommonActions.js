@@ -74,11 +74,22 @@ var commonActions = {
       data: data
     });
   },
-   updatePopupVisible:function(status){   
-   console.log("i  am i commonactionss"); 
+  updatePopupVisible:function(status){   
     AppDispatcher.handleAction({
       actionType: appConstants.POPUP_VISIBLE,
       status: status
+    })
+  },
+  stageAllBins:function(data){   
+    AppDispatcher.handleAction({
+      actionType: appConstants.STAGE_ALL,
+      data: data
+    })
+  },
+  stageOneBin:function(data){   
+    AppDispatcher.handleAction({
+      actionType: appConstants.STAGE_ONE_BIN,
+      data: data
     })
   },
 };

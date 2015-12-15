@@ -16,7 +16,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	        var received_msg = evt.data;
 	        //setTimeout(CommonActions.seatData, 0, evt.data);
 	        var data = JSON.parse(evt.data);
-	        console.log(data);
 	        putSeatData(data);
 	        CommonActions.setCurrentSeat(data.state_data.mode + "_" + data.state_data.seat_type);
 	        
@@ -33,6 +32,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	postDataToWebsockets: function(data){ 
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
+  	},
+  	postDataToInterface : function(data){
+  		$.ajax({
+        type: 'POST',
+        url: appConstants.INTERFACE_IP,
+        dataType:"json",
+        data: data
+        }).done(function(response) {
+
+        }).fail(function(jqXhr) {
+                     
+        });
   	}
 }); 
 

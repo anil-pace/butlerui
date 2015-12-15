@@ -21,7 +21,9 @@ var appConstants = {
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
-	PUT_BACK_SCAN : "put_back_scan"
+	PUT_BACK_SCAN : "put_back_scan",
+	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
+	STAGE_ALL : 'STAGE_ALL'
 };
 
 module.exports = appConstants;

@@ -6,6 +6,7 @@ var assign = require('object-assign');
 var ActionTypes = AppConstants;
 var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
+var utils = require('../utils/utils');
 
 var _PutBackData, _NavData, _NotificationData;
 
@@ -86,7 +87,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getScreenId:function(){
     return _PutBackData.screen_id;
   }
-
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
@@ -100,6 +100,10 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PutBackStore.setPutBackData(action.action.data);
       PutBackStore.emitChange();
       break;
+     case ActionTypes.STAGE_ALL: console.log(action.action.data);
+      utils.postDataToInterface(action.action.data);
+      PutBackStore.emitChange();
+      break;  
 
     
     default:

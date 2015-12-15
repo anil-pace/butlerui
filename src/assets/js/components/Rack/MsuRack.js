@@ -192,8 +192,8 @@ var MsuRack = React.createClass({
         alert(b%10);
 */
         var compartment_details = [
-                "005.1.B.02",
-                "005.1.B.06"
+                "005.1.B.03",
+                "005.1.B.03"
             ];
 
         var slotStart,slotEnd,i;

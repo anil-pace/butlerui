@@ -8,6 +8,7 @@ var Bins = require("./Bins/Bins.react");
 var PutBackNav = require('./PutBackNav');
 var MsuRack = require('./Rack/MsuRack');
 var LoaderButler = require('./Spinner/LoaderButler');
+var Overlay = require('./Spinner/Overlay');
 var SampleData = require('../sample_data/sample');
 var appConstants = require('../constants/appConstants');
 
@@ -68,7 +69,7 @@ var Operator = React.createClass({
       <div className="main">
         <Header />
         <Navigation navData = {d} />
-        <MsuRack />
+        <Overlay />
       </div> 
      
     )

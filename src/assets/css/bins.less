@@ -21,17 +21,17 @@
         justify-content:center;
         .bin {
             position: relative;
-            border: 2px solid @bin_normal_border;
+            border: 2px solid @text-color;
             &.use{
-                background: @bin_in_use_background;
+                background: @bin-selected-bck;
                 color: white;
             }
             &.empty{
                 background: white;
-                color:@bin_qty;
+                color:@bin-inactive-text;
             }
             &.selected{
-                border: 5px solid @bin_select_border;
+                border: 5px solid @brand-primary;
             }
             .pptl {
                 position: absolute;
@@ -42,7 +42,7 @@
                 align-items:center;
                 justify-content:center;
                 align-items:center;
-                background: #939598;
+                background: @text-color;
                 text-align: center;
                 color: white;
                 font-size: 1.5em;

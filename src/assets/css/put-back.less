@@ -1,6 +1,3 @@
-
-@active_navigation:#f8961f;
-@passive_navigation:#000;
 .navigation {
     position: relative;
     width: 100%;
@@ -11,7 +8,7 @@
     box-shadow: 0px 7px 5px 1px rgba(220, 220, 220, 1);
     .active-navigation {
         position: relative;
-        background: @active_navigation;
+        background: @active-nav-bck;
         width: 90%;
         order: 1;
         display: flex;
@@ -39,7 +36,7 @@
                 display: block;
                 vertical-align: middle;
                 font-size: 2em;
-                color: @active_navigation;
+                color: @active-nav-bck;
                 margin-left: 1em;
                 margin-bottom: 0.3125em;
                 span {
@@ -59,7 +56,7 @@
         }
     }
     .passive-navigation {
-        background: @passive_navigation;
+        background: @passive-nav-bck;
         width: 10%;
         order: 2;
         vertical-align: middle;

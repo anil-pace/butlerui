@@ -7,7 +7,6 @@
     justify-content: center;
 }
 
-
 .rightWrapper {
     display: flex;
     flex-flow:column;
@@ -28,7 +27,7 @@
         .topArrow {
             display: flex;
             flex-grow:1;
-            border: 1px solid grey;
+            border: 1px solid @kq-border-color;
             width: 100%;
             justify-content:center;
             align-items:center;
@@ -37,8 +36,8 @@
             .itemCount {
             display: flex;
             flex-grow:3;
-            border-left: 1px solid grey;
-            border-right: 1px solid grey;
+            border-left: 1px solid @kq-border-color;
+            border-right: 1px solid @kq-border-color;
             font-size: 3em;
             width: 100%;
             justify-content:center;
@@ -47,8 +46,8 @@
         .downArrow {
             display: flex;
             flex-grow:1;
-            border: 1px solid grey;
-            color: rgb(204, 204, 204);
+            border: 1px solid @kq-border-color;
+            color: @kq-arrow-disabled;
             width: 100%;
             justify-content:center;
             align-items:center;

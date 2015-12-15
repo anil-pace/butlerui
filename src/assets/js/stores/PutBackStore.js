@@ -86,7 +86,27 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
 
   getScreenId:function(){
     return _PutBackData.screen_id;
+  },
+
+  stageOneBin:function(){
+    var data ={};
+    _PutBackData.ppsbin_list.map(function(value,index){
+        if(value.selected_state == true){
+          data["event_name"] = "stage_ppsbin";
+          data["event_data"] = {};
+          data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+        }
+    });
+    utils.postDataToInterface(data);
+
+  },
+
+  stageAllBin:function(){
+    var data ={};
+    data["event_name"] = "stage_all";
+     utils.postDataToInterface(data);
   }
+
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
@@ -100,8 +120,14 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PutBackStore.setPutBackData(action.action.data);
       PutBackStore.emitChange();
       break;
-     case ActionTypes.STAGE_ALL: console.log(action.action.data);
-      utils.postDataToInterface(action.action.data);
+
+      case ActionTypes.STAGE_ONE_BIN: 
+        PutBackStore.stageOneBin();
+        PutBackStore.emitChange();
+      break; 
+
+     case ActionTypes.STAGE_ALL: 
+      PutBackStore.stageAllBin();
       PutBackStore.emitChange();
       break;  
 

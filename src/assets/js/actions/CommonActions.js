@@ -80,16 +80,14 @@ var commonActions = {
       status: status
     })
   },
-  stageAllBins:function(data){   
+  stageAllBins:function(){   
     AppDispatcher.handleAction({
-      actionType: appConstants.STAGE_ALL,
-      data: data
+      actionType: appConstants.STAGE_ALL
     })
   },
-  stageOneBin:function(data){   
+  stageOneBin:function(){   
     AppDispatcher.handleAction({
-      actionType: appConstants.STAGE_ONE_BIN,
-      data: data
+      actionType: appConstants.STAGE_ONE_BIN
     })
   },
 };

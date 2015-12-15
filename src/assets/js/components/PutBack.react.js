@@ -43,8 +43,8 @@ var Operator = React.createClass({
                     <Bins binsData={this.state.PutBackBinData}/>
                 </div>
                 <div className = 'staging-action' >
-                  <Button1 disabled = {!this.state.StageActive} text = {"Stage"}/>
-                  <Button1 disabled = {!this.state.StageAllActive} text = {"Stage All"}/>  
+                  <Button1 disabled = {!this.state.StageActive} text = {"Stage"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN}/>
+                  <Button1 disabled = {!this.state.StageAllActive} text = {"Stage All"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} />  
                 </div>
               </div>
             );

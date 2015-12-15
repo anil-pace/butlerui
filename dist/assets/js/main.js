@@ -24454,11 +24454,20 @@ var commonActions = {
       data: data
     });
   },
-   updatePopupVisible:function(status){   
-   console.log("i  am i commonactionss"); 
+  updatePopupVisible:function(status){   
     AppDispatcher.handleAction({
       actionType: appConstants.POPUP_VISIBLE,
       status: status
+    })
+  },
+  stageAllBins:function(){   
+    AppDispatcher.handleAction({
+      actionType: appConstants.STAGE_ALL
+    })
+  },
+  stageOneBin:function(){   
+    AppDispatcher.handleAction({
+      actionType: appConstants.STAGE_ONE_BIN
     })
   },
 };
@@ -24564,12 +24573,32 @@ module.exports = Bins;
 },{"../../stores/PutBackStore":241,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
+var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({displayName: "Button1",
+    performAction:function(module,action){
+        switch(action){
+             case appConstants.PUT_BACK:
+                switch(action){
+                     case appConstants.STAGE_ONE_BIN:
+                        ActionCreators.stageOneBin();
+                        break;
+                     case appConstants.STAGE_ALL:
+                        ActionCreators.stageAllBins();
+                        break;
+                     default:
+                        return true; 
+                }
+                break;
+                
+             default:
+                return true; 
+        }
+    },
     render: function() {
         if(this.props.disabled == false)
             return (
-                React.createElement("a", {className: "custom-button active"}, this.props.text)
+                React.createElement("a", {className: "custom-button active", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
             );        
         else
             return (
@@ -24580,7 +24609,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
 module.exports = Button1;
 
-},{"../../actions/CommonActions":217,"react":215}],221:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../constants/appConstants":236,"react":215}],221:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 
@@ -25165,11 +25194,12 @@ var appConstants = require('../constants/appConstants');
 
 function getStateData(){
   return {
-           PutBackStateData:PutBackStore.getStateData(),
            StageActive:PutBackStore.getStageActiveStatus(),
            StageAllActive:PutBackStore.getStageAllActiveStatus(),
            PutBackNavData : PutBackStore.getNavData(),
-           PutBackNotification : PutBackStore.getNotificationData()
+           PutBackNotification : PutBackStore.getNotificationData(),
+           PutBackBinData: PutBackStore.getBinData(),
+           PutBackScreenId:PutBackStore.getScreenId()
     };
 }
 
@@ -25187,17 +25217,17 @@ var Operator = React.createClass({displayName: "Operator",
   onChange: function(){ 
     this.setState(getStateData());
   },
-  getScreenId : function(screen_id){console.log(screen_id);
+  getScreenComponent : function(screen_id){console.log(screen_id);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackStateData})
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData})
                 ), 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage"}), 
-                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All"})
+                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage", module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN}), 
+                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All", module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL})
                 )
               )
             );
@@ -25206,7 +25236,7 @@ var Operator = React.createClass({displayName: "Operator",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackStateData}), 
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData}), 
                     React.createElement(Wrapper, null)
                 )
               )
@@ -25217,7 +25247,7 @@ var Operator = React.createClass({displayName: "Operator",
     }
   },
   render: function(data){ 
-    this.getScreenId(this.state.PutBackStateData.screen_id);
+    this.getScreenComponent(this.state.PutBackScreenId);
     return (
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
@@ -25379,7 +25409,9 @@ var appConstants = {
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
-	PUT_BACK_SCAN : "put_back_scan"
+	PUT_BACK_SCAN : "put_back_scan",
+	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
+	STAGE_ALL : 'STAGE_ALL'
 };
 
 module.exports = appConstants;
@@ -25390,8 +25422,8 @@ var allSvgConstants = {
 	putBackPlace : 'assets/images/place.svg',
 	logo : 'assets/images/logo.png',
 	menu : 'assets/images/menu.png',
-	stage : 'assets/images/nav1.png',
-	scan : 'assets/images/nav2.png'
+	stage : 'assets/images/nav2.png',
+	scan : 'assets/images/scan-item.png'
 }
 
 module.exports = allSvgConstants;
@@ -25492,6 +25524,7 @@ var assign = require('object-assign');
 var ActionTypes = AppConstants;
 var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
+var utils = require('../utils/utils');
 
 var _PutBackData, _NavData, _NotificationData;
 
@@ -25537,11 +25570,11 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     });
     return flag;
   },
-  setNavData: function (screenId){ 
+  getNavData : function () {
     _NavData = navConfig.putBack;
     console.log(_NavData);
     navConfig.putBack.map(function(data,index){
-       if(screenId.screen_id === data.screen_id ){
+       if(_PutBackData.screen_id === data.screen_id ){
           _NavData[index].type = 'active'; 
           _NavData[index].showImage = true; 
         }else{
@@ -25549,16 +25582,10 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
           _NavData[index].showImage = false; 
         }
     });
-    console.log(_NavData);
-  },
-  getNavData : function (argument) {
     return _NavData;
   },
-  setNotificationData : function(data){
-    _NotificationData = data.notification_list[0];console.log(_NotificationData);
-  },
   getNotificationData : function() {
-    return _NotificationData;
+    return _PutBackData.notification_list[0];
   },
   setPutBackData:function(data){
     _PutBackData = data;
@@ -25566,9 +25593,37 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
 
   getStateData:function(){
     return _PutBackData;
+  },
+
+  getBinData:function(){
+    var binData = {};
+    binData["structure"] = _PutBackData.structure;
+    binData["ppsbin_list"] = _PutBackData.ppsbin_list;
+    return binData;
+  },
+
+  getScreenId:function(){
+    return _PutBackData.screen_id;
+  },
+
+  stageOneBin:function(){
+    var data ={};
+    _PutBackData.ppsbin_list.map(function(value,index){
+        if(value.selected_state == true){
+          data["event_name"] = "stage_ppsbin";
+          data["event_data"] = {};
+          data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+        }
+    });
+    utils.postDataToInterface(data);
+
+  },
+
+  stageAllBin:function(){
+    var data ={};
+    data["event_name"] = "stage_all";
+     utils.postDataToInterface(data);
   }
-
-
 
 });
 
@@ -25581,10 +25636,18 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
      case ActionTypes.SET_PUT_BACK_DATA:
       PutBackStore.setPutBackData(action.action.data);
-      PutBackStore.setNavData(action.action.data);
-      PutBackStore.setNotificationData(action.action.data);
       PutBackStore.emitChange();
       break;
+
+      case ActionTypes.STAGE_ONE_BIN: 
+        PutBackStore.stageOneBin();
+        PutBackStore.emitChange();
+      break; 
+
+     case ActionTypes.STAGE_ALL: 
+      PutBackStore.stageAllBin();
+      PutBackStore.emitChange();
+      break;  
 
     
     default:
@@ -25594,7 +25657,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
-},{"../config/navConfig":235,"../constants/appConstants":236,"../dispatchers/AppDispatcher":238,"events":1,"object-assign":53}],242:[function(require,module,exports){
+},{"../config/navConfig":235,"../constants/appConstants":236,"../dispatchers/AppDispatcher":238,"../utils/utils":244,"events":1,"object-assign":53}],242:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -25765,7 +25828,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	        var received_msg = evt.data;
 	        //setTimeout(CommonActions.seatData, 0, evt.data);
 	        var data = JSON.parse(evt.data);
-	        console.log(data);
 	        putSeatData(data);
 	        CommonActions.setCurrentSeat(data.state_data.mode + "_" + data.state_data.seat_type);
 	        
@@ -25782,6 +25844,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	postDataToWebsockets: function(data){ 
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
+  	},
+  	postDataToInterface : function(data){
+  		$.ajax({
+        type: 'POST',
+        url: appConstants.INTERFACE_IP,
+        dataType:"json",
+        data: data
+        }).done(function(response) {
+
+        }).fail(function(jqXhr) {
+                     
+        });
   	}
 }); 
 

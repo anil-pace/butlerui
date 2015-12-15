@@ -46,7 +46,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getStageAllActiveStatus:function(){
     var flag = false;
     _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.ppsbin_count > 0 && ppsbin_state != "staged")
+      if(value.ppsbin_count > 0 && value.ppsbin_state != "staged")
         flag = true;
     });
     return flag;

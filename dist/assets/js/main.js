@@ -24508,11 +24508,13 @@ var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({displayName: "Bins",
-	 componentDidMount: function() {
+	componentDidMount: function() {
+        console.log("did mount");
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
     render: function() {
-    	console.log(this.props.binsData);
+        console.log("render");
+        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
         var compData = this.props.binsData;
         return (
             	 React.createElement("div", {className: "bins"}, 
@@ -24540,11 +24542,16 @@ var Bins = React.createClass({displayName: "Bins",
     },
 
     _calculateAndSetBinDimensions: function(dimension){
+        var myElements = document.querySelectorAll(".bin");
+        for (var i = 0; i < myElements.length; i++) {
+            myElements[i].style.height = 0 + "px";
+            myElements[i].style.width = 0 + "px";
+        }
+        console.log("ashu");
         var clientHeight = $('.bins').height();
         var clientWidth = $('.bins').width();
         console.log(clientHeight + " " + clientWidth);
         var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
-        var myElements = document.querySelectorAll(".bin");
         for (var i = 0; i < myElements.length; i++) {
             myElements[i].style.height = boxSize - 15 + "px";
             myElements[i].style.width = boxSize - 15 + "px";
@@ -24774,7 +24781,7 @@ var ActionCreators = require('../../actions/CommonActions');
 var Notification = React.createClass({displayName: "Notification",
     render: function() {
             return (
-                React.createElement("div", {className: "alert alert-success notify", role: "alert"}, "Hello Ashish Wassup")
+                React.createElement("div", {className: "alert alert-success notify", role: "alert"}, this.props.notification.description)
             );              
     }
 });
@@ -25161,7 +25168,8 @@ function getStateData(){
            PutBackStateData:PutBackStore.getStateData(),
            StageActive:PutBackStore.getStageActiveStatus(),
            StageAllActive:PutBackStore.getStageAllActiveStatus(),
-           PutBackNavData : PutBackStore.getNavData()
+           PutBackNavData : PutBackStore.getNavData(),
+           PutBackNotification : PutBackStore.getNotificationData()
     };
 }
 
@@ -25215,7 +25223,7 @@ var Operator = React.createClass({displayName: "Operator",
         React.createElement(Header, null), 
         React.createElement(Navigation, {navData: this.state.PutBackNavData}), 
         this._component, 
-        React.createElement(Notification, null)
+        React.createElement(Notification, {notification: this.state.PutBackNotification})
       ) 
      
     )
@@ -25485,7 +25493,7 @@ var ActionTypes = AppConstants;
 var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 
-var _PutBackData, _NavData;
+var _PutBackData, _NavData, _NotificationData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -25524,7 +25532,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getStageAllActiveStatus:function(){
     var flag = false;
     _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.ppsbin_count > 0 && ppsbin_state != "staged")
+      if(value.ppsbin_count > 0 && value.ppsbin_state != "staged")
         flag = true;
     });
     return flag;
@@ -25545,6 +25553,12 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
   getNavData : function (argument) {
     return _NavData;
+  },
+  setNotificationData : function(data){
+    _NotificationData = data.notification_list[0];console.log(_NotificationData);
+  },
+  getNotificationData : function() {
+    return _NotificationData;
   },
   setPutBackData:function(data){
     _PutBackData = data;
@@ -25568,6 +25582,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
      case ActionTypes.SET_PUT_BACK_DATA:
       PutBackStore.setPutBackData(action.action.data);
       PutBackStore.setNavData(action.action.data);
+      PutBackStore.setNotificationData(action.action.data);
       PutBackStore.emitChange();
       break;
 

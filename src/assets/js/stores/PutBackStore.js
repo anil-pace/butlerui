@@ -51,11 +51,11 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     });
     return flag;
   },
-  setNavData: function (screenId){ 
+  getNavData : function () {
     _NavData = navConfig.putBack;
     console.log(_NavData);
     navConfig.putBack.map(function(data,index){
-       if(screenId.screen_id === data.screen_id ){
+       if(_PutBackData.screen_id === data.screen_id ){
           _NavData[index].type = 'active'; 
           _NavData[index].showImage = true; 
         }else{
@@ -63,16 +63,10 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
           _NavData[index].showImage = false; 
         }
     });
-    console.log(_NavData);
-  },
-  getNavData : function (argument) {
     return _NavData;
   },
-  setNotificationData : function(data){
-    _NotificationData = data.notification_list[0];console.log(_NotificationData);
-  },
   getNotificationData : function() {
-    return _NotificationData;
+    return _PutBackData.notification_list[0];
   },
   setPutBackData:function(data){
     _PutBackData = data;
@@ -80,9 +74,18 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
 
   getStateData:function(){
     return _PutBackData;
+  },
+
+  getBinData:function(){
+    var binData = {};
+    binData["structure"] = _PutBackData.structure;
+    binData["ppsbin_list"] = _PutBackData.ppsbin_list;
+    return binData;
+  },
+
+  getScreenId:function(){
+    return _PutBackData.screen_id;
   }
-
-
 
 });
 
@@ -95,8 +98,6 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
      case ActionTypes.SET_PUT_BACK_DATA:
       PutBackStore.setPutBackData(action.action.data);
-      PutBackStore.setNavData(action.action.data);
-      PutBackStore.setNotificationData(action.action.data);
       PutBackStore.emitChange();
       break;
 

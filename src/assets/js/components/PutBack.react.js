@@ -11,11 +11,12 @@ var appConstants = require('../constants/appConstants');
 
 function getStateData(){
   return {
-           PutBackStateData:PutBackStore.getStateData(),
            StageActive:PutBackStore.getStageActiveStatus(),
            StageAllActive:PutBackStore.getStageAllActiveStatus(),
            PutBackNavData : PutBackStore.getNavData(),
-           PutBackNotification : PutBackStore.getNotificationData()
+           PutBackNotification : PutBackStore.getNotificationData(),
+           PutBackBinData: PutBackStore.getBinData(),
+           PutBackScreenId:PutBackStore.getScreenId()
     };
 }
 
@@ -33,13 +34,13 @@ var Operator = React.createClass({
   onChange: function(){ 
     this.setState(getStateData());
   },
-  getScreenId : function(screen_id){console.log(screen_id);
+  getScreenComponent : function(screen_id){console.log(screen_id);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
-                    <Bins binsData={this.state.PutBackStateData}/>
+                    <Bins binsData={this.state.PutBackBinData}/>
                 </div>
                 <div className = 'staging-action' >
                   <Button1 disabled = {!this.state.StageActive} text = {"Stage"}/>
@@ -52,7 +53,7 @@ var Operator = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
-                    <Bins binsData={this.state.PutBackStateData}/>
+                    <Bins binsData={this.state.PutBackBinData}/>
                     <Wrapper />
                 </div>
               </div>
@@ -63,7 +64,7 @@ var Operator = React.createClass({
     }
   },
   render: function(data){ 
-    this.getScreenId(this.state.PutBackStateData.screen_id);
+    this.getScreenComponent(this.state.PutBackScreenId);
     return (
       <div className="main">
         <Header />

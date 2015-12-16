@@ -60,8 +60,7 @@ var commonActions = {
       data:data
     })
   },
-   increment : function(data){    
-    alert("increment");  
+  increment : function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.INCREMENT, 
       data: data

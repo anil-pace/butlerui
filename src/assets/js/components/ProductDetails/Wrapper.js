@@ -18,12 +18,11 @@ var Wrapper = React.createClass({
   },
   onChange: function(){ 
   },
-  render: function(data){ 
-    
+  render: function(data){ console.log(this.props.productDetails.product_sku);
       return (
         <div className='rightWrapper'>
-           <ProductInfo />
-            <KQ />
+           <ProductInfo productDetails={this.props.productDetails}/>
+            <KQ scanDetails={this.props.scanDetails} itemUid={this.props.productDetails.product_sku} />
         </div>    
       )
   }

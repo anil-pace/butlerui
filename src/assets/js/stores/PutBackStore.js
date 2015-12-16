@@ -8,7 +8,7 @@ var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 
-var _PutBackData, _NavData, _NotificationData;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -106,8 +106,15 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     data["event_name"] = "stage_all";
     data["event_data"]= '';
      utils.postDataToInterface(data);
+  },
+  scanDetails : function(){ console.log(_PutBackData);
+    _scanDetails = _PutBackData.scan_details;
+    return _scanDetails;
+  },
+  productDetails : function(){ console.log(_PutBackData);
+    _prodDetails = _PutBackData.product_info;
+    return _prodDetails;
   }
-
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {

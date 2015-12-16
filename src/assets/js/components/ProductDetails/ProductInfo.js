@@ -1,13 +1,13 @@
 var React = require('react');
-var mainstore = require('../../stores/mainstore');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
+var mainstore = require('../../stores/mainstore');
+
 
 function getPopUpState(){
   return {        
         popupVisible : mainstore.getPopUpVisible()
-        
-      };
+  };
 }
 var ProductInfo = React.createClass({
   getInitialState: function(){
@@ -28,13 +28,9 @@ var ProductInfo = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
-    this.setState({
-      popupVisible : mainstore.getPopUpVisible()
-    });
+    this.setState(getPopUpState());
   },
    showPopUp: function(){
-    
-    console.log("hello u therre" + this.state.popupVisible);
     if(this.state.popupVisible === false)
         CommonActions.updatePopupVisible(true);
     else 
@@ -43,28 +39,13 @@ var ProductInfo = React.createClass({
   },
   render: function(data){ 
     console.log(this.state.popupVisible);
-    var d1 = 
-        {
-          "heading":"DETAILS",
-          "img_src":"assets/images/logo.png",
-          "product_name":"abc",
-          "product_type":"active",
-          "product_serial_no":"1234",
-          "heading1":"DETAILS",
-          "img_src1":"assets/images/nav2.png",
-          "product_name1":"abc",
-          "product_type1":"active",
-          "product_serial_no1":"1234"         
-        };
-        
-      
-      return (       
+    return (       
         
            <div className="imgContainer">
-             <img src={d1.img_src} />
+             <img src={this.props.productDetails.product_local_image_url} />
              <div className="imgFooter" data-toggle="modal" data-target="#myModal" onClick={this.showPopUp}>
               <div className="popUpContainer">
-                <PopUp popupVisible = {this.state.popupVisible} popupData = {d1} />
+                <PopUp popupVisible = {this.state.popupVisible} popupData = {this.props.productDetails} />
               </div>
                 <span> View More </span>                
                 <span className="glyphicon glyphicon-info-sign"></span>

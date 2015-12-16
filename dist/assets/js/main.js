@@ -24506,10 +24506,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
-                    React.createElement("div", {className: "popUpContainer"}, 
-                        React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
-                    )
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
@@ -24518,10 +24515,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
             return (
                 React.createElement("div", {className: "bin selected"}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
-                    React.createElement("div", {className: "popUpContainer"}, 
-                        React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
-                    )
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
@@ -24530,10 +24524,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
-                    React.createElement("div", {className: "popUpContainer"}, 
-                        React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
-                    )
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
@@ -24542,10 +24533,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_scan" )
             return (
                 React.createElement("div", {className: "bin use"}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
-                    React.createElement("div", {className: "popUpContainer"}, 
-                        React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
-                    )
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
@@ -25070,7 +25058,8 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 
   render: function(data){ 
-      
+      console.log("jindal");
+      console.log(this.props.popupData);
       var productInfo=  this.props.popupData;
       var details = [];
       for (var key in productInfo) {
@@ -25081,21 +25070,22 @@ var PopUp = React.createClass({displayName: "PopUp",
       }
       return (
           React.createElement("div", {className: "container1 " + (this.props.popupVisible ? 'active' : '')}, 
-           React.createElement("div", {className: "modal fade", id: "myModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel", "data-backdrop": "static", "data-keyboard": "false"}, 
-          React.createElement("div", {className: "modal-dialog", role: "document"}, 
-            React.createElement("div", {className: "modal-content"}, 
-              
-              React.createElement("div", {className: "modal-body"}, 
-                React.createElement("table", null, 
-                  React.createElement("tbody", null, 
-                  details
+            React.createElement("div", {className: "modal fade", id: "myModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel", "data-backdrop": "static", "data-keyboard": "false"}, 
+              React.createElement("div", {className: "modal-dialog", role: "document"}, 
+                React.createElement("div", {className: "modal-content"}, 
+                  React.createElement("div", {className: "modal-header"}, 
+                    React.createElement("h4", {className: "modal-title"}, "Product Details")
+                  ), 
+                  React.createElement("div", {className: "modal-body"}, 
+                    React.createElement("table", null, 
+                      React.createElement("tbody", null, 
+                        details
+                      )
+                    )
                   )
                 )
               )
-              
             )
-          )
-        )
         ) 
       )
   }

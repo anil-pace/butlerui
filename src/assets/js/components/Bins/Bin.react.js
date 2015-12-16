@@ -37,10 +37,7 @@ var Bin = React.createClass({
         else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
             return (
                 <div className = "bin use selected-staging" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <span className="glyphicon glyphicon-info-sign info-icon" data-toggle="modal" data-target="#myModal" onClick={this.showPopUp}>
-                    <div className="popUpContainer">
-                        <PopUp popupVisible = {this.state.popupVisible} popupData = {this.props.productDetails} />
-                    </div>
+                    <span className="glyphicon glyphicon-info-sign info-icon" >
                     </span>
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
@@ -49,10 +46,7 @@ var Bin = React.createClass({
         else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
             return (
                 <div className = "bin selected">
-                    <span className="glyphicon glyphicon-info-sign info-icon" data-toggle="modal" data-target="#myModal" onClick={this.showPopUp}>
-                    <div className="popUpContainer">
-                        <PopUp popupVisible = {this.state.popupVisible} popupData = {this.props.productDetails} />
-                    </div>
+                    <span className="glyphicon glyphicon-info-sign info-icon" >
                     </span>
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl selected">{compData.ppsbin_id}</div>
@@ -61,10 +55,7 @@ var Bin = React.createClass({
         else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
             return (
                 <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <span className="glyphicon glyphicon-info-sign info-icon" data-toggle="modal" data-target="#myModal" onClick={this.showPopUp}>
-                    <div className="popUpContainer">
-                        <PopUp popupVisible = {this.state.popupVisible} popupData = {this.props.productDetails} />
-                    </div>
+                    <span className="glyphicon glyphicon-info-sign info-icon" >
                     </span>
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
@@ -73,10 +64,7 @@ var Bin = React.createClass({
         else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_scan" )
             return (
                 <div className = "bin use" >
-                    <span className="glyphicon glyphicon-info-sign info-icon" data-toggle="modal" data-target="#myModal" onClick={this.showPopUp}>
-                    <div className="popUpContainer">
-                        <PopUp popupVisible = {this.state.popupVisible} popupData = {this.props.productDetails} />
-                    </div>
+                    <span className="glyphicon glyphicon-info-sign info-icon" >
                     </span>
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>

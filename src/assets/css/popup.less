@@ -1,11 +1,19 @@
 .popUpContainer {
     .active {
         display: block;
+        .modal-header{
+            background:@kq-arrow-disabled;
+            .modal-title{
+                font-size:@font-size-body-medium;
+                font-weight:@font-weight-semi-bold;
+                color:@passive-nav-bck;
+            }            
+        }
         .modal-body {
-            color: black;
-            height:300px;
-            border:1px solid blue;
-            overflow-y:scroll;
+            color: @passive-nav-bck;
+            height:500px;
+            overflow-y:auto;
+            padding:0;
             table {
                 width: 100%;
                 td {
@@ -14,10 +22,6 @@
                     text-align: left;
                     padding: 15px;
                     border-bottom: 1px solid #e5e5e5;
-                }
-                tr:first-child {
-                    background-color: #f2f2f2;
-                    font-size:bold;
                 }
                 th {
                     width: 100%;

@@ -21,21 +21,22 @@ var PopUp = React.createClass({
       }
       return (
           <div className={"container1 " + (this.props.popupVisible ? 'active' : '')}>
-           <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              
-              <div className="modal-body">
-                <table>
-                  <tbody>
-                  {details}
-                  </tbody>
-                </table>
+            <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content"> 
+                  <div className="modal-header">        
+                    <h4 className="modal-title">Product Details</h4>
+                  </div>             
+                  <div className="modal-body">
+                    <table>
+                      <tbody>
+                        {details}
+                      </tbody>
+                    </table>
+                  </div>              
+                </div>
               </div>
-              
             </div>
-          </div>
-        </div>
         </div> 
       )
   }

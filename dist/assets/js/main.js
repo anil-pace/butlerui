@@ -24487,7 +24487,7 @@ var Bin = React.createClass({displayName: "Bin",
         console.log("ashu" + this.props.screenId);
         if(compData.ppsbin_state == "staged" )
             return (
-                React.createElement("div", {className: "bin staged", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                React.createElement("div", {className: "bin staged"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
@@ -24842,6 +24842,7 @@ var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
 var appConstants = require('../constants/appConstants');
 
+
 function getState(){
   return {
       currentSeat: OperatorStore.getCurrentSeat()
@@ -25188,7 +25189,7 @@ var Operator = React.createClass({displayName: "Operator",
   onChange: function(){ 
     this.setState(getStateData());
   },
-  getScreenComponent : function(screen_id){console.log(screen_id);
+  getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
           this._component = (
@@ -25208,9 +25209,10 @@ var Operator = React.createClass({displayName: "Operator",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
-                    React.createElement(Wrapper, null), 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData}), 
                     React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails})
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", color: "black"})
                 )
               )
             );

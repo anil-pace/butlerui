@@ -37,7 +37,7 @@ var Operator = React.createClass({
   onChange: function(){ 
     this.setState(getStateData());
   },
-  getScreenComponent : function(screen_id){console.log(screen_id);
+  getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
           this._component = (
@@ -58,6 +58,9 @@ var Operator = React.createClass({
                 <div className='main-container'>
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                     <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} />
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Scan"}  color={"black"}/>
                 </div>
               </div>
             );

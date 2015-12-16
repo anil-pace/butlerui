@@ -11,7 +11,7 @@ var Bin = React.createClass({
         console.log("ashu" + this.props.screenId);
         if(compData.ppsbin_state == "staged" )
             return (
-                <div className = "bin staged" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                <div className = "bin staged" >
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>

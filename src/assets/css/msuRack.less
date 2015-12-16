@@ -1,0 +1,43 @@
+// 1px = 0.92 vh for height
+//1px =  0.520 vw for width
+
+.drawRack{
+	margin:2% 0 0 5%;
+    //width: 22vw; //452px
+    width: -moz-min-content;
+    width: -webkit-min-content;
+    width: min-content;
+    height: 54vh;   //575px 
+    border: 0.3vw solid #939598;
+    border-bottom: 0;
+
+    .rackRow{
+    	//border: 0.15vw solid #939598;
+    	//height: 7.2vh;
+    	display: flex;
+    	flex: 0 1 auto;
+    	flex-direction: row;
+
+    	.rackSlot{
+    		border: 0.15vw solid #939598;
+    		//width: 3.66vw;
+    		height: inherit;//6.9vh
+    		display: flex;
+    		background: #ebebeb;
+            .singleslot{
+                 width: 4.2vw;
+                 height: inherit - 0.5vh;
+            }
+                .activeSlot{
+                background: #6d6d6d;
+                color: #ffffff;
+                //font-size: 3em;
+                text-align: center;
+                padding: 0.56vh 0;
+   
+            }
+    	}
+
+
+    }
+}

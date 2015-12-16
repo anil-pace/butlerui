@@ -11,7 +11,6 @@ var popupVisible = false;
 function setPopUpVisible(status){
   popupVisible = status;
   mainstore.emit(CHANGE_EVENT);
-  console.log(" im in store set function " + popupVisible);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
   addChangeListener: function(cb){
@@ -27,6 +26,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getPopUpVisible: function(data){
     console.log("getpopupvisible" + data);
     return popupVisible;
+  },
+  setIncrementValue: function(data){
+    console.log(data);
+    utils.postDataToInterface(data);
   }
 });
 function pasreSeatData(data){console.log(data);
@@ -49,7 +52,10 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.POPUP_VISIBLE:
       setPopUpVisible(action.status);
-      break; 
+      break;
+    case appConstants.INCREMENT:
+      mainstore.setIncrementValue(action.data);
+      break;    
     default:
       return true;
   }

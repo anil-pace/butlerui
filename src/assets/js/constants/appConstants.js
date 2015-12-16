@@ -23,7 +23,9 @@ var appConstants = {
 	PUT_BACK_STAGE:"put_back_stage",
 	PUT_BACK_SCAN : "put_back_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
-	STAGE_ALL : 'STAGE_ALL'
+	STAGE_ALL : 'STAGE_ALL',
+	INCREMENT : 'INCREMENT',
+	DECREMENT : 'DECREMENT'
 };
 
 module.exports = appConstants;

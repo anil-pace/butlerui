@@ -7,9 +7,13 @@ var uglify = require('gulp-uglify');										  // browserify ends about putting
 var watchify = require('watchify');	
 var gutil = require('gulp-util');							
 var less = require('gulp-less');
+/*var bundler = watchify(browserify('./src/assets/js/main.js', watchify.args));
+// add any other browserify options or transforms here
+
 
 
 var bundler = watchify(browserify('./src/assets/js/main.js', watchify.args));
+>>>>>>> staging
 bundler.transform('reactify');
 gulp.task('browserify', bundle);
 bundler.on('update', bundle); 
@@ -20,9 +24,9 @@ function bundle() {
     .pipe(source('main.js'))
     .pipe(gulp.dest('dist/assets/js'));
 }
+*/
 
-
-/*gulp.task('browserify', function(){
+gulp.task('browserify', function(){
 	browserify('./src/assets/js/main.js')
 		.transform('reactify') // transform JSX to JS
 		.bundle() // output in bundle
@@ -30,12 +34,16 @@ function bundle() {
 		.pipe(gulp.dest('dist/assets/js')); // move into destination
 
 });
-*/
+
 gulp.task('copy', function(){
 	gulp.src('src/index.html')
 		.pipe(gulp.dest('dist'));
 	gulp.src('src/assets/images/*.*')
-		.pipe(gulp.dest('dist/assets/images'));		
+		.pipe(gulp.dest('dist/assets/images'));
+  gulp.src('src/assets/fonts/*.*')
+    .pipe(gulp.dest('dist/assets/fonts'));
+  gulp.src('src/assets/js/utils/vendor/**/*.*')
+    .pipe(gulp.dest('dist/assets/js/vendor/'));  		
 });
 
 gulp.task('build-less', function(){

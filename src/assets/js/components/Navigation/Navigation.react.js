@@ -11,7 +11,7 @@ var Navigation = React.createClass({
                     console.log(value);
                     if(value.type == "active")
                         return (
-                                <ActiveNavigation data={value} />
+                                <ActiveNavigation key={index} data={value} />
                             );
                     else
                         return (

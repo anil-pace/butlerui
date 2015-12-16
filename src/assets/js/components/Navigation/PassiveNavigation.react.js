@@ -5,9 +5,9 @@ var PassiveNavigation = React.createClass({
         return (
             	<div className="passive-navigation">
                     <div className = "nav-detail">
-                        <div className="index"><span>{this.props.data.id}</span></div>
+                        <div className="index"><span>{this.props.data.level}</span></div>
                         <img src={this.props.data.image} />
-                        <div className = "info">{this.props.data.action}</div>
+                        <div className = "info">{this.props.data.message}</div>
                     </div>
                 </div>
         );

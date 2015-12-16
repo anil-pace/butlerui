@@ -1,32 +1,89 @@
 
 var React = require('react');
-var mainstore = require('../stores/mainstore');
-var PutBack = React.createClass({
+var PutBackStore = require('../stores/PutBackStore');
+var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var Button1 = require("./Button/Button");
+var Wrapper = require('./ProductDetails/Wrapper');
+var appConstants = require('../constants/appConstants');
+
+function getStateData(){
+  return {
+           StageActive:PutBackStore.getStageActiveStatus(),
+           StageAllActive:PutBackStore.getStageAllActiveStatus(),
+           PutBackNavData : PutBackStore.getNavData(),
+           PutBackNotification : PutBackStore.getNotificationData(),
+           PutBackBinData: PutBackStore.getBinData(),
+           PutBackScreenId:PutBackStore.getScreenId()
+    };
+}
+
+var Operator = React.createClass({
+  _component:'',
+  _notification:'',
   getInitialState: function(){
-    return {
-      
-    }
+    return getStateData();
   },
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
+    PutBackStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
+    PutBackStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
+    this.setState(getStateData());
   },
-  render: function(data){ 
-    
-      return (
-        <div className='row row-offcanvas row-offcanvas-right'>
-        	<div className="col-xs-12 col-sm-12">
-              <div className='row'>
-                Body area
+  getScreenComponent : function(screen_id){console.log(screen_id);
+    switch(screen_id){
+      case appConstants.PUT_BACK_STAGE:
+          this._component = (
+              <div className='grid-container'>
+                <div className='main-container'>
+                    <Bins binsData={this.state.PutBackBinData}/>
+                </div>
+                <div className = 'staging-action' >
+                  <Button1 disabled = {!this.state.StageActive} text = {"Stage"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN}/>
+                  <Button1 disabled = {!this.state.StageAllActive} text = {"Stage All"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} />  
+                </div>
               </div>
-          </div>
-        </div>  
-      )
+            );
+        break;
+      case appConstants.PUT_BACK_SCAN:
+          this._component = (
+              <div className='grid-container'>
+                <div className='main-container'>
+                    <Bins binsData={this.state.PutBackBinData}/>
+                    <Wrapper />
+                </div>
+              </div>
+            );
+        break;
+      default:
+        return true; 
+    }
+  },
+
+  getNotificationComponent:function(){
+    if(this.state.PutBackNotification.description != "")
+      this._notification = <Notification notification={this.state.PutBackNotification} />
+    else
+      this._notification = "";
+  },
+  render: function(data){
+    this.getNotificationComponent();
+    this.getScreenComponent(this.state.PutBackScreenId);
+    return (
+      <div className="main">
+        <Header />
+        <Navigation navData ={this.state.PutBackNavData}/>
+        {this._component}
+        {this._notification}
+      </div> 
+     
+    )
   }
 });
 
-module.exports = PutBack;
+module.exports = Operator;

@@ -1,0 +1,33 @@
+.popUpContainer {
+    .active {
+        display: block;
+        .modal-body {
+            color: black;
+            height:300px;
+            border:1px solid blue;
+            overflow-y:scroll;
+            table {
+                width: 100%;
+                td {
+                    width: 50%;
+                    //height: 50px;
+                    text-align: left;
+                    padding: 15px;
+                    border-bottom: 1px solid #e5e5e5;
+                }
+                tr:first-child {
+                    background-color: #f2f2f2;
+                    font-size:bold;
+                }
+                th {
+                    width: 100%;
+                }
+            }
+            table,
+            tr,
+            td {
+                border-collapse: collapse;
+            }
+        }
+    }
+}

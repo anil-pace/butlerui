@@ -1,4 +1,3 @@
-@import 'vendor/less/variables';
 .navigation {
     position: relative;
     width: 100%;
@@ -10,7 +9,7 @@
     box-shadow: 0px 7px 5px 1px rgba(220, 220, 220, 1);
     .active-navigation {
         position: relative;
-        background: @active_navigation;
+        background: @active-nav-bck;
         flex-grow: 1;
         order: 1;
         display: flex;
@@ -25,6 +24,10 @@
             padding-bottom: 1em;
             text-align: center;
             order: 1;
+            display: flex;
+            flex-flow:column;
+            justify-content:center;
+            align-items:center;
             img {
                 display: block;
                 height: 7.5em;
@@ -37,9 +40,9 @@
                 border-radius: 150px;
                 display: block;
                 vertical-align: middle;
-                font-size: 2em;
-                color: @active_navigation;
-                margin-left: 1em;
+                font-size: @font-size-body-medium;
+                font-weight:@font-weight-bold;
+                color: @active-nav-bck;
                 margin-bottom: 0.3125em;
                 span {
                     padding-top: 0.3125em;
@@ -49,7 +52,7 @@
         }
         .action {
             color: white;
-            font-size: 5.25em;
+            font-size: @font-size-active-navigation;
             order: 2;
             width: 100%;
             padding-left: 1em;
@@ -58,7 +61,7 @@
         }
     }
     .passive-navigation {
-        background: @passive_navigation;
+        background: @passive-nav-bck;
         order: 1;
         display: flex;
         padding-left:30px;
@@ -68,6 +71,10 @@
         align-items:center;
         border-right: 2px solid white;
         .nav-detail {
+            display: flex;
+            flex-flow:column;
+            justify-content:center;
+            align-items:center;
             padding-top: 1em;
             padding-bottom: 1em;
             text-align: center;
@@ -77,25 +84,26 @@
                 width: 5.625em;
             }
             .index {
-                height: 2em;
-                width: 2em;
+                height: 1.5em;
+                width: 1.5em;
                 background: white;
                 border-radius: 150px;
                 display: block;
                 vertical-align: middle;
-                font-size: 1.5em;
+                font-size: @font-size-body-medium;
+                font-weight:@font-weight-bold;
                 color: black;
-                margin-left: 1em;
+                margin-left: 0;
                 margin-bottom: 0.3125em;
                 span {
-                    padding-top: 0.312em;
+                    //padding-top: 0.312em;
                     display: block;
                 }
             }
             .info {
                 color: white;
                 padding-top: 1em;
-                font-size: 1em;
+                font-size: @font-size-body-small;
             }
         }
     }

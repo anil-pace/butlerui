@@ -14,7 +14,7 @@
 @gray-light:             lighten(@gray-base, 46.7%); // #777
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:         darken(#428bca, 6.5%); // #337ab7
+@brand-primary:         #f8961f;
 @brand-success:         #5cb85c;
 @brand-info:            #5bc0de;
 @brand-warning:         #f0ad4e;
@@ -28,7 +28,11 @@
 //** Background color for `<body>`.
 @body-bg:               #fff;
 //** Global text color on `<body>`.
-@text-color:            @gray-dark;
+@text-color:            #939598;
+
+//** Navigation
+@active-nav-bck:        @brand-primary;
+@passive-nav-bck:       #1a252d;
 
 //** Global textual link color.
 @link-color:            @brand-primary;
@@ -42,8 +46,13 @@
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
-@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@font-face {
+	font-family: 'SourceSansPro';
+	src: url('../fonts/SourceSansPro-Regular.otf.woff') format('woff')
+}
+
+@font-family-sans-serif:  SourceSansPro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       SourceSansPro, Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
@@ -58,6 +67,17 @@
 @font-size-h4:            ceil((@font-size-base * 1.25)); // ~18px
 @font-size-h5:            @font-size-base;
 @font-size-h6:            ceil((@font-size-base * 0.85)); // ~12px
+
+//** PPS font sizes
+@font-size-active-navigation:    7.4rem;  //74px
+@font-size-body-small:           2.2rem;  //22px
+@font-size-body-medium:          3rem;    //30px
+@font-size-body-large:           4rem;    //40px
+@font-size-body-modal-heading:   4.6rem;  //46px
+@font-size-body-bin-item:        5.6rem;  //56px
+@font-size-body-kq:              6.6rem;  //66px
+@font-weight-bold:               bold;
+@font-weight-semi-bold:          600;
 
 //** Unit-less `line-height` for use in components like buttons.
 @line-height-base:        1.428571429; // 20/14
@@ -350,7 +370,9 @@
 @container-large-desktop:      (1140px + @grid-gutter-width);
 //** For `@screen-lg-min` and up.
 @container-lg:                 @container-large-desktop;
-@container-x-lg: 		   	   1920px;
+@container-x-lg: 		   	   1366px;
+@container-xx-lg:              1600px;
+@container-x-lg-max:          (@container-xx-lg - 1);
 
 
 //== Navbar
@@ -866,12 +888,33 @@
 @dl-horizontal-offset:        @component-offset-horizontal;
 //** Horizontal line color.
 @hr-border:                   @gray-lighter;
-@active_navigation:#f8961f;
-@passive_navigation:#000;
 
-@bin_in_use_background:#0090ff;
-@bin_normal_border:#939598;
-@bin_staged_background:#c9cacb;
-@bin_select_border:#f8961f;
-@bin_qty:#d8d9d9;
 
+// PPS Components
+//** Bins
+@bin-selected-bck: #0090ff;
+@bin-selected-item: @text-color;
+@bin-staged-bck: #c9cacb;
+@bin-inactive-bck: @text-color;
+@bin-inactive-text: #d8d9d9;
+
+//**MSU
+@msu-outer-border: @text-color;
+@msu-slots-border: #ebebeb;
+@msu-slot-highlighted-bck: #6d6d6d;
+
+//**KQ
+@kq-number: @passive-nav-bck;
+@kq-border-color: #e7e7e7;
+@kq-arrow-enabled : @passive-nav-bck;
+@kq-arrow-disabled: #cccccc;
+
+//**Buttons
+@btn-default-bck: #444f54;
+@view-more-btn-bck: @passive-nav-bck;
+@cancel-scan-bck: @btn-default-bck;
+@stage-all-bck: @btn-default-bck;
+
+//**Notifications
+@notification-light-bck: #66bb6a;
+@notification-dark-bck: #4caf50;

@@ -1,18 +1,17 @@
 .bins {
-    padding-top: 3.75em;
+   /* padding-top: 3.75em;
     padding-bottom: 3.75em;
     padding-left: 3.75em;
-    padding-right: 3.75em;
+    padding-right: 3.75em;*/
     display: flex;
-    order: 1;
     flex-flow:column;
     flex-grow:1;
     flex-shrink:1;
-    width: 100%;
     flex-wrap:nowrap;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+    max-height: 100%;
     .bin-row {
         display: flex;
         flex-flow: row;
@@ -22,17 +21,17 @@
         justify-content:center;
         .bin {
             position: relative;
-            border: 2px solid @bin_normal_border;
+            border: 2px solid @text-color;
             &.use{
-                background: @bin_in_use_background;
+                background: @bin-selected-bck;
                 color: white;
             }
             &.empty{
                 background: white;
-                color:@bin_qty;
+                color:@bin-inactive-text;
             }
             &.selected{
-                border: 5px solid @bin_select_border;
+                border: 5px solid @brand-primary;
             }
             .pptl {
                 position: absolute;
@@ -43,10 +42,10 @@
                 align-items:center;
                 justify-content:center;
                 align-items:center;
-                background: #939598;
+                background: @text-color;
                 text-align: center;
                 color: white;
-                font-size: 1.5em;
+                font-size: @font-size-body-medium;
             }
             .item-count {
                 position: absolute;
@@ -61,7 +60,7 @@
                 text-align: center;
                 left: 0;
                 right: 0;
-                font-size: 3em;
+                font-size: @font-size-body-bin-item;
             }
         }
     }

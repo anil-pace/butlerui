@@ -6,6 +6,13 @@ var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
 var seatData;
+var popupVisible = false;
+
+function setPopUpVisible(status){
+  popupVisible = status;
+  mainstore.emit(CHANGE_EVENT);
+  console.log(" im in store set function " + popupVisible);
+};
 var mainstore = objectAssign({}, EventEmitter.prototype, {
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
@@ -16,6 +23,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   seatData : function(data){
     console.log(data);
     return seatData;
+  },
+  getPopUpVisible: function(data){
+    console.log("getpopupvisible" + data);
+    return popupVisible;
   }
 });
 function pasreSeatData(data){console.log(data);
@@ -36,6 +47,9 @@ AppDispatcher.register(function(payload){
     case appConstants.SEAT_DATA:
       pasreSeatData(action.data);
       break;
+    case appConstants.POPUP_VISIBLE:
+      setPopUpVisible(action.status);
+      break; 
     default:
       return true;
   }

@@ -1,0 +1,26 @@
+.custom-button{
+	width: 15%;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	color: white;
+	font-size: @font-size-body-medium;
+	height: 100%;
+	margin-left: 1.5%;
+	margin-right: 1.5%;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 7px 5px 1px rgba(220, 220, 220, 1);
+    -moz-box-shadow: 0px 7px 5px 1px rgba(220, 220, 220, 1);
+    box-shadow: 0px 7px 5px 1px rgba(220, 220, 220, 1);
+    &.active{
+    	background: @brand-primary;
+    }
+    &.disabled{
+    	background: @passive-nav-bck;
+    }
+}
+.custom-button:hover{
+	text-decoration: none;
+	color: white;
+}

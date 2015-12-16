@@ -1,0 +1,62 @@
+.centerAlign {
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    -webkit-align-items: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.rightWrapper {
+    display: flex;
+    flex-flow:column;
+    flex-grow:1;
+    align-items: center;
+    justify-content: center;
+    flex:0 0 12.5%;
+    align-items:center;
+    margin-right: 5%;
+    margin-left: 5%;
+    .kQableContainer {
+        flex-grow:3;
+        display: flex;
+        flex-flow:column;
+        width: 100%;
+        align-items:center;
+        padding-top: 10%;
+        box-sizing: border-box;
+        .topArrow {
+            display: flex;
+            flex-grow:1;
+            border: 1px solid @kq-border-color;
+            width: 100%;
+            justify-content:center;
+            align-items:center;
+            font-size: 3em;
+        }
+            .itemCount {
+            display: flex;
+            flex-grow:3;
+            border-left: 1px solid @kq-border-color;
+            border-right: 1px solid @kq-border-color;
+            font-size: @font-size-body-kq;
+            width: 100%;
+            justify-content:center;
+            align-items:center;
+        }
+        #keyboard { display: block; margin: 0 auto; width: 200px;height:200px;}
+
+        .downArrow {
+            display: flex;
+            flex-grow:1;
+            border: 1px solid @kq-border-color;
+            color: @kq-arrow-disabled;
+            width: 100%;
+            justify-content:center;
+            align-items:center;
+            font-size: 3em;
+        }
+    }
+}
+
+

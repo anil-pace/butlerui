@@ -24488,6 +24488,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
@@ -24495,13 +24496,23 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
             return (
                 React.createElement("div", {className: "bin selected"}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 )
+        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_scan" )
+            return (
+                React.createElement("div", {className: "bin use"}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
@@ -25000,7 +25011,7 @@ var KQ = React.createClass({displayName: "KQ",
                  React.createElement("span", {className: "glyphicon glyphicon-menu-up"})
              ), 
              React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
-                 React.createElement("input", {id: "keyboard", readOnly: true, value: this.props.scanDetails.current_qty})
+                 React.createElement("input", {id: "keyboard", value: this.props.scanDetails.current_qty})
               ), 
               React.createElement("a", {className: "downArrow", href: "#", onClick: this.handleDecrement}, 
                  React.createElement("span", {className: "glyphicon glyphicon-menu-down"})

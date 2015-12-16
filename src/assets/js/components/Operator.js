@@ -1,77 +1,57 @@
-
 var React = require('react');
-var mainstore = require('../stores/mainstore');
+var OperatorStore = require('../stores/OperatorStore');
 var PutBack = require('./PutBack');
-var Header = require('./Header');
-var Navigation = require("./Navigation/Navigation.react");
-var Bins = require("./Bins/Bins.react");
-var PutBackNav = require('./PutBackNav');
-var MsuRack = require('./Rack/MsuRack');
-var LoaderButler = require('./Spinner/LoaderButler');
-var Overlay = require('./Spinner/Overlay');
-var SampleData = require('../sample_data/sample');
+var PutFront = require('./PutFront');
+var PickBack = require('./PickBack');
+var PickFront = require('./PutFront');
 var appConstants = require('../constants/appConstants');
 
 function getState(){
   return {
-      seatData: mainstore.seatData(),
-      seatType : null,
-      mode : null
+      currentSeat: OperatorStore.getCurrentSeat()
   }
 }
 var Operator = React.createClass({
+  _currentSeat:'',
   getInitialState: function(){
     return getState();
   },
   componentWillMount: function(){
-     mainstore.addChangeListener(this.onChange);
+     OperatorStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
+    OperatorStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
-   this.setState({
-      seatData :mainstore.seatData()
-    });
+   this.setState(getState());
+  
   },
-  checkSeatType : function(){
-    if(this.state.seatData.seat_type === appConstants.BACK){}
+  getSeatType:function(seat){
+     switch(seat){
+      case appConstants.PUT_BACK:
+          this._currentSeat = <PutBack />;
+        break;
+      case appConstants.PUT_FRONT:
+          this._currentSeat = <PutFront />;
+        break;
+      case appConstants.PICK_BACK:
+          this._currentSeat = <PickBack />;
+        break;
+      case appConstants.PICK_FRONT:
+          this._currentSeat = <PickFront />;
+        break;
+      default:
+        return true; 
+      }
   },
-  render: function(data){ console.log(this.state.seatData);
 
-    var d = [
-        {
-          "id":"1",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
-        },
-        {
-          "id":"2",
-          "type":"active",
-          "action":"Stage Bins or Scan the Item(s)",
-          "image":"assets/images/nav2.png",
-          "showImage":true
-        },
-        {
-          "id":"3",
-          "type":"passive",
-          "action":"Pick",
-          "image":"assets/images/nav3.png"
-        }
-      ];
-
-    var moduleToLoad,navigation;
-
-     
-    
+  render: function(data){ 
+     this.getSeatType(this.state.currentSeat);
     return (
-      <div className="main">
-        <Header />
-        <Navigation navData = {d} />
-        <Overlay />
+      <div>
+        {this._currentSeat}
       </div> 
-     
+
     )
   }
 });

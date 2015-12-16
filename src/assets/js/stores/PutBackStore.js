@@ -95,7 +95,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   stageOneBin:function(){
     var data ={};
     _PutBackData.ppsbin_list.map(function(value,index){
-        if(value.selected_state == true){
+         if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
           data["event_name"] = "stage_ppsbin";
           data["event_data"] = {};
           data["event_data"]["ppsbin_id"] = value.ppsbin_id;

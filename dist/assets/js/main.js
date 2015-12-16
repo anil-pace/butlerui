@@ -24440,8 +24440,7 @@ var commonActions = {
       data:data
     })
   },
-   increment : function(data){    
-    alert("increment");  
+  increment : function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.INCREMENT, 
       data: data
@@ -24931,20 +24930,18 @@ module.exports = PutBack;
 
 },{"../stores/mainstore":243,"react":215}],229:[function(require,module,exports){
 var React = require('react');
-var mainstore = require('../../stores/mainstore');
 var CommonActions = require('../../actions/CommonActions');
 
 var KQ = React.createClass({displayName: "KQ",
-  getInitialState: function(){
-    return {
-       defValue: 999
+  handleIncrement: function(event){
+    var data  = {
+      "event_name":"quantity_update_from_gui",
+      "event_data":{
+          "item_uid":this.props.itemUid,
+          "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
+      }
     }
-    //return {data: []};
-  },
-  handleIncrement: function(event){    
-    this.setState({defValue: this.state.defValue + 1});
-    CommonActions.increment();
-
+    CommonActions.increment(data);
   },
   handleDecrement: function(event){
     this.setState({defValue: this.state.defValue - 1});
@@ -24979,68 +24976,45 @@ var KQ = React.createClass({displayName: "KQ",
           visible: function(e, keyboard, el){
             $(".ui-keyboard").css({"background-color":"grey", "left":newLeft+"px", "top":newTop+"px"});
           }
-      }) }.bind(this), 0);
-     
-    mainstore.addChangeListener(this.onChange);
+      }) }.bind(this), 0)
   },
   showNumpad: function(){    
-    
     var kb;
     kb = $('#keyboard').getkeyboard()
   },
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
   },
   render: function(data){ 
-    
       return (
-        
-           
-            React.createElement("div", {className: "kQableContainer"}, 
-             
-              React.createElement("div", {className: "topArrow", onClick: this.handleIncrement}, 
+        React.createElement("div", {className: "kQableContainer"}, 
+             React.createElement("div", {className: "topArrow", onClick: this.handleIncrement}, 
                  React.createElement("span", {className: "glyphicon glyphicon-menu-up"})
-              ), 
-              React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
-                 React.createElement("input", {id: "keyboard", value: this.state.defValue})
+             ), 
+             React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+                 React.createElement("input", {id: "keyboard", value: this.props.scanDetails.current_qty})
               ), 
               React.createElement("div", {className: "downArrow", onClick: this.handleDecrement}, 
                  React.createElement("span", {className: "glyphicon glyphicon-menu-down"})
               )
               
-            )
-        
-
-        
       )
+    )
   }
 });
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":243,"react":215}],230:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"react":215}],230:[function(require,module,exports){
 var React = require('react');
-var mainstore = require('../../stores/mainstore');
-var CommonActions = require('../../actions/CommonActions');
-
-var PopUp = React.createClass({displayName: "PopUp",
-  getInitialState: function(){
-    return {
-       
-    }
-    
-  }, 
+var PopUp = React.createClass({displayName: "PopUp", 
   
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
   },
@@ -25048,72 +25022,49 @@ var PopUp = React.createClass({displayName: "PopUp",
 
   render: function(data){ 
       
-      var productInfo1 =  this.props.popupData;
-      var x = [];
-      
-        for (var key in productInfo1) {
-        if (productInfo1.hasOwnProperty(key)) {
-            //alert(key + " -> " + productInfo1[key]);
-           x.push((React.createElement("tr", null, React.createElement("td", null, key, " "), "  ", React.createElement("td", null, productInfo1[key]))));
+      var productInfo=  this.props.popupData;
+      var details = [];
+      for (var key in productInfo) {
+        if (productInfo.hasOwnProperty(key)) {
+           details.push((React.createElement("tr", null, React.createElement("td", null, key, " "), "  ", React.createElement("td", null, productInfo[key]))));
             
         }
       }
-      
-      
-
-      console.log(this.props.popupData)
       return (
-      
-           
-  React.createElement("div", {className: "container1 " + (this.props.popupVisible ? 'active' : '')}, 
-        
-  
-  
-
-  
-  React.createElement("div", {className: "modal fade", id: "myModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel", "data-backdrop": "static", "data-keyboard": "false"}, 
-  React.createElement("div", {className: "modal-dialog", role: "document"}, 
-    React.createElement("div", {className: "modal-content"}, 
-      
-      React.createElement("div", {className: "modal-body"}, 
-        React.createElement("table", null, 
-          React.createElement("tbody", null, 
-          x
+          React.createElement("div", {className: "container1 " + (this.props.popupVisible ? 'active' : '')}, 
+           React.createElement("div", {className: "modal fade", id: "myModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel", "data-backdrop": "static", "data-keyboard": "false"}, 
+          React.createElement("div", {className: "modal-dialog", role: "document"}, 
+            React.createElement("div", {className: "modal-content"}, 
+              
+              React.createElement("div", {className: "modal-body"}, 
+                React.createElement("table", null, 
+                  React.createElement("tbody", null, 
+                  details
+                  )
+                )
+              )
+              
+            )
           )
         )
-      )
-      
-    )
-  )
-)
-)
-  
-
-      
-  
-  
-      
-
-        
-
-        
+        ) 
       )
   }
 });
 
 module.exports = PopUp;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":243,"react":215}],231:[function(require,module,exports){
+},{"react":215}],231:[function(require,module,exports){
 var React = require('react');
-var mainstore = require('../../stores/mainstore');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
+var mainstore = require('../../stores/mainstore');
+
 
 function getPopUpState(){
   return {        
         popupVisible : mainstore.getPopUpVisible()
-        
-      };
+  };
 }
 var ProductInfo = React.createClass({displayName: "ProductInfo",
   getInitialState: function(){
@@ -25134,13 +25085,9 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
-    this.setState({
-      popupVisible : mainstore.getPopUpVisible()
-    });
+    this.setState(getPopUpState());
   },
    showPopUp: function(){
-    
-    console.log("hello u therre" + this.state.popupVisible);
     if(this.state.popupVisible === false)
         CommonActions.updatePopupVisible(true);
     else 
@@ -25149,28 +25096,13 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
   },
   render: function(data){ 
     console.log(this.state.popupVisible);
-    var d1 = 
-        {
-          "heading":"DETAILS",
-          "img_src":"assets/images/logo.png",
-          "product_name":"abc",
-          "product_type":"active",
-          "product_serial_no":"1234",
-          "heading1":"DETAILS",
-          "img_src1":"assets/images/nav2.png",
-          "product_name1":"abc",
-          "product_type1":"active",
-          "product_serial_no1":"1234"         
-        };
-        
-      
-      return (       
+    return (       
         
            React.createElement("div", {className: "imgContainer"}, 
-             React.createElement("img", {src: d1.img_src}), 
+             React.createElement("img", {src: this.props.productDetails.product_local_image_url}), 
              React.createElement("div", {className: "imgFooter", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
               React.createElement("div", {className: "popUpContainer"}, 
-                React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: d1})
+                React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
               ), 
                 React.createElement("span", null, " View More "), 
                 React.createElement("span", {className: "glyphicon glyphicon-info-sign"})
@@ -25204,12 +25136,11 @@ var Wrapper = React.createClass({displayName: "Wrapper",
   },
   onChange: function(){ 
   },
-  render: function(data){ 
-    
+  render: function(data){ console.log(this.props.productDetails.product_sku);
       return (
         React.createElement("div", {className: "rightWrapper"}, 
-           React.createElement(ProductInfo, null), 
-            React.createElement(KQ, null)
+           React.createElement(ProductInfo, {productDetails: this.props.productDetails}), 
+            React.createElement(KQ, {scanDetails: this.props.scanDetails, itemUid: this.props.productDetails.product_sku})
         )    
       )
   }
@@ -25236,7 +25167,9 @@ function getStateData(){
            PutBackNavData : PutBackStore.getNavData(),
            PutBackNotification : PutBackStore.getNotificationData(),
            PutBackBinData: PutBackStore.getBinData(),
-           PutBackScreenId:PutBackStore.getScreenId()
+           PutBackScreenId:PutBackStore.getScreenId(),
+           PutBackScanDetails : PutBackStore.scanDetails(),
+           PutBackProductDetails : PutBackStore.productDetails()
     };
 }
 
@@ -25275,7 +25208,9 @@ var Operator = React.createClass({displayName: "Operator",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
-                    React.createElement(Wrapper, null)
+                    React.createElement(Wrapper, null), 
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData}), 
+                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails})
                 )
               )
             );
@@ -25457,7 +25392,9 @@ var appConstants = {
 	PUT_BACK_STAGE:"put_back_stage",
 	PUT_BACK_SCAN : "put_back_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
-	STAGE_ALL : 'STAGE_ALL'
+	STAGE_ALL : 'STAGE_ALL',
+	INCREMENT : 'INCREMENT',
+	DECREMENT : 'DECREMENT'
 };
 
 module.exports = appConstants;
@@ -25572,7 +25509,7 @@ var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 
-var _PutBackData, _NavData, _NotificationData;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -25659,7 +25596,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   stageOneBin:function(){
     var data ={};
     _PutBackData.ppsbin_list.map(function(value,index){
-        if(value.selected_state == true){
+         if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
           data["event_name"] = "stage_ppsbin";
           data["event_data"] = {};
           data["event_data"]["ppsbin_id"] = value.ppsbin_id;
@@ -25674,8 +25611,15 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     data["event_name"] = "stage_all";
     data["event_data"]= '';
      utils.postDataToInterface(data);
+  },
+  scanDetails : function(){ console.log(_PutBackData);
+    _scanDetails = _PutBackData.scan_details;
+    return _scanDetails;
+  },
+  productDetails : function(){ console.log(_PutBackData);
+    _prodDetails = _PutBackData.product_info;
+    return _prodDetails;
   }
-
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
@@ -25814,7 +25758,6 @@ var popupVisible = false;
 function setPopUpVisible(status){
   popupVisible = status;
   mainstore.emit(CHANGE_EVENT);
-  console.log(" im in store set function " + popupVisible);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
   addChangeListener: function(cb){
@@ -25830,6 +25773,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getPopUpVisible: function(data){
     console.log("getpopupvisible" + data);
     return popupVisible;
+  },
+  setIncrementValue: function(data){
+    console.log(data);
+    utils.postDataToInterface(data);
   }
 });
 function pasreSeatData(data){console.log(data);
@@ -25852,7 +25799,10 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.POPUP_VISIBLE:
       setPopUpVisible(action.status);
-      break; 
+      break;
+    case appConstants.INCREMENT:
+      mainstore.setIncrementValue(action.data);
+      break;    
     default:
       return true;
   }

@@ -24826,7 +24826,10 @@ var ActionCreators = require('../../actions/CommonActions');
 var Notification = React.createClass({displayName: "Notification",
     render: function() {
             return (
-                React.createElement("div", {className: "alert alert-success notify", role: "alert"}, this.props.notification.description)
+                React.createElement("div", {className: "notify", role: "alert"}, 
+                	React.createElement("div", {className: "glyphicon glyphicon-info-sign success-icon"}), 
+                	this.props.notification.description
+                )
             );              
     }
 });

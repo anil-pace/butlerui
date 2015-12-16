@@ -1,5 +1,5 @@
 var React = require('react');
-var OperatorStore = require('../stores/OperatorStore');
+var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
@@ -10,7 +10,7 @@ var Spinner = require('./Spinner/Overlay');
 
 function getState(){
   return {
-      currentSeat: OperatorStore.getCurrentSeat()
+      currentSeat: mainstore.getCurrentSeat()
   }
 }
 var Operator = React.createClass({
@@ -19,10 +19,10 @@ var Operator = React.createClass({
     return getState();
   },
   componentWillMount: function(){
-     OperatorStore.addChangeListener(this.onChange);
+     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    OperatorStore.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
    this.setState(getState());
@@ -47,7 +47,7 @@ var Operator = React.createClass({
       }
   },
 
-  render: function(data){ 
+  render: function(data){ console.log(this.state.currentSeat);
      this.getSeatType(this.state.currentSeat);
       if(this.state.currentSeat === undefined){
         return (

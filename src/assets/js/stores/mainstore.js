@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var seatData;
+var seatData, _currentSeat;
 var popupVisible = false;
 
 function setPopUpVisible(status){
@@ -30,6 +30,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   kqOperation: function(data){
     console.log(data);
     utils.postDataToInterface(data);
+  },
+  showSpinner : function(){
+    _showSpinner = true;
+  },
+  setSpinnerState : function(){ console.log('test'+_showSpinner)
+    return _showSpinner;
+  },
+  setCurrentSeat:function(seat){console.log(seat);
+    _currentSeat  = seat;
+  },
+
+  getCurrentSeat:function(){
+    return _currentSeat;
   }
 });
 function pasreSeatData(data){console.log(data);
@@ -47,6 +60,10 @@ AppDispatcher.register(function(payload){
       utils.connectToWebSocket();
       mainstore.emit(CHANGE_EVENT);
       break;
+    case appConstants.SET_CURRENT_SEAT:
+      mainstore.setCurrentSeat(action.data);
+      mainstore.emit(CHANGE_EVENT);
+      break;  
     case appConstants.SEAT_DATA:
       pasreSeatData(action.data);
       break;
@@ -54,6 +71,7 @@ AppDispatcher.register(function(payload){
       setPopUpVisible(action.status);
       break;
     case appConstants.KQ_OPERATION:
+      mainstore.showSpinner();
       mainstore.kqOperation(action.data);
       break;    
     default:

@@ -16,7 +16,9 @@ function getStateData(){
            PutBackNavData : PutBackStore.getNavData(),
            PutBackNotification : PutBackStore.getNotificationData(),
            PutBackBinData: PutBackStore.getBinData(),
-           PutBackScreenId:PutBackStore.getScreenId()
+           PutBackScreenId:PutBackStore.getScreenId(),
+           PutBackScanDetails : PutBackStore.scanDetails(),
+           PutBackProductDetails : PutBackStore.productDetails()
     };
 }
 
@@ -56,6 +58,8 @@ var Operator = React.createClass({
                 <div className='main-container'>
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                     <Wrapper />
+                    <Bins binsData={this.state.PutBackBinData}/>
+                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} />
                 </div>
               </div>
             );

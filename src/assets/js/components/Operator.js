@@ -1,6 +1,6 @@
 var React = require('react');
 var OperatorStore = require('../stores/OperatorStore');
-var PutBack = require('./PutBack.react');
+var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');

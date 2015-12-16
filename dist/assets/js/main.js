@@ -24813,7 +24813,9 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
             	React.createElement("div", {className: "passive-navigation"}, 
                     React.createElement("div", {className: "nav-detail"}, 
                         React.createElement("div", {className: "index"}, React.createElement("span", null, this.props.data.level)), 
-                        React.createElement("img", {src: this.props.data.image}), 
+                        React.createElement("div", {className: "image"}, 
+                        React.createElement("img", {src: this.props.data.image})
+                        ), 
                         React.createElement("div", {className: "info"}, this.props.data.message)
                     )
                 )

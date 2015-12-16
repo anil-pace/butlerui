@@ -24484,7 +24484,8 @@ var Bin = React.createClass({displayName: "Bin",
         ActionCreators.toggleBinSelection(bin_id);
     },
 
-    showPopUp: function(){
+    showPopUp: function(e){
+    e.stopPropagation();
     if(this.state.popupVisible === false)
         ActionCreators.updatePopupVisible(true);
     else 
@@ -24505,9 +24506,10 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
                     React.createElement("div", {className: "popUpContainer"}, 
                         React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
+                    )
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
@@ -24516,9 +24518,10 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
             return (
                 React.createElement("div", {className: "bin selected"}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
                     React.createElement("div", {className: "popUpContainer"}, 
                         React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
+                    )
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
@@ -24527,9 +24530,10 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
                     React.createElement("div", {className: "popUpContainer"}, 
                         React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
+                    )
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
@@ -24538,9 +24542,10 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_scan" )
             return (
                 React.createElement("div", {className: "bin use"}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showPopUp}, 
                     React.createElement("div", {className: "popUpContainer"}, 
                         React.createElement(PopUp, {popupVisible: this.state.popupVisible, popupData: this.props.productDetails})
+                    )
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
@@ -24874,12 +24879,10 @@ module.exports = Notification;
 },{"../../actions/CommonActions":217,"react":215}],227:[function(require,module,exports){
 var React = require('react');
 var OperatorStore = require('../stores/OperatorStore');
-var mainstore = require('../stores/mainstore');
-var PutBack = require('./PutBack.react');
+var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
-var Header = require('./Header');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 
@@ -24904,7 +24907,6 @@ var Operator = React.createClass({displayName: "Operator",
    this.setState(getState());
   
   },
-
   getSeatType:function(seat){
      switch(seat){
       case appConstants.PUT_BACK:
@@ -24946,7 +24948,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":238,"../stores/OperatorStore":242,"../stores/mainstore":245,"./Header":221,"./PickBack":228,"./PutBack.react":233,"./PutFront":234,"./Spinner/Overlay":236,"react":215}],228:[function(require,module,exports){
+},{"../constants/appConstants":238,"../stores/OperatorStore":242,"./PickBack":228,"./PutBack":233,"./PutFront":234,"./Spinner/Overlay":236,"react":215}],228:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -25214,7 +25216,9 @@ function getStateData(){
            PutBackNavData : PutBackStore.getNavData(),
            PutBackNotification : PutBackStore.getNotificationData(),
            PutBackBinData: PutBackStore.getBinData(),
-           PutBackScreenId:PutBackStore.getScreenId()
+           PutBackScreenId:PutBackStore.getScreenId(),
+           PutBackScanDetails : PutBackStore.scanDetails(),
+           PutBackProductDetails : PutBackStore.productDetails()
     };
 }
 
@@ -25233,17 +25237,17 @@ var Operator = React.createClass({displayName: "Operator",
   onChange: function(){ 
     this.setState(getStateData());
   },
-  getScreenComponent : function(screen_id){console.log(screen_id);
+  getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData})
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                 ), 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage", module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN}), 
-                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All", module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL})
+                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage", module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
+                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All", module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
                 )
               )
             );
@@ -25252,8 +25256,11 @@ var Operator = React.createClass({displayName: "Operator",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData}), 
-                    React.createElement(Wrapper, null)
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
+                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails})
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", color: "black"})
                 )
               )
             );

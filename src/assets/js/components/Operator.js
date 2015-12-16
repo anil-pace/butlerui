@@ -1,11 +1,9 @@
 var React = require('react');
 var OperatorStore = require('../stores/OperatorStore');
-var mainstore = require('../stores/mainstore');
-var PutBack = require('./PutBack.react');
+var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
-var Header = require('./Header');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 
@@ -30,7 +28,6 @@ var Operator = React.createClass({
    this.setState(getState());
   
   },
-
   getSeatType:function(seat){
      switch(seat){
       case appConstants.PUT_BACK:

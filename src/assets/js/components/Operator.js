@@ -5,6 +5,7 @@ var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
 var appConstants = require('../constants/appConstants');
+var Spinner = require('./Spinner/Overlay');
 
 
 function getState(){
@@ -48,12 +49,21 @@ var Operator = React.createClass({
 
   render: function(data){ 
      this.getSeatType(this.state.currentSeat);
-    return (
-      <div>
-        {this._currentSeat}
-      </div> 
+      if(this.state.currentSeat === undefined){
+        return (
+          <div>
+            <Spinner />
+          </div> 
 
-    )
+        )
+     }else{
+        return (
+          <div>
+            {this._currentSeat}
+          </div> 
+
+        )
+     }
   }
 });
 

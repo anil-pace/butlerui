@@ -6,10 +6,7 @@ var RackSlot = React.createClass({
 	render : function(){
 		var rackRange = this.props.rackRange;
 		slotIndexArrays = this.props.slotIndexArrays;
-		//selectedSlotStatus = this.props.selectedSlot;
-		//console.log('slotWidthData' + this.props.slotWidthData);
-		//console.log('slotWidthDataLength' + this.props.slotWidthDataLength);
-		//var calculateWidth = 3.66*this.props.slotWidthDataLength;
+		
 		var calculateWidth = 4.2*this.props.slotWidthDataLength; 
 		 var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {

@@ -5,99 +5,6 @@ var RackRow = require('./RackRow');
 var MsuRack = React.createClass({
 	render: function(){
 
-         /*"compartment_details": [
-            "005.1.B.01", 
-            "005.1.B.03"
-        ], */
-
-		/*var rackDetails = [
-
-            [
-                "A", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02", 
-                            "03", 
-                            "04", 
-                            "05", 
-                            "06"
-                        ], 
-                        30, 
-                        48
-                    ]
-                ]
-            ], 
-            [
-                "B", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02", 
-                            "03", 
-                            "04", 
-                            "05", 
-                            "06"
-                        ], 
-                        30, 
-                        48
-                    ]
-                ]
-            ], 
-            [
-                "C", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02", 
-                            "03", 
-                            "04", 
-                            "05", 
-                            "06"
-                        ], 
-                        30, 
-                        48
-                    ]
-                ]
-            ], 
-            [
-                "D", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02", 
-                            "03", 
-                            "04", 
-                            "05", 
-                            "06"
-                        ], 
-                        30, 
-                        48
-                    ]
-                ]
-            ], 
-            [
-                "E", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02", 
-                            "03", 
-                            "04", 
-                            "05", 
-                            "06"
-                        ], 
-                        30, 
-                        48
-                    ]
-                ]
-            ]
-        ];*/
         
 
         var rackDetails = [
@@ -187,10 +94,7 @@ var MsuRack = React.createClass({
         
         ];
 
-/*          var a = "005.1.B.01";
-        var b = a.split(".")[3];
-        alert(b%10);
-*/
+
         var compartment_details = [
                 "005.1.B.03",
                 "005.1.B.03"
@@ -217,10 +121,8 @@ var MsuRack = React.createClass({
             slotIndexList.push(i);
         };
 
-       // var rackRange = (selectedRackRow + slotStart + " - " + selectedRackRow + slotEnd);
         var rackRange = selectedRackRow;
-        //eachSlot={this.state.eachSlot}
-        //console.log("rackDetails = " + rackDetails[0][1].length);
+       
         
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)

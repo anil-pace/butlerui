@@ -6,6 +6,7 @@ var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
 var appConstants = require('../constants/appConstants');
 
+
 function getState(){
   return {
       currentSeat: OperatorStore.getCurrentSeat()

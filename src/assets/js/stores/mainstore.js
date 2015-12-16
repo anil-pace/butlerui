@@ -27,7 +27,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     console.log("getpopupvisible" + data);
     return popupVisible;
   },
-  setIncrementValue: function(data){
+  kqOperation: function(data){
     console.log(data);
     utils.postDataToInterface(data);
   }
@@ -53,8 +53,8 @@ AppDispatcher.register(function(payload){
     case appConstants.POPUP_VISIBLE:
       setPopUpVisible(action.status);
       break;
-    case appConstants.INCREMENT:
-      mainstore.setIncrementValue(action.data);
+    case appConstants.KQ_OPERATION:
+      mainstore.kqOperation(action.data);
       break;    
     default:
       return true;

@@ -3,23 +3,30 @@ var CommonActions = require('../../actions/CommonActions');
 
 var KQ = React.createClass({
   handleIncrement: function(event){
-    var data  = {
-      "event_name":"quantity_update_from_gui",
-      "event_data":{
-          "item_uid":this.props.itemUid,
-          "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
+    if(this.props.scanDetails.kq_allowed === true){
+      var data  = {
+        "event_name":"quantity_update_from_gui",
+        "event_data":{
+            "item_uid":this.props.itemUid,
+            "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
+        }
       }
+      CommonActions.kq_operation(data);
     }
-    CommonActions.increment(data);
   },
   handleDecrement: function(event){
-    this.setState({defValue: this.state.defValue - 1});
-    console.log("value is " + this.state.defValue);
-    if(this.state.defValue === 1){
-      alert("no further operation allowed");
+    if(this.props.scanDetails.kq_allowed === true){
+      if(parseInt(this.props.scanDetails.current_qty) != 1){
+      var data  = {
+          "event_name":"quantity_update_from_gui",
+          "event_data":{
+              "item_uid":this.props.itemUid,
+              "quantity_updated":parseInt(this.props.scanDetails.current_qty) - 1
+          }
+        }
+        CommonActions.kq_operation(data);
+      }
     }
-    CommonActions.decrement();
-
   },
   postRequest: function() {
     $.ajax({
@@ -58,17 +65,18 @@ var KQ = React.createClass({
   onChange: function(){ 
   },
   render: function(data){ 
+   
       return (
         <div className="kQableContainer">
-             <div className="topArrow" onClick={this.handleIncrement}>
+             <a className="topArrow" href='#' onClick={this.handleIncrement}>
                  <span className="glyphicon glyphicon-menu-up"></span>
-             </div>
+             </a>
              <div id='textbox'  onClick={this.showNumpad}>
-                 <input id="keyboard" value={this.props.scanDetails.current_qty}/> 
+                 <input id="keyboard" readOnly value={this.props.scanDetails.current_qty}/> 
               </div> 
-              <div className="downArrow" onClick={this.handleDecrement}>
+              <a className="downArrow" href='#' onClick={this.handleDecrement}>
                  <span className="glyphicon glyphicon-menu-down"></span>
-              </div>
+              </a>
               
       </div>
     )

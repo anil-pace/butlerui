@@ -60,16 +60,9 @@ var commonActions = {
       data:data
     })
   },
-  increment : function(data){
+  kq_operation : function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.INCREMENT, 
-      data: data
-    });
-  },
-  decrement : function(data){ 
-    alert("decrement");    
-    AppDispatcher.handleAction({
-      actionType: appConstants.DECREMENT, 
+      actionType: appConstants.KQ_OPERATION, 
       data: data
     });
   },

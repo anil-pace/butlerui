@@ -10,7 +10,8 @@ var Spinner = require('./Spinner/Overlay');
 
 function getState(){
   return {
-      currentSeat: mainstore.getCurrentSeat()
+      currentSeat: mainstore.getCurrentSeat(),
+      spinner : mainstore.getSpinnerState()
   }
 }
 var Operator = React.createClass({
@@ -47,9 +48,9 @@ var Operator = React.createClass({
       }
   },
 
-  render: function(data){ console.log(this.state.currentSeat);
+  render: function(data){ 
      this.getSeatType(this.state.currentSeat);
-      if(this.state.currentSeat === undefined){
+      if(this.state.spinner === true){
         return (
           <div>
             <Spinner />

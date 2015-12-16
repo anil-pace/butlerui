@@ -41,7 +41,9 @@ gulp.task('copy', function(){
 	gulp.src('src/assets/images/*.*')
 		.pipe(gulp.dest('dist/assets/images'));
   gulp.src('src/assets/fonts/*.*')
-    .pipe(gulp.dest('dist/assets/fonts'));		
+    .pipe(gulp.dest('dist/assets/fonts'));
+  gulp.src('src/assets/js/utils/vendor/**/*.*')
+    .pipe(gulp.dest('dist/assets/js/vendor/'));  		
 });
 
 gulp.task('build-less', function(){

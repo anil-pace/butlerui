@@ -36,6 +36,26 @@ var KQ = React.createClass({
       }.bind(this)
     });
   },
+  componentDidMount: function(){
+    var x = $("#keyboard").offset();
+    console.log("Top: " + x.top + " Left: " + x.left);
+    var newLeft = x.left - 200;
+    var newTop = x.top - 50;
+     setTimeout(function () {
+          $('#keyboard').keyboard({
+          layout: 'num',  
+          visible: function(e, keyboard, el){
+            $(".ui-keyboard").css({"background-color":"grey", "left":newLeft+"px", "top":newTop+"px"});
+          }
+      }) }.bind(this), 0);
+     
+    mainstore.addChangeListener(this.onChange);
+  },
+  showNumpad: function(){    
+    
+    var kb;
+    kb = $('#keyboard').getkeyboard()
+  },
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -54,9 +74,9 @@ var KQ = React.createClass({
               <div className="topArrow" onClick={this.handleIncrement}>
                  <span className="glyphicon glyphicon-menu-up"></span>
               </div>
-              <div className="itemCount" ref="myInput">
-                 {this.state.defValue}
-              </div>
+              <div id='textbox'  onClick={this.showNumpad}>
+                 <input id="keyboard" value={this.state.defValue} /> 
+              </div> 
               <div className="downArrow" onClick={this.handleDecrement}>
                  <span className="glyphicon glyphicon-menu-down"></span>
               </div>

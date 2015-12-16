@@ -40,11 +40,16 @@
             &.selected-staging{
                  border: 5px solid @brand-primary;
             }
+            .info-icon{
+                position: absolute;
+                right: 6px;
+                top: 6px;
+            }
             .pptl {
                 position: absolute;
                 bottom: 0;
                 width: 100%;
-                min-height: 15%;
+                /*min-height: 15%;*/
                 display: flex;
                 align-items:center;
                 justify-content:center;
@@ -52,7 +57,7 @@
                 background: @text-color;
                 text-align: center;
                 color: white;
-                font-size: @font-size-body-medium;
+                font-size: @font-size-body-small;
                  &.selected{
                     background: @bin-selected-bck;
                     color: white;

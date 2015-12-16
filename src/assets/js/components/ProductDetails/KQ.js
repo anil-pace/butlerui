@@ -72,7 +72,7 @@ var KQ = React.createClass({
                  <span className="glyphicon glyphicon-menu-up"></span>
              </a>
              <div id='textbox'  onClick={this.showNumpad}>
-                 <input id="keyboard" readOnly value={this.props.scanDetails.current_qty}/> 
+                 <input id="keyboard"  value={this.props.scanDetails.current_qty}/> 
               </div> 
               <a className="downArrow" href='#' onClick={this.handleDecrement}>
                  <span className="glyphicon glyphicon-menu-down"></span>

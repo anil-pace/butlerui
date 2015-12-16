@@ -5,7 +5,7 @@ var Notification = React.createClass({
     render: function() {
             return (
                 <div className="notify" role="alert">
-                	<div className="glyphicon glyphicon-info-sign success-icon"></div>
+                	<div className="glyphicon glyphicon-ok success-icon"></div>
                 	{this.props.notification.description}
                 </div>
             );              

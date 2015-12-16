@@ -24440,16 +24440,9 @@ var commonActions = {
       data:data
     })
   },
-  increment : function(data){
+  kq_operation : function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.INCREMENT, 
-      data: data
-    });
-  },
-  decrement : function(data){ 
-    alert("decrement");    
-    AppDispatcher.handleAction({
-      actionType: appConstants.DECREMENT, 
+      actionType: appConstants.KQ_OPERATION, 
       data: data
     });
   },
@@ -24495,6 +24488,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
@@ -24502,13 +24496,23 @@ var Bin = React.createClass({displayName: "Bin",
         else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
             return (
                 React.createElement("div", {className: "bin selected"}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 )
+        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_scan" )
+            return (
+                React.createElement("div", {className: "bin use"}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
@@ -24827,7 +24831,7 @@ var Notification = React.createClass({displayName: "Notification",
     render: function() {
             return (
                 React.createElement("div", {className: "notify", role: "alert"}, 
-                	React.createElement("div", {className: "glyphicon glyphicon-info-sign success-icon"}), 
+                	React.createElement("div", {className: "glyphicon glyphicon-ok success-icon"}), 
                 	this.props.notification.description
                 )
             );              
@@ -24938,23 +24942,30 @@ var CommonActions = require('../../actions/CommonActions');
 
 var KQ = React.createClass({displayName: "KQ",
   handleIncrement: function(event){
-    var data  = {
-      "event_name":"quantity_update_from_gui",
-      "event_data":{
-          "item_uid":this.props.itemUid,
-          "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
+    if(this.props.scanDetails.kq_allowed === true){
+      var data  = {
+        "event_name":"quantity_update_from_gui",
+        "event_data":{
+            "item_uid":this.props.itemUid,
+            "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
+        }
       }
+      CommonActions.kq_operation(data);
     }
-    CommonActions.increment(data);
   },
   handleDecrement: function(event){
-    this.setState({defValue: this.state.defValue - 1});
-    console.log("value is " + this.state.defValue);
-    if(this.state.defValue === 1){
-      alert("no further operation allowed");
+    if(this.props.scanDetails.kq_allowed === true){
+      if(parseInt(this.props.scanDetails.current_qty) != 1){
+      var data  = {
+          "event_name":"quantity_update_from_gui",
+          "event_data":{
+              "item_uid":this.props.itemUid,
+              "quantity_updated":parseInt(this.props.scanDetails.current_qty) - 1
+          }
+        }
+        CommonActions.kq_operation(data);
+      }
     }
-    CommonActions.decrement();
-
   },
   postRequest: function() {
     $.ajax({
@@ -24993,15 +25004,16 @@ var KQ = React.createClass({displayName: "KQ",
   onChange: function(){ 
   },
   render: function(data){ 
+   
       return (
         React.createElement("div", {className: "kQableContainer"}, 
-             React.createElement("div", {className: "topArrow", onClick: this.handleIncrement}, 
+             React.createElement("a", {className: "topArrow", href: "#", onClick: this.handleIncrement}, 
                  React.createElement("span", {className: "glyphicon glyphicon-menu-up"})
              ), 
              React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
                  React.createElement("input", {id: "keyboard", value: this.props.scanDetails.current_qty})
               ), 
-              React.createElement("div", {className: "downArrow", onClick: this.handleDecrement}, 
+              React.createElement("a", {className: "downArrow", href: "#", onClick: this.handleDecrement}, 
                  React.createElement("span", {className: "glyphicon glyphicon-menu-down"})
               )
               
@@ -25398,8 +25410,7 @@ var appConstants = {
 	PUT_BACK_SCAN : "put_back_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
 	STAGE_ALL : 'STAGE_ALL',
-	INCREMENT : 'INCREMENT',
-	DECREMENT : 'DECREMENT'
+	KQ_OPERATION : 'KQ_OPERATION'
 };
 
 module.exports = appConstants;
@@ -25779,7 +25790,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     console.log("getpopupvisible" + data);
     return popupVisible;
   },
-  setIncrementValue: function(data){
+  kqOperation: function(data){
     console.log(data);
     utils.postDataToInterface(data);
   }
@@ -25805,8 +25816,8 @@ AppDispatcher.register(function(payload){
     case appConstants.POPUP_VISIBLE:
       setPopUpVisible(action.status);
       break;
-    case appConstants.INCREMENT:
-      mainstore.setIncrementValue(action.data);
+    case appConstants.KQ_OPERATION:
+      mainstore.kqOperation(action.data);
       break;    
     default:
       return true;

@@ -28,19 +28,6 @@ var KQ = React.createClass({
       }
     }
   },
-  postRequest: function() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
   componentDidMount: function(){
     var x = $("#keyboard").offset();
     console.log("Top: " + x.top + " Left: " + x.left);
@@ -72,7 +59,7 @@ var KQ = React.createClass({
                  <span className="glyphicon glyphicon-menu-up"></span>
              </a>
              <div id='textbox'  onClick={this.showNumpad}>
-                 <input id="keyboard" readOnly value={this.props.scanDetails.current_qty}/> 
+                 <input id="keyboard"  value={this.props.scanDetails.current_qty}/> 
               </div> 
               <a className="downArrow" href='#' onClick={this.handleDecrement}>
                  <span className="glyphicon glyphicon-menu-down"></span>

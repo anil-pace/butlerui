@@ -176,9 +176,13 @@
 /* :not(:required) hides this rule from IE9 and below */
 .overlay{
        align-items: center;
-    display: flex;
+    /*display: flex;
     flex: 1 1 auto;
-    flex-flow: row nowrap;
+    flex-flow: row nowrap;*/
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    flex-wrap: nowrap;
     justify-content: center; background:rgba(0,0,0,0.3); z-index:98; 
     }
 

@@ -57,8 +57,6 @@ var Operator = React.createClass({
               <div className='grid-container'>
                 <div className='main-container'>
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                    <Wrapper />
-                    <Bins binsData={this.state.PutBackBinData}/>
                     <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} />
                 </div>
               </div>

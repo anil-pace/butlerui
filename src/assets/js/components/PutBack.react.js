@@ -16,9 +16,7 @@ function getStateData(){
            PutBackNavData : PutBackStore.getNavData(),
            PutBackNotification : PutBackStore.getNotificationData(),
            PutBackBinData: PutBackStore.getBinData(),
-           PutBackScreenId:PutBackStore.getScreenId(),
-           PutBackScanDetails : PutBackStore.scanDetails(),
-           PutBackProductDetails : PutBackStore.productDetails()
+           PutBackScreenId:PutBackStore.getScreenId()
     };
 }
 
@@ -43,11 +41,11 @@ var Operator = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
-                    <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+                    <Bins binsData={this.state.PutBackBinData}/>
                 </div>
                 <div className = 'staging-action' >
-                  <Button1 disabled = {!this.state.StageActive} text = {"Stage"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
-                  <Button1 disabled = {!this.state.StageAllActive} text = {"Stage All"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
+                  <Button1 disabled = {!this.state.StageActive} text = {"Stage"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN}/>
+                  <Button1 disabled = {!this.state.StageAllActive} text = {"Stage All"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} />  
                 </div>
               </div>
             );
@@ -56,10 +54,8 @@ var Operator = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
-                    <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                    <Wrapper />
                     <Bins binsData={this.state.PutBackBinData}/>
-                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} />
+                    <Wrapper />
                 </div>
               </div>
             );

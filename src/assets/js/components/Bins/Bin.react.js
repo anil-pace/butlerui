@@ -8,27 +8,43 @@ var Bin = React.createClass({
    
     render: function() {
         var compData = this.props.binData;
-    	if(compData.bin_info.length > 0 && compData.selected_state == false )
-    		return (
+        console.log("ashu" + this.props.screenId);
+        if(compData.ppsbin_state == "staged" )
+            return (
+                <div className = "bin staged" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl">{compData.ppsbin_id}</div>
+                </div>
+            );
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
+            return (
+                <div className = "bin use selected-staging" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl">{compData.ppsbin_id}</div>
+                </div>
+            );
+        else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
+            return (
+                <div className = "bin selected">
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl selected">{compData.ppsbin_id}</div>
+                </div>
+            );
+        else if(compData.ppsbin_count > 0 )
+            return (
                 <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-    	else if(compData.bin_info.length == 0)
+    	else if(compData.ppsbin_count == 0)
             return (
                 <div className = "bin empty">
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.bin_info.length > 0 && compData.selected_state == true)
-            return (
-                <div className = "bin use selected" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
-                </div>
-            );
+        
     }
 });
 

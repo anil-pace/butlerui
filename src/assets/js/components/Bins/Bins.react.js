@@ -11,6 +11,7 @@ var Bins = React.createClass({
         console.log("render");
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
         var compData = this.props.binsData;
+        var scrnId = this.props.screenId;
         return (
             	 <div className="bins">
             	 	{
@@ -21,7 +22,7 @@ var Bins = React.createClass({
             	 			var list = [];
             	 			var i = 0;
             	 			for( i = i ; i<compData.structure[1] ; i++){
-            	 				list.push(<Bin binData={compData.ppsbin_list[j*compData.structure[1] + i]} />);
+            	 				list.push(<Bin binData={compData.ppsbin_list[j*compData.structure[1] + i]} screenId={scrnId} />);
             	 			}
             	 			l.push((
             	 				<div className="bin-row">

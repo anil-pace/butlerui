@@ -1,18 +1,16 @@
 var React = require('react');
-var mainstore = require('../../stores/mainstore');
 var CommonActions = require('../../actions/CommonActions');
 
 var KQ = React.createClass({
-  getInitialState: function(){
-    return {
-       defValue: 999
+  handleIncrement: function(event){
+    var data  = {
+      "event_name":"quantity_update_from_gui",
+      "event_data":{
+          "item_uid":this.props.itemUid,
+          "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
+      }
     }
-    //return {data: []};
-  },
-  handleIncrement: function(event){    
-    this.setState({defValue: this.state.defValue + 1});
-    CommonActions.increment();
-
+    CommonActions.increment(data);
   },
   handleDecrement: function(event){
     this.setState({defValue: this.state.defValue - 1});
@@ -47,45 +45,33 @@ var KQ = React.createClass({
           visible: function(e, keyboard, el){
             $(".ui-keyboard").css({"background-color":"grey", "left":newLeft+"px", "top":newTop+"px"});
           }
-      }) }.bind(this), 0);
-     
-    mainstore.addChangeListener(this.onChange);
+      }) }.bind(this), 0)
   },
   showNumpad: function(){    
-    
     var kb;
     kb = $('#keyboard').getkeyboard()
   },
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
   },
   render: function(data){ 
-    
       return (
-        
-           
-            <div className="kQableContainer">
-             
-              <div className="topArrow" onClick={this.handleIncrement}>
+        <div className="kQableContainer">
+             <div className="topArrow" onClick={this.handleIncrement}>
                  <span className="glyphicon glyphicon-menu-up"></span>
-              </div>
-              <div id='textbox'  onClick={this.showNumpad}>
-                 <input id="keyboard" value={this.state.defValue} /> 
+             </div>
+             <div id='textbox'  onClick={this.showNumpad}>
+                 <input id="keyboard" value={this.props.scanDetails.current_qty}/> 
               </div> 
               <div className="downArrow" onClick={this.handleDecrement}>
                  <span className="glyphicon glyphicon-menu-down"></span>
               </div>
               
-            </div>
-        
-
-        
-      )
+      </div>
+    )
   }
 });
 

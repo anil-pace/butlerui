@@ -31,7 +31,14 @@
                 color:@bin-inactive-text;
             }
             &.selected{
-                border: 5px solid @brand-primary;
+                border: 5px solid @bin-selected-bck;
+            }
+            &.staged{
+                background: @bin-staged-bck;
+                color:@bin-inactive-text;
+            }
+            &.selected-staging{
+                 border: 5px solid @brand-primary;
             }
             .pptl {
                 position: absolute;
@@ -46,6 +53,10 @@
                 text-align: center;
                 color: white;
                 font-size: @font-size-body-medium;
+                 &.selected{
+                    background: @bin-selected-bck;
+                    color: white;
+                }
             }
             .item-count {
                 position: absolute;

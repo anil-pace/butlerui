@@ -24485,27 +24485,43 @@ var Bin = React.createClass({displayName: "Bin",
    
     render: function() {
         var compData = this.props.binData;
-    	if(compData.bin_info.length > 0 && compData.selected_state == false )
-    		return (
-                React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("div", {className: "item-count"}, compData.bin_info.length), 
+        console.log("ashu" + this.props.screenId);
+        if(compData.ppsbin_state == "staged" )
+            return (
+                React.createElement("div", {className: "bin staged", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-    	else if(compData.bin_info.length == 0)
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
+            return (
+                React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 )
+            return (
+                React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+    	else if(compData.ppsbin_count == 0)
             return (
                 React.createElement("div", {className: "bin empty"}, 
-                    React.createElement("div", {className: "item-count"}, compData.bin_info.length), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.bin_info.length > 0 && compData.selected_state == true)
-            return (
-                React.createElement("div", {className: "bin use selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("div", {className: "item-count"}, compData.bin_info.length), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
-                )
-            );
+        
     }
 });
 
@@ -24525,6 +24541,7 @@ var Bins = React.createClass({displayName: "Bins",
         console.log("render");
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
         var compData = this.props.binsData;
+        var scrnId = this.props.screenId;
         return (
             	 React.createElement("div", {className: "bins"}, 
             	 	
@@ -24535,7 +24552,7 @@ var Bins = React.createClass({displayName: "Bins",
             	 			var list = [];
             	 			var i = 0;
             	 			for( i = i ; i<compData.structure[1] ; i++){
-            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[j*compData.structure[1] + i]}));
+            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[j*compData.structure[1] + i], screenId: scrnId}));
             	 			}
             	 			l.push((
             	 				React.createElement("div", {className: "bin-row"}, 
@@ -24577,10 +24594,10 @@ var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({displayName: "Button1",
     performAction:function(module,action){
-        switch(action){
+        switch(module){
              case appConstants.PUT_BACK:
                 switch(action){
-                     case appConstants.STAGE_ONE_BIN:
+                     case appConstants.STAGE_ONE_BIN: console.log(action);
                         ActionCreators.stageOneBin();
                         break;
                      case appConstants.STAGE_ALL:
@@ -24598,11 +24615,11 @@ var Button1 = React.createClass({displayName: "Button1",
     render: function() {
         if(this.props.disabled == false)
             return (
-                React.createElement("a", {className: "custom-button active", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
+                React.createElement("a", {className: this.props.color == "orange"? "custom-button orange" : "custom-button black", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
             );        
         else
             return (
-                React.createElement("a", {className: "custom-button disabled"}, this.props.text)
+                React.createElement("a", {className: this.props.color == "orange"? "custom-button disabled orange" : "custom-button disabled black"}, this.props.text)
             );        
     }
 });
@@ -24820,7 +24837,7 @@ module.exports = Notification;
 },{"../../actions/CommonActions":217,"react":215}],227:[function(require,module,exports){
 var React = require('react');
 var OperatorStore = require('../stores/OperatorStore');
-var PutBack = require('./PutBack.react');
+var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
@@ -24878,7 +24895,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":236,"../stores/OperatorStore":240,"./PickBack":228,"./PutBack.react":233,"./PutFront":234,"react":215}],228:[function(require,module,exports){
+},{"../constants/appConstants":236,"../stores/OperatorStore":240,"./PickBack":228,"./PutBack":233,"./PutFront":234,"react":215}],228:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -24951,6 +24968,26 @@ var KQ = React.createClass({displayName: "KQ",
       }.bind(this)
     });
   },
+  componentDidMount: function(){
+    var x = $("#keyboard").offset();
+    console.log("Top: " + x.top + " Left: " + x.left);
+    var newLeft = x.left - 200;
+    var newTop = x.top - 50;
+     setTimeout(function () {
+          $('#keyboard').keyboard({
+          layout: 'num',  
+          visible: function(e, keyboard, el){
+            $(".ui-keyboard").css({"background-color":"grey", "left":newLeft+"px", "top":newTop+"px"});
+          }
+      }) }.bind(this), 0);
+     
+    mainstore.addChangeListener(this.onChange);
+  },
+  showNumpad: function(){    
+    
+    var kb;
+    kb = $('#keyboard').getkeyboard()
+  },
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -24969,8 +25006,8 @@ var KQ = React.createClass({displayName: "KQ",
               React.createElement("div", {className: "topArrow", onClick: this.handleIncrement}, 
                  React.createElement("span", {className: "glyphicon glyphicon-menu-up"})
               ), 
-              React.createElement("div", {className: "itemCount", ref: "myInput"}, 
-                 this.state.defValue
+              React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+                 React.createElement("input", {id: "keyboard", value: this.state.defValue})
               ), 
               React.createElement("div", {className: "downArrow", onClick: this.handleDecrement}, 
                  React.createElement("span", {className: "glyphicon glyphicon-menu-down"})
@@ -25205,6 +25242,7 @@ function getStateData(){
 
 var Operator = React.createClass({displayName: "Operator",
   _component:'',
+  _notification:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -25223,11 +25261,11 @@ var Operator = React.createClass({displayName: "Operator",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData})
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                 ), 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage", module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN}), 
-                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All", module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL})
+                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage", module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
+                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All", module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
                 )
               )
             );
@@ -25236,7 +25274,7 @@ var Operator = React.createClass({displayName: "Operator",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData}), 
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
                     React.createElement(Wrapper, null)
                 )
               )
@@ -25246,14 +25284,22 @@ var Operator = React.createClass({displayName: "Operator",
         return true; 
     }
   },
-  render: function(data){ 
+
+  getNotificationComponent:function(){
+    if(this.state.PutBackNotification.description != "")
+      this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification})
+    else
+      this._notification = "";
+  },
+  render: function(data){
+    this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
     return (
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
         React.createElement(Navigation, {navData: this.state.PutBackNavData}), 
         this._component, 
-        React.createElement(Notification, {notification: this.state.PutBackNotification})
+        this._notification
       ) 
      
     )
@@ -25546,17 +25592,21 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   toggleBinSelection:function(bin_id){
     _PutBackData["ppsbin_list"].map(function(value,index){
       if(value.ppsbin_id == bin_id){
-        value.selected_state = !value.selected_state;
-      }else
-        value.selected_state = false;
+        if(value["selected_for_staging"]!=undefined)
+          value["selected_for_staging"] =  !value["selected_for_staging"];
+        else
+          value["selected_for_staging"] = true;
+      }else if(value["selected_for_staging"]!=undefined)
+        value["selected_for_staging"] = false;
     });
+    console.log(_PutBackData);
   },
 
   getStageActiveStatus:function(){
     console.log(_PutBackData);
     var flag = false;
     _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.selected_state == true)
+      if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
         flag = true;
     });
     return flag;
@@ -25584,8 +25634,8 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     });
     return _NavData;
   },
-  getNotificationData : function() {
-    return _PutBackData.notification_list[0];
+  getNotificationData : function() { 
+      return _PutBackData.notification_list[0];
   },
   setPutBackData:function(data){
     _PutBackData = data;
@@ -25622,6 +25672,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   stageAllBin:function(){
     var data ={};
     data["event_name"] = "stage_all";
+    data["event_data"]= '';
      utils.postDataToInterface(data);
   }
 
@@ -25845,12 +25896,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
-  	postDataToInterface : function(data){
+  	postDataToInterface : function(data){ 
   		$.ajax({
         type: 'POST',
         url: appConstants.INTERFACE_IP,
-        dataType:"json",
-        data: data
+        data: data,
+        dataType : 'json'
         }).done(function(response) {
 
         }).fail(function(jqXhr) {

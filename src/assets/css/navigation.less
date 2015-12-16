@@ -66,12 +66,13 @@
         display: flex;
         padding-left:30px;
         padding-right:30px;
-        max-width: 15%;
+        max-width: 12%;
         justify-content: center;
         align-items:center;
         border-right: 2px solid white;
         .nav-detail {
             display: flex;
+            width: 100%;
             flex-flow:column;
             justify-content:center;
             align-items:center;
@@ -104,6 +105,10 @@
                 color: white;
                 padding-top: 1em;
                 font-size: @font-size-body-small;
+                text-overflow:ellipsis;
+                overflow: hidden;
+                width: 100%;
+                white-space: nowrap;
             }
         }
     }

@@ -28,17 +28,21 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   toggleBinSelection:function(bin_id){
     _PutBackData["ppsbin_list"].map(function(value,index){
       if(value.ppsbin_id == bin_id){
-        value.selected_state = !value.selected_state;
-      }else
-        value.selected_state = false;
+        if(value["selected_for_staging"]!=undefined)
+          value["selected_for_staging"] =  !value["selected_for_staging"];
+        else
+          value["selected_for_staging"] = true;
+      }else if(value["selected_for_staging"]!=undefined)
+        value["selected_for_staging"] = false;
     });
+    console.log(_PutBackData);
   },
 
   getStageActiveStatus:function(){
     console.log(_PutBackData);
     var flag = false;
     _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.selected_state == true)
+      if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
         flag = true;
     });
     return flag;

@@ -6,7 +6,43 @@
     align-items: center;
     justify-content: center;
 }
-
+.ui-keyboard, .ui-widget-content, .ui-widget{
+    background-color: white !important;
+    border: 2px solid #939598 !important;
+    border-radius: 0 !important;
+    padding:0 !important;
+    //width:auto !important;
+    font-size:2rem !important;
+    .ui-keyboard-preview-wrapper{
+        text-align: left !important;
+        .ui-widget-content, .ui-corner-all, .ui-keyboard-preview{
+            width:100% !important;
+            margin:0 !important;
+            border-radius:0 !important;
+            height:6vh !important;
+        }
+    }
+    .ui-keyboard-keyset, .ui-keyboard-keyset-normal{
+        text-align: left !important;
+        .ui-keyboard-button, .ui-state-default, .ui-corner-all{
+            background-color: #fff !important;
+            color: #1a252d !important;
+            border: 3px solid #939598 !important;
+            border-radius: 0 !important;
+            margin:0  !important;
+            width:33.33% !important;
+            height:6vh !important;
+            
+        }
+        .ui-keyboard-accept{
+            width:50% !important;
+        }
+        .ui-keyboard-cancel{
+            width:50% !important;
+        }
+    }
+             
+}
 .rightWrapper {
     display: flex;
     flex-flow:column;

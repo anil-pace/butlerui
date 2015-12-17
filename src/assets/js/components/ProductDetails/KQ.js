@@ -29,17 +29,13 @@ var KQ = React.createClass({
     }
   },
   componentDidMount: function(){
-    var x = $("#keyboard").offset();
-    console.log("Top: " + x.top + " Left: " + x.left);
-    var newLeft = x.left - 200;
-    var newTop = x.top - 50;
      setTimeout(function () {
           $('#keyboard').keyboard({
-          layout: 'num',  
-          visible: function(e, keyboard, el){
-            $(".ui-keyboard").css({"background-color":"grey", "left":newLeft+"px", "top":newTop+"px"});
-          }
-      }) }.bind(this), 0)
+          layout: 'num',
+          reposition   : true,
+          alwaysOpen   : false,
+          initialFocus : true
+      }) }.bind(this), 0);
   },
   showNumpad: function(){    
     var kb;

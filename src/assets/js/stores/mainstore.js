@@ -8,6 +8,10 @@ var CHANGE_EVENT = 'change';
 var seatData, _currentSeat;
 var popupVisible = false;
 var _showSpinner = true;
+var modalContent = {
+  data:"",
+  type:""
+};
 
 function setPopUpVisible(status){
   popupVisible = status;
@@ -40,6 +44,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   setCurrentSeat:function(seat){console.log(seat);
     _showSpinner = false;
     _currentSeat  = seat;
+  },
+
+  getModalContent:function(){
+    return modalContent.data;
+  },
+
+  getModalType:function(){
+    return modalContent.type;
+  },
+
+  setModalContent:function(data){
+    modalContent = data;
   },
 
   getCurrentSeat:function(){
@@ -75,6 +91,10 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.kqOperation(action.data);
       mainstore.emit(CHANGE_EVENT);
+      break; 
+    case appConstants.LOAD_MODAL:
+      mainstore.setModalContent(action.data);
+       mainstore.emit(CHANGE_EVENT);
       break;    
     default:
       return true;

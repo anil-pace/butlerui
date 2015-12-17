@@ -24,7 +24,8 @@ var appConstants = {
 	PUT_BACK_SCAN : "put_back_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
 	STAGE_ALL : 'STAGE_ALL',
-	KQ_OPERATION : 'KQ_OPERATION'
+	KQ_OPERATION : 'KQ_OPERATION',
+	LOAD_MODAL:'load_modal'
 };
 
 module.exports = appConstants;

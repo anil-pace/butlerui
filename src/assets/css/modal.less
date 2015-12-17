@@ -1,0 +1,44 @@
+.modal {
+    top:20%;
+    width: auto;
+    .modal-dialog {
+        width: 40%;
+        .modal-content {
+            display: block;
+            width: auto;
+            border-radius: 0;
+            .modal-header {
+                background: @kq-arrow-disabled;
+                .modal-title {
+                    font-size: @font-size-body-medium;
+                    font-weight: @font-weight-semi-bold;
+                    color: @passive-nav-bck;
+                }
+            }
+            .modal-body {
+                color: @passive-nav-bck;
+                max-height: 500px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 0;
+                font-size: @font-size-body-small;
+                .row{
+                    border-bottom: 1px solid @kq-border-color;
+                    margin: 0;
+                }
+                .key{
+                    padding: 15px;
+                   // border-right: 1px solid @kq-border-color;
+                }
+                .heading{
+                    padding: 15px;
+                    border-right: 1px solid @kq-border-color;
+                    background: @kq-border-color;
+                }
+                .value{
+                     padding: 15px;
+                }
+            }
+        }
+    }
+}

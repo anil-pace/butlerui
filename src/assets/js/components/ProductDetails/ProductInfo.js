@@ -1,6 +1,7 @@
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
+var Modal = require('../Modal/Modal');
 var mainstore = require('../../stores/mainstore');
 
 
@@ -12,6 +13,13 @@ function getPopUpState(){
 var ProductInfo = React.createClass({
   getInitialState: function(){
     return getPopUpState();
+  },
+  showModal: function(data,type) {
+         CommonActions.showModal({
+            data:data,
+            type:type
+         });
+         $('.modal').modal();
   },
   showPopUp: function(){
     if(this.state.popupVisible === false){
@@ -43,10 +51,7 @@ var ProductInfo = React.createClass({
         
            <div className="imgContainer">
              <img src={this.props.productDetails.product_local_image_url} />
-             <div className="imgFooter" data-toggle="modal" data-target="#myModal" onClick={this.showPopUp}>
-              <div className="popUpContainer">
-                <PopUp popupVisible = {this.state.popupVisible} popupData = {this.props.productDetails} />
-              </div>
+             <div className="imgFooter" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,this.props.productDetails,"product-detail")}>
                 <span> View More </span>                
                 <span className="glyphicon glyphicon-info-sign"></span>
              </div>

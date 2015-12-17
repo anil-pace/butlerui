@@ -8,7 +8,7 @@ var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 
-var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -92,6 +92,8 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     return _PutBackData.screen_id;
   },
 
+  
+
   stageOneBin:function(){
     var data ={};
     _PutBackData.ppsbin_list.map(function(value,index){
@@ -142,7 +144,6 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PutBackStore.stageAllBin();
       PutBackStore.emitChange();
       break;  
-
     
     default:
       // do nothing

@@ -82,6 +82,15 @@ var commonActions = {
       actionType: appConstants.STAGE_ONE_BIN
     })
   },
+
+  showModal:function(data){
+    console.log(data);
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOAD_MODAL,
+      data:data
+    })
+  }
+
 };
 
 module.exports = commonActions;

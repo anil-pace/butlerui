@@ -60,6 +60,12 @@ var commonActions = {
       data:data
     })
   },
+  setPutFrontData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PUT_FRONT_DATA,
+      data:data
+    })
+  },
   kq_operation : function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.KQ_OPERATION, 

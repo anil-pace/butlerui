@@ -24875,7 +24875,8 @@ var Spinner = require('./Spinner/Overlay');
 
 function getState(){
   return {
-      currentSeat: mainstore.getCurrentSeat()
+      currentSeat: mainstore.getCurrentSeat(),
+      spinner : mainstore.getSpinnerState()
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -24912,9 +24913,9 @@ var Operator = React.createClass({displayName: "Operator",
       }
   },
 
-  render: function(data){ console.log(this.state.currentSeat);
+  render: function(data){ 
      this.getSeatType(this.state.currentSeat);
-      if(this.state.currentSeat === undefined){
+      if(this.state.spinner === true){
         return (
           React.createElement("div", null, 
             React.createElement(Spinner, null)
@@ -25779,6 +25780,7 @@ var utils = require('../utils/utils');
 var CHANGE_EVENT = 'change';
 var seatData, _currentSeat;
 var popupVisible = false;
+var _showSpinner = true;
 
 function setPopUpVisible(status){
   popupVisible = status;
@@ -25800,16 +25802,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return popupVisible;
   },
   kqOperation: function(data){
-    console.log(data);
     utils.postDataToInterface(data);
   },
   showSpinner : function(){
     _showSpinner = true;
   },
-  setSpinnerState : function(){ console.log('test'+_showSpinner)
+  getSpinnerState : function(){ console.log('test'+_showSpinner)
     return _showSpinner;
   },
   setCurrentSeat:function(seat){console.log(seat);
+    _showSpinner = false;
     _currentSeat  = seat;
   },
 
@@ -25845,6 +25847,7 @@ AppDispatcher.register(function(payload){
     case appConstants.KQ_OPERATION:
       mainstore.showSpinner();
       mainstore.kqOperation(action.data);
+      mainstore.emit(CHANGE_EVENT);
       break;    
     default:
       return true;

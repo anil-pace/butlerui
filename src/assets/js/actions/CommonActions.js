@@ -93,7 +93,16 @@ var commonActions = {
       actionType: appConstants.CANCEL_SCAN, 
       data: data
     });
+  },
+
+  showModal:function(data){
+    console.log(data);
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOAD_MODAL,
+      data:data
+    })
   }
+
 };
 
 module.exports = commonActions;

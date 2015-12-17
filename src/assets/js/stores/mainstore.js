@@ -21,11 +21,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, cb);
   },
   seatData : function(data){
-    console.log(data);
     return seatData;
   },
   getPopUpVisible: function(data){
-    console.log("getpopupvisible" + data);
     return popupVisible;
   },
   kqOperation: function(data){
@@ -34,10 +32,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   showSpinner : function(){
     _showSpinner = true;
   },
-  getSpinnerState : function(){ console.log('test'+_showSpinner)
+  getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(seat){console.log(seat);
+  setCurrentSeat:function(seat){
     _showSpinner = false;
     _currentSeat  = seat;
   },
@@ -51,7 +49,6 @@ function pasreSeatData(data){console.log(data);
   if(parseData.hasOwnProperty('state_data')){
     seatData = parseData.state_data;
   }
-  console.log(seatData);
   mainstore.emit(CHANGE_EVENT);
 }
 AppDispatcher.register(function(payload){ 

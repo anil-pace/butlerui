@@ -42,7 +42,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
   getCurrentSeat:function(){
     return _currentSeat;
-  }
+  },
 });
 function pasreSeatData(data){console.log(data);
   var parseData = JSON.parse(data);
@@ -72,7 +72,10 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.kqOperation(action.data);
       mainstore.emit(CHANGE_EVENT);
-      break;    
+      break;
+    case appConstants.RESET_NUMPAD:
+      mainstore.emit(CHANGE_EVENT);
+      break;      
     default:
       return true;
   }

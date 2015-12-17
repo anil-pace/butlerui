@@ -82,6 +82,12 @@ var commonActions = {
       actionType: appConstants.STAGE_ONE_BIN
     })
   },
+  resetNumpadVal : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.RESET_NUMPAD, 
+      data: data
+    });
+  }
 };
 
 module.exports = commonActions;

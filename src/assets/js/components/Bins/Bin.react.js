@@ -37,8 +37,6 @@ var Bin = React.createClass({
         else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
             return (
                 <div className = "bin use selected-staging" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <span className="glyphicon glyphicon-info-sign info-icon" >
-                    </span>
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>

@@ -39,10 +39,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _showSpinner = false;
     _currentSeat  = seat;
   },
-
+  cancelScan : function(barcode){
+    var data = {
+      "event_name": "cancel_barcode_scan",
+      "event_data": {
+        "barcode": barcode
+      }
+    }
+    utils.postDataToInterface(data);
+  },
   getCurrentSeat:function(){
     return _currentSeat;
-  }
+  },
 });
 function pasreSeatData(data){console.log(data);
   var parseData = JSON.parse(data);
@@ -72,7 +80,15 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.kqOperation(action.data);
       mainstore.emit(CHANGE_EVENT);
-      break;    
+      break;
+    case appConstants.RESET_NUMPAD:
+      mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.CANCEL_SCAN:
+      mainstore.showSpinner();
+      mainstore.cancelScan(action.data);
+      mainstore.emit(CHANGE_EVENT);
+      break;         
     default:
       return true;
   }

@@ -5,18 +5,21 @@ var appConstants = require('../../constants/appConstants');
 var Button1 = React.createClass({
     performAction:function(module,action){
         switch(module){
-             case appConstants.PUT_BACK:
+            case appConstants.PUT_BACK:
                 switch(action){
-                     case appConstants.STAGE_ONE_BIN: console.log(action);
+                    case appConstants.STAGE_ONE_BIN: console.log(action);
                         ActionCreators.stageOneBin();
                         break;
-                     case appConstants.STAGE_ALL:
+                    case appConstants.STAGE_ALL:
                         ActionCreators.stageAllBins();
                         break;
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScan(this.props.barcode);
+                        break;    
                      default:
                         return true; 
                 }
-                break;
+            break;
                 
              default:
                 return true; 

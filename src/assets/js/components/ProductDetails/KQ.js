@@ -1,5 +1,6 @@
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
 
 var KQ = React.createClass({
   handleIncrement: function(event){
@@ -29,12 +30,29 @@ var KQ = React.createClass({
     }
   },
   componentDidMount: function(){
+    var qty = this.props.scanDetails.current_qty;
+    var itemUid = this.props.itemUid;
      setTimeout(function () {
           $('#keyboard').keyboard({
           layout: 'num',
           reposition   : true,
           alwaysOpen   : false,
-          initialFocus : true
+          initialFocus : true,
+          accepted: function(e, keypressed, el) {
+            if (e.target.value === '' || e.target.value === '0') {
+              CommonActions.resetNumpadVal(parseInt(qty));
+            }else{
+              var data  = {
+                "event_name":"quantity_update_from_gui",
+                "event_data":{
+                    "item_uid":itemUid,
+                    "quantity_updated":parseInt(e.target.value)
+                }
+              }
+              CommonActions.kq_operation(data);
+
+            }
+          }
       }) }.bind(this), 0);
   },
   showNumpad: function(){    
@@ -42,20 +60,23 @@ var KQ = React.createClass({
     kb = $('#keyboard').getkeyboard()
   },
   componentWillMount: function(){
+    mainstore.removeChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
+    this.setState(getState());
   },
   render: function(data){ 
-   
+
       return (
         <div className="kQableContainer">
              <a className="topArrow" href='#' onClick={this.handleIncrement}>
                  <span className="glyphicon glyphicon-menu-up"></span>
              </a>
              <div id='textbox'  onClick={this.showNumpad}>
-                 <input id="keyboard"  value={this.props.scanDetails.current_qty}/> 
+                 <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/> 
               </div> 
               <a className="downArrow" href='#' onClick={this.handleDecrement}>
                  <span className="glyphicon glyphicon-menu-down"></span>

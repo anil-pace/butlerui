@@ -25,7 +25,8 @@ var appConstants = {
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
-	RESET_NUMPAD :'RESET_NUMPAD'
+	RESET_NUMPAD :'RESET_NUMPAD',
+	CANCEL_SCAN : 'CANCEL_SCAN'
 };
 
 module.exports = appConstants;

@@ -87,6 +87,12 @@ var commonActions = {
       actionType: appConstants.RESET_NUMPAD, 
       data: data
     });
+  },
+  cancelScan:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CANCEL_SCAN, 
+      data: data
+    });
   }
 };
 

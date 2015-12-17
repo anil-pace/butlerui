@@ -8,6 +8,10 @@ var CHANGE_EVENT = 'change';
 var seatData, _currentSeat;
 var popupVisible = false;
 var _showSpinner = true;
+var modalContent = {
+  data:"",
+  type:""
+};
 
 function setPopUpVisible(status){
   popupVisible = status;
@@ -48,9 +52,23 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     utils.postDataToInterface(data);
   },
+
+  getModalContent:function(){
+    return modalContent.data;
+  },
+
+  getModalType:function(){
+    return modalContent.type;
+  },
+
+  setModalContent:function(data){
+    modalContent = data;
+  },
+
   getCurrentSeat:function(){
     return _currentSeat;
-  },
+  }
+
 });
 function pasreSeatData(data){console.log(data);
   var parseData = JSON.parse(data);
@@ -89,6 +107,10 @@ AppDispatcher.register(function(payload){
       mainstore.cancelScan(action.data);
       mainstore.emit(CHANGE_EVENT);
       break;         
+    case appConstants.LOAD_MODAL:
+      mainstore.setModalContent(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;    
     default:
       return true;
   }

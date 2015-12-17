@@ -55,9 +55,11 @@ var KQ = React.createClass({
           }
       }) }.bind(this), 0);
   },
-  showNumpad: function(){    
-    var kb;
-    kb = $('#keyboard').getkeyboard()
+  showNumpad: function(){  
+    if(this.props.scanDetails.kq_allowed === true){  
+      var kb;
+      kb = $('#keyboard').getkeyboard()
+    }
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);

@@ -16,7 +16,7 @@ var PopUp = React.createClass({
       var details = [];
       for (var key in productInfo) {
         if (productInfo.hasOwnProperty(key)) {
-           details.push((<tr><td>{key} </td>  <td>{productInfo[key]}</td></tr>));
+           details.push((<div><div className="col-md-6">{key} </div><div className="col-md-6">{productInfo[key]}</div></div>));
             
         }
       }

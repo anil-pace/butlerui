@@ -31,6 +31,7 @@ var KQ = React.createClass({
   },
   componentDidMount: function(){
     var qty = this.props.scanDetails.current_qty;
+    var itemUid = this.props.itemUid;
      setTimeout(function () {
           $('#keyboard').keyboard({
           layout: 'num',
@@ -38,9 +39,17 @@ var KQ = React.createClass({
           alwaysOpen   : false,
           initialFocus : true,
           accepted: function(e, keypressed, el) {
-            if (e.target.value === '' || e.target.value === '0') {console.log(e.target.value);
+            if (e.target.value === '' || e.target.value === '0') {
               CommonActions.resetNumpadVal(parseInt(qty));
             }else{
+              var data  = {
+                "event_name":"quantity_update_from_gui",
+                "event_data":{
+                    "item_uid":itemUid,
+                    "quantity_updated":parseInt(e.target.value)
+                }
+              }
+              CommonActions.kq_operation(data);
 
             }
           }

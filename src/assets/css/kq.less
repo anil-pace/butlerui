@@ -6,39 +6,45 @@
     align-items: center;
     justify-content: center;
 }
-.ui-keyboard, .ui-widget-content, .ui-widget{
-    background-color: white !important;
-    border: 2px solid #939598 !important;
-    border-radius: 0 !important;
-    padding:0 !important;
-    //width:auto !important;
-    font-size:2rem !important;
+div.ui-keyboard, div.ui-widget-content, .ui-widget{
+    background: @text-color;
+    padding:3px;
+    border-radius: 0;
     .ui-keyboard-preview-wrapper{
-        text-align: left !important;
+        border:2px solid @text-color;
+        text-align: left;
         .ui-widget-content, .ui-corner-all, .ui-keyboard-preview{
-            width:100% !important;
-            margin:0 !important;
-            border-radius:0 !important;
-            height:6vh !important;
+            width:100% ;
+            margin:0 ;
+            border-radius:0;
+            height:6vh;
+            background:#fff;
+            font-size:1.9rem;
         }
     }
     .ui-keyboard-keyset, .ui-keyboard-keyset-normal{
-        text-align: left !important;
+        text-align: left;
         .ui-keyboard-button, .ui-state-default, .ui-corner-all{
-            background-color: #fff !important;
-            color: #1a252d !important;
-            border: 3px solid #939598 !important;
-            border-radius: 0 !important;
-            margin:0  !important;
-            width:33.33% !important;
-            height:6vh !important;
-            
+            background-color: #fff;
+            color: @kq-number;
+            border: 3px solid @text-color;
+            border-radius: 5px;
+            margin:0;
+            width:70px;
+            height:60px;
+            font-weight:normal;
+
+            span{
+                font-size:@font-size-body-small;
+            }
         }
         .ui-keyboard-accept{
-            width:50% !important;
+            width:50%;
+            font-weight:bold;
         }
         .ui-keyboard-cancel{
-            width:50% !important;
+            width:50%;
+            font-weight:bold;
         }
     }
              
@@ -87,7 +93,8 @@
                 width: 100%;
                 height: 100%;
                 background-color: #fff;
-                border: none !important;                
+                border: none;  
+                color:@kq-number;              
             }
         }
         #keyboard { display: block; margin: 0 auto; width: 200px;height:200px;}

@@ -15,6 +15,7 @@ function getState(){
   }
 }
 var Operator = React.createClass({
+  _spinner : null,
   _currentSeat:'',
   getInitialState: function(){
     return getState();
@@ -51,20 +52,18 @@ var Operator = React.createClass({
   render: function(data){ 
      this.getSeatType(this.state.currentSeat);
       if(this.state.spinner === true){
+       this._spinner = <Spinner />
+      }else{
+        this._spinner ='';
+      }
         return (
           <div>
-            <Spinner />
-          </div> 
-
-        )
-     }else{
-        return (
-          <div>
+            {this._spinner}
             {this._currentSeat}
           </div> 
 
         )
-     }
+     
   }
 });
 

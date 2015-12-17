@@ -24618,8 +24618,8 @@ var Bins = React.createClass({displayName: "Bins",
         console.log(clientHeight + " " + clientWidth);
         var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
         for (var i = 0; i < myElements.length; i++) {
-            myElements[i].style.height = boxSize - 15 + "px";
-            myElements[i].style.width = boxSize - 15 + "px";
+            myElements[i].style.height = boxSize + "px";
+            myElements[i].style.width = boxSize + "px";
         }
     }
 });
@@ -24982,7 +24982,11 @@ var Notification = React.createClass({displayName: "Notification",
     render: function() {
             return (
                 React.createElement("div", {className: "notify", role: "alert"}, 
-                	React.createElement("div", {className: "glyphicon glyphicon-ok success-icon"}), 
+                	React.createElement("div", {className: "success-icon"}, 
+                		React.createElement("div", {className: "border-glyp"}, 
+                			React.createElement("span", {className: "glyphicon glyphicon-ok"})
+                		)
+                	), 
                 	this.props.notification.description
                 )
             );              

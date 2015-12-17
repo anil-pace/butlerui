@@ -49,8 +49,8 @@ var Bins = React.createClass({
         console.log(clientHeight + " " + clientWidth);
         var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
         for (var i = 0; i < myElements.length; i++) {
-            myElements[i].style.height = boxSize - 15 + "px";
-            myElements[i].style.width = boxSize - 15 + "px";
+            myElements[i].style.height = boxSize + "px";
+            myElements[i].style.width = boxSize + "px";
         }
     }
 });

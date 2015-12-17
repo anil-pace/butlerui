@@ -5,7 +5,11 @@ var Notification = React.createClass({
     render: function() {
             return (
                 <div className="notify" role="alert">
-                	<div className="glyphicon glyphicon-ok success-icon"></div>
+                	<div className="success-icon">
+                		<div className="border-glyp">
+                			<span className="glyphicon glyphicon-ok"></span>
+                		</div>
+                	</div>
                 	{this.props.notification.description}
                 </div>
             );              

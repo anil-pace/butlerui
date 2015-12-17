@@ -4,7 +4,7 @@
     flex-flow: column;
     flex-wrap: nowrap;
     .grid-container {
-        padding: 4%;
+        padding: 100px;
         display: flex;
         order: 1;
         flex-flow: column;
@@ -41,7 +41,9 @@
 //Scaffolding
 @media screen and (max-width:@container-x-lg-max) {
     html {
-        font-size: 8px;
+        font-size: 8px;        
+    }
+    .main{
         .navigation {
             .active-navigation {
                 .nav-detail {
@@ -51,10 +53,13 @@
             .passive-navigation {
                 .nav-detail {
                     .image{
-                    max-width: 45px;
-                }
+                        max-width: 45px;
+                    }
                 }
             }
         }
+        .grid-container {
+            padding:50px;
+        } 
     }
 }

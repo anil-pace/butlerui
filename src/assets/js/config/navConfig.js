@@ -15,7 +15,7 @@ var navData ={
           "screen_id":"put_back_scan",
           "code" :  "Common.001",
           "image":svgConstants.scan,
-          "message" : "Scan & Confirm",
+          "message" : "Press PPTL to confirm",
           "showImage" : true,
           "level" : 2,
           "type" : 'passive'

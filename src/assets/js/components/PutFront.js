@@ -18,7 +18,7 @@ function getStateData(){
 
 };
 
-var Operator = React.createClass({
+var PutFront = React.createClass({
   _notification:'',
   getInitialState: function(){
     return getStateData();
@@ -56,4 +56,4 @@ var Operator = React.createClass({
 
 });
 
-module.exports = Operator;
+module.exports = PutFront;

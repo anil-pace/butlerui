@@ -60,27 +60,10 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
 
 PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
   switch(action.action.actionType) {
-    case ActionTypes.TOGGLE_BIN_SELECTION:
-      PutFrontStore.toggleBinSelection(action.action.bin_id);
-      PutFrontStore.emitChange();
-      break;
-
-     case ActionTypes.SET_PUT_FRONT_DATA:
+    case ActionTypes.SET_PUT_FRONT_DATA:
       PutFrontStore.setPutFrontData(action.action.data);
       PutFrontStore.emitChange();
-      break;
-
-      case ActionTypes.STAGE_ONE_BIN: 
-        PutFrontStore.stageOneBin();
-        PutFrontStore.emitChange();
-      break; 
-
-     case ActionTypes.STAGE_ALL: 
-      PutFrontStore.stageAllBin();
-      PutFrontStore.emitChange();
-      break;  
-
-    
+      break;    
     default:
       // do nothing
   }

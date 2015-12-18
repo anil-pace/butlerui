@@ -36,7 +36,11 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
       }else if(value["selected_for_staging"]!=undefined)
         value["selected_for_staging"] = false;
     });
-    _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
+    if(_PutBackData.notification_list.length != 0){
+      _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
+    }else{
+     // _PutBackData.notification_list = undefined;
+    }
   },
 
   getStageActiveStatus:function(){
@@ -104,7 +108,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
           data["event_data"]["ppsbin_id"] = value.ppsbin_id;
         }
     });
-    utils.postDataToInterface(data);
+   utils.postDataToInterface(data, _PutBackData.seat_name);
 
   },
 

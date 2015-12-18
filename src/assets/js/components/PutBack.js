@@ -8,7 +8,9 @@ var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
-var Modal = require('./Modal/Modal')
+var Modal = require('./Modal/Modal');
+var SystemIdle = require('./SystemIdle');
+
 
 function getStateData(){
   return {
@@ -19,7 +21,9 @@ function getStateData(){
            PutBackBinData: PutBackStore.getBinData(),
            PutBackScreenId:PutBackStore.getScreenId(),
            PutBackScanDetails : PutBackStore.scanDetails(),
-           PutBackProductDetails : PutBackStore.productDetails()
+           PutBackProductDetails : PutBackStore.productDetails(),
+           PutBackSysIdle : PutBackStore.getSystemIdleState()
+
     };
 }
 
@@ -53,6 +57,7 @@ var Operator = React.createClass({
                 </div>
               </div>
             );
+
         break;
       case appConstants.PUT_BACK_SCAN:
           this._component = (
@@ -82,15 +87,25 @@ var Operator = React.createClass({
   render: function(data){
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
-    return (
-      <div className="main">
-        <Header />
-        <Navigation navData ={this.state.PutBackNavData}/>
-        {this._component}
-        {this._notification}
-      </div> 
-     
-    )
+    if(this.state.PutBackSysIdle == true){
+      return (
+        <div className="main">
+          <Header />
+          <SystemIdle />
+        </div> 
+      )
+    }
+    else{
+      return (
+        <div className="main">
+          <Header />
+          <Navigation navData ={this.state.PutBackNavData}/>
+          {this._component}
+          {this._notification}
+        </div> 
+       
+      )
+    }
   }
 });
 

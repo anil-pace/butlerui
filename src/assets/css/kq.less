@@ -77,7 +77,6 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
             align-items:center;
             font-size: 3em;
             text-decoration: none;
-            color: @btn-default-bck;
         }
             #textbox {
             display: flex;
@@ -104,12 +103,17 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
             display: flex;
             flex-grow:1;
             border: 1px solid @kq-border-color;
-            color: @kq-arrow-disabled;
             width: 100%;
             justify-content:center;
             align-items:center;
             font-size: 3em;
             text-decoration: none;
+        }
+        .enable{
+            color:@btn-default-bck;
+        }
+        .disable{
+            color: @kq-arrow-disabled;
         }
     }
 }

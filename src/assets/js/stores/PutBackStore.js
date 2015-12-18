@@ -7,6 +7,7 @@ var ActionTypes = AppConstants;
 var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
+var resourceConstants = require('../constants/resourceConstants');
 
 var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent;
 
@@ -35,7 +36,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
       }else if(value["selected_for_staging"]!=undefined)
         value["selected_for_staging"] = false;
     });
-    console.log(_PutBackData);
+    _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
   },
 
   getStageActiveStatus:function(){
@@ -91,9 +92,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getScreenId:function(){
     return _PutBackData.screen_id;
   },
-
-  
-
+  getSystemIdleState : function(){
+    return _PutBackData.is_idle;
+  },
   stageOneBin:function(){
     var data ={};
     _PutBackData.ppsbin_list.map(function(value,index){

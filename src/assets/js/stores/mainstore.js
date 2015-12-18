@@ -24,9 +24,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   removeChangeListener: function(cb){
     this.removeListener(CHANGE_EVENT, cb);
   },
-  seatData : function(data){
-    return seatData;
-  },
   getPopUpVisible: function(data){
     return popupVisible;
   },
@@ -60,7 +57,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getModalType:function(){
     return modalContent.type;
   },
-
   setModalContent:function(data){
     modalContent = data;
   },
@@ -70,13 +66,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   }
 
 });
-function pasreSeatData(data){console.log(data);
-  var parseData = JSON.parse(data);
-  if(parseData.hasOwnProperty('state_data')){
-    seatData = parseData.state_data;
-  }
-  mainstore.emit(CHANGE_EVENT);
-}
+
 AppDispatcher.register(function(payload){ 
   var action = payload.action;
   switch(action.actionType){
@@ -87,9 +77,6 @@ AppDispatcher.register(function(payload){
     case appConstants.SET_CURRENT_SEAT:
       mainstore.setCurrentSeat(action.data);
       mainstore.emit(CHANGE_EVENT);
-      break;  
-    case appConstants.SEAT_DATA:
-      pasreSeatData(action.data);
       break;
     case appConstants.POPUP_VISIBLE:
       setPopUpVisible(action.status);

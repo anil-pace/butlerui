@@ -23,7 +23,7 @@ var navData ={
   ],
   "putFront" : [
         {
-          "screen_id":"put_back_stage",
+          "screen_id":"Scan the item(s)",
           "code" :  "Common.000",
           "image":svgConstants.stage,
           "message" : "Stage Bin or Scan Item",
@@ -32,7 +32,7 @@ var navData ={
           "type" : 'passive'
         },
         {
-          "screen_id":"put_back_scan",
+          "screen_id":"Place",
           "code" :  "Common.001",
           "image":svgConstants.scan,
           "message" : "Scan & Confirm",

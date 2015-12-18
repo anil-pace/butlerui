@@ -26,13 +26,6 @@ var commonActions = {
       data: data
     });
   },
-  seatData : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.SEAT_DATA,
-      data : data
-    })
-  },
-
   toggleBinSelection:function(bin_id){
      AppDispatcher.handleAction({
       actionType: appConstants.TOGGLE_BIN_SELECTION,
@@ -57,6 +50,12 @@ var commonActions = {
   setPutBackData :function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PUT_BACK_DATA,
+      data:data
+    })
+  },
+  setPutFrontData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PUT_FRONT_DATA,
       data:data
     })
   },

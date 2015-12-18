@@ -3,6 +3,8 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 
 var KQ = React.createClass({
+  _appendClassDown : '',
+  _appendClassUp : '',
   handleIncrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
       var data  = {
@@ -55,9 +57,11 @@ var KQ = React.createClass({
           }
       }) }.bind(this), 0);
   },
-  showNumpad: function(){    
-    var kb;
-    kb = $('#keyboard').getkeyboard()
+  showNumpad: function(){  
+    if(this.props.scanDetails.kq_allowed === true){  
+      var kb;
+      kb = $('#keyboard').getkeyboard()
+    }
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -68,17 +72,31 @@ var KQ = React.createClass({
   onChange: function(){ 
     this.setState(getState());
   },
+  checkKqAllowed : function(){
+    if(this.props.scanDetails.kq_allowed === false){
+      this._appendClassUp = 'topArrow disable';
+      this._appendClassDown = 'downArrow disable';
+    }else{
+      this._appendClassUp = 'topArrow enable';
+      if(this.props.scanDetails.current_qty == 1){
+        this._appendClassDown = 'downArrow disable';
+      }else{
+        this._appendClassDown = 'downArrow enable';
+      }
+    }
+    
+  },
   render: function(data){ 
-
+    this.checkKqAllowed();
       return (
         <div className="kQableContainer">
-             <a className="topArrow" href='#' onClick={this.handleIncrement}>
+             <a className={this._appendClassUp} href='#' onClick={this.handleIncrement}>
                  <span className="glyphicon glyphicon-menu-up"></span>
              </a>
              <div id='textbox'  onClick={this.showNumpad}>
                  <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/> 
               </div> 
-              <a className="downArrow" href='#' onClick={this.handleDecrement}>
+              <a className={this._appendClassDown} href='#' onClick={this.handleDecrement}>
                  <span className="glyphicon glyphicon-menu-down"></span>
               </a>
               

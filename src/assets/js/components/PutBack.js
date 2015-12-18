@@ -27,7 +27,7 @@ function getStateData(){
     };
 }
 
-var Operator = React.createClass({
+var PutBack = React.createClass({
   _component:'',
   _notification:'',
   getInitialState: function(){
@@ -79,7 +79,7 @@ var Operator = React.createClass({
   },
 
   getNotificationComponent:function(){
-    if(this.state.PutBackNotification.description != "")
+    if(this.state.PutBackNotification != undefined)
       this._notification = <Notification notification={this.state.PutBackNotification} />
     else
       this._notification = "";
@@ -109,4 +109,4 @@ var Operator = React.createClass({
   }
 });
 
-module.exports = Operator;
+module.exports = PutBack;

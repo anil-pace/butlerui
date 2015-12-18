@@ -7,9 +7,7 @@ var SystemIdle = React.createClass({
 				<div className="systemIdle">
 					<Header />
 					<div className="idleScreen">
-						
-		  					System is Idle	
-						
+						System is Idle	
 					</div>
 				</div>
 			);

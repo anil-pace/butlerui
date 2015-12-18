@@ -24577,11 +24577,22 @@ var Bins = React.createClass({displayName: "Bins",
         console.log("did mount");
             this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
+    _findCoordinatesIndex:function(x,y){
+        var i = 0;
+        this.props.binsData.ppsbin_list.map(function(value,index){
+            if(value.coordinate[0]==x && value.coordinate[1]==y){
+                i=index;
+                return ;
+            }
+        });
+        return i;
+    },
     render: function() {
         console.log("render");
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
         var compData = this.props.binsData;
         var scrnId = this.props.screenId;
+        var self = this;
         return (
             	 React.createElement("div", {className: "bins"}, 
             	 	
@@ -24592,7 +24603,7 @@ var Bins = React.createClass({displayName: "Bins",
             	 			var list = [];
             	 			var i = 0;
             	 			for( i = i ; i<compData.structure[1] ; i++){
-            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[j*compData.structure[1] + i], screenId: scrnId}));
+            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
             	 			}
             	 			l.push((
             	 				React.createElement("div", {className: "bin-row"}, 
@@ -24851,6 +24862,7 @@ var Modal = React.createClass({displayName: "Modal",
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
+    console.log("tttt");
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 

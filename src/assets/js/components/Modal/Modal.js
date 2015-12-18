@@ -61,6 +61,7 @@ var Modal = React.createClass({
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
+    console.log("tttt");
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 

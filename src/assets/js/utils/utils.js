@@ -50,10 +50,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 var putSeatData = function(data){
 	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
       case appConstants.PUT_BACK:
-           CommonActions.setPutBackData(data.state_data);
+          CommonActions.setPutBackData(data.state_data);
       break;
       case appConstants.PUT_FRONT:
-      CommonActions.setPutFrontData(data.state_data);
+          CommonActions.setPutFrontData(data.state_data);
         break;
       case appConstants.PICK_BACK:
         break;

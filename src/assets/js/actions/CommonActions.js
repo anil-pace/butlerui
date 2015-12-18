@@ -26,13 +26,6 @@ var commonActions = {
       data: data
     });
   },
-  seatData : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.SEAT_DATA,
-      data : data
-    })
-  },
-
   toggleBinSelection:function(bin_id){
      AppDispatcher.handleAction({
       actionType: appConstants.TOGGLE_BIN_SELECTION,

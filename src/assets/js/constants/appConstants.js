@@ -6,7 +6,6 @@ var appConstants = {
 	LOGIN: "LOGIN",
 	PPS_SEATS : "/pps_seats/",
 	OPERATOR_SEAT: "OPERATOR_SEAT",
-	SEAT_DATA: "SEAT_DATA",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",

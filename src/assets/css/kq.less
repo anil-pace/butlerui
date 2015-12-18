@@ -6,50 +6,7 @@
     align-items: center;
     justify-content: center;
 }
-div.ui-keyboard, div.ui-widget-content, .ui-widget{
-    background: @text-color;
-    padding:3px;
-    border-radius: 0;
-    .ui-keyboard-preview-wrapper{
-        border:2px solid @text-color;
-        text-align: left;
-        .ui-widget-content, .ui-corner-all, .ui-keyboard-preview{
-            width:100% ;
-            margin:0 ;
-            border-radius:0;
-            height:6vh;
-            background:#fff;
-            font-size:1.6rem;
-            color:@kq-number;
-        }
-    }
-    .ui-keyboard-keyset, .ui-keyboard-keyset-normal{
-        text-align: left;
-        .ui-keyboard-button, .ui-state-default, .ui-corner-all{
-            background-color: #fff;
-            color: @kq-number;
-            border: 3px solid @text-color;
-            border-radius: 5px;
-            margin:0;
-            width:70px;
-            height:60px;
-            font-weight:normal;
 
-            span{
-                font-size:@font-size-body-small;
-            }
-        }
-        .ui-keyboard-accept{
-            width:50%;
-            font-weight:bold;
-        }
-        .ui-keyboard-cancel{
-            width:50%;
-            font-weight:bold;
-        }
-    }
-             
-}
 .rightWrapper {
     display: flex;
     flex-flow:column;
@@ -118,4 +75,74 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
     }
 }
 
+div.ui-keyboard, div.ui-widget-content, .ui-widget{
+    background: @text-color;
+    padding:3px;
+    border-radius: 0;
+    .ui-keyboard-preview-wrapper{
+        border:2px solid @text-color;
+        text-align: left;
+        .ui-widget-content, .ui-corner-all, .ui-keyboard-preview{
+            width:100% ;
+            margin:0 ;
+            border-radius:0;
+            height:6vh;
+            background:#fff;
+            font-size:1.6rem;
+            color:@kq-number;
+        }
+    }
+    .ui-keyboard-keyset, .ui-keyboard-keyset-normal{
+        text-align: center;
+        .ui-keyboard-button, .ui-state-default, .ui-corner-all{
+            background-color: #fff;
+            color: @kq-number;
+            border: 3px solid @text-color;
+            border-radius: 5px;
+            margin:0;
+            width:70px;
+            height:60px;
+            font-weight:normal;
 
+            span{
+                font-size:@font-size-body-small;
+            }
+        }
+        .ui-keyboard-accept{
+            width:50%;
+            font-weight:bold;
+        }
+        .ui-keyboard-cancel{
+            width:50%;
+            font-weight:bold;
+        }
+    }
+             
+}
+.ui-keyboard.custom-keypad {
+    .ui-keyboard-preview-wrapper {
+        input{
+            color:@kq-number;
+        }
+    }   
+    .ui-keyboard-keyset{
+        button {
+            width:60px;
+            height:50px;
+            span{
+                font-size:1.8rem;
+            }
+
+            &.ui-keyboard-accept, &.ui-keyboard-cancel{
+                width:15%;
+                font-weight:400;
+            }
+            &.ui-keyboard-space{
+                width:70%;
+            }
+            &.ui-keyboard-shift{
+                width:100px;
+            }
+        }
+    }
+}

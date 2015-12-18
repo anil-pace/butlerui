@@ -24494,17 +24494,21 @@ var Modal = require('../Modal/Modal');
 
 var Bin = React.createClass({displayName: "Bin",
 
-    _toggleBinSelection:function(bin_id){
+    _toggleBinSelection:function(bin_id,e){
+        console.log("_toggleBinSelection");
         ActionCreators.toggleBinSelection(bin_id);
+        e.stopPropagation();
+        return false;
     },
 
     showModal: function(data,type,e) {
-        e.stopPropagation();
          ActionCreators.showModal({
             data:data,
             type:type
          });
          $('.modal').modal();
+         e.stopPropagation();
+         return false;
      },
    
     render: function() {
@@ -24529,7 +24533,6 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected"}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                     ), 
-                    React.createElement(Modal, null), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 )
@@ -24539,7 +24542,6 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                     ), 
-                    React.createElement(Modal, null), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
@@ -24574,7 +24576,7 @@ var PutBackStore = require('../../stores/PutBackStore');
 var Bins = React.createClass({displayName: "Bins",
 	componentDidMount: function() {
         console.log("did mount");
-        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+            this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
     render: function() {
         console.log("render");
@@ -24841,6 +24843,10 @@ function loadComponent(modalType,modalData){
 var Modal = React.createClass({displayName: "Modal",
   componentDidMount:function(){
     console.log("ashish");
+    $(".modal").click(function(e){
+      e.stopPropagation();
+        return false;
+    });
   },
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
@@ -25351,6 +25357,7 @@ var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
+var Modal = require('./Modal/Modal')
 
 function getStateData(){
   return {
@@ -25385,6 +25392,7 @@ var Operator = React.createClass({displayName: "Operator",
       case appConstants.PUT_BACK_STAGE:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
                 React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                 ), 
@@ -25398,6 +25406,7 @@ var Operator = React.createClass({displayName: "Operator",
       case appConstants.PUT_BACK_SCAN:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
                 React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
                     React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails})
@@ -25436,7 +25445,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":241,"../stores/PutBackStore":245,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"react":215}],237:[function(require,module,exports){
+},{"../constants/appConstants":241,"../stores/PutBackStore":245,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"react":215}],237:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');

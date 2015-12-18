@@ -4,17 +4,21 @@ var Modal = require('../Modal/Modal');
 
 var Bin = React.createClass({
 
-    _toggleBinSelection:function(bin_id){
+    _toggleBinSelection:function(bin_id,e){
+        console.log("_toggleBinSelection");
         ActionCreators.toggleBinSelection(bin_id);
+        e.stopPropagation();
+        return false;
     },
 
     showModal: function(data,type,e) {
-        e.stopPropagation();
          ActionCreators.showModal({
             data:data,
             type:type
          });
          $('.modal').modal();
+         e.stopPropagation();
+         return false;
      },
    
     render: function() {
@@ -39,7 +43,6 @@ var Bin = React.createClass({
                 <div className = "bin selected">
                     <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
                     </span>
-                    <Modal />
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl selected">{compData.ppsbin_id}</div>
                 </div>
@@ -49,7 +52,6 @@ var Bin = React.createClass({
                 <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
                     <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
                     </span>
-                    <Modal />
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>

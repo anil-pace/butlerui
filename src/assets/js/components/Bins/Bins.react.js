@@ -5,7 +5,7 @@ var PutBackStore = require('../../stores/PutBackStore');
 var Bins = React.createClass({
 	componentDidMount: function() {
         console.log("did mount");
-        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+            this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
     render: function() {
         console.log("render");

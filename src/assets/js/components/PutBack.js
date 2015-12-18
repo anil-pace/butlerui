@@ -8,6 +8,7 @@ var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
+var Modal = require('./Modal/Modal')
 
 function getStateData(){
   return {
@@ -42,6 +43,7 @@ var Operator = React.createClass({
       case appConstants.PUT_BACK_STAGE:
           this._component = (
               <div className='grid-container'>
+                <Modal />
                 <div className='main-container'>
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
                 </div>
@@ -55,6 +57,7 @@ var Operator = React.createClass({
       case appConstants.PUT_BACK_SCAN:
           this._component = (
               <div className='grid-container'>
+                <Modal />
                 <div className='main-container'>
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                     <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} />

@@ -52,6 +52,10 @@ function loadComponent(modalType,modalData){
 var Modal = React.createClass({
   componentDidMount:function(){
     console.log("ashish");
+    $(".modal").click(function(e){
+      e.stopPropagation();
+        return false;
+    });
   },
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);

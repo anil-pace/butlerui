@@ -25,7 +25,7 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PutFrontData.screen_id === "put_front_rack_waiting") {
+        if (_PutFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
             _NavData = navConfig.putFront[0];
             _NavData[0].type = 'active';
         } else {

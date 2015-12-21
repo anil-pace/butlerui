@@ -22,7 +22,8 @@ function getStateData(){
            PutBackScreenId:PutBackStore.getScreenId(),
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
-           PutBackSysIdle : PutBackStore.getSystemIdleState()
+           PutBackSysIdle : PutBackStore.getSystemIdleState(),
+           PutBackServerNavData : PutBackStore.getServerNavData()
 
     };
 }
@@ -95,11 +96,11 @@ var PutBack = React.createClass({
         </div> 
       )
     }
-    else{
+    else{ console.log(this.state.PutBackServerNavData);
       return (
         <div className="main">
           <Header />
-          <Navigation navData ={this.state.PutBackNavData}/>
+          <Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData}/>
           {this._component}
           {this._notification}
         </div> 

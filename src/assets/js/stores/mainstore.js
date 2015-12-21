@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var seatData, _currentSeat;
+var seatData, _currentSeat, _seatName;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
@@ -28,7 +28,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return popupVisible;
   },
   kqOperation: function(data){
-    utils.postDataToInterface(data);
+    utils.postDataToInterface(data, _seatName);
   },
   showSpinner : function(){
     _showSpinner = true;
@@ -36,9 +36,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(seat){
+  setCurrentSeat:function(data){
     _showSpinner = false;
-    _currentSeat  = seat;
+    _seatName = data.seat_name;
+    _currentSeat  = data.mode + "_" + data.seat_type;
   },
   cancelScan : function(barcode){
     var data = {
@@ -46,8 +47,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       "event_data": {
         "barcode": barcode
       }
-    }
-    utils.postDataToInterface(data);
+    };
+    utils.postDataToInterface(data, _seatName);
   },
 
   getModalContent:function(){

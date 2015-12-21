@@ -1,6 +1,7 @@
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
+var appConstants = require('../../constants/appConstants');
 
 var Bin = React.createClass({
 
@@ -44,7 +45,7 @@ var Bin = React.createClass({
                 </div>
             );
 
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == "put_back_scan" || this.props.screenId == "put_front_scan_stage"))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == "put_back_scan" || this.props.screenId == appConstants.PUT_FRONT_SCAN))
             return (
                 <div className = "bin selected">
                     <div className ="item-count">{compData.ppsbin_count}</div>
@@ -60,7 +61,7 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == "put_back_scan" || this.props.screenId == "put_front_scan_stage") )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == "put_back_scan" || this.props.screenId == appConstants.PUT_FRONT_SCAN) )
             return (
                 <div className = "bin use" >
                    <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")}  >

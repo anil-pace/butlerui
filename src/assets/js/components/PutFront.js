@@ -44,7 +44,7 @@ var PutFront = React.createClass({
  
 
   getNotificationComponent:function(){
-    if(this.state.PutFrontNotification.description != "")
+    if(this.state.PutFrontNotification != "")
       this._notification = <Notification notification={this.state.PutFrontNotification} />
     else
       this._notification = "";
@@ -62,7 +62,7 @@ var PutFront = React.createClass({
             );
 
         break;
-      case appConstants.PUT_FRONT_STAGE_OR_SCAN:
+      case appConstants.PUT_FRONT_SCAN:
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
@@ -72,7 +72,7 @@ var PutFront = React.createClass({
               </div>
             );
         break;
-      case appConstants.PUT_FRONT_PLACE_ITEM_IN_RACK:
+      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
           this._component = (
               <div className='grid-container'>
                 <div className="single-bin">

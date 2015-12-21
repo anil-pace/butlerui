@@ -17,7 +17,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	        //setTimeout(CommonActions.seatData, 0, evt.data);
 	        var data = JSON.parse(evt.data);
 	        putSeatData(data);
-	        CommonActions.setCurrentSeat(data.state_data.mode + "_" + data.state_data.seat_type);
+	        CommonActions.setCurrentSeat(data.state_data);
 	        
 	      };
 	      ws.onclose = function(){ 

@@ -9,7 +9,7 @@ var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
-var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent, _serverNavData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -75,6 +75,10 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     });
     return _NavData;
   },
+  getServerNavData : function(){
+    _serverNavData = _PutBackData.header_msge_list[0];
+    return _serverNavData;
+  },
   getNotificationData : function() { 
       return _PutBackData.notification_list[0];
   },
@@ -101,13 +105,14 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
   stageOneBin:function(){
     var data ={};
-    _PutBackData.ppsbin_list.map(function(value,index){
+    _PutBackData.ppsbin_list.map(function(value,index){ 
          if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
           data["event_name"] = "stage_ppsbin";
           data["event_data"] = {};
           data["event_data"]["ppsbin_id"] = value.ppsbin_id;
         }
     });
+
    utils.postDataToInterface(data, _PutBackData.seat_name);
 
   },
@@ -116,7 +121,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     var data ={};
     data["event_name"] = "stage_all";
     data["event_data"]= '';
-     utils.postDataToInterface(data);
+     utils.postDataToInterface(data, _PutBackData.seat_name);
   },
   scanDetails : function(){ console.log(_PutBackData);
     _scanDetails = _PutBackData.scan_details;

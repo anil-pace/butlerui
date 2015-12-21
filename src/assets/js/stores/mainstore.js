@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var seatData, _currentSeat, _seatName;
+var seatData, _currentSeat, _seatName, _pptlEvent;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
@@ -63,7 +63,35 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getCurrentSeat:function(){
+    switch(_currentSeat){
+      case appConstants.PUT_BACK:
+         _pptlEvent = 'secondary_button_press';
+        break;
+      case appConstants.PUT_FRONT:
+          _pptlEvent = 'primary_button_press';
+        break;
+      case appConstants.PICK_BACK:
+          _pptlEvent = 'secondary_button_press';
+        break;
+      case appConstants.PICK_FRONT:
+          _pptlEvent = 'primary_button_press';
+        break;
+      default:
+        return true; 
+    }
     return _currentSeat;
+  },
+  pptlPress : function(data){ console.log(data);
+    var data = {
+      "event_name": "process_ppsbin_event",
+      "event_data": {
+        "ppsbin_id" : data.bin_id,
+        "ppsbin_state": data.bin_state,
+        "ppsbin_event" : _pptlEvent
+      }
+    };
+    utils.postDataToInterface(data, _seatName);
+
   }
 
 });
@@ -98,7 +126,12 @@ AppDispatcher.register(function(payload){
     case appConstants.LOAD_MODAL:
       mainstore.setModalContent(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;    
+      break; 
+    case appConstants.PPTL_PRESS:
+      mainstore.showSpinner();
+      mainstore.pptlPress(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;      
     default:
       return true;
   }

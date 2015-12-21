@@ -1,6 +1,6 @@
 var appConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
-	INTERFACE_IP : "http://192.168.2.110:5000",
+	WEBSOCKET_IP : "ws://192.168.2.219:8888/ws",
+	INTERFACE_IP : "http://192.168.2.219:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
@@ -29,7 +29,8 @@ var appConstants = {
 	KQ_OPERATION : 'KQ_OPERATION',
 	RESET_NUMPAD :'RESET_NUMPAD',
 	CANCEL_SCAN : 'CANCEL_SCAN',
-	LOAD_MODAL:'load_modal'
+	LOAD_MODAL:'load_modal',
+	PPTL_PRESS : 'PPTL_PRESS'
 };
 
 module.exports = appConstants;

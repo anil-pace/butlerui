@@ -5,12 +5,18 @@ var Modal = require('../Modal/Modal');
 var Bin = React.createClass({
 
     _toggleBinSelection:function(bin_id,e){
-        console.log("_toggleBinSelection");
         ActionCreators.toggleBinSelection(bin_id);
         e.stopPropagation();
         return false;
     },
-
+    pressPptl : function(bin_id, binState){
+        var data  ={
+            'bin_id' : bin_id,
+            'bin_state' : binState
+        };
+        console.log(data);
+        ActionCreators.pptlPress(data);
+    },
     showModal: function(data,type,e) {
          ActionCreators.showModal({
             data:data,
@@ -38,13 +44,11 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
+        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
             return (
                 <div className = "bin selected">
-                    <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                    </span>
                     <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected">{compData.ppsbin_id}</div>
+                    <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
                 </div>
             );
         else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )

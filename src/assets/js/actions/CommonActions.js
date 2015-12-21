@@ -95,9 +95,14 @@ var commonActions = {
   },
 
   showModal:function(data){
-    console.log(data);
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
+      data:data
+    })
+  },
+  pptlPress : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.PPTL_PRESS,
       data:data
     })
   }

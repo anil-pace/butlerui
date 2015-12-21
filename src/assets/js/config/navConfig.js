@@ -4,7 +4,7 @@ var navData ={
   "putBack" : [
 		    {
           "screen_id":"put_back_stage",
-          "code" :  "Common.000",
+          "code" :  "PtB.A.001",
           "image":svgConstants.stage,
           "message" : "Stage Bin or Scan Item",
           "showImage" : true,
@@ -13,7 +13,7 @@ var navData ={
         },
         {
           "screen_id":"put_back_scan",
-          "code" :  "Common.001",
+          "code" :  "PtB.A.012",
           "image":svgConstants.scan,
           "message" : "Place item in bin {0} and press PPTL to confirm",
           "showImage" : true,

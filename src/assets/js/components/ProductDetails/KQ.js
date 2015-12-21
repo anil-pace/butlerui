@@ -89,18 +89,17 @@ var KQ = React.createClass({
   render: function(data){ 
     this.checkKqAllowed();
       return (
-        <div className="kQableContainer">
-             <a className={this._appendClassUp} href='#' onClick={this.handleIncrement}>
-                 <span className="glyphicon glyphicon-menu-up"></span>
-             </a>
-             <div id='textbox'  onClick={this.showNumpad}>
-                 <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/> 
-              </div> 
-              <a className={this._appendClassDown} href='#' onClick={this.handleDecrement}>
-                 <span className="glyphicon glyphicon-menu-down"></span>
-              </a>
-              
-      </div>
+        <div className="kq-wrapper">
+          <a href="#" className={this._appendClassUp} onClick={this.handleIncrement}>
+            <span className="glyphicon glyphicon-menu-up"></span>
+          </a>
+          <div id='textbox' onClick={this.showNumpad}>
+            <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/> 
+          </div>
+          <a href="#" className={this._appendClassDown} onClick={this.handleDecrement}>
+            <span className="glyphicon glyphicon-menu-down"></span>
+          </a>
+        </div>
     )
   }
 });

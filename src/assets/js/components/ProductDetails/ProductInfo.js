@@ -48,14 +48,14 @@ var ProductInfo = React.createClass({
   render: function(data){ 
     console.log(this.state.popupVisible);
     return (       
-        
-           <div className="imgContainer">
-             <img src={this.props.productDetails.product_local_image_url} />
-             <div className="imgFooter" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,this.props.productDetails,"product-detail")}>
+            <div className="product-details-wrapper">
+              <div className="img-container">
+                  <img src={this.props.productDetails.product_local_image_url}  />
+              </div>
+              <div className="view-more-link" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,this.props.productDetails,"product-detail")}>
                 <span> View More </span>                
-                <span className="glyphicon glyphicon-info-sign"></span>
-             </div>
-             
+                <i className="glyphicon glyphicon-info-sign"></i>
+              </div>              
             </div>
     )
   }

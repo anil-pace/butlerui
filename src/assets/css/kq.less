@@ -10,68 +10,85 @@
 .rightWrapper {
     display: flex;
     flex-flow:column;
-    flex-grow:1;
     align-items: center;
     justify-content: center;
     flex:0 0 12.5%;
     align-items:center;
     margin-right: 5%;
     margin-left: 5%;
-    .kQableContainer {
-        flex-grow:1;
-        display: flex;
-        flex-flow:column;
-        width: 100%;
-        align-items:center;
-        padding-top: 30px;
-        box-sizing: border-box;
-        .topArrow {
-            display: flex;
-            flex-grow:1;
-            border: 1px solid @kq-border-color;
-            width: 100%;
+
+    .product-details-wrapper{
+        border:1px solid @kq-border-color;
+        margin-bottom:25px;
+        .view-more-link{
+            flex:1.5 0 0;
+            display:flex;
             justify-content:center;
             align-items:center;
-            font-size: 3em;
-            text-decoration: none;
+            background:@passive-nav-bck;
+            font-size:1.8rem;
+                span{
+                    color:#fff;
+                    margin-right:10px;
+                }
+                i{
+                    color:#fff;
+                }        
         }
-            #textbox {
-            display: flex;
-            flex-grow: 3;
-            border-left: 1px solid @kq-border-color;
-            border-right: 1px solid @kq-border-color;
-            font-size: @font-size-body-kq;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            #keyboard {
-                display: block;
-                margin: 0 auto;
-                width: 100%;
-                height: 100%;
-                background-color: #fff;
-                border: none;  
-                color:@kq-number;              
+        .img-container{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex:9 0 auto;
+            width:100%;
+            img{
+                max-width:100%;
             }
         }
-        //#keyboard { display: block; margin: 0 auto; width: 200px;height:200px;}
+    }
 
-        .downArrow {
-            display: flex;
-            flex-grow:1;
-            border: 1px solid @kq-border-color;
-            width: 100%;
+    .kq-wrapper {
+        a {
+            flex:1.5 0 0;
+            display:flex;
             justify-content:center;
             align-items:center;
-            font-size: 3em;
-            text-decoration: none;
+            border: 1px solid @kq-border-color;
+            font-size:@font-size-body-medium;
+            &:hover, &:focus{
+                text-decoration:none;
+            }
+            &.enable{
+                color:@btn-default-bck;
+            }
+            &.disable{
+                color: @kq-arrow-disabled;
+            }
         }
-        .enable{
-            color:@btn-default-bck;
+        #textbox{
+            flex:4 0 0;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border-left: 1px solid @kq-border-color;
+            border-right: 1px solid @kq-border-color;
+            font-size: @font-size-body-kq;            
+            #keyboard {
+                background: #fff;
+                border: none;  
+                color:@kq-number;
+                width:100%;
+                border-radius:0;
+                padding:0;
+            }             
         }
-        .disable{
-            color: @kq-arrow-disabled;
-        }
+    }
+
+    .product-details-wrapper, .kq-wrapper {
+        flex:1 0 0;
+        width:100%;
+        display:flex;
+        flex-flow:column;
     }
 }
 
@@ -146,3 +163,4 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
         }
     }
 }
+

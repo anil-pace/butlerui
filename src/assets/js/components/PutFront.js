@@ -20,7 +20,8 @@ function getStateData(){
            PutFrontBinData: PutFrontStore.getBinData(),
            PutFrontScanDetails : PutFrontStore.scanDetails(),
            PutFrontProductDetails : PutFrontStore.productDetails(),
-           PutFrontRackDetails: PutFrontStore.getRackDetails()
+           PutFrontRackDetails: PutFrontStore.getRackDetails(),
+           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin()
     };
 
 };
@@ -75,7 +76,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <div className="single-bin">
-                    <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+                    <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                 </div>
                 <div className='main-container'>
                   <Rack />

@@ -73,6 +73,17 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
 
     getRackDetails: function() {
         return _PutFrontData.rack_details;
+    },
+
+    getCurrentSelectedBin:function(){
+       var binData = {};
+        binData["structure"] = [1,1];
+        binData["ppsbin_list"] = [];
+        _PutFrontData.ppsbin_list.map(function(value,index){
+          if(value.selected_state == true)
+              binData["ppsbin_list"].push(value);
+        })
+        return binData;
     }
 
 });

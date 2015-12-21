@@ -81,5 +81,6 @@ var navData ={
           "type" : 'passive'
         }
   ]
+};
 
 module.exports = navData;

@@ -29,7 +29,6 @@ var Bin = React.createClass({
    
     render: function() {
         var compData = this.props.binData;
-        console.log("ashu" + this.props.screenId);
         if(compData.ppsbin_state == "staged" )
             return (
                 <div className = "bin staged" >
@@ -37,7 +36,7 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == appConstants.PUT_BACK_STAGE)
             return (
                 <div className = "bin use selected-staging" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
                     <div className ="item-count">{compData.ppsbin_count}</div>
@@ -45,14 +44,14 @@ var Bin = React.createClass({
                 </div>
             );
 
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == "put_back_scan" || this.props.screenId == appConstants.PUT_FRONT_SCAN))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN))
             return (
                 <div className = "bin selected">
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
+        else if(compData.ppsbin_count > 0 && this.props.screenId == appConstants.PUT_BACK_STAGE )
             return (
                 <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
                     <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
@@ -61,7 +60,7 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == "put_back_scan" || this.props.screenId == appConstants.PUT_FRONT_SCAN) )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN) )
             return (
                 <div className = "bin use" >
                    <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")}  >

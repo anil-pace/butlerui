@@ -30,9 +30,11 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
             _NavData[0].type = 'active';
         } else {
             _NavData = navConfig.putFront[1];
-            _NavData.map(function(data, index) {
-                if (_PutFrontData.screen_id === data.screen_id) {
+            _NavData.map(function(data, index) { 
+                if (_PutFrontData.screen_id === data.screen_id) {console.log(_PutFrontData);
                     _NavData[index].type = 'active';
+                }else{
+                     _NavData[index].type = 'passive';
                 }
             });
         }

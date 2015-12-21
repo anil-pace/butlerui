@@ -5,8 +5,9 @@ var RackRow = require('./RackRow');
 var MsuRack = React.createClass({
 	render: function(){
 
-        
-
+        var rackDetails = this.props.rackData.rack_type_rec;
+        var compartment_details = this.props.rackData.slot_barcodes;
+/*
         var rackDetails = [
 
            [
@@ -99,7 +100,7 @@ var MsuRack = React.createClass({
                 "005.1.B.03",
                 "005.1.B.03"
             ];
-
+*/
         var slotStart,slotEnd,i;
         var slotIndexList = [];
         var eachRow =[];

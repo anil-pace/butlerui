@@ -21,7 +21,7 @@ function getStateData(){
            PutFrontScanDetails : PutFrontStore.scanDetails(),
            PutFrontProductDetails : PutFrontStore.productDetails(),
            PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin()
+           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
     };
 
 };
@@ -44,7 +44,7 @@ var PutFront = React.createClass({
  
 
   getNotificationComponent:function(){
-    if(this.state.PutFrontNotification != "")
+    if(this.state.PutFrontNotification != undefined)
       this._notification = <Notification notification={this.state.PutFrontNotification} />
     else
       this._notification = "";
@@ -79,7 +79,7 @@ var PutFront = React.createClass({
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                 </div>
                 <div className='main-container'>
-                  <Rack />
+                  <Rack rackData = {this.state.PutFrontRackDetails}/>
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
                 </div>
                 <div className = 'cancel-scan'>

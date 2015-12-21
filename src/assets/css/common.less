@@ -4,6 +4,7 @@
     flex-flow: column;
     flex-wrap: nowrap;
     .grid-container {
+        position: relative;
         padding: 100px;
         display: flex;
         order: 1;
@@ -15,6 +16,23 @@
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
+        .single-bin {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                .bins {
+                    height: 200px;
+                    width: 200px;
+                    .bin-row {
+                        height: 200px;
+                        width: 200px;
+                        .bin {
+                            height: 200px;
+                            width: 200px;
+                        }
+                    }
+                }
+            }
         .main-container {
             position: relative;
             display: flex;
@@ -24,6 +42,7 @@
             flex-wrap: nowrap;
             box-sizing: border-box;
             width: 100%;
+            
         }
         .staging-action {
             margin-top: 50px;
@@ -41,9 +60,9 @@
 //Scaffolding
 @media screen and (max-width:@container-x-lg-max) {
     html {
-        font-size: 8px;        
+        font-size: 8px;
     }
-    .main{
+    .main {
         .navigation {
             .active-navigation {
                 .nav-detail {
@@ -52,14 +71,14 @@
             }
             .passive-navigation {
                 .nav-detail {
-                    .image{
+                    .image {
                         max-width: 45px;
                     }
                 }
             }
         }
         .grid-container {
-            padding:50px;
-        } 
+            padding: 50px;
+        }
     }
 }

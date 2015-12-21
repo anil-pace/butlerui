@@ -1,4 +1,3 @@
-
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -13,77 +12,80 @@ var _PutFrontData, _NavData, _NotificationData;
 
 var PutFrontStore = assign({}, EventEmitter.prototype, {
 
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
 
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
 
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
 
-  
-
-  getNavData : function () {
-    _NavData = navConfig.putFront;
-    console.log(_NavData);
-    navConfig.putFront.map(function(data,index){
-       if(_PutFrontData.screen_id === data.screen_id ){
-          _NavData[index].type = 'active'; 
-          _NavData[index].showImage = true; 
-        }else{
-          _NavData[index].type = 'passive';
-          _NavData[index].showImage = false; 
+    getNavData: function() {
+        if (_PutFrontData.screen_id === "put_front_rack_waiting") {
+            _NavData = navConfig.putFront[0];
+            _NavData[0].type = 'active';
+        } else {
+            _NavData = navConfig.putFront[1];
+            _NavData.map(function(data, index) {
+                if (_PutFrontData.screen_id === data.screen_id) {
+                    _NavData[index].type = 'active';
+                }
+            });
         }
-    });
-    return _NavData;
-  },
-  getNotificationData : function() { 
-      return _PutFrontData.notification_list[0];
-  },
-  setPutFrontData:function(data){
-    _PutFrontData = data;
-  },
+        return _NavData;
+    },
+    getNotificationData: function() {
+        return _PutFrontData.notification_list[0];
+    },
+    setPutFrontData: function(data) {
+        _PutFrontData = data;
+    },
 
-  getStateData:function(){
-    return _PutFrontData;
-  },
+    getStateData: function() {
+        return _PutFrontData;
+    },
 
-  getScreenId:function(){
-    return _PutFrontData.screen_id;
-  },
+    getScreenId: function() {
+        return _PutFrontData.screen_id;
+    },
+
+    getBinData: function() {
+        var binData = {};
+        binData["structure"] = _PutFrontData.structure;
+        binData["ppsbin_list"] = _PutFrontData.ppsbin_list;
+        return binData;
+    },
+
+    scanDetails: function() {
+        console.log(_PutFrontData);
+        _scanDetails = _PutFrontData.scan_details;
+        return _scanDetails;
+    },
+    productDetails: function() {
+        console.log(_PutFrontData);
+        _prodDetails = _PutFrontData.product_info;
+        return _prodDetails;
+    },
+
+    getRackDetails: function() {
+        return _PutFrontData.rack_details;
+    }
 
 });
 
 PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.action.actionType) {
-    case ActionTypes.TOGGLE_BIN_SELECTION:
-      PutFrontStore.toggleBinSelection(action.action.bin_id);
-      PutFrontStore.emitChange();
-      break;
-
-     case ActionTypes.SET_PUT_FRONT_DATA:
-      PutFrontStore.setPutFrontData(action.action.data);
-      PutFrontStore.emitChange();
-      break;
-
-      case ActionTypes.STAGE_ONE_BIN: 
-        PutFrontStore.stageOneBin();
-        PutFrontStore.emitChange();
-      break; 
-
-     case ActionTypes.STAGE_ALL: 
-      PutFrontStore.stageAllBin();
-      PutFrontStore.emitChange();
-      break;  
-
-    
-    default:
-      // do nothing
-  }
+    switch (action.action.actionType) {
+        case ActionTypes.SET_PUT_FRONT_DATA:
+            PutFrontStore.setPutFrontData(action.action.data);
+            PutFrontStore.emitChange();
+            break;
+        default:
+            // do nothing
+    }
 
 });
 

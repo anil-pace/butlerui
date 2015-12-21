@@ -27,7 +27,7 @@ function getStateData(){
     };
 }
 
-var Operator = React.createClass({
+var PutBack = React.createClass({
   _component:'',
   _notification:'',
   getInitialState: function(){
@@ -109,4 +109,4 @@ var Operator = React.createClass({
   }
 });
 
-module.exports = Operator;
+module.exports = PutBack;

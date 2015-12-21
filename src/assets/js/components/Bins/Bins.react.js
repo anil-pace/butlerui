@@ -57,6 +57,7 @@ var Bins = React.createClass({
         console.log("ashu");
         var clientHeight = $('.bins').height();
         var clientWidth = $('.bins').width();
+        console.log($(".bins").innerHeight());
         console.log(clientHeight + " " + clientWidth);
         var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
         for (var i = 0; i < myElements.length; i++) {

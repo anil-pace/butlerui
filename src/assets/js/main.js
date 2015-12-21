@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var LoginForm = require('./components/LoginForm'); 
+var Operator = require('./components/Operator');
 
 var App = React.createClass({
   getInitialState: function(){

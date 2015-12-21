@@ -3,23 +3,31 @@ var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
+var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
+var Rack = require('./Rack/MsuRack.js');
 
 
 function getStateData(){
   return {
            PutFrontNavData : PutFrontStore.getNavData(),
-           PutFrontNotification : PutFrontStore.getNotificationData()
+           PutFrontNotification : PutFrontStore.getNotificationData(),
+           PutFrontScreenId:PutFrontStore.getScreenId(),
+           PutFrontBinData: PutFrontStore.getBinData(),
+           PutFrontScanDetails : PutFrontStore.scanDetails(),
+           PutFrontProductDetails : PutFrontStore.productDetails(),
+           PutFrontRackDetails: PutFrontStore.getRackDetails()
     };
 
 };
 
 var PutFront = React.createClass({
   _notification:'',
+  _component:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -41,13 +49,59 @@ var PutFront = React.createClass({
       this._notification = "";
   },
 
+  getScreenComponent : function(screen_id){
+    switch(screen_id){
+      case appConstants.PUT_FRONT_WAITING_FOR_RACK:
+          this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                    <Spinner />
+                 </div>
+              </div>
+            );
+
+        break;
+      case appConstants.PUT_FRONT_STAGE_OR_SCAN:
+          this._component = (
+              <div className='grid-container'>
+                <div className='main-container'>
+                  <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
+                </div>
+              </div>
+            );
+        break;
+      case appConstants.PUT_FRONT_PLACE_ITEM_IN_RACK:
+          this._component = (
+              <div className='grid-container'>
+                <div className="single-bin">
+                    <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+                </div>
+                <div className='main-container'>
+                  <Rack />
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontProductDetails.product_sku} color={"black"}/>
+                </div>
+
+              </div>
+            );
+        break;
+      default:
+        return true; 
+    }
+  },
+
   render: function(data){
     this.getNotificationComponent();
+    this.getScreenComponent(this.state.PutFrontScreenId);
    
     return (
       <div className="main">
         <Header />
         <Navigation navData ={this.state.PutFrontNavData} />
+        {this._component}
         {this._notification}
       </div> 
      

@@ -14,7 +14,6 @@ var Bin = React.createClass({
             'bin_id' : bin_id,
             'bin_state' : binState
         };
-        console.log(data);
         ActionCreators.pptlPress(data);
     },
     showModal: function(data,type,e) {
@@ -44,7 +43,8 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
+
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == "put_back_scan" || this.props.screenId == "put_front_scan_stage"))
             return (
                 <div className = "bin selected">
                     <div className ="item-count">{compData.ppsbin_count}</div>
@@ -60,7 +60,7 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_scan" )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == "put_back_scan" || this.props.screenId == "put_front_scan_stage") )
             return (
                 <div className = "bin use" >
                    <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")}  >

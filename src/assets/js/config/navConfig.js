@@ -82,6 +82,4 @@ var navData ={
         }
   ]
 
-};
-
 module.exports = navData;

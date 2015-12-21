@@ -8,13 +8,19 @@ var utils  = require('../utils/utils.js');
 
 var CHANGE_EVENT = 'change';
 var flag = false;
+var currentSeat = [];
 
 function getParameterByName(name){
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    /*name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search); console.log(name);
-    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
-    listPpsSeat(currentSeat[0]);
+        results = regex.exec(location.search); console.log(regex);
+        if(results === null){
+          results = decodeURIComponent(results[1].replace(/\+/g, " ")); 
+        }else{
+          results = '';
+        } console.log(results);*/
+     //results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); 
+    listPpsSeat(null);
 }
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
@@ -23,7 +29,7 @@ if(retrieved_token != null){
           xhr.setRequestHeader("Authentication-Token", authentication_token)
   }
 }
-var currentSeat = [];
+
 
 function listPpsSeat(seat){
     if(seat === null){

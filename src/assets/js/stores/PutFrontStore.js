@@ -86,7 +86,6 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
         default:
             // do nothing
     }
-
 });
 
 module.exports = PutFrontStore;

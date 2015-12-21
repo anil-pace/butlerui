@@ -1,7 +1,7 @@
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var PutBack = React.createClass({
+var PickFront = React.createClass({
   getInitialState: function(){
     return {
       
@@ -29,4 +29,4 @@ var PutBack = React.createClass({
   }
 });
 
-module.exports = PutBack;
+module.exports = PickFront;

@@ -24758,7 +24758,7 @@ function getState(){
       seatList : loginstore.seatList(),
       username : 'kerry',
       password : 'gorapj',
-      seat_name : '10_front_1'
+      seat_name : 'back_10'
   }
 }
 var LoginForm = React.createClass({displayName: "LoginForm",
@@ -24795,14 +24795,14 @@ var LoginForm = React.createClass({displayName: "LoginForm",
     });
 
   },
-  render: function(){
+  render: function(){console.log(this.state.seatList);
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
-          seatData = this.state.seatList.map(function(data, index){ 
-            if(data[0].hasOwnProperty('seat_type')){
+          seatData = this.state.seatList[0].map(function(data, index){ 
+            if(data.hasOwnProperty('seat_type')){
                return (
-                  React.createElement("option", {key: 'pps' + index}, "PPS ", data[0].seat_type, " ", data[0].pps_id)
+                  React.createElement("option", {key: 'pps' + index}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
             }else{console.log(data);
                  return( React.createElement("option", {key: index, value: data}, data))
@@ -25129,7 +25129,7 @@ module.exports = Operator;
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var PutBack = React.createClass({displayName: "PutBack",
+var PickBack = React.createClass({displayName: "PickBack",
   getInitialState: function(){
     return {
       
@@ -25157,7 +25157,7 @@ var PutBack = React.createClass({displayName: "PutBack",
   }
 });
 
-module.exports = PutBack;
+module.exports = PickBack;
 
 },{"../stores/mainstore":254,"react":215}],232:[function(require,module,exports){
 var React = require('react');
@@ -25498,7 +25498,7 @@ var PutBack = React.createClass({displayName: "PutBack",
   },
 
   getNotificationComponent:function(){
-    if(this.state.PutBackNotification.description != "")
+    if(this.state.PutBackNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification})
     else
       this._notification = "";
@@ -26026,8 +26026,10 @@ var navData = {
         "level": 2,
         "type": 'passive'
     }]
+  };
 
-};
+
+
 
 module.exports = navData;
 },{"../constants/svgConstants":248}],246:[function(require,module,exports){
@@ -26037,7 +26039,9 @@ var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
+	API : '/api',
 	PPS_SEATS : "/pps_seats/",
+	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
@@ -26166,7 +26170,11 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
       }else if(value["selected_for_staging"]!=undefined)
         value["selected_for_staging"] = false;
     });
-    _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
+    if(_PutBackData.notification_list.length != 0){
+      _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
+    }else{
+     // _PutBackData.notification_list = undefined;
+    }
   },
 
   getStageActiveStatus:function(){
@@ -26234,7 +26242,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
           data["event_data"]["ppsbin_id"] = value.ppsbin_id;
         }
     });
-    utils.postDataToInterface(data);
+   utils.postDataToInterface(data, _PutBackData.seat_name);
 
   },
 
@@ -26372,7 +26380,6 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
         default:
             // do nothing
     }
-
 });
 
 module.exports = PutFrontStore;
@@ -26387,13 +26394,19 @@ var utils  = require('../utils/utils.js');
 
 var CHANGE_EVENT = 'change';
 var flag = false;
+var currentSeat = [];
 
 function getParameterByName(name){
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    /*name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search); console.log(name);
-    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
-    listPpsSeat(currentSeat[0]);
+        results = regex.exec(location.search); console.log(regex);
+        if(results === null){
+          results = decodeURIComponent(results[1].replace(/\+/g, " ")); 
+        }else{
+          results = '';
+        } console.log(results);*/
+     //results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); 
+    listPpsSeat(null);
 }
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
@@ -26402,7 +26415,7 @@ if(retrieved_token != null){
           xhr.setRequestHeader("Authentication-Token", authentication_token)
   }
 }
-var currentSeat = [];
+
 
 function listPpsSeat(seat){
     if(seat === null){
@@ -26612,12 +26625,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
-  	postDataToInterface : function(data){ 
+  	postDataToInterface : function(data, seat_name){ 
+      console.log(data);
   		$.ajax({
         type: 'POST',
-        url: appConstants.INTERFACE_IP,
-        data: data,
-        dataType : 'json'
+        url: appConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,
+        data: JSON.stringify(data),
+        dataType:"json",
+        headers: {
+         'content-type' : 'application/json',
+         'accept' : 'application/json'
+        }
         }).done(function(response) {
 
         }).fail(function(jqXhr) {
@@ -26626,7 +26644,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   	}
 }); 
 
-var putSeatData = function(data){
+var putSeatData = function(data){ console.log(data);
 	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
       case appConstants.PUT_BACK:
           CommonActions.setPutBackData(data.state_data);
@@ -26644,5 +26662,4 @@ var putSeatData = function(data){
 }
 
 module.exports = utils;
-
 },{"../actions/CommonActions":217,"../constants/appConstants":246,"events":1,"react/lib/Object.assign":106}]},{},[250]);

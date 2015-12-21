@@ -79,7 +79,9 @@ var navData = {
         "level": 2,
         "type": 'passive'
     }]
+  };
 
-};
+
+
 
 module.exports = navData;

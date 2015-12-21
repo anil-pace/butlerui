@@ -33,13 +33,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
-  	postDataToInterface : function(data, seat_name){ console.log(data);
+  	postDataToInterface : function(data, seat_name){ 
+      console.log(data);
   		$.ajax({
         type: 'POST',
         url: appConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,
-        data: data,
-        dataType : 'json',
-        headers: { 'Authentication-Token': 'WyIxIiwiZGE1NmJlYzFhZmRhMzY5ZDlkZGMzOTBlNjBlNDViODIiXQ' }
+        data: JSON.stringify(data),
+        dataType:"json",
+        headers: {
+         'content-type' : 'application/json',
+         'accept' : 'application/json'
+        }
         }).done(function(response) {
 
         }).fail(function(jqXhr) {
@@ -66,3 +70,4 @@ var putSeatData = function(data){ console.log(data);
 }
 
 module.exports = utils;
+

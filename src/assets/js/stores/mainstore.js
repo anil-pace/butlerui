@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent;
+var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
@@ -44,7 +44,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   cancelScan : function(barcode){
     var data = {
-      "event_name": "cancel_barcode_scan",
+      "event_name": _cancelEvent,
       "event_data": {
         "barcode": barcode
       }
@@ -74,15 +74,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     switch(_currentSeat){
       case appConstants.PUT_BACK:
          _pptlEvent = 'secondary_button_press';
+         _cancelEvent = 'cancel_barcode_scan';
         break;
       case appConstants.PUT_FRONT:
           _pptlEvent = 'primary_button_press';
+          _cancelEvent = 'cancel_scan_all';
         break;
       case appConstants.PICK_BACK:
           _pptlEvent = 'secondary_button_press';
+
         break;
       case appConstants.PICK_FRONT:
           _pptlEvent = 'primary_button_press';
+          _cancelEvent = 'cancel_scan_all';
         break;
       default:
         return true; 

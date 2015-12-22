@@ -20,7 +20,7 @@ var navData = {
     }],
     "putFront": [
         [{
-            "screen_id": "put_front_rack_waiting",
+            "screen_id": "put_front_waiting_for_rack",
             "code": "Common.000",
             "message": "Wait For MSU",
             "showImage": false,
@@ -28,7 +28,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": "put_front_scan_stage",
+            "screen_id": "put_front_scan",
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Item From Bin",
@@ -36,7 +36,7 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-            "screen_id": "put_front_place_item_in_rack",
+            "screen_id": "put_front_place_items_in_rack",
             "code": "Common.001",
             "image": svgConstants.rack,
             "message": "Place Item in slot and scan more",

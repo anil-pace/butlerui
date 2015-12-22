@@ -25,18 +25,29 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PutFrontData.screen_id === "put_front_rack_waiting") {
+        if (_PutFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
             _NavData = navConfig.putFront[0];
             _NavData[0].type = 'active';
         } else {
             _NavData = navConfig.putFront[1];
-            _NavData.map(function(data, index) {
-                if (_PutFrontData.screen_id === data.screen_id) {
+            _NavData.map(function(data, index) { 
+                if (_PutFrontData.screen_id === data.screen_id) {console.log(_PutFrontData);
                     _NavData[index].type = 'active';
+                }else{
+                     _NavData[index].type = 'passive';
                 }
             });
         }
         return _NavData;
+    },
+    getServerNavData : function(){ 
+        if(_PutFrontData.header_msge_list.length > 0){
+            _serverNavData = _PutFrontData.header_msge_list[0];
+            return _serverNavData;
+        }
+        else{
+            return null;   
+        } 
     },
     getNotificationData: function() {
         return _PutFrontData.notification_list[0];

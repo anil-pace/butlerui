@@ -21,7 +21,8 @@ function getStateData(){
            PutFrontScanDetails : PutFrontStore.scanDetails(),
            PutFrontProductDetails : PutFrontStore.productDetails(),
            PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin()
+           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
+           PutFrontServerNavData : PutFrontStore.getServerNavData()
     };
 
 };
@@ -44,7 +45,7 @@ var PutFront = React.createClass({
  
 
   getNotificationComponent:function(){
-    if(this.state.PutFrontNotification.description != "")
+    if(this.state.PutFrontNotification != undefined)
       this._notification = <Notification notification={this.state.PutFrontNotification} />
     else
       this._notification = "";
@@ -62,7 +63,7 @@ var PutFront = React.createClass({
             );
 
         break;
-      case appConstants.PUT_FRONT_STAGE_OR_SCAN:
+      case appConstants.PUT_FRONT_SCAN:
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
@@ -72,14 +73,14 @@ var PutFront = React.createClass({
               </div>
             );
         break;
-      case appConstants.PUT_FRONT_PLACE_ITEM_IN_RACK:
+      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
           this._component = (
               <div className='grid-container'>
                 <div className="single-bin">
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                 </div>
                 <div className='main-container'>
-                  <Rack />
+                  <Rack rackData = {this.state.PutFrontRackDetails}/>
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
                 </div>
                 <div className = 'cancel-scan'>
@@ -97,11 +98,10 @@ var PutFront = React.createClass({
   render: function(data){
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutFrontScreenId);
-   
     return (
       <div className="main">
         <Header />
-        <Navigation navData ={this.state.PutFrontNavData} />
+        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} />
         {this._component}
         {this._notification}
       </div> 

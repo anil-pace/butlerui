@@ -5,6 +5,7 @@ var mainstore = require('../../stores/mainstore');
 var KQ = React.createClass({
   _appendClassDown : '',
   _appendClassUp : '',
+  _qtyComponent : null,
   handleIncrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
       var data  = {
@@ -86,16 +87,32 @@ var KQ = React.createClass({
     }
     
   },
+  handleTotalQty : function(){
+    if(this.props.scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          <div id='textbox' onClick={this.showNumpad}>
+            <input id="keyboard" className="current-quantity"  value={parseInt(this.props.scanDetails.current_qty)}/>
+            <span className="separator">/</span>
+            <span className="total-quantity">{parseInt(this.props.scanDetails.total_qty)}</span> 
+          </div>
+        );
+    }else{
+      this._qtyComponent = (
+          <div id='textbox' onClick={this.showNumpad}>
+            <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/> 
+          </div>
+      );
+    }
+  },
   render: function(data){ 
     this.checkKqAllowed();
+    this.handleTotalQty();
       return (
         <div className="kq-wrapper">
           <a href="#" className={this._appendClassUp} onClick={this.handleIncrement}>
             <span className="glyphicon glyphicon-menu-up"></span>
           </a>
-          <div id='textbox' onClick={this.showNumpad}>
-            <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/> 
-          </div>
+          {this._qtyComponent}
           <a href="#" className={this._appendClassDown} onClick={this.handleDecrement}>
             <span className="glyphicon glyphicon-menu-down"></span>
           </a>

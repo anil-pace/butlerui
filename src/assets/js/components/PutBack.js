@@ -22,7 +22,6 @@ function getStateData(){
            PutBackScreenId:PutBackStore.getScreenId(),
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
-           PutBackSysIdle : PutBackStore.getSystemIdleState(),
            PutBackServerNavData : PutBackStore.getServerNavData()
 
     };
@@ -88,15 +87,6 @@ var PutBack = React.createClass({
   render: function(data){
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
-    if(this.state.PutBackSysIdle == true){
-      return (
-        <div className="main">
-          <Header />
-          <SystemIdle />
-        </div> 
-      )
-    }
-    else{ console.log(this.state.PutBackServerNavData);
       return (
         <div className="main">
           <Header />
@@ -106,7 +96,6 @@ var PutBack = React.createClass({
         </div> 
        
       )
-    }
   }
 });
 

@@ -51,7 +51,7 @@ var Operator = React.createClass({
       }
   },
 
-  render: function(data){ console.log(this.state.spinner);
+  render: function(data){ 
      this.getSeatType(this.state.currentSeat);
       if(this.state.spinner === true){
        this._spinner = <Spinner />

@@ -3,6 +3,11 @@ var React = require('react');
 var ActiveNavigation = React.createClass({
     render: function() {
         var compData = this.props.data;
+        var message_args  = compData.message.slice(0);
+        console.log(this.props.serverNavData);
+       /* console.log(message_args);
+       var m = message_args.unshift(compData.message[this.props.serverNavData.code]);
+       console.log(m);*/
         return (
             	<div className="active-navigation">
                     {
@@ -17,7 +22,7 @@ var ActiveNavigation = React.createClass({
                         })()
                     }
             		<div className = "action">
-            			{compData.message}
+            			{this.props.serverNavData.description}
             		</div>
             	</div>
         );

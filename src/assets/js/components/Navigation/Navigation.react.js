@@ -8,7 +8,6 @@ var Navigation = React.createClass({
         return (
             <div className="navigation">
                 {this.props.navData.map(function(value,index){
-                    console.log(value);
                     if(value.type == "active")
                         return (
                                 <ActiveNavigation key={index} data={value} serverNavData={this.props.serverNavData} />

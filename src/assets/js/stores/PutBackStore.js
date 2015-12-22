@@ -76,8 +76,12 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     return _NavData;
   },
   getServerNavData : function(){
-    _serverNavData = _PutBackData.header_msge_list[0];
-    return _serverNavData;
+    if(_PutBackData.header_msge_list.length > 0){
+      _serverNavData = _PutBackData.header_msge_list[0];
+      return _serverNavData;
+    }else{
+      return null;
+    }
   },
   getNotificationData : function() { 
       return _PutBackData.notification_list[0];

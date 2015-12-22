@@ -115,7 +115,6 @@ var MsuRack = React.createClass({
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else {
-            console.log('No Slots to be highlited!!!');
         }
         
         for (i = slotStart; i <= slotEnd; i++) {

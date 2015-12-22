@@ -10,8 +10,6 @@ var PopUp = React.createClass({
 
 
   render: function(data){ 
-      console.log("jindal");
-      console.log(this.props.popupData);
       var productInfo=  this.props.popupData;
       var details = [];
       for (var key in productInfo) {

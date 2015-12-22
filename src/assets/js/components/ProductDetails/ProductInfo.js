@@ -46,7 +46,6 @@ var ProductInfo = React.createClass({
     
   },
   render: function(data){ 
-    console.log(this.state.popupVisible);
     return (       
             <div className="product-details-wrapper">
               <div className="img-container">

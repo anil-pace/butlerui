@@ -100,9 +100,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getScreenId:function(){
     return _PutBackData.screen_id;
   },
-  getSystemIdleState : function(){
-    return _PutBackData.is_idle;
-  },
   stageOneBin:function(){
     var data ={};
     _PutBackData.ppsbin_list.map(function(value,index){ 

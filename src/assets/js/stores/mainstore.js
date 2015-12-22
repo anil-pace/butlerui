@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var seatData, _currentSeat, _seatName, _pptlEvent;
+var _seatData, _currentSeat, _seatName, _pptlEvent;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
@@ -36,8 +36,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(data){
+  setCurrentSeat:function(data){ console.log(data);
     _showSpinner = false;
+    _seatData = data;
     _seatName = data.seat_name;
     _currentSeat  = data.mode + "_" + data.seat_type;
   },
@@ -54,7 +55,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getModalContent:function(){
     return modalContent.data;
   },
-
+  getSystemIdleState : function(){ 
+    if(_seatData != undefined){
+      return _seatData.is_idle;
+    }
+    else{ console.log(_seatData);
+      return null;
+    }
+  },
   getModalType:function(){
     return modalContent.type;
   },

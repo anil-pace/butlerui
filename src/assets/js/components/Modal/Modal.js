@@ -51,7 +51,6 @@ function loadComponent(modalType,modalData){
 
 var Modal = React.createClass({
   componentDidMount:function(){
-    console.log("ashish");
     $(".modal").click(function(e){
       e.stopPropagation();
         return false;
@@ -61,7 +60,6 @@ var Modal = React.createClass({
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    console.log("tttt");
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 

@@ -1,0 +1,236 @@
+{
+	"state_data": {
+		"seat_name": "back_10",
+		"screen_id": "put_back_stage",
+		"screen_version": "1",
+		"structure": [2, 4],
+		"notification_list": [{
+			"details": [],
+			"code": "Common.000",
+			"description": "Test",
+			"level": "info"
+		}],
+		"logout_allowed": "false",
+		"exception_allowed": [{
+			"exception_id": "Common000",
+			"exception_name": "Reset Scanner"
+		}],
+		"mode": "put",
+		"is_idle": false,
+		"seat_type": "back",
+		"time_stamp": "1449827300",
+		"ppsbin_list": [{
+			"bin_info": [],
+			"ppsbin_id": "4",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 1]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "3",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 2]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "2",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 3]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "1",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 4]
+		},
+		{
+			"bin_info": [],
+			"ppsbin_id": "4",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 5]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "3",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 6]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "2",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 7]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "1",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 8]
+		},
+		 {
+			"bin_info": [],
+			"ppsbin_id": "8",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 1]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "7",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 2]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "6",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 3]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "5",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 4]
+		}],
+		"header_msge_list": {
+			"details": [],
+			"code": "Common.000",
+			"description": [],
+			"level": "info"
+		},
+		"api_version": "1"
+	}
+}
+
+
+
+{
+	"state_data": {
+		"seat_name": "back_10",
+		"screen_id": "put_back_scan",
+		"screen_version": "1",
+		"structure": [2, 4],
+		"notification_list": [{
+			"details": [],
+			"code": "PtB.B.001",
+			"description": "Scan Item/ Stage PpsBin",
+			"level": "info"
+		}],
+		"scan_details": {
+			"current_qty": "1",
+			"total_qty": "0",
+			"kq_allowed": true
+		},
+		"logout_allowed": "true",
+		"exception_allowed": [{
+			"exception_id": "PtB004",
+			"exception_name": "Extra Items"
+		}, {
+			"exception_id": "PtB003",
+			"exception_name": "Item Damaged"
+		}, {
+			"exception_id": "PtB002",
+			"exception_name": "Item Over Sized"
+		}, {
+			"exception_id": "PtB001",
+			"exception_name": "PPTL Not Glowing"
+		}, {
+			"exception_id": "Common000",
+			"exception_name": "Reset Scanner"
+		}],
+		"mode": "put",
+		"is_idle": false,
+		"seat_type": "back",
+		"product_info": {
+			"product_description": null,
+			"product_local_image_url": null,
+			"product_dimension": null,
+			"product_sku": "be5bded1a9c74a478b95c739a899671b",
+			"product_name": null,
+			"product_weight": 3.75
+		},
+		"time_stamp": "1449826923",
+		"ppsbin_list": [{
+			"bin_info": [],
+			"ppsbin_id": "4",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 1]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "3",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 2]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "2",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 3]
+		}, {
+			"bin_info": [{
+				"serial": "A000001984",
+				"name": null,
+				"quantity": 1
+			}],
+			"ppsbin_id": "1",
+			"selected_state": "true",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [1, 4]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "8",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 1]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "7",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 2]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "6",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 3]
+		}, {
+			"bin_info": [],
+			"ppsbin_id": "5",
+			"selected_state": "false",
+			"ppsbin_state": "empty",
+			"ppsbin_count": "0",
+			"coordinate": [2, 4]
+		}],
+		"header_msge_list":[{
+			"details": ["1"],
+			"code": "PtB.A.012",
+			"description": "Please put the item/box in Bin 1 and press the pptl button",
+			"level": "info"
+		}],
+		"api_version": "1"
+	}
+}

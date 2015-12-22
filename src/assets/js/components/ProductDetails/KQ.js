@@ -92,7 +92,8 @@ var KQ = React.createClass({
         this._qtyComponent = (
           <div id='textbox' onClick={this.showNumpad}>
             <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/>
-            <input id="keyboard"  value={parseInt(this.props.scanDetails.total_qty)}/> 
+
+            <span> / {parseInt(this.props.scanDetails.total_qty)} </span> 
           </div>
         );
     }else{

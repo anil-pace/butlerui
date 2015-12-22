@@ -22,6 +22,7 @@ function getStateData(){
            PutFrontProductDetails : PutFrontStore.productDetails(),
            PutFrontRackDetails: PutFrontStore.getRackDetails(),
            PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
+           PutFrontServerNavData : PutFrontStore.getServerNavData()
     };
 
 };
@@ -97,11 +98,10 @@ var PutFront = React.createClass({
   render: function(data){
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutFrontScreenId);
-   
     return (
       <div className="main">
         <Header />
-        <Navigation navData ={this.state.PutFrontNavData} />
+        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} />
         {this._component}
         {this._notification}
       </div> 

@@ -6,12 +6,14 @@ var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
+var SystemIdle = require('./SystemIdle');
 
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
-      spinner : mainstore.getSpinnerState()
+      spinner : mainstore.getSpinnerState(),
+      systemIsIdle : mainstore.getSystemIdleState()
   }
 }
 var Operator = React.createClass({
@@ -56,13 +58,22 @@ var Operator = React.createClass({
       }else{
         this._spinner ='';
       }
-        return (
-          <div>
-            {this._spinner}
-            {this._currentSeat}
-          </div> 
+       if(this.state.systemIsIdle === true){
+          return (
+            <div className="main">
+              <SystemIdle />
+            </div> 
+          )
+        }else{
+          return (
+            <div>
+              {this._spinner}
+              {this._currentSeat}
+            </div> 
 
-        )
+          )
+       }
+      
      
   }
 });

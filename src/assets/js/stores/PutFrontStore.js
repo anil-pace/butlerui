@@ -40,6 +40,15 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
         }
         return _NavData;
     },
+    getServerNavData : function(){ 
+        if(_PutFrontData.header_msge_list.length > 0){
+            _serverNavData = _PutFrontData.header_msge_list[0];
+            return _serverNavData;
+        }
+        else{
+            return null;   
+        } 
+    },
     getNotificationData: function() {
         return _PutFrontData.notification_list[0];
     },

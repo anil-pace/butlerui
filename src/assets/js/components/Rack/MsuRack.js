@@ -7,100 +7,6 @@ var MsuRack = React.createClass({
 
         var rackDetails = this.props.rackData.rack_type_rec;
         var compartment_details = this.props.rackData.slot_barcodes;
-/*
-        var rackDetails = [
-
-           [
-                "A", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02",
-                            "03", 
-                            "04"
-                        ], 
-                        50, 
-                        48
-                    ], 
-                    [
-                        [
-                            "05", 
-                            "06"
-                        ], 
-                        50, 
-                        48
-                    ]
-                ]
-            ], 
-            [
-                "B", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02"
-                        ], 
-                        55, 
-                        48
-                    ], 
-                    [
-                        [
-                            "03", 
-                            "04"
-                        ], 
-                        55, 
-                        48
-                    ], 
-                    [
-                        [
-                            "05", 
-                            "06"
-                        ], 
-                        55, 
-                        48
-                    ]
-                ]
-            ],
-            [
-                "C", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02",
-                            "03"
-                        ], 
-                        60, 
-                        48
-                    ], 
-                    [
-                        [
-                            
-                            "04"
-                        ], 
-                        60, 
-                        48
-                    ], 
-                    [
-                        [
-                            "05", 
-                            "06"
-                        ], 
-                        60, 
-                        48
-                    ]
-                ]
-            ]
-        
-        ];
-
-
-        var compartment_details = [
-                "005.1.B.03",
-                "005.1.B.03"
-            ];
-*/
         var slotStart,slotEnd,i;
         var slotIndexList = [];
         var eachRow =[];
@@ -115,7 +21,6 @@ var MsuRack = React.createClass({
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else {
-            console.log('No Slots to be highlited!!!');
         }
         
         for (i = slotStart; i <= slotEnd; i++) {

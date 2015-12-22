@@ -25,8 +25,7 @@ var Bins = React.createClass({
             	 <div className="bins">
             	 	{
             	 		(function(){
-            	 			var l =[];        
-                            console.log(compData.structure);
+            	 			var l =[]; 
             	 			for(var j = 0 ;j<compData.structure[0] ;j++){
             	 			var list = [];
             	 			var i = 0;
@@ -52,11 +51,8 @@ var Bins = React.createClass({
             myElements[i].style.height = 0 + "px";
             myElements[i].style.width = 0 + "px";
         }
-        console.log("ashu");
         var clientHeight = $('.bins').height();
         var clientWidth = $('.bins').width();
-        console.log($(".bins").innerHeight());
-        console.log(clientHeight + " " + clientWidth);
         var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
         for (var i = 0; i < myElements.length; i++) {
             myElements[i].style.height = boxSize + "px";

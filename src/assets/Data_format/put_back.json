@@ -109,7 +109,7 @@
 		"header_msge_list": {
 			"details": [],
 			"code": "Common.000",
-			"description": [],
+			"description": "test",
 			"level": "info"
 		},
 		"api_version": "1"

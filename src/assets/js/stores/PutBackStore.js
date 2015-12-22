@@ -44,7 +44,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
 
   getStageActiveStatus:function(){
-    console.log(_PutBackData);
     var flag = false;
     _PutBackData["ppsbin_list"].map(function(value,index){
       if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
@@ -63,7 +62,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
   getNavData : function () {
     _NavData = navConfig.putBack;
-    console.log(_NavData);
     navConfig.putBack.map(function(data,index){
        if(_PutBackData.screen_id === data.screen_id ){
           _NavData[index].type = 'active'; 
@@ -124,11 +122,11 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     data["event_data"]= '';
      utils.postDataToInterface(data, _PutBackData.seat_name);
   },
-  scanDetails : function(){ console.log(_PutBackData);
+  scanDetails : function(){ 
     _scanDetails = _PutBackData.scan_details;
     return _scanDetails;
   },
-  productDetails : function(){ console.log(_PutBackData);
+  productDetails : function(){
     _prodDetails = _PutBackData.product_info;
     return _prodDetails;
   }

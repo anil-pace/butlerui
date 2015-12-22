@@ -36,7 +36,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(data){ console.log(data);
+  setCurrentSeat:function(data){ 
     _showSpinner = false;
     _seatData = data;
     _seatName = data.seat_name;
@@ -59,7 +59,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if(_seatData != undefined){
       return _seatData.is_idle;
     }
-    else{ console.log(_seatData);
+    else{
       return null;
     }
   },

@@ -7,7 +7,7 @@ var SingleSlot = React.createClass({
 		
 		return (
 			<div className={"singleslot " + (this.props.selected ? 'activeSlot' : '')}  >
-				<h2>{this.props.selected ? rackRange + slotId : ''}</h2>
+				{this.props.selected ? rackRange + slotId : ''}
 			</div>
 			);
 	}

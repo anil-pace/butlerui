@@ -13,7 +13,7 @@ function getState(){
       seatList : loginstore.seatList(),
       username : 'kerry',
       password : 'gorapj',
-      seat_name : 'back_10'
+      seat_name : '10_back_1'
   }
 }
 var LoginForm = React.createClass({

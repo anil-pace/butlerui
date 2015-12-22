@@ -44,6 +44,8 @@ function listPpsSeat(seat){
           loginstore.emit(CHANGE_EVENT); 
         }).fail(function(jqXhr) {
                      
+      }).success(function(data){
+        console.log("success");
       });
     }else{
       loginstore.emit(CHANGE_EVENT); 

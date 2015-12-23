@@ -228,7 +228,6 @@
         }],
         "logout_allowed": "false",
         "rack_details": {
-            "rack_type_rec":  {
             "rack_type_rec": [
                 ["A", [
                     [
@@ -294,8 +293,6 @@
                     ]
                 ]]
             ],
-            "slot_barcodes": ["128.1.B.05", "128.1.B.06"]
-        },
             "slot_barcodes": ["128.1.B.05", "128.1.B.06"]
         },
         "exception_allowed": [{

@@ -106,12 +106,12 @@
 			"ppsbin_count": "0",
 			"coordinate": [2, 4]
 		}],
-		"header_msge_list": {
+		"header_msge_list": [{
 			"details": [],
 			"code": "Common.000",
 			"description": "test",
 			"level": "info"
-		},
+		}],
 		"api_version": "1"
 	}
 }

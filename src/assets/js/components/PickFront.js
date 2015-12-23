@@ -9,8 +9,13 @@ var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
+var BoxSerial = require('./BoxSerial.js');
+var Modal = require('./Modal/Modal');
 
 function getStateData(){
+  console.log("jjiii");
+  console.log(PickFrontStore.getCurrentSelectedBin());
+  console.log(PickFrontStore.getBinData());
   return {
            //StageActive:PickFrontStore.getStageActiveStatus(),
            //StageAllActive:PickFrontStore.getStageAllActiveStatus(),
@@ -21,8 +26,9 @@ function getStateData(){
            PickFrontScanDetails : PickFrontStore.scanDetails(),
            PickFrontProductDetails : PickFrontStore.productDetails(),
            //PickFrontSysIdle : PickFrontStore.getSystemIdleState(),
-          //PickFrontServerNavData : PickFrontStore.getServerNavData()
-          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+           PickFrontRackDetails: PickFrontStore.getRackDetails(),
+          PickFrontServerNavData : PickFrontStore.getServerNavData(),
+          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
 
     };
 };
@@ -49,34 +55,69 @@ var PickFront = React.createClass({
       this._notification = "";
   },
   getScreenComponent : function(screen_id){
-    
     switch(screen_id){
      
-      case appConstants.PICK_FRONT_ITEM_SCAN:
-      break;
-
-
-      case appConstants.PICK_FRONT_PLACE_ITEMS_IN_BINS:
-          this._component = (
+      case appConstants.PICK_FRONT_WAITING_FOR_RACK:
+        this._component = (
               <div className='grid-container'>
-                <div className="single-bin">
-                    
-                </div>
-                <div className='main-container'>
-                  
-                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
-                </div>
-                <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/>
-                  <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} />  
-                </div>
-
+                 <div className='main-container'>
+                    <Spinner />
+                 </div>
               </div>
             );
-        break;
-
-      case appConstants.PICK_FRONT_PPTL_PRESS:
       break;
+
+      case appConstants.PICK_FRONT_SCAN_SLOT_BARCODE:
+        this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                    <Rack rackData = {this.state.PickFrontRackDetails}/>
+                 </div>
+              </div>
+            );
+      break;
+
+       case appConstants.PICK_FRONT_SCAN_BOX_BARCODE:
+        this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                    <BoxSerial />
+                    <Rack rackData = {this.state.PickFrontRackDetails}/>
+                 </div>
+              </div>
+            );
+      break;
+
+      case appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:
+        this._component = (
+              <div className='grid-container'>
+                <Modal />
+                <div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
+                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
+                </div>
+                <div className = 'actions'>
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/>
+                   <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> 
+                </div>
+              </div>
+            );
+      break;
+
+      case appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM:
+        this._component = (
+              <div className='grid-container'>
+                <Modal />
+                <div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/> 
+                </div>
+              </div>
+            );
+      break;
+     
 
       default:
         return true;
@@ -89,7 +130,7 @@ var PickFront = React.createClass({
 	return (
 		<div className="main">
 			<Header />
-			<Navigation navData ={this.state.PickFrontNavData} />
+			<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} />
 			{this._component}
 			
 	  </div>   

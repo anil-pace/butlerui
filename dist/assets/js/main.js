@@ -24495,6 +24495,7 @@ module.exports = commonActions;
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
+var appConstants = require('../../constants/appConstants');
 
 var Bin = React.createClass({displayName: "Bin",
 
@@ -24522,7 +24523,6 @@ var Bin = React.createClass({displayName: "Bin",
    
     render: function() {
         var compData = this.props.binData;
-        console.log("ashu" + this.props.screenId);
         if(compData.ppsbin_state == "staged" )
             return (
                 React.createElement("div", {className: "bin staged"}, 
@@ -24530,7 +24530,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == appConstants.PUT_BACK_STAGE)
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -24538,14 +24538,21 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == "put_back_scan" || this.props.screenId == "put_front_scan_stage"))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN ))
             return (
                 React.createElement("div", {className: "bin selected"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK))
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && this.props.screenId == appConstants.PUT_BACK_STAGE )
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -24554,7 +24561,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == "put_back_scan" || this.props.screenId == "put_front_scan_stage") )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
             return (
                 React.createElement("div", {className: "bin use"}, 
                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -24576,15 +24583,14 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":217,"../Modal/Modal":223,"react":215}],219:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../constants/appConstants":246,"../Modal/Modal":223,"react":215}],219:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({displayName: "Bins",
 	componentDidMount: function() {
-        console.log("did mount");
-            this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
     _findCoordinatesIndex:function(x,y){
         var i = 0;
@@ -24597,17 +24603,15 @@ var Bins = React.createClass({displayName: "Bins",
         return i;
     },
     render: function() {
-        console.log("render");
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-        var compData = this.props.binsData;
+        var compData = this.props.binsData; 
         var scrnId = this.props.screenId;
         var self = this;
         return (
             	 React.createElement("div", {className: "bins"}, 
             	 	
             	 		(function(){
-            	 			var l =[];        
-                            console.log(compData.structure);
+            	 			var l =[]; 
             	 			for(var j = 0 ;j<compData.structure[0] ;j++){
             	 			var list = [];
             	 			var i = 0;
@@ -24633,11 +24637,8 @@ var Bins = React.createClass({displayName: "Bins",
             myElements[i].style.height = 0 + "px";
             myElements[i].style.width = 0 + "px";
         }
-        console.log("ashu");
         var clientHeight = $('.bins').height();
         var clientWidth = $('.bins').width();
-        console.log($(".bins").innerHeight());
-        console.log(clientHeight + " " + clientWidth);
         var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
         for (var i = 0; i < myElements.length; i++) {
             myElements[i].style.height = boxSize + "px";
@@ -24671,7 +24672,15 @@ var Button1 = React.createClass({displayName: "Button1",
                         return true; 
                 }
             break;
-                
+            case appConstants.PUT_FRONT:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScan(this.props.barcode);
+                        break;    
+                     default:
+                        return true; 
+                }
+            break;
              default:
                 return true; 
         }
@@ -24767,7 +24776,7 @@ function getState(){
       seatList : loginstore.seatList(),
       username : 'kerry',
       password : 'gorapj',
-      seat_name : '10_back_1'
+      seat_name : '10_front_1'
   }
 }
 var LoginForm = React.createClass({displayName: "LoginForm",
@@ -24804,7 +24813,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
     });
 
   },
-  render: function(){console.log(this.state.seatList);
+  render: function(){
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
@@ -24902,7 +24911,6 @@ function loadComponent(modalType,modalData){
 
 var Modal = React.createClass({displayName: "Modal",
   componentDidMount:function(){
-    console.log("ashish");
     $(".modal").click(function(e){
       e.stopPropagation();
         return false;
@@ -24912,7 +24920,6 @@ var Modal = React.createClass({displayName: "Modal",
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    console.log("tttt");
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
@@ -24969,6 +24976,11 @@ var React = require('react');
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
         var compData = this.props.data;
+        var message_args  = compData.message.slice(0);
+        console.log(this.props.serverNavData);
+       /* console.log(message_args);
+       var m = message_args.unshift(compData.message[this.props.serverNavData.code]);
+       console.log(m);*/
         return (
             	React.createElement("div", {className: "active-navigation"}, 
                     
@@ -24983,7 +24995,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                         })(), 
                     
             		React.createElement("div", {className: "action"}, 
-            			compData.message
+            			this.props.serverNavData.description
             		)
             	)
         );
@@ -25003,7 +25015,6 @@ var Navigation = React.createClass({displayName: "Navigation",
         return (
             React.createElement("div", {className: "navigation"}, 
                 this.props.navData.map(function(value,index){
-                    console.log(value);
                     if(value.type == "active")
                         return (
                                 React.createElement(ActiveNavigation, {key: index, data: value, serverNavData: this.props.serverNavData})
@@ -25071,12 +25082,14 @@ var PickBack = require('./PickBack');
 var PickFront = require('./PutFront');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
+var SystemIdle = require('./SystemIdle');
 
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
-      spinner : mainstore.getSpinnerState()
+      spinner : mainstore.getSpinnerState(),
+      systemIsIdle : mainstore.getSystemIdleState()
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -25121,20 +25134,29 @@ var Operator = React.createClass({displayName: "Operator",
       }else{
         this._spinner ='';
       }
-        return (
-          React.createElement("div", null, 
-            this._spinner, 
-            this._currentSeat
-          ) 
+       if(this.state.systemIsIdle === true){
+          return (
+            React.createElement("div", {className: "main"}, 
+              React.createElement(SystemIdle, null)
+            ) 
+          )
+        }else{
+          return (
+            React.createElement("div", null, 
+              this._spinner, 
+              this._currentSeat
+            ) 
 
-        )
+          )
+       }
+      
      
   }
 });
 
 module.exports = Operator;
 
-},{"../constants/appConstants":246,"../stores/mainstore":254,"./PickBack":231,"./PutBack":236,"./PutFront":237,"./Spinner/Overlay":243,"react":215}],231:[function(require,module,exports){
+},{"../constants/appConstants":246,"../stores/mainstore":254,"./PickBack":231,"./PutBack":236,"./PutFront":237,"./Spinner/Overlay":243,"./SystemIdle":244,"react":215}],231:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -25176,6 +25198,7 @@ var mainstore = require('../../stores/mainstore');
 var KQ = React.createClass({displayName: "KQ",
   _appendClassDown : '',
   _appendClassUp : '',
+  _qtyComponent : null,
   handleIncrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
       var data  = {
@@ -25257,16 +25280,32 @@ var KQ = React.createClass({displayName: "KQ",
     }
     
   },
+  handleTotalQty : function(){
+    if(this.props.scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: parseInt(this.props.scanDetails.current_qty)}), 
+            React.createElement("span", {className: "separator"}, "/"), 
+            React.createElement("span", {className: "total-quantity"}, parseInt(this.props.scanDetails.total_qty))
+          )
+        );
+    }else{
+      this._qtyComponent = (
+          React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+            React.createElement("input", {id: "keyboard", value: parseInt(this.props.scanDetails.current_qty)})
+          )
+      );
+    }
+  },
   render: function(data){ 
     this.checkKqAllowed();
+    this.handleTotalQty();
       return (
         React.createElement("div", {className: "kq-wrapper"}, 
           React.createElement("a", {href: "#", className: this._appendClassUp, onClick: this.handleIncrement}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-up"})
           ), 
-          React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
-            React.createElement("input", {id: "keyboard", value: parseInt(this.props.scanDetails.current_qty)})
-          ), 
+          this._qtyComponent, 
           React.createElement("a", {href: "#", className: this._appendClassDown, onClick: this.handleDecrement}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"})
           )
@@ -25290,8 +25329,6 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 
   render: function(data){ 
-      console.log("jindal");
-      console.log(this.props.popupData);
       var productInfo=  this.props.popupData;
       var details = [];
       for (var key in productInfo) {
@@ -25374,7 +25411,6 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
     
   },
   render: function(data){ 
-    console.log(this.state.popupVisible);
     return (       
             React.createElement("div", {className: "product-details-wrapper"}, 
               React.createElement("div", {className: "img-container"}, 
@@ -25449,7 +25485,6 @@ function getStateData(){
            PutBackScreenId:PutBackStore.getScreenId(),
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
-           PutBackSysIdle : PutBackStore.getSystemIdleState(),
            PutBackServerNavData : PutBackStore.getServerNavData()
 
     };
@@ -25515,15 +25550,6 @@ var PutBack = React.createClass({displayName: "PutBack",
   render: function(data){
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
-    if(this.state.PutBackSysIdle == true){
-      return (
-        React.createElement("div", {className: "main"}, 
-          React.createElement(Header, null), 
-          React.createElement(SystemIdle, null)
-        ) 
-      )
-    }
-    else{ console.log(this.state.PutBackServerNavData);
       return (
         React.createElement("div", {className: "main"}, 
           React.createElement(Header, null), 
@@ -25533,7 +25559,6 @@ var PutBack = React.createClass({displayName: "PutBack",
         ) 
        
       )
-    }
   }
 });
 
@@ -25552,6 +25577,7 @@ var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
+var Modal = require('./Modal/Modal');
 
 
 function getStateData(){
@@ -25563,7 +25589,8 @@ function getStateData(){
            PutFrontScanDetails : PutFrontStore.scanDetails(),
            PutFrontProductDetails : PutFrontStore.productDetails(),
            PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin()
+           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
+           PutFrontServerNavData : PutFrontStore.getServerNavData()
     };
 
 };
@@ -25586,7 +25613,7 @@ var PutFront = React.createClass({displayName: "PutFront",
  
 
   getNotificationComponent:function(){
-    if(this.state.PutFrontNotification.description != "")
+    if(this.state.PutFrontNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification})
     else
       this._notification = "";
@@ -25604,9 +25631,10 @@ var PutFront = React.createClass({displayName: "PutFront",
             );
 
         break;
-      case appConstants.PUT_FRONT_STAGE_OR_SCAN:
+      case appConstants.PUT_FRONT_SCAN:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails})
@@ -25614,14 +25642,15 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
         break;
-      case appConstants.PUT_FRONT_PLACE_ITEM_IN_RACK:
+      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
                 React.createElement("div", {className: "single-bin"}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId})
                 ), 
                 React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Rack, null), 
+                  React.createElement(Rack, {rackData: this.state.PutFrontRackDetails}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -25639,11 +25668,10 @@ var PutFront = React.createClass({displayName: "PutFront",
   render: function(data){
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutFrontScreenId);
-   
     return (
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
-        React.createElement(Navigation, {navData: this.state.PutFrontNavData}), 
+        React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData}), 
         this._component, 
         this._notification
       ) 
@@ -25655,7 +25683,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":246,"../stores/PutFrontStore":252,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"./Rack/MsuRack.js":238,"./Spinner/LoaderButler":242,"react":215}],238:[function(require,module,exports){
+},{"../constants/appConstants":246,"../stores/PutFrontStore":252,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"./Rack/MsuRack.js":238,"./Spinner/LoaderButler":242,"react":215}],238:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -25663,101 +25691,8 @@ var RackRow = require('./RackRow');
 var MsuRack = React.createClass({displayName: "MsuRack",
 	render: function(){
 
-        
-
-        var rackDetails = [
-
-           [
-                "A", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02",
-                            "03", 
-                            "04"
-                        ], 
-                        50, 
-                        48
-                    ], 
-                    [
-                        [
-                            "05", 
-                            "06"
-                        ], 
-                        50, 
-                        48
-                    ]
-                ]
-            ], 
-            [
-                "B", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02"
-                        ], 
-                        55, 
-                        48
-                    ], 
-                    [
-                        [
-                            "03", 
-                            "04"
-                        ], 
-                        55, 
-                        48
-                    ], 
-                    [
-                        [
-                            "05", 
-                            "06"
-                        ], 
-                        55, 
-                        48
-                    ]
-                ]
-            ],
-            [
-                "C", 
-                [
-                    [
-                        [
-                            "01", 
-                            "02",
-                            "03"
-                        ], 
-                        60, 
-                        48
-                    ], 
-                    [
-                        [
-                            
-                            "04"
-                        ], 
-                        60, 
-                        48
-                    ], 
-                    [
-                        [
-                            "05", 
-                            "06"
-                        ], 
-                        60, 
-                        48
-                    ]
-                ]
-            ]
-        
-        ];
-
-
-        var compartment_details = [
-                "005.1.B.03",
-                "005.1.B.03"
-            ];
-
+        var rackDetails = this.props.rackData.rack_type_rec;
+        var compartment_details = this.props.rackData.slot_barcodes;
         var slotStart,slotEnd,i;
         var slotIndexList = [];
         var eachRow =[];
@@ -25772,7 +25707,6 @@ var MsuRack = React.createClass({displayName: "MsuRack",
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else {
-            console.log('No Slots to be highlited!!!');
         }
         
         for (i = slotStart; i <= slotEnd; i++) {
@@ -25886,11 +25820,10 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 	render : function(){
 		var rackRange = this.props.rackRange;
 		var slotId = this.props.index;
-		console.log("slot Index " + slotId);
 		
 		return (
 			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : '')}, 
-				React.createElement("h2", null, this.props.selected ? rackRange + slotId : '')
+				this.props.selected ? rackRange + slotId : ''
 			)
 			);
 	}
@@ -25977,7 +25910,7 @@ var navData = {
     }],
     "putFront": [
         [{
-            "screen_id": "put_front_rack_waiting",
+            "screen_id": "put_front_waiting_for_rack",
             "code": "Common.000",
             "message": "Wait For MSU",
             "showImage": false,
@@ -25985,7 +25918,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": "put_front_scan_stage",
+            "screen_id": "put_front_scan",
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Item From Bin",
@@ -25993,7 +25926,7 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-            "screen_id": "put_front_place_item_in_rack",
+            "screen_id": "put_front_place_items_in_rack",
             "code": "Common.001",
             "image": svgConstants.rack,
             "message": "Place Item in slot and scan more",
@@ -26067,9 +26000,9 @@ var appConstants = {
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
 	PUT_BACK_SCAN : "put_back_scan",
-	PUT_FRONT_WAITING_FOR_RACK:"put_front_rack_waiting",
-	PUT_FRONT_PLACE_ITEM_IN_RACK:"put_front_place_item_in_rack",
-	PUT_FRONT_STAGE_OR_SCAN:"put_front_scan_stage",
+	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
+	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
+	PUT_FRONT_SCAN:"put_front_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
@@ -26187,7 +26120,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
 
   getStageActiveStatus:function(){
-    console.log(_PutBackData);
     var flag = false;
     _PutBackData["ppsbin_list"].map(function(value,index){
       if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
@@ -26206,7 +26138,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
   getNavData : function () {
     _NavData = navConfig.putBack;
-    console.log(_NavData);
     navConfig.putBack.map(function(data,index){
        if(_PutBackData.screen_id === data.screen_id ){
           _NavData[index].type = 'active'; 
@@ -26219,8 +26150,12 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     return _NavData;
   },
   getServerNavData : function(){
-    _serverNavData = _PutBackData.header_msge_list[0];
-    return _serverNavData;
+    if(_PutBackData.header_msge_list.length > 0){
+      _serverNavData = _PutBackData.header_msge_list[0];
+      return _serverNavData;
+    }else{
+      return null;
+    }
   },
   getNotificationData : function() { 
       return _PutBackData.notification_list[0];
@@ -26243,9 +26178,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getScreenId:function(){
     return _PutBackData.screen_id;
   },
-  getSystemIdleState : function(){
-    return _PutBackData.is_idle;
-  },
   stageOneBin:function(){
     var data ={};
     _PutBackData.ppsbin_list.map(function(value,index){ 
@@ -26266,11 +26198,11 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     data["event_data"]= '';
      utils.postDataToInterface(data, _PutBackData.seat_name);
   },
-  scanDetails : function(){ console.log(_PutBackData);
+  scanDetails : function(){ 
     _scanDetails = _PutBackData.scan_details;
     return _scanDetails;
   },
-  productDetails : function(){ console.log(_PutBackData);
+  productDetails : function(){
     _prodDetails = _PutBackData.product_info;
     return _prodDetails;
   }
@@ -26333,18 +26265,29 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PutFrontData.screen_id === "put_front_rack_waiting") {
+        if (_PutFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
             _NavData = navConfig.putFront[0];
             _NavData[0].type = 'active';
         } else {
             _NavData = navConfig.putFront[1];
-            _NavData.map(function(data, index) {
-                if (_PutFrontData.screen_id === data.screen_id) {
+            _NavData.map(function(data, index) { 
+                if (_PutFrontData.screen_id === data.screen_id) {console.log(_PutFrontData);
                     _NavData[index].type = 'active';
+                }else{
+                     _NavData[index].type = 'passive';
                 }
             });
         }
         return _NavData;
+    },
+    getServerNavData : function(){ 
+        if(_PutFrontData.header_msge_list.length > 0){
+            _serverNavData = _PutFrontData.header_msge_list[0];
+            return _serverNavData;
+        }
+        else{
+            return null;   
+        } 
     },
     getNotificationData: function() {
         return _PutFrontData.notification_list[0];
@@ -26516,7 +26459,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var seatData, _currentSeat, _seatName, _pptlEvent;
+var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
@@ -26547,14 +26490,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(data){
+  setCurrentSeat:function(data){ 
     _showSpinner = false;
+    _seatData = data;
     _seatName = data.seat_name;
     _currentSeat  = data.mode + "_" + data.seat_type;
   },
   cancelScan : function(barcode){
     var data = {
-      "event_name": "cancel_barcode_scan",
+      "event_name": _cancelEvent,
       "event_data": {
         "barcode": barcode
       }
@@ -26565,7 +26509,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getModalContent:function(){
     return modalContent.data;
   },
-
+  getSystemIdleState : function(){ 
+    if(_seatData != undefined){
+      return _seatData.is_idle;
+    }
+    else{
+      return null;
+    }
+  },
   getModalType:function(){
     return modalContent.type;
   },
@@ -26577,15 +26528,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     switch(_currentSeat){
       case appConstants.PUT_BACK:
          _pptlEvent = 'secondary_button_press';
+         _cancelEvent = 'cancel_barcode_scan';
         break;
       case appConstants.PUT_FRONT:
           _pptlEvent = 'primary_button_press';
+          _cancelEvent = 'cancel_scan_all';
         break;
       case appConstants.PICK_BACK:
           _pptlEvent = 'secondary_button_press';
+
         break;
       case appConstants.PICK_FRONT:
           _pptlEvent = 'primary_button_press';
+          _cancelEvent = 'cancel_scan_all';
         break;
       default:
         return true; 

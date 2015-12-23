@@ -49,36 +49,37 @@ var PickFront = React.createClass({
       this._notification = "";
   },
   getScreenComponent : function(screen_id){
+    
     switch(screen_id){
-	  case appConstants.PICK_FRONT_PLACE_ITEMS_IN_BINS:
-		  this._component = (
+     
+      case appConstants.PICK_FRONT_ITEM_SCAN:
+      break;
+
+
+      case appConstants.PICK_FRONT_PLACE_ITEMS_IN_BINS:
+          this._component = (
               <div className='grid-container'>
                 <div className="single-bin">
-                    <Bins binsData={this.state.PickFrontCurrentBin} screenId = {this.state.PickFrontScreenId}/>
+                    
                 </div>
                 <div className='main-container'>
-                  <Rack rackData = {this.state.PickFrontRackDetails}/>
+                  
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
                 </div>
-                <div className = 'button-actions'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/>
-                   <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} barcode={this.state.PickFrontProductDetails.product_sku} color={"orange"}/>
+                <div className = 'staging-action' >
+                  <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/>
+                  <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} />  
                 </div>
 
               </div>
             );
-	 
-      case appConstants.PUT_FRONT_WAITING_FOR_RACK:      
         break;
-		
-      case appConstants.PUT_FRONT_SCAN:          
-        break;
-		
-      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:          
-        break;
-        
+
+      case appConstants.PICK_FRONT_PPTL_PRESS:
+      break;
+
       default:
-        return true; 
+        return true;
     }
   },
   render: function(data){ 
@@ -90,7 +91,7 @@ var PickFront = React.createClass({
 			<Header />
 			<Navigation navData ={this.state.PickFrontNavData} />
 			{this._component}
-			//{this._notification}
+			
 	  </div>   
 	  )
   }

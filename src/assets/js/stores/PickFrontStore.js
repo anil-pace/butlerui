@@ -79,7 +79,7 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
 
     getCurrentSelectedBin:function(){
        var binData = {};
-        binData["structure"] = [1,1];
+        binData["structure"] = [2,4];
         binData["ppsbin_list"] = [];
         _PickFrontData.ppsbin_list.map(function(value,index){
           if(value.selected_state == true)
@@ -91,13 +91,13 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
 });
 
 PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
-    switch (action.action.actionType) {
-        case ActionTypes.SET_PICK_FRONT_DATA:
+    switch (action.action.actionType) { 
+        case ActionTypes.SET_PICK_FRONT_DATA: 
             PickFrontStore.setPickFrontData(action.action.data);
             PickFrontStore.emitChange();
             break;
         default:
-            // do nothing
+           return true;
     }
 });
 

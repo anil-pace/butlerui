@@ -24475,31 +24475,48 @@ var commonActions = {
   },
 
   showModal:function(data){
-    console.log(data);
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
       data:data
     })
-  }
+  },
+  pptlPress : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.PPTL_PRESS,
+      data:data
+    })
+  },
+  setPickFrontData :function(data){ console.log(data); 
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PICK_FRONT_DATA,
+      data:data
+    })
+  },
 
 };
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":242,"../dispatchers/AppDispatcher":245}],218:[function(require,module,exports){
+},{"../constants/appConstants":247,"../dispatchers/AppDispatcher":250}],218:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
+var appConstants = require('../../constants/appConstants');
 
 var Bin = React.createClass({displayName: "Bin",
 
     _toggleBinSelection:function(bin_id,e){
-        console.log("_toggleBinSelection");
         ActionCreators.toggleBinSelection(bin_id);
         e.stopPropagation();
         return false;
     },
-
+    pressPptl : function(bin_id, binState){
+        var data  ={
+            'bin_id' : bin_id,
+            'bin_state' : binState
+        };
+        ActionCreators.pptlPress(data);
+    },
     showModal: function(data,type,e) {
          ActionCreators.showModal({
             data:data,
@@ -24512,7 +24529,6 @@ var Bin = React.createClass({displayName: "Bin",
    
     render: function() {
         var compData = this.props.binData;
-        console.log("ashu" + this.props.screenId);
         if(compData.ppsbin_state == "staged" )
             return (
                 React.createElement("div", {className: "bin staged"}, 
@@ -24520,23 +24536,22 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == "put_back_stage")
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == appConstants.PUT_BACK_STAGE)
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == "put_back_scan")
+
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN))
             return (
                 React.createElement("div", {className: "bin selected"}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                    ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_stage" )
+        else if(compData.ppsbin_count > 0 && this.props.screenId == appConstants.PUT_BACK_STAGE )
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -24545,7 +24560,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && this.props.screenId == "put_back_scan" )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN) )
             return (
                 React.createElement("div", {className: "bin use"}, 
                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -24567,15 +24582,14 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":217,"../Modal/Modal":223,"react":215}],219:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../constants/appConstants":247,"../Modal/Modal":223,"react":215}],219:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({displayName: "Bins",
 	componentDidMount: function() {
-        console.log("did mount");
-            this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
   	},
     _findCoordinatesIndex:function(x,y){
         var i = 0;
@@ -24588,9 +24602,8 @@ var Bins = React.createClass({displayName: "Bins",
         return i;
     },
     render: function() {
-        console.log("render");
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-        var compData = this.props.binsData;
+        var compData = this.props.binsData; 
         var scrnId = this.props.screenId;
         var self = this;
         return (
@@ -24627,6 +24640,7 @@ var Bins = React.createClass({displayName: "Bins",
         console.log("ashu");
         var clientHeight = $('.bins').height();
         var clientWidth = $('.bins').width();
+        console.log($(".bins").innerHeight());
         console.log(clientHeight + " " + clientWidth);
         var boxSize = Math.min(clientHeight/dimension[0],clientWidth/dimension[1]);
         for (var i = 0; i < myElements.length; i++) {
@@ -24638,7 +24652,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":247,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
+},{"../../stores/PutBackStore":253,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -24661,7 +24675,15 @@ var Button1 = React.createClass({displayName: "Button1",
                         return true; 
                 }
             break;
-                
+            case appConstants.PUT_FRONT:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScan(this.props.barcode);
+                        break;    
+                     default:
+                        return true; 
+                }
+            break;
              default:
                 return true; 
         }
@@ -24680,17 +24702,57 @@ var Button1 = React.createClass({displayName: "Button1",
 
 module.exports = Button1;
 
-},{"../../actions/CommonActions":217,"../../constants/appConstants":242,"react":215}],221:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../constants/appConstants":247,"react":215}],221:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
+var CommonActions = require('../actions/CommonActions');
+var mainstore = require('../stores/mainstore');
 
 var Header = React.createClass({displayName: "Header",
+    openKeyboard: function() {  
+        $('#barcode').data('keyboard').reveal();
+        return false;
+    },
+    componentDidMount: function(){
+        setTimeout(function () {
+             $('#barcode').keyboard({
+             layout: 'qwerty',
+             css:{
+                container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+             },
+             reposition   : true,
+             alwaysOpen   : false,
+             initialFocus : true,
+             position : {
+               of : $('.keyboard-actions'),
+               my : 'center top',
+               at : 'center top'
+           },
+             accepted: function(e, keypressed, el) {
+               if (e.target.value === '' || e.target.value === '0') {
+                 CommonActions.resetNumpadVal(parseInt(qty));
+               }else{
+                 var data  = {
+                   "event_name":"quantity_update_from_gui",
+                   "event_data":{
+                       "item_uid":itemUid,
+                       "quantity_updated":parseInt(e.target.value)
+                   }
+                 }
+               }
+             }
+         })}.bind(this), 0);
+    },
     render: function() {
         return (
             React.createElement("div", {className: "head"}, 
             	React.createElement("div", {className: "logo"}, 
             	React.createElement("img", {src: allSvgConstants.logo})
             	), 
+                React.createElement("div", {className: "keyboard-actions", onClick: this.openKeyboard}, 
+                  React.createElement("span", {className: "glyphicon glyphicon-barcode"}), 
+                  React.createElement("input", {id: "barcode", type: "text"})
+                ), 
             	React.createElement("div", {className: "header-actions"}, 
             	   React.createElement("img", {src: allSvgConstants.menu})
             	)
@@ -24701,7 +24763,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../constants/svgConstants":244,"react":215}],222:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../constants/svgConstants":249,"../stores/mainstore":256,"react":215}],222:[function(require,module,exports){
 
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
@@ -24758,10 +24820,10 @@ var LoginForm = React.createClass({displayName: "LoginForm",
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
-          seatData = this.state.seatList.map(function(data, index){ 
-            if(data[0].hasOwnProperty('seat_type')){
+          seatData = this.state.seatList[0].map(function(data, index){ 
+            if(data.hasOwnProperty('seat_type')){
                return (
-                  React.createElement("option", {key: 'pps' + index}, "PPS ", data[0].seat_type, " ", data[0].pps_id)
+                  React.createElement("option", {key: 'pps' + index}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
             }else{console.log(data);
                  return( React.createElement("option", {key: index, value: data}, data))
@@ -24798,7 +24860,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../actions/CommonActions":217,"../components/Operator":230,"../stores/loginstore":249,"../stores/mainstore":250,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],223:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../components/Operator":230,"../stores/loginstore":255,"../stores/mainstore":256,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],223:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -24852,7 +24914,6 @@ function loadComponent(modalType,modalData){
 
 var Modal = React.createClass({displayName: "Modal",
   componentDidMount:function(){
-    console.log("ashish");
     $(".modal").click(function(e){
       e.stopPropagation();
         return false;
@@ -24862,7 +24923,6 @@ var Modal = React.createClass({displayName: "Modal",
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    console.log("tttt");
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
@@ -24884,7 +24944,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../stores/mainstore":250,"./ModalFooter":224,"./ModalHeader":225,"react":215}],224:[function(require,module,exports){
+},{"../../stores/mainstore":256,"./ModalFooter":224,"./ModalHeader":225,"react":215}],224:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -24919,6 +24979,11 @@ var React = require('react');
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
         var compData = this.props.data;
+        var message_args  = compData.message.slice(0);
+        console.log(this.props.serverNavData);
+       /* console.log(message_args);
+       var m = message_args.unshift(compData.message[this.props.serverNavData.code]);
+       console.log(m);*/
         return (
             	React.createElement("div", {className: "active-navigation"}, 
                     
@@ -24933,7 +24998,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                         })(), 
                     
             		React.createElement("div", {className: "action"}, 
-            			compData.message
+            			this.props.serverNavData.description
             		)
             	)
         );
@@ -24947,16 +25012,15 @@ var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
 
-var Navigation = React.createClass({displayName: "Navigation",
+var Navigation = React.createClass({displayName: "Navigation", 
+    
     render: function() {
-        console.log(this.props.navData);
         return (
             React.createElement("div", {className: "navigation"}, 
                 this.props.navData.map(function(value,index){
-                    console.log(value);
                     if(value.type == "active")
                         return (
-                                React.createElement(ActiveNavigation, {key: index, data: value})
+                                React.createElement(ActiveNavigation, {key: index, data: value, serverNavData: this.props.serverNavData})
                             );
                     else
                         return (
@@ -25018,15 +25082,17 @@ var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
-var PickFront = require('./PutFront');
+var PickFront = require('./PickFront');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
+var SystemIdle = require('./SystemIdle');
 
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
-      spinner : mainstore.getSpinnerState()
+      spinner : mainstore.getSpinnerState(),
+      systemIsIdle : mainstore.getSystemIdleState()
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -25064,31 +25130,40 @@ var Operator = React.createClass({displayName: "Operator",
       }
   },
 
-  render: function(data){ 
+  render: function(data){ console.log(this.state.currentSeat);
      this.getSeatType(this.state.currentSeat);
       if(this.state.spinner === true){
        this._spinner = React.createElement(Spinner, null)
       }else{
         this._spinner ='';
       }
-        return (
-          React.createElement("div", null, 
-            this._spinner, 
-            this._currentSeat
-          ) 
+       if(this.state.systemIsIdle === true){
+          return (
+            React.createElement("div", {className: "main"}, 
+              React.createElement(SystemIdle, null)
+            ) 
+          )
+        }else{
+          return (
+            React.createElement("div", null, 
+              this._spinner, 
+              this._currentSeat
+            ) 
 
-        )
+          )
+       }
+      
      
   }
 });
 
 module.exports = Operator;
 
-},{"../constants/appConstants":242,"../stores/mainstore":250,"./PickBack":231,"./PutBack":236,"./PutFront":237,"./Spinner/Overlay":239,"react":215}],231:[function(require,module,exports){
+},{"../constants/appConstants":247,"../stores/mainstore":256,"./PickBack":231,"./PickFront":232,"./PutBack":237,"./PutFront":238,"./Spinner/Overlay":244,"./SystemIdle":245,"react":215}],231:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var PutBack = React.createClass({displayName: "PutBack",
+var PickBack = React.createClass({displayName: "PickBack",
   getInitialState: function(){
     return {
       
@@ -25116,9 +25191,111 @@ var PutBack = React.createClass({displayName: "PutBack",
   }
 });
 
-module.exports = PutBack;
+module.exports = PickBack;
 
-},{"../stores/mainstore":250,"react":215}],232:[function(require,module,exports){
+},{"../stores/mainstore":256,"react":215}],232:[function(require,module,exports){
+var React = require('react');
+var PickFrontStore = require('../stores/PickFrontStore');
+var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var Spinner = require("./Spinner/LoaderButler");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var Button1 = require("./Button/Button");
+var Wrapper = require('./ProductDetails/Wrapper');
+var appConstants = require('../constants/appConstants');
+var Rack = require('./Rack/MsuRack.js');
+
+function getStateData(){
+  return {
+           //StageActive:PickFrontStore.getStageActiveStatus(),
+           //StageAllActive:PickFrontStore.getStageAllActiveStatus(),
+           PickFrontNavData : PickFrontStore.getNavData(),
+           PickFrontNotification : PickFrontStore.getNotificationData(),
+           PickFrontBinData: PickFrontStore.getBinData(),
+           PickFrontScreenId:PickFrontStore.getScreenId(),
+           PickFrontScanDetails : PickFrontStore.scanDetails(),
+           PickFrontProductDetails : PickFrontStore.productDetails(),
+           //PickFrontSysIdle : PickFrontStore.getSystemIdleState(),
+          //PickFrontServerNavData : PickFrontStore.getServerNavData()
+          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+
+    };
+};
+
+var PickFront = React.createClass({displayName: "PickFront",
+  _notification:'',
+  _component:'',
+  getInitialState: function(){
+    return getStateData();
+  },
+  componentWillMount: function(){
+    PickFrontStore.addChangeListener(this.onChange);
+  },
+  componentWillUnmount: function(){
+    PickFrontStore.removeChangeListener(this.onChange);
+  },
+  onChange: function(){ 
+	this.setState(getStateData());
+  },
+  getNotificationComponent:function(){
+    if(this.state.PickFrontNotification != undefined)
+      this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification})
+    else
+      this._notification = "";
+  },
+  getScreenComponent : function(screen_id){
+    
+    switch(screen_id){
+     
+      case appConstants.PICK_FRONT_ITEM_SCAN:
+      break;
+
+
+      case appConstants.PICK_FRONT_PLACE_ITEMS_IN_BINS:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "single-bin"}
+                    
+                ), 
+                React.createElement("div", {className: "main-container"}, 
+                  
+                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails})
+                ), 
+                React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PickFrontProductDetails.product_sku, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"})
+                )
+
+              )
+            );
+        break;
+
+      case appConstants.PICK_FRONT_PPTL_PRESS:
+      break;
+
+      default:
+        return true;
+    }
+  },
+  render: function(data){ 
+	  this.getNotificationComponent();
+    this.getScreenComponent(this.state.PickFrontScreenId);
+	
+	return (
+		React.createElement("div", {className: "main"}, 
+			React.createElement(Header, null), 
+			React.createElement(Navigation, {navData: this.state.PickFrontNavData}), 
+			this._component
+			
+	  )   
+	  )
+  }
+});
+
+module.exports = PickFront;
+
+},{"../constants/appConstants":247,"../stores/PickFrontStore":252,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":236,"./Rack/MsuRack.js":239,"./Spinner/LoaderButler":243,"react":215}],233:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -25126,6 +25303,7 @@ var mainstore = require('../../stores/mainstore');
 var KQ = React.createClass({displayName: "KQ",
   _appendClassDown : '',
   _appendClassUp : '',
+  _qtyComponent : null,
   handleIncrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
       var data  = {
@@ -25207,28 +25385,43 @@ var KQ = React.createClass({displayName: "KQ",
     }
     
   },
+  handleTotalQty : function(){
+    if(this.props.scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: parseInt(this.props.scanDetails.current_qty)}), 
+            React.createElement("span", {className: "separator"}, "/"), 
+            React.createElement("span", {className: "total-quantity"}, parseInt(this.props.scanDetails.total_qty))
+          )
+        );
+    }else{
+      this._qtyComponent = (
+          React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+            React.createElement("input", {id: "keyboard", value: parseInt(this.props.scanDetails.current_qty)})
+          )
+      );
+    }
+  },
   render: function(data){ 
     this.checkKqAllowed();
+    this.handleTotalQty();
       return (
-        React.createElement("div", {className: "kQableContainer"}, 
-             React.createElement("a", {className: this._appendClassUp, href: "#", onClick: this.handleIncrement}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-menu-up"})
-             ), 
-             React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
-                 React.createElement("input", {id: "keyboard", value: parseInt(this.props.scanDetails.current_qty)})
-              ), 
-              React.createElement("a", {className: this._appendClassDown, href: "#", onClick: this.handleDecrement}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-menu-down"})
-              )
-              
-      )
+        React.createElement("div", {className: "kq-wrapper"}, 
+          React.createElement("a", {href: "#", className: this._appendClassUp, onClick: this.handleIncrement}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"})
+          ), 
+          this._qtyComponent, 
+          React.createElement("a", {href: "#", className: this._appendClassDown, onClick: this.handleDecrement}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-down"})
+          )
+        )
     )
   }
 });
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":250,"react":215}],233:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../stores/mainstore":256,"react":215}],234:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -25276,7 +25469,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":215}],234:[function(require,module,exports){
+},{"react":215}],235:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -25327,14 +25520,14 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
   render: function(data){ 
     console.log(this.state.popupVisible);
     return (       
-        
-           React.createElement("div", {className: "imgContainer"}, 
-             React.createElement("img", {src: this.props.productDetails.product_local_image_url}), 
-             React.createElement("div", {className: "imgFooter", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,this.props.productDetails,"product-detail")}, 
+            React.createElement("div", {className: "product-details-wrapper"}, 
+              React.createElement("div", {className: "img-container"}, 
+                  React.createElement("img", {src: this.props.productDetails.product_local_image_url})
+              ), 
+              React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,this.props.productDetails,"product-detail")}, 
                 React.createElement("span", null, " View More "), 
-                React.createElement("span", {className: "glyphicon glyphicon-info-sign"})
-             )
-             
+                React.createElement("i", {className: "glyphicon glyphicon-info-sign"})
+              )
             )
     )
   }
@@ -25342,7 +25535,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":250,"../Modal/Modal":223,"./PopUp":233,"react":215}],235:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../stores/mainstore":256,"../Modal/Modal":223,"./PopUp":234,"react":215}],236:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -25375,7 +25568,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":250,"./KQ":232,"./PopUp":233,"./ProductInfo":234,"react":215}],236:[function(require,module,exports){
+},{"../../stores/mainstore":256,"./KQ":233,"./PopUp":234,"./ProductInfo":235,"react":215}],237:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -25400,12 +25593,12 @@ function getStateData(){
            PutBackScreenId:PutBackStore.getScreenId(),
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
-           PutBackSysIdle : PutBackStore.getSystemIdleState()
+           PutBackServerNavData : PutBackStore.getServerNavData()
 
     };
 }
 
-var Operator = React.createClass({displayName: "Operator",
+var PutBack = React.createClass({displayName: "PutBack",
   _component:'',
   _notification:'',
   getInitialState: function(){
@@ -25457,7 +25650,7 @@ var Operator = React.createClass({displayName: "Operator",
   },
 
   getNotificationComponent:function(){
-    if(this.state.PutBackNotification.description != "")
+    if(this.state.PutBackNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification})
     else
       this._notification = "";
@@ -25465,53 +25658,53 @@ var Operator = React.createClass({displayName: "Operator",
   render: function(data){
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
-    if(this.state.PutBackSysIdle == true){
       return (
         React.createElement("div", {className: "main"}, 
           React.createElement(Header, null), 
-          React.createElement(SystemIdle, null)
-        ) 
-      )
-    }
-    else{
-      return (
-        React.createElement("div", {className: "main"}, 
-          React.createElement(Header, null), 
-          React.createElement(Navigation, {navData: this.state.PutBackNavData}), 
+          React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData}), 
           this._component, 
           this._notification
         ) 
        
       )
-    }
   }
 });
 
-module.exports = Operator;
+module.exports = PutBack;
 
-},{"../constants/appConstants":242,"../stores/PutBackStore":247,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"./SystemIdle":240,"react":215}],237:[function(require,module,exports){
+},{"../constants/appConstants":247,"../stores/PutBackStore":253,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":236,"./SystemIdle":245,"react":215}],238:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
+var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
+var Rack = require('./Rack/MsuRack.js');
 
 
 function getStateData(){
   return {
            PutFrontNavData : PutFrontStore.getNavData(),
-           PutFrontNotification : PutFrontStore.getNotificationData()
+           PutFrontNotification : PutFrontStore.getNotificationData(),
+           PutFrontScreenId:PutFrontStore.getScreenId(),
+           PutFrontBinData: PutFrontStore.getBinData(),
+           PutFrontScanDetails : PutFrontStore.scanDetails(),
+           PutFrontProductDetails : PutFrontStore.productDetails(),
+           PutFrontRackDetails: PutFrontStore.getRackDetails(),
+           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
+           PutFrontServerNavData : PutFrontStore.getServerNavData()
     };
 
 };
 
-var Operator = React.createClass({displayName: "Operator",
+var PutFront = React.createClass({displayName: "PutFront",
   _notification:'',
+  _component:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -25527,19 +25720,64 @@ var Operator = React.createClass({displayName: "Operator",
  
 
   getNotificationComponent:function(){
-    if(this.state.PutFrontNotification.description != "")
+    if(this.state.PutFrontNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification})
     else
       this._notification = "";
   },
 
+  getScreenComponent : function(screen_id){
+    switch(screen_id){
+      case appConstants.PUT_FRONT_WAITING_FOR_RACK:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                 React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Spinner, null)
+                 )
+              )
+            );
+
+        break;
+      case appConstants.PUT_FRONT_SCAN:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails})
+                )
+              )
+            );
+        break;
+      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "single-bin"}, 
+                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId})
+                ), 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Rack, {rackData: this.state.PutFrontRackDetails}), 
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails})
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontProductDetails.product_sku, color: "black"})
+                )
+
+              )
+            );
+        break;
+      default:
+        return true; 
+    }
+  },
+
   render: function(data){
     this.getNotificationComponent();
-   
+    this.getScreenComponent(this.state.PutFrontScreenId);
     return (
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
-        React.createElement(Navigation, {navData: this.state.PutFrontNavData}), 
+        React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData}), 
+        this._component, 
         this._notification
       ) 
      
@@ -25548,9 +25786,157 @@ var Operator = React.createClass({displayName: "Operator",
 
 });
 
-module.exports = Operator;
+module.exports = PutFront;
 
-},{"../constants/appConstants":242,"../stores/PutFrontStore":248,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"react":215}],238:[function(require,module,exports){
+},{"../constants/appConstants":247,"../stores/PutFrontStore":254,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":236,"./Rack/MsuRack.js":239,"./Spinner/LoaderButler":243,"react":215}],239:[function(require,module,exports){
+var React = require('react');
+var RackRow = require('./RackRow');
+
+
+var MsuRack = React.createClass({displayName: "MsuRack",
+	render: function(){
+
+        var rackDetails = this.props.rackData.rack_type_rec;
+        var compartment_details = this.props.rackData.slot_barcodes;
+        var slotStart,slotEnd,i;
+        var slotIndexList = [];
+        var eachRow =[];
+        if(compartment_details.length === 1){
+            slotStart = (compartment_details[0].split(".")[3])%10;
+            slotEnd = (compartment_details[0].split(".")[3])%10;
+            selectedRackRow =compartment_details[0].split(".")[2]; 
+        }
+        else if(compartment_details.length === 2){
+            slotStart = (compartment_details[0].split(".")[3])%10;
+            slotEnd = (compartment_details[1].split(".")[3])%10;
+            selectedRackRow =compartment_details[0].split(".")[2]; 
+        }
+        else {
+        }
+        
+        for (i = slotStart; i <= slotEnd; i++) {
+            slotIndexList.push(i);
+        };
+
+        var rackRange = selectedRackRow;
+       
+        
+        eachRow = rackDetails.map(function(row,index){
+            if(row[0] == selectedRackRow)
+                return (
+                        React.createElement(RackRow, {slots: row[1], key: index, slotIndexArray: slotIndexList, rackRange: rackRange})
+                    );
+
+            else
+                return (
+        				React.createElement(RackRow, {slots: row[1], key: index, rackRange: rackRange})
+        			);
+        	});
+
+
+		return (
+				React.createElement("div", {className: "drawRack"}, 
+					eachRow.reverse()
+				)
+			);
+	}
+});
+
+module.exports = MsuRack;
+
+},{"./RackRow":240,"react":215}],240:[function(require,module,exports){
+var React = require('react');
+var RackSlot = require('./RackSlot');
+
+
+var RackRow = React.createClass({displayName: "RackRow",
+	render: function(){
+		
+		var rackRange = this.props.rackRange;
+		var slotIndexArray = this.props.slotIndexArray;
+		var slotData = this.props.slots;
+		var eachSlot =[];		
+		
+		eachSlot = slotData.map(function(slot,index){
+			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
+			return(
+					React.createElement(RackSlot, {selectedSlot: true, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange})
+				);
+			else
+				return(
+					React.createElement(RackSlot, {slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange})
+					);
+		});
+
+		return (
+				React.createElement("div", {className: "rackRow"}, 
+					eachSlot
+				)
+			);
+	}
+});
+
+module.exports = RackRow;
+
+},{"./RackSlot":241,"react":215}],241:[function(require,module,exports){
+var React = require('react');
+var SingleSlot = require('./SingleSlot');
+
+
+var RackSlot = React.createClass({displayName: "RackSlot",
+	render : function(){
+		var rackRange = this.props.rackRange;
+		slotIndexArrays = this.props.slotIndexArrays;
+		
+		var calculateWidth = 4.2*this.props.slotWidthDataLength; 
+		 var calculateHeight = this.props.slotHeightData;
+		var slotWidth = {
+				width : calculateWidth + 'vw',
+				height : calculateHeight/5.5 + "vh",
+			};
+		
+		
+		var singleSlot = this.props.slotWidthData.map(function(singSlot,index){
+			if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
+				return(
+						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot%10})
+					);
+				else
+				return(
+						React.createElement(SingleSlot, {key: index, rackRange: rackRange})
+					);
+			
+		});
+
+		return (
+			React.createElement("div", {className: "rackSlot", style: slotWidth}, 
+				singleSlot
+			)
+			);
+	}
+});
+
+module.exports = RackSlot ;
+
+},{"./SingleSlot":242,"react":215}],242:[function(require,module,exports){
+var React = require('react');
+
+var SingleSlot = React.createClass({displayName: "SingleSlot",
+	render : function(){
+		var rackRange = this.props.rackRange;
+		var slotId = this.props.index;
+		
+		return (
+			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : '')}, 
+				this.props.selected ? rackRange + slotId : ''
+			)
+			);
+	}
+});
+
+module.exports = SingleSlot ;
+
+},{"react":215}],243:[function(require,module,exports){
 var React = require('react');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
@@ -25570,7 +25956,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":215}],239:[function(require,module,exports){
+},{"react":215}],244:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 
@@ -25587,123 +25973,121 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":238,"react":215}],240:[function(require,module,exports){
+},{"./LoaderButler":243,"react":215}],245:[function(require,module,exports){
 var React = require('react');
+var Header = require('./Header');
 
 var SystemIdle = React.createClass({displayName: "SystemIdle",
 	render:function(){
 		return (
-
-			React.createElement("div", {className: "loader"}, 
-				
-					React.createElement("div", {className: "hexdots-loader"}, 
-  						"Loading…"
+				React.createElement("div", {className: "systemIdle"}, 
+					React.createElement(Header, null), 
+					React.createElement("div", {className: "idleScreen"}, 
+						"System is Idle"	
 					)
-				
-			)
+				)
 			);
 	}
 });
 
 module.exports = SystemIdle;
 
-},{"react":215}],241:[function(require,module,exports){
+},{"./Header":221,"react":215}],246:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
-var navData ={
-  "putBack" : [
-		    {
-          "screen_id":"put_back_stage",
-          "code" :  "Common.000",
-          "image":svgConstants.stage,
-          "message" : "Stage Bin or Scan Item",
-          "showImage" : true,
-          "level" : 1,
-          "type" : 'passive'
-        },
-        {
-          "screen_id":"put_back_scan",
-          "code" :  "Common.001",
-          "image":svgConstants.scan,
-          "message" : "Scan & Confirm",
-          "showImage" : true,
-          "level" : 2,
-          "type" : 'passive'
-        }
-  ],
-  "putFront" : [
-        {
-          "screen_id":"Scan the item(s)",
-          "code" :  "Common.000",
-          "image":svgConstants.stage,
-          "message" : "Stage Bin or Scan Item",
-          "showImage" : true,
-          "level" : 1,
-          "type" : 'passive'
-        },
-        {
-          "screen_id":"Place",
-          "code" :  "Common.001",
-          "image":svgConstants.scan,
-          "message" : "Scan & Confirm",
-          "showImage" : true,
-          "level" : 2,
-          "type" : 'passive'
-        }
-  ],
-  "pickFront" : [
-        {
-          "screen_id":"put_back_stage",
-          "code" :  "Common.000",
-          "image":svgConstants.stage,
-          "message" : "Stage Bin or Scan Item",
-          "showImage" : true,
-          "level" : 1,
-          "type" : 'passive'
-        },
-        {
-          "screen_id":"put_back_scan",
-          "code" :  "Common.001",
-          "image":svgConstants.scan,
-          "message" : "Scan & Confirm",
-          "showImage" : true,
-          "level" : 2,
-          "type" : 'passive'
-        }
-  ],
-  "pickBack" : [
-        {
-          "screen_id":"put_back_stage",
-          "code" :  "Common.000",
-          "image":svgConstants.stage,
-          "message" : "Stage Bin or Scan Item",
-          "showImage" : true,
-          "level" : 1,
-          "type" : 'passive'
-        },
-        {
-          "screen_id":"put_back_scan",
-          "code" :  "Common.001",
-          "image":svgConstants.scan,
-          "message" : "Scan & Confirm",
-          "showImage" : true,
-          "level" : 2,
-          "type" : 'passive'
-        }
-  ]
+var navData = {
+    "putBack": [{
+        "screen_id": "put_back_stage",
+        "code": "Common.000",
+        "image": svgConstants.stage,
+        "message": "Stage Bin or Scan Item",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    }, {
+        "screen_id": "put_back_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan & Confirm",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
+    }],
+    "putFront": [
+        [{
+            "screen_id": "put_front_waiting_for_rack",
+            "code": "Common.000",
+            "message": "Wait For MSU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_scan",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan Item From Bin",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": "put_front_place_items_in_rack",
+            "code": "Common.001",
+            "image": svgConstants.rack,
+            "message": "Place Item in slot and scan more",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }]
+    ],
+    "pickFront": [{
+        "screen_id": "put_back_stage",
+        "code": "Common.000",
+        "image": svgConstants.stage,
+        "message": "Stage Bin or Scan Item",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    }, {
+        "screen_id": "put_back_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan & Confirm",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
+    }],
+    "pickBack": [{
+        "screen_id": "put_back_stage",
+        "code": "Common.000",
+        "image": svgConstants.stage,
+        "message": "Stage Bin or Scan Item",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    }, {
+        "screen_id": "put_back_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan & Confirm",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
+    }]
 
 };
 
 module.exports = navData;
-
-},{"../constants/svgConstants":244}],242:[function(require,module,exports){
+},{"../constants/svgConstants":249}],247:[function(require,module,exports){
 var appConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.110:8888/ws",
-	INTERFACE_IP : "http://192.168.2.110:5000",
+	WEBSOCKET_IP : "ws://192.168.3.93:8892/ws",
+	INTERFACE_IP : "http://192.168.3.93:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
+	API : '/api',
 	PPS_SEATS : "/pps_seats/",
+	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
@@ -25721,36 +26105,47 @@ var appConstants = {
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
 	PUT_BACK_SCAN : "put_back_scan",
+	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
+	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
+	PUT_FRONT_SCAN:"put_front_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
 	RESET_NUMPAD :'RESET_NUMPAD',
 	CANCEL_SCAN : 'CANCEL_SCAN',
-	LOAD_MODAL:'load_modal'
+	LOAD_MODAL:'load_modal',
+	PPTL_PRESS : 'PPTL_PRESS',
+	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
+	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
+	PICK_FRONT_PLACE_ITEMS_IN_BINS:"pick_front_more_item_scan",
+	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
+	EDIT_DETAILS:"EDIT_DETAILS"
+
 };
 
 module.exports = appConstants;
 
-},{}],243:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected'
 };
 module.exports = resourceConstants;
 
-},{}],244:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
 	logo : 'assets/images/logo.png',
 	menu : 'assets/images/menu.png',
 	stage : 'assets/images/nav2.png',
-	scan : 'assets/images/scan-item.png'
+	scan : 'assets/images/scan-item.png',
+	rack: 'assets/images/rack.png',
 }
 
 module.exports = allSvgConstants;
 
-},{}],245:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -25764,11 +26159,12 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":33}],246:[function(require,module,exports){
+},{"flux":33}],251:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 
 var LoginForm = require('./components/LoginForm'); 
+var Operator = require('./components/Operator');
 
 var App = React.createClass({displayName: "App",
   getInitialState: function(){
@@ -25788,7 +26184,112 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
-},{"./components/LoginForm":222,"react":215,"react-dom":59}],247:[function(require,module,exports){
+},{"./components/LoginForm":222,"./components/Operator":230,"react":215,"react-dom":59}],252:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/AppDispatcher');
+var AppConstants = require('../constants/appConstants');
+var EventEmitter = require('events').EventEmitter;
+var assign = require('object-assign');
+var ActionTypes = AppConstants;
+var CHANGE_EVENT = 'change';
+var navConfig = require('../config/navConfig');
+var utils = require('../utils/utils');
+
+var _PickFrontData, _NavData, _NotificationData;
+
+
+var PickFrontStore = assign({}, EventEmitter.prototype, {
+
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
+
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
+
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
+
+    getNavData: function() {
+        if (_PickFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
+            _NavData = navConfig.putFront[0];
+            _NavData[0].type = 'active';
+        } else {
+            _NavData = navConfig.putFront[1];
+            _NavData.map(function(data, index) { 
+                if (_PickFrontData.screen_id === data.screen_id) {console.log(_PickFrontData);
+                    _NavData[index].type = 'active';
+                }else{
+                     _NavData[index].type = 'passive';
+                }
+            });
+        }
+        return _NavData;
+    },
+    getNotificationData: function() {
+        return _PickFrontData.notification_list[0];
+    },
+    setPickFrontData: function(data) {
+        _PickFrontData = data;
+    },
+
+    getStateData: function() {
+        return _PickFrontData;
+    },
+
+    getScreenId: function() {
+        return _PickFrontData.screen_id;
+    },
+
+    getBinData: function() {
+        var binData = {};
+        binData["structure"] = _PickFrontData.structure;
+        binData["ppsbin_list"] = _PickFrontData.ppsbin_list;
+        return binData;
+    },
+
+    scanDetails: function() {
+        console.log(_PickFrontData);
+        _scanDetails = _PickFrontData.scan_details;
+        return _scanDetails;
+    },
+    productDetails: function() {
+        console.log(_PickFrontData);
+        _prodDetails = _PickFrontData.product_info;
+        return _prodDetails;
+    },
+
+    getRackDetails: function() {
+        return _PickFrontData.rack_details;
+    },
+
+    getCurrentSelectedBin:function(){
+       var binData = {};
+        binData["structure"] = [2,4];
+        binData["ppsbin_list"] = [];
+        _PickFrontData.ppsbin_list.map(function(value,index){
+          if(value.selected_state == true)
+              binData["ppsbin_list"].push(value);
+        })
+        return binData;
+    }
+
+});
+
+PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
+    switch (action.action.actionType) { 
+        case ActionTypes.SET_PICK_FRONT_DATA: 
+            PickFrontStore.setPickFrontData(action.action.data);
+            PickFrontStore.emitChange();
+            break;
+        default:
+           return true;
+    }
+});
+
+module.exports = PickFrontStore;
+},{"../config/navConfig":246,"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"object-assign":53}],253:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -25800,7 +26301,7 @@ var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
-var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent, _serverNavData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -25827,11 +26328,14 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
       }else if(value["selected_for_staging"]!=undefined)
         value["selected_for_staging"] = false;
     });
-    _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
+    if(_PutBackData.notification_list.length != 0){
+      _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
+    }else{
+     // _PutBackData.notification_list = undefined;
+    }
   },
 
   getStageActiveStatus:function(){
-    console.log(_PutBackData);
     var flag = false;
     _PutBackData["ppsbin_list"].map(function(value,index){
       if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
@@ -25850,7 +26354,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
   getNavData : function () {
     _NavData = navConfig.putBack;
-    console.log(_NavData);
     navConfig.putBack.map(function(data,index){
        if(_PutBackData.screen_id === data.screen_id ){
           _NavData[index].type = 'active'; 
@@ -25861,6 +26364,14 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         }
     });
     return _NavData;
+  },
+  getServerNavData : function(){
+    if(_PutBackData.header_msge_list.length > 0){
+      _serverNavData = _PutBackData.header_msge_list[0];
+      return _serverNavData;
+    }else{
+      return null;
+    }
   },
   getNotificationData : function() { 
       return _PutBackData.notification_list[0];
@@ -25883,19 +26394,17 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   getScreenId:function(){
     return _PutBackData.screen_id;
   },
-  getSystemIdleState : function(){
-    return _PutBackData.is_idle;
-  },
   stageOneBin:function(){
     var data ={};
-    _PutBackData.ppsbin_list.map(function(value,index){
+    _PutBackData.ppsbin_list.map(function(value,index){ 
          if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
           data["event_name"] = "stage_ppsbin";
           data["event_data"] = {};
           data["event_data"]["ppsbin_id"] = value.ppsbin_id;
         }
     });
-    utils.postDataToInterface(data);
+
+   utils.postDataToInterface(data, _PutBackData.seat_name);
 
   },
 
@@ -25903,13 +26412,13 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     var data ={};
     data["event_name"] = "stage_all";
     data["event_data"]= '';
-     utils.postDataToInterface(data);
+     utils.postDataToInterface(data, _PutBackData.seat_name);
   },
-  scanDetails : function(){ console.log(_PutBackData);
+  scanDetails : function(){ 
     _scanDetails = _PutBackData.scan_details;
     return _scanDetails;
   },
-  productDetails : function(){ console.log(_PutBackData);
+  productDetails : function(){
     _prodDetails = _PutBackData.product_info;
     return _prodDetails;
   }
@@ -25944,8 +26453,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
-},{"../config/navConfig":241,"../constants/appConstants":242,"../constants/resourceConstants":243,"../dispatchers/AppDispatcher":245,"../utils/utils":251,"events":1,"object-assign":53}],248:[function(require,module,exports){
-
+},{"../config/navConfig":246,"../constants/appConstants":247,"../constants/resourceConstants":248,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"object-assign":53}],254:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -25960,82 +26468,106 @@ var _PutFrontData, _NavData, _NotificationData;
 
 var PutFrontStore = assign({}, EventEmitter.prototype, {
 
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
 
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
 
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
 
-  
-
-  getNavData : function () {
-    _NavData = navConfig.putFront;
-    console.log(_NavData);
-    navConfig.putFront.map(function(data,index){
-       if(_PutFrontData.screen_id === data.screen_id ){
-          _NavData[index].type = 'active'; 
-          _NavData[index].showImage = true; 
-        }else{
-          _NavData[index].type = 'passive';
-          _NavData[index].showImage = false; 
+    getNavData: function() {
+        if (_PutFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
+            _NavData = navConfig.putFront[0];
+            _NavData[0].type = 'active';
+        } else {
+            _NavData = navConfig.putFront[1];
+            _NavData.map(function(data, index) { 
+                if (_PutFrontData.screen_id === data.screen_id) {console.log(_PutFrontData);
+                    _NavData[index].type = 'active';
+                }else{
+                     _NavData[index].type = 'passive';
+                }
+            });
         }
-    });
-    return _NavData;
-  },
-  getNotificationData : function() { 
-      return _PutFrontData.notification_list[0];
-  },
-  setPutFrontData:function(data){
-    _PutFrontData = data;
-  },
+        return _NavData;
+    },
+    getServerNavData : function(){ 
+        if(_PutFrontData.header_msge_list.length > 0){
+            _serverNavData = _PutFrontData.header_msge_list[0];
+            return _serverNavData;
+        }
+        else{
+            return null;   
+        } 
+    },
+    getNotificationData: function() {
+        return _PutFrontData.notification_list[0];
+    },
+    setPutFrontData: function(data) {
+        _PutFrontData = data;
+    },
 
-  getStateData:function(){
-    return _PutFrontData;
-  },
+    getStateData: function() {
+        return _PutFrontData;
+    },
 
-  getScreenId:function(){
-    return _PutFrontData.screen_id;
-  },
+    getScreenId: function() {
+        return _PutFrontData.screen_id;
+    },
+
+    getBinData: function() {
+        var binData = {};
+        binData["structure"] = _PutFrontData.structure;
+        binData["ppsbin_list"] = _PutFrontData.ppsbin_list;
+        return binData;
+    },
+
+    scanDetails: function() {
+        console.log(_PutFrontData);
+        _scanDetails = _PutFrontData.scan_details;
+        return _scanDetails;
+    },
+    productDetails: function() {
+        console.log(_PutFrontData);
+        _prodDetails = _PutFrontData.product_info;
+        return _prodDetails;
+    },
+
+    getRackDetails: function() {
+        return _PutFrontData.rack_details;
+    },
+
+    getCurrentSelectedBin:function(){
+       var binData = {};
+        binData["structure"] = [1,1];
+        binData["ppsbin_list"] = [];
+        _PutFrontData.ppsbin_list.map(function(value,index){
+          if(value.selected_state == true)
+              binData["ppsbin_list"].push(value);
+        })
+        return binData;
+    }
 
 });
 
 PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.action.actionType) {
-    case ActionTypes.TOGGLE_BIN_SELECTION:
-      PutFrontStore.toggleBinSelection(action.action.bin_id);
-      PutFrontStore.emitChange();
-      break;
-
-     case ActionTypes.SET_PUT_FRONT_DATA:
-      PutFrontStore.setPutFrontData(action.action.data);
-      PutFrontStore.emitChange();
-      break;
-
-      case ActionTypes.STAGE_ONE_BIN: 
-        PutFrontStore.stageOneBin();
-        PutFrontStore.emitChange();
-      break; 
-
-     case ActionTypes.STAGE_ALL: 
-      PutFrontStore.stageAllBin();
-      PutFrontStore.emitChange();
-      break;  
-
-    
-    default:
-      // do nothing
-  }
-
+    switch (action.action.actionType) {
+        case ActionTypes.SET_PUT_FRONT_DATA:
+            PutFrontStore.setPutFrontData(action.action.data);
+            PutFrontStore.emitChange();
+            break;
+        default:
+           return true;
+    }
 });
 
 module.exports = PutFrontStore;
-},{"../config/navConfig":241,"../constants/appConstants":242,"../dispatchers/AppDispatcher":245,"../utils/utils":251,"events":1,"object-assign":53}],249:[function(require,module,exports){
+},{"../config/navConfig":246,"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"object-assign":53}],255:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -26046,13 +26578,19 @@ var utils  = require('../utils/utils.js');
 
 var CHANGE_EVENT = 'change';
 var flag = false;
+var currentSeat = [];
 
 function getParameterByName(name){
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    /*name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search); console.log(name);
-    currentSeat[0] = results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " ")); console.log(currentSeat[0]);
-    listPpsSeat(currentSeat[0]);
+        results = regex.exec(location.search); console.log(regex);
+        if(results === null){
+          results = decodeURIComponent(results[1].replace(/\+/g, " ")); 
+        }else{
+          results = '';
+        } console.log(results);*/
+     //results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); 
+    listPpsSeat(null);
 }
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
@@ -26061,7 +26599,7 @@ if(retrieved_token != null){
           xhr.setRequestHeader("Authentication-Token", authentication_token)
   }
 }
-var currentSeat = [];
+
 
 function listPpsSeat(seat){
     if(seat === null){
@@ -26127,7 +26665,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":217,"../constants/appConstants":242,"../dispatchers/AppDispatcher":245,"../utils/utils.js":251,"events":1,"react/lib/Object.assign":106}],250:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils.js":257,"events":1,"react/lib/Object.assign":106}],256:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -26135,7 +26673,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var seatData, _currentSeat;
+var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
@@ -26158,7 +26696,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return popupVisible;
   },
   kqOperation: function(data){
-    utils.postDataToInterface(data);
+    utils.postDataToInterface(data, _seatName);
   },
   showSpinner : function(){
     _showSpinner = true;
@@ -26166,24 +26704,33 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(seat){
+  setCurrentSeat:function(data){ 
     _showSpinner = false;
-    _currentSeat  = seat;
+    _seatData = data;
+    _seatName = data.seat_name;
+    _currentSeat  = data.mode + "_" + data.seat_type;
   },
   cancelScan : function(barcode){
     var data = {
-      "event_name": "cancel_barcode_scan",
+      "event_name": _cancelEvent,
       "event_data": {
         "barcode": barcode
       }
-    }
-    utils.postDataToInterface(data);
+    };
+    utils.postDataToInterface(data, _seatName);
   },
 
   getModalContent:function(){
     return modalContent.data;
   },
-
+  getSystemIdleState : function(){ 
+    if(_seatData != undefined){
+      return _seatData.is_idle;
+    }
+    else{
+      return null;
+    }
+  },
   getModalType:function(){
     return modalContent.type;
   },
@@ -26192,7 +26739,39 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getCurrentSeat:function(){
+    switch(_currentSeat){
+      case appConstants.PUT_BACK:
+         _pptlEvent = 'secondary_button_press';
+         _cancelEvent = 'cancel_barcode_scan';
+        break;
+      case appConstants.PUT_FRONT:
+          _pptlEvent = 'primary_button_press';
+          _cancelEvent = 'cancel_scan_all';
+        break;
+      case appConstants.PICK_BACK:
+          _pptlEvent = 'secondary_button_press';
+
+        break;
+      case appConstants.PICK_FRONT:
+          _pptlEvent = 'primary_button_press';
+          _cancelEvent = 'cancel_scan_all';
+        break;
+      default:
+        return true; 
+    }
     return _currentSeat;
+  },
+  pptlPress : function(data){ console.log(data);
+    var data = {
+      "event_name": "process_ppsbin_event",
+      "event_data": {
+        "ppsbin_id" : data.bin_id,
+        "ppsbin_state": data.bin_state,
+        "ppsbin_event" : _pptlEvent
+      }
+    };
+    utils.postDataToInterface(data, _seatName);
+
   }
 
 });
@@ -26227,7 +26806,12 @@ AppDispatcher.register(function(payload){
     case appConstants.LOAD_MODAL:
       mainstore.setModalContent(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;    
+      break; 
+    case appConstants.PPTL_PRESS:
+      mainstore.showSpinner();
+      mainstore.pptlPress(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;      
     default:
       return true;
   }
@@ -26235,7 +26819,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":242,"../dispatchers/AppDispatcher":245,"../utils/utils":251,"events":1,"react/lib/Object.assign":106}],251:[function(require,module,exports){
+},{"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"react/lib/Object.assign":106}],257:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
@@ -26255,7 +26839,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	        //setTimeout(CommonActions.seatData, 0, evt.data);
 	        var data = JSON.parse(evt.data);
 	        putSeatData(data);
-	        CommonActions.setCurrentSeat(data.state_data.mode + "_" + data.state_data.seat_type);
+	        CommonActions.setCurrentSeat(data.state_data);
 	        
 	      };
 	      ws.onclose = function(){ 
@@ -26271,12 +26855,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
-  	postDataToInterface : function(data){ 
+  	postDataToInterface : function(data, seat_name){ 
+      console.log(data);
   		$.ajax({
         type: 'POST',
-        url: appConstants.INTERFACE_IP,
-        data: data,
-        dataType : 'json'
+        url: appConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,
+        data: JSON.stringify(data),
+        dataType:"json",
+        headers: {
+         'content-type' : 'application/json',
+         'accept' : 'application/json'
+        }
         }).done(function(response) {
 
         }).fail(function(jqXhr) {
@@ -26285,17 +26874,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   	}
 }); 
 
-var putSeatData = function(data){
+var putSeatData = function(data){ console.log(data); 
 	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
       case appConstants.PUT_BACK:
           CommonActions.setPutBackData(data.state_data);
       break;
-      case appConstants.PUT_FRONT:
+      case appConstants.PUT_FRONT: 
           CommonActions.setPutFrontData(data.state_data);
         break;
       case appConstants.PICK_BACK:
         break;
-      case appConstants.PICK_FRONT:
+      case appConstants.PICK_FRONT: 
+          CommonActions.setPickFrontData(data.state_data);
         break;
       default:
         return true; 
@@ -26303,5 +26893,4 @@ var putSeatData = function(data){
 }
 
 module.exports = utils;
-
-},{"../actions/CommonActions":217,"../constants/appConstants":242,"events":1,"react/lib/Object.assign":106}]},{},[246]);
+},{"../actions/CommonActions":217,"../constants/appConstants":247,"events":1,"react/lib/Object.assign":106}]},{},[251]);

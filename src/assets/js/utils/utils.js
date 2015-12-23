@@ -52,17 +52,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   	}
 }); 
 
-var putSeatData = function(data){ console.log(data);
+var putSeatData = function(data){ console.log(data); 
 	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
       case appConstants.PUT_BACK:
           CommonActions.setPutBackData(data.state_data);
       break;
-      case appConstants.PUT_FRONT:
+      case appConstants.PUT_FRONT: 
           CommonActions.setPutFrontData(data.state_data);
         break;
       case appConstants.PICK_BACK:
         break;
-      case appConstants.PICK_FRONT:
+      case appConstants.PICK_FRONT: 
+          CommonActions.setPickFrontData(data.state_data);
         break;
       default:
         return true; 

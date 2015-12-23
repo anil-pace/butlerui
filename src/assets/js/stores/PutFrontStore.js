@@ -106,7 +106,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
             PutFrontStore.emitChange();
             break;
         default:
-            // do nothing
+           return true;
     }
 });
 

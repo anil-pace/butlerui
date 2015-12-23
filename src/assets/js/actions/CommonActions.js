@@ -105,7 +105,13 @@ var commonActions = {
       actionType: appConstants.PPTL_PRESS,
       data:data
     })
-  }
+  },
+  setPickFrontData :function(data){ console.log(data); 
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PICK_FRONT_DATA,
+      data:data
+    })
+  },
 
 };
 

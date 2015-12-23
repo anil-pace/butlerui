@@ -4,54 +4,60 @@ var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 
 var Header = React.createClass({
-    openKeyboard: function() {  
+    virtualKeyBoard: '',
+    openKeyboard: function() {
         $('#barcode').data('keyboard').reveal();
         return false;
     },
-    componentDidMount: function(){
-        setTimeout(function () {
-             $('#barcode').keyboard({
-             layout: 'qwerty',
-             css:{
+    componentDidMount: function() {
+        virtualKeyBoard = $('#barcode').keyboard({
+            layout: 'qwerty',
+            css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
-             },
-             reposition   : true,
-             alwaysOpen   : false,
-             initialFocus : true,
-             position : {
-               of : $('.keyboard-actions'),
-               my : 'center top',
-               at : 'center top'
-           },
-             accepted: function(e, keypressed, el) {
-               if (e.target.value === '' || e.target.value === '0') {
-                 CommonActions.resetNumpadVal(parseInt(qty));
-               }else{
-                 var data  = {
-                   "event_name":"quantity_update_from_gui",
-                   "event_data":{
-                       "item_uid":itemUid,
-                       "quantity_updated":parseInt(e.target.value)
-                   }
-                 }
-               }
-             }
-         })}.bind(this), 0);
+            },
+            reposition: true,
+            alwaysOpen: false,
+            initialFocus: true,
+            position: {
+                of: $('.keyboard-actions'),
+                my: 'center top',
+                at: 'center top'
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' || e.target.value === '0') {
+                    CommonActions.resetNumpadVal(parseInt(qty));
+                } else {
+                    var data = {
+                        "event_name": "quantity_update_from_gui",
+                        "event_data": {
+                            "item_uid": itemUid,
+                            "quantity_updated": parseInt(e.target.value)
+                        }
+                    }
+                }
+            }
+        })
+    },
+    componentWillMount: function() {
+        mainstore.addChangeListener(this.onChange);
+    },
+    onChange: function() {
+        virtualKeyBoard.getkeyboard().close();
     },
     render: function() {
         return (
             <div className="head">
-            	<div className="logo">
-            	<img src={allSvgConstants.logo} />
-            	</div>
+              <div className="logo">
+              <img src={allSvgConstants.logo} />
+              </div>
                 <div className="keyboard-actions" onClick={this.openKeyboard}>
                   <span className="glyphicon glyphicon-barcode"></span>
                   <input id="barcode" type="text" />
                 </div>
-            	<div className="header-actions">
-            	   <img src={allSvgConstants.menu} />
-            	</div>
-      		</div>
+              <div className="header-actions">
+                 <img src={allSvgConstants.menu} />
+              </div>
+          </div>
         );
     },
 });

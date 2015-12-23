@@ -11,6 +11,7 @@ var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var BoxSerial = require('./BoxSerial.js');
 var Modal = require('./Modal/Modal');
+var CurrentSlot = require('./CurrentSlot');
 
 function getStateData(){
   console.log("jjiii");
@@ -91,7 +92,8 @@ var PickFront = React.createClass({
       case appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:
         this._component = (
               <div className='grid-container'>
-                <Modal />
+                <Modal />             
+                <CurrentSlot />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
@@ -108,6 +110,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                 <Modal />
+                <CurrentSlot />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
                 </div>
@@ -132,7 +135,6 @@ var PickFront = React.createClass({
 			<Header />
 			<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} />
 			{this._component}
-			
 	  </div>   
 	  )
   }

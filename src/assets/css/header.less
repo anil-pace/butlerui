@@ -6,19 +6,22 @@
     .logo {
         order: 1;
         margin-left: 2.5em;
-        padding-top:1em;
-        padding-bottom:1em;
+        padding-top: 1em;
+        padding-bottom: 1em;
     }
     .keyboard-actions {
-       order: 2;
-       margin:0 60px 0 auto;
-       input[type='text'] {
-           display:none;
-       }
-       span{
-            font-size:2em;
-            color:@passive-nav-bck;
-       }
+        order: 2;
+        margin: 0 60px 0 auto;
+        input[type='text'] {
+            display: none;
+        }
+        span {
+            font-size: 2em;
+            color: @passive-nav-bck;
+        }
+        &.hide-manual-barcode {
+            display: none;
+        }
     }
     .header-actions {
         order: 3;

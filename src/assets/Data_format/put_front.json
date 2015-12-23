@@ -324,7 +324,7 @@
 			"bin_info": [],
 			"ppsbin_id": "1",
 			"selected_state": true,
-			"ppsbin_state": "staged",
+			"ppsbin_state": "use",
 			"ppsbin_count": "1",
 			"coordinate": [1, 4]
 		}, {

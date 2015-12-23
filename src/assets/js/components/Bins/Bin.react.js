@@ -44,11 +44,18 @@ var Bin = React.createClass({
                 </div>
             );
 
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN ))
             return (
                 <div className = "bin selected">
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK))
+            return (
+                <div className = "bin selected">
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl selected">{compData.ppsbin_id}</div>
                 </div>
             );
         else if(compData.ppsbin_count > 0 && this.props.screenId == appConstants.PUT_BACK_STAGE )
@@ -60,7 +67,7 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN) )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
             return (
                 <div className = "bin use" >
                    <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")}  >

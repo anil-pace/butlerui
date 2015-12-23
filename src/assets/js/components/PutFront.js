@@ -10,6 +10,7 @@ var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
+var Modal = require('./Modal/Modal');
 
 
 function getStateData(){
@@ -66,6 +67,7 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_SCAN:
           this._component = (
               <div className='grid-container'>
+                <Modal />
                 <div className='main-container'>
                   <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
@@ -76,6 +78,7 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
           this._component = (
               <div className='grid-container'>
+                <Modal />
                 <div className="single-bin">
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                 </div>

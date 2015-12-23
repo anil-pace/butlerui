@@ -5,6 +5,12 @@ var mainstore = require('../stores/mainstore');
 
 var Header = React.createClass({
     virtualKeyBoard: '',
+    getInitialState: function() {
+        return {
+            spinner: mainstore.getSpinnerState(),
+            systemIsIdle: mainstore.getSystemIdleState()
+        }
+    },
     openKeyboard: function() {
         $('#barcode').data('keyboard').reveal();
         return false;
@@ -44,20 +50,26 @@ var Header = React.createClass({
     onChange: function() {
         virtualKeyBoard.getkeyboard().close();
     },
-    render: function() {
+    render: function() { 
+        var cssClass;        
+        if(this.state.spinner || this.state.systemIsIdle){
+            cssClass = 'keyboard-actions hide-manual-barcode'
+        } else{
+            cssClass = 'keyboard-actions'
+        }
         return (
             <div className="head">
               <div className="logo">
               <img src={allSvgConstants.logo} />
               </div>
-                <div className="keyboard-actions" onClick={this.openKeyboard}>
+                <div className={cssClass} onClick={this.openKeyboard}>
                   <span className="glyphicon glyphicon-barcode"></span>
                   <input id="barcode" type="text" />
                 </div>
               <div className="header-actions">
                  <img src={allSvgConstants.menu} />
               </div>
-          </div>
+            </div>
         );
     },
 });

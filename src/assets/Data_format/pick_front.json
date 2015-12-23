@@ -324,6 +324,116 @@
 
 
 
+{
+    "state_data": {
+        "seat_name": "front_10",
+        "screen_id": "pick_front_scan_item_barcode",
+        "screen_version": "1",
+        "notification_list": [{
+            "details": [],
+            "code": "Common.001",
+            "description": "Processing. Please wait and scan later",
+            "level": "error"
+        }],
+        "logout_allowed": "false",
+        "rack_details": {
+            "rack_type_rec": [
+                ["A", [
+                    [
+                        ["01", "02"], 44, 48
+                    ],
+                    [
+                        ["03", "04"], 44, 48
+                    ],
+                    [
+                        ["05", "06"], 44, 48
+                    ]
+                ]],
+                ["B", [
+                    [
+                        ["01", "02"], 25, 48
+                    ],
+                    [
+                        ["03", "04"], 25, 48
+                    ],
+                    [
+                        ["05", "06"], 25, 48
+                    ]
+                ]],
+                ["C", [
+                    [
+                        ["01", "02"], 25, 48
+                    ],
+                    [
+                        ["03", "04"], 25, 48
+                    ]
+                ]],
+                ["D", [
+                    [
+                        ["01", "02"], 25, 48
+                    ],
+                    [
+                        ["03", "04"], 25, 48
+                    ],
+                    [
+                        ["05", "06"], 25, 48
+                    ]
+                ]],
+                ["E", [
+                    [
+                        ["01", "02"], 25, 48
+                    ],
+                    [
+                        ["03", "04"], 25, 48
+                    ],
+                    [
+                        ["05", "06"], 25, 48
+                    ]
+                ]],
+                ["F", [
+                    [
+                        ["01", "02"], 25, 48
+                    ],
+                    [
+                        ["03", "04"], 25, 48
+                    ],
+                    [
+                        ["05", "06"], 25, 48
+                    ]
+                ]]
+            ],
+            "slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+        },
+        "exception_allowed": [{
+            "exception_id": "Common000",
+            "exception_name": "Reset Scanner"
+        }],
+        "mode": "pick",
+        "is_idle": false,
+        "seat_type": "front",
+        "product_info": {
+            "product_description": null,
+            "product_local_image_url": null,
+            "product_dimension": null,
+            "product_sku": null,
+            "product_name": null,
+            "product_weight": null
+        },
+        "time_stamp": "1450294487",
+        "header_msge_list": [{
+            "details": [2],
+            "code": "PkF.A.012",
+            "description": "Scan Item barcode",
+            "level": "info"
+        }],
+        "api_version": "1"
+    }
+}
+
+
+
+
+
 
 
 

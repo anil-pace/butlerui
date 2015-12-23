@@ -55,7 +55,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["pick_front_scan_slot_barcode", "pick_front_scan_box_barcode", "pick_front_scan_item_and_place_in_bin"],
+            "screen_id": ["pick_front_scan_slot_barcode", "pick_front_scan_box_barcode", "pick_front_scan_item_barcode" , "pick_front_scan_item_and_place_in_bin"],
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot Barcode",

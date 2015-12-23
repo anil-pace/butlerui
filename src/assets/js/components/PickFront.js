@@ -12,21 +12,19 @@ var Rack = require('./Rack/MsuRack.js');
 var BoxSerial = require('./BoxSerial.js');
 var Modal = require('./Modal/Modal');
 var CurrentSlot = require('./CurrentSlot');
+var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 
 function getStateData(){
   console.log("jjiii");
   console.log(PickFrontStore.getCurrentSelectedBin());
   console.log(PickFrontStore.getBinData());
   return {
-           //StageActive:PickFrontStore.getStageActiveStatus(),
-           //StageAllActive:PickFrontStore.getStageAllActiveStatus(),
            PickFrontNavData : PickFrontStore.getNavData(),
            PickFrontNotification : PickFrontStore.getNotificationData(),
            PickFrontBinData: PickFrontStore.getBinData(),
            PickFrontScreenId:PickFrontStore.getScreenId(),
            PickFrontScanDetails : PickFrontStore.scanDetails(),
            PickFrontProductDetails : PickFrontStore.productDetails(),
-           //PickFrontSysIdle : PickFrontStore.getSystemIdleState(),
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
@@ -77,6 +75,18 @@ var PickFront = React.createClass({
               </div>
             );
       break;
+
+      case appConstants.PICK_FRONT_SCAN_ITEM_BARCODE:
+        this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                    <Rack rackData = {this.state.PickFrontRackDetails}/>
+                     <PrdtDetails />
+                 </div>
+              </div>
+            );
+      break;
+
 
        case appConstants.PICK_FRONT_SCAN_BOX_BARCODE:
         this._component = (

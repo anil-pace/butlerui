@@ -38,6 +38,7 @@ var appConstants = {
 	PICK_FRONT_WAITING_FOR_RACK:"pick_front_waiting_for_rack",
 	PICK_FRONT_SCAN_SLOT_BARCODE:"pick_front_scan_slot_barcode",
 	PICK_FRONT_SCAN_BOX_BARCODE:"pick_front_scan_box_barcode",
+	PICK_FRONT_SCAN_ITEM_BARCODE:"pick_front_scan_item_barcode",
 	PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:"pick_front_scan_item_and_place_in_bin",
 	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
 	EDIT_DETAILS:"EDIT_DETAILS"

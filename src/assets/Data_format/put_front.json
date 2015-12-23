@@ -288,7 +288,7 @@
 			"exception_name": "Reset Scanner"
 		}],
 		"mode": "put",
-		"is_idle": true,
+		"is_idle": false,
 		"seat_type": "front",
 		"product_info": {
 			"product_description": null,

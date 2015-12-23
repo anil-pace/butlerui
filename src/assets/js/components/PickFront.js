@@ -9,6 +9,7 @@ var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
+var CurrentSlot = require('./CurrentSlot');
 
 function getStateData(){
   return {
@@ -58,10 +59,8 @@ var PickFront = React.createClass({
 
       case appConstants.PICK_FRONT_PLACE_ITEMS_IN_BINS:
           this._component = (
-              <div className='grid-container'>
-                <div className="single-bin">
-                    
-                </div>
+              <div className='grid-container'>                    
+                
                 <div className='main-container'>
                   
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
@@ -90,6 +89,7 @@ var PickFront = React.createClass({
 		<div className="main">
 			<Header />
 			<Navigation navData ={this.state.PickFrontNavData} />
+      <CurrentSlot />
 			{this._component}
 			
 	  </div>   

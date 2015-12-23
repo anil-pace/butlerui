@@ -1,31 +1,99 @@
-
 var React = require('react');
-var mainstore = require('../stores/mainstore');
+var PickFrontStore = require('../stores/PickFrontStore');
+var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var Spinner = require("./Spinner/LoaderButler");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var Button1 = require("./Button/Button");
+var Wrapper = require('./ProductDetails/Wrapper');
+var appConstants = require('../constants/appConstants');
+var Rack = require('./Rack/MsuRack.js');
+
+function getStateData(){
+  return {
+           //StageActive:PickFrontStore.getStageActiveStatus(),
+           //StageAllActive:PickFrontStore.getStageAllActiveStatus(),
+           PickFrontNavData : PickFrontStore.getNavData(),
+           PickFrontNotification : PickFrontStore.getNotificationData(),
+           PickFrontBinData: PickFrontStore.getBinData(),
+           PickFrontScreenId:PickFrontStore.getScreenId(),
+           PickFrontScanDetails : PickFrontStore.scanDetails(),
+           PickFrontProductDetails : PickFrontStore.productDetails(),
+           //PickFrontSysIdle : PickFrontStore.getSystemIdleState(),
+          //PickFrontServerNavData : PickFrontStore.getServerNavData()
+          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+
+    };
+};
+
 var PickFront = React.createClass({
+  _notification:'',
+  _component:'',
   getInitialState: function(){
-    return {
-      
-    }
+    return getStateData();
   },
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
+    PickFrontStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
+    PickFrontStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
+	this.setState(getStateData());
+  },
+  getNotificationComponent:function(){
+    if(this.state.PickFrontNotification != undefined)
+      this._notification = <Notification notification={this.state.PickFrontNotification} />
+    else
+      this._notification = "";
+  },
+  getScreenComponent : function(screen_id){
+    
+    switch(screen_id){
+     
+      case appConstants.PICK_FRONT_ITEM_SCAN:
+      break;
+
+
+      case appConstants.PICK_FRONT_PLACE_ITEMS_IN_BINS:
+          this._component = (
+              <div className='grid-container'>
+                <div className="single-bin">
+                    
+                </div>
+                <div className='main-container'>
+                  
+                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
+                </div>
+                <div className = 'staging-action' >
+                  <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/>
+                  <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} />  
+                </div>
+
+              </div>
+            );
+        break;
+
+      case appConstants.PICK_FRONT_PPTL_PRESS:
+      break;
+
+      default:
+        return true;
+    }
   },
   render: function(data){ 
-    
-      return (
-        <div className='row row-offcanvas row-offcanvas-right'>
-        	<div className="col-xs-12 col-sm-12">
-              <div className='row'>
-                Body area
-              </div>
-          </div>
-        </div>  
-      )
+	  this.getNotificationComponent();
+    this.getScreenComponent(this.state.PickFrontScreenId);
+	
+	return (
+		<div className="main">
+			<Header />
+			<Navigation navData ={this.state.PickFrontNavData} />
+			{this._component}
+			
+	  </div>   
+	  )
   }
 });
 

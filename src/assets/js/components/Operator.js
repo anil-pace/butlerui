@@ -3,7 +3,7 @@ var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
-var PickFront = require('./PutFront');
+var PickFront = require('./PickFront');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
@@ -51,7 +51,7 @@ var Operator = React.createClass({
       }
   },
 
-  render: function(data){ 
+  render: function(data){ console.log(this.state.currentSeat);
      this.getSeatType(this.state.currentSeat);
       if(this.state.spinner === true){
        this._spinner = <Spinner />

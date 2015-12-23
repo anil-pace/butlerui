@@ -33,7 +33,13 @@ var appConstants = {
 	RESET_NUMPAD :'RESET_NUMPAD',
 	CANCEL_SCAN : 'CANCEL_SCAN',
 	LOAD_MODAL:'load_modal',
-	PPTL_PRESS : 'PPTL_PRESS'
+	PPTL_PRESS : 'PPTL_PRESS',
+	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
+	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
+	PICK_FRONT_PLACE_ITEMS_IN_BINS:"pick_front_more_item_scan",
+	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
+	EDIT_DETAILS:"EDIT_DETAILS"
+
 };
 
 module.exports = appConstants;

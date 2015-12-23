@@ -24485,13 +24485,19 @@ var commonActions = {
       actionType: appConstants.PPTL_PRESS,
       data:data
     })
-  }
+  },
+  setPickFrontData :function(data){ console.log(data); 
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PICK_FRONT_DATA,
+      data:data
+    })
+  },
 
 };
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":246,"../dispatchers/AppDispatcher":249}],218:[function(require,module,exports){
+},{"../constants/appConstants":247,"../dispatchers/AppDispatcher":250}],218:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -24583,7 +24589,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":217,"../../constants/appConstants":246,"../Modal/Modal":223,"react":215}],219:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../constants/appConstants":247,"../Modal/Modal":223,"react":215}],219:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -24649,7 +24655,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":251,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
+},{"../../stores/PutBackStore":253,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -24699,7 +24705,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
 module.exports = Button1;
 
-},{"../../actions/CommonActions":217,"../../constants/appConstants":246,"react":215}],221:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../constants/appConstants":247,"react":215}],221:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -24760,7 +24766,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":217,"../constants/svgConstants":248,"../stores/mainstore":254,"react":215}],222:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../constants/svgConstants":249,"../stores/mainstore":256,"react":215}],222:[function(require,module,exports){
 
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
@@ -24857,7 +24863,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../actions/CommonActions":217,"../components/Operator":230,"../stores/loginstore":253,"../stores/mainstore":254,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],223:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../components/Operator":230,"../stores/loginstore":255,"../stores/mainstore":256,"react":215,"react-addons-linked-state-mixin":58,"react-router":79}],223:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -24941,7 +24947,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../stores/mainstore":254,"./ModalFooter":224,"./ModalHeader":225,"react":215}],224:[function(require,module,exports){
+},{"../../stores/mainstore":256,"./ModalFooter":224,"./ModalHeader":225,"react":215}],224:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -25079,7 +25085,7 @@ var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
-var PickFront = require('./PutFront');
+var PickFront = require('./PickFront');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
@@ -25127,7 +25133,7 @@ var Operator = React.createClass({displayName: "Operator",
       }
   },
 
-  render: function(data){ 
+  render: function(data){ console.log(this.state.currentSeat);
      this.getSeatType(this.state.currentSeat);
       if(this.state.spinner === true){
        this._spinner = React.createElement(Spinner, null)
@@ -25156,7 +25162,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":246,"../stores/mainstore":254,"./PickBack":231,"./PutBack":236,"./PutFront":237,"./Spinner/Overlay":243,"./SystemIdle":244,"react":215}],231:[function(require,module,exports){
+},{"../constants/appConstants":247,"../stores/mainstore":256,"./PickBack":231,"./PickFront":232,"./PutBack":237,"./PutFront":238,"./Spinner/Overlay":244,"./SystemIdle":245,"react":215}],231:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -25190,7 +25196,109 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../stores/mainstore":254,"react":215}],232:[function(require,module,exports){
+},{"../stores/mainstore":256,"react":215}],232:[function(require,module,exports){
+var React = require('react');
+var PickFrontStore = require('../stores/PickFrontStore');
+var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var Spinner = require("./Spinner/LoaderButler");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var Button1 = require("./Button/Button");
+var Wrapper = require('./ProductDetails/Wrapper');
+var appConstants = require('../constants/appConstants');
+var Rack = require('./Rack/MsuRack.js');
+
+function getStateData(){
+  return {
+           //StageActive:PickFrontStore.getStageActiveStatus(),
+           //StageAllActive:PickFrontStore.getStageAllActiveStatus(),
+           PickFrontNavData : PickFrontStore.getNavData(),
+           PickFrontNotification : PickFrontStore.getNotificationData(),
+           PickFrontBinData: PickFrontStore.getBinData(),
+           PickFrontScreenId:PickFrontStore.getScreenId(),
+           PickFrontScanDetails : PickFrontStore.scanDetails(),
+           PickFrontProductDetails : PickFrontStore.productDetails(),
+           //PickFrontSysIdle : PickFrontStore.getSystemIdleState(),
+          //PickFrontServerNavData : PickFrontStore.getServerNavData()
+          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+
+    };
+};
+
+var PickFront = React.createClass({displayName: "PickFront",
+  _notification:'',
+  _component:'',
+  getInitialState: function(){
+    return getStateData();
+  },
+  componentWillMount: function(){
+    PickFrontStore.addChangeListener(this.onChange);
+  },
+  componentWillUnmount: function(){
+    PickFrontStore.removeChangeListener(this.onChange);
+  },
+  onChange: function(){ 
+	this.setState(getStateData());
+  },
+  getNotificationComponent:function(){
+    if(this.state.PickFrontNotification != undefined)
+      this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification})
+    else
+      this._notification = "";
+  },
+  getScreenComponent : function(screen_id){
+    
+    switch(screen_id){
+     
+      case appConstants.PICK_FRONT_ITEM_SCAN:
+      break;
+
+
+      case appConstants.PICK_FRONT_PLACE_ITEMS_IN_BINS:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "single-bin"}
+                    
+                ), 
+                React.createElement("div", {className: "main-container"}, 
+                  
+                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails})
+                ), 
+                React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PickFrontProductDetails.product_sku, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"})
+                )
+
+              )
+            );
+        break;
+
+      case appConstants.PICK_FRONT_PPTL_PRESS:
+      break;
+
+      default:
+        return true;
+    }
+  },
+  render: function(data){ 
+	  this.getNotificationComponent();
+    this.getScreenComponent(this.state.PickFrontScreenId);
+	
+	return (
+		React.createElement("div", {className: "main"}, 
+			React.createElement(Header, null), 
+			React.createElement(Navigation, {navData: this.state.PickFrontNavData}), 
+			this._component
+			
+	  )   
+	  )
+  }
+});
+
+module.exports = PickFront;
+
+},{"../constants/appConstants":247,"../stores/PickFrontStore":252,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":236,"./Rack/MsuRack.js":239,"./Spinner/LoaderButler":243,"react":215}],233:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -25199,6 +25307,7 @@ var KQ = React.createClass({displayName: "KQ",
   _appendClassDown : '',
   _appendClassUp : '',
   _qtyComponent : null,
+  virtualKeyboard : '',
   handleIncrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
       var data  = {
@@ -25228,8 +25337,7 @@ var KQ = React.createClass({displayName: "KQ",
   componentDidMount: function(){
     var qty = this.props.scanDetails.current_qty;
     var itemUid = this.props.itemUid;
-     setTimeout(function () {
-          $('#keyboard').keyboard({
+    virtualKeyboard = $('#keyboard').keyboard({
           layout: 'num',
           reposition   : true,
           alwaysOpen   : false,
@@ -25237,31 +25345,25 @@ var KQ = React.createClass({displayName: "KQ",
           accepted: function(e, keypressed, el) {
             if (e.target.value === '' || e.target.value === '0') {
               CommonActions.resetNumpadVal(parseInt(qty));
-            }else{
-              var data  = {
-                "event_name":"quantity_update_from_gui",
-                "event_data":{
-                    "item_uid":itemUid,
-                    "quantity_updated":parseInt(e.target.value)
+            } else{
+                var data  = {
+                  "event_name":"quantity_update_from_gui",
+                  "event_data":{
+                      "item_uid":itemUid,
+                      "quantity_updated":parseInt(e.target.value)
+                  }
                 }
-              }
               CommonActions.kq_operation(data);
-
             }
           }
-      }) }.bind(this), 0);
-  },
-  showNumpad: function(){  
-    if(this.props.scanDetails.kq_allowed === true){  
-      var kb;
-      kb = $('#keyboard').getkeyboard()
-    }
+    });
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  componentWillUnmount: function(){
+  componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
+    virtualKeyboard.getkeyboard().close();
   },
   onChange: function(){ 
     this.setState(getState());
@@ -25283,7 +25385,7 @@ var KQ = React.createClass({displayName: "KQ",
   handleTotalQty : function(){
     if(this.props.scanDetails.total_qty != 0 ){
         this._qtyComponent = (
-          React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+          React.createElement("div", {id: "textbox"}, 
             React.createElement("input", {id: "keyboard", className: "current-quantity", value: parseInt(this.props.scanDetails.current_qty)}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(this.props.scanDetails.total_qty))
@@ -25291,7 +25393,7 @@ var KQ = React.createClass({displayName: "KQ",
         );
     }else{
       this._qtyComponent = (
-          React.createElement("div", {id: "textbox", onClick: this.showNumpad}, 
+          React.createElement("div", {id: "textbox"}, 
             React.createElement("input", {id: "keyboard", value: parseInt(this.props.scanDetails.current_qty)})
           )
       );
@@ -25316,7 +25418,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":254,"react":215}],233:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../stores/mainstore":256,"react":215}],234:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -25362,7 +25464,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":215}],234:[function(require,module,exports){
+},{"react":215}],235:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -25427,7 +25529,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":254,"../Modal/Modal":223,"./PopUp":233,"react":215}],235:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../stores/mainstore":256,"../Modal/Modal":223,"./PopUp":234,"react":215}],236:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -25460,7 +25562,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":254,"./KQ":232,"./PopUp":233,"./ProductInfo":234,"react":215}],236:[function(require,module,exports){
+},{"../../stores/mainstore":256,"./KQ":233,"./PopUp":234,"./ProductInfo":235,"react":215}],237:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -25564,7 +25666,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":246,"../stores/PutBackStore":251,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"./SystemIdle":244,"react":215}],237:[function(require,module,exports){
+},{"../constants/appConstants":247,"../stores/PutBackStore":253,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":236,"./SystemIdle":245,"react":215}],238:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -25683,7 +25785,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":246,"../stores/PutFrontStore":252,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":235,"./Rack/MsuRack.js":238,"./Spinner/LoaderButler":242,"react":215}],238:[function(require,module,exports){
+},{"../constants/appConstants":247,"../stores/PutFrontStore":254,"./Bins/Bins.react":219,"./Button/Button":220,"./Header":221,"./Modal/Modal":223,"./Navigation/Navigation.react":227,"./Notification/Notification":229,"./ProductDetails/Wrapper":236,"./Rack/MsuRack.js":239,"./Spinner/LoaderButler":243,"react":215}],239:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -25739,7 +25841,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":239,"react":215}],239:[function(require,module,exports){
+},{"./RackRow":240,"react":215}],240:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -25773,7 +25875,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":240,"react":215}],240:[function(require,module,exports){
+},{"./RackSlot":241,"react":215}],241:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -25813,7 +25915,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":241,"react":215}],241:[function(require,module,exports){
+},{"./SingleSlot":242,"react":215}],242:[function(require,module,exports){
 var React = require('react');
 
 var SingleSlot = React.createClass({displayName: "SingleSlot",
@@ -25831,7 +25933,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":215}],242:[function(require,module,exports){
+},{"react":215}],243:[function(require,module,exports){
 var React = require('react');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
@@ -25851,7 +25953,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":215}],243:[function(require,module,exports){
+},{"react":215}],244:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 
@@ -25868,7 +25970,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":242,"react":215}],244:[function(require,module,exports){
+},{"./LoaderButler":243,"react":215}],245:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 
@@ -25887,7 +25989,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"./Header":221,"react":215}],245:[function(require,module,exports){
+},{"./Header":221,"react":215}],246:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
@@ -25973,7 +26075,7 @@ var navData = {
 };
 
 module.exports = navData;
-},{"../constants/svgConstants":248}],246:[function(require,module,exports){
+},{"../constants/svgConstants":249}],247:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
 	INTERFACE_IP : "http://192.168.3.93:5000",
@@ -26009,19 +26111,25 @@ var appConstants = {
 	RESET_NUMPAD :'RESET_NUMPAD',
 	CANCEL_SCAN : 'CANCEL_SCAN',
 	LOAD_MODAL:'load_modal',
-	PPTL_PRESS : 'PPTL_PRESS'
+	PPTL_PRESS : 'PPTL_PRESS',
+	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
+	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
+	PICK_FRONT_PLACE_ITEMS_IN_BINS:"pick_front_more_item_scan",
+	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
+	EDIT_DETAILS:"EDIT_DETAILS"
+
 };
 
 module.exports = appConstants;
 
-},{}],247:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected'
 };
 module.exports = resourceConstants;
 
-},{}],248:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -26034,7 +26142,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],249:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -26048,7 +26156,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":33}],250:[function(require,module,exports){
+},{"flux":33}],251:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -26073,7 +26181,112 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
-},{"./components/LoginForm":222,"./components/Operator":230,"react":215,"react-dom":59}],251:[function(require,module,exports){
+},{"./components/LoginForm":222,"./components/Operator":230,"react":215,"react-dom":59}],252:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/AppDispatcher');
+var AppConstants = require('../constants/appConstants');
+var EventEmitter = require('events').EventEmitter;
+var assign = require('object-assign');
+var ActionTypes = AppConstants;
+var CHANGE_EVENT = 'change';
+var navConfig = require('../config/navConfig');
+var utils = require('../utils/utils');
+
+var _PickFrontData, _NavData, _NotificationData;
+
+
+var PickFrontStore = assign({}, EventEmitter.prototype, {
+
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
+
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
+
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
+
+    getNavData: function() {
+        if (_PickFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
+            _NavData = navConfig.putFront[0];
+            _NavData[0].type = 'active';
+        } else {
+            _NavData = navConfig.putFront[1];
+            _NavData.map(function(data, index) { 
+                if (_PickFrontData.screen_id === data.screen_id) {console.log(_PickFrontData);
+                    _NavData[index].type = 'active';
+                }else{
+                     _NavData[index].type = 'passive';
+                }
+            });
+        }
+        return _NavData;
+    },
+    getNotificationData: function() {
+        return _PickFrontData.notification_list[0];
+    },
+    setPickFrontData: function(data) {
+        _PickFrontData = data;
+    },
+
+    getStateData: function() {
+        return _PickFrontData;
+    },
+
+    getScreenId: function() {
+        return _PickFrontData.screen_id;
+    },
+
+    getBinData: function() {
+        var binData = {};
+        binData["structure"] = _PickFrontData.structure;
+        binData["ppsbin_list"] = _PickFrontData.ppsbin_list;
+        return binData;
+    },
+
+    scanDetails: function() {
+        console.log(_PickFrontData);
+        _scanDetails = _PickFrontData.scan_details;
+        return _scanDetails;
+    },
+    productDetails: function() {
+        console.log(_PickFrontData);
+        _prodDetails = _PickFrontData.product_info;
+        return _prodDetails;
+    },
+
+    getRackDetails: function() {
+        return _PickFrontData.rack_details;
+    },
+
+    getCurrentSelectedBin:function(){
+       var binData = {};
+        binData["structure"] = [2,4];
+        binData["ppsbin_list"] = [];
+        _PickFrontData.ppsbin_list.map(function(value,index){
+          if(value.selected_state == true)
+              binData["ppsbin_list"].push(value);
+        })
+        return binData;
+    }
+
+});
+
+PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
+    switch (action.action.actionType) { 
+        case ActionTypes.SET_PICK_FRONT_DATA: 
+            PickFrontStore.setPickFrontData(action.action.data);
+            PickFrontStore.emitChange();
+            break;
+        default:
+           return true;
+    }
+});
+
+module.exports = PickFrontStore;
+},{"../config/navConfig":246,"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"object-assign":53}],253:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -26237,7 +26450,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
-},{"../config/navConfig":245,"../constants/appConstants":246,"../constants/resourceConstants":247,"../dispatchers/AppDispatcher":249,"../utils/utils":255,"events":1,"object-assign":53}],252:[function(require,module,exports){
+},{"../config/navConfig":246,"../constants/appConstants":247,"../constants/resourceConstants":248,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"object-assign":53}],254:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -26346,12 +26559,12 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
             PutFrontStore.emitChange();
             break;
         default:
-            // do nothing
+           return true;
     }
 });
 
 module.exports = PutFrontStore;
-},{"../config/navConfig":245,"../constants/appConstants":246,"../dispatchers/AppDispatcher":249,"../utils/utils":255,"events":1,"object-assign":53}],253:[function(require,module,exports){
+},{"../config/navConfig":246,"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"object-assign":53}],255:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -26451,7 +26664,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":217,"../constants/appConstants":246,"../dispatchers/AppDispatcher":249,"../utils/utils.js":255,"events":1,"react/lib/Object.assign":106}],254:[function(require,module,exports){
+},{"../actions/CommonActions":217,"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils.js":257,"events":1,"react/lib/Object.assign":106}],256:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -26605,7 +26818,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":246,"../dispatchers/AppDispatcher":249,"../utils/utils":255,"events":1,"react/lib/Object.assign":106}],255:[function(require,module,exports){
+},{"../constants/appConstants":247,"../dispatchers/AppDispatcher":250,"../utils/utils":257,"events":1,"react/lib/Object.assign":106}],257:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var appConstants = require('../constants/appConstants');
@@ -26660,17 +26873,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   	}
 }); 
 
-var putSeatData = function(data){ console.log(data);
+var putSeatData = function(data){ console.log(data); 
 	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
       case appConstants.PUT_BACK:
           CommonActions.setPutBackData(data.state_data);
       break;
-      case appConstants.PUT_FRONT:
+      case appConstants.PUT_FRONT: 
           CommonActions.setPutFrontData(data.state_data);
         break;
       case appConstants.PICK_BACK:
         break;
-      case appConstants.PICK_FRONT:
+      case appConstants.PICK_FRONT: 
+          CommonActions.setPickFrontData(data.state_data);
         break;
       default:
         return true; 
@@ -26678,4 +26892,4 @@ var putSeatData = function(data){ console.log(data);
 }
 
 module.exports = utils;
-},{"../actions/CommonActions":217,"../constants/appConstants":246,"events":1,"react/lib/Object.assign":106}]},{},[250]);
+},{"../actions/CommonActions":217,"../constants/appConstants":247,"events":1,"react/lib/Object.assign":106}]},{},[251]);

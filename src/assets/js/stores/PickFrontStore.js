@@ -7,10 +7,10 @@ var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 
-var _PutFrontData, _NavData, _NotificationData;
+var _PickFrontData, _NavData, _NotificationData;
 
 
-var PutFrontStore = assign({}, EventEmitter.prototype, {
+var PickFrontStore = assign({}, EventEmitter.prototype, {
 
     emitChange: function() {
         this.emit(CHANGE_EVENT);
@@ -25,13 +25,13 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PutFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
+        if (_PickFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
             _NavData = navConfig.putFront[0];
             _NavData[0].type = 'active';
         } else {
             _NavData = navConfig.putFront[1];
             _NavData.map(function(data, index) { 
-                if (_PutFrontData.screen_id === data.screen_id) {console.log(_PutFrontData);
+                if (_PickFrontData.screen_id === data.screen_id) {console.log(_PickFrontData);
                     _NavData[index].type = 'active';
                 }else{
                      _NavData[index].type = 'passive';
@@ -40,57 +40,48 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
         }
         return _NavData;
     },
-    getServerNavData : function(){ 
-        if(_PutFrontData.header_msge_list.length > 0){
-            _serverNavData = _PutFrontData.header_msge_list[0];
-            return _serverNavData;
-        }
-        else{
-            return null;   
-        } 
-    },
     getNotificationData: function() {
-        return _PutFrontData.notification_list[0];
+        return _PickFrontData.notification_list[0];
     },
-    setPutFrontData: function(data) {
-        _PutFrontData = data;
+    setPickFrontData: function(data) {
+        _PickFrontData = data;
     },
 
     getStateData: function() {
-        return _PutFrontData;
+        return _PickFrontData;
     },
 
     getScreenId: function() {
-        return _PutFrontData.screen_id;
+        return _PickFrontData.screen_id;
     },
 
     getBinData: function() {
         var binData = {};
-        binData["structure"] = _PutFrontData.structure;
-        binData["ppsbin_list"] = _PutFrontData.ppsbin_list;
+        binData["structure"] = _PickFrontData.structure;
+        binData["ppsbin_list"] = _PickFrontData.ppsbin_list;
         return binData;
     },
 
     scanDetails: function() {
-        console.log(_PutFrontData);
-        _scanDetails = _PutFrontData.scan_details;
+        console.log(_PickFrontData);
+        _scanDetails = _PickFrontData.scan_details;
         return _scanDetails;
     },
     productDetails: function() {
-        console.log(_PutFrontData);
-        _prodDetails = _PutFrontData.product_info;
+        console.log(_PickFrontData);
+        _prodDetails = _PickFrontData.product_info;
         return _prodDetails;
     },
 
     getRackDetails: function() {
-        return _PutFrontData.rack_details;
+        return _PickFrontData.rack_details;
     },
 
     getCurrentSelectedBin:function(){
        var binData = {};
-        binData["structure"] = [1,1];
+        binData["structure"] = [2,4];
         binData["ppsbin_list"] = [];
-        _PutFrontData.ppsbin_list.map(function(value,index){
+        _PickFrontData.ppsbin_list.map(function(value,index){
           if(value.selected_state == true)
               binData["ppsbin_list"].push(value);
         })
@@ -99,15 +90,15 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
 
 });
 
-PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
-    switch (action.action.actionType) {
-        case ActionTypes.SET_PUT_FRONT_DATA:
-            PutFrontStore.setPutFrontData(action.action.data);
-            PutFrontStore.emitChange();
+PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
+    switch (action.action.actionType) { 
+        case ActionTypes.SET_PICK_FRONT_DATA: 
+            PickFrontStore.setPickFrontData(action.action.data);
+            PickFrontStore.emitChange();
             break;
         default:
            return true;
     }
 });
 
-module.exports = PutFrontStore;
+module.exports = PickFrontStore;

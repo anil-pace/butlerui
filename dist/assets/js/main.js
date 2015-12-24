@@ -26473,7 +26473,7 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
                     if( data.screen_id.indexOf(_PickFrontData.screen_id) != -1 ){
                          _NavData[index].type = 'active';
                     }else{
-                        NavData[index].type = 'passive';
+                        _NavData[index].type = 'passive';
                     }
                 }
                 else if (_PickFrontData.screen_id === data.screen_id) {

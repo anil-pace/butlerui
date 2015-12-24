@@ -24659,6 +24659,7 @@ module.exports = Bins;
 
 },{"../../stores/PutBackStore":259,"./Bin.react":218,"react":215}],220:[function(require,module,exports){
 var React = require("react");
+var allresourceConstants = require('../constants/resourceConstants');
 
 var BoxSerial = React.createClass({displayName: "BoxSerial",
 	render : function(){
@@ -24682,7 +24683,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 					React.createElement("table", {className: "table"}, 
 						React.createElement("thead", null, 
 							React.createElement("div", {className: "boxHeader"}, 
-								"Box Serial Numbers"
+								allresourceConstants.TBL_HEADER
 							)
 						), 
 						React.createElement("tbody", null, 
@@ -24696,7 +24697,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"react":215}],221:[function(require,module,exports){
+},{"../constants/resourceConstants":254,"react":215}],221:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -24749,13 +24750,14 @@ module.exports = Button1;
 },{"../../actions/CommonActions":217,"../../constants/appConstants":253,"react":215}],222:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
+var allresourceConstants = require('../constants/resourceConstants');
 
 var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 	render:function(){
 		return (
 				React.createElement("div", {className: "currentSlotWrapper"}, 
 					React.createElement("div", {className: "slotRange"}, " A1- A6 "), 
-					React.createElement("div", {className: "slotFooter"}, " CURRENT SLOT ")
+					React.createElement("div", {className: "slotFooter"}, " ", allresourceConstants.CURR_SLOT, " ")
 				)
 						
 					
@@ -24766,7 +24768,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"./Header":223,"react":215}],223:[function(require,module,exports){
+},{"../constants/resourceConstants":254,"./Header":223,"react":215}],223:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -25709,6 +25711,7 @@ var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
 var Modal = require('../Modal/Modal');
 var mainstore = require('../../stores/mainstore');
+var allresourceConstants = require('../../constants/resourceConstants');
 
 
 function getPopUpState(){
@@ -25758,7 +25761,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
                   React.createElement("img", {src: this.props.productDetails.product_local_image_url})
               ), 
               React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,this.props.productDetails,"product-detail")}, 
-                React.createElement("span", null, " View More "), 
+                React.createElement("span", null, " ", allresourceConstants.VIEW_MORE, " "), 
                 React.createElement("i", {className: "glyphicon glyphicon-info-sign"})
               )
             )
@@ -25768,7 +25771,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":217,"../../stores/mainstore":262,"../Modal/Modal":225,"./PopUp":240,"react":215}],242:[function(require,module,exports){
+},{"../../actions/CommonActions":217,"../../constants/resourceConstants":254,"../../stores/mainstore":262,"../Modal/Modal":225,"./PopUp":240,"react":215}],242:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -26212,6 +26215,7 @@ module.exports = Overlay;
 },{"./LoaderButler":249,"react":215}],251:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
+var allresourceConstants = require('../constants/resourceConstants');
 
 var SystemIdle = React.createClass({displayName: "SystemIdle",
 	render:function(){
@@ -26219,7 +26223,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 				React.createElement("div", {className: "systemIdle"}, 
 					React.createElement(Header, null), 
 					React.createElement("div", {className: "idleScreen"}, 
-						"System is Idle"	
+						allresourceConstants.SYS_IDLE	
 					)
 				)
 			);
@@ -26228,7 +26232,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"./Header":223,"react":215}],252:[function(require,module,exports){
+},{"../constants/resourceConstants":254,"./Header":223,"react":215}],252:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
@@ -26378,10 +26382,13 @@ module.exports = appConstants;
 },{}],254:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
-	SELECTED : 'Selected'
+	SELECTED : 'Selected',
+	SYS_IDLE : 'System is Idle',
+	CURR_SLOT: 'CURRENT SLOT',
+	VIEW_MORE: 'View More',
+	TBL_HEADER: 'Box Serial Numbers'
 };
 module.exports = resourceConstants;
-
 },{}],255:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
@@ -26391,7 +26398,7 @@ var allSvgConstants = {
 	stage : 'assets/images/nav2.png',
 	place:'assets/images/nav1.png',
 	scan : 'assets/images/scan-item.png',
-	rack: 'assets/images/rack.png',
+	rack: 'assets/images/rack.png'
 }
 
 module.exports = allSvgConstants;

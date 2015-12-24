@@ -37,7 +37,8 @@ var KQ = React.createClass({
     var qty = this.props.scanDetails.current_qty;
     var itemUid = this.props.itemUid;
     virtualKeyboard = $('#keyboard').keyboard({
-          layout: 'num',
+          layout: 'custom',
+          customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
           reposition   : true,
           alwaysOpen   : false,
           initialFocus : true,

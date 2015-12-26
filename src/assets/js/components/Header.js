@@ -3,6 +3,7 @@ var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
+var jqueryPosition = require('jquery-ui/position');
 
 var Header = React.createClass({
     virtualKeyBoard: '',

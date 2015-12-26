@@ -106,12 +106,18 @@ var commonActions = {
       data:data
     })
   },
-  setPickFrontData :function(data){ console.log(data); 
+  setPickFrontData :function(data){  
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PICK_FRONT_DATA,
       data:data
     })
   },
+  barcodeScan :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.BARCODE_SCAN,
+      data:data
+    })
+  }
 
 };
 

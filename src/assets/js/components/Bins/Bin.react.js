@@ -44,14 +44,16 @@ var Bin = React.createClass({
                 </div>
             );
 
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN ))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM )){
+
             return (
                 <div className = "bin selected">
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK))
+        }
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN))
             return (
                 <div className = "bin selected">
                     <div className ="item-count">{compData.ppsbin_count}</div>
@@ -76,7 +78,7 @@ var Bin = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-    	else if(compData.ppsbin_count == 0)
+    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty")
             return (
                 <div className = "bin empty">
                     <div className ="item-count">{compData.ppsbin_count}</div>

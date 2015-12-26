@@ -93,7 +93,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return _currentSeat;
   },
-  pptlPress : function(data){ console.log(data);
+  pptlPress : function(data){ 
     var data = {
       "event_name": "process_ppsbin_event",
       "event_data": {
@@ -104,6 +104,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     };
     utils.postDataToInterface(data, _seatName);
 
+  },
+  barcodeScan : function(data){
+    utils.postDataToInterface(data, _seatName);
   }
 
 });
@@ -143,7 +146,12 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.pptlPress(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;      
+      break;  
+    case appConstants.BARCODE_SCAN:
+      mainstore.showSpinner();
+      mainstore.barcodeScan(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;        
     default:
       return true;
   }

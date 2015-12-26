@@ -12,8 +12,7 @@ function getState(){
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
       username : 'kerry',
-      password : 'gorapj',
-      seat_name : '10_front_1'
+      password : 'gorapj'
   }
 }
 var LoginForm = React.createClass({
@@ -27,7 +26,7 @@ var LoginForm = React.createClass({
         'data': {
               'username': this.state.username,
               'password': this.state.password,
-              'seat_name': this.state.seat_name
+              'seat_name': this.refs.seat_name.value
           }
       }
     CommonActions.login(data);
@@ -50,6 +49,7 @@ var LoginForm = React.createClass({
     });
 
   },
+ 
   render: function(){
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
@@ -57,7 +57,7 @@ var LoginForm = React.createClass({
           seatData = this.state.seatList[0].map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                return (
-                  <option key={'pps' + index}>PPS {data.seat_type} {data.pps_id}</option>
+                  <option key={'pps' + index} value={data.seat_type+'_'+data.pps_id} >PPS {data.seat_type} {data.pps_id}</option>
                 )
             }else{console.log(data);
                  return( <option key={index} value={data} >{data}</option>)
@@ -69,7 +69,7 @@ var LoginForm = React.createClass({
           <div className='container'>
             <form className="form-signin">
               <h2 className="form-signin-heading">Please sign in</h2>
-              <select className='form-control'>
+              <select className='form-control' ref='seat_name'>
                 {seatData}
               </select>   
               <input type="email"  valueLink={this.linkState('username')} className="form-control" placeholder="Username"   />

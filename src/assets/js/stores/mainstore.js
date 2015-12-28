@@ -51,7 +51,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     };
     utils.postDataToInterface(data, _seatName);
   },
-
+  cancelScanAll : function(barcode){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{}
+    };
+    utils.postDataToInterface(data, _seatName);
+  },
   getModalContent:function(){
     return modalContent.data;
   },
@@ -151,7 +157,12 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.barcodeScan(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;        
+      break; 
+    case appConstants.CANCEL_SCAN_ALL:
+      mainstore.showSpinner();
+      mainstore.cancelScanAll();
+       mainstore.emit(CHANGE_EVENT);
+      break;          
     default:
       return true;
   }

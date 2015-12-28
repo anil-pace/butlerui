@@ -124,7 +124,7 @@ var PickFront = React.createClass({
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/> 
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
                 </div>
               </div>
             );
@@ -144,6 +144,7 @@ var PickFront = React.createClass({
 			<Header />
 			<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} />
 			{this._component}
+      {this._notification}
 	  </div>   
 	  )
   }

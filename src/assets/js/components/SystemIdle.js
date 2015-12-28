@@ -1,5 +1,6 @@
 var React = require('react');
 var Header = require('./Header');
+var allresourceConstants = require('../constants/resourceConstants');
 
 var SystemIdle = React.createClass({
 	render:function(){
@@ -7,7 +8,7 @@ var SystemIdle = React.createClass({
 				<div className="systemIdle">
 					<Header />
 					<div className="idleScreen">
-						System is Idle	
+						{allresourceConstants.SYS_IDLE}	
 					</div>
 				</div>
 			);

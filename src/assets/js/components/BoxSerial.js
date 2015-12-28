@@ -1,4 +1,5 @@
 var React = require("react");
+var allresourceConstants = require('../constants/resourceConstants');
 
 var BoxSerial = React.createClass({
 	render : function(){
@@ -22,7 +23,7 @@ var BoxSerial = React.createClass({
 					<table className="table">
 						<thead>
 							<div className="boxHeader">
-								Box Serial Numbers
+								{allresourceConstants.TBL_HEADER}
 							</div>
 						</thead>
 						<tbody>

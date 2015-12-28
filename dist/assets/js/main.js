@@ -37481,7 +37481,7 @@ var PickFront = React.createClass({displayName: "PickFront",
   getScreenComponent : function(screen_id){
     switch(screen_id){
      
-      case appConstants.PICK_FRONT_WAITING_FOR_RACK:
+      case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
@@ -37491,7 +37491,7 @@ var PickFront = React.createClass({displayName: "PickFront",
             );
       break;
 
-      case appConstants.PICK_FRONT_SCAN_SLOT_BARCODE:
+      case appConstants.PICK_FRONT_LOCATION_SCAN:
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
@@ -37501,7 +37501,7 @@ var PickFront = React.createClass({displayName: "PickFront",
             );
       break;
 
-      case appConstants.PICK_FRONT_SCAN_ITEM_BARCODE:
+      case appConstants.PICK_FRONT_ITEM_SCAN:
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
@@ -37513,7 +37513,7 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
 
-       case appConstants.PICK_FRONT_SCAN_BOX_BARCODE:
+       case appConstants.PICK_FRONT_CONTAINER_SCAN:
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
@@ -37524,7 +37524,8 @@ var PickFront = React.createClass({displayName: "PickFront",
             );
       break;
 
-      case appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:
+      case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+        var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -37535,13 +37536,13 @@ var PickFront = React.createClass({displayName: "PickFront",
                 ), 
                 React.createElement("div", {className: "actions"}, 
                    React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PickFrontProductDetails.product_sku, color: "black"}), 
-                   React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"})
+                   editButton
                 )
               )
             );
       break;
 
-      case appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM:
+      case appConstants.PICK_FRONT_PPTL_PRESS:
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -38429,7 +38430,7 @@ var navData = {
     ],
     "pickFront": [
         [{
-            "screen_id": "pick_front_waiting_for_rack",
+            "screen_id": "pick_front_waiting_for_msu",
             "code": "Common.000",
             "message": "Wait For MSU",
             "showImage": false,
@@ -38437,7 +38438,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["pick_front_scan_slot_barcode", "pick_front_scan_box_barcode", "pick_front_scan_item_barcode" , "pick_front_scan_item_and_place_in_bin"],
+            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan" , "pick_front_more_item_scan"],
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot Barcode",
@@ -38445,7 +38446,7 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-            "screen_id": "pick_front_press_pptl_to_confirm",
+            "screen_id": "pick_front_pptl_press",
             "code": "Common.001",
             "image": svgConstants.place,
             "message": "PPTL",
@@ -38513,12 +38514,12 @@ var appConstants = {
 	LOAD_MODAL:'load_modal',
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
-	PICK_FRONT_WAITING_FOR_RACK:"pick_front_waiting_for_rack",
-	PICK_FRONT_SCAN_SLOT_BARCODE:"pick_front_scan_slot_barcode",
-	PICK_FRONT_SCAN_BOX_BARCODE:"pick_front_scan_box_barcode",
-	PICK_FRONT_SCAN_ITEM_BARCODE:"pick_front_scan_item_barcode",
-	PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:"pick_front_scan_item_and_place_in_bin",
-	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
+	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
+	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
+	PICK_FRONT_CONTAINER_SCAN:"pick_front_container_scan",
+	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
+	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
+	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	EDIT_DETAILS:"EDIT_DETAILS",
 	BARCODE_SCAN : 'BARCODE_SCAN'
 
@@ -38630,7 +38631,7 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_RACK) {
+        if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_MSU) {
             _NavData = navConfig.pickFront[0];
             _NavData[0].type = 'active';
         } else {

@@ -1,7 +1,8 @@
+global.jQuery = global.$ = require("jquery");
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var LoginForm = require('./components/LoginForm'); 
+var LoginForm = require('./components/LoginPage/LoginPage'); 
 var Operator = require('./components/Operator');
 
 var App = React.createClass({

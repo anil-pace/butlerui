@@ -3,6 +3,8 @@ var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
 var ModalFooter = require('./ModalFooter');
 
+var bootstrap = require('bootstrap');
+
 var component,title;
 
 function getStateData(){

@@ -7,7 +7,7 @@ var CHANGE_EVENT = 'change';
 var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 
-var _PickFrontData, _NavData, _NotificationData;
+var _PickFrontData, _NavData, _NotificationData,_serverNavData;
 
 
 var PickFrontStore = assign({}, EventEmitter.prototype, {
@@ -25,23 +25,33 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PickFrontData.screen_id === AppConstants.PUT_FRONT_WAITING_FOR_RACK) {
-            _NavData = navConfig.putFront[0];
+        if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_RACK) {
+            _NavData = navConfig.pickFront[0];
             _NavData[0].type = 'active';
         } else {
-            _NavData = navConfig.putFront[1];
-            _NavData.map(function(data, index) { 
-                if (_PickFrontData.screen_id === data.screen_id) {console.log(_PickFrontData);
+            _NavData = navConfig.pickFront[1];
+            _NavData.map(function(data, index) {
+                if(data.screen_id instanceof Array){
+                    if( data.screen_id.indexOf(_PickFrontData.screen_id) != -1 ){
+                         _NavData[index].type = 'active';
+                    }else{
+                        _NavData[index].type = 'passive';
+                    }
+                }
+                else if (_PickFrontData.screen_id === data.screen_id) {
                     _NavData[index].type = 'active';
-                }else{
-                     _NavData[index].type = 'passive';
+                } else {
+                    _NavData[index].type = 'passive';
                 }
             });
         }
         return _NavData;
     },
     getNotificationData: function() {
-        return _PickFrontData.notification_list[0];
+        if (_PickFrontData["notification_list"] != undefined)
+            return _PickFrontData.notification_list[0];
+        else
+            return null;
     },
     setPickFrontData: function(data) {
         _PickFrontData = data;
@@ -52,13 +62,24 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getScreenId: function() {
-        return _PickFrontData.screen_id;
+        if (_PickFrontData["screen_id"] != undefined)
+            return _PickFrontData.screen_id;
+        else
+            return null;
     },
-
+    getServerNavData : function(){ 
+        if(_PickFrontData.header_msge_list.length > 0){
+            _serverNavData = _PickFrontData.header_msge_list[0];
+            return _serverNavData;
+        }
+        else{
+            return null;   
+        } 
+    },
     getBinData: function() {
         var binData = {};
-        binData["structure"] = _PickFrontData.structure;
-        binData["ppsbin_list"] = _PickFrontData.ppsbin_list;
+        binData["structure"] = _PickFrontData["structure"];
+        binData["ppsbin_list"] = _PickFrontData["ppsbin_list"];
         return binData;
     },
 
@@ -77,27 +98,36 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.rack_details;
     },
 
-    getCurrentSelectedBin:function(){
-       var binData = {};
-        binData["structure"] = [2,4];
-        binData["ppsbin_list"] = [];
-        _PickFrontData.ppsbin_list.map(function(value,index){
-          if(value.selected_state == true)
-              binData["ppsbin_list"].push(value);
-        })
-        return binData;
+    getBoxDetails: function() {
+        return _PickFrontData.box_serials;
+    },
+
+    getCurrentSelectedBin: function() {
+        if (_PickFrontData["ppsbin_list"] != undefined) {
+            var binData = {};
+            binData["structure"] = [1, 1];
+            binData["ppsbin_list"] = [];
+            _PickFrontData.ppsbin_list.map(function(value, index) {
+                if (value.selected_state == true){
+                    binData["ppsbin_list"].push(value);
+                }
+            });
+            binData["ppsbin_list"]["coordinate"] = [1,1];
+            return binData;
+        } else
+            return null;
     }
 
 });
 
 PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
-    switch (action.action.actionType) { 
-        case ActionTypes.SET_PICK_FRONT_DATA: 
+    switch (action.action.actionType) {
+        case ActionTypes.SET_PICK_FRONT_DATA:
             PickFrontStore.setPickFrontData(action.action.data);
             PickFrontStore.emitChange();
             break;
         default:
-           return true;
+            return true;
     }
 });
 

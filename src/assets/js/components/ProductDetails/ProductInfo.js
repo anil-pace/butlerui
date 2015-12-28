@@ -3,6 +3,7 @@ var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
 var Modal = require('../Modal/Modal');
 var mainstore = require('../../stores/mainstore');
+var allresourceConstants = require('../../constants/resourceConstants');
 
 
 function getPopUpState(){
@@ -52,7 +53,7 @@ var ProductInfo = React.createClass({
                   <img src={this.props.productDetails.product_local_image_url}  />
               </div>
               <div className="view-more-link" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,this.props.productDetails,"product-detail")}>
-                <span> View More </span>                
+                <span> {allresourceConstants.VIEW_MORE} </span>                
                 <i className="glyphicon glyphicon-info-sign"></i>
               </div>              
             </div>

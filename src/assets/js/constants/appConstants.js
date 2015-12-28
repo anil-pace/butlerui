@@ -1,6 +1,4 @@
 var appConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
@@ -35,10 +33,14 @@ var appConstants = {
 	LOAD_MODAL:'load_modal',
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
-	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
-	PICK_FRONT_PLACE_ITEMS_IN_BINS:"pick_front_more_item_scan",
-	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
-	EDIT_DETAILS:"EDIT_DETAILS"
+	PICK_FRONT_WAITING_FOR_RACK:"pick_front_waiting_for_rack",
+	PICK_FRONT_SCAN_SLOT_BARCODE:"pick_front_scan_slot_barcode",
+	PICK_FRONT_SCAN_BOX_BARCODE:"pick_front_scan_box_barcode",
+	PICK_FRONT_SCAN_ITEM_BARCODE:"pick_front_scan_item_barcode",
+	PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:"pick_front_scan_item_and_place_in_bin",
+	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
+	EDIT_DETAILS:"EDIT_DETAILS",
+	BARCODE_SCAN : 'BARCODE_SCAN'
 
 };
 

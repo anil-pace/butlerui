@@ -7,7 +7,7 @@ var Button1 = React.createClass({
         switch(module){
             case appConstants.PUT_BACK:
                 switch(action){
-                    case appConstants.STAGE_ONE_BIN: console.log(action);
+                    case appConstants.STAGE_ONE_BIN: 
                         ActionCreators.stageOneBin();
                         break;
                     case appConstants.STAGE_ALL:
@@ -21,6 +21,15 @@ var Button1 = React.createClass({
                 }
             break;
             case appConstants.PUT_FRONT:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScan(this.props.barcode);
+                        break;    
+                     default:
+                        return true; 
+                }
+            break;
+            case appConstants.PICK_FRONT:
                 switch(action){
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScan(this.props.barcode);

@@ -15,9 +15,6 @@ var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 
 function getStateData(){
-  console.log("jjiii");
-  console.log(PickFrontStore.getCurrentSelectedBin());
-  console.log(PickFrontStore.getBinData());
   return {
            PickFrontNavData : PickFrontStore.getNavData(),
            PickFrontNotification : PickFrontStore.getNotificationData(),

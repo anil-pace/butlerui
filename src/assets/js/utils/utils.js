@@ -1,9 +1,10 @@
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
+var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 
-var ws = new WebSocket(appConstants.WEBSOCKET_IP);
+var ws = new WebSocket(configConstants.WEBSOCKET_IP);
 
 
 var utils = objectAssign({}, EventEmitter.prototype, {
@@ -37,7 +38,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       console.log(data);
   		$.ajax({
         type: 'POST',
-        url: appConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,
+        url: configConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,
         data: JSON.stringify(data),
         dataType:"json",
         headers: {

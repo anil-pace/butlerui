@@ -73,19 +73,19 @@ var navData = {
         }],
 
     ],
-    "pickBack": [{
-        "screen_id": "put_back_stage",
-        "code": "Common.000",
+    "pickBack": [ {
+        "screen_id": "pick_back_scan",
+        "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Stage Bin or Scan Item",
+        "message": "Scan Tote ",
         "showImage": true,
         "level": 1,
         "type": 'passive'
-    }, {
-        "screen_id": "put_back_scan",
-        "code": "Common.001",
+    },{
+        "screen_id": "pick_back_bin",
+        "code": "Common.000",
         "image": svgConstants.place,
-        "message": "Scan & Confirm",
+        "message": "Remove Item",
         "showImage": true,
         "level": 2,
         "type": 'passive'

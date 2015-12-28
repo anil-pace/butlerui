@@ -117,7 +117,13 @@ var commonActions = {
       actionType: appConstants.BARCODE_SCAN,
       data:data
     })
-  }
+  },
+  cancelScanAll:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CANCEL_SCAN_ALL, 
+      data: data
+    });
+  },
 
 };
 

@@ -40,7 +40,8 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	EDIT_DETAILS:"EDIT_DETAILS",
-	BARCODE_SCAN : 'BARCODE_SCAN'
+	BARCODE_SCAN : 'BARCODE_SCAN',
+	CANCEL_SCAN_ALL : 'CANCEL_SCAN_ALL',
 
 };
 

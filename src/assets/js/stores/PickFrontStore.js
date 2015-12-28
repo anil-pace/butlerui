@@ -98,6 +98,10 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.rack_details;
     },
 
+    getBoxDetails: function() {
+        return _PickFrontData.box_serials;
+    },
+
     getCurrentSelectedBin: function() {
         if (_PickFrontData["ppsbin_list"] != undefined) {
             var binData = {};

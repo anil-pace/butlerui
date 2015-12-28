@@ -35,17 +35,19 @@ var Header = React.createClass({
                 my: 'center top',
                 at: 'center top'
             },
+            visible : function(e, keypressed, el){
+                el.value = '';
+            },
             accepted: function(e, keypressed, el) {
-                if (e.target.value === '' || e.target.value === '0') {
-                    CommonActions.resetNumpadVal(parseInt(qty));
+                if (e.target.value === '') {
                 } else {
                     var data = {
-                        "event_name": "quantity_update_from_gui",
+                        "event_name": "process_barcode",
                         "event_data": {
-                            "item_uid": itemUid,
-                            "quantity_updated": parseInt(e.target.value)
+                            "barcode": e.target.value,
                         }
                     }
+                    CommonActions.barcodeScan(data);
                 }
             }
         })
@@ -70,7 +72,7 @@ var Header = React.createClass({
               </div>
                 <div className={cssClass} onClick={this.openKeyboard}>
                   <span className="glyphicon glyphicon-barcode"></span>
-                  <input id="barcode" type="text" />
+                  <input id="barcode" type="text" value='' />
                 </div>
               <div className="header-actions">
                  <img src={allSvgConstants.menu} />

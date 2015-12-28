@@ -15,9 +15,6 @@ var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 
 function getStateData(){
-  console.log("jjiii");
-  console.log(PickFrontStore.getCurrentSelectedBin());
-  console.log(PickFrontStore.getBinData());
   return {
            PickFrontNavData : PickFrontStore.getNavData(),
            PickFrontNotification : PickFrontStore.getNotificationData(),
@@ -26,6 +23,7 @@ function getStateData(){
            PickFrontScanDetails : PickFrontStore.scanDetails(),
            PickFrontProductDetails : PickFrontStore.productDetails(),
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
+           PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
 
@@ -92,7 +90,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                    <BoxSerial />
+                    <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
                     <Rack rackData = {this.state.PickFrontRackDetails}/>
                  </div>
               </div>
@@ -122,7 +120,7 @@ var PickFront = React.createClass({
                 <Modal />
                 <CurrentSlot />
                 <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM}/>
                 </div>
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/> 

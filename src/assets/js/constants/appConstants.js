@@ -1,6 +1,4 @@
 var appConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8892/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
@@ -41,7 +39,8 @@ var appConstants = {
 	PICK_FRONT_SCAN_ITEM_BARCODE:"pick_front_scan_item_barcode",
 	PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:"pick_front_scan_item_and_place_in_bin",
 	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
-	EDIT_DETAILS:"EDIT_DETAILS"
+	EDIT_DETAILS:"EDIT_DETAILS",
+	BARCODE_SCAN : 'BARCODE_SCAN'
 
 };
 

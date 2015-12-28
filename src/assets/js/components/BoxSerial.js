@@ -1,9 +1,10 @@
 var React = require("react");
+var allresourceConstants = require('../constants/resourceConstants');
 
 var BoxSerial = React.createClass({
 	render : function(){
 
-		var boxList =["ABCCD123RT","A09976523RT","ABCCD1091253","ABCJDHSGET9465RT"];
+		var boxList =this.props.boxData;
 		var eachBoxSerial = [];
 
 		eachBoxSerial = boxList.map(function(row,index){
@@ -22,7 +23,7 @@ var BoxSerial = React.createClass({
 					<table className="table">
 						<thead>
 							<div className="boxHeader">
-								Box Serial Numbers
+								{allresourceConstants.TBL_HEADER}
 							</div>
 						</thead>
 						<tbody>

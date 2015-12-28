@@ -36805,7 +36805,7 @@ var Button1 = React.createClass({displayName: "Button1",
         switch(module){
             case appConstants.PUT_BACK:
                 switch(action){
-                    case appConstants.STAGE_ONE_BIN: console.log(action);
+                    case appConstants.STAGE_ONE_BIN: 
                         ActionCreators.stageOneBin();
                         break;
                     case appConstants.STAGE_ALL:
@@ -36819,6 +36819,15 @@ var Button1 = React.createClass({displayName: "Button1",
                 }
             break;
             case appConstants.PUT_FRONT:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScan(this.props.barcode);
+                        break;    
+                     default:
+                        return true; 
+                }
+            break;
+            case appConstants.PICK_FRONT:
                 switch(action){
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScan(this.props.barcode);
@@ -36903,6 +36912,11 @@ var Header = React.createClass({displayName: "Header",
                 my: 'center top',
                 at: 'center top'
             },
+            visible : function(e, keypressed, el){
+                console.log(el);
+                el.value = '';
+
+            },
             accepted: function(e, keypressed, el) {
                 if (e.target.value === '') {
                 } else {
@@ -36937,7 +36951,7 @@ var Header = React.createClass({displayName: "Header",
               ), 
                 React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
                   React.createElement("span", {className: "glyphicon glyphicon-barcode"}), 
-                  React.createElement("input", {id: "barcode", type: "text"})
+                  React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
               React.createElement("div", {className: "header-actions"}, 
                  React.createElement("img", {src: allSvgConstants.menu})
@@ -36948,6 +36962,7 @@ var Header = React.createClass({displayName: "Header",
 });
 
 module.exports = Header;
+
 },{"../actions/CommonActions":233,"../constants/svgConstants":271,"../stores/mainstore":278,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],240:[function(require,module,exports){
 
 var React = require('react');
@@ -36963,8 +36978,7 @@ function getState(){
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
       username : 'kerry',
-      password : 'gorapj',
-      seat_name : '10_front_1'
+      password : 'gorapj'
   }
 }
 var LoginForm = React.createClass({displayName: "LoginForm",
@@ -36978,9 +36992,10 @@ var LoginForm = React.createClass({displayName: "LoginForm",
         'data': {
               'username': this.state.username,
               'password': this.state.password,
-              'seat_name': this.state.seat_name
+              'seat_name': this.refs.seat_name.value
           }
       }
+      console.log(data);
     CommonActions.login(data);
 
   },
@@ -37001,6 +37016,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
     });
 
   },
+ 
   render: function(){
       var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
@@ -37008,7 +37024,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
           seatData = this.state.seatList[0].map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                return (
-                  React.createElement("option", {key: 'pps' + index}, "PPS ", data.seat_type, " ", data.pps_id)
+                  React.createElement("option", {key: 'pps' + index, value: data.seat_type+'_'+data.pps_id}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
             }else{console.log(data);
                  return( React.createElement("option", {key: index, value: data}, data))
@@ -37020,7 +37036,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
           React.createElement("div", {className: "container"}, 
             React.createElement("form", {className: "form-signin"}, 
               React.createElement("h2", {className: "form-signin-heading"}, "Please sign in"), 
-              React.createElement("select", {className: "form-control"}, 
+              React.createElement("select", {className: "form-control", ref: "seat_name"}, 
                 seatData
               ), 
               React.createElement("input", {type: "email", valueLink: this.linkState('username'), className: "form-control", placeholder: "Username"}), 
@@ -37398,9 +37414,6 @@ var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 
 function getStateData(){
-  console.log("jjiii");
-  console.log(PickFrontStore.getCurrentSelectedBin());
-  console.log(PickFrontStore.getBinData());
   return {
            PickFrontNavData : PickFrontStore.getNavData(),
            PickFrontNotification : PickFrontStore.getNotificationData(),
@@ -38432,10 +38445,11 @@ var navData = {
 };
 
 module.exports = navData;
+
 },{"../constants/svgConstants":271}],269:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_IP : "ws://192.168.1.35:8888/ws",
-	INTERFACE_IP : "http://192.168.1.35:5000",
+	INTERFACE_IP : "https://localhost:5000",
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
@@ -38545,6 +38559,7 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./components/LoginForm":240,"./components/Operator":248,"jquery":67,"react":230,"react-dom":74}],274:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
@@ -38677,6 +38692,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PickFrontStore;
+
 },{"../config/navConfig":268,"../constants/appConstants":269,"../dispatchers/AppDispatcher":272,"../utils/utils":279,"events":14,"object-assign":68}],275:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
@@ -38841,6 +38857,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
+
 },{"../config/navConfig":268,"../constants/appConstants":269,"../constants/resourceConstants":270,"../dispatchers/AppDispatcher":272,"../utils/utils":279,"events":14,"object-assign":68}],276:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -38955,6 +38972,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutFrontStore;
+
 },{"../config/navConfig":268,"../constants/appConstants":269,"../dispatchers/AppDispatcher":272,"../utils/utils":279,"events":14,"object-assign":68}],277:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
@@ -39291,4 +39309,5 @@ var putSeatData = function(data){ console.log(data);
 }
 
 module.exports = utils;
+
 },{"../actions/CommonActions":233,"../constants/appConstants":269,"events":14,"react/lib/Object.assign":121}]},{},[273]);

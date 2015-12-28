@@ -25,7 +25,7 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_RACK) {
+        if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_MSU) {
             _NavData = navConfig.pickFront[0];
             _NavData[0].type = 'active';
         } else {

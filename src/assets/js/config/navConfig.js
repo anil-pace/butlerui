@@ -47,7 +47,7 @@ var navData = {
     ],
     "pickFront": [
         [{
-            "screen_id": "pick_front_waiting_for_rack",
+            "screen_id": "pick_front_waiting_for_msu",
             "code": "Common.000",
             "message": "Wait For MSU",
             "showImage": false,
@@ -55,7 +55,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["pick_front_scan_slot_barcode", "pick_front_scan_box_barcode", "pick_front_scan_item_barcode" , "pick_front_scan_item_and_place_in_bin"],
+            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan" , "pick_front_more_item_scan"],
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot Barcode",
@@ -63,7 +63,7 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-            "screen_id": "pick_front_press_pptl_to_confirm",
+            "screen_id": "pick_front_pptl_press",
             "code": "Common.001",
             "image": svgConstants.place,
             "message": "PPTL",

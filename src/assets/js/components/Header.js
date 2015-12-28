@@ -36,9 +36,7 @@ var Header = React.createClass({
                 at: 'center top'
             },
             visible : function(e, keypressed, el){
-                console.log(el);
                 el.value = '';
-
             },
             accepted: function(e, keypressed, el) {
                 if (e.target.value === '') {

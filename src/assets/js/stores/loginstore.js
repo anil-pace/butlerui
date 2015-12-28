@@ -1,4 +1,5 @@
 var AppDispatcher = require('../dispatchers/AppDispatcher');
+var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
@@ -36,7 +37,7 @@ function listPpsSeat(seat){
       currentSeat.length = 0; 
       $.ajax({
         type: 'GET',
-        url: appConstants.INTERFACE_IP+appConstants.PPS_SEATS,
+        url: configConstants.INTERFACE_IP+appConstants.PPS_SEATS,
         dataType : "json",
         beforeSend : xhrConfig 
         }).done(function(response) {

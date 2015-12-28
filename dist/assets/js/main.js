@@ -36964,25 +36964,25 @@ var Header = React.createClass({displayName: "Header",
 module.exports = Header;
 
 },{"../actions/CommonActions":233,"../constants/svgConstants":272,"../stores/mainstore":279,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],240:[function(require,module,exports){
-
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
-var mainstore = require('../stores/mainstore');
-var loginstore = require('../stores/loginstore');
-var CommonActions = require('../actions/CommonActions');
-var Operator = require('../components/Operator');
+var mainstore = require('../../stores/mainstore');
+var loginstore = require('../../stores/loginstore');
+var CommonActions = require('../../actions/CommonActions');
+var Operator = require('../Operator');
 
 function getState(){
-  return {
+   return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
       username : 'kerry',
       password : 'gorapj'
   }
 }
-var LoginForm = React.createClass({displayName: "LoginForm",
-  mixins:[LinkedStateMixin],
+
+var LoginPage = React.createClass({displayName: "LoginPage",
+ mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
   },
@@ -37015,9 +37015,9 @@ var LoginForm = React.createClass({displayName: "LoginForm",
     });
 
   },
- 
-  render: function(){
-      var seatData;
+
+	render: function(){
+var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
           seatData = this.state.seatList[0].map(function(data, index){ 
@@ -37032,21 +37032,49 @@ var LoginForm = React.createClass({displayName: "LoginForm",
       }
       if(this.state.flag === false){
         return (
-          React.createElement("div", {className: "container"}, 
-            React.createElement("form", {className: "form-signin"}, 
-              React.createElement("h2", {className: "form-signin-heading"}, "Please sign in"), 
-              React.createElement("select", {className: "form-control", ref: "seat_name"}, 
-                seatData
-              ), 
-              React.createElement("input", {type: "email", valueLink: this.linkState('username'), className: "form-control", placeholder: "Username"}), 
-              React.createElement("input", {type: "password", valueLink: this.linkState('password'), className: "form-control", placeholder: "Password"}), 
-              React.createElement("input", {type: "button", className: "btn btn-default", onClick: this.handleLogin, value: "Login"})
-            )
+				React.createElement("div", null, 
+					React.createElement("div", {className: "headerLoginPage"}, 
+		            	React.createElement("div", {className: "logo"}, 
+		            		React.createElement("img", {className: "imgLogo", src: "assets/images/LogoVectorSmartObject.png"})
+		            	), 
+		            	React.createElement("div", {className: "header-actions"}, 
+		            	   	React.createElement("img", {className: "mapImg", src: "assets/images/headerbg.png"})
+		            	)
+	      			), 
+	      			React.createElement("div", {className: "bodyContent"}, 
+	      				React.createElement("div", {className: "bodyLoginPage"}, 
+		      				React.createElement("div", {className: "factoryImage"}, 
+		      						React.createElement("img", {src: "assets/images/factoryImage.png"})
+		      				), 
+		      				React.createElement("div", {className: "userFormLoginPage"}, 
+		      				React.createElement("form", null, 
+							React.createElement("select", {ref: "seat_name"}, 
+							seatData
+							), 
 
-          )
-        )
+							React.createElement("div", {className: "form-group"}, 
+								React.createElement("label", {for: "username"}, "User Name :"), 
+	    						React.createElement("input", {type: "text", class: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
+							), 
+							React.createElement("div", {className: "form-group"}, 
+								React.createElement("label", {for: "password"}, "Password :"), 
+	    						React.createElement("input", {type: "Password", class: "form-control", id: "username", placeholder: "Enter Password", valueLink: this.linkState('password')})
+							), 
+							React.createElement("select", null, 
+								  React.createElement("option", {value: "volvo"}, "Select Language"), 
+								  React.createElement("option", {value: "saab"}, "English"), 
+								  React.createElement("option", {value: "mercedes"}, "Chinese"), 
+								  React.createElement("option", {value: "audi"}, "German")
+							), 
+							React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", onClick: this.handleLogin, value: "Login"})
+					)
+		      				)
+	      				)
+	      			)
+				)
+			);
     }
-    else{ 
+     else{ 
       return(
          React.createElement("div", {className: "main"}, 
             React.createElement(Operator, null)
@@ -37054,13 +37082,14 @@ var LoginForm = React.createClass({displayName: "LoginForm",
         
       )
     }
-  }
+
+		
+	}
 });
 
+module.exports = LoginPage;
 
-module.exports = LoginForm;
-
-},{"../actions/CommonActions":233,"../components/Operator":248,"../stores/loginstore":278,"../stores/mainstore":279,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],241:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/loginstore":278,"../../stores/mainstore":279,"../Operator":248,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],241:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -38550,7 +38579,7 @@ global.jQuery = global.$ = require("jquery");
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var LoginForm = require('./components/LoginForm'); 
+var LoginForm = require('./components/LoginPage/LoginPage'); 
 var Operator = require('./components/Operator');
 
 var App = React.createClass({displayName: "App",
@@ -38573,7 +38602,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginForm":240,"./components/Operator":248,"jquery":67,"react":230,"react-dom":74}],275:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":240,"./components/Operator":248,"jquery":67,"react":230,"react-dom":74}],275:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;

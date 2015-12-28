@@ -45,7 +45,7 @@ var Bin = React.createClass({
             );
 
         else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM )){
-            alert("hello");
+
             return (
                 <div className = "bin selected">
                     <div className ="item-count">{compData.ppsbin_count}</div>

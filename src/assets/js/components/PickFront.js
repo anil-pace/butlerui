@@ -119,7 +119,7 @@ var PickFront = React.createClass({
                 <Modal />
                 <CurrentSlot />
                 <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM}/>
                 </div>
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/> 

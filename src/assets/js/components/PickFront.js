@@ -23,6 +23,7 @@ function getStateData(){
            PickFrontScanDetails : PickFrontStore.scanDetails(),
            PickFrontProductDetails : PickFrontStore.productDetails(),
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
+           PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
 
@@ -89,7 +90,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                    <BoxSerial />
+                    <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
                     <Rack rackData = {this.state.PickFrontRackDetails}/>
                  </div>
               </div>

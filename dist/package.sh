@@ -22,7 +22,6 @@ case "$1" in
 	ln -sf /opt/butler_ui/bin/butler_ui butler_ui-$RELVSN/usr/local/bin/
 	ln -sf /opt/butler_ui/log butler_ui-$RELVSN/var/log/butler_ui
 	chmod u+rw ./butler_ui-$RELVSN
-	echo "about to construct the debian package"
 	fakeroot dpkg-deb --build butler_ui-$RELVSN
 	rm -rf ./butler_ui-$RELVSN
 	;;

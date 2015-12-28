@@ -10,6 +10,7 @@ var appConstants = {
 	PLACE_ITEMS: "Place",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	SET_PUT_DATA:"SET_PUT_DATA",
+	SET_PICK_BACK_DATA:"SET_PICK_BACK_DATA",
 	PICK_BACK : "pick_back",
 	PICK_FRONT:"pick_front",
 	PUT_BACK : "put_back",
@@ -39,7 +40,9 @@ var appConstants = {
 	PICK_FRONT_SCAN_ITEM_BARCODE:"pick_front_scan_item_barcode",
 	PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:"pick_front_scan_item_and_place_in_bin",
 	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
-	EDIT_DETAILS:"EDIT_DETAILS",
+	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
+	PICK_BACK_BIN:"pick_back_bin",
+	PICK_BACK_SCAN:"pick_back_scan",
 	BARCODE_SCAN : 'BARCODE_SCAN'
 
 };

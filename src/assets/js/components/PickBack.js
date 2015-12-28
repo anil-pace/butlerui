@@ -1,30 +1,88 @@
 
 var React = require('react');
-var mainstore = require('../stores/mainstore');
+var PickBackStore = require('../stores/PickBackStore');
+var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var Button1 = require("./Button/Button");
+var Wrapper = require('./ProductDetails/Wrapper');
+var appConstants = require('../constants/appConstants');
+var Modal = require('./Modal/Modal');
+var SystemIdle = require('./SystemIdle');
+
+
+function getStateData(){
+  return {
+           PickBackNavData : PickBackStore.getNavData(),
+           PickBackNotification : PickBackStore.getNotificationData(),
+           PickBackBinData: PickBackStore.getBinData(),
+           PickBackScreenId:PickBackStore.getScreenId(),
+           PickBackServerNavData : PickBackStore.getServerNavData()
+
+    };
+}
+
 var PickBack = React.createClass({
+  _component:'',
+  _notification:'',
   getInitialState: function(){
-    return {
-      
-    }
+    return getStateData();
   },
   componentWillMount: function(){
-    mainstore.addChangeListener(this.onChange);
+    PickBackStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
+    PickBackStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
+    this.setState(getStateData());
   },
-  render: function(data){ 
-    
-      return (
-        <div className='row row-offcanvas row-offcanvas-right'>
-        	<div className="col-xs-12 col-sm-12">
-              <div className='row'>
-                Body area
+  getScreenComponent : function(screen_id){
+    switch(screen_id){
+      case appConstants.PICK_BACK_BIN:
+          this._component = (
+              <div className='grid-container'>
+                <Modal />
+                <div className='main-container'>
+                    <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />
+                </div>
               </div>
-          </div>
-        </div>  
+            );
+
+        break;
+      case appConstants.PICK_BACK_SCAN:
+          this._component = (
+              <div className='grid-container'>
+                <Modal />
+                <div className='main-container'>
+                    <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />
+                </div>
+              </div>
+            );
+        break;
+      default:
+        return true; 
+    }
+  },
+
+  getNotificationComponent:function(){
+    if(this.state.PickBackNotification != undefined)
+      this._notification = <Notification notification={this.state.PickBackNotification} />
+    else
+      this._notification = "";
+  },
+  render: function(data){
+    this.getNotificationComponent();
+    this.getScreenComponent(this.state.PickBackScreenId);
+      return (
+        <div className="main">
+          <Header />
+          <Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData}/>
+          {this._component}
+          {this._notification}
+        </div> 
+       
       )
   }
 });

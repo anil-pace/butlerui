@@ -59,6 +59,14 @@ var commonActions = {
       data:data
     })
   },
+
+  setPickBackData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_PICK_BACK_DATA,
+      data:data
+    })
+  },
+
   kq_operation : function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.KQ_OPERATION, 

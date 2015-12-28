@@ -7,18 +7,16 @@ var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
 
 function getState(){
-  return {
+   return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
       username : 'kerry',
-      password : 'gorapj',
-      seat_name : '10_front_1'
+      password : 'gorapj'
   }
 }
 
 var LoginPage = React.createClass({
-
-  mixins:[LinkedStateMixin],
+ mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
   },
@@ -28,7 +26,7 @@ var LoginPage = React.createClass({
         'data': {
               'username': this.state.username,
               'password': this.state.password,
-              'seat_name': this.state.seat_name
+              'seat_name': this.refs.seat_name.value
           }
       }
     CommonActions.login(data);
@@ -53,21 +51,19 @@ var LoginPage = React.createClass({
   },
 
 	render: function(){
-
-      var seatData;
+var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
           seatData = this.state.seatList[0].map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                return (
-                  <option key={'pps' + index}>PPS {data.seat_type} {data.pps_id}</option>
+                  <option key={'pps' + index} value={data.seat_type+'_'+data.pps_id} >PPS {data.seat_type} {data.pps_id}</option>
                 )
             }else{console.log(data);
                  return( <option key={index} value={data} >{data}</option>)
             }
           });
       }
-
       if(this.state.flag === false){
         return (
 				<div>
@@ -86,7 +82,7 @@ var LoginPage = React.createClass({
 		      				</div>
 		      				<div className="userFormLoginPage">
 		      				<form>
-							<select>
+							<select ref='seat_name'>
 							{seatData}
 							</select>
 

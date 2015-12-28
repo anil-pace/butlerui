@@ -38447,7 +38447,6 @@ var navData = {
 
 module.exports = navData;
 
-
 },{"../constants/svgConstants":272}],269:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
@@ -38871,7 +38870,6 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 module.exports = PutBackStore;
 
 },{"../config/navConfig":268,"../constants/appConstants":269,"../constants/resourceConstants":271,"../dispatchers/AppDispatcher":273,"../utils/utils":280,"events":14,"object-assign":68}],277:[function(require,module,exports){
-
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -38986,9 +38984,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-
 },{"../config/navConfig":268,"../constants/appConstants":269,"../dispatchers/AppDispatcher":273,"../utils/utils":280,"events":14,"object-assign":68}],278:[function(require,module,exports){
-
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -39328,4 +39324,3 @@ var putSeatData = function(data){ console.log(data);
 module.exports = utils;
 
 },{"../actions/CommonActions":233,"../constants/appConstants":269,"../constants/configConstants":270,"events":14,"react/lib/Object.assign":121}]},{},[274]);
-

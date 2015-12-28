@@ -36763,7 +36763,7 @@ var allresourceConstants = require('../constants/resourceConstants');
 var BoxSerial = React.createClass({displayName: "BoxSerial",
 	render : function(){
 
-		var boxList =["ABCCD123RT","A09976523RT","ABCCD1091253","ABCJDHSGET9465RT"];
+		var boxList =this.props.boxData;
 		var eachBoxSerial = [];
 
 		eachBoxSerial = boxList.map(function(row,index){
@@ -37421,6 +37421,7 @@ function getStateData(){
            PickFrontScanDetails : PickFrontStore.scanDetails(),
            PickFrontProductDetails : PickFrontStore.productDetails(),
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
+           PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
 
@@ -37487,7 +37488,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement(BoxSerial, null), 
+                    React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
                     React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
                  )
               )
@@ -37517,7 +37518,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement(Modal, null), 
                 React.createElement(CurrentSlot, null), 
                 React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN})
+                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PickFrontProductDetails.product_sku, color: "black"})
@@ -38671,6 +38672,10 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
 
     getRackDetails: function() {
         return _PickFrontData.rack_details;
+    },
+
+    getBoxDetails: function() {
+        return _PickFrontData.box_serials;
     },
 
     getCurrentSelectedBin: function() {

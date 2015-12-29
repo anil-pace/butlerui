@@ -119,6 +119,9 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
     getItemUid : function(){
         return _PickFrontData.item_uid;
+    },
+    getCurrentSlot : function(){        
+        return _PickFrontData.rack_details.slot_barcodes;
     }
 
 });

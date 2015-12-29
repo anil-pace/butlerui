@@ -26,7 +26,8 @@ function getStateData(){
            PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
-          PickFrontItemUid : PickFrontStore.getItemUid()
+          PickFrontItemUid : PickFrontStore.getItemUid(),
+          PickFrontSlotDetails :PickFrontStore.getCurrentSlot()
 
 
     };
@@ -104,7 +105,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                 <Modal />             
-                <CurrentSlot />
+                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
@@ -121,7 +122,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                 <Modal />
-                <CurrentSlot />
+                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM}/>
                 </div>
@@ -137,7 +138,7 @@ var PickFront = React.createClass({
         return true;
     }
   },
-  render: function(data){ 
+  render: function(data){
 	  this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
 	

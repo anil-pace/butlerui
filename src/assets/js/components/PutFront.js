@@ -23,7 +23,8 @@ function getStateData(){
            PutFrontProductDetails : PutFrontStore.productDetails(),
            PutFrontRackDetails: PutFrontStore.getRackDetails(),
            PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData()
+           PutFrontServerNavData : PutFrontStore.getServerNavData(),
+           PutFrontItemUid : PutFrontStore.getItemUid()
     };
 
 };
@@ -70,7 +71,7 @@ var PutFront = React.createClass({
                 <Modal />
                 <div className='main-container'>
                   <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                 </div>
               </div>
             );
@@ -84,7 +85,7 @@ var PutFront = React.createClass({
                 </div>
                 <div className='main-container'>
                   <Rack rackData = {this.state.PutFrontRackDetails}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                 </div>
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontProductDetails.product_sku} color={"black"}/>

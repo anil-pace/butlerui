@@ -129,6 +129,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   productDetails : function(){
     _prodDetails = _PutBackData.product_info;
     return _prodDetails;
+  },
+  getItemUid : function(){
+    return _PutBackData.item_uid;
   }
 });
 

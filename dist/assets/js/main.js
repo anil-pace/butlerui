@@ -36670,6 +36670,13 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))  && (compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
+            return (
+                React.createElement("div", {className: "bin  selected blink1"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")) && compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
             return (
@@ -37559,7 +37566,9 @@ function getStateData(){
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
            PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
-          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
+          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+          PickFrontItemUid : PickFrontStore.getItemUid()
+
 
     };
 };
@@ -37639,10 +37648,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement(CurrentSlot, null), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails})
+                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                 ), 
                 React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PickFrontProductDetails.product_sku, color: "black"}), 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton
                 )
               )
@@ -38052,7 +38061,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
       return (
         React.createElement("div", {className: "rightWrapper"}, 
            React.createElement(ProductInfo, {productDetails: this.props.productDetails}), 
-            React.createElement(KQ, {scanDetails: this.props.scanDetails, itemUid: this.props.productDetails.product_sku})
+            React.createElement(KQ, {scanDetails: this.props.scanDetails, itemUid: this.props.itemUid})
         )    
       )
   }
@@ -38085,7 +38094,8 @@ function getStateData(){
            PutBackScreenId:PutBackStore.getScreenId(),
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
-           PutBackServerNavData : PutBackStore.getServerNavData()
+           PutBackServerNavData : PutBackStore.getServerNavData(),
+           PutBackItemUid : PutBackStore.getItemUid()
 
     };
 }
@@ -38128,7 +38138,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                 React.createElement(Modal, null), 
                 React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
-                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails})
+                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackProductDetails.product_sku, color: "black"})
@@ -38190,7 +38200,8 @@ function getStateData(){
            PutFrontProductDetails : PutFrontStore.productDetails(),
            PutFrontRackDetails: PutFrontStore.getRackDetails(),
            PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData()
+           PutFrontServerNavData : PutFrontStore.getServerNavData(),
+           PutFrontItemUid : PutFrontStore.getItemUid()
     };
 
 };
@@ -38237,7 +38248,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement(Modal, null), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails})
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
                 )
               )
             );
@@ -38251,7 +38262,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 ), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Rack, {rackData: this.state.PutFrontRackDetails}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails})
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontProductDetails.product_sku, color: "black"})
@@ -38639,8 +38650,8 @@ module.exports = appConstants;
 
 },{}],270:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "https://localhost:5000"
 };
 
 module.exports = configConstants;
@@ -38927,6 +38938,9 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
             return binData;
         } else
             return null;
+    },
+    getItemUid : function(){
+        return _PickFrontData.item_uid;
     }
 
 });
@@ -39075,6 +39089,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   productDetails : function(){
     _prodDetails = _PutBackData.product_info;
     return _prodDetails;
+  },
+  getItemUid : function(){
+    return _PutBackData.item_uid;
   }
 });
 
@@ -39205,6 +39222,9 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
               binData["ppsbin_list"].push(value);
         })
         return binData;
+    },
+    getItemUid : function(){
+        return _PutFrontData.item_uid;
     }
 
 });
@@ -39312,9 +39332,6 @@ AppDispatcher.register(function(payload){
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.SCAN_BARCODE:
-      scanBarcode(action.data, action.receiveKey);
-      break; 
     default:
       return true;
   }
@@ -39533,7 +39550,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
   	postDataToInterface : function(data, seat_name){ 
-      console.log(data);
   		$.ajax({
         type: 'POST',
         url: configConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,

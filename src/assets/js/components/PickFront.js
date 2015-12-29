@@ -25,7 +25,9 @@ function getStateData(){
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
            PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
-          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
+          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+          PickFrontItemUid : PickFrontStore.getItemUid()
+
 
     };
 };
@@ -105,10 +107,10 @@ var PickFront = React.createClass({
                 <CurrentSlot />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
-                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
+                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                 </div>
                 <div className = 'actions'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/>
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
                 </div>
               </div>

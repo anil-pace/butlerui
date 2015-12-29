@@ -88,9 +88,6 @@ AppDispatcher.register(function(payload){
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.SCAN_BARCODE:
-      scanBarcode(action.data, action.receiveKey);
-      break; 
     default:
       return true;
   }

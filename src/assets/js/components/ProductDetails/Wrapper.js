@@ -22,7 +22,7 @@ var Wrapper = React.createClass({
       return (
         <div className='rightWrapper'>
            <ProductInfo productDetails={this.props.productDetails}/>
-            <KQ scanDetails={this.props.scanDetails} itemUid={this.props.productDetails.product_sku} />
+            <KQ scanDetails={this.props.scanDetails} itemUid={this.props.itemUid} />
         </div>    
       )
   }

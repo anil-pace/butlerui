@@ -95,6 +95,9 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
               binData["ppsbin_list"].push(value);
         })
         return binData;
+    },
+    getItemUid : function(){
+        return _PutFrontData.item_uid;
     }
 
 });

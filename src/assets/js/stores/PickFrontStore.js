@@ -116,6 +116,9 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
             return binData;
         } else
             return null;
+    },
+    getItemUid : function(){
+        return _PickFrontData.item_uid;
     }
 
 });

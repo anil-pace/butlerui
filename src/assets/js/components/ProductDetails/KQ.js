@@ -34,36 +34,40 @@ var KQ = React.createClass({
     }
   },
   componentDidMount: function(){
-    var qty = this.props.scanDetails.current_qty;
-    var itemUid = this.props.itemUid;
-    virtualKeyboard = $('#keyboard').keyboard({
-          layout: 'custom',
-          customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
-          reposition   : true,
-          alwaysOpen   : false,
-          initialFocus : true,
-          accepted: function(e, keypressed, el) {
-            if (e.target.value === '' || e.target.value === '0') {
-              CommonActions.resetNumpadVal(parseInt(qty));
-            } else{
-                var data  = {
-                  "event_name":"quantity_update_from_gui",
-                  "event_data":{
-                      "item_uid":itemUid,
-                      "quantity_updated":parseInt(e.target.value)
+    if(this.props.scanDetails.kq_allowed === true){
+      var qty = this.props.scanDetails.current_qty;
+      var itemUid = this.props.itemUid;
+      virtualKeyboard = $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
+            reposition   : true,
+            alwaysOpen   : false,
+            initialFocus : true,
+            accepted: function(e, keypressed, el) {
+              if (e.target.value === '' || e.target.value === '0') {
+                CommonActions.resetNumpadVal(parseInt(qty));
+              } else{
+                  var data  = {
+                    "event_name":"quantity_update_from_gui",
+                    "event_data":{
+                        "item_uid":itemUid,
+                        "quantity_updated":parseInt(e.target.value)
+                    }
                   }
-                }
-              CommonActions.kq_operation(data);
+                CommonActions.kq_operation(data);
+              }
             }
-          }
-    });
+      });
+    }
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
-    virtualKeyboard.getkeyboard().close();
+    if(virtualKeyboard != undefined){
+      virtualKeyboard.getkeyboard().close();
+    }
   },
   onChange: function(){ 
     this.setState(getState());

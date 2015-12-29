@@ -38632,8 +38632,9 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	EDIT_DETAILS:"EDIT_DETAILS",
-	BARCODE_SCAN : 'BARCODE_SCAN',
-	CANCEL_SCAN_ALL : 'CANCEL_SCAN_ALL',
+	PICK_BACK_BIN:"pick_back_bin",
+	PICK_BACK_SCAN:"pick_back_scan",
+	BARCODE_SCAN : 'BARCODE_SCAN'
 
 };
 
@@ -38641,8 +38642,8 @@ module.exports = appConstants;
 
 },{}],270:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "https://localhost:5000"
 };
 
 module.exports = configConstants;

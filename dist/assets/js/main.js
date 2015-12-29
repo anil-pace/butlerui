@@ -36598,7 +36598,13 @@ var commonActions = {
       actionType: appConstants.BARCODE_SCAN,
       data:data
     })
-  }
+  },
+  cancelScanAll:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CANCEL_SCAN_ALL, 
+      data: data
+    });
+  },
 
 };
 
@@ -36876,7 +36882,7 @@ var Button1 = React.createClass({displayName: "Button1",
             case appConstants.PICK_FRONT:
                 switch(action){
                     case appConstants.CANCEL_SCAN:
-                        ActionCreators.cancelScan(this.props.barcode);
+                        ActionCreators.cancelScanAll();
                         break;    
                      default:
                         return true; 
@@ -37652,7 +37658,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PickFrontProductDetails.product_sku, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
                 )
               )
             );
@@ -37671,7 +37677,8 @@ var PickFront = React.createClass({displayName: "PickFront",
 		React.createElement("div", {className: "main"}, 
 			React.createElement(Header, null), 
 			React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData}), 
-			this._component
+			this._component, 
+      this._notification
 	  )   
 	  )
   }
@@ -38622,16 +38629,8 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	EDIT_DETAILS:"EDIT_DETAILS",
-	PICK_FRONT_WAITING_FOR_RACK:"pick_front_waiting_for_rack",
-	PICK_FRONT_SCAN_SLOT_BARCODE:"pick_front_scan_slot_barcode",
-	PICK_FRONT_SCAN_BOX_BARCODE:"pick_front_scan_box_barcode",
-	PICK_FRONT_SCAN_ITEM_BARCODE:"pick_front_scan_item_barcode",
-	PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:"pick_front_scan_item_and_place_in_bin",
-	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
-	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
-	PICK_BACK_BIN:"pick_back_bin",
-	PICK_BACK_SCAN:"pick_back_scan",
-	BARCODE_SCAN : 'BARCODE_SCAN'
+	BARCODE_SCAN : 'BARCODE_SCAN',
+	CANCEL_SCAN_ALL : 'CANCEL_SCAN_ALL',
 
 };
 
@@ -39376,7 +39375,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     };
     utils.postDataToInterface(data, _seatName);
   },
-
+  cancelScanAll : function(barcode){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{}
+    };
+    utils.postDataToInterface(data, _seatName);
+  },
   getModalContent:function(){
     return modalContent.data;
   },
@@ -39476,7 +39481,12 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.barcodeScan(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;        
+      break; 
+    case appConstants.CANCEL_SCAN_ALL:
+      mainstore.showSpinner();
+      mainstore.cancelScanAll();
+       mainstore.emit(CHANGE_EVENT);
+      break;          
     default:
       return true;
   }

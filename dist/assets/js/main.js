@@ -37013,6 +37013,7 @@ var Header = React.createClass({displayName: "Header",
 });
 
 module.exports = Header;
+
 },{"../actions/CommonActions":233,"../constants/svgConstants":272,"../stores/mainstore":280,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],240:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
@@ -37138,6 +37139,7 @@ var seatData;
 });
 
 module.exports = LoginPage;
+
 },{"../../actions/CommonActions":233,"../../stores/loginstore":279,"../../stores/mainstore":280,"../Operator":248,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],241:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
@@ -38585,6 +38587,7 @@ var navData = {
 };
 
 module.exports = navData;
+
 },{"../constants/svgConstants":272}],269:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
@@ -38629,8 +38632,9 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	EDIT_DETAILS:"EDIT_DETAILS",
-	BARCODE_SCAN : 'BARCODE_SCAN',
-	CANCEL_SCAN_ALL : 'CANCEL_SCAN_ALL',
+	PICK_BACK_BIN:"pick_back_bin",
+	PICK_BACK_SCAN:"pick_back_scan",
+	BARCODE_SCAN : 'BARCODE_SCAN'
 
 };
 
@@ -38638,11 +38642,12 @@ module.exports = appConstants;
 
 },{}],270:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "https://localhost:5000"
 };
 
 module.exports = configConstants;
+
 },{}],271:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
@@ -38653,6 +38658,7 @@ var resourceConstants = {
 	TBL_HEADER: 'Box Serial Numbers'
 };
 module.exports = resourceConstants;
+
 },{}],272:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
@@ -38708,6 +38714,7 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./components/LoginPage/LoginPage":240,"./components/Operator":248,"jquery":67,"react":230,"react-dom":74}],275:[function(require,module,exports){
 
@@ -38807,6 +38814,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PickBackStore;
+
 },{"../config/navConfig":268,"../constants/appConstants":269,"../constants/resourceConstants":271,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],276:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -38942,6 +38950,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PickFrontStore;
+
 },{"../config/navConfig":268,"../constants/appConstants":269,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],277:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
@@ -39106,6 +39115,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutBackStore;
+
 },{"../config/navConfig":268,"../constants/appConstants":269,"../constants/resourceConstants":271,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],278:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -39220,6 +39230,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 });
 
 module.exports = PutFrontStore;
+
 },{"../config/navConfig":268,"../constants/appConstants":269,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],279:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
@@ -39570,4 +39581,5 @@ var putSeatData = function(data){ console.log(data);
 }
 
 module.exports = utils;
+
 },{"../actions/CommonActions":233,"../constants/appConstants":269,"../constants/configConstants":270,"events":14,"react/lib/Object.assign":121}]},{},[274]);

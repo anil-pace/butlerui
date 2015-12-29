@@ -38258,7 +38258,8 @@ var PutFront = React.createClass({displayName: "PutFront",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement("div", {className: "single-bin"}, 
-                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId})
+                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
+                      React.createElement("div", {className: "text"}, "CURRENT BIN")
                 ), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Rack, {rackData: this.state.PutFrontRackDetails}), 

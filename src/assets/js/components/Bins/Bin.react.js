@@ -31,7 +31,7 @@ var Bin = React.createClass({
         var compData = this.props.binData;
         if(compData.ppsbin_state == "staged" )
             return (
-                <div className = "bin staged" >
+                <div className = {(compData.selected_state == true || compData.selected_state =="true") ? "bin staged selected":"bin staged"} >
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>

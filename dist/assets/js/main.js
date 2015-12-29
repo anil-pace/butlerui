@@ -36644,7 +36644,7 @@ var Bin = React.createClass({displayName: "Bin",
         var compData = this.props.binData;
         if(compData.ppsbin_state == "staged" )
             return (
-                React.createElement("div", {className: "bin staged"}, 
+                React.createElement("div", {className: (compData.selected_state == true || compData.selected_state =="true") ? "bin staged selected":"bin staged"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
@@ -38650,8 +38650,8 @@ module.exports = appConstants;
 
 },{}],270:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://localhost:8888/ws",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "http://192.168.3.93:5000"
 };
 
 module.exports = configConstants;

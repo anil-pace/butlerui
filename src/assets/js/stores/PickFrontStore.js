@@ -120,8 +120,12 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     getItemUid : function(){
         return _PickFrontData.item_uid;
     },
-    getCurrentSlot : function(){        
-        return _PickFrontData.rack_details.slot_barcodes;
+    getCurrentSlot : function(){ 
+      if(_PickFrontData.hasOwnProperty('rack_details')){       
+            return _PickFrontData.rack_details.slot_barcodes;
+      }else{
+        return null;
+      }
     }
 
 });

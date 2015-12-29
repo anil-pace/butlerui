@@ -31,7 +31,7 @@ var Bin = React.createClass({
         var compData = this.props.binData;
         if(compData.ppsbin_state == "staged" )
             return (
-                <div className = {(compData.selected_state == true || compData.selected_state =="true") ? "bin staged selected":"bin staged"} >
+                <div className = "bin staged" >
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
@@ -57,13 +57,6 @@ var Bin = React.createClass({
                 </div>
             );
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))  && (compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
-            return (
-                <div className = "bin  selected blink1">
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected blink" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
-                </div>
-            );
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")) && compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
             return (
@@ -99,9 +92,9 @@ var Bin = React.createClass({
         }
         else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
             return (
-                <div className = "bin selected">
+                <div className = {compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}>
                     <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected">{compData.ppsbin_id}</div>
+                    <div className={compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}>{compData.ppsbin_id}</div>
                 </div>
             );
         else if(compData.ppsbin_count > 0 && this.props.screenId == appConstants.PUT_BACK_STAGE )

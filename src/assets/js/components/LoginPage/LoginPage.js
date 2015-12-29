@@ -5,6 +5,7 @@ var mainstore = require('../../stores/mainstore');
 var loginstore = require('../../stores/loginstore');
 var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
+var allSvgConstants = require('../../constants/svgConstants')
 
 function getState(){
    return {
@@ -69,16 +70,16 @@ var seatData;
 				<div>
 					<div className="headerLoginPage">
 		            	<div className="logo">
-		            		<img className="imgLogo" src="assets/images/LogoVectorSmartObject.png" />
+		            		<img className="imgLogo" src={allSvgConstants.gorLogo} />
 		            	</div>
 		            	<div className="header-actions">
-		            	   	<img className="mapImg" src="assets/images/headerbg.png" />
+		            	   	<img className="mapImg" src={allSvgConstants.headerbg} />
 		            	</div>
 	      			</div>
 	      			<div className="bodyContent">
 	      				<div className="bodyLoginPage">
 		      				<div className="factoryImage">
-		      						<img src ="assets/images/factoryImage.png" />
+		      						<img src ={allSvgConstants.factoryImg} />
 		      				</div>
 		      				<div className="userFormLoginPage">
 		      				<form>

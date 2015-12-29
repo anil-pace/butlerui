@@ -6,7 +6,7 @@ var KQ = React.createClass({
   _appendClassDown : '',
   _appendClassUp : '',
   _qtyComponent : null,
-  virtualKeyboard : '',
+  virtualKeyboard : null,
   handleIncrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
       var data  = {
@@ -65,7 +65,7 @@ var KQ = React.createClass({
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
-    if(virtualKeyboard != undefined){
+    if(this.virtualKeyboard != null){
       virtualKeyboard.getkeyboard().close();
     }
   },

@@ -85,6 +85,7 @@
         "mode": "pick",
         "is_idle": false,
         "seat_type": "front",
+        "item_uid" : "123",
         "product_info": {
             "product_description": null,
             "product_local_image_url": null,
@@ -472,6 +473,7 @@ after container scan
         "mode": "pick",
         "is_idle": false,
         "seat_type": "front",
+        "item_uid" : "123",
         "product_info": {
             "product_description": null,
             "product_local_image_url": null,
@@ -575,6 +577,7 @@ after container scan
         "mode": "pick",
         "is_idle": false,
         "seat_type": "front",
+        "item_uid" : "123",
         "product_info": {
             "product_description": null,
             "product_local_image_url": null,

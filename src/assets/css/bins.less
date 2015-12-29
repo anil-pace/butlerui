@@ -31,29 +31,29 @@
                 color: @bin-inactive-text;
             }
             &.selected {
-                border: 5px solid @bin-selected-bck;
+                border: 2px solid @bin-selected-bck;
             }
             &.staged {
                 background: @bin-staged-bck;
                 color: @bin-inactive-text;
             }
             &.selected-staging {
-                border: 5px solid @brand-primary;
+                border: 2px solid @brand-primary;
             }
-            &.blink1 {
-                animation: blink 2s steps(2, start) infinite;
-                -webkit-animation: blink 2s steps(2, start) infinite;
-                @keyframes blink1 {
-                    to {
-                        border-color: @text-color !important;
-                    }
-                }
-                @-webkit-keyframes blink1 {
-                    to {
-                        border-color: @text-color !important;
-                    }
-                }
-            }
+             @keyframes blink {
+               0% {
+                   border-color: @bin-selected-bck;
+               }
+               50% {
+                   border-color: @text-color;
+               }
+               100% {
+                   border-color: @bin-selected-bck;
+               }
+           }
+           &.blink1 {
+               animation: blink 2s step-end infinite;
+           }
             .tote {
                 position: absolute;
                 left: 0;

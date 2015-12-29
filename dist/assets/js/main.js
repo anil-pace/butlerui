@@ -36670,6 +36670,13 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))  && (compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
+            return (
+                React.createElement("div", {className: "bin  selected blink1"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")) && compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
             return (
@@ -38629,8 +38636,16 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	EDIT_DETAILS:"EDIT_DETAILS",
-	BARCODE_SCAN : 'BARCODE_SCAN',
-	CANCEL_SCAN_ALL : 'CANCEL_SCAN_ALL',
+	PICK_FRONT_WAITING_FOR_RACK:"pick_front_waiting_for_rack",
+	PICK_FRONT_SCAN_SLOT_BARCODE:"pick_front_scan_slot_barcode",
+	PICK_FRONT_SCAN_BOX_BARCODE:"pick_front_scan_box_barcode",
+	PICK_FRONT_SCAN_ITEM_BARCODE:"pick_front_scan_item_barcode",
+	PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:"pick_front_scan_item_and_place_in_bin",
+	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
+	PICK_FRONT_PRESS_PPTL_TO_CONFIRM:"pick_front_press_pptl_to_confirm",
+	PICK_BACK_BIN:"pick_back_bin",
+	PICK_BACK_SCAN:"pick_back_scan",
+	BARCODE_SCAN : 'BARCODE_SCAN'
 
 };
 

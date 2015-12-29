@@ -32,7 +32,7 @@ var Button1 = React.createClass({
             case appConstants.PICK_FRONT:
                 switch(action){
                     case appConstants.CANCEL_SCAN:
-                        ActionCreators.cancelScan(this.props.barcode);
+                        ActionCreators.cancelScanAll();
                         break;    
                      default:
                         return true; 

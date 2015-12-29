@@ -62,6 +62,7 @@ var putSeatData = function(data){ console.log(data);
           CommonActions.setPutFrontData(data.state_data);
         break;
       case appConstants.PICK_BACK:
+          CommonActions.setPickBackData(data.state_data);
         break;
       case appConstants.PICK_FRONT: 
           CommonActions.setPickFrontData(data.state_data);

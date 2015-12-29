@@ -36705,9 +36705,9 @@ var Bin = React.createClass({displayName: "Bin",
         }
         else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
                 )
             );
         else if(compData.ppsbin_count > 0 && this.props.screenId == appConstants.PUT_BACK_STAGE )
@@ -36912,10 +36912,14 @@ var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var CurrentSlot = React.createClass({displayName: "CurrentSlot",
-	render:function(){
+	render:function(){		
+		var slotStart = this.props.slotDetails[0].split(".")[2] + this.props.slotDetails[0].split(".")[3].slice(1, 2);
+		var slotEnd = this.props.slotDetails[1].split(".")[2] + this.props.slotDetails[1].split(".")[3].slice(1, 2);
+		var range = slotStart + " - " + slotEnd;		
+		
 		return (
 				React.createElement("div", {className: "currentSlotWrapper"}, 
-					React.createElement("div", {className: "slotRange"}, " A1- A6 "), 
+					React.createElement("div", {className: "slotRange"}, " ", range, " "), 
 					React.createElement("div", {className: "slotFooter"}, " ", allresourceConstants.CURR_SLOT, " ")
 				)
 						
@@ -36951,7 +36955,7 @@ var Header = React.createClass({displayName: "Header",
         virtualKeyBoard = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['1 2 3 4 5 6 7 8 9 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
+              'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
               'shift': ['1 2 3 4 5 6 7 8 9 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
             },
             css: {
@@ -37022,6 +37026,7 @@ var mainstore = require('../../stores/mainstore');
 var loginstore = require('../../stores/loginstore');
 var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
+var allSvgConstants = require('../../constants/svgConstants')
 
 function getState(){
    return {
@@ -37086,16 +37091,16 @@ var seatData;
 				React.createElement("div", null, 
 					React.createElement("div", {className: "headerLoginPage"}, 
 		            	React.createElement("div", {className: "logo"}, 
-		            		React.createElement("img", {className: "imgLogo", src: "assets/images/LogoVectorSmartObject.png"})
+		            		React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
 		            	), 
 		            	React.createElement("div", {className: "header-actions"}, 
-		            	   	React.createElement("img", {className: "mapImg", src: "assets/images/headerbg.png"})
+		            	   	React.createElement("img", {className: "mapImg", src: allSvgConstants.headerbg})
 		            	)
 	      			), 
 	      			React.createElement("div", {className: "bodyContent"}, 
 	      				React.createElement("div", {className: "bodyLoginPage"}, 
 		      				React.createElement("div", {className: "factoryImage"}, 
-		      						React.createElement("img", {src: "assets/images/factoryImage.png"})
+		      						React.createElement("img", {src: allSvgConstants.factoryImg})
 		      				), 
 		      				React.createElement("div", {className: "userFormLoginPage"}, 
 		      				React.createElement("form", null, 
@@ -37140,7 +37145,7 @@ var seatData;
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../stores/loginstore":279,"../../stores/mainstore":280,"../Operator":248,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],241:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/svgConstants":272,"../../stores/loginstore":279,"../../stores/mainstore":280,"../Operator":248,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],241:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -37562,7 +37567,8 @@ function getStateData(){
            PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
           PickFrontServerNavData : PickFrontStore.getServerNavData(),
           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
-          PickFrontItemUid : PickFrontStore.getItemUid()
+          PickFrontItemUid : PickFrontStore.getItemUid(),
+          PickFrontSlotDetails :PickFrontStore.getCurrentSlot()
 
 
     };
@@ -37640,7 +37646,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(CurrentSlot, null), 
+                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
@@ -37657,7 +37663,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(CurrentSlot, null), 
+                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM})
                 ), 
@@ -37673,7 +37679,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         return true;
     }
   },
-  render: function(data){ 
+  render: function(data){
 	  this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
 	
@@ -37807,7 +37813,7 @@ var KQ = React.createClass({displayName: "KQ",
   _appendClassDown : '',
   _appendClassUp : '',
   _qtyComponent : null,
-  virtualKeyboard : '',
+  virtualKeyboard : null,
   handleIncrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
       var data  = {
@@ -37835,36 +37841,40 @@ var KQ = React.createClass({displayName: "KQ",
     }
   },
   componentDidMount: function(){
-    var qty = this.props.scanDetails.current_qty;
-    var itemUid = this.props.itemUid;
-    virtualKeyboard = $('#keyboard').keyboard({
-          layout: 'custom',
-          customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
-          reposition   : true,
-          alwaysOpen   : false,
-          initialFocus : true,
-          accepted: function(e, keypressed, el) {
-            if (e.target.value === '' || e.target.value === '0') {
-              CommonActions.resetNumpadVal(parseInt(qty));
-            } else{
-                var data  = {
-                  "event_name":"quantity_update_from_gui",
-                  "event_data":{
-                      "item_uid":itemUid,
-                      "quantity_updated":parseInt(e.target.value)
+    if(this.props.scanDetails.kq_allowed === true){
+      var qty = this.props.scanDetails.current_qty;
+      var itemUid = this.props.itemUid;
+      virtualKeyboard = $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
+            reposition   : true,
+            alwaysOpen   : false,
+            initialFocus : true,
+            accepted: function(e, keypressed, el) {
+              if (e.target.value === '' || e.target.value === '0') {
+                CommonActions.resetNumpadVal(parseInt(qty));
+              } else{
+                  var data  = {
+                    "event_name":"quantity_update_from_gui",
+                    "event_data":{
+                        "item_uid":itemUid,
+                        "quantity_updated":parseInt(e.target.value)
+                    }
                   }
-                }
-              CommonActions.kq_operation(data);
+                CommonActions.kq_operation(data);
+              }
             }
-          }
-    });
+      });
+    }
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
-    virtualKeyboard.getkeyboard().close();
+    if(this.virtualKeyboard != null){
+      virtualKeyboard.getkeyboard().close();
+    }
   },
   onChange: function(){ 
     this.setState(getState());
@@ -38253,7 +38263,8 @@ var PutFront = React.createClass({displayName: "PutFront",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement("div", {className: "single-bin"}, 
-                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId})
+                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
+                      React.createElement("div", {className: "text"}, "CURRENT BIN")
                 ), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Rack, {rackData: this.state.PutFrontRackDetails}), 
@@ -38646,8 +38657,8 @@ module.exports = appConstants;
 
 },{}],270:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.148:8888/ws",
-	INTERFACE_IP : "https://192.168.3.148:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "http://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
@@ -38672,7 +38683,11 @@ var allSvgConstants = {
 	stage : 'assets/images/nav2.png',
 	place:'assets/images/nav1.png',
 	scan : 'assets/images/scan-item.png',
-	rack: 'assets/images/rack.png'
+	rack: 'assets/images/rack.png',
+	gorLogo : 'assets/images/LogoVectorSmartObject.png',
+	factoryImg : 'assets/images/factoryImage.png',
+	forma1 : 'assets/images/Forma1.png',
+	headerbg : 'assets/images/headerbg.png'
 }
 
 module.exports = allSvgConstants;
@@ -38941,6 +38956,9 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
     getItemUid : function(){
         return _PickFrontData.item_uid;
+    },
+    getCurrentSlot : function(){        
+        return _PickFrontData.rack_details.slot_barcodes;
     }
 
 });

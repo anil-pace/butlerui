@@ -11,7 +11,7 @@ var RackSlot = React.createClass({
 		 var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {
 				width : calculateWidth + 'vw',
-				height : calculateHeight/5.5 + "vh",
+				height : calculateHeight/4 + "vh",
 			};
 		
 		

@@ -38965,7 +38965,11 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.item_uid;
     },
     getCurrentSlot : function(){        
-        return _PickFrontData.rack_details.slot_barcodes;
+        if(_PickFrontData.hasOwnProperty('rack_details')){       
+            return _PickFrontData.rack_details.slot_barcodes;
+        }else{
+            return null;
+        }
     }
 
 });

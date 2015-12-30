@@ -71,7 +71,7 @@ var Header = React.createClass({
               <img src={allSvgConstants.logo} />
               </div>
                 <div className={cssClass} onClick={this.openKeyboard}>
-                  <span className="glyphicon glyphicon-barcode"></span>
+                  <img src={allSvgConstants.scanHeader} />
                   <input id="barcode" type="text" value='' />
                 </div>
               <div className="header-actions">

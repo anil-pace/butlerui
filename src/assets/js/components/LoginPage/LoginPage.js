@@ -52,7 +52,9 @@ var LoginPage = React.createClass({
   },
 
 	render: function(){
-var seatData;
+    var d = new Date();
+    var n = d.getFullYear();
+    var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
           seatData = this.state.seatList[0].map(function(data, index){ 
@@ -75,37 +77,40 @@ var seatData;
 		            	<div className="header-actions">
 		            	   	<img className="mapImg" src={allSvgConstants.headerbg} />
 		            	</div>
-	      			</div>
-	      			<div className="bodyContent">
+	      	</div>
+	      	<div className="bodyContent">
 	      				<div className="bodyLoginPage">
-		      				<div className="factoryImage">
-		      						<img src ={allSvgConstants.factoryImg} />
-		      				</div>
-		      				<div className="userFormLoginPage">
-		      				<form>
-							<select ref='seat_name'>
-							{seatData}
-							</select>
+		      				  <div className="factoryImage">
+		      						  <img src ={allSvgConstants.factoryImg} />
+		      				  </div>
+		      				  <div className="userFormLoginPage">
+      		      				<form>
+              							<select className="selectPPS" ref='seat_name'>
+              							   {seatData}
+              							</select>
 
-							<div className="form-group">
-								<label for="username">User Name :</label>
-	    						<input type="text" class="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
-							</div>
-							<div className="form-group">
-								<label for="password">Password :</label>
-	    						<input type="Password" class="form-control" id="username" placeholder="Enter Password" valueLink={this.linkState('password')} />
-							</div>
-							<select>
-								  <option value="volvo">Select Language</option>
-								  <option value="saab">English</option>
-								  <option value="mercedes">Chinese</option>
-								  <option value="audi">German</option>
-							</select>
-							<input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
-					</form>
-		      				</div>
+              							<div className="form-group">
+              								<label for="username">User Name :</label>
+              	    						<input type="text" class="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
+              							</div>
+              							<div className="form-group">
+              								<label for="password">Password :</label>
+              	    						<input type="Password" class="form-control" id="username" placeholder="Enter Password" valueLink={this.linkState('password')} />
+              							</div>
+              							<select className="selectLang">
+              								  <option value="volvo">Select Language</option>
+              								  <option value="saab">English</option>
+              								  <option value="mercedes">Chinese</option>
+              								  <option value="audi">German</option>
+              							</select>
+              							<input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
+      					       </form>
+		      				  </div>
 	      				</div>
-	      			</div>
+	      	  </div>
+            <div className="copyright">
+                Copyright &copy; {n} GreyOrange Pte Ltd
+            </div>
 				</div>
 			);
     }

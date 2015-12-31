@@ -10,7 +10,8 @@ var allSvgConstants = {
 	gorLogo : 'assets/images/LogoVectorSmartObject.png',
 	factoryImg : 'assets/images/factoryImage.png',
 	forma1 : 'assets/images/Forma1.png',
-	headerbg : 'assets/images/headerbg.png'
+	headerbg : 'assets/images/headerbg.png',
+	scanHeader :'assets/images/scan_header.png'
 }
 
 module.exports = allSvgConstants;

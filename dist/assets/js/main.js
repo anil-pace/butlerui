@@ -37019,7 +37019,7 @@ var Header = React.createClass({displayName: "Header",
               React.createElement("img", {src: allSvgConstants.logo})
               ), 
                 React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
-                  React.createElement("span", {className: "glyphicon glyphicon-barcode"}), 
+                  React.createElement("img", {src: allSvgConstants.scanHeader}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
               React.createElement("div", {className: "header-actions"}, 
@@ -38696,7 +38696,8 @@ var allSvgConstants = {
 	gorLogo : 'assets/images/LogoVectorSmartObject.png',
 	factoryImg : 'assets/images/factoryImage.png',
 	forma1 : 'assets/images/Forma1.png',
-	headerbg : 'assets/images/headerbg.png'
+	headerbg : 'assets/images/headerbg.png',
+	scanHeader :'assets/images/scan_header.png'
 }
 
 module.exports = allSvgConstants;
@@ -38965,7 +38966,11 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.item_uid;
     },
     getCurrentSlot : function(){        
-        return _PickFrontData.rack_details.slot_barcodes;
+        if(_PickFrontData.hasOwnProperty('rack_details')){       
+            return _PickFrontData.rack_details.slot_barcodes;
+        }else{
+            return null;
+        }
     }
 
 });

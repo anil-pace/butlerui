@@ -78,7 +78,7 @@ var PickBack = React.createClass({
       return (
         <div className="main">
           <Header />
-          <Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData}/>
+          <Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>
           {this._component}
           {this._notification}
         </div> 

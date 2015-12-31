@@ -145,7 +145,7 @@ var PickFront = React.createClass({
 	return (
 		<div className="main">
 			<Header />
-			<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} />
+			<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>
 			{this._component}
       {this._notification}
 	  </div>   

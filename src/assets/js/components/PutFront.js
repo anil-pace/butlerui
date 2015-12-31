@@ -106,7 +106,7 @@ var PutFront = React.createClass({
     return (
       <div className="main">
         <Header />
-        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} />
+        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>
         {this._component}
         {this._notification}
       </div> 

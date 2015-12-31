@@ -39,23 +39,23 @@ var Operator = React.createClass({
   getSeatType:function(seat){
      switch(seat){
       case appConstants.PUT_BACK:
-          this._currentSeat = <PutBack navMessages={this.state.navMessages}/>;
+          this._currentSeat = <PutBack navMessagesJson={this.state.navMessages}/>;
         break;
       case appConstants.PUT_FRONT:
-          this._currentSeat = <PutFront navMessages={this.state.navMessages}/>;
+          this._currentSeat = <PutFront navMessagesJson={this.state.navMessages}/>;
         break;
       case appConstants.PICK_BACK:
-          this._currentSeat = <PickBack navMessages={this.state.navMessages}/>;
+          this._currentSeat = <PickBack navMessagesJson={this.state.navMessages}/>;
         break;
       case appConstants.PICK_FRONT:
-          this._currentSeat = <PickFront navMessages={this.state.navMessages}/>;
+          this._currentSeat = <PickFront navMessagesJson={this.state.navMessages}/>;
         break;
       default:
         return true; 
       }
   },
 
-  render: function(data){ console.log(this.state.navMessages);
+  render: function(data){ 
      this.getSeatType(this.state.currentSeat);
       if(this.state.spinner === true){
        this._spinner = <Spinner />

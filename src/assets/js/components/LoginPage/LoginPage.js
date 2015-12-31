@@ -31,13 +31,13 @@ var LoginPage = React.createClass({
           }
       }
     CommonActions.login(data);
-
   },
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats(); 
+ 
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -88,12 +88,12 @@ var seatData;
 							</select>
 
 							<div className="form-group">
-								<label for="username">User Name :</label>
-	    						<input type="text" class="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
+								<label >User Name :</label>
+	    						<input type="text" className="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
 							</div>
 							<div className="form-group">
-								<label for="password">Password :</label>
-	    						<input type="Password" class="form-control" id="username" placeholder="Enter Password" valueLink={this.linkState('password')} />
+								<label >Password :</label>
+	    						<input type="Password" className="form-control" id="username" placeholder="Enter Password" valueLink={this.linkState('password')} />
 							</div>
 							<select>
 								  <option value="volvo">Select Language</option>

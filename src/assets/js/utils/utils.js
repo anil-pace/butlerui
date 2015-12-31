@@ -19,7 +19,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	        var data = JSON.parse(evt.data);
 	        putSeatData(data);
 	        CommonActions.setCurrentSeat(data.state_data);
-	        
+	        utils.getServerErrorMapping();
 	      };
 	      ws.onclose = function(){ 
 	         alert("Connection is closed..."); 
@@ -30,7 +30,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      alert("WebSocket NOT supported by your Browser!");
 	    }
 	},
-	postDataToWebsockets: function(data){ 
+	 postDataToWebsockets: function(data){ 
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
@@ -49,10 +49,20 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(jqXhr) {
                      
         });
-  	}
+  	},
+    getServerErrorMapping : function(){
+      $.ajax({
+        type: 'GET',
+        url: '/assets/js/localization/server_messages.json',
+        }).done(function(response) { 
+          CommonActions.setServerMessages(response);
+        }).fail(function(jqXhr) {
+                     
+        });
+    }
 }); 
 
-var putSeatData = function(data){ console.log(data); 
+var putSeatData = function(data){ console.log(data);
 	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
       case appConstants.PUT_BACK:
           CommonActions.setPutBackData(data.state_data);

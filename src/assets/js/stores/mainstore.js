@@ -5,19 +5,21 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent;
+var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent, _messageJson;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
   data:"",
   type:""
 };
-
 function setPopUpVisible(status){
   popupVisible = status;
   mainstore.emit(CHANGE_EVENT);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
@@ -36,11 +38,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(data){ 
+  setCurrentSeat:function(data){
     _showSpinner = false;
     _seatData = data;
     _seatName = data.seat_name;
-    _currentSeat  = data.mode + "_" + data.seat_type;
+    _currentSeat  = data.mode + "_" + data.seat_type;    
   },
   cancelScan : function(barcode){
     var data = {
@@ -113,15 +115,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   barcodeScan : function(data){
     utils.postDataToInterface(data, _seatName);
+  },
+  setServerMessages : function(data){
+    _messageJson = data;
+  },
+  getServerMessages : function(){console.log(_messageJson);
+    return _messageJson;
   }
 
 });
 
 AppDispatcher.register(function(payload){ 
-  var action = payload.action;
+  var action = payload.action; console.log(action.actionType);
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
-      utils.connectToWebSocket();
+      utils.connectToWebSocket(); 
       mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SET_CURRENT_SEAT:
@@ -162,7 +170,11 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.cancelScanAll();
        mainstore.emit(CHANGE_EVENT);
-      break;          
+      break;
+    case appConstants.SET_SERVER_MESSAGES:
+       mainstore.setServerMessages(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;                
     default:
       return true;
   }

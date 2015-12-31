@@ -132,6 +132,12 @@ var commonActions = {
       data: data
     });
   },
+  setServerMessages : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_SERVER_MESSAGES,
+      data:data
+    });
+  }
 
 };
 

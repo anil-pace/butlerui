@@ -31,13 +31,13 @@ var LoginPage = React.createClass({
           }
       }
     CommonActions.login(data);
-
   },
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats(); 
+ 
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -89,23 +89,24 @@ var LoginPage = React.createClass({
               							   {seatData}
               							</select>
 
-              							<div className="form-group">
-              								<label for="username">User Name :</label>
-              	    						<input type="text" class="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
-              							</div>
-              							<div className="form-group">
-              								<label for="password">Password :</label>
-              	    						<input type="Password" class="form-control" id="username" placeholder="Enter Password" valueLink={this.linkState('password')} />
-              							</div>
-              							<select className="selectLang">
-              								  <option value="volvo">Select Language</option>
-              								  <option value="saab">English</option>
-              								  <option value="mercedes">Chinese</option>
-              								  <option value="audi">German</option>
-              							</select>
-              							<input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
-      					       </form>
-		      				  </div>
+
+							<div className="form-group">
+								<label >User Name :</label>
+	    						<input type="text" className="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
+							</div>
+							<div className="form-group">
+								<label >Password :</label>
+	    						<input type="Password" className="form-control" id="username" placeholder="Enter Password" valueLink={this.linkState('password')} />
+							</div>
+							<select className="selectLang">
+								  <option value="volvo">Select Language</option>
+								  <option value="saab">English</option>
+								  <option value="mercedes">Chinese</option>
+								  <option value="audi">German</option>
+							</select>
+							<input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
+					</form>
+		      </div>
 	      				</div>
 	      	  </div>
             <div className="copyright">

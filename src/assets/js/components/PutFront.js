@@ -48,7 +48,7 @@ var PutFront = React.createClass({
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
-      this._notification = <Notification notification={this.state.PutFrontNotification} />
+      this._notification = <Notification notification={this.state.PutFrontNotification} navMessagesJson={this.props.navMessagesJson} />
     else
       this._notification = "";
   },

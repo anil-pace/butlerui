@@ -50,7 +50,7 @@ var PickFront = React.createClass({
   },
   getNotificationComponent:function(){
     if(this.state.PickFrontNotification != undefined)
-      this._notification = <Notification notification={this.state.PickFrontNotification} />
+      this._notification = <Notification notification={this.state.PickFrontNotification} navMessagesJson={this.props.navMessagesJson} />
     else
       this._notification = "";
   },

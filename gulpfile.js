@@ -42,7 +42,7 @@ gulp.task('copy', function(){
     .pipe(gulp.dest('dist/assets/js/vendor/'));   		
 });
 gulp.task('json', function() {
-        gulp.src('src/assets/js/serverMessages/*.json')
+        gulp.src('src/assets/js/serverMessages/server_messages.json')
         .pipe(gulp.dest('dist/assets/js/localization/'));
 });
 gulp.task('build-less', function(){

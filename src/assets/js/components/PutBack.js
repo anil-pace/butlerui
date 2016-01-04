@@ -81,7 +81,7 @@ var PutBack = React.createClass({
 
   getNotificationComponent:function(){
     if(this.state.PutBackNotification != undefined)
-      this._notification = <Notification notification={this.state.PutBackNotification} />
+      this._notification = <Notification notification={this.state.PutBackNotification} navMessagesJson={this.props.navMessagesJson}/>
     else
       this._notification = "";
   },

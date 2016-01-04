@@ -1,5 +1,7 @@
 {
     "PtB.B.001": "Scan item / Stage pps bin {0}",
+    "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
+    "PkB.A.003" : "Press PpsBin {0} to remove items",
     "Common.001": "Processing. Please wait and scan later",
     "Common.002": "Waiting for rack",
     "Common.003": "Current PPS mode does not support back seat. Please logout."

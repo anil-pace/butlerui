@@ -110,10 +110,17 @@
             padding: 0.9vh 0.8vw;
             //box-shadow: 3px 4px 6px #ccc;
             margin: 1vh 0;
-            box-shadow:2px 4px @input-box-shadow;
+            box-shadow:0 4px 5px 0px @input-box-shadow;// 2px 4px @input-box-shadow;
             font-size: 1.9rem;
             font-weight: unset;
+            border:1px solid @input-border;
+            border-radius:0px;
         }
+        .form-control:focus {
+            border-color:@input-border;
+            outline:0;
+        }
+
         .loginButton{
             background: #4caf50 none repeat scroll 0 0;
             color: #fff;

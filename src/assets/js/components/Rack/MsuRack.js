@@ -3,6 +3,29 @@ var RackRow = require('./RackRow');
 
 
 var MsuRack = React.createClass({
+
+     totalRackHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var totalHeight = 0;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][1];
+            });
+            for(var i in eachRowHeight) { 
+                totalHeight += eachRowHeight[i]; 
+            }
+               return totalHeight;
+        },
+
+        eachRowHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][1];
+            });
+            return eachRowHeight;
+        },
+
 	render: function(){
 
         var rackDetails = this.props.rackData.rack_type_rec;
@@ -26,19 +49,21 @@ var MsuRack = React.createClass({
         for (i = slotStart; i <= slotEnd; i++) {
             slotIndexList.push(i);
         };
-
-        var rackRange = selectedRackRow;
        
+        var rackRange = selectedRackRow;
+        var totalRackHeight = this.totalRackHeight(); 
+        var eachRowHeight = this.eachRowHeight();
+        
         
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)
                 return (
-                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} />
+                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} />
                     );
 
             else
                 return (
-        				<RackRow slots={row[1]} key={index} rackRange={rackRange} />
+        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} />
         			);
         	});
 
@@ -46,6 +71,7 @@ var MsuRack = React.createClass({
 		return (
 				<div className="drawRack">
 					{eachRow.reverse()}
+                    <div className="lastRow"></div>
 				</div>
 			);
 	}

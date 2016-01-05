@@ -76,6 +76,9 @@ var putSeatData = function(data){ console.log(data);
       case appConstants.PICK_FRONT: 
           CommonActions.setPickFrontData(data.state_data);
         break;
+       case appConstants.AUDIT: 
+          CommonActions.setAuditData(data.state_data);
+        break;
       default:
         return true; 
       }

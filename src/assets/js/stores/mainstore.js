@@ -97,7 +97,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           _cancelEvent = 'cancel_scan_all';
         break;
       default:
-        return true; 
+        //return true; 
     }
     return _currentSeat;
   },
@@ -117,7 +117,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatName);
   },
   setServerMessages : function(data){
-    _messageJson = data;
+    _messageJson = {
+    "PtB.B.001": "Scan item / Stage pps bin {0}",
+    "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
+    "PkB.A.003" : "Press PpsBin {0} to remove items",
+    "Common.000": "Testing configuration {0} and {1}",
+    "Common.001": "Processing. Please wait and scan later",
+    "Common.002": "Waiting for rack",
+    "Common.003": "Current PPS mode does not support back seat. Please logout."
+
+};
   },
   getServerMessages : function(){console.log(_messageJson);
     return _messageJson;

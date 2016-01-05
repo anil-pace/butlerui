@@ -1,0 +1,31 @@
+.table-row{
+	background: @bin-inactive-bck;
+	display: flex;
+	flex-flow:row;
+	color: @btn-default-bck;
+	border-bottom:1px solid @bin-staged-bck;
+	.table-col{
+		padding: 10px;
+		padding-left:20px;
+		padding-right:20px;
+		&.border-left{
+			border-left:1px solid @bin-staged-bck;
+		}
+		&.flex-grow{
+			flex-grow: 1;
+		}
+		&.selected{
+			background:@bin-selected-bck;
+			color: white;
+		}
+		&.large{
+			font-size: 2em;
+		}
+		&.small{
+			font-size: 1em;
+		}
+		&.bold{
+			font-weight: bold;
+		}
+	}
+}

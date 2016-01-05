@@ -29,7 +29,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
  
   getNavData : function () {
     _NavData = navConfig.audit;
-    navConfig.Audit.map(function(data,index){
+    navConfig.audit.map(function(data,index){
        if(_AuditData.screen_id === data.screen_id ){
           _NavData[index].type = 'active'; 
           _NavData[index].showImage = true; 

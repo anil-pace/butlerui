@@ -18,7 +18,7 @@ function getStateData(){
     };
 }
 
-function loadComponent(modalType,modalData){ console.log(modalData);
+function loadComponent(modalType,modalData){ 
   switch(modalType){
     case "product-detail":
       component = [];

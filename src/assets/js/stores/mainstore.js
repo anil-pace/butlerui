@@ -90,8 +90,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         break;
       case appConstants.PICK_BACK:
           _pptlEvent = 'secondary_button_press';
-          _cancelEvent = 'cancel_scan_tote';
-
+          _cancelEvent = 'cancel_tote_scan';
         break;
       case appConstants.PICK_FRONT:
           _pptlEvent = 'primary_button_press';
@@ -120,14 +119,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   setServerMessages : function(data){
     _messageJson = data;
   },
-  getServerMessages : function(){console.log(_messageJson);
+  getServerMessages : function(){
     return _messageJson;
   }
 
 });
 
 AppDispatcher.register(function(payload){ 
-  var action = payload.action; console.log(action.actionType);
+  var action = payload.action; 
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
       utils.connectToWebSocket(); 

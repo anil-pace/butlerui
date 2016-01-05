@@ -3,7 +3,7 @@ var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({
-    performAction:function(module,action){ console.log(module)
+    performAction:function(module,action){
         switch(module){
             case appConstants.PUT_BACK:
                 switch(action){

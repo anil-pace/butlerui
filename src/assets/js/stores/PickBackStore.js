@@ -74,6 +74,13 @@ var PickBackStore = assign({}, EventEmitter.prototype, {
 
   getScreenId:function(){
     return _PickBackData.screen_id;
+  },
+  getToteDetails: function(){
+    if(_PickBackData.hasOwnProperty('tote_details')){
+      return _PickBackData.tote_details
+    }else{
+      return null;
+    }
   }
 
 

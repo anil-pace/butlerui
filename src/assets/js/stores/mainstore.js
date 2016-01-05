@@ -90,6 +90,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         break;
       case appConstants.PICK_BACK:
           _pptlEvent = 'secondary_button_press';
+          _cancelEvent = 'cancel_scan_tote';
 
         break;
       case appConstants.PICK_FRONT:

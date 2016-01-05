@@ -68,7 +68,7 @@ var PickBack = React.createClass({
 
   getNotificationComponent:function(){
     if(this.state.PickBackNotification != undefined)
-      this._notification = <Notification notification={this.state.PickBackNotification} />
+      this._notification = <Notification notification={this.state.PickBackNotification} navMessagesJson={this.props.navMessagesJson} />
     else
       this._notification = "";
   },

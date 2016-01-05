@@ -5,13 +5,15 @@ var SingleSlot = require('./SingleSlot');
 var RackSlot = React.createClass({
 	render : function(){
 		var rackRange = this.props.rackRange;
-		slotIndexArrays = this.props.slotIndexArrays;
-		
-		var calculateWidth = 4.2*this.props.slotWidthDataLength; 
-		 var calculateHeight = this.props.slotHeightData;
+		var slotIndexArrays = this.props.slotIndexArrays;
+		var totalRackHeight = this.props.totalRackHeight;
+		var noOfRows = this.props.noOfRows;
+		console.log("totalRackHeight = " + totalRackHeight);
+		var calculateWidth = 3.8*this.props.slotWidthDataLength; 
+		//var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {
 				width : calculateWidth + 'vw',
-				height : calculateHeight/4 + "vh",
+				//height : calculateHeight/4 + "vh",
 			};
 		
 		

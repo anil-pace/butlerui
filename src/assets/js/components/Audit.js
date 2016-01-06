@@ -10,41 +10,26 @@ var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
-var TableHeader = require('./TableHeader');
-var TableRow = require('./TableRow');
+var TabularData = require('./TabularData');
+var Button1 = require('./Button/Button.js');
+var Img = require('./PrdtDetails/ProductImage.js');
+var Rack = require('./Rack/MsuRack.js');
 
 
 function getStateData(){
+  console.log(AuditStore.getBoxSerialData());
   return {
            AuditNavData : AuditStore.getNavData(),
            AuditNotification : AuditStore.getNotificationData(),
            AuditScreenId:AuditStore.getScreenId(),
-           AuditServerNavData : AuditStore.getServerNavData()
+           AuditServerNavData : AuditStore.getServerNavData(),
+           AuditBoxSerialData :AuditStore.getBoxSerialData(),
+           AuditCurrentBoxSerialData :AuditStore.getCurrentBoxSerialData(),
+           AuditLooseItemsData:AuditStore.getLooseItemsData(),
+           AuditItemDetailsData:AuditStore.getItemDetailsData(),
+           AuditRackDetails:AuditStore.getRackDetails()
 
     };
-}
-
-var rowData = {
-  cols:[
-    {
-      text:"ashish",
-      status:"enabled",
-      selected:true,
-      size:"large",
-      border:false,
-      grow:true,
-      bold:false
-    },
-    {
-      text:"ashish",
-      status:"enabled",
-      selected:false,
-      size:"large",
-      border:true,
-      grow:false,
-      bold:false
-    }
-  ]
 }
 
 
@@ -71,15 +56,19 @@ var Audit = React.createClass({
                 <Modal />
                 <div className='main-container'>
                   <div className="audit-scan-left">
-                  <TableHeader data="Box Serial Numbers"/>
-                  <TableRow data={rowData} />
+                    <Rack rackData = {this.state.AuditRackDetails} type="small"/>
+                    <TabularData data = {this.state.AuditBoxSerialData}/>
                   </div>
                   <div className="audit-scan-middle">
-                  <TableHeader data="SKU Box Serial Number"/>
-                  kumar
+                    <TabularData data = {this.state.AuditCurrentBoxSerialData}/>
+                   <TabularData data = {this.state.AuditLooseItemsData}/>
                   </div>
                   <div className="audit-scan-right">
-                  <TableHeader data="Product Details"/>
+                    <Img />
+                   <TabularData data = {this.state.AuditItemDetailsData}/>
+                   <div className = 'finish-scan'>
+                    <Button1 disabled = {false} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.FINISH_SCAN}  color={"orange"}/>
+                  </div>
                   </div>
                 </div>
               </div>

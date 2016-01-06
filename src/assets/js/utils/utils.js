@@ -59,6 +59,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(jqXhr) {
                      
         });
+    },
+    changeLanguage : function(language){ 
+      $.ajax({
+        type: 'GET',
+        url: '/assets/js/localization/'+language+'.json',
+        }).done(function(response) { 
+          _.setTranslation(response);
+          CommonActions.setLanguage(response);
+        }).fail(function(jqXhr) {
+                     
+        }); 
     }
 }); 
 
@@ -75,6 +86,9 @@ var putSeatData = function(data){ console.log(data);
         break;
       case appConstants.PICK_FRONT: 
           CommonActions.setPickFrontData(data.state_data);
+        break;
+       case appConstants.AUDIT: 
+          CommonActions.setAuditData(data.state_data);
         break;
       default:
         return true; 

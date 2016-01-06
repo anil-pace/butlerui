@@ -1,6 +1,13 @@
 var React = require('react');
 var RackRow = require('./RackRow');
 
+var drawRackStyle = {
+    flexGrow:"1",
+    flexBasis:"0",
+    width:"50%"};
+
+var lastSlot = {
+    flexBasis:"4vh"};
 
 var MsuRack = React.createClass({
 
@@ -26,8 +33,13 @@ var MsuRack = React.createClass({
             return eachRowHeight;
         },
 
-	render: function(){
+    componentDidMount:function(){
+        if(this.props.type=="small"){
 
+        }
+    },
+	render: function(){
+        var type = this.props.type;
         var rackDetails = this.props.rackData.rack_type_rec;
         var compartment_details = this.props.rackData.slot_barcodes;
         var slotStart,slotEnd,i;
@@ -58,20 +70,20 @@ var MsuRack = React.createClass({
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)
                 return (
-                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} />
+                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""}   />
                     );
 
             else
                 return (
-        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} />
+        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} />
         			);
         	});
 
 
 		return (
-				<div className="drawRack">
+				<div className="drawRack" style={this.props.type=="small" ? drawRackStyle:{} }>
 					{eachRow.reverse()}
-                    <div className="lastRow"></div>
+                    <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
 				</div>
 			);
 	}

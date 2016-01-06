@@ -97,7 +97,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           _cancelEvent = 'cancel_scan_all';
         break;
       default:
-        return true; 
+        //return true; 
     }
     return _currentSeat;
   },
@@ -121,6 +121,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getServerMessages : function(){
     return _messageJson;
+  },
+  changeLanguage : function(data){
+    utils.changeLanguage(data);
   }
 
 });
@@ -174,7 +177,14 @@ AppDispatcher.register(function(payload){
     case appConstants.SET_SERVER_MESSAGES:
        mainstore.setServerMessages(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;                
+      break;
+    case appConstants.CHANGE_LANGUAGE:
+       mainstore.changeLanguage(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break; 
+    case appConstants.SET_LANGUAGE:
+       mainstore.emit(CHANGE_EVENT);
+      break;                    
     default:
       return true;
   }

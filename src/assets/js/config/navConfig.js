@@ -89,6 +89,23 @@ var navData = {
         "showImage": true,
         "level": 2,
         "type": 'passive'
+    }],
+    "audit": [ {
+        "screen_id": "audit_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan Items ",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    },{
+        "screen_id": "audit_status",
+        "code": "Common.000",
+        "image": svgConstants.place,
+        "message": "Status",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
     }]
 
 };

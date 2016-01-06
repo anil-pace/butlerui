@@ -1,0 +1,44 @@
+.table-row {
+    background: @msu-slots-border;
+    display: flex;
+    flex-flow: row;
+    color: @btn-default-bck;
+    border-bottom: 1px solid #bcbcbc;
+    .table-col {
+        padding: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        color: #1a252d;
+        min-width: 20%;
+        justify-content: center;
+        &.border-left {
+            border-left: 1px solid @bin-staged-bck;
+        }
+        &.flex-grow {
+            flex-grow: 1;
+            flex-basis:0;
+        }
+        &.selected {
+            background: @bin-selected-bck;
+            color: white;
+        }
+        &.large {
+            font-size: 2em;
+        }
+        &.small {
+            font-size: 1.5em;
+        }
+        &.bold {
+            font-weight: bold;
+        }
+        &.disabled {
+            color: #979c9f;
+        }
+        &.heading {
+            color: @passive-nav-bck;
+        }
+        &.center-align {
+            text-align: center;
+        }
+    }
+}

@@ -26,6 +26,16 @@ var ProductDetails = React.createClass({
             <div className="productTableInfo">
 				<ProductImage srcURL={prodDetails[0].product_info.product_local_image_url} details = {prodDetails[0].product_info.product_description} />
 				<ProductInfo infoDetails = {obj} />
+                <div className="productHeader">
+                    {this.prop.details}
+                </div>
+				<div className="table-wrapper">
+					<table className="table">									
+						<tbody>
+							<ProductInfo infoDetails = {obj} />
+						</tbody>
+					</table>
+				</div>
 			</div>
         );
     }

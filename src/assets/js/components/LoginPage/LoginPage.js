@@ -50,6 +50,9 @@ var LoginPage = React.createClass({
     });
 
   },
+  changeLanguage : function(){
+    CommonActions.changeLanguage(this.refs.language.value);
+  },
 
 	render: function(){
     var d = new Date();
@@ -98,11 +101,9 @@ var LoginPage = React.createClass({
 								<label >Password :</label>
 	    						<input type="Password" className="form-control" id="username" placeholder="Enter Password" valueLink={this.linkState('password')} />
 							</div>
-							<select className="selectLang">
-								  <option value="volvo">Select Language</option>
-								  <option value="saab">English</option>
-								  <option value="mercedes">Chinese</option>
-								  <option value="audi">German</option>
+							<select className="selectLang" ref='language' onChange={this.changeLanguage}>
+								  <option value="english">English</option>
+								  <option value="chinese">Chinese</option>
 							</select>
 							<input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
 					</form>

@@ -137,6 +137,18 @@ var commonActions = {
       actionType: appConstants.SET_SERVER_MESSAGES,
       data:data
     });
+  },
+  changeLanguage: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_LANGUAGE,
+      data:data
+    }); 
+  },
+  setLanguage: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_LANGUAGE,
+      data:data
+    }); 
   }
 
 };

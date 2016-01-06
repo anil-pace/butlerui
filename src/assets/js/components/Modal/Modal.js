@@ -2,7 +2,8 @@ var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
 var ModalFooter = require('./ModalFooter');
-
+var Button1 = require("../Button/Button");
+var appConstants = require('../../constants/appConstants');
 var bootstrap = require('bootstrap');
 
 var component,title;
@@ -17,7 +18,7 @@ function getStateData(){
     };
 }
 
-function loadComponent(modalType,modalData){
+function loadComponent(modalType,modalData){ 
   switch(modalType){
     case "product-detail":
       component = [];
@@ -44,6 +45,13 @@ function loadComponent(modalType,modalData){
       })
       title = "Bin Info";
       break;
+    case "scan_bin_barcode":
+      component = [];
+      component.push((<div><div className="col-md-12 heading">Scan Bin Barcode</div> <div className = 'cancel-scan'><Button1 disabled = {false} text = {"Cancel"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN} barcode={modalData.tote_barcode} color={"black"}/> </div></div>));
+      
+      
+      title = "Associate tote with bin";
+      break;  
     default:
       component = null;
       title = null;
@@ -53,10 +61,10 @@ function loadComponent(modalType,modalData){
 
 var Modal = React.createClass({
   componentDidMount:function(){
-    $(".modal").click(function(e){
+    /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });
+    });*/
   },
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);

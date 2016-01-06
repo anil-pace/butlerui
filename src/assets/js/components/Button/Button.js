@@ -38,11 +38,20 @@ var Button1 = React.createClass({
                         return true; 
                 }
             break;
+            case appConstants.PICK_BACK:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScan(this.props.barcode);
+                        break;    
+                     default:
+                        return true; 
+                }
+            break;
              default:
                 return true; 
         }
     },
-    render: function() {
+    render: function() { 
         if(this.props.disabled == false)
             return (
                 <a className={this.props.color == "orange"? "custom-button orange" : "custom-button black"} onClick={this.performAction.bind(this,this.props.module,this.props.action)}>{this.props.text}</a>

@@ -10,6 +10,7 @@ var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
+var CommonActions = require('../actions/CommonActions');
 
 
 function getStateData(){
@@ -18,7 +19,8 @@ function getStateData(){
            PickBackNotification : PickBackStore.getNotificationData(),
            PickBackBinData: PickBackStore.getBinData(),
            PickBackScreenId:PickBackStore.getScreenId(),
-           PickBackServerNavData : PickBackStore.getServerNavData()
+           PickBackServerNavData : PickBackStore.getServerNavData(),
+           PickBackToteDetails : PickBackStore.getToteDetails()
 
     };
 }
@@ -30,13 +32,19 @@ var PickBack = React.createClass({
     return getStateData();
   },
   componentWillMount: function(){
+    if(this.state.PickBackToteDetails != null){
+        this.showModal(this.state.PickBackToteDetails)
+    }
     PickBackStore.addChangeListener(this.onChange);
   },
-  componentWillUnmount: function(){
+  componentWillUnmount: function(){ console.log('test');
     PickBackStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
     this.setState(getStateData());
+    if(this.state.PickBackToteDetails != null){
+        this.showModal(this.state.PickBackToteDetails)
+    }
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -65,7 +73,19 @@ var PickBack = React.createClass({
         return true; 
     }
   },
-
+  showModal: function(data) { 
+    if(data.tote_status === true){ 
+      setTimeout((function(){CommonActions.showModal({
+              data:data,
+              type:'scan_bin_barcode'
+      });
+      $('.modal').modal();
+      return false;
+      }),0)
+    }else{ 
+      $('.modal').modal('hide');
+    }
+  },
   getNotificationComponent:function(){
     if(this.state.PickBackNotification != undefined)
       this._notification = <Notification notification={this.state.PickBackNotification} navMessagesJson={this.props.navMessagesJson} />

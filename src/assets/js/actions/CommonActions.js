@@ -67,6 +67,13 @@ var commonActions = {
     })
   },
 
+  setAuditData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_AUDIT_DATA,
+      data:data
+    })
+  },
+
   kq_operation : function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.KQ_OPERATION, 

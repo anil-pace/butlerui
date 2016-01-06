@@ -97,7 +97,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           _cancelEvent = 'cancel_scan_all';
         break;
       default:
-        return true; 
+        //return true; 
     }
     return _currentSeat;
   },

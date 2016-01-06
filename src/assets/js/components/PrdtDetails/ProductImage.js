@@ -8,9 +8,6 @@ var ProductImage = React.createClass({
 		return(
 			<div className="productImage">
 				<img className="img-responsive" src={srcURL} />
-				<div className="productHeader">
-					{details}
-				</div>
 			</div>
 			);
 	}

@@ -59,6 +59,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(jqXhr) {
                      
         });
+    },
+    changeLanguage : function(language){ 
+      $.ajax({
+        type: 'GET',
+        url: '/assets/js/localization/'+language+'.json',
+        }).done(function(response) { 
+          _.setTranslation(response);
+          CommonActions.setLanguage(response);
+        }).fail(function(jqXhr) {
+                     
+        }); 
     }
 }); 
 

@@ -44,6 +44,8 @@ gulp.task('copy', function(){
 gulp.task('json', function() {
         gulp.src('src/assets/js/serverMessages/server_messages.json')
         .pipe(gulp.dest('dist/assets/js/localization/'));
+        gulp.src('src/assets/js/utils/vendor/i18n/*.json')
+        .pipe(gulp.dest('dist/assets/js/localization/'));  
 });
 gulp.task('build-less', function(){
     return gulp.src('src/assets/css/styles.less')

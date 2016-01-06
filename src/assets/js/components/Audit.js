@@ -60,8 +60,8 @@ var Audit = React.createClass({
                     <TabularData data = {this.state.AuditBoxSerialData}/>
                   </div>
                   <div className="audit-scan-middle">
-                    <TabularData data = {this.state.AuditCurrentBoxSerialData}/>
-                   <TabularData data = {this.state.AuditLooseItemsData}/>
+                    <TabularData data = {this.state.AuditCurrentBoxSerialData} size="double"/>
+                   <TabularData data = {this.state.AuditLooseItemsData} size="triple"/>
                   </div>
                   <div className="audit-scan-right">
                     <Img />

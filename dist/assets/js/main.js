@@ -36698,8 +36698,8 @@ var Audit = React.createClass({displayName: "Audit",
                     React.createElement(TabularData, {data: this.state.AuditBoxSerialData})
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
-                    React.createElement(TabularData, {data: this.state.AuditCurrentBoxSerialData}), 
-                   React.createElement(TabularData, {data: this.state.AuditLooseItemsData})
+                    React.createElement(TabularData, {data: this.state.AuditCurrentBoxSerialData, size: "double"}), 
+                   React.createElement(TabularData, {data: this.state.AuditLooseItemsData, size: "triple"})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
                     React.createElement(Img, null), 
@@ -38869,8 +38869,11 @@ var TabularData = React.createClass({displayName: "TabularData",
     },
     render: function() {
     	this.getTableRows();
+        var classes = "tabular-data ";
+        var size = this.props.size=="double"?classes = classes + "double ":"";
+        var size = this.props.size=="triple"?classes = classes + "triple ":"";
         return (
-            React.createElement("div", {className: "tabular-data"}, 
+            React.createElement("div", {className: classes}, 
                 React.createElement(TableHeader, {data: this.props.data.header}), 
                 this._tableRows
       		)

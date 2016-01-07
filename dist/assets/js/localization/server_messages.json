@@ -1,8 +1,4 @@
 {
-
-    "PtB.B.001": "Scan item / Stage pps bin {0}",
-    "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
-    "PkB.A.003" : "Press PpsBin {0} to remove items",
     "PtB.B.001": "Scan item / Stage pps bin",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",

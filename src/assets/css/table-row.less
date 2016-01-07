@@ -11,6 +11,9 @@
         color: #1a252d;
         min-width: 20%;
         justify-content: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &.border-left {
             border-left: 1px solid @bin-staged-bck;
         }
@@ -39,6 +42,9 @@
         }
         &.center-align {
             text-align: center;
+        }
+        &.complete{
+            color: green;
         }
     }
 }

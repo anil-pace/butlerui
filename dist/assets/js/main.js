@@ -36652,6 +36652,7 @@ var TabularData = require('./TabularData');
 var Button1 = require('./Button/Button.js');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Rack = require('./Rack/MsuRack.js');
+var Spinner = require("./Spinner/LoaderButler");
 
 
 function getStateData(){
@@ -36665,7 +36666,8 @@ function getStateData(){
            AuditCurrentBoxSerialData :AuditStore.getCurrentBoxSerialData(),
            AuditLooseItemsData:AuditStore.getLooseItemsData(),
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
-           AuditRackDetails:AuditStore.getRackDetails()
+           AuditRackDetails:AuditStore.getRackDetails(),
+           AuditCancelScanStatus:AuditStore.getCancelScanStatus()
 
     };
 }
@@ -36674,6 +36676,7 @@ function getStateData(){
 var Audit = React.createClass({displayName: "Audit",
   _component:'',
   _notification:'',
+  _cancelStatus:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -36688,6 +36691,15 @@ var Audit = React.createClass({displayName: "Audit",
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
+      case appConstants.AUDIT_WAITING_FOR_MSU:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                 React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Spinner, null)
+                 )
+              )
+            );
+        break;
       case appConstants.AUDIT_SCAN:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
@@ -36726,7 +36738,15 @@ var Audit = React.createClass({displayName: "Audit",
         return true; 
     }
   },
-
+  getCancelStatus:function(){
+    if(this.state.AuditCancelScanStatus == true){
+      this._cancelStatus = (
+        React.createElement("div", {className: "cancel-scan"}, 
+            React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+        )
+      );
+    }
+  },
   getNotificationComponent:function(){
     if(this.state.AuditNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
@@ -36735,13 +36755,15 @@ var Audit = React.createClass({displayName: "Audit",
   },
   render: function(data){
     this.getNotificationComponent();
+    this.getCancelStatus();
     this.getScreenComponent(this.state.AuditScreenId);
       return (
         React.createElement("div", {className: "main"}, 
           React.createElement(Header, null), 
           React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}), 
           this._component, 
-          this._notification
+          this._notification, 
+          this._cancelStatus
         ) 
        
       )
@@ -36750,7 +36772,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../constants/appConstants":273,"../stores/AuditStore":279,"./Bins/Bins.react":236,"./Button/Button":238,"./Button/Button.js":238,"./Header":240,"./Modal/Modal":242,"./Navigation/Navigation.react":246,"./Notification/Notification":248,"./PrdtDetails/ProductImage.js":253,"./ProductDetails/Wrapper":258,"./Rack/MsuRack.js":261,"./SystemIdle":268,"./TabularData":271,"react":230}],235:[function(require,module,exports){
+},{"../constants/appConstants":273,"../stores/AuditStore":279,"./Bins/Bins.react":236,"./Button/Button":238,"./Button/Button.js":238,"./Header":240,"./Modal/Modal":242,"./Navigation/Navigation.react":246,"./Notification/Notification":248,"./PrdtDetails/ProductImage.js":253,"./ProductDetails/Wrapper":258,"./Rack/MsuRack.js":261,"./Spinner/LoaderButler":265,"./SystemIdle":268,"./TabularData":271,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -38837,6 +38859,7 @@ var TableRow = React.createClass({displayName: "TableRow",
     		var bold = value.bold == true ? classes = classes + "bold ":"";
     		var disabled = value.disabled == true ? classes = classes + "disabled ":"";
     		var center = value.centerAlign == true ? classes = classes + "center-align ":"";
+            var complete = value.status == "complete" ? classes = classes + "complete ":"";
     		comp.push((React.createElement("div", {className: classes}, value.text)));
     	});
     	this._component = comp;
@@ -38976,7 +38999,16 @@ var navData = {
         "level": 2,
         "type": 'passive'
     }],
-    "audit": [ {
+    "audit": [
+        [{
+            "screen_id": "pick_front_waiting_for_msu",
+            "code": "Common.000",
+            "message": "Wait For MSU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [ {
         "screen_id": "audit_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
@@ -38993,6 +39025,7 @@ var navData = {
         "level": 2,
         "type": 'passive'
     }]
+    ]
 
 };
 
@@ -39044,10 +39077,11 @@ var appConstants = {
 	EDIT_DETAILS:"EDIT_DETAILS",
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
-	AUDIT:"audit_audit",
+	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",
 	AUDIT_STATUS:"audit_status",
+	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
 	BARCODE_SCAN : 'BARCODE_SCAN',
 	GET_SERVER_MESSAGES :'GET_SERVER_MESSAGES',
 	SET_SERVER_MESSAGES : 'SET_SERVER_MESSAGES',
@@ -39169,19 +39203,21 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
 
     getNavData: function() {
-        _NavData = navConfig.audit;
-        navConfig.audit.map(function(data, index) {
-            if (_AuditData.screen_id === data.screen_id) {
-                _NavData[index].type = 'active';
-                _NavData[index].showImage = true;
-            } else {
-                _NavData[index].type = 'passive';
-                _NavData[index].showImage = false;
-            }
-        });
+        if (_AuditData.screen_id === AppConstants.AUDIT_WAITING_FOR_MSU) {
+            _NavData = navConfig.audit[0];
+            _NavData[0].type = 'active';
+        } else {
+            _NavData = navConfig.audit[1];
+            _NavData.map(function(data, index) { 
+                if (_AuditData.screen_id === data.screen_id) {console.log(_AuditData);
+                    _NavData[index].type = 'active';
+                }else{
+                     _NavData[index].type = 'passive';
+                }
+            });
+        }
         return _NavData;
     },
-
 
     getServerNavData: function() {
         if (_AuditData.header_msge_list.length > 0) {
@@ -39209,32 +39245,50 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         var data = {};
         data["header"] = "Box Serial Numbers";
         data["tableRows"] = [];
-        data["tableRows"].push([new this.tableCol("1.9845012AA", "enabled", false, "large", false, true, false, false)]);
-        data["tableRows"].push([new this.tableCol("2.9845012AC", "enabled", false, "large", false, true, false, false)]);
-        data["tableRows"].push([new this.tableCol("3.9845012AB", "enabled", false, "large", false, true, false, false)]);
-
+        var self = this;
+        _AuditData.Box_qty_list.map(function(value, index) {
+            if(value.Scan_status != "close")
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", value.Scan_status == "open", "large", false, true, false, false)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false),new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )" , "complete", value.Scan_status == "open", "large", false, false, false, false)]);
+        });
         return data;
-
     },
 
     getCurrentBoxSerialData: function() {
         var data = {};
         data["header"] = "SKU Box Serial Number";
         data["tableRows"] = [];
+        var self = this;
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Finish", "enabled", false, "small", true, false, true, false, true)]);
-        data["tableRows"].push([new this.tableCol("8545012AA", "enabled", false, "large", false, true, false, true), new this.tableCol("1", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true)]);
+        if (_AuditData.Current_box_details.length > 0) {
+            _AuditData.Current_box_details.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true)]);
+            });
+        } else {
+            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true)]);
+        }
 
         return data;
     },
 
+    getCancelScanStatus:function(){
+        return _AuditData.Cancel_scan;
+    },
+
     getLooseItemsData: function() {
         var data = {};
+        var disabledStatus;
+        if (_AuditData.Current_box_details.length > 0){
+            disabledStatus = true;
+        }
         data["header"] = "Loose Items";
         data["tableRows"] = [];
+        var self = this;
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true)]);
-        data["tableRows"].push([new this.tableCol("8545012AA", "enabled", false, "large", false, true, false, false), new this.tableCol("1", "enabled", false, "large", true, false, false, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, false, true)]);
-        data["tableRows"].push([new this.tableCol("8545012AA", "enabled", false, "large", false, true, false, false), new this.tableCol("0", "enabled", false, "large", true, false, false, false, true), new this.tableCol("1", "enabled", false, "large", true, false, false, false, true)]);
-
+        _AuditData.Loose_sku_list.map(function(value, index) {
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true), new self.tableCol(value.Actual_qty, "enabled", false, "large", true, false, false, disabledStatus, true)]);
+        });
         return data;
     },
 

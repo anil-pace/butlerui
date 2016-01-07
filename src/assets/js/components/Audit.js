@@ -14,6 +14,7 @@ var TabularData = require('./TabularData');
 var Button1 = require('./Button/Button.js');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Rack = require('./Rack/MsuRack.js');
+var Spinner = require("./Spinner/LoaderButler");
 
 
 function getStateData(){
@@ -27,7 +28,8 @@ function getStateData(){
            AuditCurrentBoxSerialData :AuditStore.getCurrentBoxSerialData(),
            AuditLooseItemsData:AuditStore.getLooseItemsData(),
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
-           AuditRackDetails:AuditStore.getRackDetails()
+           AuditRackDetails:AuditStore.getRackDetails(),
+           AuditCancelScanStatus:AuditStore.getCancelScanStatus()
 
     };
 }
@@ -36,6 +38,7 @@ function getStateData(){
 var Audit = React.createClass({
   _component:'',
   _notification:'',
+  _cancelStatus:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -50,6 +53,15 @@ var Audit = React.createClass({
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
+      case appConstants.AUDIT_WAITING_FOR_MSU:
+          this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                    <Spinner />
+                 </div>
+              </div>
+            );
+        break;
       case appConstants.AUDIT_SCAN:
           this._component = (
               <div className='grid-container'>
@@ -88,7 +100,15 @@ var Audit = React.createClass({
         return true; 
     }
   },
-
+  getCancelStatus:function(){
+    if(this.state.AuditCancelScanStatus == true){
+      this._cancelStatus = (
+        <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+        </div>
+      );
+    }
+  },
   getNotificationComponent:function(){
     if(this.state.AuditNotification != undefined)
       this._notification = <Notification notification={this.state.AuditNotification} navMessagesJson={this.props.navMessagesJson} />
@@ -97,6 +117,7 @@ var Audit = React.createClass({
   },
   render: function(data){
     this.getNotificationComponent();
+    this.getCancelStatus();
     this.getScreenComponent(this.state.AuditScreenId);
       return (
         <div className="main">
@@ -104,6 +125,7 @@ var Audit = React.createClass({
           <Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>
           {this._component}
           {this._notification}
+          {this._cancelStatus}
         </div> 
        
       )

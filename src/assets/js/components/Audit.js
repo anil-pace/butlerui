@@ -25,8 +25,10 @@ function getStateData(){
            AuditScreenId:AuditStore.getScreenId(),
            AuditServerNavData : AuditStore.getServerNavData(),
            AuditBoxSerialData :AuditStore.getBoxSerialData(),
+           AuditReconcileBoxSerialData :AuditStore.getReconcileBoxSerialData(),
            AuditCurrentBoxSerialData :AuditStore.getCurrentBoxSerialData(),
            AuditLooseItemsData:AuditStore.getLooseItemsData(),
+           AuditReconcileLooseItemsData:AuditStore.getReconcileLooseItemsData(),
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
            AuditRackDetails:AuditStore.getRackDetails(),
            AuditCancelScanStatus:AuditStore.getCancelScanStatus()
@@ -65,7 +67,6 @@ var Audit = React.createClass({
       case appConstants.AUDIT_SCAN:
           this._component = (
               <div className='grid-container'>
-                <Modal />
                 <div className='main-container'>
                   <div className="audit-scan-left">
                     <Rack rackData = {this.state.AuditRackDetails} type="small"/>
@@ -87,11 +88,20 @@ var Audit = React.createClass({
             );
 
         break;
-      case appConstants.AUDIT_STATUS:
+      case appConstants.AUDIT_RECONCILE:
           this._component = (
               <div className='grid-container'>
-                <Modal />
                 <div className='main-container'>
+                  <div className="audit-reconcile-left">
+                    <TabularData data = {this.state.AuditReconcileBoxSerialData}/>
+                  </div>
+                  <div className="audit-reconcile-right">
+                   <TabularData data = {this.state.AuditReconcileLooseItemsData} size="triple"/>
+                  </div>
+                </div>
+                 <div className = 'staging-action' >
+                  <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.AUDIT_BACK} color={"black"}/>
+                  <Button1 disabled = {false} text = {"OK"} module ={appConstants.AUDIT} action={appConstants.AUDIT_OK} color={"orange"} />  
                 </div>
               </div>
             );

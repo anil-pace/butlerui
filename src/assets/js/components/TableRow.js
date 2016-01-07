@@ -14,6 +14,8 @@ var TableRow = React.createClass({
     		var disabled = value.disabled == true ? classes = classes + "disabled ":"";
     		var center = value.centerAlign == true ? classes = classes + "center-align ":"";
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
+            var missing = value.status == "missing" ? classes = classes + "missing ":"";
+            var extra = value.status == "extra" ? classes = classes + "extra ":"";
     		comp.push((<div className={classes}>{value.text}</div>));
     	});
     	this._component = comp;

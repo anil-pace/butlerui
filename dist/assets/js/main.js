@@ -36663,8 +36663,10 @@ function getStateData(){
            AuditScreenId:AuditStore.getScreenId(),
            AuditServerNavData : AuditStore.getServerNavData(),
            AuditBoxSerialData :AuditStore.getBoxSerialData(),
+           AuditReconcileBoxSerialData :AuditStore.getReconcileBoxSerialData(),
            AuditCurrentBoxSerialData :AuditStore.getCurrentBoxSerialData(),
            AuditLooseItemsData:AuditStore.getLooseItemsData(),
+           AuditReconcileLooseItemsData:AuditStore.getReconcileLooseItemsData(),
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
            AuditRackDetails:AuditStore.getRackDetails(),
            AuditCancelScanStatus:AuditStore.getCancelScanStatus()
@@ -36703,7 +36705,6 @@ var Audit = React.createClass({displayName: "Audit",
       case appConstants.AUDIT_SCAN:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
                     React.createElement(Rack, {rackData: this.state.AuditRackDetails, type: "small"}), 
@@ -36725,11 +36726,20 @@ var Audit = React.createClass({displayName: "Audit",
             );
 
         break;
-      case appConstants.AUDIT_STATUS:
+      case appConstants.AUDIT_RECONCILE:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                React.createElement("div", {className: "main-container"}
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement("div", {className: "audit-reconcile-left"}, 
+                    React.createElement(TabularData, {data: this.state.AuditReconcileBoxSerialData})
+                  ), 
+                  React.createElement("div", {className: "audit-reconcile-right"}, 
+                   React.createElement(TabularData, {data: this.state.AuditReconcileLooseItemsData, size: "triple"})
+                  )
+                ), 
+                 React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "Back", module: appConstants.AUDIT, action: appConstants.AUDIT_BACK, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "OK", module: appConstants.AUDIT, action: appConstants.AUDIT_OK, color: "orange"})
                 )
               )
             );
@@ -38860,6 +38870,8 @@ var TableRow = React.createClass({displayName: "TableRow",
     		var disabled = value.disabled == true ? classes = classes + "disabled ":"";
     		var center = value.centerAlign == true ? classes = classes + "center-align ":"";
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
+            var missing = value.status == "missing" ? classes = classes + "missing ":"";
+            var extra = value.status == "extra" ? classes = classes + "extra ":"";
     		comp.push((React.createElement("div", {className: classes}, value.text)));
     	});
     	this._component = comp;
@@ -39017,7 +39029,7 @@ var navData = {
         "level": 1,
         "type": 'passive'
     },{
-        "screen_id": "audit_status",
+        "screen_id": "audit_reconcile",
         "code": "Common.000",
         "image": svgConstants.place,
         "message": "Status",
@@ -39080,7 +39092,7 @@ var appConstants = {
 	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",
-	AUDIT_STATUS:"audit_status",
+	AUDIT_RECONCILE:"audit_reconcile",
 	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
 	BARCODE_SCAN : 'BARCODE_SCAN',
 	GET_SERVER_MESSAGES :'GET_SERVER_MESSAGES',
@@ -39252,6 +39264,9 @@ var AuditStore = assign({}, EventEmitter.prototype, {
             else
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false),new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )" , "complete", value.Scan_status == "open", "large", false, false, false, false)]);
         });
+        _AuditData.Extra_box_list.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false)]);
+        });
         return data;
     },
 
@@ -39274,6 +39289,43 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getCancelScanStatus:function(){
         return _AuditData.Cancel_scan;
+    },
+
+
+    getReconcileBoxSerialData:function(){
+        var data = {};
+        data["header"] = "Box Serial Numbers";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("Box Serial", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+        _AuditData.Box_qty_list.map(function(value, index) {
+            if(value.Scan_status !="no_scan")
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty-value.Actual_qty,0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty-value.Expected_qty,0), "enabled", false, "large", true, false, false, false, true)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+
+        });
+        _AuditData.Extra_box_list.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false), new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)]);
+        });
+
+        return data;
+    },
+
+    getReconcileLooseItemsData:function(){
+         var data = {};
+        data["header"] = "Loose Items";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+        _AuditData.Loose_sku_list.map(function(value, index) {
+            if(value.Scan_status !="no_scan")
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty-value.Actual_qty,0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty-value.Expected_qty,0), "enabled", false, "large", true, false, false, false, true)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+
+        });
+        return data;
     },
 
     getLooseItemsData: function() {

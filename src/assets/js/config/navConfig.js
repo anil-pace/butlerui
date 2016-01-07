@@ -108,7 +108,7 @@ var navData = {
         "level": 1,
         "type": 'passive'
     },{
-        "screen_id": "audit_status",
+        "screen_id": "audit_reconcile",
         "code": "Common.000",
         "image": svgConstants.place,
         "message": "Status",

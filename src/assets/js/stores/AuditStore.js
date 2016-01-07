@@ -76,6 +76,9 @@ var AuditStore = assign({}, EventEmitter.prototype, {
             else
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false),new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )" , "complete", value.Scan_status == "open", "large", false, false, false, false)]);
         });
+        _AuditData.Extra_box_list.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false)]);
+        });
         return data;
     },
 
@@ -98,6 +101,43 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getCancelScanStatus:function(){
         return _AuditData.Cancel_scan;
+    },
+
+
+    getReconcileBoxSerialData:function(){
+        var data = {};
+        data["header"] = "Box Serial Numbers";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("Box Serial", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+        _AuditData.Box_qty_list.map(function(value, index) {
+            if(value.Scan_status !="no_scan")
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty-value.Actual_qty,0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty-value.Expected_qty,0), "enabled", false, "large", true, false, false, false, true)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+
+        });
+        _AuditData.Extra_box_list.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false), new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)]);
+        });
+
+        return data;
+    },
+
+    getReconcileLooseItemsData:function(){
+         var data = {};
+        data["header"] = "Loose Items";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+        _AuditData.Loose_sku_list.map(function(value, index) {
+            if(value.Scan_status !="no_scan")
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty-value.Actual_qty,0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty-value.Expected_qty,0), "enabled", false, "large", true, false, false, false, true)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+
+        });
+        return data;
     },
 
     getLooseItemsData: function() {

@@ -53,7 +53,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign ,type , buttonType) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -63,6 +63,8 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         this.bold = bold;
         this.disabled = disabled;
         this.centerAlign = centerAlign;
+        this.type = type;
+        this.buttonType = buttonType;
     },
 
     getBoxSerialData: function() {
@@ -90,10 +92,10 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Finish", "enabled", false, "small", true, false, true, false, true)]);
         if (_AuditData.Current_box_details.length > 0) {
             _AuditData.Current_box_details.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true)]);
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true,"button","finish")]);
             });
         } else {
-            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true)]);
+            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)]);
         }
 
         return data;

@@ -12,14 +12,13 @@ var IconButton = React.createClass({
         }
     },
     render: function() { 
-        if(this.props.disabled == false)
             return (
-                <a className={this.props.color == "orange"? "custom-button orange" : "custom-button black"} onClick={this.performAction.bind(this,this.props.module,this.props.action)}>{this.props.text}</a>
-            );        
-        else
-            return (
-                <a className={this.props.color == "orange"? "custom-button disabled orange" : "custom-button disabled black"}>{this.props.text}</a>
-            );        
+                <div className="success-icon" onClick={this.performAction.bind(this,this.props.module,this.props.action)}>
+                        <div className="border-glyp">
+                            <span className="glyphicon glyphicon-ok"></span>
+                        </div>
+                </div>
+            );           
     }
 });
 

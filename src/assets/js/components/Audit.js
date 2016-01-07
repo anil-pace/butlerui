@@ -90,7 +90,7 @@ var Audit = React.createClass({
         break;
       case appConstants.AUDIT_RECONCILE:
           this._component = (
-              <div className='grid-container'>
+              <div className='grid-container audit-reconcilation'>
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
                     <TabularData data = {this.state.AuditReconcileBoxSerialData}/>

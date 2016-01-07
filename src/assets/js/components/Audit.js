@@ -14,6 +14,7 @@ var TabularData = require('./TabularData');
 var Button1 = require('./Button/Button.js');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Rack = require('./Rack/MsuRack.js');
+var Reconcile = require('./Reconcile.js');
 
 
 function getStateData(){
@@ -102,8 +103,8 @@ var Audit = React.createClass({
         <div className="main">
           <Header />
           <Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>
-          {this._component}
-          {this._notification}
+            {this._component}
+            {this._notification}          
         </div> 
        
       )

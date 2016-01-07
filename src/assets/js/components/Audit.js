@@ -66,6 +66,13 @@ var Audit = React.createClass({
             );
         break;
       case appConstants.AUDIT_SCAN:
+          if(this.state.AuditCancelScanStatus == true){
+            this._cancelStatus = (
+              <div className = 'cancel-scan'>
+                <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+              </div>
+            );
+          }
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
@@ -85,6 +92,7 @@ var Audit = React.createClass({
                   </div>
                   </div>
                 </div>
+                {this._cancelStatus}
               </div>
             );
 
@@ -122,15 +130,6 @@ var Audit = React.createClass({
         return true; 
     }
   },
-  getCancelStatus:function(){
-    if(this.state.AuditCancelScanStatus == true){
-      this._cancelStatus = (
-        <div className = 'cancel-scan'>
-            <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
-        </div>
-      );
-    }
-  },
   getNotificationComponent:function(){
     if(this.state.AuditNotification != undefined)
       this._notification = <Notification notification={this.state.AuditNotification} navMessagesJson={this.props.navMessagesJson} />
@@ -139,7 +138,6 @@ var Audit = React.createClass({
   },
   render: function(data){
     this.getNotificationComponent();
-    this.getCancelStatus();
     this.getScreenComponent(this.state.AuditScreenId);
       return (
         <div className="main">

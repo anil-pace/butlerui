@@ -36704,6 +36704,13 @@ var Audit = React.createClass({displayName: "Audit",
             );
         break;
       case appConstants.AUDIT_SCAN:
+          if(this.state.AuditCancelScanStatus == true){
+            this._cancelStatus = (
+              React.createElement("div", {className: "cancel-scan"}, 
+                React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+              )
+            );
+          }
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
@@ -36722,7 +36729,8 @@ var Audit = React.createClass({displayName: "Audit",
                     React.createElement(Button1, {disabled: false, text: "Finish", module: appConstants.AUDIT, action: appConstants.FINISH_SCAN, color: "orange"})
                   )
                   )
-                )
+                ), 
+                this._cancelStatus
               )
             );
 
@@ -36760,15 +36768,6 @@ var Audit = React.createClass({displayName: "Audit",
         return true; 
     }
   },
-  getCancelStatus:function(){
-    if(this.state.AuditCancelScanStatus == true){
-      this._cancelStatus = (
-        React.createElement("div", {className: "cancel-scan"}, 
-            React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
-        )
-      );
-    }
-  },
   getNotificationComponent:function(){
     if(this.state.AuditNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
@@ -36777,7 +36776,6 @@ var Audit = React.createClass({displayName: "Audit",
   },
   render: function(data){
     this.getNotificationComponent();
-    this.getCancelStatus();
     this.getScreenComponent(this.state.AuditScreenId);
       return (
         React.createElement("div", {className: "main"}, 

@@ -546,229 +546,133 @@
 
 
 
+
 {
-    "state_data": {
-        "seat_name": "front_20",
-        "screen_id": "audit_scan",
-        "screen_version": "1",
-        "notification_list": [{
-            "details": [],
-            "code": "Common.001",
-            "description": "Processing. Please wait and scan later",
-            "level": "error"
-        }],
-        "logout_allowed": "false",
-        "rack_details":  {
-            "rack_type_rec": [
-                ["A", [
-                    [
-                        ["01", "02"], 44, 48
-                    ],
-                    [
-                        ["03", "04"], 44, 48
-                    ],
-                    [
-                        ["05", "06"], 44, 48
-                    ]
-                ]],
-                ["B", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]],
-                ["C", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ]
-                ]],
-                ["D", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]],
-                ["E", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]],
-                ["F", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]]
-            ],
-            "slot_barcodes": ["128.1.B.05", "128.1.B.06"]
-        },
-        "exception_allowed": [{
-            "exception_id": "Common000",
-            "exception_name": "Reset Scanner"
-        }],
-        "mode": "audit",
-        "is_idle": false,
-        "seat_type": "front",
-        "item_uid" : "123",
-        "product_info": {
-            "product_description": null,
-            "product_local_image_url": null,
-            "product_dimension": null,
-            "product_sku": null,
-            "product_name": null,
-            "product_weight": null
-        },
-        "time_stamp": "1450294487",
-        "header_msge_list": [{
+	"state_data": {
+		"Cancel_scan":false,
+		"Extra_box_list": [{"Box_serial": "A000000039", "Scan_status": "open", "Actual_qty": 0, "Expected_qty": 0}],
+		"Box_qty_list": [{
+			"Box_serial": "A000000037",
+			"Scan_status": "no_scan",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "open",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "close",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		}
+		],
+		"Current_box_details": [{
+ 			"Box_serial": "A000000037",
+ 			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+ 			"Actual_qty": 0,
+ 			"Expected_qty": 5
+ 		}],
+		"screen_id": "audit_scan",
+		"screen_version": "1",
+		"notification_list": [{
+			"details": [],
+			"code": "AdF.A.009",
+			"description": "Waiting for MSU to arrive",
+			"level": "info"
+		}],
+		"logout_allowed": "true",
+		"exception_allowed": [{
+			"exception_id": "Common.000",
+			"exception_name": "Reset Scanner"
+		}],
+		"rack_details": {
+			"rack_type_rec": [
+				["A", [
+					[
+						["01", "02"], 44, 48
+					],
+					[
+						["03", "04"], 44, 48
+					],
+					[
+						["05", "06"], 44, 48
+					]
+				]],
+				["B", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["C", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					]
+				]],
+				["D", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["E", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["F", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]]
+			],
+			"slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+		},
+		"mode": "audit",
+		"is_idle": false,
+		"seat_type": "front",
+		"time_stamp": "1452087202",
+		"header_msge_list": [{
             "details": [2],
             "code": "PkF.A.012",
             "description": "Waiting for Rack",
             "level": "info"
         }],
-        "api_version": "1"
-    }
-}
-
-
-
-{
-	"state_data": {
-		"seat_name": "back_10",
-		"screen_id": "audit_status",
-		"screen_version": "1",
-		"structure": [2, 4],
-		"notification_list": [{
-			"details": [],
-			"code": "PtB.B.001",
-			"description": "Scan Item/ Stage PpsBin",
-			"level": "info"
-		}],
-		"scan_details": {
-			"current_qty": "1",
-			"total_qty": "0",
-			"kq_allowed": true
-		},
-		"logout_allowed": "true",
-		"exception_allowed": [{
-			"exception_id": "PtB004",
-			"exception_name": "Extra Items"
-		}, {
-			"exception_id": "PtB003",
-			"exception_name": "Item Damaged"
-		}, {
-			"exception_id": "PtB002",
-			"exception_name": "Item Over Sized"
-		}, {
-			"exception_id": "PtB001",
-			"exception_name": "PPTL Not Glowing"
-		}, {
-			"exception_id": "Common000",
-			"exception_name": "Reset Scanner"
-		}],
-		"mode": "audit",
-		"is_idle": false,
-		"seat_type": "",
-		"item_uid" : "123",
-		"product_info": {
-			"product_description": null,
-			"product_local_image_url": null,
-			"product_dimension": null,
-			"product_sku": "be5bded1a9c74a478b95c739a899671b",
-			"product_name": null,
-			"product_weight": 3.75
-		},
-		"time_stamp": "1449826923",
-		"ppsbin_list": [{
-			"bin_info": [],
-			"ppsbin_id": "4",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 1]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "3",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 2]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "2",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 3]
-		}, {
-			"bin_info": [{
-				"serial": "A000001984",
-				"name": null,
-				"quantity": 1
-			}],
-			"ppsbin_id": "1",
-			"selected_state": "true",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 4]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "8",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 1]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "7",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 2]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "6",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 3]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "5",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 4]
-		}],
-		"header_msge_list":[{
-			"details": ["1"],
-			"code": "PtB.A.012",
-			"description": "Please put the item/box in Bin 1 and press the pptl button",
-			"level": "info"
-		}],
-		"api_version": "1"
+		"api_version": "1",
+		"Loose_sku_list": [{
+			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+			"Actual_qty": 0,
+			"Expected_qty": 2
+		}]
 	}
+
 }

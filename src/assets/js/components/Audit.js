@@ -15,6 +15,7 @@ var Button1 = require('./Button/Button.js');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Rack = require('./Rack/MsuRack.js');
 var Spinner = require("./Spinner/LoaderButler");
+var Reconcile = require("./Reconcile");
 
 
 function getStateData(){
@@ -89,8 +90,10 @@ var Audit = React.createClass({
 
         break;
       case appConstants.AUDIT_RECONCILE:
-          this._component = (
-              <div className='grid-container audit-reconcilation'>
+          var subComponent='';
+          var messageType = 'large';
+          if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
+            subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
                     <TabularData data = {this.state.AuditReconcileBoxSerialData}/>
@@ -99,6 +102,15 @@ var Audit = React.createClass({
                    <TabularData data = {this.state.AuditReconcileLooseItemsData} size="triple"/>
                   </div>
                 </div>
+              );
+            messageType = "small";
+          }
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                <div className={messageType=="small"?"reconcilation-message":"reconcilation-message large"}>
+                  <Reconcile />
+                </div>
+                {subComponent}
                  <div className = 'staging-action' >
                   <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.AUDIT_BACK} color={"black"}/>
                   <Button1 disabled = {false} text = {"OK"} module ={appConstants.AUDIT} action={appConstants.AUDIT_OK} color={"orange"} />  

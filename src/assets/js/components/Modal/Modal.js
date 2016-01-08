@@ -4,6 +4,7 @@ var ModalHeader = require('./ModalHeader');
 var ModalFooter = require('./ModalFooter');
 var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
+var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
 
 var component,title;
@@ -47,8 +48,21 @@ function loadComponent(modalType,modalData){
       break;
     case "scan_bin_barcode":
       component = [];
-      component.push((<div><div className="col-md-12 heading">Scan Bin Barcode</div> <div className = 'cancel-scan'><Button1 disabled = {false} text = {"Cancel"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN} barcode={modalData.tote_barcode} color={"black"}/> </div></div>));
-      
+      footer = [];
+      component.push((<div>
+        <div className="modalContent removeBorder">
+            <div className="image1">
+                <img src={allSvgConstants.scan} />
+            </div>
+            <div className="content1">Scan Bin Barcode</div>
+            <div className="clearfix"></div>
+        </div>    
+            <div className="modal-footer removeBorder">
+             <div className="buttonContainer center-block">
+                <Button1 disabled = {false} text = {"Cancel"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN} barcode={modalData.tote_barcode} color={"black"}/></div>
+             </div>
+       </div>
+       ));      
       
       title = "Associate tote with bin";
       break;  
@@ -83,6 +97,7 @@ var Modal = React.createClass({
              <div className="modal-body">
               {component}
             </div>
+
           </div>
         </div>
       </div>)

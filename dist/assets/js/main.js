@@ -36740,7 +36740,7 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
-                   
+                     React.createElement(Rack, {rackData: this.state.AuditRackDetails, type: "small"}), 
                     React.createElement(TabularData, {data: this.state.AuditBoxSerialData})
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
@@ -37317,39 +37317,71 @@ var mainstore = require('../../stores/mainstore');
 var loginstore = require('../../stores/loginstore');
 var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
-var allSvgConstants = require('../../constants/svgConstants')
+var allSvgConstants = require('../../constants/svgConstants');
+
 
 function getState(){
-   return {
-      flag: loginstore.getFlag(),
-      seatList : loginstore.seatList(),
-      username : 'kerry',
-      password : 'gorapj'
-  }
+ return {
+  flag: loginstore.getFlag(),
+  seatList : loginstore.seatList(),
+  username : 'kerry',
+  password : 'gorapj'
+}
 }
 
 var LoginPage = React.createClass({displayName: "LoginPage",
- mixins:[LinkedStateMixin],
+  virtualKeyBoard: '',
+  mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
   },
+  
   handleLogin: function(newItem){
-      var data = {
-        'data_type': 'auth',
-        'data': {
-              'username': this.state.username,
-              'password': this.state.password,
-              'seat_name': this.refs.seat_name.value
-          }
+    var data = {
+      'data_type': 'auth',
+      'data': {
+        'username': this.state.username,
+        'password': this.state.password,
+        'seat_name': this.refs.seat_name.value
       }
+    }
     CommonActions.login(data);
   },
-  componentDidMount: function(){
+  componentDidMount: function(){    
+    virtualKeyBoard = $('#username, #password').keyboard({
+      layout: 'custom',
+      customLayout: {
+        'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
+        'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+      },
+      css: {
+        container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+      },
+      reposition: true,
+      alwaysOpen: false,
+      initialFocus: true,     
+      visible : function(e, keypressed, el){
+        el.value = '';
+      },
+      accepted: function(e, keypressed, el) {
+        if (e.target.value === '') {
+        } else {
+          var data = {
+            "event_name": "process_barcode",
+            "event_data": {
+              "barcode": e.target.value,
+            }
+          }
+
+        }
+      }
+    });
+
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats(); 
- 
+
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -37366,79 +37398,79 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     CommonActions.changeLanguage(this.refs.language.value);
   },
 
-	render: function(){
+  render: function(){
     var d = new Date();
     var n = d.getFullYear();
     var seatData;
-      var display = this.state.flag === true ? 'block' : 'none';
-      if(this.state.seatList.length > 0){
-          seatData = this.state.seatList[0].map(function(data, index){ 
-            if(data.hasOwnProperty('seat_type')){
-               return (
-                  React.createElement("option", {key: 'pps' + index, value: data.seat_type+'_'+data.pps_id}, "PPS ", data.seat_type, " ", data.pps_id)
-                )
-            }else{console.log(data);
-                 return( React.createElement("option", {key: index, value: data}, data))
-            }
-          });
-      }
-      if(this.state.flag === false){
-        return (
-				React.createElement("div", null, 
-					React.createElement("div", {className: "headerLoginPage"}, 
-		            	React.createElement("div", {className: "logo"}, 
-		            		React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
-		            	), 
-		            	React.createElement("div", {className: "header-actions"}, 
-		            	   	React.createElement("img", {className: "mapImg", src: allSvgConstants.headerbg})
-		            	)
-	      	), 
-	      	React.createElement("div", {className: "bodyContent"}, 
-	      				React.createElement("div", {className: "bodyLoginPage"}, 
-		      				  React.createElement("div", {className: "factoryImage"}, 
-		      						  React.createElement("img", {src: allSvgConstants.factoryImg})
-		      				  ), 
-		      				  React.createElement("div", {className: "userFormLoginPage"}, 
-      		      				React.createElement("form", null, 
-              							React.createElement("select", {className: "selectPPS", ref: "seat_name"}, 
-              							   seatData
-              							), 
-
-
-							React.createElement("div", {className: "form-group"}, 
-								React.createElement("label", null, "User Name :"), 
-	    						React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
-							), 
-							React.createElement("div", {className: "form-group"}, 
-								React.createElement("label", null, "Password :"), 
-	    						React.createElement("input", {type: "Password", className: "form-control", id: "username", placeholder: "Enter Password", valueLink: this.linkState('password')})
-							), 
-							React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
-								  React.createElement("option", {value: "english"}, "English"), 
-								  React.createElement("option", {value: "chinese"}, "Chinese")
-							), 
-							React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", onClick: this.handleLogin, value: "Login"})
-					)
-		      )
-	      				)
-	      	  ), 
-            React.createElement("div", {className: "copyright"}, 
-                "Copyright © ", n, " GreyOrange Pte Ltd"
-            )
-				)
-			);
-    }
-     else{ 
-      return(
-         React.createElement("div", {className: "main"}, 
-            React.createElement(Operator, null)
+    var display = this.state.flag === true ? 'block' : 'none';
+    if(this.state.seatList.length > 0){
+      seatData = this.state.seatList[0].map(function(data, index){ 
+        if(data.hasOwnProperty('seat_type')){
+         return (
+          React.createElement("option", {key: 'pps' + index, value: data.seat_type+'_'+data.pps_id}, "PPS ", data.seat_type, " ", data.pps_id)
           )
-        
-      )
+       }else{console.log(data);
+         return( React.createElement("option", {key: index, value: data}, data))
+       }
+     });
     }
+    if(this.state.flag === false){
+      return (
+        React.createElement("div", null, 
+        React.createElement("div", {className: "headerLoginPage"}, 
+        React.createElement("div", {className: "logo"}, 
+        React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
+        ), 
+        React.createElement("div", {className: "header-actions"}, 
+        React.createElement("img", {classNam: true, e: "mapImg", src: allSvgConstants.headerbg})
+        )
+        ), 
+        React.createElement("div", {className: "bodyContent"}, 
+        React.createElement("div", {className: "bodyLoginPage"}, 
+        React.createElement("div", {className: "factoryImage"}, 
+        React.createElement("img", {src: allSvgConstants.factoryImg})
+        ), 
+        React.createElement("div", {className: "userFormLoginPage"}, 
+        React.createElement("form", null, 
+        React.createElement("select", {className: "selectPPS", ref: "seat_name"}, 
+        seatData
+        ), 
 
-		
-	}
+
+        React.createElement("div", {className: "form-group"}, 
+        React.createElement("label", null, "User Name :"), 
+        React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
+        ), 
+        React.createElement("div", {className: "form-group"}, 
+        React.createElement("label", null, "Password :"), 
+        React.createElement("input", {type: "Password", className: "form-control", id: "password", placeholder: "Enter Password", valueLink: this.linkState('password')})
+        ), 
+        React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
+        React.createElement("option", {value: "english"}, "English"), 
+        React.createElement("option", {value: "chinese"}, "Chinese")
+        ), 
+        React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", onClick: this.handleLogin, value: "Login"})
+        )
+        )
+        )
+        ), 
+        React.createElement("div", {className: "copyright"}, 
+        "Copyright © ", n, " GreyOrange Pte Ltd"
+        )
+        )
+        );
+}
+else{ 
+  return(
+   React.createElement("div", {className: "main"}, 
+   React.createElement(Operator, null)
+   )
+   
+   )
+}
+
+
+}
 });
 
 module.exports = LoginPage;
@@ -37450,6 +37482,7 @@ var ModalHeader = require('./ModalHeader');
 var ModalFooter = require('./ModalFooter');
 var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
+var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
 
 var component,title;
@@ -37493,8 +37526,21 @@ function loadComponent(modalType,modalData){
       break;
     case "scan_bin_barcode":
       component = [];
-      component.push((React.createElement("div", null, React.createElement("div", {className: "col-md-12 heading"}, "Scan Bin Barcode"), " ", React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}), " "))));
-      
+      footer = [];
+      component.push((React.createElement("div", null, 
+        React.createElement("div", {className: "modalContent removeBorder"}, 
+            React.createElement("div", {className: "image1"}, 
+                React.createElement("img", {src: allSvgConstants.scan})
+            ), 
+            React.createElement("div", {className: "content1"}, "Scan Bin Barcode"), 
+            React.createElement("div", {className: "clearfix"})
+        ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+             React.createElement("div", {className: "buttonContainer center-block"}, 
+                React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
+             )
+       )
+       ));      
       
       title = "Associate tote with bin";
       break;  
@@ -37529,6 +37575,7 @@ var Modal = React.createClass({displayName: "Modal",
              React.createElement("div", {className: "modal-body"}, 
               component
             )
+
           )
         )
       ))
@@ -37537,7 +37584,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":275,"../../stores/mainstore":287,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"react":230}],244:[function(require,module,exports){
+},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/mainstore":287,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"react":230}],244:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -38797,7 +38844,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		var totalRackHeight = this.props.totalRackHeight;
 		var noOfRows = this.props.noOfRows;
 		console.log("totalRackHeight = " + totalRackHeight);
-		var calculateWidth = 100/this.props.slotWidthDataLength; 
+		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
 		var type = this.props.type;
 		//var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {
@@ -39234,8 +39281,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.210:8888/ws",
-	INTERFACE_IP : "https://192.168.2.210:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "http://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
@@ -39350,11 +39397,12 @@ var AuditStore = assign({}, EventEmitter.prototype, {
             _NavData[0].type = 'active';
         } else {
             _NavData = navConfig.audit[1];
-            _NavData.map(function(data, index) { 
-                if (_AuditData.screen_id === data.screen_id) {console.log(_AuditData);
+            _NavData.map(function(data, index) {
+                if (_AuditData.screen_id === data.screen_id) {
+                    console.log(_AuditData);
                     _NavData[index].type = 'active';
-                }else{
-                     _NavData[index].type = 'passive';
+                } else {
+                    _NavData[index].type = 'passive';
                 }
             });
         }
@@ -39371,7 +39419,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign ,type , buttonType) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -39391,13 +39439,13 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         _AuditData.Box_qty_list.map(function(value, index) {
-            if(value.Scan_status != "close")
+            if (value.Scan_status != "close")
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", value.Scan_status == "open", "large", false, true, false, false)]);
             else
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false),new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )" , "complete", value.Scan_status == "open", "large", false, false, false, false)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false), new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )", "complete", value.Scan_status == "open", "large", false, false, false, false)]);
         });
         _AuditData.Extra_box_list.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false)]);
+            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false)]);
         });
         return data;
     },
@@ -39410,7 +39458,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Finish", "enabled", false, "small", true, false, true, false, true)]);
         if (_AuditData.Current_box_details.length > 0) {
             _AuditData.Current_box_details.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true,"button","finish")]);
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish")]);
             });
         } else {
             data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)]);
@@ -39419,40 +39467,40 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         return data;
     },
 
-    getCancelScanStatus:function(){
+    getCancelScanStatus: function() {
         return _AuditData.Cancel_scan;
     },
 
 
-    getReconcileBoxSerialData:function(){
+    getReconcileBoxSerialData: function() {
         var data = {};
         data["header"] = "Box Serial Numbers";
         data["tableRows"] = [];
         var self = this;
         data["tableRows"].push([new this.tableCol("Box Serial", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Box_qty_list.map(function(value, index) {
-            if(value.Scan_status !="no_scan")
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty-value.Actual_qty,0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty-value.Expected_qty,0), "enabled", false, "large", true, false, false, false, true)]);
+            if (value.Scan_status != "no_scan")
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
             else
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
 
         });
         _AuditData.Extra_box_list.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false), new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)]);
+            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false), new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)]);
         });
 
         return data;
     },
 
-    getReconcileLooseItemsData:function(){
-         var data = {};
+    getReconcileLooseItemsData: function() {
+        var data = {};
         data["header"] = "Loose Items";
         data["tableRows"] = [];
         var self = this;
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Loose_sku_list.map(function(value, index) {
-            if(value.Scan_status !="no_scan")
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty-value.Actual_qty,0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty-value.Expected_qty,0), "enabled", false, "large", true, false, false, false, true)]);
+            if (value.Scan_status != "no_scan")
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
             else
                 data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
 
@@ -39463,7 +39511,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     getLooseItemsData: function() {
         var data = {};
         var disabledStatus;
-        if (_AuditData.Current_box_details.length > 0){
+        if (_AuditData.Current_box_details.length > 0) {
             disabledStatus = true;
         }
         data["header"] = "Loose Items";
@@ -39480,11 +39528,12 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         var data = {};
         data["header"] = "Details";
         data["tableRows"] = [];
-        data["tableRows"].push([new this.tableCol("Product Name", "enabled", false, "small", false, true, false, false), new this.tableCol("--", "enabled", false, "small", false, true, false, false)]);
-        data["tableRows"].push([new this.tableCol("Color", "enabled", false, "small", false, true, false, false), new this.tableCol("--", "enabled", false, "small", false, true, false, false)]);
-        data["tableRows"].push([new this.tableCol("L X W X H (cm)", "enabled", false, "small", false, true, false, false), new this.tableCol("--", "enabled", false, "small", false, true, false, false)]);
-        data["tableRows"].push([new this.tableCol("Item Serial", "enabled", false, "small", false, true, false, false), new this.tableCol("--", "enabled", false, "small", false, true, false, false)]);
-
+        var self = this;
+        for (var key in _AuditData.product_info) {
+            if (_AuditData.product_info.hasOwnProperty(key)) {
+               data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+            }
+        }
         return data;
     },
 

@@ -102,6 +102,40 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.box_serials;
     },
 
+     getChecklistDetails:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.pick_checklist.length > 0){
+                return _PickFrontData.checklist_details.pick_checklist;
+            }
+            else{
+                return null;
+            }     
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistIndex:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.checklist_index!= null){
+                return _PickFrontData.checklist_details.checklist_index;
+            } 
+            else{
+                return null;
+            }    
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistOverlayStatus:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            return _PickFrontData.checklist_details.display_checklist_overlay;
+          }else{
+            return null;
+        }
+    },
+
     getCurrentSelectedBin: function() {
         if (_PickFrontData["ppsbin_list"] != undefined) {
             var binData = {};

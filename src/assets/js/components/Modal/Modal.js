@@ -65,7 +65,66 @@ function loadComponent(modalType,modalData){
        ));      
       
       title = "Associate tote with bin";
-      break;  
+      break;
+    case "pick_checklist":
+      component = [];
+      footer = [];
+      rowData =[];
+      title = "Input Extra Details";
+  
+        var rowData = modalData.checklist_data.map(function(data,index){
+            if(modalData.checklist_index === (index+1)){
+              return (
+                  data.map(function(data1,index1){
+                    var keyvalue = Object.keys(data1);
+                    console.log("data = " +modalData.checklist_index);
+                      return (<div>
+                                  <div className="row dataCapture removeBorder">
+                                      {keyvalue}
+                                  </div>
+                                  <div className="row dataCaptureInput removeBorder">
+                                      <input type="text" value={keyvalue.value} />
+                                  </div>
+                              </div>
+                        );
+                  })
+                );
+                  
+            }
+            else if(modalData.checklist_index === null || modalData.checklist_index === undefined){
+               return (
+                  data.map(function(data1,index1){
+                    var keyvalue = Object.keys(data1);
+                      return (<div>
+                                  <div className="row dataCaptureHead">
+                                      {keyvalue}
+                                  </div>
+                                  <div className="row dataCaptureInput">
+                                      <input type="text" value={keyvalue.value} />
+                                  </div>
+                                 
+                              </div>
+                        );
+                  })
+                );
+            }
+          });
+      return (
+              component.push((
+                <div>
+                  {rowData}
+                      <div className="modal-footer removeBorder">
+                          <div className="buttonContainer center-block">
+                                <input type="button" value="Clear All" onclick={$('input[type="text"]').val('')} />
+                                <input type="button" value="Submit" />
+                          </div>
+                     </div>
+                </div>
+               ))   
+               );  
+     
+      
+      break;    
     default:
       component = null;
       title = null;

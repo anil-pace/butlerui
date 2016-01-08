@@ -65,88 +65,88 @@ var LoginPage = React.createClass({
       }
     });
 
-mainstore.addChangeListener(this.onChange);
-loginstore.addChangeListener(this.onChange);
-CommonActions.webSocketConnection(); 
-CommonActions.listSeats(); 
+    mainstore.addChangeListener(this.onChange);
+    loginstore.addChangeListener(this.onChange);
+    CommonActions.webSocketConnection(); 
+    CommonActions.listSeats(); 
 
-},
-componentWillUnmount: function(){
-  mainstore.removeChangeListener(this.onChange);
-  loginstore.removeChangeListener(this.onChange);
-},
-onChange: function(){
-  this.setState({
-    flag: loginstore.getFlag(),
-    seatList : loginstore.seatList()
-  });
+  },
+  componentWillUnmount: function(){
+    mainstore.removeChangeListener(this.onChange);
+    loginstore.removeChangeListener(this.onChange);
+  },
+  onChange: function(){
+    this.setState({
+      flag: loginstore.getFlag(),
+      seatList : loginstore.seatList()
+    });
 
-},
-changeLanguage : function(){
-  CommonActions.changeLanguage(this.refs.language.value);
-},
+  },
+  changeLanguage : function(){
+    CommonActions.changeLanguage(this.refs.language.value);
+  },
 
-render: function(){
-  var d = new Date();
-  var n = d.getFullYear();
-  var seatData;
-  var display = this.state.flag === true ? 'block' : 'none';
-  if(this.state.seatList.length > 0){
-    seatData = this.state.seatList[0].map(function(data, index){ 
-      if(data.hasOwnProperty('seat_type')){
-       return (
-        <option key={'pps' + index} value={data.seat_type+'_'+data.pps_id} >PPS {data.seat_type} {data.pps_id}</option>
-        )
-     }else{console.log(data);
-       return( <option key={index} value={data} >{data}</option>)
-     }
-   });
-  }
-  if(this.state.flag === false){
-    return (
-      <div>
-      <div className="headerLoginPage">
-      <div className="logo">
-      <img className="imgLogo" src={allSvgConstants.gorLogo} />
-      </div>
-      <div className="header-actions">
-      <img className="mapImg" src={allSvgConstants.headerbg} />
-      </div>
-      </div>
-      <div className="bodyContent">
-      <div className="bodyLoginPage">
-      <div className="factoryImage">
-      <img src ={allSvgConstants.factoryImg} />
-      </div>
-      <div className="userFormLoginPage">
-      <form>
-      <select className="selectPPS" ref='seat_name'>
-      {seatData}
-      </select>
+  render: function(){
+    var d = new Date();
+    var n = d.getFullYear();
+    var seatData;
+    var display = this.state.flag === true ? 'block' : 'none';
+    if(this.state.seatList.length > 0){
+      seatData = this.state.seatList[0].map(function(data, index){ 
+        if(data.hasOwnProperty('seat_type')){
+         return (
+          <option key={'pps' + index} value={data.seat_type+'_'+data.pps_id} >PPS {data.seat_type} {data.pps_id}</option>
+          )
+       }else{console.log(data);
+         return( <option key={index} value={data} >{data}</option>)
+       }
+     });
+    }
+    if(this.state.flag === false){
+      return (
+        <div>
+        <div className="headerLoginPage">
+        <div className="logo">
+        <img className="imgLogo" src={allSvgConstants.gorLogo} />
+        </div>
+        <div className="header-actions">
+        <img classNam e="mapImg" src={allSvgConstants.headerbg} />
+        </div>
+        </div>
+        <div className="bodyContent">
+        <div className="bodyLoginPage">
+        <div className="factoryImage">
+        <img src ={allSvgConstants.factoryImg} />
+        </div>
+        <div className="userFormLoginPage">
+        <form>
+        <select className="selectPPS" ref='seat_name'>
+        {seatData}
+        </select>
 
 
-      <div className="form-group">
-      <label >User Name :</label>
-      <input type="text" className="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')} />
-      </div>
-      <div className="form-group">
-      <label >Password :</label>
-      <input type="Password" className="form-control" id="password" placeholder="Enter Password" valueLink={this.linkState('password')} />
-      </div>
-      <select className="selectLang" ref='language' onChange={this.changeLanguage}>
-      <option value="english">English</option>
-      <option value="chinese">Chinese</option>
-      </select>
-      <input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
-      </form>
-      </div>
-      </div>
-      </div>
-      <div className="copyright">
-      Copyright &copy; {n} GreyOrange Pte Ltd
-      </div>
-      </div>
-      );
+        <div className="form-group">
+        <label >User Name :</label>
+        <input type="text" className="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')} />
+        </div>
+        <div className="form-group">
+        <label >Password :</label>
+        <input type="Password" className="form-control" id="password" placeholder="Enter Password" valueLink={this.linkState('password')} />
+        </div>
+        <select className="selectLang" ref='language' onChange={this.changeLanguage}>
+        <option value="english">English</option>
+        <option value="chinese">Chinese</option>
+        </select>
+        <input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
+        </form>
+        </div>
+        </div>
+        </div>
+        <div className="copyright">
+        Copyright &copy; {n} GreyOrange Pte Ltd
+        </div>
+        </div>
+        );
 }
 else{ 
   return(

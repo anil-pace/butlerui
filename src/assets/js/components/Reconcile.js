@@ -8,7 +8,7 @@ var ReconcileStatus = React.createClass({
 		
 		return (
 				<div className="reconcileWrapper">
-					<div className="reconcileStatus"> {allresourceConstants.NO_RECONCILE} </div>
+					<div className="reconcileStatus"> {this.props.message} </div>
 					<div className="reconcileAction"> Please Place The Box Back in Slot A1 </div>					
 				</div>
 				

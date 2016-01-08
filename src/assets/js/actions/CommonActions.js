@@ -108,7 +108,30 @@ var commonActions = {
       data: data
     });
   },
-
+  finishBox:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_BOX, 
+      data: data
+    });
+  },
+  generateReport:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.GENERATE_REPORT, 
+      data: data
+    });
+  },
+  cancelFinishAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CANCEL_FINISH_AUDIT, 
+      data: data
+    });
+  },
+  finishCurrentAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_CURRENT_AUDIT, 
+      data: data
+    });
+  },
   showModal:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,

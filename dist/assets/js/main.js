@@ -36581,7 +36581,30 @@ var commonActions = {
       data: data
     });
   },
-
+  finishBox:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_BOX, 
+      data: data
+    });
+  },
+  generateReport:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.GENERATE_REPORT, 
+      data: data
+    });
+  },
+  cancelFinishAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CANCEL_FINISH_AUDIT, 
+      data: data
+    });
+  },
+  finishCurrentAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_CURRENT_AUDIT, 
+      data: data
+    });
+  },
   showModal:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
@@ -36710,12 +36733,14 @@ var Audit = React.createClass({displayName: "Audit",
                 React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
               )
             );
+          }else{
+            this._cancelStatus = '';
           }
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
-                    React.createElement(Rack, {rackData: this.state.AuditRackDetails, type: "small"}), 
+                   
                     React.createElement(TabularData, {data: this.state.AuditBoxSerialData})
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
@@ -36726,7 +36751,7 @@ var Audit = React.createClass({displayName: "Audit",
                     React.createElement(Img, null), 
                    React.createElement(TabularData, {data: this.state.AuditItemDetailsData}), 
                    React.createElement("div", {className: "finish-scan"}, 
-                    React.createElement(Button1, {disabled: false, text: "Finish", module: appConstants.AUDIT, action: appConstants.FINISH_SCAN, color: "orange"})
+                    React.createElement(Button1, {disabled: !this.state.AuditCurrentBoxSerialData.tableRows[1][0].disabled, text: "Finish", module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
                   )
                   )
                 ), 
@@ -36754,12 +36779,12 @@ var Audit = React.createClass({displayName: "Audit",
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                 React.createElement("div", {className: messageType=="small"?"reconcilation-message":"reconcilation-message large"}, 
-                  React.createElement(Reconcile, null)
+                  React.createElement(Reconcile, {message: (this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1) ? "Reconcile the below Item":"No Items to renconcile"})
                 ), 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "Back", module: appConstants.AUDIT, action: appConstants.AUDIT_BACK, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "OK", module: appConstants.AUDIT, action: appConstants.AUDIT_OK, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: "Back", module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "OK", module: appConstants.AUDIT, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
                 )
               )
             );
@@ -36782,8 +36807,7 @@ var Audit = React.createClass({displayName: "Audit",
           React.createElement(Header, null), 
           React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}), 
           this._component, 
-          this._notification, 
-          this._cancelStatus
+          this._notification
         ) 
        
       )
@@ -37093,6 +37117,25 @@ var Button1 = React.createClass({displayName: "Button1",
                         return true; 
                 }
             break;
+            case appConstants.AUDIT:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScanAll();
+                        break;    
+                    case appConstants.GENERATE_REPORT:
+                        ActionCreators.generateReport();
+                        break;    
+                     case appConstants.CANCEL_FINISH_AUDIT:
+                        ActionCreators.cancelFinishAudit();
+                        break;   
+                     case appConstants.FINISH_CURRENT_AUDIT:
+                        ActionCreators.finishCurrentAudit();
+                        break;   
+                     default:
+                        return true; 
+                }
+            break;
+
              default:
                 return true; 
         }
@@ -37120,19 +37163,35 @@ var IconButton = React.createClass({displayName: "IconButton",
     performAction:function(module,action){
         switch(module){
             case appConstants.AUDIT:
+                switch(action){
+                    case appConstants.FINISH_BOX:
+                        ActionCreators.finishBox();
+                        break;    
+                     default:
+                        return true; 
+                }
             break;
              default:
                 return true; 
         }
     },
     render: function() { 
-            return (
-                React.createElement("div", {className: "success-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
+            if(this.props.type == "finish")
+                return (
+                    React.createElement("div", {className: "success-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
                         React.createElement("div", {className: "border-glyp"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-ok"})
                         )
+                    )
+                );
+            else if(this.props.type == "edit")
+                return (
+                React.createElement("div", {className: "edit-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
+                        React.createElement("div", {className: "border-glyp"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-pencil"})
+                        )
                 )
-            );           
+            );              
     }
 });
 
@@ -38800,7 +38859,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 		
 		return (
 				React.createElement("div", {className: "reconcileWrapper"}, 
-					React.createElement("div", {className: "reconcileStatus"}, " ", allresourceConstants.NO_RECONCILE, " "), 
+					React.createElement("div", {className: "reconcileStatus"}, " ", this.props.message, " "), 
 					React.createElement("div", {className: "reconcileAction"}, " Please Place The Box Back in Slot A1 ")					
 				)
 				
@@ -38916,6 +38975,7 @@ module.exports = TableHeader;
 },{"react":230}],272:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
+var appConstants = require('../constants/appConstants');
 
 var TableRow = React.createClass({displayName: "TableRow", 
 	_component:[],
@@ -38933,10 +38993,10 @@ var TableRow = React.createClass({displayName: "TableRow",
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" ? classes = classes + "extra ":"";
-            if((value.type != undefined && value.type=="button") && value.buttonType == "finish")
-                comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, null))));
+            if((value.type != undefined && value.type=="button"))
+                comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX}))));
             else
-    		  comp.push((React.createElement("div", {className: classes}, value.text)));
+    		  comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
     	});
     	this._component = comp;
     },
@@ -38952,7 +39012,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"./Button/IconButton":239,"react":230}],273:[function(require,module,exports){
+},{"../constants/appConstants":275,"./Button/IconButton":239,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -39140,7 +39200,11 @@ var appConstants = {
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
 	RESET_NUMPAD :'RESET_NUMPAD',
+	CANCEL_FINISH_AUDIT:"CANCEL_FINISH_AUDIT",
+	FINISH_CURRENT_AUDIT:"FINISH_CURRENT_AUDIT",
 	CANCEL_SCAN : 'CANCEL_SCAN',
+	FINISH_BOX:"FINISH_BOX",
+	GENERATE_REPORT:"GENERATE_REPORT",
 	LOAD_MODAL:'load_modal',
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
@@ -39170,8 +39234,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://192.168.2.210:8888/ws",
+	INTERFACE_IP : "https://192.168.2.210:5000"
 };
 
 module.exports = configConstants;
@@ -40165,11 +40229,57 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatName);
   },
   cancelScanAll : function(barcode){
-    var data = {
+    
+    if(_currentSeat == appConstants.AUDIT){
+      var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_audit"
+      }
+    };
+    }else{
+      var data = {
       "event_name": _cancelEvent,
       "event_data":{}
     };
+    }
     utils.postDataToInterface(data, _seatName);
+  },
+  finishBox:function(){
+     var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_box"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  generateReport:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"generate_report"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  cancelFinishAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_finish_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  finishCurrentAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_current_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
   },
   getModalContent:function(){
     return modalContent.data;
@@ -40206,6 +40316,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       case appConstants.PICK_FRONT:
           _pptlEvent = 'primary_button_press';
           _cancelEvent = 'cancel_scan_all';
+        break;
+      case appConstants.AUDIT:
+          _cancelEvent = 'audit_actions';
         break;
       default:
         //return true; 
@@ -40265,7 +40378,27 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.cancelScan(action.data);
       mainstore.emit(CHANGE_EVENT);
-      break;         
+      break;       
+     case appConstants.FINISH_BOX:
+      mainstore.showSpinner();
+      mainstore.finishBox();
+      mainstore.emit(CHANGE_EVENT);
+      break;           
+    case appConstants.GENERATE_REPORT:
+      mainstore.showSpinner();
+      mainstore.generateReport();
+      mainstore.emit(CHANGE_EVENT);
+      break;       
+     case appConstants.CANCEL_FINISH_AUDIT:
+      mainstore.showSpinner();
+      mainstore.cancelFinishAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;  
+     case appConstants.FINISH_CURRENT_AUDIT:
+      mainstore.showSpinner();
+      mainstore.finishCurrentAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;      
     case appConstants.LOAD_MODAL:
       mainstore.setModalContent(action.data);
        mainstore.emit(CHANGE_EVENT);

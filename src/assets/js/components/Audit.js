@@ -72,12 +72,14 @@ var Audit = React.createClass({
                 <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
               </div>
             );
+          }else{
+            this._cancelStatus = '';
           }
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
                   <div className="audit-scan-left">
-                    <Rack rackData = {this.state.AuditRackDetails} type="small"/>
+                     <Rack rackData = {this.state.AuditRackDetails} type="small"/>
                     <TabularData data = {this.state.AuditBoxSerialData}/>
                   </div>
                   <div className="audit-scan-middle">
@@ -88,7 +90,7 @@ var Audit = React.createClass({
                     <Img />
                    <TabularData data = {this.state.AuditItemDetailsData}/>
                    <div className = 'finish-scan'>
-                    <Button1 disabled = {false} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.FINISH_SCAN}  color={"orange"}/>
+                    <Button1 disabled = {!this.state.AuditCurrentBoxSerialData.tableRows[1][0].disabled} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
                   </div>
                   </div>
                 </div>
@@ -116,12 +118,12 @@ var Audit = React.createClass({
           this._component = (
               <div className='grid-container audit-reconcilation'>
                 <div className={messageType=="small"?"reconcilation-message":"reconcilation-message large"}>
-                  <Reconcile />
+                  <Reconcile message={(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1) ? "Reconcile the below Item":"No Items to renconcile"}/>
                 </div>
                 {subComponent}
                  <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.AUDIT_BACK} color={"black"}/>
-                  <Button1 disabled = {false} text = {"OK"} module ={appConstants.AUDIT} action={appConstants.AUDIT_OK} color={"orange"} />  
+                  <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>
+                  <Button1 disabled = {false} text = {"OK"} module ={appConstants.AUDIT} action={appConstants.FINISH_CURRENT_AUDIT} color={"orange"} />  
                 </div>
               </div>
             );
@@ -145,7 +147,6 @@ var Audit = React.createClass({
           <Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>
           {this._component}
           {this._notification}
-          {this._cancelStatus}
         </div> 
        
       )

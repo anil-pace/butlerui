@@ -54,11 +54,57 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatName);
   },
   cancelScanAll : function(barcode){
-    var data = {
+    
+    if(_currentSeat == appConstants.AUDIT){
+      var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_audit"
+      }
+    };
+    }else{
+      var data = {
       "event_name": _cancelEvent,
       "event_data":{}
     };
+    }
     utils.postDataToInterface(data, _seatName);
+  },
+  finishBox:function(){
+     var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_box"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  generateReport:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"generate_report"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  cancelFinishAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_finish_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  finishCurrentAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_current_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
   },
   getModalContent:function(){
     return modalContent.data;
@@ -95,6 +141,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       case appConstants.PICK_FRONT:
           _pptlEvent = 'primary_button_press';
           _cancelEvent = 'cancel_scan_all';
+        break;
+      case appConstants.AUDIT:
+          _cancelEvent = 'audit_actions';
         break;
       default:
         //return true; 
@@ -154,7 +203,27 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.cancelScan(action.data);
       mainstore.emit(CHANGE_EVENT);
-      break;         
+      break;       
+     case appConstants.FINISH_BOX:
+      mainstore.showSpinner();
+      mainstore.finishBox();
+      mainstore.emit(CHANGE_EVENT);
+      break;           
+    case appConstants.GENERATE_REPORT:
+      mainstore.showSpinner();
+      mainstore.generateReport();
+      mainstore.emit(CHANGE_EVENT);
+      break;       
+     case appConstants.CANCEL_FINISH_AUDIT:
+      mainstore.showSpinner();
+      mainstore.cancelFinishAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;  
+     case appConstants.FINISH_CURRENT_AUDIT:
+      mainstore.showSpinner();
+      mainstore.finishCurrentAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;      
     case appConstants.LOAD_MODAL:
       mainstore.setModalContent(action.data);
        mainstore.emit(CHANGE_EVENT);

@@ -47,6 +47,25 @@ var Button1 = React.createClass({
                         return true; 
                 }
             break;
+            case appConstants.AUDIT:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScanAll();
+                        break;    
+                    case appConstants.GENERATE_REPORT:
+                        ActionCreators.generateReport();
+                        break;    
+                     case appConstants.CANCEL_FINISH_AUDIT:
+                        ActionCreators.cancelFinishAudit();
+                        break;   
+                     case appConstants.FINISH_CURRENT_AUDIT:
+                        ActionCreators.finishCurrentAudit();
+                        break;   
+                     default:
+                        return true; 
+                }
+            break;
+
              default:
                 return true; 
         }

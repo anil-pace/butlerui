@@ -3,19 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: butler_interface_kerry 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 13:12+0530\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2016-01-09 12:14+0530\n"
+"PO-Revision-Date: 2016-01-09 12:17+0530\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:7
 msgid "Scan item / Stage pps bin"
@@ -27,4 +26,16 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:9
 msgid "Press PpsBin Button Or Scan a Tote"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:10
+msgid "user Name"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:11
+msgid "Password"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:10
+msgid "User Name"
 msgstr ""

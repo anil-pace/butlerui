@@ -5,8 +5,14 @@
     margin-bottom: 10px;
     flex-grow:1;
     flex-basis:0;
-    overflow-y: auto;
+    display: flex;
+    flex-flow:column;
     width: 100%;
+    .overflow{
+        flex-grow:1;
+        flex-basis:0;
+        overflow-y: auto;
+    }
     &.double{
         flex-grow:2;
     }
@@ -15,10 +21,10 @@
     }
     .table-header {
         background: @product-header-bck;
-        padding: 10px;
-        padding-left: 20px;
-        padding-right: 20px;
-        font-size: 2em;
+        padding: 0.3em;
+        padding-left: 0.6em;
+        padding-right: 0.6em;
+        font-size: @font-size-body-medium;
         color: white;
         font-weight: bold;
     }

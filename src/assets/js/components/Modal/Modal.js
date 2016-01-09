@@ -19,6 +19,8 @@ function getStateData(){
     };
 }
 
+
+
 function loadComponent(modalType,modalData){ 
   switch(modalType){
     case "product-detail":
@@ -52,7 +54,7 @@ function loadComponent(modalType,modalData){
       component.push((<div>
         <div className="modalContent removeBorder">
             <div className="image1">
-                <img src={allSvgConstants.scan} />
+                <img src={allSvgConstants.iconBar} />
             </div>
             <div className="content1">Scan Bin Barcode</div>
             <div className="clearfix"></div>
@@ -115,8 +117,10 @@ function loadComponent(modalType,modalData){
                   {rowData}
                       <div className="modal-footer removeBorder">
                           <div className="buttonContainer center-block">
-                                <input type="button" value="Clear All" onclick={$('input[type="text"]').val('')} />
-                                <input type="button" value="Submit" />
+                                <div className="row removeBorder">
+                                    <div className="col-md-6"><input className="btn btn-default checklistButtonClear" type="button" value="Clear All" /></div>
+                                    <div className="col-md-6"><input className="btn btn-default checklistButtonSubmit" type="button" value="Submit" /></div>
+                                </div>
                           </div>
                      </div>
                 </div>

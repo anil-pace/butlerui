@@ -36664,13 +36664,11 @@ var React = require('react');
 var AuditStore = require('../stores/AuditStore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
+var SystemIdle = require("./SystemIdle");
 var Notification = require("./Notification/Notification");
-var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
-var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
-var SystemIdle = require('./SystemIdle');
 var TabularData = require('./TabularData');
 var Button1 = require('./Button/Button.js');
 var Img = require('./PrdtDetails/ProductImage.js');
@@ -36816,7 +36814,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../constants/appConstants":275,"../stores/AuditStore":281,"./Bins/Bins.react":236,"./Button/Button":238,"./Button/Button.js":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductImage.js":254,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Reconcile":266,"./Spinner/LoaderButler":267,"./SystemIdle":270,"./TabularData":273,"react":230}],235:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/AuditStore":281,"./Button/Button":238,"./Button/Button.js":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductImage.js":254,"./Rack/MsuRack.js":262,"./Reconcile":266,"./Spinner/LoaderButler":267,"./SystemIdle":270,"./TabularData":273,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -39081,8 +39079,10 @@ var TabularData = React.createClass({displayName: "TabularData",
         return (
             React.createElement("div", {className: classes}, 
                 React.createElement(TableHeader, {data: this.props.data.header}), 
-                this._tableRows
-      		)
+                React.createElement("div", {className: "overflow"}, 
+                    this._tableRows
+      		    )
+            )
         );
     },
 });
@@ -39281,8 +39281,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://192.168.2.210:8888/ws",
+	INTERFACE_IP : "https://192.168.2.210:5000"
 };
 
 module.exports = configConstants;

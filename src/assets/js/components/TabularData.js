@@ -17,10 +17,12 @@ var TabularData = React.createClass({
         var size = this.props.size=="double"?classes = classes + "double ":"";
         var size = this.props.size=="triple"?classes = classes + "triple ":"";
         return (
-            <div className={classes} >
+            <div className={classes}>
                 <TableHeader data={this.props.data.header}/>
-                {this._tableRows}
-      		</div>
+                <div className="overflow" >
+                    {this._tableRows}
+      		    </div>
+            </div>
         );
     },
 });

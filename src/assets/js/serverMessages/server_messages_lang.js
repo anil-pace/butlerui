@@ -7,4 +7,6 @@ function server_messages_list() {
     _("Scan item / Stage pps bin");
     _("Scan Tote to associate with Bin");
     _("Press PpsBin Button Or Scan a Tote");
+    _("User Name");
+    _("Password");
 }

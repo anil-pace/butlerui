@@ -6,7 +6,9 @@ var resourceConstants = {
 	VIEW_MORE: 'View More',
 	TBL_HEADER: 'Box Serial Numbers',
 	NO_RECONCILE: 'No Items To Reconcile',
-	YES_RECONCILE:'List Of Items To Reconcile'
+	YES_RECONCILE:'List Of Items To Reconcile',
+	USERNAME :'User Name',
+	PASSWORD : 'Password'
 };
 module.exports = resourceConstants;
 

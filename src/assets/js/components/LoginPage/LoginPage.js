@@ -5,7 +5,8 @@ var mainstore = require('../../stores/mainstore');
 var loginstore = require('../../stores/loginstore');
 var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
-var allSvgConstants = require('../../constants/svgConstants')
+var allSvgConstants = require('../../constants/svgConstants');
+var resourceConstants = require('../../constants/resourceConstants');
 
 function getState(){
    return {
@@ -113,11 +114,11 @@ var LoginPage = React.createClass({
 
 
               <div className="form-group">
-                <label >User Name :</label>
+                <label >{_(resourceConstants.USERNAME)}</label>
                   <input type="text" className="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
               </div>
               <div className="form-group">
-                <label >Password :</label>
+                <label >{_(resourceConstants.PASSWORD)}</label>
                   <input type="password" className="form-control" id="password" placeholder="Enter Password" valueLink={this.linkState('password')} />
               </div>
               <select className="selectLang" ref='language' onChange={this.changeLanguage}>

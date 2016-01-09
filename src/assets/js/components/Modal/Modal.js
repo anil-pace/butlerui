@@ -6,6 +6,8 @@ var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
 var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
+var jqueryPosition = require('jquery-ui/position');
+var virtualkeyboard = require('virtual-keyboard');
 
 var component,title;
 
@@ -19,7 +21,32 @@ function getStateData(){
     };
 }
 
+function attachKeyboard(id){ 
+    virtualKeyBoard1 = $('#'+id).keyboard({
+            layout: 'custom',
+            customLayout: {
+            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
+            'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+            },
+            css: {
+              container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+            },
+            reposition: true,
+            alwaysOpen: false,
+            initialFocus: true,
+            visible : function(e, keypressed, el){
+              el.value = '';
+            },
+            accepted: function(e, keypressed, el) {
 
+            }
+        });
+   $('#'+id).data('keyboard').reveal(); 
+}
+
+function removeTextField(){
+  $('.modal-body').find('input:text').val('');
+}
 
 function loadComponent(modalType,modalData){ 
   switch(modalType){
@@ -79,13 +106,14 @@ function loadComponent(modalType,modalData){
               return (
                   data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
-                    console.log("data = " +modalData.checklist_index);
+                    var inputBoxValue = data1[keyvalue]["value"];
+                    console.log("data keyvalue = " +data1[keyvalue]["value"]);
                       return (<div>
-                                  <div className="row dataCapture removeBorder">
+                                  <div className="row dataCaptureHead removeBorder">
                                       {keyvalue}
                                   </div>
                                   <div className="row dataCaptureInput removeBorder">
-                                      <input type="text" value={keyvalue.value} />
+                                      <input type="text" id={"checklist_field"+index1} value={"inputBoxValue"} onClick={attachKeyboard.bind(this, 'checklist_field'+index1)} />
                                   </div>
                               </div>
                         );
@@ -97,12 +125,13 @@ function loadComponent(modalType,modalData){
                return (
                   data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
+                    var inputBoxValue = data1[keyvalue]["value"];
                       return (<div>
-                                  <div className="row dataCaptureHead">
+                                  <div className="row dataCaptureHead removeBorder">
                                       {keyvalue}
                                   </div>
-                                  <div className="row dataCaptureInput">
-                                      <input type="text" value={keyvalue.value} />
+                                  <div className="row dataCaptureInput removeBorder">
+                                      <input type="text" id={"checklist_field"+index1} value={"inputBoxValue"} onClick={attachKeyboard.bind(this, 'checklist_field'+index1)} />
                                   </div>
                                  
                               </div>
@@ -118,8 +147,8 @@ function loadComponent(modalType,modalData){
                       <div className="modal-footer removeBorder">
                           <div className="buttonContainer center-block">
                                 <div className="row removeBorder">
-                                    <div className="col-md-6"><input className="btn btn-default checklistButtonClear" type="button" value="Clear All" /></div>
-                                    <div className="col-md-6"><input className="btn btn-default checklistButtonSubmit" type="button" value="Submit" /></div>
+                                    <div className="col-md-6"><input className="btn btn-default checklistButtonClear" type="button" value="Clear All" onClick={removeTextField} /></div>
+                                    <div className="col-md-6"><Button1 disabled = {false} text ={"Submit"} color={"orange"} buttonChecklist={"checklist"}/></div>
                                 </div>
                           </div>
                      </div>
@@ -137,12 +166,15 @@ function loadComponent(modalType,modalData){
 }
 
 var Modal = React.createClass({
-  componentDidMount:function(){
+  virtualKeyBoard1 : '',
+  componentDidMount:function(id){
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
     });*/
+    
   },
+ 
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -151,6 +183,7 @@ var Modal = React.createClass({
   },
   onChange: function(){ 
     this.setState(getStateData());
+   // virtualKeyBoard1.getkeyboard().close();
   },
   render: function () {
     return (<div className="modal fade">

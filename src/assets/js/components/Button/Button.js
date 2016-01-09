@@ -3,6 +3,7 @@ var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({
+    _checklistClass : '',
     performAction:function(module,action){
         switch(module){
             case appConstants.PUT_BACK:
@@ -71,9 +72,14 @@ var Button1 = React.createClass({
         }
     },
     render: function() { 
+       if(this.props.buttonChecklist != undefined){
+            _checklistClass = 'checklistButtonSubmit';
+       }else{
+            _checklistClass = '';
+       }
         if(this.props.disabled == false)
             return (
-                <a className={this.props.color == "orange"? "custom-button orange" : "custom-button black"} onClick={this.performAction.bind(this,this.props.module,this.props.action)}>{this.props.text}</a>
+                <a className={this.props.color == "orange"? "custom-button orange "+_checklistClass : "custom-button black "+_checklistClass}  onClick={this.performAction.bind(this,this.props.module,this.props.action)}>{this.props.text}</a>
             );        
         else
             return (

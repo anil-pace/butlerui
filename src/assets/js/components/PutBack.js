@@ -49,6 +49,7 @@ var PutBack = React.createClass({
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
+      case appConstants.PUT_BACK_SCAN_TOTE:
           this._component = (
               <div className='grid-container'>
                 <Modal />

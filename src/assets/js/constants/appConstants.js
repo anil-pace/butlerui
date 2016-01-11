@@ -24,6 +24,7 @@ var appConstants = {
 	PUT_BACK_STAGE:"put_back_stage",
 	PUT_BACK_SCAN : "put_back_scan",
 	PUT_BACK_TOTE_CLOSE : "put_back_tote_close",
+	PUT_BACK_SCAN_TOTE :'put_back_scan_tote',
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_FRONT_SCAN:"put_front_scan",

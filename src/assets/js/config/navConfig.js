@@ -2,7 +2,7 @@ var svgConstants = require('../constants/svgConstants');
 
 var navData = {
     "putBack": [{
-        "screen_id": "put_back_stage",
+        "screen_id": ["put_back_stage","put_back_scan_tote"],
         "code": "Common.000",
         "image": svgConstants.stage,
         "message": "Stage Bin or Scan Item",
@@ -10,26 +10,10 @@ var navData = {
         "level": 1,
         "type": 'passive'
     }, {
-        "screen_id": "put_back_scan",
+        "screen_id": ["put_back_scan","put_back_tote_close"],
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan & Confirm",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
-    },{
-        "screen_id": "put_back_tote_close",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan & Confirm",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
-    },{
-        "screen_id": "put_back_tote_scan",
-        "code": "Common.001",
-        "image": svgConstants.rack,
-        "message": "Stage Bin or Scan tote",
         "showImage": true,
         "level": 2,
         "type": 'passive'

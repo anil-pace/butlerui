@@ -37071,6 +37071,7 @@ var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({displayName: "Button1",
+    _checklistClass : '',
     performAction:function(module,action){
         switch(module){
             case appConstants.PUT_BACK:
@@ -37139,9 +37140,14 @@ var Button1 = React.createClass({displayName: "Button1",
         }
     },
     render: function() { 
+       if(this.props.buttonChecklist != undefined){
+            _checklistClass = 'checklistButtonSubmit';
+       }else{
+            _checklistClass = '';
+       }
         if(this.props.disabled == false)
             return (
-                React.createElement("a", {className: this.props.color == "orange"? "custom-button orange" : "custom-button black", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
+                React.createElement("a", {className: this.props.color == "orange"? "custom-button orange "+_checklistClass : "custom-button black "+_checklistClass, onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
             );        
         else
             return (
@@ -37316,36 +37322,38 @@ var loginstore = require('../../stores/loginstore');
 var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
 var allSvgConstants = require('../../constants/svgConstants');
-
+var resourceConstants = require('../../constants/resourceConstants');
 
 function getState(){
- return {
-  flag: loginstore.getFlag(),
-  seatList : loginstore.seatList(),
-  username : 'kerry',
-  password : 'gorapj'
-}
+   return {
+      flag: loginstore.getFlag(),
+      seatList : loginstore.seatList(),
+      username : 'kerry',
+      password : 'gorapj'
+  }
 }
 
 var LoginPage = React.createClass({displayName: "LoginPage",
-  virtualKeyBoard: '',
-  mixins:[LinkedStateMixin],
+ mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
-  },
-  
-  handleLogin: function(newItem){
+  }, 
+  handleLogin: function(e){    
     var data = {
-      'data_type': 'auth',
-      'data': {
-        'username': this.state.username,
-        'password': this.state.password,
-        'seat_name': this.refs.seat_name.value
+        'data_type': 'auth',
+        'data': {
+              'username': this.state.username,
+              'password': this.state.password,
+              'seat_name': this.refs.seat_name.value
+          }
       }
-    }
-    CommonActions.login(data);
-  },
-  componentDidMount: function(){    
+    CommonActions.login(data);  
+  }, 
+  componentDidMount: function(){
+    mainstore.addChangeListener(this.onChange);
+    loginstore.addChangeListener(this.onChange);
+    CommonActions.webSocketConnection(); 
+    CommonActions.listSeats();   
     virtualKeyBoard = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -37362,24 +37370,18 @@ var LoginPage = React.createClass({displayName: "LoginPage",
         el.value = '';
       },
       accepted: function(e, keypressed, el) {
-        if (e.target.value === '') {
-        } else {
-          var data = {
-            "event_name": "process_barcode",
-            "event_data": {
-              "barcode": e.target.value,
-            }
-          }
-
-        }
+        var usernameValue = document.getElementById('username').value;
+        var passwordValue = document.getElementById('password').value;
+        
+        console.log(usernameValue , passwordValue);
+        if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
+          $('#loginBtn').prop('disabled', false);
+        }else{
+          $('#loginBtn').prop('disabled', true); 
+        }    
       }
-    });
-
-    mainstore.addChangeListener(this.onChange);
-    loginstore.addChangeListener(this.onChange);
-    CommonActions.webSocketConnection(); 
-    CommonActions.listSeats(); 
-
+    }); 
+  
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -37398,82 +37400,82 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
   render: function(){
     var d = new Date();
-    var n = d.getFullYear();
+    var n = d.getFullYear();   
     var seatData;
-    var display = this.state.flag === true ? 'block' : 'none';
-    if(this.state.seatList.length > 0){
-      seatData = this.state.seatList[0].map(function(data, index){ 
-        if(data.hasOwnProperty('seat_type')){
-         return (
-          React.createElement("option", {key: 'pps' + index, value: data.seat_type+'_'+data.pps_id}, "PPS ", data.seat_type, " ", data.pps_id)
-          )
-       }else{console.log(data);
-         return( React.createElement("option", {key: index, value: data}, data))
-       }
-     });
-    }
-    if(this.state.flag === false){
-      return (
+      var display = this.state.flag === true ? 'block' : 'none';
+      if(this.state.seatList.length > 0){
+          seatData = this.state.seatList[0].map(function(data, index){ 
+            if(data.hasOwnProperty('seat_type')){
+               return (
+                  React.createElement("option", {key: 'pps' + index, value: data.seat_type+'_'+data.pps_id}, "PPS ", data.seat_type, " ", data.pps_id)
+                )
+            }else{console.log(data);
+                 return( React.createElement("option", {key: index, value: data}, data))
+            }
+          });
+      }
+      if(this.state.flag === false){
+        return (
         React.createElement("div", null, 
-        React.createElement("div", {className: "headerLoginPage"}, 
-        React.createElement("div", {className: "logo"}, 
-        React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
-        ), 
-        React.createElement("div", {className: "header-actions"}, 
-        React.createElement("img", {classNam: true, e: "mapImg", src: allSvgConstants.headerbg})
-        )
-        ), 
-        React.createElement("div", {className: "bodyContent"}, 
-        React.createElement("div", {className: "bodyLoginPage"}, 
-        React.createElement("div", {className: "factoryImage"}, 
-        React.createElement("img", {src: allSvgConstants.factoryImg})
-        ), 
-        React.createElement("div", {className: "userFormLoginPage"}, 
-        React.createElement("form", null, 
-        React.createElement("select", {className: "selectPPS", ref: "seat_name"}, 
-        seatData
-        ), 
+          React.createElement("div", {className: "headerLoginPage"}, 
+                  React.createElement("div", {className: "logo"}, 
+                    React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
+                  ), 
+                  React.createElement("div", {className: "header-actions"}, 
+                      React.createElement("img", {className: "mapImg", src: allSvgConstants.headerbg})
+                  )
+          ), 
+          React.createElement("div", {className: "bodyContent"}, 
+                React.createElement("div", {className: "bodyLoginPage"}, 
+                    React.createElement("div", {className: "factoryImage"}, 
+                        React.createElement("img", {src: allSvgConstants.factoryImg})
+                    ), 
+                    React.createElement("div", {className: "userFormLoginPage"}, 
+                        React.createElement("form", null, 
+                            React.createElement("select", {className: "selectPPS", ref: "seat_name"}, 
+                               seatData
+                            ), 
 
 
-        React.createElement("div", {className: "form-group"}, 
-        React.createElement("label", null, "User Name :"), 
-        React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
-        ), 
-        React.createElement("div", {className: "form-group"}, 
-        React.createElement("label", null, "Password :"), 
-        React.createElement("input", {type: "Password", className: "form-control", id: "password", placeholder: "Enter Password", valueLink: this.linkState('password')})
-        ), 
-        React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
-        React.createElement("option", {value: "english"}, "English"), 
-        React.createElement("option", {value: "chinese"}, "Chinese")
-        ), 
-        React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", onClick: this.handleLogin, value: "Login"})
+              React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", null, _(resourceConstants.USERNAME)), 
+                  React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
+              ), 
+              React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", null, _(resourceConstants.PASSWORD)), 
+                  React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", valueLink: this.linkState('password')})
+              ), 
+              React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
+                  React.createElement("option", {value: "english"}, "English"), 
+                  React.createElement("option", {value: "chinese"}, "Chinese")
+              ), 
+              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", onClick: this.handleLogin, value: "Login"})
+          )
+          )
+                )
+            ), 
+            React.createElement("div", {className: "copyright"}, 
+                "Copyright © ", n, " GreyOrange Pte Ltd"
+            )
         )
-        )
-        )
-        ), 
-        React.createElement("div", {className: "copyright"}, 
-        "Copyright © ", n, " GreyOrange Pte Ltd"
-        )
-        )
-        );
-}
-else{ 
-  return(
-   React.createElement("div", {className: "main"}, 
-   React.createElement(Operator, null)
-   )
-   
-   )
-}
+      );
+    }
+     else{ 
+      return(
+         React.createElement("div", {className: "main"}, 
+            React.createElement(Operator, null)
+          )
+        
+      )
+    }
 
-
-}
+    
+  }
 });
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/svgConstants":278,"../../stores/loginstore":286,"../../stores/mainstore":287,"../Operator":250,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],243:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../constants/svgConstants":278,"../../stores/loginstore":286,"../../stores/mainstore":287,"../Operator":250,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],243:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -37482,6 +37484,8 @@ var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
 var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
+var jqueryPosition = require('jquery-ui/position');
+var virtualkeyboard = require('virtual-keyboard');
 
 var component,title;
 
@@ -37493,6 +37497,33 @@ function getStateData(){
       data:modalData,
       type:modalType
     };
+}
+
+function attachKeyboard(id){ 
+    virtualKeyBoard1 = $('#'+id).keyboard({
+            layout: 'custom',
+            customLayout: {
+            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
+            'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+            },
+            css: {
+              container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+            },
+            reposition: true,
+            alwaysOpen: false,
+            initialFocus: true,
+            visible : function(e, keypressed, el){
+              el.value = '';
+            },
+            accepted: function(e, keypressed, el) {
+
+            }
+        });
+   $('#'+id).data('keyboard').reveal(); 
+}
+
+function removeTextField(){
+  $('.modal-body').find('input:text').val('');
 }
 
 function loadComponent(modalType,modalData){ 
@@ -37528,7 +37559,7 @@ function loadComponent(modalType,modalData){
       component.push((React.createElement("div", null, 
         React.createElement("div", {className: "modalContent removeBorder"}, 
             React.createElement("div", {className: "image1"}, 
-                React.createElement("img", {src: allSvgConstants.scan})
+                React.createElement("img", {src: allSvgConstants.iconBar})
             ), 
             React.createElement("div", {className: "content1"}, "Scan Bin Barcode"), 
             React.createElement("div", {className: "clearfix"})
@@ -37541,7 +37572,53 @@ function loadComponent(modalType,modalData){
        ));      
       
       title = "Associate tote with bin";
-      break;  
+      break;
+    case "pick_checklist":
+      component = [];
+      footer = [];
+      rowData =[];
+      title = "Input Extra Details";
+  
+        var rowData = modalData.checklist_data.map(function(data,index){
+            if(modalData.checklist_index === (index+1) || modalData.checklist_index === null || modalData.checklist_index === undefined){
+              return (
+                  data.map(function(data1,index1){
+                    var keyvalue = Object.keys(data1);
+                    var inputBoxValue = data1[keyvalue]["value"];
+                    console.log("data keyvalue = " +data1[keyvalue]["value"]);
+                      return (React.createElement("div", null, 
+                                  React.createElement("div", {className: "row dataCaptureHead removeBorder"}, 
+                                      keyvalue
+                                  ), 
+                                  React.createElement("div", {className: "row dataCaptureInput removeBorder"}, 
+                                      React.createElement("input", {type: "text", id: "checklist_field"+index1, value: "inputBoxValue", onClick: attachKeyboard.bind(this, 'checklist_field'+index1)})
+                                  )
+                              )
+                        );
+                  })
+                );
+                  
+            }
+            else{}
+          });
+      return (
+              component.push((
+                React.createElement("div", null, 
+                  rowData, 
+                      React.createElement("div", {className: "modal-footer removeBorder"}, 
+                          React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                                React.createElement("div", {className: "row removeBorder"}, 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement("input", {className: "btn btn-default checklistButtonClear", type: "button", value: "Clear All", onClick: removeTextField})), 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", buttonChecklist: "checklist"}))
+                                )
+                          )
+                     )
+                )
+               ))   
+               );  
+     
+      
+      break;    
     default:
       component = null;
       title = null;
@@ -37550,12 +37627,15 @@ function loadComponent(modalType,modalData){
 }
 
 var Modal = React.createClass({displayName: "Modal",
-  componentDidMount:function(){
+  virtualKeyBoard1 : '',
+  componentDidMount:function(id){
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
     });*/
+    
   },
+ 
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -37564,6 +37644,7 @@ var Modal = React.createClass({displayName: "Modal",
   },
   onChange: function(){ 
     this.setState(getStateData());
+   // virtualKeyBoard1.getkeyboard().close();
   },
   render: function () {
     return (React.createElement("div", {className: "modal fade"}, 
@@ -37582,7 +37663,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/mainstore":287,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"react":230}],244:[function(require,module,exports){
+},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/mainstore":287,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],244:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -37953,6 +38034,7 @@ var BoxSerial = require('./BoxSerial.js');
 var Modal = require('./Modal/Modal');
 var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
+var CommonActions = require('../actions/CommonActions');
 
 function getStateData(){
   return {
@@ -37964,12 +38046,13 @@ function getStateData(){
            PickFrontProductDetails : PickFrontStore.productDetails(),
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
            PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
-          PickFrontServerNavData : PickFrontStore.getServerNavData(),
-          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
-          PickFrontItemUid : PickFrontStore.getItemUid(),
-          PickFrontSlotDetails :PickFrontStore.getCurrentSlot()
-
-
+           PickFrontServerNavData : PickFrontStore.getServerNavData(),
+           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+           PickFrontItemUid : PickFrontStore.getItemUid(),
+           PickFrontSlotDetails :PickFrontStore.getCurrentSlot(),
+           PickFrontChecklistDetails :PickFrontStore.getChecklistDetails(),
+           PickFrontChecklistIndex : PickFrontStore.getChecklistIndex(),
+           PickFrontChecklistOverlayStatus :PickFrontStore.getChecklistOverlayStatus()
     };
 };
 
@@ -37980,6 +38063,9 @@ var PickFront = React.createClass({displayName: "PickFront",
     return getStateData();
   },
   componentWillMount: function(){
+    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
+        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }
     PickFrontStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
@@ -37987,12 +38073,33 @@ var PickFront = React.createClass({displayName: "PickFront",
   },
   onChange: function(){ 
 	this.setState(getStateData());
+   if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
+        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }
   },
   getNotificationComponent:function(){
     if(this.state.PickFrontNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, navMessagesJson: this.props.navMessagesJson})
     else
       this._notification = "";
+  },
+  showModal:function(data,index){
+    var data ={
+      'checklist_data' : data,
+      "checklist_index" : index
+    };
+    if(this.state.PickFrontChecklistOverlayStatus === true ){
+    setTimeout((function(){CommonActions.showModal({
+              data:data,
+              type:'pick_checklist'
+      });
+      $('.modal').modal();
+      return false;
+      }),0)
+
+    }
+    else {}
+
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -38078,6 +38185,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         return true;
     }
   },
+  
   render: function(data){
 	  this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
@@ -38095,7 +38203,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../constants/appConstants":275,"../stores/PickFrontStore":283,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductDetails.js":253,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],253:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickFrontStore":283,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductDetails.js":253,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],253:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -38473,6 +38581,8 @@ var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
+var TabularData = require('./TabularData');
+
 
 
 function getStateData(){
@@ -38486,7 +38596,8 @@ function getStateData(){
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
            PutBackServerNavData : PutBackStore.getServerNavData(),
-           PutBackItemUid : PutBackStore.getItemUid()
+           PutBackItemUid : PutBackStore.getItemUid(),
+           PutBackReconciliation : PutBackStore.getReconcileData()
 
     };
 }
@@ -38509,6 +38620,7 @@ var PutBack = React.createClass({displayName: "PutBack",
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
+      case appConstants.PUT_BACK_SCAN_TOTE:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -38537,6 +38649,27 @@ var PutBack = React.createClass({displayName: "PutBack",
               )
             );
         break;
+      case appConstants.PUT_BACK_TOTE_CLOSE:
+          var subComponent='';
+          var messageType = 'large';
+            subComponent=(
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement("div", {className: "audit-reconcile-left"}, 
+                    React.createElement(TabularData, {data: this.state.PutBackReconciliation})
+                  )
+                )
+              );
+            messageType = "small";
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                subComponent, 
+                 React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "BACK", module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "CLOSE", module: appConstants.PUT_BACK, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
+                )
+              )
+            );
+        break;  
       default:
         return true; 
     }
@@ -38548,7 +38681,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     else
       this._notification = "";
   },
-  render: function(data){
+  render: function(data){ console.log(this.state.PutBackReconciliation);
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
       return (
@@ -38565,7 +38698,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":275,"../stores/PutBackStore":284,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"react":230}],261:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/PutBackStore":284,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"./TabularData":273,"react":230}],261:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -39094,7 +39227,7 @@ var svgConstants = require('../constants/svgConstants');
 
 var navData = {
     "putBack": [{
-        "screen_id": "put_back_stage",
+        "screen_id": ["put_back_stage","put_back_scan_tote"],
         "code": "Common.000",
         "image": svgConstants.stage,
         "message": "Stage Bin or Scan Item",
@@ -39102,7 +39235,7 @@ var navData = {
         "level": 1,
         "type": 'passive'
     }, {
-        "screen_id": "put_back_scan",
+        "screen_id": ["put_back_scan","put_back_tote_close"],
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan & Confirm",
@@ -39240,6 +39373,8 @@ var appConstants = {
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
 	PUT_BACK_SCAN : "put_back_scan",
+	PUT_BACK_TOTE_CLOSE : "put_back_tote_close",
+	PUT_BACK_SCAN_TOTE :'put_back_scan_tote',
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_FRONT_SCAN:"put_front_scan",
@@ -39296,7 +39431,9 @@ var resourceConstants = {
 	VIEW_MORE: 'View More',
 	TBL_HEADER: 'Box Serial Numbers',
 	NO_RECONCILE: 'No Items To Reconcile',
-	YES_RECONCILE:'List Of Items To Reconcile'
+	YES_RECONCILE:'List Of Items To Reconcile',
+	USERNAME :'User Name',
+	PASSWORD : 'Password'
 };
 module.exports = resourceConstants;
 
@@ -39314,7 +39451,8 @@ var allSvgConstants = {
 	factoryImg : 'assets/images/factoryImage.png',
 	forma1 : 'assets/images/Forma1.png',
 	headerbg : 'assets/images/headerbg.png',
-	scanHeader :'assets/images/scan_header.png'
+	scanHeader :'assets/images/scan_header.png',
+	iconBar :'assets/images/Icon.png'
 }
 
 module.exports = allSvgConstants;
@@ -39796,6 +39934,40 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.box_serials;
     },
 
+     getChecklistDetails:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.pick_checklist.length > 0){
+                return _PickFrontData.checklist_details.pick_checklist;
+            }
+            else{
+                return null;
+            }     
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistIndex:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.checklist_index!= null){
+                return _PickFrontData.checklist_details.checklist_index;
+            } 
+            else{
+                return null;
+            }    
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistOverlayStatus:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            return _PickFrontData.checklist_details.display_checklist_overlay;
+          }else{
+            return null;
+        }
+    },
+
     getCurrentSelectedBin: function() {
         if (_PickFrontData["ppsbin_list"] != undefined) {
             var binData = {};
@@ -39838,7 +40010,6 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 module.exports = PickFrontStore;
 
 },{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],284:[function(require,module,exports){
-
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -39849,157 +40020,194 @@ var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
-var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent, _serverNavData;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
 
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
 
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
 
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
 
-  toggleBinSelection:function(bin_id){
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.ppsbin_id == bin_id){
-        if(value["selected_for_staging"]!=undefined)
-          value["selected_for_staging"] =  !value["selected_for_staging"];
-        else
-          value["selected_for_staging"] = true;
-      }else if(value["selected_for_staging"]!=undefined)
-        value["selected_for_staging"] = false;
-    });
-    if(_PutBackData.notification_list.length != 0){
-      _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
-    }else{
-     // _PutBackData.notification_list = undefined;
-    }
-  },
-
-  getStageActiveStatus:function(){
-    var flag = false;
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
-        flag = true;
-    });
-    return flag;
-  },
-
-  getStageAllActiveStatus:function(){
-    var flag = false;
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.ppsbin_count > 0 && value.ppsbin_state != "staged")
-        flag = true;
-    });
-    return flag;
-  },
-  getNavData : function () {
-    _NavData = navConfig.putBack;
-    navConfig.putBack.map(function(data,index){
-       if(_PutBackData.screen_id === data.screen_id ){
-          _NavData[index].type = 'active'; 
-          _NavData[index].showImage = true; 
-        }else{
-          _NavData[index].type = 'passive';
-          _NavData[index].showImage = false; 
+    toggleBinSelection: function(bin_id) {
+        _PutBackData["ppsbin_list"].map(function(value, index) {
+            if (value.ppsbin_id == bin_id) {
+                if (value["selected_for_staging"] != undefined)
+                    value["selected_for_staging"] = !value["selected_for_staging"];
+                else
+                    value["selected_for_staging"] = true;
+            } else if (value["selected_for_staging"] != undefined)
+                value["selected_for_staging"] = false;
+        });
+        if (_PutBackData.notification_list.length != 0) {
+            _PutBackData.notification_list[0].description = resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED;
+        } else {
+            // _PutBackData.notification_list = undefined;
         }
-    });
-    return _NavData;
-  },
-  getServerNavData : function(){
-    if(_PutBackData.header_msge_list.length > 0){
-      _serverNavData = _PutBackData.header_msge_list[0];
-      return _serverNavData;
-    }else{
-      return null;
-    }
-  },
-  getNotificationData : function() { 
-      return _PutBackData.notification_list[0];
-  },
-  setPutBackData:function(data){
-    _PutBackData = data;
-  },
+    },
 
-  getStateData:function(){
-    return _PutBackData;
-  },
-
-  getBinData:function(){
-    var binData = {};
-    binData["structure"] = _PutBackData.structure;
-    binData["ppsbin_list"] = _PutBackData.ppsbin_list;
-    return binData;
-  },
-
-  getScreenId:function(){
-    return _PutBackData.screen_id;
-  },
-  stageOneBin:function(){
-    var data ={};
-    _PutBackData.ppsbin_list.map(function(value,index){ 
-         if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
-          data["event_name"] = "stage_ppsbin";
-          data["event_data"] = {};
-          data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+    getStageActiveStatus: function() {
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var flag = false;
+            _PutBackData["ppsbin_list"].map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true)
+                    flag = true;
+            });
+            return flag;
         }
-    });
+    },
 
-   utils.postDataToInterface(data, _PutBackData.seat_name);
+    getStageAllActiveStatus: function() {
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var flag = false;
+            _PutBackData["ppsbin_list"].map(function(value, index) {
+                if (value.ppsbin_count > 0 && value.ppsbin_state != "staged")
+                    flag = true;
+            });
+            return flag;
+        }
+    },
+    getNavData: function() {
+        _NavData = navConfig.putBack;
+        _NavData.map(function(data, index) {
+            if (data.screen_id instanceof Array) {
+                if (data.screen_id.indexOf(_PutBackData.screen_id) != -1) {
+                    _NavData[index].type = 'active';
+                } else {
+                    _NavData[index].type = 'passive';
+                }
+            } else if (_PutBackData.screen_id === data.screen_id) {
+                _NavData[index].type = 'active';
+            } else {
+                _NavData[index].type = 'passive';
+            }
+        });
 
-  },
+        return _NavData;
+    },
+    getServerNavData: function() {
+        if (_PutBackData.header_msge_list.length > 0) {
+            _serverNavData = _PutBackData.header_msge_list[0];
+            return _serverNavData;
+        } else {
+            return null;
+        }
+    },
+    getNotificationData: function() {
+        return _PutBackData.notification_list[0];
+    },
+    setPutBackData: function(data) {
+        _PutBackData = data;
+    },
 
-  stageAllBin:function(){
-    var data ={};
-    data["event_name"] = "stage_all";
-    data["event_data"]= '';
-     utils.postDataToInterface(data, _PutBackData.seat_name);
-  },
-  scanDetails : function(){ 
-    _scanDetails = _PutBackData.scan_details;
-    return _scanDetails;
-  },
-  productDetails : function(){
-    _prodDetails = _PutBackData.product_info;
-    return _prodDetails;
-  },
-  getItemUid : function(){
-    return _PutBackData.item_uid;
-  }
+    getStateData: function() {
+        return _PutBackData;
+    },
+
+    getBinData: function() {
+        var binData = {};
+        binData["structure"] = _PutBackData.structure;
+        binData["ppsbin_list"] = _PutBackData.ppsbin_list;
+        return binData;
+    },
+
+    getScreenId: function() {
+        return _PutBackData.screen_id;
+    },
+    stageOneBin: function() {
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var data = {};
+            _PutBackData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data["event_name"] = "stage_ppsbin";
+                    data["event_data"] = {};
+                    data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+                }
+            });
+
+            utils.postDataToInterface(data, _PutBackData.seat_name);
+        }
+    },
+
+    stageAllBin: function() {
+        var data = {};
+        data["event_name"] = "stage_all";
+        data["event_data"] = '';
+        utils.postDataToInterface(data, _PutBackData.seat_name);
+    },
+    scanDetails: function() {
+        _scanDetails = _PutBackData.scan_details;
+        return _scanDetails;
+    },
+    productDetails: function() {
+        _prodDetails = _PutBackData.product_info;
+        return _prodDetails;
+    },
+    getItemUid: function() {
+        return _PutBackData.item_uid;
+    },
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType) {
+        this.text = text;
+        this.status = status;
+        this.selected = selected;
+        this.size = size;
+        this.border = border;
+        this.grow = grow;
+        this.bold = bold;
+        this.disabled = disabled;
+        this.centerAlign = centerAlign;
+        this.type = type;
+        this.buttonType = buttonType;
+    },
+    getReconcileData: function() {
+        if (_PutBackData.hasOwnProperty('reconciliation')) {
+            var data = {};
+            data["header"] = "Box Serial Numbers";
+            data["tableRows"] = [];
+            var self = this;
+            data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
+            _PutBackData.reconciliation.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
+
+            });
+            return data;
+        }
+    }
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.action.actionType) {
-    case ActionTypes.TOGGLE_BIN_SELECTION:
-      PutBackStore.toggleBinSelection(action.action.bin_id);
-      PutBackStore.emitChange();
-      break;
+    switch (action.action.actionType) {
+        case ActionTypes.TOGGLE_BIN_SELECTION:
+            PutBackStore.toggleBinSelection(action.action.bin_id);
+            PutBackStore.emitChange();
+            break;
 
-     case ActionTypes.SET_PUT_BACK_DATA:
-      PutBackStore.setPutBackData(action.action.data);
-      PutBackStore.emitChange();
-      break;
+        case ActionTypes.SET_PUT_BACK_DATA:
+            PutBackStore.setPutBackData(action.action.data);
+            PutBackStore.emitChange();
+            break;
 
-      case ActionTypes.STAGE_ONE_BIN: 
-        PutBackStore.stageOneBin();
-        PutBackStore.emitChange();
-      break; 
+        case ActionTypes.STAGE_ONE_BIN:
+            PutBackStore.stageOneBin();
+            PutBackStore.emitChange();
+            break;
 
-     case ActionTypes.STAGE_ALL: 
-      PutBackStore.stageAllBin();
-      PutBackStore.emitChange();
-      break;  
-    
-    default:
-      // do nothing
-  }
+        case ActionTypes.STAGE_ALL:
+            PutBackStore.stageAllBin();
+            PutBackStore.emitChange();
+            break;
+
+        default:
+            // do nothing
+    }
 
 });
 

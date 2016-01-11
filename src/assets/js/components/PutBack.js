@@ -47,7 +47,6 @@ var PutBack = React.createClass({
     this.setState(getStateData());
   },
   getScreenComponent : function(screen_id){
-    alert(screen_id);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:

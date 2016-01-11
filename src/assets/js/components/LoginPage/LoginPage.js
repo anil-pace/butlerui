@@ -87,11 +87,11 @@ var LoginPage = React.createClass({
     var n = d.getFullYear();   
     var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
-      if(this.state.seatList.length > 0){
+      if(this.state.seatList.length > 0){ 
           seatData = this.state.seatList[0].map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                return (
-                  <option key={'pps' + index} value={data.seat_type+'_'+data.pps_id} >PPS {data.seat_type} {data.pps_id}</option>
+                  <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_type} {data.pps_id}</option>
                 )
             }else{console.log(data);
                  return( <option key={index} value={data} >{data}</option>)

@@ -119,7 +119,7 @@
 {
 	"state_data": {
 		"seat_name": "back_10",
-		"screen_id": "put_back_tote_scan",
+		"screen_id": "put_back_scan_tote",
 		"screen_version": "1",
 		"structure": [2, 4],
 		"notification_list": [{

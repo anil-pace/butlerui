@@ -21,9 +21,9 @@ var LoginPage = React.createClass({
  mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
-  },
-  handleLogin: function(newItem){
-      var data = {
+  }, 
+  handleLogin: function(e){    
+    var data = {
         'data_type': 'auth',
         'data': {
               'username': this.state.username,
@@ -31,13 +31,13 @@ var LoginPage = React.createClass({
               'seat_name': this.refs.seat_name.value
           }
       }
-    CommonActions.login(data);
-  },
+    CommonActions.login(data);  
+  }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
-    CommonActions.listSeats(); 
+    CommonActions.listSeats();   
     virtualKeyBoard = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -54,10 +54,18 @@ var LoginPage = React.createClass({
         el.value = '';
       },
       accepted: function(e, keypressed, el) {
+        var usernameValue = document.getElementById('username').value;
+        var passwordValue = document.getElementById('password').value;
         
+        console.log(usernameValue , passwordValue);
+        if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
+          $('#loginBtn').prop('disabled', false);
+        }else{
+          $('#loginBtn').prop('disabled', true); 
+        }    
       }
-    });
- 
+    }); 
+  
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -76,7 +84,7 @@ var LoginPage = React.createClass({
 
   render: function(){
     var d = new Date();
-    var n = d.getFullYear();
+    var n = d.getFullYear();   
     var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
@@ -125,7 +133,7 @@ var LoginPage = React.createClass({
                   <option value="english">English</option>
                   <option value="chinese">Chinese</option>
               </select>
-              <input type="button" className="btn btn-default loginButton loginButton"  onClick={this.handleLogin} value="Login" />
+              <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" onClick={this.handleLogin} value="Login" />
           </form>
           </div>
                 </div>

@@ -10,6 +10,8 @@ var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
+var TabularData = require('./TabularData');
+
 
 
 function getStateData(){
@@ -23,7 +25,8 @@ function getStateData(){
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
            PutBackServerNavData : PutBackStore.getServerNavData(),
-           PutBackItemUid : PutBackStore.getItemUid()
+           PutBackItemUid : PutBackStore.getItemUid(),
+           PutBackReconciliation : PutBackStore.getReconcileData()
 
     };
 }
@@ -74,6 +77,27 @@ var PutBack = React.createClass({
               </div>
             );
         break;
+      case appConstants.PUT_BACK_TOTE_CLOSE:
+          var subComponent='';
+          var messageType = 'large';
+            subComponent=(
+                <div className='main-container'>
+                  <div className="audit-reconcile-left">
+                    <TabularData data = {this.state.PutBackReconciliation}/>
+                  </div>
+                </div>
+              );
+            messageType = "small";
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                {subComponent}
+                 <div className = 'staging-action' >
+                  <Button1 disabled = {false} text = {"BACK"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                  <Button1 disabled = {false} text = {"CLOSE"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_CURRENT_AUDIT} color={"orange"} />  
+                </div>
+              </div>
+            );
+        break;  
       default:
         return true; 
     }
@@ -85,7 +109,7 @@ var PutBack = React.createClass({
     else
       this._notification = "";
   },
-  render: function(data){
+  render: function(data){ console.log(this.state.PutBackReconciliation);
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
       return (

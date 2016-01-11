@@ -17,6 +17,14 @@ var navData = {
         "showImage": true,
         "level": 2,
         "type": 'passive'
+    },{
+        "screen_id": "put_back_tote_close",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan & Confirm",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
     }],
     "putFront": [
         [{

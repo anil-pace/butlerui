@@ -9,4 +9,5 @@ function server_messages_list() {
     _("Press PpsBin Button Or Scan a Tote");
     _("User Name");
     _("Password");
+    _("Are you sure you want to close Tote");
 }

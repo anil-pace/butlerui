@@ -44,21 +44,25 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
 
   getStageActiveStatus:function(){
-    var flag = false;
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
-        flag = true;
-    });
-    return flag;
+    if(_PutBackData.hasOwnProperty('ppsbin_list')){
+      var flag = false;
+      _PutBackData["ppsbin_list"].map(function(value,index){
+        if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
+          flag = true;
+      });
+      return flag;
+    }
   },
 
   getStageAllActiveStatus:function(){
-    var flag = false;
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.ppsbin_count > 0 && value.ppsbin_state != "staged")
-        flag = true;
-    });
-    return flag;
+    if(_PutBackData.hasOwnProperty('ppsbin_list')){
+      var flag = false;
+      _PutBackData["ppsbin_list"].map(function(value,index){
+        if(value.ppsbin_count > 0 && value.ppsbin_state != "staged")
+          flag = true;
+      });
+      return flag;
+    }
   },
   getNavData : function () {
     _NavData = navConfig.putBack;
@@ -103,17 +107,18 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     return _PutBackData.screen_id;
   },
   stageOneBin:function(){
-    var data ={};
-    _PutBackData.ppsbin_list.map(function(value,index){ 
-         if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
-          data["event_name"] = "stage_ppsbin";
-          data["event_data"] = {};
-          data["event_data"]["ppsbin_id"] = value.ppsbin_id;
-        }
-    });
+    if(_PutBackData.hasOwnProperty('ppsbin_list')){
+      var data ={};
+      _PutBackData.ppsbin_list.map(function(value,index){ 
+           if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
+            data["event_name"] = "stage_ppsbin";
+            data["event_data"] = {};
+            data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+          }
+      });
 
-   utils.postDataToInterface(data, _PutBackData.seat_name);
-
+     utils.postDataToInterface(data, _PutBackData.seat_name);
+    }
   },
 
   stageAllBin:function(){
@@ -132,6 +137,33 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
   },
   getItemUid : function(){
     return _PutBackData.item_uid;
+  },
+  tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType) {
+    this.text = text;
+    this.status = status;
+    this.selected = selected;
+    this.size = size;
+    this.border = border;
+    this.grow = grow;
+    this.bold = bold;
+    this.disabled = disabled;
+    this.centerAlign = centerAlign;
+    this.type = type;
+    this.buttonType = buttonType;
+  },
+  getReconcileData: function() {
+    if(_PutBackData.hasOwnProperty('reconciliation')){
+        var data = {};
+        data["header"] = "Box Serial Numbers";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
+        _PutBackData.reconciliation.map(function(value, index) {
+            data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity , "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity,  "enabled", false, "large", true, false, false, false, true)]);
+           
+        });
+       return data;
+    }
   }
 });
 

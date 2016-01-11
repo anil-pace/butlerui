@@ -235,3 +235,34 @@
 		"api_version": "1"
 	}
 }
+
+ {
+ 	"state_data": {
+ 		"reconciliation": [{
+ 			"product_sku": "2001",
+ 			"actual_quantity": 2,
+ 			"expected_quantity": 3
+ 		}, {
+ 			"product_sku": "2002",
+ 			"actual_quantity": 0,
+ 			"expected_quantity": 5
+ 		}],
+ 		"notification_list": [],
+ 		"seat_name": "back_10",
+ 		"screen_id": "put_back_tote_close",
+ 		"screen_version ": "1",
+ 		"mode": "put",
+ 		"is_idle": false,
+ 		"logout_allowed": "false",
+ 		"seat_type": "back",
+ 		"time_stamp": "1452370620",
+ 		"header_msge_list": [{
+ 			"details": [],
+ 			"code": "PtB.H.003",
+ 			"description": "Are you sure you want to close Tote",
+ 			"level": "info"
+ 		}],
+ 		"api_version": "1",
+ 		"tote_id": "TOTEAB"
+ 	}
+ }

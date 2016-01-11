@@ -122,11 +122,11 @@ var LoginPage = React.createClass({
 
               <div className="form-group">
                 <label >User Name :</label>
-                  <input type="text" className="form-control" id="username" ref='username' placeholder="Enter User Name" onChange={this.validateLogin} value="kerry"/>
+                  <input type="text" className="form-control" id="username" ref='username' placeholder="Enter User Name" valueLink={this.linkState('username')}/>
               </div>
               <div className="form-group">
                 <label >Password :</label>
-                  <input type="password" className="form-control" id="password" ref='password' placeholder="Enter Password" onChange={this.validateLogin} value="gorapj"/>
+                  <input type="password" className="form-control" id="password" ref='password' placeholder="Enter Password" valueLink={this.linkState('password')}/>
               </div>
               <select className="selectLang" ref='language' onChange={this.changeLanguage}>
                   <option value="english">English</option>

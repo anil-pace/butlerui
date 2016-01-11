@@ -67,7 +67,7 @@ var PickFront = React.createClass({
       'checklist_data' : data,
       "checklist_index" : index
     };
-    if(this.state.PickFrontChecklistDetails.length >0){
+    if(this.state.PickFrontChecklistOverlayStatus === true ){
     setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
@@ -77,6 +77,7 @@ var PickFront = React.createClass({
       }),0)
 
     }
+    else {}
 
   },
   getScreenComponent : function(screen_id){

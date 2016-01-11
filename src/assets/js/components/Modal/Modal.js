@@ -102,7 +102,7 @@ function loadComponent(modalType,modalData){
       title = "Input Extra Details";
   
         var rowData = modalData.checklist_data.map(function(data,index){
-            if(modalData.checklist_index === (index+1)){
+            if(modalData.checklist_index === (index+1) || modalData.checklist_index === null || modalData.checklist_index === undefined){
               return (
                   data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
@@ -121,24 +121,7 @@ function loadComponent(modalType,modalData){
                 );
                   
             }
-            else if(modalData.checklist_index === null || modalData.checklist_index === undefined){
-               return (
-                  data.map(function(data1,index1){
-                    var keyvalue = Object.keys(data1);
-                    var inputBoxValue = data1[keyvalue]["value"];
-                      return (<div>
-                                  <div className="row dataCaptureHead removeBorder">
-                                      {keyvalue}
-                                  </div>
-                                  <div className="row dataCaptureInput removeBorder">
-                                      <input type="text" id={"checklist_field"+index1} value={"inputBoxValue"} onClick={attachKeyboard.bind(this, 'checklist_field'+index1)} />
-                                  </div>
-                                 
-                              </div>
-                        );
-                  })
-                );
-            }
+            else{}
           });
       return (
               component.push((

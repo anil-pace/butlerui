@@ -39170,7 +39170,7 @@ var TableRow = React.createClass({displayName: "TableRow",
     		var center = value.centerAlign == true ? classes = classes + "center-align ":"";
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
-            var extra = value.status == "extra" ? classes = classes + "extra ":"";
+            var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
             if((value.type != undefined && value.type=="button"))
                 comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX}))));
             else
@@ -39580,10 +39580,12 @@ var AuditStore = assign({}, EventEmitter.prototype, {
             if (value.Scan_status != "close")
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", value.Scan_status == "open", "large", false, true, false, false)]);
             else
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false), new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )", "complete", value.Scan_status == "open", "large", false, false, false, false)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false), 
+                    new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )", "complete", value.Scan_status == "open", "large", false, false, false, false)]);
         });
         _AuditData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false),
+                                        new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " ) ", "extra", value.Scan_status == "open", "large", false, true, false, false)]);
         });
         return data;
     },

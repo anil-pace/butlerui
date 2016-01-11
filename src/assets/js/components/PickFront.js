@@ -108,7 +108,7 @@ var PickFront = React.createClass({
               <div className='grid-container'>
                  <div className='main-container'>
                     <Rack rackData = {this.state.PickFrontRackDetails}/>
-                     <PrdtDetails />
+                     <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
                  </div>
               </div>
             );
@@ -127,7 +127,11 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               <div className='grid-container'>
                 <Modal />             
@@ -145,6 +149,11 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -154,6 +163,7 @@ var PickFront = React.createClass({
                 </div>
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
+                    {editButton}
                 </div>
               </div>
             );
@@ -165,7 +175,7 @@ var PickFront = React.createClass({
     }
   },
   
-  render: function(data){
+  render: function(data){ 
 	  this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
 	

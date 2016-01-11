@@ -10,4 +10,5 @@ function server_messages_list() {
     _("User Name");
     _("Password");
     _("Are you sure you want to close Tote");
+    _("Details");
 }

@@ -36658,6 +36658,12 @@ var commonActions = {
       actionType: appConstants.CHECKLIST_SUBMIT,
       data:data
     });
+  },
+  toteAction : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.TOTE_ACTION,
+      data:data
+    });
   }
 
 };
@@ -37090,7 +37096,15 @@ var Button1 = React.createClass({displayName: "Button1",
                         break;
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScan(this.props.barcode);
-                        break;    
+                        break;
+                    case appConstants.CANCEL_TOTE:
+                    case appConstants.CLOSE_TOTE:
+                        var data = {
+                            "close_value" : this.props.status,
+                            "toteId" : this.props.toteId
+                        }
+                        ActionCreators.toteAction(data);
+                        break;            
                      default:
                         return true; 
                 }
@@ -37111,20 +37125,15 @@ var Button1 = React.createClass({displayName: "Button1",
                         break;   
                     case appConstants.CHECKLIST_SUBMIT:
                         var checklist_index = this.props.checkListData.checklist_index;
-                        var checkList = this.props.checkListData;
-                        checkList.checklist_data.map(function(data, index){
-                            if(checkList.checklist_index != null){
-                                if(index === checkList.checklist_index - 1){
-                                    var keyvalue = Object.keys(data);
-                                    checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
-                                }
-                            }else{
-                                var keyvalue = Object.keys(data);
-                                checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
-                            }   
-                        
+                        var checkList = this.props.checkListData;console.log(JSON.stringify(checkList));
+                        checkList.checklist_data[checklist_index-1].map(function(value,index){
+                            var keyvalue = Object.keys(value);
+                            console.log(keyvalue[0]);
+                            console.log(checkList.checklist_data[checklist_index-1][index][keyvalue[0]]);
+                            checkList.checklist_data[checklist_index-1][index][keyvalue[0]].value = document.getElementById("checklist_field"+index).value;
                         });
-                       ActionCreators.checkListSubmit(checkList);
+                        console.log(JSON.stringify(checkList));
+                        ActionCreators.checkListSubmit(checkList);
                         break;       
                      default:
                         return true; 
@@ -37968,7 +37977,7 @@ var PickBack = React.createClass({displayName: "PickBack",
     }
     PickBackStore.addChangeListener(this.onChange);
   },
-  componentWillUnmount: function(){ console.log('test');
+  componentWillUnmount: function(){ 
     PickBackStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
@@ -38097,6 +38106,9 @@ var PickFront = React.createClass({displayName: "PickFront",
 	this.setState(getStateData());
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }else{
+      $('.modal').modal('hide');
+      $('.modal-backdrop').remove();
     }
   },
   getNotificationComponent:function(){
@@ -38120,7 +38132,10 @@ var PickFront = React.createClass({displayName: "PickFront",
       }),0)
 
     }
-    else {}
+    else {
+      $('.modal').modal('hide');
+      $('.modal-backdrop fade in').remove();
+    }
 
   },
   getScreenComponent : function(screen_id){
@@ -38283,6 +38298,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
         var infoDetails = this.props.infoDetails;
         var arr1 = [];
         $.each(infoDetails, function(key, value) {
+            if(key != "product_local_image_url" )
             return arr1.push(
                 React.createElement("tr", null, 
 	  				React.createElement("td", {className: "key"}, " ", key.toUpperCase(), " "), 
@@ -38605,7 +38621,8 @@ function getStateData(){
            PutBackProductDetails : PutBackStore.productDetails(),
            PutBackServerNavData : PutBackStore.getServerNavData(),
            PutBackItemUid : PutBackStore.getItemUid(),
-           PutBackReconciliation : PutBackStore.getReconcileData()
+           PutBackReconciliation : PutBackStore.getReconcileData(),
+           PutBackToteId : PutBackStore.getToteId(),
 
     };
 }
@@ -38672,8 +38689,8 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "BACK", module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "CLOSE", module: appConstants.PUT_BACK, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: "BACK", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "CLOSE", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: true, action: appConstants.CLOSE_TOTE, color: "orange"})
                 )
               )
             );
@@ -39414,7 +39431,10 @@ var appConstants = {
 	SET_SERVER_MESSAGES : 'SET_SERVER_MESSAGES',
 	CHANGE_LANGUAGE :'CHANGE_LANGUAGE',
 	SET_LANGUAGE :'SET_LANGUAGE',
-	CHECKLIST_SUBMIT :'CHECKLIST_SUBMIT'
+	CHECKLIST_SUBMIT :'CHECKLIST_SUBMIT',
+	CANCEL_TOTE :'CANCEL_TOTE',
+	CLOSE_TOTE : 'CLOSE_TOTE',
+	TOTE_ACTION :'TOTE_ACTION'
 
 };
 
@@ -39422,8 +39442,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.211:8888/ws",
-	INTERFACE_IP : "https://192.168.2.211:5000"
+	WEBSOCKET_IP : "ws://192.168.1.95:8888/ws",
+	INTERFACE_IP : "https://192.168.1.95:5000"
 };
 
 module.exports = configConstants;
@@ -40188,6 +40208,13 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             });
             return data;
         }
+    },
+    getToteId : function(){
+        if(_PutBackData.hasOwnProperty('tote_id')){
+            return _PutBackData.tote_id;
+        }else{
+            return null;
+        }
     }
 });
 
@@ -40622,7 +40649,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         
       }
     };
+    console.log(JSON.stringify(data));
     utils.postDataToInterface(data, _seatName);
+  },
+  sendToteData: function(data){
+    var data = {
+      "event_name": "confirm_close_tote",
+      "event_data": {
+        "close_value" : data.close_value,
+        "barcode" : data.toteId
+        
+      }
+    };
+    console.log(data);
+   utils.postDataToInterface(data, _seatName); 
   }
 
 });
@@ -40708,7 +40748,12 @@ AppDispatcher.register(function(payload){
        mainstore.showSpinner();
        mainstore.checkListSubmit(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;                      
+      break;
+    case appConstants.TOTE_ACTION:
+       mainstore.showSpinner();
+       mainstore.sendToteData(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;                        
     default:
       return true;
   }

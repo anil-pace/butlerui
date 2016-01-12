@@ -45,5 +45,14 @@ function server_messages_list() {
     _("Processing. Please wait and scan later");
     _("Waiting for rack");
     _("Current PPS mode does not support back seat. Please logout.");
+    _("Scan items and place in Bin {0}");
+    _("Stage Bin or Scan Entity");
+    _("Place Entity in Bin and Press PPTL");
+    _("Are you sure you want to close Tote");
+    _("Scan Tote / Stage PpsBin");
+    _("Item Not Found in Tote");
+    _("Tote already opened.Scan some other tote");
+    _("Tote already closed.Scan some other tote");
+    _("No matching tote found");
 
 }

@@ -185,6 +185,12 @@ var commonActions = {
       actionType: appConstants.CHECKLIST_SUBMIT,
       data:data
     });
+  },
+  toteAction : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.TOTE_ACTION,
+      data:data
+    });
   }
 
 };

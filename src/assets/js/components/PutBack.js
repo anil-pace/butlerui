@@ -26,7 +26,8 @@ function getStateData(){
            PutBackProductDetails : PutBackStore.productDetails(),
            PutBackServerNavData : PutBackStore.getServerNavData(),
            PutBackItemUid : PutBackStore.getItemUid(),
-           PutBackReconciliation : PutBackStore.getReconcileData()
+           PutBackReconciliation : PutBackStore.getReconcileData(),
+           PutBackToteId : PutBackStore.getToteId(),
 
     };
 }
@@ -93,8 +94,8 @@ var PutBack = React.createClass({
               <div className='grid-container audit-reconcilation'>
                 {subComponent}
                  <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"BACK"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} color={"black"}/>
-                  <Button1 disabled = {false} text = {"CLOSE"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_CURRENT_AUDIT} color={"orange"} />  
+                  <Button1 disabled = {false} text = {"BACK"} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={false} action={appConstants.CANCEL_TOTE} color={"black"}/>
+                  <Button1 disabled = {false} text = {"CLOSE"} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={true} action={appConstants.CLOSE_TOTE} color={"orange"} />  
                 </div>
               </div>
             );

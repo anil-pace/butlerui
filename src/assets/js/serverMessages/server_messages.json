@@ -2,6 +2,7 @@
     "PtB.B.001": "Scan item / Stage pps bin",
     "PtB.H.003": "Are you sure you want to close Tote",
     "PkF.A.012" : "Scan {0} items",
+    "PkF.E.013" : "Scan items and place in Bin {0}",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",

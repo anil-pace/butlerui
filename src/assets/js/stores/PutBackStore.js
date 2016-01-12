@@ -168,6 +168,13 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             });
             return data;
         }
+    },
+    getToteId : function(){
+        if(_PutBackData.hasOwnProperty('tote_id')){
+            return _PutBackData.tote_id;
+        }else{
+            return null;
+        }
     }
 });
 

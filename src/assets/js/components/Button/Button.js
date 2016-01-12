@@ -16,7 +16,16 @@ var Button1 = React.createClass({
                         break;
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScan(this.props.barcode);
-                        break;    
+                        break;
+                    case appConstants.CANCEL_TOTE:
+                    case appConstants.CLOSE_TOTE:
+                        var data = {
+                            "close_value" : this.props.status,
+                            "toteId" : this.props.toteId
+                        }
+                        console.log(data);
+                        ActionCreators.toteAction(data);
+                        break;            
                      default:
                         return true; 
                 }

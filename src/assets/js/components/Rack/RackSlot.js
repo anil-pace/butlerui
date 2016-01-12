@@ -8,7 +8,6 @@ var RackSlot = React.createClass({
 		var slotIndexArrays = this.props.slotIndexArrays;
 		var totalRackHeight = this.props.totalRackHeight;
 		var noOfRows = this.props.noOfRows;
-		console.log("totalRackHeight = " + totalRackHeight);
 		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
 		var type = this.props.type;
 		//var calculateHeight = this.props.slotHeightData;

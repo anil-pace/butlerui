@@ -42,7 +42,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _showSpinner = false;
     _seatData = data;
     _seatName = data.seat_name;
-    _currentSeat  = data.mode + "_" + data.seat_type;    
+    _currentSeat  = data.mode + "_" + data.seat_type;
   },
   cancelScan : function(barcode){
     var data = {
@@ -173,12 +173,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   changeLanguage : function(data){
     utils.changeLanguage(data);
+  },
+  checkListSubmit: function(data){
+     var data = {
+      "event_name": "pick_checklist_update",
+      "event_data": {
+        "pick_checklist" : data,
+        
+      }
+    };
+    utils.postDataToInterface(data, _seatName);
   }
 
 });
 
-AppDispatcher.register(function(payload){ 
-  var action = payload.action; 
+AppDispatcher.register(function(payload){    
+  var action = payload.action; console.log(action.actionType);
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
       utils.connectToWebSocket(); 
@@ -253,7 +263,12 @@ AppDispatcher.register(function(payload){
       break; 
     case appConstants.SET_LANGUAGE:
        mainstore.emit(CHANGE_EVENT);
-      break;                    
+      break;
+    case appConstants.CHECKLIST_SUBMIT:
+       mainstore.showSpinner();
+       mainstore.checkListSubmit(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;                      
     default:
       return true;
   }

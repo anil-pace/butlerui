@@ -34,7 +34,24 @@ var Button1 = React.createClass({
                 switch(action){
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScanAll();
-                        break;    
+                        break;   
+                    case appConstants.CHECKLIST_SUBMIT:
+                        var checklist_index = this.props.checkListData.checklist_index;
+                        var checkList = this.props.checkListData;
+                        checkList.checklist_data.map(function(data, index){
+                            if(checkList.checklist_index != null){
+                                if(index === checkList.checklist_index - 1){
+                                    var keyvalue = Object.keys(data);
+                                    checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
+                                }
+                            }else{
+                                var keyvalue = Object.keys(data);
+                                checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
+                            }   
+                        
+                        });
+                       ActionCreators.checkListSubmit(checkList);
+                        break;       
                      default:
                         return true; 
                 }
@@ -71,7 +88,7 @@ var Button1 = React.createClass({
                 return true; 
         }
     },
-    render: function() { 
+    render: function() { console.log(this.props.checkListData);
        if(this.props.buttonChecklist != undefined){
             _checklistClass = 'checklistButtonSubmit';
        }else{

@@ -11,4 +11,5 @@ function server_messages_list() {
     _("Password");
     _("Are you sure you want to close Tote");
     _("Details");
+    _("Scan {0} items");
 }

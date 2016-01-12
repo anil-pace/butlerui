@@ -640,66 +640,66 @@ after container scan
         },
         "logout_allowed": "false",
            "checklist_details":{
-           "checklist_index": 3,
-           "display_checklist_overlay" : true,
-           "pick_checklist": [
-            [
-              {
-                "Data Capture Field 1": {
-                  "Format": "String",
-                  "value" : null
-                }
-              },
-              {
-                "Data Capture Field 2": {
-                  "Format": "String",
-                  "value" : null
-                }
-              }
-            ],
-            [ 
-              {
-                "Data Capture Field 1": {
-                  "Format": "String",
-                  "value" : null
-                }
-              },
-              {
-                "Data Capture Field 2": {
-                  "Format": "String",
-                  "value" : null
-                }
-              }
-            ],
-            [ 
-              {
-                "Data Capture Field 1": {
-                  "Format": "String",
-                  "value" : null
-                }
-              },
-              {
-                "Data Capture Field 2": {
-                  "Format": "String",
-                  "value" : null
-                }
-              }
-            ],
-            [
-              {
-                "Data Capture Field 1": {
-                  "Format": "String",
-                  "value" : null
-                }
-              },
-              {
-                "Data Capture Field 2": {
-                  "Format": "String",
-                  "value" : null
-                }
-              }
-            ]
-          ]
+               "checklist_index": 3,
+               "display_checklist_overlay" : true,
+               "pick_checklist": [
+                [
+                  {
+                    "Data Capture Field 1": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  },
+                  {
+                    "Data Capture Field 2": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  }
+                ],
+                [ 
+                  {
+                    "Data Capture Field 1": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  },
+                  {
+                    "Data Capture Field 2": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  }
+                ],
+                [ 
+                  {
+                    "Data Capture Field 1": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  },
+                  {
+                    "Data Capture Field 2": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  }
+                ],
+                [
+                  {
+                    "Data Capture Field 1": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  },
+                  {
+                    "Data Capture Field 2": {
+                      "Format": "String",
+                      "value" : null
+                    }
+                  }
+                ]
+              ]
         },
         "rack_details": {
             "rack_type_rec": [

@@ -13,8 +13,6 @@ var RackRow = React.createClass({
 		var eachRowHeight = this.props.eachRowHeight;
 		var eachSlot =[];	
 		var type = this.props.type;
-		console.log('eachRowHeight =' + eachRowHeight);
-        console.log('totalRackHeight' + totalRackHeight);
         /*var calculateHeight = (eachRowHeight/totalRackHeight)*100;
         var rackRowHeight = {
 				

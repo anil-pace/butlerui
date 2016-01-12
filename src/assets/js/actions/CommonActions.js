@@ -40,7 +40,7 @@ var commonActions = {
     })
   },
 
-  setCurrentSeat:function(seat){
+  setCurrentSeat:function(seat){ 
     AppDispatcher.handleAction({
       actionType: appConstants.SET_CURRENT_SEAT,
       data:seat
@@ -179,6 +179,12 @@ var commonActions = {
       actionType: appConstants.SET_LANGUAGE,
       data:data
     }); 
+  },
+  checkListSubmit : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHECKLIST_SUBMIT,
+      data:data
+    });
   }
 
 };

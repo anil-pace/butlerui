@@ -100,20 +100,19 @@ function loadComponent(modalType,modalData){
       footer = [];
       rowData =[];
       title = "Input Extra Details";
-  
+        var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
             if(modalData.checklist_index === (index+1) || modalData.checklist_index === null || modalData.checklist_index === undefined){
               return (
                   data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
-                    console.log("data keyvalue = " +data1[keyvalue]["value"]);
                       return (<div>
                                   <div className="row dataCaptureHead removeBorder">
                                       {keyvalue}
                                   </div>
                                   <div className="row dataCaptureInput removeBorder">
-                                      <input type="text" id={"checklist_field"+index1} value={"inputBoxValue"} onClick={attachKeyboard.bind(this, 'checklist_field'+index1)} />
+                                      <input type="text" id={"checklist_field"+index1} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1)} />
                                   </div>
                               </div>
                         );
@@ -131,7 +130,7 @@ function loadComponent(modalType,modalData){
                           <div className="buttonContainer center-block chklstButtonContainer">
                                 <div className="row removeBorder">
                                     <div className="col-md-6"><input className="btn btn-default checklistButtonClear" type="button" value="Clear All" onClick={removeTextField} /></div>
-                                    <div className="col-md-6"><Button1 disabled = {false} text ={"Submit"} color={"orange"} buttonChecklist={"checklist"}/></div>
+                                    <div className="col-md-6"><Button1 disabled = {false} text ={"Submit"} color={"orange"} buttonChecklist={"checklist"} checkListData={modalData} module ={appConstants.PICK_FRONT} action={appConstants.CHECKLIST_SUBMIT}/></div>
                                 </div>
                           </div>
                      </div>

@@ -22,7 +22,7 @@ function server_messages_list() {
     _("Pptl scan not allowed. Totes are not required");
     _("Tote didn't get associated");
     _("After scannning tote barcode, please scan pptl barcode");
-    _( "Wrong Ppsbin button pressed.Please press those buttons having color blue");
+    _("Wrong Ppsbin button pressed.Please press those buttons having color blue");
     _("Please complete process for pending ppsbin and then proceed");
     _("No totes associated. Pease keep totes in the Bin and then scan");
     _("Documents printed Successfully");
@@ -40,7 +40,7 @@ function server_messages_list() {
     _("Scanning pptl barcode not allowed");
     _("Please press those buttons having color blink_blue");
     _("Unhandled event ocurred");
-    _( "Barcode didn't match with current tote barcode");
+    _("Barcode didn't match with current tote barcode");
     _("Testing configuration {0} and {1}");
     _("Processing. Please wait and scan later");
     _("Waiting for rack");

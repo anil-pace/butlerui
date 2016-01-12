@@ -34,6 +34,7 @@
     "PtB.W.004" : "PpsBin already staged. Ignoring event",
     "PtB.W.005" : "PpsBin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
+    "PtF.C.007" :"Waiting for MSU to arrive",
     "PkF.E.013" : "Scan items and place in Bin {0}",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
@@ -69,6 +70,15 @@
     "Common.000": "Testing configuration {0} and {1}",
     "Common.001": "Processing. Please wait and scan later",
     "Common.002": "Waiting for rack",
-    "Common.003": "Current PPS mode does not support back seat. Please logout."
-
+    "Common.003": "Current PPS mode does not support back seat. Please logout.",
+    "AdF.A.001" :"Scan Box/Items from Slot",
+    "AdF.A.002" :"Scan Remaining Item In Box",
+    "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
+    "AdF.A.006" :"Status To Reconcile",
+    "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
+    "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
+    "AdF.A.009" :"Waiting for MSU to arrive",
+    "AdF.B.001" :"Wrong Barcode.",
+    "AdF.B.002" :"Box Scan successfull",
+    "AdF.B.003" :"Item Scan successfull"
 }

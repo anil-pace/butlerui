@@ -37822,25 +37822,47 @@ var Notification = React.createClass({displayName: "Notification",
         var compData = this.props.notification;
         var message_args  = this.props.notification.details.slice(0);
         var errorCode = this.props.notification.code;
-            return (
-                React.createElement("div", {className: "notify", role: "alert"}, 
-                	React.createElement("div", {className: "success-icon"}, 
-                		React.createElement("div", {className: "border-glyp"}, 
-                			React.createElement("span", {className: "glyphicon glyphicon-ok"})
-                		)
-                	), 
-                	(function(){
+            if(this.props.notification.level!=undefined && this.props.notification.level == "error")
+                return (
+                    React.createElement("div", {className: "notify-error", role: "alert"}, 
+                    	React.createElement("div", {className: "error-icon"}, 
+                    		React.createElement("div", {className: "border-glyp"}, 
+                    			React.createElement("span", {className: "glyphicon glyphicon-remove"})
+                    		)
+                    	), 
+                    	(function(){
 
-                        if(navMessagesJson != undefined){
-                            message_args.unshift(navMessagesJson[errorCode]);
-                            var notification_message = _.apply(null, message_args);
-                            return notification_message;
-                        }
-                       
-                        }
-                    )()
-                )
-            );              
+                            if(navMessagesJson != undefined){
+                                message_args.unshift(navMessagesJson[errorCode]);
+                                var notification_message = _.apply(null, message_args);
+                                return notification_message;
+                            }
+                           
+                            }
+                        )()
+                    )
+                );  
+            else
+                return (
+                    React.createElement("div", {className: "notify", role: "alert"}, 
+                        React.createElement("div", {className: "success-icon"}, 
+                            React.createElement("div", {className: "border-glyp"}, 
+                                React.createElement("span", {className: "glyphicon glyphicon-ok"})
+                            )
+                        ), 
+                        (function(){
+
+                            if(navMessagesJson != undefined){
+                                message_args.unshift(navMessagesJson[errorCode]);
+                                var notification_message = _.apply(null, message_args);
+                                return notification_message;
+                            }
+                           
+                            }
+                        )()
+                    )
+                );  
+
     }
 });
 
@@ -39442,8 +39464,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.1.95:8888/ws",
-	INTERFACE_IP : "https://192.168.1.95:5000"
+	WEBSOCKET_IP : "ws://192.168.2.210:8888/ws",
+	INTERFACE_IP : "https://192.168.2.210:5000"
 };
 
 module.exports = configConstants;
@@ -40819,7 +40841,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         type: 'GET',
         url: 'http://192.168.3.93:3000/static/server_messages.json',
         }).done(function(response) { 
-          console.log(response);
           CommonActions.setServerMessages(response);
         }).fail(function(jqXhr) {
                      

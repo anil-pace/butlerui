@@ -36513,7 +36513,7 @@ var commonActions = {
     })
   },
 
-  setCurrentSeat:function(seat){
+  setCurrentSeat:function(seat){ 
     AppDispatcher.handleAction({
       actionType: appConstants.SET_CURRENT_SEAT,
       data:seat
@@ -36652,6 +36652,12 @@ var commonActions = {
       actionType: appConstants.SET_LANGUAGE,
       data:data
     }); 
+  },
+  checkListSubmit : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHECKLIST_SUBMIT,
+      data:data
+    });
   }
 
 };
@@ -37102,7 +37108,24 @@ var Button1 = React.createClass({displayName: "Button1",
                 switch(action){
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScanAll();
-                        break;    
+                        break;   
+                    case appConstants.CHECKLIST_SUBMIT:
+                        var checklist_index = this.props.checkListData.checklist_index;
+                        var checkList = this.props.checkListData;
+                        checkList.checklist_data.map(function(data, index){
+                            if(checkList.checklist_index != null){
+                                if(index === checkList.checklist_index - 1){
+                                    var keyvalue = Object.keys(data);
+                                    checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
+                                }
+                            }else{
+                                var keyvalue = Object.keys(data);
+                                checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
+                            }   
+                        
+                        });
+                       ActionCreators.checkListSubmit(checkList);
+                        break;       
                      default:
                         return true; 
                 }
@@ -37139,7 +37162,7 @@ var Button1 = React.createClass({displayName: "Button1",
                 return true; 
         }
     },
-    render: function() { 
+    render: function() { console.log(this.props.checkListData);
        if(this.props.buttonChecklist != undefined){
             _checklistClass = 'checklistButtonSubmit';
        }else{
@@ -37403,11 +37426,11 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var n = d.getFullYear();   
     var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
-      if(this.state.seatList.length > 0){
+      if(this.state.seatList.length > 0){ 
           seatData = this.state.seatList[0].map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                return (
-                  React.createElement("option", {key: 'pps' + index, value: data.seat_type+'_'+data.pps_id}, "PPS ", data.seat_type, " ", data.pps_id)
+                  React.createElement("option", {key: 'pps' + index, value: data.seat_name}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
             }else{console.log(data);
                  return( React.createElement("option", {key: index, value: data}, data))
@@ -37578,20 +37601,19 @@ function loadComponent(modalType,modalData){
       footer = [];
       rowData =[];
       title = "Input Extra Details";
-  
+        var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
             if(modalData.checklist_index === (index+1) || modalData.checklist_index === null || modalData.checklist_index === undefined){
               return (
                   data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
-                    console.log("data keyvalue = " +data1[keyvalue]["value"]);
                       return (React.createElement("div", null, 
                                   React.createElement("div", {className: "row dataCaptureHead removeBorder"}, 
                                       keyvalue
                                   ), 
                                   React.createElement("div", {className: "row dataCaptureInput removeBorder"}, 
-                                      React.createElement("input", {type: "text", id: "checklist_field"+index1, value: "inputBoxValue", onClick: attachKeyboard.bind(this, 'checklist_field'+index1)})
+                                      React.createElement("input", {type: "text", id: "checklist_field"+index1, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1)})
                                   )
                               )
                         );
@@ -37609,7 +37631,7 @@ function loadComponent(modalType,modalData){
                           React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                                 React.createElement("div", {className: "row removeBorder"}, 
                                     React.createElement("div", {className: "col-md-6"}, React.createElement("input", {className: "btn btn-default checklistButtonClear", type: "button", value: "Clear All", onClick: removeTextField})), 
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", buttonChecklist: "checklist"}))
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
                                 )
                           )
                      )
@@ -38129,7 +38151,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Rack, {rackData: this.state.PickFrontRackDetails}), 
-                     React.createElement(PrdtDetails, null)
+                     React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                  )
               )
             );
@@ -38148,7 +38170,11 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -38166,6 +38192,11 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -38174,7 +38205,8 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                    editButton
                 )
               )
             );
@@ -38186,7 +38218,7 @@ var PickFront = React.createClass({displayName: "PickFront",
     }
   },
   
-  render: function(data){
+  render: function(data){ 
 	  this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
 	
@@ -38211,37 +38243,13 @@ var ProductImage = require('./ProductImage');
 
 var ProductDetails = React.createClass({displayName: "ProductDetails",
     render: function() {
-
-        var prodDetails = [{
-            "product_info": {
-                "product_description": "APPLE IPHONE 5S",
-                "product_local_image_url": null,
-                "product_dimension": 32.4,
-                "product_sku": null,
-                "product_name": null,
-                "product_weight": null
-            }
-        }];
-
-        var obj = prodDetails[0].product_info;
-
-
-
-
         return (
             React.createElement("div", {className: "productTableInfo"}, 
-				React.createElement(ProductImage, {srcURL: prodDetails[0].product_info.product_local_image_url, details: prodDetails[0].product_info.product_description}), 
-				React.createElement(ProductInfo, {infoDetails: obj}), 
+				React.createElement(ProductImage, {srcURL: this.props.productInfo.product_local_image_url, details: this.props.productInfo.product_description}), 
                 React.createElement("div", {className: "productHeader"}, 
-                    this.prop.details
+                    _("Details")
                 ), 
-				React.createElement("div", {className: "table-wrapper"}, 
-					React.createElement("table", {className: "table"}, 									
-						React.createElement("tbody", null, 
-							React.createElement(ProductInfo, {infoDetails: obj})
-						)
-					)
-				)
+                React.createElement(ProductInfo, {infoDetails: this.props.productInfo})
 			)
         );
     }
@@ -38929,8 +38937,6 @@ var RackRow = React.createClass({displayName: "RackRow",
 		var eachRowHeight = this.props.eachRowHeight;
 		var eachSlot =[];	
 		var type = this.props.type;
-		console.log('eachRowHeight =' + eachRowHeight);
-        console.log('totalRackHeight' + totalRackHeight);
         /*var calculateHeight = (eachRowHeight/totalRackHeight)*100;
         var rackRowHeight = {
 				
@@ -38974,7 +38980,6 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		var slotIndexArrays = this.props.slotIndexArrays;
 		var totalRackHeight = this.props.totalRackHeight;
 		var noOfRows = this.props.noOfRows;
-		console.log("totalRackHeight = " + totalRackHeight);
 		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
 		var type = this.props.type;
 		//var calculateHeight = this.props.slotHeightData;
@@ -39409,6 +39414,7 @@ var appConstants = {
 	SET_SERVER_MESSAGES : 'SET_SERVER_MESSAGES',
 	CHANGE_LANGUAGE :'CHANGE_LANGUAGE',
 	SET_LANGUAGE :'SET_LANGUAGE',
+	CHECKLIST_SUBMIT :'CHECKLIST_SUBMIT'
 
 };
 
@@ -39416,8 +39422,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://192.168.2.211:8888/ws",
+	INTERFACE_IP : "https://192.168.2.211:5000"
 };
 
 module.exports = configConstants;
@@ -40476,7 +40482,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _showSpinner = false;
     _seatData = data;
     _seatName = data.seat_name;
-    _currentSeat  = data.mode + "_" + data.seat_type;    
+    _currentSeat  = data.mode + "_" + data.seat_type;
   },
   cancelScan : function(barcode){
     var data = {
@@ -40607,12 +40613,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   changeLanguage : function(data){
     utils.changeLanguage(data);
+  },
+  checkListSubmit: function(data){
+     var data = {
+      "event_name": "pick_checklist_update",
+      "event_data": {
+        "pick_checklist" : data,
+        
+      }
+    };
+    utils.postDataToInterface(data, _seatName);
   }
 
 });
 
-AppDispatcher.register(function(payload){ 
-  var action = payload.action; 
+AppDispatcher.register(function(payload){    
+  var action = payload.action; console.log(action.actionType);
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
       utils.connectToWebSocket(); 
@@ -40687,7 +40703,12 @@ AppDispatcher.register(function(payload){
       break; 
     case appConstants.SET_LANGUAGE:
        mainstore.emit(CHANGE_EVENT);
-      break;                    
+      break;
+    case appConstants.CHECKLIST_SUBMIT:
+       mainstore.showSpinner();
+       mainstore.checkListSubmit(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;                      
     default:
       return true;
   }

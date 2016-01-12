@@ -54,5 +54,33 @@ function server_messages_list() {
     _("Tote already opened.Scan some other tote");
     _("Tote already closed.Scan some other tote");
     _("No matching tote found");
+    _("Wrong entity scanned. Please scan tote");
+    _("No entities added yet. Scan entities and then PPS bin");
+    _("Wrong entity scanned. Please scan Container/Item.");
+    _("Cannot cancel scan. No scanned box found");
+    _("Entity scan not expected.Waiting for button press");
+    _("PpsBin selected for put. Cannot be staged");
+    _("SKU not present in Database. WMS Notified. ");
+    _("Warehouse Full! Remove all entities from bin number and press PPTL.");
+    _("No free Pps bins. Please scan later");
+    _("Wrong button pressed. Please try another");
+    _("Wrong button pressed. Please try another");
+    _("Please put it in IRT bin and confirm");
+    _("Tote scan successfull.");
+    _("PPS is in paused mode. Cannot process new box. Take the entity back.");
+    _("Cancel scan successfull.");
+    _("Tote close successfull.");
+    _("Tote not closed.");
+    _("Entity scan successfull.");
+    _("PPtl Button press successfull");
+    _("Excess item in tote recorded.Now press Pptl");
+    _("Invalid item in tote recorded.");
+    _("Container already stored in the warehouse");
+    _("Entity already scanned.Waiting for Pptl button press");
+    _("No PpsBins available to stage");
+    _("PpsBin already staged. Ignoring event");
+    _("PpsBin empty. Cannot be staged");
+    
+
 
 }

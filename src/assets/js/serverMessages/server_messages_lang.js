@@ -80,7 +80,16 @@ function server_messages_list() {
     _("No PpsBins available to stage");
     _("PpsBin already staged. Ignoring event");
     _("PpsBin empty. Cannot be staged");
-    
-
+    _("Scan Box/Items from Slot");
+    _("Scan Remaining Item In Box");
+    _("Last Box Scan Completed! Scan Remaining Box/Items");
+    _("Status To Reconcile");
+    _("This box belongs to some other SKU in the slot.Put it back.Scan next box.");
+    _("This box does not belong to this slot. Remove the box and put in exception area.");
+    _("Waiting for MSU to arrive");
+    _("Wrong Barcode.");
+    _("Box Scan successfull");
+    _("Item Scan successfull");
+    _("Waiting for MSU to arrive");
 
 }

@@ -89,7 +89,7 @@ var PutFront = React.createClass({
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontProductDetails.product_sku} color={"black"}/>
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
                 </div>
 
               </div>

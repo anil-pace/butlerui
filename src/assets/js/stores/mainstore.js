@@ -183,6 +183,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       }
     };
     utils.postDataToInterface(data, _seatName);
+  },
+  sendToteData: function(data){
+    var data = {
+      "event_name": "confirm_close_tote",
+      "event_data": {
+        "close_value" : data.close_value,
+        "barcode" : data.toteId
+        
+      }
+    };
+    console.log(data);
+   utils.postDataToInterface(data, _seatName); 
   }
 
 });
@@ -268,7 +280,12 @@ AppDispatcher.register(function(payload){
        mainstore.showSpinner();
        mainstore.checkListSubmit(action.data);
        mainstore.emit(CHANGE_EVENT);
-      break;                      
+      break;
+    case appConstants.TOTE_ACTION:
+       mainstore.showSpinner();
+       mainstore.sendToteData(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;                        
     default:
       return true;
   }

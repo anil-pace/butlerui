@@ -1,6 +1,13 @@
 {
     "PtB.B.001": "Scan item / Stage pps bin",
+    "PtB.H.001" : "Stage Bin or Scan Entity",
+    "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
+    "PtB.H.004": "Scan Tote / Stage PpsBin",
+    "PtB.H.005" : "Item Not Found in Tote",
+    "PtB.E.001" : "Tote already opened.Scan some other tote",
+    "PtB.E.002" : "Tote already closed.Scan some other tote",
+    "PtB.E.003" : "No matching tote found",
     "PkF.A.012" : "Scan {0} items",
     "PkF.E.013" : "Scan items and place in Bin {0}",
     "PkF.D.010" :"Scan box barcode",

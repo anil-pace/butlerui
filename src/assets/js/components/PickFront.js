@@ -54,6 +54,9 @@ var PickFront = React.createClass({
 	this.setState(getStateData());
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }else{
+      $('.modal').modal('hide');
+      $('.modal-backdrop').remove();
     }
   },
   getNotificationComponent:function(){
@@ -77,7 +80,10 @@ var PickFront = React.createClass({
       }),0)
 
     }
-    else {}
+    else {
+      $('.modal').modal('hide');
+      $('.modal-backdrop fade in').remove();
+    }
 
   },
   getScreenComponent : function(screen_id){

@@ -38899,7 +38899,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         }
         else if(compartment_details.length === 2){
             slotStart = (compartment_details[0].split(".")[3])%10;
-            slotEnd = (compartment_details[1].split(".")[3])%10;
+            slotEnd = (compartment_details[compartment_details.length - 1].split(".")[3])%10;
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else {
@@ -39444,7 +39444,6 @@ module.exports = appConstants;
 var configConstants = {
 	WEBSOCKET_IP : "ws://localhost:8888/ws",
 	INTERFACE_IP : "https://localhost:5000"
-
 };
 
 module.exports = configConstants;

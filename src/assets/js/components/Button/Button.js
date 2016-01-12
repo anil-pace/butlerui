@@ -23,7 +23,6 @@ var Button1 = React.createClass({
                             "close_value" : this.props.status,
                             "toteId" : this.props.toteId
                         }
-                        console.log(data);
                         ActionCreators.toteAction(data);
                         break;            
                      default:
@@ -46,20 +45,25 @@ var Button1 = React.createClass({
                         break;   
                     case appConstants.CHECKLIST_SUBMIT:
                         var checklist_index = this.props.checkListData.checklist_index;
-                        var checkList = this.props.checkListData;
+                        var checkList = this.props.checkListData;console.log(checkList);
                         checkList.checklist_data.map(function(data, index){
+                            var keyvalue = Object.keys(data);
+                            console.log(inputBoxValue);
+                            var inputBoxValue = data[keyvalue]["value"];
                             if(checkList.checklist_index != null){
-                                if(index === checkList.checklist_index - 1){
-                                    var keyvalue = Object.keys(data);
-                                    checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
+                                if(index === checkList.checklist_index - 1){                                    
+                                    checkList.checklist_data[index][keyvalue].value = document.getElementById("checklist_field"+index).value;
                                 }
                             }else{
                                 var keyvalue = Object.keys(data);
                                 checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
-                            }   
+                            }  
+                            console.log(data); 
                         
                         });
-                       ActionCreators.checkListSubmit(checkList);
+
+                        console.log(checkList);
+                       //ActionCreators.checkListSubmit(checkList);
                         break;       
                      default:
                         return true; 

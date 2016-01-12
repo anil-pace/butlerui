@@ -37,7 +37,7 @@ var PickBack = React.createClass({
     }
     PickBackStore.addChangeListener(this.onChange);
   },
-  componentWillUnmount: function(){ console.log('test');
+  componentWillUnmount: function(){ 
     PickBackStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 

@@ -45,25 +45,15 @@ var Button1 = React.createClass({
                         break;   
                     case appConstants.CHECKLIST_SUBMIT:
                         var checklist_index = this.props.checkListData.checklist_index;
-                        var checkList = this.props.checkListData;console.log(checkList);
-                        checkList.checklist_data.map(function(data, index){
-                            var keyvalue = Object.keys(data);
-                            console.log(inputBoxValue);
-                            var inputBoxValue = data[keyvalue]["value"];
-                            if(checkList.checklist_index != null){
-                                if(index === checkList.checklist_index - 1){                                    
-                                    checkList.checklist_data[index][keyvalue].value = document.getElementById("checklist_field"+index).value;
-                                }
-                            }else{
-                                var keyvalue = Object.keys(data);
-                                checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
-                            }  
-                            console.log(data); 
-                        
+                        var checkList = this.props.checkListData;console.log(JSON.stringify(checkList));
+                        checkList.checklist_data[checklist_index-1].map(function(value,index){
+                            var keyvalue = Object.keys(value);
+                            console.log(keyvalue[0]);
+                            console.log(checkList.checklist_data[checklist_index-1][index][keyvalue[0]]);
+                            checkList.checklist_data[checklist_index-1][index][keyvalue[0]].value = document.getElementById("checklist_field"+index).value;
                         });
-
-                        console.log(checkList);
-                       //ActionCreators.checkListSubmit(checkList);
+                        console.log(JSON.stringify(checkList));
+                        ActionCreators.checkListSubmit(checkList);
                         break;       
                      default:
                         return true; 

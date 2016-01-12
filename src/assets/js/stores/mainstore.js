@@ -182,6 +182,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         
       }
     };
+    console.log(JSON.stringify(data));
     utils.postDataToInterface(data, _seatName);
   },
   sendToteData: function(data){

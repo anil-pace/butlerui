@@ -19,8 +19,9 @@ var Notification = React.createClass({
 
                             if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
-                                var notification_message = _.apply(null, message_args);
-                                return notification_message;
+                               // var notification_message = _.apply(null, message_args);
+                                //return notification_message;
+                                return compData.description;
                             }
                            
                             }
@@ -39,8 +40,9 @@ var Notification = React.createClass({
 
                             if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
-                                var notification_message = _.apply(null, message_args);
-                                return notification_message;
+                                //var notification_message = _.apply(null, message_args);
+                                //return notification_message;
+                                return compData.description;
                             }
                            
                             }

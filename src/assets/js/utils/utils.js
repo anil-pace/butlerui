@@ -65,7 +65,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         type: 'GET',
         url: '/assets/js/localization/'+language+'.json',
         }).done(function(response) { 
-          _.setTranslation(response);
+          //_.setTranslation(response);
           CommonActions.setLanguage(response);
         }).fail(function(jqXhr) {
                      

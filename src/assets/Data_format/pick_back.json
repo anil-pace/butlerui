@@ -13,6 +13,7 @@ after first time blue pptl press
 			"description": "Documents printed Successfully",
 			"level": "info"
 		}],
+
 		"logout_allowed": "true",
 		"exception_allowed": [{
 			"exception_id": "PkB009",
@@ -97,7 +98,7 @@ after first time blue pptl press
 			"totes_associated": "false"
 		}],
 		"header_msge_list": [{
-			"details": [],
+			"details": [1],
 			"code": "PkB.A.003",
 			"description": "Press PpsBin 1 to remove items",
 			"level": "info"
@@ -113,6 +114,7 @@ after blinking_blue pptl press
 	"state_data": {
 		"seat_name": "back_10",
 		"screen_id": "pick_back_scan",
+
 		"screen_version": "1",
 		"structure": [2, 4],
 		"notification_list": [{
@@ -121,6 +123,10 @@ after blinking_blue pptl press
 			"description": "Bin 1 items removed successfully",
 			"level": "info"
 		}],
+		"tote_details" :{
+			"tote_status" : true,
+			"tote_barcode" : "123"
+		},
 		"logout_allowed": "true",
 		"exception_allowed": [{
 			"exception_id": "PkB010",

@@ -1,39 +1,46 @@
 .headerLoginPage{
-	background: #f8981d none repeat scroll 0 0;
-    height: 14.69vh;
+    background: #f8981d none repeat scroll 0 0;
+    height: 16.69vh;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     .logo {
         order: 1;
-        margin-left: 2.5em;
+        margin-left: 4.5em;
         padding-top:1em;
         padding-bottom:1em;
          .imgLogo{
-    		height: 4vh;
-    	}
+            height: 4.3vh;
+        }
     }
     .header-actions {
         order: 2;
         .mapImg{
-        	height: 13vh;
+            height: 16vh;
         }
     }
 }
+.copyright{
+    position: fixed;
+    bottom: 0.5%;
+    right: 1.5%;
+    font-weight: unset;
+    font-size: 2.2rem;
+    color: #1a252d;
+}
 .bodyContent{
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
+    
+    display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-align: stretch;
     -webkit-box-direction: normal;
     -webkit-box-pack: start;
-    height: 84vh;
+    height: 83.2vh;
     width: 100%;
-    padding: 0.8vh;
+    padding: 0 0.8vh;
 .bodyLoginPage{
-	      align-content: stretch;
+          align-content: stretch;
         align-items: flex-start;
         box-sizing: border-box;
         display: flex;
@@ -41,25 +48,26 @@
         //flex-grow: 1;
         //flex-shrink: 1;
         height: 100%;
+        width: 100%;
         //justify-content: center;
         order: 1;
         position: relative;
     .factoryImage{
-    	-webkit-order: 0;
-	    -ms-flex-order: 0;
-	    order: 0;
-	    -webkit-flex: 0 1 auto;
-	    -ms-flex: 0 1 auto;
-	    flex: 0 1 auto;
-	    -webkit-align-self: flex-end;
-	    -ms-flex-item-align: flex-end;
-	    align-self: flex-end;
+        -webkit-order: 0;
+        -ms-flex-order: 0;
+        order: 0;
+        -webkit-flex: 0 1 auto;
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        -webkit-align-self: flex-end;
+        -ms-flex-item-align: flex-end;
+        align-self: flex-end;
         img{
-            height: 69vh;
+            height: 60vh;
         }
     }
     .userFormLoginPage{
-        width: 25vw;
+        width: 25%;
         -webkit-order: 0;
         -ms-flex-order: 0;
         order: 0;
@@ -69,36 +77,62 @@
         -webkit-align-self: center;
         -ms-flex-item-align: center;
         align-self: center;
-        margin-left: 5vw;
+        margin-left: 6em;
+        .selectPPS{
+                margin-bottom: 13%;
+            }
+        .selectLang{
+            margin-top: 13%;
+        }
         select{
             //background: #444f54 none repeat scroll 0 0;
             background: #444f54 url("../images/Forma1.png") no-repeat scroll 97% center;
             
-            color: #fff;
-            font-size: 1.7rem;
-            margin-top: 1.5vh;
+            color: #d0d3d4;
+            height: 100%;
+            font-size: 2.3rem;
+            font-weight: unset;
             //height: 4.2vh;
-            padding: 0.9vh 0.8vw;
+            padding: 2.5% 4%;
             width: 100%;
             -webkit-appearance: none;
             -moz-appearance: none;
+            border:none;
         }
         label{
             margin-top: 1.5vh;
+            color: #000;
+            font-size: 2.3rem;
+            font-weight: unset;
         }
-        input{
+        input[type="text"], input[type="password"]{
             width: 100%;
-            padding: 0.9vh 0.8vw;
+            padding: 1.94% 4%;
+            //color: #bfbfbf;
             //box-shadow: 3px 4px 6px #ccc;
-            margin: 1vh 0;
+            height: 100%;
+            margin: 0.5vh 0;
+            box-shadow:0 4px 5px 0px @input-box-shadow;// 2px 4px @input-box-shadow;
+            font-size: 2.3rem;
+            font-weight: unset;
+            border-radius: unset;
+            border:1px solid @input-border;
+            background-color:#fff;
         }
+        .form-control:focus {
+            border-color:@input-border;
+            outline:0;
+        }
+
         .loginButton{
             background: #4caf50 none repeat scroll 0 0;
             color: #fff;
-            font-size: 2.1rem;
-            height: 5vh;
-            margin-top: 5vh;
+            font-size: 2.8rem;
+            //height: 5vh;
+            padding: 2% 0;
+            margin-top: 5%;
             width: 100%;
+            border-radius: initial;
         }
     }
 }

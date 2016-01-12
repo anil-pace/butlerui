@@ -4,16 +4,19 @@ var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PickFront');
+var Audit = require('./Audit');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
+
 
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
       spinner : mainstore.getSpinnerState(),
-      systemIsIdle : mainstore.getSystemIdleState()
+      systemIsIdle : mainstore.getSystemIdleState(),
+      navMessages : mainstore.getServerMessages()
   }
 }
 var Operator = React.createClass({
@@ -21,6 +24,9 @@ var Operator = React.createClass({
   _currentSeat:'',
   getInitialState: function(){
     return getState();
+  },
+  componentDidMount: function(){
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillMount: function(){
      mainstore.addChangeListener(this.onChange);
@@ -30,21 +36,23 @@ var Operator = React.createClass({
   },
   onChange: function(){ 
    this.setState(getState());
-  
   },
   getSeatType:function(seat){
      switch(seat){
       case appConstants.PUT_BACK:
-          this._currentSeat = <PutBack />;
+          this._currentSeat = <PutBack navMessagesJson={this.state.navMessages}/>;
         break;
       case appConstants.PUT_FRONT:
-          this._currentSeat = <PutFront />;
+          this._currentSeat = <PutFront navMessagesJson={this.state.navMessages}/>;
         break;
       case appConstants.PICK_BACK:
-          this._currentSeat = <PickBack />;
+          this._currentSeat = <PickBack navMessagesJson={this.state.navMessages}/>;
         break;
       case appConstants.PICK_FRONT:
-          this._currentSeat = <PickFront />;
+          this._currentSeat = <PickFront navMessagesJson={this.state.navMessages}/>;
+        break;
+      case appConstants.AUDIT:
+          this._currentSeat = <Audit navMessagesJson={this.state.navMessages}/>;
         break;
       default:
         return true; 

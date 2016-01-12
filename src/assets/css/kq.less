@@ -12,10 +12,10 @@
     flex-flow:column;
     align-items: center;
     justify-content: center;
-    flex:0 0 12.5%;
+    flex:0 0 14%;
     align-items:center;
     margin-right: 5%;
-    margin-left: 5%;
+    margin-left: 2%;
 
     .product-details-wrapper{
         border:1px solid @kq-border-color;
@@ -25,7 +25,7 @@
             display:flex;
             justify-content:center;
             align-items:center;
-            background:@passive-nav-bck;
+            background-color: @view-more-background;// @passive-nav-bck;
             font-size:1.8rem;
                 span{
                     color:#fff;
@@ -93,7 +93,8 @@
             .total-quantity{
                 width:40%;
             }         
-        }
+        }        
+        box-shadow: 0 7px 7px -3px @kq-box-shadow;
     }
 
     .product-details-wrapper, .kq-wrapper {

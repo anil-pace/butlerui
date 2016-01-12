@@ -1,0 +1,66 @@
+.table-row {
+    background: @msu-slots-border;
+    display: flex;
+    flex-flow: row;
+    color: @btn-default-bck;
+    border-bottom: 1px solid #bcbcbc;
+    .table-col {
+        padding: 0.3em;
+        padding-left: 0.6em;
+        padding-right: 0.6em;
+        color: #1a252d;
+        min-width: 20%;
+        justify-content: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.border-left {
+            border-left: 1px solid @bin-staged-bck;
+        }
+        &.flex-grow {
+            flex-grow: 1;
+            flex-basis:0;
+        }
+        &.selected {
+            background: @bin-selected-bck;
+            color: white;
+        }
+        &.large {
+            font-size: @font-size-body-medium;
+        }
+        &.small {
+            font-size: @font-size-body-small;
+        }
+        &.bold {
+            font-weight: bold;
+        }
+        &.disabled {
+            color: #979c9f;
+        }
+        &.heading {
+            color: @passive-nav-bck;
+        }
+        &.center-align {
+            text-align: center;
+        }
+        &.complete{
+            color: green;
+        }
+        &.missing{
+            background: red;
+            color: white;
+        }
+        &.extra{
+         background: @bin-staged-bck;
+            color: white;   
+        }
+        .success-icon{
+            color: green;
+            cursor: pointer;
+        }
+        .edit-icon{
+            color: @bin-staged-bck;
+            cursor: pointer;
+        }
+    }
+}

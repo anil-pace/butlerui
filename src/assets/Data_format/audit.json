@@ -1,0 +1,678 @@
+{
+	"state_data": {
+		"Cancel_scan":false,
+		"Extra_box_list": [],
+		"Box_qty_list": [
+		],
+		"Current_box_details": [],
+		"screen_id": "audit_reconcile",
+		"screen_version": "1",
+		"notification_list": [{
+			"details": [],
+			"code": "AdF.A.009",
+			"description": "Waiting for MSU to arrive",
+			"level": "info"
+		}],
+		"logout_allowed": "true",
+		"exception_allowed": [{
+			"exception_id": "Common.000",
+			"exception_name": "Reset Scanner"
+		}],
+		"rack_details": {
+			"rack_type_rec": [
+				["A", [
+					[
+						["01", "02"], 44, 48
+					],
+					[
+						["03", "04"], 44, 48
+					],
+					[
+						["05", "06"], 44, 48
+					]
+				]],
+				["B", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["C", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					]
+				]],
+				["D", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["E", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["F", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]]
+			],
+			"slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+		},
+		"mode": "audit",
+		"is_idle": false,
+		"seat_type": "front",
+		"time_stamp": "1452087202",
+		"header_msge_list": [{
+            "details": [2],
+            "code": "PkF.A.012",
+            "description": "Waiting for Rack",
+            "level": "info"
+        }],
+		"api_version": "1",
+		"Loose_sku_list": []
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+	"state_data": {
+		"Cancel_scan":true,
+		"Box_qty_list": [{
+			"Box_serial": "A000000037",
+			"Scan_status": "no_scan",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "open",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "close",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		}
+		],
+		"Current_box_details": [{
+ 			"Box_serial": "A000000037",
+ 			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+ 			"Actual_qty": 0,
+ 			"Expected_qty": 5
+ 		}],
+		"screen_id": "audit_scan",
+		"screen_version": "1",
+		"notification_list": [{
+			"details": [],
+			"code": "AdF.A.009",
+			"description": "Waiting for MSU to arrive",
+			"level": "info"
+		}],
+		"logout_allowed": "true",
+		"exception_allowed": [{
+			"exception_id": "Common.000",
+			"exception_name": "Reset Scanner"
+		}],
+		"Extra_box_list": [{"Box_serial": "A000000039", "Scan_status": "open", "Actual_qty": 0, "Expected_qty": 0}],
+		"rack_details": {
+			"rack_type_rec": [
+				["A", [
+					[
+						["01", "02"], 44, 48
+					],
+					[
+						["03", "04"], 44, 48
+					],
+					[
+						["05", "06"], 44, 48
+					]
+				]],
+				["B", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["C", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					]
+				]],
+				["D", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["E", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["F", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]]
+			],
+			"slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+		},
+		"mode": "audit",
+		"is_idle": false,
+		"seat_type": "front",
+		"time_stamp": "1452087202",
+		"header_msge_list": [{
+            "details": [2],
+            "code": "PkF.A.012",
+            "description": "Waiting for Rack",
+            "level": "info"
+        }],
+		"api_version": "1",
+		"Loose_sku_list": [{
+			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+			"Actual_qty": 0,
+			"Expected_qty": 2
+		}]
+	}
+
+}
+
+
+
+
+
+
+
+{
+	"state_data": {
+		"Cancel_scan":false,
+		"Extra_box_list": [{"Box_serial": "A000000039", "Scan_status": "open", "Actual_qty": 0, "Expected_qty": 0}],
+		"Box_qty_list": [{
+			"Box_serial": "A000000037",
+			"Scan_status": "no_scan",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "open",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "close",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		}
+		],
+		"Current_box_details": [{
+ 			"Box_serial": "A000000037",
+ 			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+ 			"Actual_qty": 0,
+ 			"Expected_qty": 5
+ 		}],
+		"screen_id": "audit_reconcile",
+		"screen_version": "1",
+		"notification_list": [{
+			"details": [],
+			"code": "AdF.A.009",
+			"description": "Waiting for MSU to arrive",
+			"level": "info"
+		}],
+		"logout_allowed": "true",
+		"exception_allowed": [{
+			"exception_id": "Common.000",
+			"exception_name": "Reset Scanner"
+		}],
+		"rack_details": {
+			"rack_type_rec": [
+				["A", [
+					[
+						["01", "02"], 44, 48
+					],
+					[
+						["03", "04"], 44, 48
+					],
+					[
+						["05", "06"], 44, 48
+					]
+				]],
+				["B", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["C", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					]
+				]],
+				["D", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["E", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["F", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]]
+			],
+			"slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+		},
+		"mode": "audit",
+		"is_idle": false,
+		"seat_type": "front",
+		"time_stamp": "1452087202",
+		"header_msge_list": [{
+            "details": [2],
+            "code": "PkF.A.012",
+            "description": "Waiting for Rack",
+            "level": "info"
+        }],
+		"api_version": "1",
+		"Loose_sku_list": [{
+			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+			"Actual_qty": 0,
+			"Expected_qty": 2
+		}]
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+	"state_data": {
+		"Cancel_scan":false,
+		"Extra_box_list": [{"Box_serial": "A000000039", "Scan_status": "open", "Actual_qty": 0, "Expected_qty": 0}],
+		"Box_qty_list": [{
+			"Box_serial": "A000000037",
+			"Scan_status": "no_scan",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "open",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "close",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		}
+		],
+		"Current_box_details": [{
+ 			"Box_serial": "A000000037",
+ 			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+ 			"Actual_qty": 0,
+ 			"Expected_qty": 5
+ 		}],
+		"screen_id": "audit_front_waiting_for_msu",
+		"screen_version": "1",
+		"notification_list": [{
+			"details": [],
+			"code": "AdF.A.009",
+			"description": "Waiting for MSU to arrive",
+			"level": "info"
+		}],
+		"logout_allowed": "true",
+		"exception_allowed": [{
+			"exception_id": "Common.000",
+			"exception_name": "Reset Scanner"
+		}],
+		"rack_details": {
+			"rack_type_rec": [
+				["A", [
+					[
+						["01", "02"], 44, 48
+					],
+					[
+						["03", "04"], 44, 48
+					],
+					[
+						["05", "06"], 44, 48
+					]
+				]],
+				["B", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["C", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					]
+				]],
+				["D", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["E", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["F", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]]
+			],
+			"slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+		},
+		"mode": "audit",
+		"is_idle": false,
+		"seat_type": "front",
+		"time_stamp": "1452087202",
+		"header_msge_list": [{
+            "details": [2],
+            "code": "PkF.A.012",
+            "description": "Waiting for Rack",
+            "level": "info"
+        }],
+		"api_version": "1",
+		"Loose_sku_list": [{
+			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+			"Actual_qty": 0,
+			"Expected_qty": 2
+		}]
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+	"state_data": {
+		"Cancel_scan":false,
+		"Extra_box_list": [{"Box_serial": "A000000039", "Scan_status": "open", "Actual_qty": 0, "Expected_qty": 0}],
+		"Box_qty_list": [{
+			"Box_serial": "A000000037",
+			"Scan_status": "no_scan",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "open",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		},
+		{
+			"Box_serial": "A000000038",
+			"Scan_status": "close",
+			"Actual_qty": 0,
+			"Expected_qty": 5
+		}
+		],
+		"Current_box_details": [{
+ 			"Box_serial": "A000000037",
+ 			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+ 			"Actual_qty": 0,
+ 			"Expected_qty": 5
+ 		}],
+		"screen_id": "audit_scan",
+		"screen_version": "1",
+		"notification_list": [{
+			"details": [],
+			"code": "AdF.A.009",
+			"description": "Waiting for MSU to arrive",
+			"level": "info"
+		}],
+		"logout_allowed": "true",
+		"exception_allowed": [{
+			"exception_id": "Common.000",
+			"exception_name": "Reset Scanner"
+		}],
+		"rack_details": {
+			"rack_type_rec": [
+				["A", [
+					[
+						["01", "02"], 44, 48
+					],
+					[
+						["03", "04"], 44, 48
+					],
+					[
+						["05", "06"], 44, 48
+					]
+				]],
+				["B", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["C", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					]
+				]],
+				["D", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["E", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]],
+				["F", [
+					[
+						["01", "02"], 25, 48
+					],
+					[
+						["03", "04"], 25, 48
+					],
+					[
+						["05", "06"], 25, 48
+					]
+				]]
+			],
+			"slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+		},
+		"mode": "audit",
+		"is_idle": false,
+		"seat_type": "front",
+		"time_stamp": "1452087202",
+		"header_msge_list": [{
+            "details": [2],
+            "code": "PkF.A.012",
+            "description": "Waiting for Rack",
+            "level": "info"
+        }],
+		"api_version": "1",
+		"Loose_sku_list": [{
+			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+			"Actual_qty": 0,
+			"Expected_qty": 2
+		}]
+	}
+
+}

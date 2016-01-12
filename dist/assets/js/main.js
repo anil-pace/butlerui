@@ -36513,7 +36513,7 @@ var commonActions = {
     })
   },
 
-  setCurrentSeat:function(seat){
+  setCurrentSeat:function(seat){ 
     AppDispatcher.handleAction({
       actionType: appConstants.SET_CURRENT_SEAT,
       data:seat
@@ -36536,6 +36536,13 @@ var commonActions = {
   setPickBackData :function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PICK_BACK_DATA,
+      data:data
+    })
+  },
+
+  setAuditData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_AUDIT_DATA,
       data:data
     })
   },
@@ -36574,7 +36581,30 @@ var commonActions = {
       data: data
     });
   },
-
+  finishBox:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_BOX, 
+      data: data
+    });
+  },
+  generateReport:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.GENERATE_REPORT, 
+      data: data
+    });
+  },
+  cancelFinishAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CANCEL_FINISH_AUDIT, 
+      data: data
+    });
+  },
+  finishCurrentAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_CURRENT_AUDIT, 
+      data: data
+    });
+  },
   showModal:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
@@ -36605,12 +36635,198 @@ var commonActions = {
       data: data
     });
   },
+  setServerMessages : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_SERVER_MESSAGES,
+      data:data
+    });
+  },
+  changeLanguage: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_LANGUAGE,
+      data:data
+    }); 
+  },
+  setLanguage: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_LANGUAGE,
+      data:data
+    }); 
+  },
+  checkListSubmit : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHECKLIST_SUBMIT,
+      data:data
+    });
+  },
+  toteAction : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.TOTE_ACTION,
+      data:data
+    });
+  }
 
 };
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":269,"../dispatchers/AppDispatcher":273}],234:[function(require,module,exports){
+},{"../constants/appConstants":275,"../dispatchers/AppDispatcher":279}],234:[function(require,module,exports){
+
+var React = require('react');
+var AuditStore = require('../stores/AuditStore');
+var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var SystemIdle = require("./SystemIdle");
+var Notification = require("./Notification/Notification");
+var Button1 = require("./Button/Button");
+var appConstants = require('../constants/appConstants');
+var Modal = require('./Modal/Modal');
+var TabularData = require('./TabularData');
+var Button1 = require('./Button/Button.js');
+var Img = require('./PrdtDetails/ProductImage.js');
+var Rack = require('./Rack/MsuRack.js');
+var Spinner = require("./Spinner/LoaderButler");
+var Reconcile = require("./Reconcile");
+
+
+function getStateData(){
+  console.log(AuditStore.getBoxSerialData());
+  return {
+           AuditNavData : AuditStore.getNavData(),
+           AuditNotification : AuditStore.getNotificationData(),
+           AuditScreenId:AuditStore.getScreenId(),
+           AuditServerNavData : AuditStore.getServerNavData(),
+           AuditBoxSerialData :AuditStore.getBoxSerialData(),
+           AuditReconcileBoxSerialData :AuditStore.getReconcileBoxSerialData(),
+           AuditCurrentBoxSerialData :AuditStore.getCurrentBoxSerialData(),
+           AuditLooseItemsData:AuditStore.getLooseItemsData(),
+           AuditReconcileLooseItemsData:AuditStore.getReconcileLooseItemsData(),
+           AuditItemDetailsData:AuditStore.getItemDetailsData(),
+           AuditRackDetails:AuditStore.getRackDetails(),
+           AuditCancelScanStatus:AuditStore.getCancelScanStatus()
+
+    };
+}
+
+
+var Audit = React.createClass({displayName: "Audit",
+  _component:'',
+  _notification:'',
+  _cancelStatus:'',
+  getInitialState: function(){
+    return getStateData();
+  },
+  componentWillMount: function(){
+    AuditStore.addChangeListener(this.onChange);
+  },
+  componentWillUnmount: function(){
+    AuditStore.removeChangeListener(this.onChange);
+  },
+  onChange: function(){ 
+    this.setState(getStateData());
+  },
+  getScreenComponent : function(screen_id){
+    switch(screen_id){
+      case appConstants.AUDIT_WAITING_FOR_MSU:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                 React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Spinner, null)
+                 )
+              )
+            );
+        break;
+      case appConstants.AUDIT_SCAN:
+          if(this.state.AuditCancelScanStatus == true){
+            this._cancelStatus = (
+              React.createElement("div", {className: "cancel-scan"}, 
+                React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+              )
+            );
+          }else{
+            this._cancelStatus = '';
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement("div", {className: "audit-scan-left"}, 
+                     React.createElement(Rack, {rackData: this.state.AuditRackDetails, type: "small"}), 
+                    React.createElement(TabularData, {data: this.state.AuditBoxSerialData})
+                  ), 
+                  React.createElement("div", {className: "audit-scan-middle"}, 
+                    React.createElement(TabularData, {data: this.state.AuditCurrentBoxSerialData, size: "double"}), 
+                   React.createElement(TabularData, {data: this.state.AuditLooseItemsData, size: "triple"})
+                  ), 
+                  React.createElement("div", {className: "audit-scan-right"}, 
+                    React.createElement(Img, null), 
+                   React.createElement(TabularData, {data: this.state.AuditItemDetailsData}), 
+                   React.createElement("div", {className: "finish-scan"}, 
+                    React.createElement(Button1, {disabled: !this.state.AuditCurrentBoxSerialData.tableRows[1][0].disabled, text: "Finish", module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
+                  )
+                  )
+                ), 
+                this._cancelStatus
+              )
+            );
+
+        break;
+      case appConstants.AUDIT_RECONCILE:
+          var subComponent='';
+          var messageType = 'large';
+          if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
+            subComponent=(
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement("div", {className: "audit-reconcile-left"}, 
+                    React.createElement(TabularData, {data: this.state.AuditReconcileBoxSerialData})
+                  ), 
+                  React.createElement("div", {className: "audit-reconcile-right"}, 
+                   React.createElement(TabularData, {data: this.state.AuditReconcileLooseItemsData, size: "triple"})
+                  )
+                )
+              );
+            messageType = "small";
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                React.createElement("div", {className: messageType=="small"?"reconcilation-message":"reconcilation-message large"}, 
+                  React.createElement(Reconcile, {message: (this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1) ? "Reconcile the below Item":"No Items to renconcile"})
+                ), 
+                subComponent, 
+                 React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "Back", module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "OK", module: appConstants.AUDIT, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
+                )
+              )
+            );
+        break;
+      default:
+        return true; 
+    }
+  },
+  getNotificationComponent:function(){
+    if(this.state.AuditNotification != undefined)
+      this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
+    else
+      this._notification = "";
+  },
+  render: function(data){
+    this.getNotificationComponent();
+    this.getScreenComponent(this.state.AuditScreenId);
+      return (
+        React.createElement("div", {className: "main"}, 
+          React.createElement(Header, null), 
+          React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}), 
+          this._component, 
+          this._notification
+        ) 
+       
+      )
+  }
+});
+
+module.exports = Audit;
+
+},{"../constants/appConstants":275,"../stores/AuditStore":281,"./Button/Button":238,"./Button/Button.js":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductImage.js":254,"./Rack/MsuRack.js":262,"./Reconcile":266,"./Spinner/LoaderButler":267,"./SystemIdle":270,"./TabularData":273,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -36649,6 +36865,13 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
+        else if(compData.ppsbin_state == "completed" )
+            return (
+                React.createElement("div", {className: "bin completed"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl completed"}, compData.ppsbin_id)
+                )
+            );
         else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == appConstants.PUT_BACK_STAGE)
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
@@ -36657,7 +36880,7 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")) && (compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")) && (compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
             return (
                 React.createElement("div", {className: "bin  selected blink1"}, 
                      React.createElement("div", {className: "tote"}, 
@@ -36689,7 +36912,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin selected"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
 
@@ -36735,13 +36958,20 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
+        else 
+            return (
+                React.createElement("div", {className: "bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+                );
         
     }
 });
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":269,"../Modal/Modal":241,"react":230}],235:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"../Modal/Modal":243,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -36807,7 +37037,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":277,"./Bin.react":234,"react":230}],236:[function(require,module,exports){
+},{"../../stores/PutBackStore":284,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -36847,12 +37077,13 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":271,"react":230}],237:[function(require,module,exports){
+},{"../constants/resourceConstants":277,"react":230}],238:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({displayName: "Button1",
+    _checklistClass : '',
     performAction:function(module,action){
         switch(module){
             case appConstants.PUT_BACK:
@@ -36865,7 +37096,15 @@ var Button1 = React.createClass({displayName: "Button1",
                         break;
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScan(this.props.barcode);
-                        break;    
+                        break;
+                    case appConstants.CANCEL_TOTE:
+                    case appConstants.CLOSE_TOTE:
+                        var data = {
+                            "close_value" : this.props.status,
+                            "toteId" : this.props.toteId
+                        }
+                        ActionCreators.toteAction(data);
+                        break;            
                      default:
                         return true; 
                 }
@@ -36883,19 +37122,74 @@ var Button1 = React.createClass({displayName: "Button1",
                 switch(action){
                     case appConstants.CANCEL_SCAN:
                         ActionCreators.cancelScanAll();
+                        break;   
+                    case appConstants.CHECKLIST_SUBMIT:
+                        var checklist_index = this.props.checkListData.checklist_index;
+                        var checkList = this.props.checkListData;console.log(checkList);
+                        checkList.checklist_data.map(function(data, index){
+                            var keyvalue = Object.keys(data);
+                            console.log(inputBoxValue);
+                            var inputBoxValue = data[keyvalue]["value"];
+                            if(checkList.checklist_index != null){
+                                if(index === checkList.checklist_index - 1){                                    
+                                    checkList.checklist_data[index][keyvalue].value = document.getElementById("checklist_field"+index).value;
+                                }
+                            }else{
+                                var keyvalue = Object.keys(data);
+                                checkList.checklist_data[index][keyvalue]["value"] = document.getElementById("checklist_field"+index).value;
+                            }  
+                            console.log(data); 
+                        
+                        });
+
+                        console.log(checkList);
+                       //ActionCreators.checkListSubmit(checkList);
+                        break;       
+                     default:
+                        return true; 
+                }
+            break;
+            case appConstants.PICK_BACK:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScan(this.props.barcode);
                         break;    
                      default:
                         return true; 
                 }
             break;
+            case appConstants.AUDIT:
+                switch(action){
+                    case appConstants.CANCEL_SCAN:
+                        ActionCreators.cancelScanAll();
+                        break;    
+                    case appConstants.GENERATE_REPORT:
+                        ActionCreators.generateReport();
+                        break;    
+                     case appConstants.CANCEL_FINISH_AUDIT:
+                        ActionCreators.cancelFinishAudit();
+                        break;   
+                     case appConstants.FINISH_CURRENT_AUDIT:
+                        ActionCreators.finishCurrentAudit();
+                        break;   
+                     default:
+                        return true; 
+                }
+            break;
+
              default:
                 return true; 
         }
     },
-    render: function() {
+    render: function() { console.log(this.props.checkListData);
+       if(this.props.buttonChecklist != undefined){
+            _checklistClass = 'checklistButtonSubmit';
+       }else{
+            _checklistClass = '';
+       }
         if(this.props.disabled == false)
             return (
-                React.createElement("a", {className: this.props.color == "orange"? "custom-button orange" : "custom-button black", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
+                React.createElement("a", {className: this.props.color == "orange"? "custom-button orange "+_checklistClass : "custom-button black "+_checklistClass, onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
             );        
         else
             return (
@@ -36906,7 +37200,50 @@ var Button1 = React.createClass({displayName: "Button1",
 
 module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":269,"react":230}],238:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"react":230}],239:[function(require,module,exports){
+var React = require('react');
+var ActionCreators = require('../../actions/CommonActions');
+var appConstants = require('../../constants/appConstants');
+
+var IconButton = React.createClass({displayName: "IconButton",
+    performAction:function(module,action){
+        switch(module){
+            case appConstants.AUDIT:
+                switch(action){
+                    case appConstants.FINISH_BOX:
+                        ActionCreators.finishBox();
+                        break;    
+                     default:
+                        return true; 
+                }
+            break;
+             default:
+                return true; 
+        }
+    },
+    render: function() { 
+            if(this.props.type == "finish")
+                return (
+                    React.createElement("div", {className: "success-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
+                        React.createElement("div", {className: "border-glyp"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-ok"})
+                        )
+                    )
+                );
+            else if(this.props.type == "edit")
+                return (
+                React.createElement("div", {className: "edit-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
+                        React.createElement("div", {className: "border-glyp"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-pencil"})
+                        )
+                )
+            );              
+    }
+});
+
+module.exports = IconButton;
+
+},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -36931,7 +37268,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":271,"./Header":239,"react":230}],239:[function(require,module,exports){
+},{"../constants/resourceConstants":277,"./Header":241,"react":230}],241:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -36956,7 +37293,7 @@ var Header = React.createClass({displayName: "Header",
             layout: 'custom',
             customLayout: {
               'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
-              'shift': ['1 2 3 4 5 6 7 8 9 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+              'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -37005,7 +37342,7 @@ var Header = React.createClass({displayName: "Header",
               React.createElement("img", {src: allSvgConstants.logo})
               ), 
                 React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
-                  React.createElement("span", {className: "glyphicon glyphicon-barcode"}), 
+                  React.createElement("img", {src: allSvgConstants.scanHeader}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
               React.createElement("div", {className: "header-actions"}, 
@@ -37018,7 +37355,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/svgConstants":272,"../stores/mainstore":280,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],240:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/svgConstants":278,"../stores/mainstore":287,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],242:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -37026,7 +37363,8 @@ var mainstore = require('../../stores/mainstore');
 var loginstore = require('../../stores/loginstore');
 var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
-var allSvgConstants = require('../../constants/svgConstants')
+var allSvgConstants = require('../../constants/svgConstants');
+var resourceConstants = require('../../constants/resourceConstants');
 
 function getState(){
    return {
@@ -37041,9 +37379,9 @@ var LoginPage = React.createClass({displayName: "LoginPage",
  mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
-  },
-  handleLogin: function(newItem){
-      var data = {
+  }, 
+  handleLogin: function(e){    
+    var data = {
         'data_type': 'auth',
         'data': {
               'username': this.state.username,
@@ -37051,14 +37389,41 @@ var LoginPage = React.createClass({displayName: "LoginPage",
               'seat_name': this.refs.seat_name.value
           }
       }
-    CommonActions.login(data);
-
-  },
+    CommonActions.login(data);  
+  }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
-    CommonActions.listSeats(); 
+    CommonActions.listSeats();   
+    virtualKeyBoard = $('#username, #password').keyboard({
+      layout: 'custom',
+      customLayout: {
+        'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
+        'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+      },
+      css: {
+        container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+      },
+      reposition: true,
+      alwaysOpen: false,
+      initialFocus: true,     
+      visible : function(e, keypressed, el){
+        el.value = '';
+      },
+      accepted: function(e, keypressed, el) {
+        var usernameValue = document.getElementById('username').value;
+        var passwordValue = document.getElementById('password').value;
+        
+        console.log(usernameValue , passwordValue);
+        if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
+          $('#loginBtn').prop('disabled', false);
+        }else{
+          $('#loginBtn').prop('disabled', true); 
+        }    
+      }
+    }); 
+  
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -37071,15 +37436,20 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     });
 
   },
+  changeLanguage : function(){
+    CommonActions.changeLanguage(this.refs.language.value);
+  },
 
-	render: function(){
-var seatData;
+  render: function(){
+    var d = new Date();
+    var n = d.getFullYear();   
+    var seatData;
       var display = this.state.flag === true ? 'block' : 'none';
-      if(this.state.seatList.length > 0){
+      if(this.state.seatList.length > 0){ 
           seatData = this.state.seatList[0].map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                return (
-                  React.createElement("option", {key: 'pps' + index, value: data.seat_type+'_'+data.pps_id}, "PPS ", data.seat_type, " ", data.pps_id)
+                  React.createElement("option", {key: 'pps' + index, value: data.seat_name}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
             }else{console.log(data);
                  return( React.createElement("option", {key: index, value: data}, data))
@@ -37088,47 +37458,49 @@ var seatData;
       }
       if(this.state.flag === false){
         return (
-				React.createElement("div", null, 
-					React.createElement("div", {className: "headerLoginPage"}, 
-		            	React.createElement("div", {className: "logo"}, 
-		            		React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
-		            	), 
-		            	React.createElement("div", {className: "header-actions"}, 
-		            	   	React.createElement("img", {className: "mapImg", src: allSvgConstants.headerbg})
-		            	)
-	      			), 
-	      			React.createElement("div", {className: "bodyContent"}, 
-	      				React.createElement("div", {className: "bodyLoginPage"}, 
-		      				React.createElement("div", {className: "factoryImage"}, 
-		      						React.createElement("img", {src: allSvgConstants.factoryImg})
-		      				), 
-		      				React.createElement("div", {className: "userFormLoginPage"}, 
-		      				React.createElement("form", null, 
-							React.createElement("select", {ref: "seat_name"}, 
-							seatData
-							), 
+        React.createElement("div", null, 
+          React.createElement("div", {className: "headerLoginPage"}, 
+                  React.createElement("div", {className: "logo"}, 
+                    React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
+                  ), 
+                  React.createElement("div", {className: "header-actions"}, 
+                      React.createElement("img", {className: "mapImg", src: allSvgConstants.headerbg})
+                  )
+          ), 
+          React.createElement("div", {className: "bodyContent"}, 
+                React.createElement("div", {className: "bodyLoginPage"}, 
+                    React.createElement("div", {className: "factoryImage"}, 
+                        React.createElement("img", {src: allSvgConstants.factoryImg})
+                    ), 
+                    React.createElement("div", {className: "userFormLoginPage"}, 
+                        React.createElement("form", null, 
+                            React.createElement("select", {className: "selectPPS", ref: "seat_name"}, 
+                               seatData
+                            ), 
 
-							React.createElement("div", {className: "form-group"}, 
-								React.createElement("label", {for: "username"}, "User Name :"), 
-	    						React.createElement("input", {type: "text", class: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
-							), 
-							React.createElement("div", {className: "form-group"}, 
-								React.createElement("label", {for: "password"}, "Password :"), 
-	    						React.createElement("input", {type: "Password", class: "form-control", id: "username", placeholder: "Enter Password", valueLink: this.linkState('password')})
-							), 
-							React.createElement("select", null, 
-								  React.createElement("option", {value: "volvo"}, "Select Language"), 
-								  React.createElement("option", {value: "saab"}, "English"), 
-								  React.createElement("option", {value: "mercedes"}, "Chinese"), 
-								  React.createElement("option", {value: "audi"}, "German")
-							), 
-							React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", onClick: this.handleLogin, value: "Login"})
-					)
-		      				)
-	      				)
-	      			)
-				)
-			);
+
+              React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", null, _(resourceConstants.USERNAME)), 
+                  React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
+              ), 
+              React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", null, _(resourceConstants.PASSWORD)), 
+                  React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", valueLink: this.linkState('password')})
+              ), 
+              React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
+                  React.createElement("option", {value: "english"}, "English"), 
+                  React.createElement("option", {value: "chinese"}, "Chinese")
+              ), 
+              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", onClick: this.handleLogin, value: "Login"})
+          )
+          )
+                )
+            ), 
+            React.createElement("div", {className: "copyright"}, 
+                "Copyright © ", n, " GreyOrange Pte Ltd"
+            )
+        )
+      );
     }
      else{ 
       return(
@@ -37139,19 +37511,23 @@ var seatData;
       )
     }
 
-		
-	}
+    
+  }
 });
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/svgConstants":272,"../../stores/loginstore":279,"../../stores/mainstore":280,"../Operator":248,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],241:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../constants/svgConstants":278,"../../stores/loginstore":286,"../../stores/mainstore":287,"../Operator":250,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],243:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
 var ModalFooter = require('./ModalFooter');
-
+var Button1 = require("../Button/Button");
+var appConstants = require('../../constants/appConstants');
+var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
+var jqueryPosition = require('jquery-ui/position');
+var virtualkeyboard = require('virtual-keyboard');
 
 var component,title;
 
@@ -37165,7 +37541,34 @@ function getStateData(){
     };
 }
 
-function loadComponent(modalType,modalData){
+function attachKeyboard(id){ 
+    virtualKeyBoard1 = $('#'+id).keyboard({
+            layout: 'custom',
+            customLayout: {
+            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
+            'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+            },
+            css: {
+              container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+            },
+            reposition: true,
+            alwaysOpen: false,
+            initialFocus: true,
+            visible : function(e, keypressed, el){
+              el.value = '';
+            },
+            accepted: function(e, keypressed, el) {
+
+            }
+        });
+   $('#'+id).data('keyboard').reveal(); 
+}
+
+function removeTextField(){
+  $('.modal-body').find('input:text').val('');
+}
+
+function loadComponent(modalType,modalData){ 
   switch(modalType){
     case "product-detail":
       component = [];
@@ -37192,6 +37595,71 @@ function loadComponent(modalType,modalData){
       })
       title = "Bin Info";
       break;
+    case "scan_bin_barcode":
+      component = [];
+      footer = [];
+      component.push((React.createElement("div", null, 
+        React.createElement("div", {className: "modalContent removeBorder"}, 
+            React.createElement("div", {className: "image1"}, 
+                React.createElement("img", {src: allSvgConstants.iconBar})
+            ), 
+            React.createElement("div", {className: "content1"}, "Scan Bin Barcode"), 
+            React.createElement("div", {className: "clearfix"})
+        ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+             React.createElement("div", {className: "buttonContainer center-block"}, 
+                React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
+             )
+       )
+       ));      
+      
+      title = "Associate tote with bin";
+      break;
+    case "pick_checklist":
+      component = [];
+      footer = [];
+      rowData =[];
+      title = "Input Extra Details";
+        var modalData = modalData;
+        var rowData = modalData.checklist_data.map(function(data,index){
+            if(modalData.checklist_index === (index+1) || modalData.checklist_index === null || modalData.checklist_index === undefined){
+              return (
+                  data.map(function(data1,index1){
+                    var keyvalue = Object.keys(data1);
+                    var inputBoxValue = data1[keyvalue]["value"];
+                      return (React.createElement("div", null, 
+                                  React.createElement("div", {className: "row dataCaptureHead removeBorder"}, 
+                                      keyvalue
+                                  ), 
+                                  React.createElement("div", {className: "row dataCaptureInput removeBorder"}, 
+                                      React.createElement("input", {type: "text", id: "checklist_field"+index1, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1)})
+                                  )
+                              )
+                        );
+                  })
+                );
+                  
+            }
+            else{}
+          });
+      return (
+              component.push((
+                React.createElement("div", null, 
+                  rowData, 
+                      React.createElement("div", {className: "modal-footer removeBorder"}, 
+                          React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                                React.createElement("div", {className: "row removeBorder"}, 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement("input", {className: "btn btn-default checklistButtonClear", type: "button", value: "Clear All", onClick: removeTextField})), 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
+                                )
+                          )
+                     )
+                )
+               ))   
+               );  
+     
+      
+      break;    
     default:
       component = null;
       title = null;
@@ -37200,12 +37668,15 @@ function loadComponent(modalType,modalData){
 }
 
 var Modal = React.createClass({displayName: "Modal",
-  componentDidMount:function(){
-    $(".modal").click(function(e){
+  virtualKeyBoard1 : '',
+  componentDidMount:function(id){
+    /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });
+    });*/
+    
   },
+ 
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -37214,6 +37685,7 @@ var Modal = React.createClass({displayName: "Modal",
   },
   onChange: function(){ 
     this.setState(getStateData());
+   // virtualKeyBoard1.getkeyboard().close();
   },
   render: function () {
     return (React.createElement("div", {className: "modal fade"}, 
@@ -37223,6 +37695,7 @@ var Modal = React.createClass({displayName: "Modal",
              React.createElement("div", {className: "modal-body"}, 
               component
             )
+
           )
         )
       ))
@@ -37231,7 +37704,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../stores/mainstore":280,"./ModalFooter":242,"./ModalHeader":243,"bootstrap":1,"react":230}],242:[function(require,module,exports){
+},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/mainstore":287,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],244:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -37244,7 +37717,7 @@ var ModalFooter = React.createClass({displayName: "ModalFooter",
 
 module.exports = ModalFooter;
 
-},{"react":230}],243:[function(require,module,exports){
+},{"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var ModalHeader = React.createClass({displayName: "ModalHeader",
   render: function () {
@@ -37260,17 +37733,15 @@ var ModalHeader = React.createClass({displayName: "ModalHeader",
 
 module.exports = ModalHeader;
 
-},{"react":230}],244:[function(require,module,exports){
+},{"react":230}],246:[function(require,module,exports){
 var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
+        var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.data;
-        var message_args  = compData.message.slice(0);
-        console.log(this.props.serverNavData);
-       /* console.log(message_args);
-       var m = message_args.unshift(compData.message[this.props.serverNavData.code]);
-       console.log(m);*/
+        var message_args  = this.props.serverNavData.details.slice(0);
+        var errorCode = this.props.serverNavData.code;
         return (
             	React.createElement("div", {className: "active-navigation"}, 
                     
@@ -37285,7 +37756,16 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                         })(), 
                     
             		React.createElement("div", {className: "action"}, 
-            			this.props.serverNavData.description
+            		(function(){
+
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                        }
+                       
+                        }
+                    )()
             		)
             	)
         );
@@ -37294,7 +37774,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"react":230}],245:[function(require,module,exports){
+},{"react":230}],247:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -37307,7 +37787,7 @@ var Navigation = React.createClass({displayName: "Navigation",
                 this.props.navData.map(function(value,index){
                     if(value.type == "active")
                         return (
-                                React.createElement(ActiveNavigation, {key: index, data: value, serverNavData: this.props.serverNavData})
+                                React.createElement(ActiveNavigation, {key: index, data: value, serverNavData: this.props.serverNavData, navMessagesJson: this.props.navMessagesJson})
                             );
                     else
                         return (
@@ -37321,7 +37801,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
 
-},{"./ActiveNavigation.react":244,"./PassiveNavigation.react":246,"react":230}],246:[function(require,module,exports){
+},{"./ActiveNavigation.react":246,"./PassiveNavigation.react":248,"react":230}],248:[function(require,module,exports){
 var React = require('react');
 
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
@@ -37342,12 +37822,16 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 
 module.exports = PassiveNavigation;
 
-},{"react":230}],247:[function(require,module,exports){
+},{"react":230}],249:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
 var Notification = React.createClass({displayName: "Notification",
     render: function() {
+        var navMessagesJson = this.props.navMessagesJson;
+        var compData = this.props.notification;
+        var message_args  = this.props.notification.details.slice(0);
+        var errorCode = this.props.notification.code;
             return (
                 React.createElement("div", {className: "notify", role: "alert"}, 
                 	React.createElement("div", {className: "success-icon"}, 
@@ -37355,7 +37839,16 @@ var Notification = React.createClass({displayName: "Notification",
                 			React.createElement("span", {className: "glyphicon glyphicon-ok"})
                 		)
                 	), 
-                	this.props.notification.description
+                	(function(){
+
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            var notification_message = _.apply(null, message_args);
+                            return notification_message;
+                        }
+                       
+                        }
+                    )()
                 )
             );              
     }
@@ -37363,23 +37856,26 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":233,"react":230}],248:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"react":230}],250:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PickFront');
+var Audit = require('./Audit');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
+
 
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
       spinner : mainstore.getSpinnerState(),
-      systemIsIdle : mainstore.getSystemIdleState()
+      systemIsIdle : mainstore.getSystemIdleState(),
+      navMessages : mainstore.getServerMessages()
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -37387,6 +37883,9 @@ var Operator = React.createClass({displayName: "Operator",
   _currentSeat:'',
   getInitialState: function(){
     return getState();
+  },
+  componentDidMount: function(){
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillMount: function(){
      mainstore.addChangeListener(this.onChange);
@@ -37396,21 +37895,23 @@ var Operator = React.createClass({displayName: "Operator",
   },
   onChange: function(){ 
    this.setState(getState());
-  
   },
   getSeatType:function(seat){
      switch(seat){
       case appConstants.PUT_BACK:
-          this._currentSeat = React.createElement(PutBack, null);
+          this._currentSeat = React.createElement(PutBack, {navMessagesJson: this.state.navMessages});
         break;
       case appConstants.PUT_FRONT:
-          this._currentSeat = React.createElement(PutFront, null);
+          this._currentSeat = React.createElement(PutFront, {navMessagesJson: this.state.navMessages});
         break;
       case appConstants.PICK_BACK:
-          this._currentSeat = React.createElement(PickBack, null);
+          this._currentSeat = React.createElement(PickBack, {navMessagesJson: this.state.navMessages});
         break;
       case appConstants.PICK_FRONT:
-          this._currentSeat = React.createElement(PickFront, null);
+          this._currentSeat = React.createElement(PickFront, {navMessagesJson: this.state.navMessages});
+        break;
+      case appConstants.AUDIT:
+          this._currentSeat = React.createElement(Audit, {navMessagesJson: this.state.navMessages});
         break;
       default:
         return true; 
@@ -37446,7 +37947,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":269,"../stores/mainstore":280,"./PickBack":249,"./PickFront":250,"./PutBack":259,"./PutFront":260,"./Spinner/Overlay":266,"./SystemIdle":267,"react":230}],249:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/mainstore":287,"./Audit":234,"./PickBack":251,"./PickFront":252,"./PutBack":260,"./PutFront":261,"./Spinner/Overlay":268,"./SystemIdle":270,"react":230}],251:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -37459,6 +37960,7 @@ var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
+var CommonActions = require('../actions/CommonActions');
 
 
 function getStateData(){
@@ -37467,7 +37969,8 @@ function getStateData(){
            PickBackNotification : PickBackStore.getNotificationData(),
            PickBackBinData: PickBackStore.getBinData(),
            PickBackScreenId:PickBackStore.getScreenId(),
-           PickBackServerNavData : PickBackStore.getServerNavData()
+           PickBackServerNavData : PickBackStore.getServerNavData(),
+           PickBackToteDetails : PickBackStore.getToteDetails()
 
     };
 }
@@ -37479,13 +37982,19 @@ var PickBack = React.createClass({displayName: "PickBack",
     return getStateData();
   },
   componentWillMount: function(){
+    if(this.state.PickBackToteDetails != null){
+        this.showModal(this.state.PickBackToteDetails)
+    }
     PickBackStore.addChangeListener(this.onChange);
   },
-  componentWillUnmount: function(){
+  componentWillUnmount: function(){ 
     PickBackStore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
     this.setState(getStateData());
+    if(this.state.PickBackToteDetails != null){
+        this.showModal(this.state.PickBackToteDetails)
+    }
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -37514,10 +38023,22 @@ var PickBack = React.createClass({displayName: "PickBack",
         return true; 
     }
   },
-
+  showModal: function(data) { 
+    if(data.tote_status === true){ 
+      setTimeout((function(){CommonActions.showModal({
+              data:data,
+              type:'scan_bin_barcode'
+      });
+      $('.modal').modal();
+      return false;
+      }),0)
+    }else{ 
+      $('.modal').modal('hide');
+    }
+  },
   getNotificationComponent:function(){
     if(this.state.PickBackNotification != undefined)
-      this._notification = React.createElement(Notification, {notification: this.state.PickBackNotification})
+      this._notification = React.createElement(Notification, {notification: this.state.PickBackNotification, navMessagesJson: this.props.navMessagesJson})
     else
       this._notification = "";
   },
@@ -37527,7 +38048,7 @@ var PickBack = React.createClass({displayName: "PickBack",
       return (
         React.createElement("div", {className: "main"}, 
           React.createElement(Header, null), 
-          React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData}), 
+          React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}), 
           this._component, 
           this._notification
         ) 
@@ -37538,7 +38059,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../constants/appConstants":269,"../stores/PickBackStore":275,"./Bins/Bins.react":235,"./Button/Button":237,"./Header":239,"./Modal/Modal":241,"./Navigation/Navigation.react":245,"./Notification/Notification":247,"./ProductDetails/Wrapper":258,"./SystemIdle":267,"react":230}],250:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickBackStore":282,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"react":230}],252:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var Header = require('./Header');
@@ -37554,6 +38075,7 @@ var BoxSerial = require('./BoxSerial.js');
 var Modal = require('./Modal/Modal');
 var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
+var CommonActions = require('../actions/CommonActions');
 
 function getStateData(){
   return {
@@ -37565,12 +38087,13 @@ function getStateData(){
            PickFrontProductDetails : PickFrontStore.productDetails(),
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
            PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
-          PickFrontServerNavData : PickFrontStore.getServerNavData(),
-          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
-          PickFrontItemUid : PickFrontStore.getItemUid(),
-          PickFrontSlotDetails :PickFrontStore.getCurrentSlot()
-
-
+           PickFrontServerNavData : PickFrontStore.getServerNavData(),
+           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+           PickFrontItemUid : PickFrontStore.getItemUid(),
+           PickFrontSlotDetails :PickFrontStore.getCurrentSlot(),
+           PickFrontChecklistDetails :PickFrontStore.getChecklistDetails(),
+           PickFrontChecklistIndex : PickFrontStore.getChecklistIndex(),
+           PickFrontChecklistOverlayStatus :PickFrontStore.getChecklistOverlayStatus()
     };
 };
 
@@ -37581,6 +38104,9 @@ var PickFront = React.createClass({displayName: "PickFront",
     return getStateData();
   },
   componentWillMount: function(){
+    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
+        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }
     PickFrontStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
@@ -37588,12 +38114,39 @@ var PickFront = React.createClass({displayName: "PickFront",
   },
   onChange: function(){ 
 	this.setState(getStateData());
+   if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
+        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }else{
+      $('.modal').modal('hide');
+      $('.modal-backdrop').remove();
+    }
   },
   getNotificationComponent:function(){
     if(this.state.PickFrontNotification != undefined)
-      this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification})
+      this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, navMessagesJson: this.props.navMessagesJson})
     else
       this._notification = "";
+  },
+  showModal:function(data,index){
+    var data ={
+      'checklist_data' : data,
+      "checklist_index" : index
+    };
+    if(this.state.PickFrontChecklistOverlayStatus === true ){
+    setTimeout((function(){CommonActions.showModal({
+              data:data,
+              type:'pick_checklist'
+      });
+      $('.modal').modal();
+      return false;
+      }),0)
+
+    }
+    else {
+      $('.modal').modal('hide');
+      $('.modal-backdrop fade in').remove();
+    }
+
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -37623,7 +38176,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Rack, {rackData: this.state.PickFrontRackDetails}), 
-                     React.createElement(PrdtDetails, null)
+                     React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                  )
               )
             );
@@ -37642,7 +38195,11 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -37660,6 +38217,11 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -37668,7 +38230,8 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                    editButton
                 )
               )
             );
@@ -37679,14 +38242,15 @@ var PickFront = React.createClass({displayName: "PickFront",
         return true;
     }
   },
-  render: function(data){
+  
+  render: function(data){ 
 	  this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
 	
 	return (
 		React.createElement("div", {className: "main"}, 
 			React.createElement(Header, null), 
-			React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData}), 
+			React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}), 
 			this._component, 
       this._notification
 	  )   
@@ -37696,75 +38260,35 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../constants/appConstants":269,"../stores/PickFrontStore":276,"./Bins/Bins.react":235,"./BoxSerial.js":236,"./Button/Button":237,"./CurrentSlot":238,"./Header":239,"./Modal/Modal":241,"./Navigation/Navigation.react":245,"./Notification/Notification":247,"./PrdtDetails/ProductDetails.js":251,"./ProductDetails/Wrapper":258,"./Rack/MsuRack.js":261,"./Spinner/LoaderButler":265,"react":230}],251:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickFrontStore":283,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductDetails.js":253,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],253:[function(require,module,exports){
 var React = require('react');
 
-var ProductHeader = require('./ProductHeader');
 var ProductInfo = require('./ProductInfo');
 var ProductImage = require('./ProductImage');
 
 var ProductDetails = React.createClass({displayName: "ProductDetails",
-	render:function(){
-
-		var prodDetails =[
-							{
-						"product_info": {
-							"product_description": "APPLE IPHONE 5S",
-							"product_local_image_url": null,
-							"product_dimension": 32.4,
-							"product_sku": null,
-							"product_name": null,
-							"product_weight": null
-						}
-					}
-				];
-
-var obj = prodDetails[0].product_info;
-
-
-		
-
-		return(
-			React.createElement("div", {className: "productTableInfo"}, 
-			React.createElement(ProductImage, {srcURL: prodDetails[0].product_info.product_local_image_url}), 
-			React.createElement("table", {className: "table"}, 
-					
-						React.createElement(ProductHeader, {details: prodDetails[0].product_info.product_description}), 
-						
-					React.createElement("tbody", null, 
-						React.createElement(ProductInfo, {infoDetails: obj})
-					)
-				)
+    render: function() {
+        return (
+            React.createElement("div", {className: "productTableInfo"}, 
+				React.createElement(ProductImage, {srcURL: this.props.productInfo.product_local_image_url, details: this.props.productInfo.product_description}), 
+                React.createElement("div", {className: "productHeader"}, 
+                    _("Details")
+                ), 
+                React.createElement(ProductInfo, {infoDetails: this.props.productInfo})
 			)
-			);
-	}
+        );
+    }
 });
 
 module.exports = ProductDetails;
 
-},{"./ProductHeader":252,"./ProductImage":253,"./ProductInfo":254,"react":230}],252:[function(require,module,exports){
-var React = require('react');
-
-var ProductHeader = React.createClass({displayName: "ProductHeader",
-	render:function(){
-		var details = this.props.details;
-
-		return(
-			React.createElement("div", {className: "productHeader"}, 
-				details
-			)
-			);
-	}
-});
-
-module.exports = ProductHeader;
-
-},{"react":230}],253:[function(require,module,exports){
+},{"./ProductImage":254,"./ProductInfo":255,"react":230}],254:[function(require,module,exports){
 var React = require('react');
 
 var ProductImage = React.createClass({displayName: "ProductImage",
 	render:function(){
 		var srcURL = this.props.srcURL;
+		var details = this.props.details;
 
 		return(
 			React.createElement("div", {className: "productImage"}, 
@@ -37776,35 +38300,39 @@ var ProductImage = React.createClass({displayName: "ProductImage",
 
 module.exports = ProductImage;
 
-},{"react":230}],254:[function(require,module,exports){
+},{"react":230}],255:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = React.createClass({displayName: "ProductInfo",
-	render:function(){
-		var infoDetails = this.props.infoDetails;
-		var arr1 = [];
-		$.each( infoDetails, function( key, value ) {
-  			return arr1.push(
-  					
-  						React.createElement("tr", null, 
-	  						React.createElement("td", {className: "key"}, " ", key.toUpperCase(), " "), 
-	  						React.createElement("td", {className: "value"}, value, " ")
-  						)
-  					
-  				);
-		});
+    render: function() {
+        var infoDetails = this.props.infoDetails;
+        var arr1 = [];
+        $.each(infoDetails, function(key, value) {
+            if(key != "product_local_image_url" )
+            return arr1.push(
+                React.createElement("tr", null, 
+	  				React.createElement("td", {className: "key"}, " ", key.toUpperCase(), " "), 
+	  				React.createElement("td", {className: "value"}, value, " ")
+  				)
 
-		return(
-			React.createElement("div", {className: ""}, 
-			arr1
+            );
+        });
+
+        return (
+            React.createElement("div", {className: "table-wrapper"}, 
+				React.createElement("table", {className: "table"}, 									
+					React.createElement("tbody", null, 
+						arr1
+					)
+				)
 			)
-			);
-	}
+        );
+    }
 });
 
 module.exports = ProductInfo;
 
-},{"react":230}],255:[function(require,module,exports){
+},{"react":230}],256:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -37929,7 +38457,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":280,"react":230}],256:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":287,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -37975,7 +38503,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],257:[function(require,module,exports){
+},{"react":230}],258:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -38041,7 +38569,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":271,"../../stores/mainstore":280,"../Modal/Modal":241,"./PopUp":256,"react":230}],258:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../stores/mainstore":287,"../Modal/Modal":243,"./PopUp":257,"react":230}],259:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -38074,7 +38602,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":280,"./KQ":255,"./PopUp":256,"./ProductInfo":257,"react":230}],259:[function(require,module,exports){
+},{"../../stores/mainstore":287,"./KQ":256,"./PopUp":257,"./ProductInfo":258,"react":230}],260:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -38087,6 +38615,8 @@ var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
+var TabularData = require('./TabularData');
+
 
 
 function getStateData(){
@@ -38100,7 +38630,9 @@ function getStateData(){
            PutBackScanDetails : PutBackStore.scanDetails(),
            PutBackProductDetails : PutBackStore.productDetails(),
            PutBackServerNavData : PutBackStore.getServerNavData(),
-           PutBackItemUid : PutBackStore.getItemUid()
+           PutBackItemUid : PutBackStore.getItemUid(),
+           PutBackReconciliation : PutBackStore.getReconcileData(),
+           PutBackToteId : PutBackStore.getToteId(),
 
     };
 }
@@ -38123,6 +38655,7 @@ var PutBack = React.createClass({displayName: "PutBack",
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
+      case appConstants.PUT_BACK_SCAN_TOTE:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -38151,6 +38684,27 @@ var PutBack = React.createClass({displayName: "PutBack",
               )
             );
         break;
+      case appConstants.PUT_BACK_TOTE_CLOSE:
+          var subComponent='';
+          var messageType = 'large';
+            subComponent=(
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement("div", {className: "audit-reconcile-left"}, 
+                    React.createElement(TabularData, {data: this.state.PutBackReconciliation})
+                  )
+                )
+              );
+            messageType = "small";
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                subComponent, 
+                 React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "BACK", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: "CLOSE", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: true, action: appConstants.CLOSE_TOTE, color: "orange"})
+                )
+              )
+            );
+        break;  
       default:
         return true; 
     }
@@ -38158,17 +38712,17 @@ var PutBack = React.createClass({displayName: "PutBack",
 
   getNotificationComponent:function(){
     if(this.state.PutBackNotification != undefined)
-      this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification})
+      this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification, navMessagesJson: this.props.navMessagesJson})
     else
       this._notification = "";
   },
-  render: function(data){
+  render: function(data){ console.log(this.state.PutBackReconciliation);
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
       return (
         React.createElement("div", {className: "main"}, 
           React.createElement(Header, null), 
-          React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData}), 
+          React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}), 
           this._component, 
           this._notification
         ) 
@@ -38179,7 +38733,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":269,"../stores/PutBackStore":277,"./Bins/Bins.react":235,"./Button/Button":237,"./Header":239,"./Modal/Modal":241,"./Navigation/Navigation.react":245,"./Notification/Notification":247,"./ProductDetails/Wrapper":258,"./SystemIdle":267,"react":230}],260:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/PutBackStore":284,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"./TabularData":273,"react":230}],261:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -38230,7 +38784,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
-      this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification})
+      this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification, navMessagesJson: this.props.navMessagesJson})
     else
       this._notification = "";
   },
@@ -38288,7 +38842,7 @@ var PutFront = React.createClass({displayName: "PutFront",
     return (
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
-        React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData}), 
+        React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}), 
         this._component, 
         this._notification
       ) 
@@ -38300,14 +38854,49 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":269,"../stores/PutFrontStore":278,"./Bins/Bins.react":235,"./Button/Button":237,"./Header":239,"./Modal/Modal":241,"./Navigation/Navigation.react":245,"./Notification/Notification":247,"./ProductDetails/Wrapper":258,"./Rack/MsuRack.js":261,"./Spinner/LoaderButler":265,"react":230}],261:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/PutFrontStore":285,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],262:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
+var drawRackStyle = {
+    flexGrow:"1",
+    flexBasis:"0",
+    width:"50%"};
+
+var lastSlot = {
+    flexBasis:"4vh"};
 
 var MsuRack = React.createClass({displayName: "MsuRack",
-	render: function(){
 
+     totalRackHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var totalHeight = 0;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][1];
+            });
+            for(var i in eachRowHeight) { 
+                totalHeight += eachRowHeight[i]; 
+            }
+               return totalHeight;
+        },
+
+        eachRowHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][1];
+            });
+            return eachRowHeight;
+        },
+
+    componentDidMount:function(){
+        if(this.props.type=="small"){
+
+        }
+    },
+	render: function(){
+        var type = this.props.type;
         var rackDetails = this.props.rackData.rack_type_rec;
         var compartment_details = this.props.rackData.slot_barcodes;
         var slotStart,slotEnd,i;
@@ -38329,26 +38918,29 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         for (i = slotStart; i <= slotEnd; i++) {
             slotIndexList.push(i);
         };
-
-        var rackRange = selectedRackRow;
        
+        var rackRange = selectedRackRow;
+        var totalRackHeight = this.totalRackHeight(); 
+        var eachRowHeight = this.eachRowHeight();
+        
         
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)
                 return (
-                        React.createElement(RackRow, {slots: row[1], key: index, slotIndexArray: slotIndexList, rackRange: rackRange})
+                        React.createElement(RackRow, {slots: row[1], key: index, slotIndexArray: slotIndexList, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
                     );
 
             else
                 return (
-        				React.createElement(RackRow, {slots: row[1], key: index, rackRange: rackRange})
+        				React.createElement(RackRow, {slots: row[1], key: index, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
         			);
         	});
 
 
 		return (
-				React.createElement("div", {className: "drawRack"}, 
-					eachRow.reverse()
+				React.createElement("div", {className: "drawRack", style: this.props.type=="small" ? drawRackStyle:{}}, 
+					eachRow.reverse(), 
+                    React.createElement("div", {className: "lastRow", style: this.props.type=="small" ?  lastSlot:{}})
 				)
 			);
 	}
@@ -38356,7 +38948,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":262,"react":230}],262:[function(require,module,exports){
+},{"./RackRow":263,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -38367,21 +38959,35 @@ var RackRow = React.createClass({displayName: "RackRow",
 		var rackRange = this.props.rackRange;
 		var slotIndexArray = this.props.slotIndexArray;
 		var slotData = this.props.slots;
-		var eachSlot =[];		
-		
+		var totalRackHeight= this.props.totalRackHeight;
+		var noOfRows = this.props.noOfRows;	
+		var eachRowHeight = this.props.eachRowHeight;
+		var eachSlot =[];	
+		var type = this.props.type;
+        /*var calculateHeight = (eachRowHeight/totalRackHeight)*100;
+        var rackRowHeight = {
+				
+				height : calculateHeight + "%",
+			};*/
+			var rackRowHeight;
 		eachSlot = slotData.map(function(slot,index){
+			var x = Math.round((slot[1]/totalRackHeight)*100);
+			rackRowHeight = {
+				
+				flexGrow : x.toString()
+			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					React.createElement(RackSlot, {selectedSlot: true, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type})
+					
 				);
 			else
 				return(
-					React.createElement(RackSlot, {slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type})
 					);
 		});
-
 		return (
-				React.createElement("div", {className: "rackRow"}, 
+				React.createElement("div", {className: "rackRow", style: rackRowHeight}, 
 					eachSlot
 				)
 			);
@@ -38390,7 +38996,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":263,"react":230}],263:[function(require,module,exports){
+},{"./RackSlot":264,"react":230}],264:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -38398,24 +39004,26 @@ var SingleSlot = require('./SingleSlot');
 var RackSlot = React.createClass({displayName: "RackSlot",
 	render : function(){
 		var rackRange = this.props.rackRange;
-		slotIndexArrays = this.props.slotIndexArrays;
-		
-		var calculateWidth = 4.2*this.props.slotWidthDataLength; 
-		 var calculateHeight = this.props.slotHeightData;
+		var slotIndexArrays = this.props.slotIndexArrays;
+		var totalRackHeight = this.props.totalRackHeight;
+		var noOfRows = this.props.noOfRows;
+		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
+		var type = this.props.type;
+		//var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {
-				width : calculateWidth + 'vw',
-				height : calculateHeight/5.5 + "vh",
+				width : calculateWidth + '%',
+				//height : calculateHeight/4 + "vh",
 			};
 		
 		
 		var singleSlot = this.props.slotWidthData.map(function(singSlot,index){
 			if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
 				return(
-						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot%10})
+						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot%10, type: type})
 					);
 				else
 				return(
-						React.createElement(SingleSlot, {key: index, rackRange: rackRange})
+						React.createElement(SingleSlot, {key: index, rackRange: rackRange, type: type})
 					);
 			
 		});
@@ -38430,8 +39038,10 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":264,"react":230}],264:[function(require,module,exports){
+},{"./SingleSlot":265,"react":230}],265:[function(require,module,exports){
 var React = require('react');
+var fontSize = {
+	"font-size":"2rem"};
 
 var SingleSlot = React.createClass({displayName: "SingleSlot",
 	render : function(){
@@ -38439,7 +39049,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 		var slotId = this.props.index;
 		
 		return (
-			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : '')}, 
+			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : ''), style: this.props.type=="small"?fontSize:{}}, 
 				this.props.selected ? rackRange + slotId : ''
 			)
 			);
@@ -38448,7 +39058,30 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],265:[function(require,module,exports){
+},{"react":230}],266:[function(require,module,exports){
+var React = require('react');
+var Header = require('./Header');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
+	render:function(){		
+				
+		
+		return (
+				React.createElement("div", {className: "reconcileWrapper"}, 
+					React.createElement("div", {className: "reconcileStatus"}, " ", this.props.message, " "), 
+					React.createElement("div", {className: "reconcileAction"}, " Please Place The Box Back in Slot A1 ")					
+				)
+				
+					
+				
+			);
+	}
+});
+
+module.exports = ReconcileStatus;
+
+},{"../constants/resourceConstants":277,"./Header":241,"react":230}],267:[function(require,module,exports){
 var React = require('react');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
@@ -38468,16 +39101,17 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":230}],266:[function(require,module,exports){
+},{"react":230}],268:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
+var SpinnerButler = require('./SpinnerButler');
 
 var Overlay = React.createClass({displayName: "Overlay",
 	render:function(){
 		return (
 
 			React.createElement("div", {className: "overlay"}, 
-				React.createElement(LoaderButler, null)
+				React.createElement(SpinnerButler, null)
 			)
 			);
 	}
@@ -38485,7 +39119,34 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":265,"react":230}],267:[function(require,module,exports){
+},{"./LoaderButler":267,"./SpinnerButler":269,"react":230}],269:[function(require,module,exports){
+var React = require('react');
+
+var SpinnerButler = React.createClass({displayName: "SpinnerButler",
+	render:function(){
+		return (
+				React.createElement("div", {className: "sk-fading-circle"}, 
+					  React.createElement("div", {className: "sk-circle1 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle2 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle3 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle4 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle5 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle6 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle7 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle8 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle9 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle10 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle11 sk-circle"}), 
+					  React.createElement("div", {className: "sk-circle12 sk-circle"})
+				)
+			
+			);
+	}
+});
+
+module.exports = SpinnerButler;
+
+},{"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -38505,12 +39166,100 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":271,"./Header":239,"react":230}],268:[function(require,module,exports){
+},{"../constants/resourceConstants":277,"./Header":241,"react":230}],271:[function(require,module,exports){
+var React = require('react');
+
+var TableHeader = React.createClass({displayName: "TableHeader", 
+    
+    render: function() {
+        return (
+            React.createElement("div", {className: "table-header"}, 
+               this.props.data
+      		)
+        );
+    },
+});
+
+module.exports = TableHeader;
+
+},{"react":230}],272:[function(require,module,exports){
+var React = require('react');
+var IconButton = require('./Button/IconButton');
+var appConstants = require('../constants/appConstants');
+
+var TableRow = React.createClass({displayName: "TableRow", 
+	_component:[],
+    getComponent:function(){
+    	var comp = [];
+    	this.props.data.map(function(value,index){
+    		var classes = "table-col ";
+    		var border = value.border == true ? classes = classes + "border-left " : "";
+    		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
+    		var selected = value.selected == true ? classes = classes + "selected ":"";
+    		var large = value.size == "large" ? classes = classes + "large ":classes = classes + "small ";
+    		var bold = value.bold == true ? classes = classes + "bold ":"";
+    		var disabled = value.disabled == true ? classes = classes + "disabled ":"";
+    		var center = value.centerAlign == true ? classes = classes + "center-align ":"";
+            var complete = value.status == "complete" ? classes = classes + "complete ":"";
+            var missing = value.status == "missing" ? classes = classes + "missing ":"";
+            var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
+            if((value.type != undefined && value.type=="button"))
+                comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX}))));
+            else
+    		  comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
+    	});
+    	this._component = comp;
+    },
+    render: function() {
+    	this.getComponent();
+        return (
+            React.createElement("div", {className: "table-row"}, 
+               this._component
+      		)
+        );
+    },
+});
+
+module.exports = TableRow;
+
+},{"../constants/appConstants":275,"./Button/IconButton":239,"react":230}],273:[function(require,module,exports){
+var React = require('react');
+var TableRow = require('./TableRow');
+var TableHeader = require('./TableHeader');
+
+var TabularData = React.createClass({displayName: "TabularData", 
+    _tableRows:[],
+    getTableRows:function(){
+    	var comp =[];
+    	this.props.data.tableRows.map(function(value,index){
+    		comp.push((React.createElement(TableRow, {data: value})));
+    	})
+    	this._tableRows = comp;
+    },
+    render: function() {
+    	this.getTableRows();
+        var classes = "tabular-data ";
+        var size = this.props.size=="double"?classes = classes + "double ":"";
+        var size = this.props.size=="triple"?classes = classes + "triple ":"";
+        return (
+            React.createElement("div", {className: classes}, 
+                React.createElement(TableHeader, {data: this.props.data.header}), 
+                React.createElement("div", {className: "overflow"}, 
+                    this._tableRows
+      		    )
+            )
+        );
+    },
+});
+
+module.exports = TabularData;
+
+},{"./TableHeader":271,"./TableRow":272,"react":230}],274:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
     "putBack": [{
-        "screen_id": "put_back_stage",
+        "screen_id": ["put_back_stage","put_back_scan_tote"],
         "code": "Common.000",
         "image": svgConstants.stage,
         "message": "Stage Bin or Scan Item",
@@ -38518,7 +39267,7 @@ var navData = {
         "level": 1,
         "type": 'passive'
     }, {
-        "screen_id": "put_back_scan",
+        "screen_id": ["put_back_scan","put_back_tote_close"],
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan & Confirm",
@@ -38597,13 +39346,40 @@ var navData = {
         "showImage": true,
         "level": 2,
         "type": 'passive'
+    }],
+    "audit": [
+        [{
+            "screen_id": "pick_front_waiting_for_msu",
+            "code": "Common.000",
+            "message": "Wait For MSU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [ {
+        "screen_id": "audit_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan Items ",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    },{
+        "screen_id": "audit_reconcile",
+        "code": "Common.000",
+        "image": svgConstants.place,
+        "message": "Status",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
     }]
+    ]
 
 };
 
 module.exports = navData;
 
-},{"../constants/svgConstants":272}],269:[function(require,module,exports){
+},{"../constants/svgConstants":278}],275:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
@@ -38629,6 +39405,8 @@ var appConstants = {
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
 	PUT_BACK_SCAN : "put_back_scan",
+	PUT_BACK_TOTE_CLOSE : "put_back_tote_close",
+	PUT_BACK_SCAN_TOTE :'put_back_scan_tote',
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_FRONT_SCAN:"put_front_scan",
@@ -38636,7 +39414,11 @@ var appConstants = {
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
 	RESET_NUMPAD :'RESET_NUMPAD',
+	CANCEL_FINISH_AUDIT:"CANCEL_FINISH_AUDIT",
+	FINISH_CURRENT_AUDIT:"FINISH_CURRENT_AUDIT",
 	CANCEL_SCAN : 'CANCEL_SCAN',
+	FINISH_BOX:"FINISH_BOX",
+	GENERATE_REPORT:"GENERATE_REPORT",
 	LOAD_MODAL:'load_modal',
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
@@ -38649,32 +39431,50 @@ var appConstants = {
 	EDIT_DETAILS:"EDIT_DETAILS",
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
-	BARCODE_SCAN : 'BARCODE_SCAN'
+	AUDIT:"audit_front",
+	SET_AUDIT_DATA:"SET_AUDIT_DATA",
+	AUDIT_SCAN:"audit_scan",
+	AUDIT_RECONCILE:"audit_reconcile",
+	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
+	BARCODE_SCAN : 'BARCODE_SCAN',
+	GET_SERVER_MESSAGES :'GET_SERVER_MESSAGES',
+	SET_SERVER_MESSAGES : 'SET_SERVER_MESSAGES',
+	CHANGE_LANGUAGE :'CHANGE_LANGUAGE',
+	SET_LANGUAGE :'SET_LANGUAGE',
+	CHECKLIST_SUBMIT :'CHECKLIST_SUBMIT',
+	CANCEL_TOTE :'CANCEL_TOTE',
+	CLOSE_TOTE : 'CLOSE_TOTE',
+	TOTE_ACTION :'TOTE_ACTION'
 
 };
 
 module.exports = appConstants;
 
-},{}],270:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 var configConstants = {
 	WEBSOCKET_IP : "ws://localhost:8888/ws",
 	INTERFACE_IP : "https://localhost:5000"
+
 };
 
 module.exports = configConstants;
 
-},{}],271:[function(require,module,exports){
+},{}],277:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',
 	SYS_IDLE : 'System is Idle',
 	CURR_SLOT: 'CURRENT SLOT',
 	VIEW_MORE: 'View More',
-	TBL_HEADER: 'Box Serial Numbers'
+	TBL_HEADER: 'Box Serial Numbers',
+	NO_RECONCILE: 'No Items To Reconcile',
+	YES_RECONCILE:'List Of Items To Reconcile',
+	USERNAME :'User Name',
+	PASSWORD : 'Password'
 };
 module.exports = resourceConstants;
 
-},{}],272:[function(require,module,exports){
+},{}],278:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -38687,12 +39487,14 @@ var allSvgConstants = {
 	gorLogo : 'assets/images/LogoVectorSmartObject.png',
 	factoryImg : 'assets/images/factoryImage.png',
 	forma1 : 'assets/images/Forma1.png',
-	headerbg : 'assets/images/headerbg.png'
+	headerbg : 'assets/images/headerbg.png',
+	scanHeader :'assets/images/scan_header.png',
+	iconBar :'assets/images/Icon.png'
 }
 
 module.exports = allSvgConstants;
 
-},{}],273:[function(require,module,exports){
+},{}],279:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -38706,7 +39508,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":46}],274:[function(require,module,exports){
+},{"flux":46}],280:[function(require,module,exports){
 (function (global){
 global.jQuery = global.$ = require("jquery");
 var React = require('react');
@@ -38735,7 +39537,232 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":240,"./components/Operator":248,"jquery":67,"react":230,"react-dom":74}],275:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":242,"./components/Operator":250,"jquery":67,"react":230,"react-dom":74}],281:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/AppDispatcher');
+var AppConstants = require('../constants/appConstants');
+var EventEmitter = require('events').EventEmitter;
+var assign = require('object-assign');
+var ActionTypes = AppConstants;
+var CHANGE_EVENT = 'change';
+var navConfig = require('../config/navConfig');
+var utils = require('../utils/utils');
+var resourceConstants = require('../constants/resourceConstants');
+
+var _AuditData, _NavData, _NotificationData, modalContent, _serverNavData;
+
+
+var AuditStore = assign({}, EventEmitter.prototype, {
+
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
+
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
+
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
+
+
+    getNavData: function() {
+        if (_AuditData.screen_id === AppConstants.AUDIT_WAITING_FOR_MSU) {
+            _NavData = navConfig.audit[0];
+            _NavData[0].type = 'active';
+        } else {
+            _NavData = navConfig.audit[1];
+            _NavData.map(function(data, index) {
+                if (_AuditData.screen_id === data.screen_id) {
+                    console.log(_AuditData);
+                    _NavData[index].type = 'active';
+                } else {
+                    _NavData[index].type = 'passive';
+                }
+            });
+        }
+        return _NavData;
+    },
+
+    getServerNavData: function() {
+        if (_AuditData.header_msge_list.length > 0) {
+            _serverNavData = _AuditData.header_msge_list[0];
+            return _serverNavData;
+        } else {
+            return null;
+        }
+    },
+
+
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType) {
+        this.text = text;
+        this.status = status;
+        this.selected = selected;
+        this.size = size;
+        this.border = border;
+        this.grow = grow;
+        this.bold = bold;
+        this.disabled = disabled;
+        this.centerAlign = centerAlign;
+        this.type = type;
+        this.buttonType = buttonType;
+    },
+
+    getBoxSerialData: function() {
+        var data = {};
+        data["header"] = "Box Serial Numbers";
+        data["tableRows"] = [];
+        var self = this;
+        _AuditData.Box_qty_list.map(function(value, index) {
+            if (value.Scan_status != "close")
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", value.Scan_status == "open", "large", false, true, false, false)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false), 
+                    new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )", "complete", value.Scan_status == "open", "large", false, false, false, false)]);
+        });
+        _AuditData.Extra_box_list.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false),
+                                        new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " ) ", "extra", value.Scan_status == "open", "large", false, true, false, false)]);
+        });
+        return data;
+    },
+
+    getCurrentBoxSerialData: function() {
+        var data = {};
+        data["header"] = "SKU Box Serial Number";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Finish", "enabled", false, "small", true, false, true, false, true)]);
+        if (_AuditData.Current_box_details.length > 0) {
+            _AuditData.Current_box_details.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish")]);
+            });
+        } else {
+            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)]);
+        }
+
+        return data;
+    },
+
+    getCancelScanStatus: function() {
+        return _AuditData.Cancel_scan;
+    },
+
+
+    getReconcileBoxSerialData: function() {
+        var data = {};
+        data["header"] = "Box Serial Numbers";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("Box Serial", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+        _AuditData.Box_qty_list.map(function(value, index) {
+            if (value.Scan_status != "no_scan")
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+
+        });
+        _AuditData.Extra_box_list.map(function(value, index) {
+            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false), new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)]);
+        });
+
+        return data;
+    },
+
+    getReconcileLooseItemsData: function() {
+        var data = {};
+        data["header"] = "Loose Items";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+        _AuditData.Loose_sku_list.map(function(value, index) {
+            if (value.Scan_status != "no_scan")
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
+            else
+                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+
+        });
+        return data;
+    },
+
+    getLooseItemsData: function() {
+        var data = {};
+        var disabledStatus;
+        if (_AuditData.Current_box_details.length > 0) {
+            disabledStatus = true;
+        }
+        data["header"] = "Loose Items";
+        data["tableRows"] = [];
+        var self = this;
+        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true)]);
+        _AuditData.Loose_sku_list.map(function(value, index) {
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true), new self.tableCol(value.Actual_qty, "enabled", false, "large", true, false, false, disabledStatus, true)]);
+        });
+        return data;
+    },
+
+    getItemDetailsData: function() {
+        var data = {};
+        data["header"] = "Details";
+        data["tableRows"] = [];
+        var self = this;
+        for (var key in _AuditData.product_info) {
+            if (_AuditData.product_info.hasOwnProperty(key)) {
+               data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+            }
+        }
+        return data;
+    },
+
+    getRackDetails: function() {
+        console.log(_AuditData.rack_details);
+        return _AuditData.rack_details;
+    },
+
+    getNotificationData: function() {
+        return _AuditData.notification_list[0];
+    },
+
+    setAuditData: function(data) {
+        _AuditData = data;
+    },
+
+    getStateData: function() {
+        return _AuditData;
+    },
+
+    getBinData: function() {
+        var binData = {};
+        binData["structure"] = _AuditData.structure;
+        binData["ppsbin_list"] = _AuditData.ppsbin_list;
+        return binData;
+    },
+
+    getScreenId: function() {
+        return _AuditData.screen_id;
+    }
+
+
+
+});
+
+AuditStore.dispatchToken = AppDispatcher.register(function(action) {
+    switch (action.action.actionType) {
+
+        case ActionTypes.SET_AUDIT_DATA:
+            AuditStore.setAuditData(action.action.data);
+            AuditStore.emitChange();
+            break;
+
+        default:
+            // do nothing
+    }
+
+});
+
+module.exports = AuditStore;
+
+},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],282:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -38812,6 +39839,13 @@ var PickBackStore = assign({}, EventEmitter.prototype, {
 
   getScreenId:function(){
     return _PickBackData.screen_id;
+  },
+  getToteDetails: function(){
+    if(_PickBackData.hasOwnProperty('tote_details')){
+      return _PickBackData.tote_details
+    }else{
+      return null;
+    }
   }
 
 
@@ -38834,7 +39868,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":268,"../constants/appConstants":269,"../constants/resourceConstants":271,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],276:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],283:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -38939,6 +39973,40 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.box_serials;
     },
 
+     getChecklistDetails:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.pick_checklist.length > 0){
+                return _PickFrontData.checklist_details.pick_checklist;
+            }
+            else{
+                return null;
+            }     
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistIndex:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.checklist_index!= null){
+                return _PickFrontData.checklist_details.checklist_index;
+            } 
+            else{
+                return null;
+            }    
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistOverlayStatus:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            return _PickFrontData.checklist_details.display_checklist_overlay;
+          }else{
+            return null;
+        }
+    },
+
     getCurrentSelectedBin: function() {
         if (_PickFrontData["ppsbin_list"] != undefined) {
             var binData = {};
@@ -38980,8 +40048,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":268,"../constants/appConstants":269,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],277:[function(require,module,exports){
-
+},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],284:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -38992,163 +40059,207 @@ var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
-var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails , modalContent, _serverNavData;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
 
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
 
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
 
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
 
-  toggleBinSelection:function(bin_id){
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.ppsbin_id == bin_id){
-        if(value["selected_for_staging"]!=undefined)
-          value["selected_for_staging"] =  !value["selected_for_staging"];
-        else
-          value["selected_for_staging"] = true;
-      }else if(value["selected_for_staging"]!=undefined)
-        value["selected_for_staging"] = false;
-    });
-    if(_PutBackData.notification_list.length != 0){
-      _PutBackData.notification_list[0].description = resourceConstants.BIN+ ' '+bin_id + ' '+resourceConstants.SELECTED;
-    }else{
-     // _PutBackData.notification_list = undefined;
-    }
-  },
+    toggleBinSelection: function(bin_id) {
+        _PutBackData["ppsbin_list"].map(function(value, index) {
+            if (value.ppsbin_id == bin_id) {
+                if (value["selected_for_staging"] != undefined)
+                    value["selected_for_staging"] = !value["selected_for_staging"];
+                else
+                    value["selected_for_staging"] = true;
+            } else if (value["selected_for_staging"] != undefined)
+                value["selected_for_staging"] = false;
+        });
+        if (_PutBackData.notification_list.length != 0) {
+            _PutBackData.notification_list[0].description = resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED;
+        } else {
+            // _PutBackData.notification_list = undefined;
+        }
+    },
 
-  getStageActiveStatus:function(){
-    var flag = false;
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true)
-        flag = true;
-    });
-    return flag;
-  },
+    getStageActiveStatus: function() {
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var flag = false;
+            _PutBackData["ppsbin_list"].map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true)
+                    flag = true;
+            });
+            return flag;
+        }
+    },
 
-  getStageAllActiveStatus:function(){
-    var flag = false;
-    _PutBackData["ppsbin_list"].map(function(value,index){
-      if(value.ppsbin_count > 0 && value.ppsbin_state != "staged")
-        flag = true;
-    });
-    return flag;
-  },
-  getNavData : function () {
-    _NavData = navConfig.putBack;
-    navConfig.putBack.map(function(data,index){
-       if(_PutBackData.screen_id === data.screen_id ){
-          _NavData[index].type = 'active'; 
-          _NavData[index].showImage = true; 
+    getStageAllActiveStatus: function() {
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var flag = false;
+            _PutBackData["ppsbin_list"].map(function(value, index) {
+                if (value.ppsbin_count > 0 && value.ppsbin_state != "staged")
+                    flag = true;
+            });
+            return flag;
+        }
+    },
+    getNavData: function() {
+        _NavData = navConfig.putBack;
+        _NavData.map(function(data, index) {
+            if (data.screen_id instanceof Array) {
+                if (data.screen_id.indexOf(_PutBackData.screen_id) != -1) {
+                    _NavData[index].type = 'active';
+                } else {
+                    _NavData[index].type = 'passive';
+                }
+            } else if (_PutBackData.screen_id === data.screen_id) {
+                _NavData[index].type = 'active';
+            } else {
+                _NavData[index].type = 'passive';
+            }
+        });
+
+        return _NavData;
+    },
+    getServerNavData: function() {
+        if (_PutBackData.header_msge_list.length > 0) {
+            _serverNavData = _PutBackData.header_msge_list[0];
+            return _serverNavData;
+        } else {
+            return null;
+        }
+    },
+    getNotificationData: function() {
+        return _PutBackData.notification_list[0];
+    },
+    setPutBackData: function(data) {
+        _PutBackData = data;
+    },
+
+    getStateData: function() {
+        return _PutBackData;
+    },
+
+    getBinData: function() {
+        var binData = {};
+        binData["structure"] = _PutBackData.structure;
+        binData["ppsbin_list"] = _PutBackData.ppsbin_list;
+        return binData;
+    },
+
+    getScreenId: function() {
+        return _PutBackData.screen_id;
+    },
+    stageOneBin: function() {
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var data = {};
+            _PutBackData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data["event_name"] = "stage_ppsbin";
+                    data["event_data"] = {};
+                    data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+                }
+            });
+
+            utils.postDataToInterface(data, _PutBackData.seat_name);
+        }
+    },
+
+    stageAllBin: function() {
+        var data = {};
+        data["event_name"] = "stage_all";
+        data["event_data"] = '';
+        utils.postDataToInterface(data, _PutBackData.seat_name);
+    },
+    scanDetails: function() {
+        _scanDetails = _PutBackData.scan_details;
+        return _scanDetails;
+    },
+    productDetails: function() {
+        _prodDetails = _PutBackData.product_info;
+        return _prodDetails;
+    },
+    getItemUid: function() {
+        return _PutBackData.item_uid;
+    },
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType) {
+        this.text = text;
+        this.status = status;
+        this.selected = selected;
+        this.size = size;
+        this.border = border;
+        this.grow = grow;
+        this.bold = bold;
+        this.disabled = disabled;
+        this.centerAlign = centerAlign;
+        this.type = type;
+        this.buttonType = buttonType;
+    },
+    getReconcileData: function() {
+        if (_PutBackData.hasOwnProperty('reconciliation')) {
+            var data = {};
+            data["header"] = "Box Serial Numbers";
+            data["tableRows"] = [];
+            var self = this;
+            data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
+            _PutBackData.reconciliation.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
+
+            });
+            return data;
+        }
+    },
+    getToteId : function(){
+        if(_PutBackData.hasOwnProperty('tote_id')){
+            return _PutBackData.tote_id;
         }else{
-          _NavData[index].type = 'passive';
-          _NavData[index].showImage = false; 
+            return null;
         }
-    });
-    return _NavData;
-  },
-  getServerNavData : function(){
-    if(_PutBackData.header_msge_list.length > 0){
-      _serverNavData = _PutBackData.header_msge_list[0];
-      return _serverNavData;
-    }else{
-      return null;
     }
-  },
-  getNotificationData : function() { 
-      return _PutBackData.notification_list[0];
-  },
-  setPutBackData:function(data){
-    _PutBackData = data;
-  },
-
-  getStateData:function(){
-    return _PutBackData;
-  },
-
-  getBinData:function(){
-    var binData = {};
-    binData["structure"] = _PutBackData.structure;
-    binData["ppsbin_list"] = _PutBackData.ppsbin_list;
-    return binData;
-  },
-
-  getScreenId:function(){
-    return _PutBackData.screen_id;
-  },
-  stageOneBin:function(){
-    var data ={};
-    _PutBackData.ppsbin_list.map(function(value,index){ 
-         if( value["selected_for_staging"] !=undefined &&  value["selected_for_staging"] == true){
-          data["event_name"] = "stage_ppsbin";
-          data["event_data"] = {};
-          data["event_data"]["ppsbin_id"] = value.ppsbin_id;
-        }
-    });
-
-   utils.postDataToInterface(data, _PutBackData.seat_name);
-
-  },
-
-  stageAllBin:function(){
-    var data ={};
-    data["event_name"] = "stage_all";
-    data["event_data"]= '';
-     utils.postDataToInterface(data, _PutBackData.seat_name);
-  },
-  scanDetails : function(){ 
-    _scanDetails = _PutBackData.scan_details;
-    return _scanDetails;
-  },
-  productDetails : function(){
-    _prodDetails = _PutBackData.product_info;
-    return _prodDetails;
-  },
-  getItemUid : function(){
-    return _PutBackData.item_uid;
-  }
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.action.actionType) {
-    case ActionTypes.TOGGLE_BIN_SELECTION:
-      PutBackStore.toggleBinSelection(action.action.bin_id);
-      PutBackStore.emitChange();
-      break;
+    switch (action.action.actionType) {
+        case ActionTypes.TOGGLE_BIN_SELECTION:
+            PutBackStore.toggleBinSelection(action.action.bin_id);
+            PutBackStore.emitChange();
+            break;
 
-     case ActionTypes.SET_PUT_BACK_DATA:
-      PutBackStore.setPutBackData(action.action.data);
-      PutBackStore.emitChange();
-      break;
+        case ActionTypes.SET_PUT_BACK_DATA:
+            PutBackStore.setPutBackData(action.action.data);
+            PutBackStore.emitChange();
+            break;
 
-      case ActionTypes.STAGE_ONE_BIN: 
-        PutBackStore.stageOneBin();
-        PutBackStore.emitChange();
-      break; 
+        case ActionTypes.STAGE_ONE_BIN:
+            PutBackStore.stageOneBin();
+            PutBackStore.emitChange();
+            break;
 
-     case ActionTypes.STAGE_ALL: 
-      PutBackStore.stageAllBin();
-      PutBackStore.emitChange();
-      break;  
-    
-    default:
-      // do nothing
-  }
+        case ActionTypes.STAGE_ALL:
+            PutBackStore.stageAllBin();
+            PutBackStore.emitChange();
+            break;
+
+        default:
+            // do nothing
+    }
 
 });
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":268,"../constants/appConstants":269,"../constants/resourceConstants":271,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],278:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],285:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -39266,7 +40377,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":268,"../constants/appConstants":269,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"object-assign":68}],279:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],286:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -39364,7 +40475,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":269,"../constants/configConstants":270,"../dispatchers/AppDispatcher":273,"../utils/utils.js":281,"events":14,"react/lib/Object.assign":121}],280:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../constants/configConstants":276,"../dispatchers/AppDispatcher":279,"../utils/utils.js":288,"events":14,"react/lib/Object.assign":121}],287:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -39372,19 +40483,21 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent;
+var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent, _messageJson;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
   data:"",
   type:""
 };
-
 function setPopUpVisible(status){
   popupVisible = status;
   mainstore.emit(CHANGE_EVENT);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
@@ -39403,7 +40516,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(data){ 
+  setCurrentSeat:function(data){
     _showSpinner = false;
     _seatData = data;
     _seatName = data.seat_name;
@@ -39419,11 +40532,57 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatName);
   },
   cancelScanAll : function(barcode){
-    var data = {
+    
+    if(_currentSeat == appConstants.AUDIT){
+      var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_audit"
+      }
+    };
+    }else{
+      var data = {
       "event_name": _cancelEvent,
       "event_data":{}
     };
+    }
     utils.postDataToInterface(data, _seatName);
+  },
+  finishBox:function(){
+     var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_box"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  generateReport:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"generate_report"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  cancelFinishAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_finish_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  finishCurrentAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_current_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
   },
   getModalContent:function(){
     return modalContent.data;
@@ -39455,14 +40614,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         break;
       case appConstants.PICK_BACK:
           _pptlEvent = 'secondary_button_press';
-
+          _cancelEvent = 'cancel_tote_scan';
         break;
       case appConstants.PICK_FRONT:
           _pptlEvent = 'primary_button_press';
           _cancelEvent = 'cancel_scan_all';
         break;
+      case appConstants.AUDIT:
+          _cancelEvent = 'audit_actions';
+        break;
       default:
-        return true; 
+        //return true; 
     }
     return _currentSeat;
   },
@@ -39480,15 +40642,46 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   barcodeScan : function(data){
     utils.postDataToInterface(data, _seatName);
+  },
+  setServerMessages : function(data){
+    _messageJson = data;
+  },
+  getServerMessages : function(){
+    return _messageJson;
+  },
+  changeLanguage : function(data){
+    utils.changeLanguage(data);
+  },
+  checkListSubmit: function(data){
+     var data = {
+      "event_name": "pick_checklist_update",
+      "event_data": {
+        "pick_checklist" : data,
+        
+      }
+    };
+    utils.postDataToInterface(data, _seatName);
+  },
+  sendToteData: function(data){
+    var data = {
+      "event_name": "confirm_close_tote",
+      "event_data": {
+        "close_value" : data.close_value,
+        "barcode" : data.toteId
+        
+      }
+    };
+    console.log(data);
+   utils.postDataToInterface(data, _seatName); 
   }
 
 });
 
-AppDispatcher.register(function(payload){ 
-  var action = payload.action;
+AppDispatcher.register(function(payload){    
+  var action = payload.action; console.log(action.actionType);
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
-      utils.connectToWebSocket();
+      utils.connectToWebSocket(); 
       mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SET_CURRENT_SEAT:
@@ -39510,7 +40703,27 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.cancelScan(action.data);
       mainstore.emit(CHANGE_EVENT);
-      break;         
+      break;       
+     case appConstants.FINISH_BOX:
+      mainstore.showSpinner();
+      mainstore.finishBox();
+      mainstore.emit(CHANGE_EVENT);
+      break;           
+    case appConstants.GENERATE_REPORT:
+      mainstore.showSpinner();
+      mainstore.generateReport();
+      mainstore.emit(CHANGE_EVENT);
+      break;       
+     case appConstants.CANCEL_FINISH_AUDIT:
+      mainstore.showSpinner();
+      mainstore.cancelFinishAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;  
+     case appConstants.FINISH_CURRENT_AUDIT:
+      mainstore.showSpinner();
+      mainstore.finishCurrentAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;      
     case appConstants.LOAD_MODAL:
       mainstore.setModalContent(action.data);
        mainstore.emit(CHANGE_EVENT);
@@ -39529,7 +40742,28 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.cancelScanAll();
        mainstore.emit(CHANGE_EVENT);
-      break;          
+      break;
+    case appConstants.SET_SERVER_MESSAGES:
+       mainstore.setServerMessages(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.CHANGE_LANGUAGE:
+       mainstore.changeLanguage(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break; 
+    case appConstants.SET_LANGUAGE:
+       mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.CHECKLIST_SUBMIT:
+       mainstore.showSpinner();
+       mainstore.checkListSubmit(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.TOTE_ACTION:
+       mainstore.showSpinner();
+       mainstore.sendToteData(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;                        
     default:
       return true;
   }
@@ -39537,7 +40771,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":269,"../dispatchers/AppDispatcher":273,"../utils/utils":281,"events":14,"react/lib/Object.assign":121}],281:[function(require,module,exports){
+},{"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"react/lib/Object.assign":121}],288:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -39559,7 +40793,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	        var data = JSON.parse(evt.data);
 	        putSeatData(data);
 	        CommonActions.setCurrentSeat(data.state_data);
-	        
+	        utils.getServerErrorMapping();
 	      };
 	      ws.onclose = function(){ 
 	         alert("Connection is closed..."); 
@@ -39570,7 +40804,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      alert("WebSocket NOT supported by your Browser!");
 	    }
 	},
-	postDataToWebsockets: function(data){ 
+	 postDataToWebsockets: function(data){ 
       ws.send(JSON.stringify(data));
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
@@ -39589,10 +40823,31 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(jqXhr) {
                      
         });
-  	}
+  	},
+    getServerErrorMapping : function(){
+      $.ajax({
+        type: 'GET',
+        url: '/assets/js/localization/server_messages.json',
+        }).done(function(response) { 
+          CommonActions.setServerMessages(response);
+        }).fail(function(jqXhr) {
+                     
+        });
+    },
+    changeLanguage : function(language){ 
+      $.ajax({
+        type: 'GET',
+        url: '/assets/js/localization/'+language+'.json',
+        }).done(function(response) { 
+          _.setTranslation(response);
+          CommonActions.setLanguage(response);
+        }).fail(function(jqXhr) {
+                     
+        }); 
+    }
 }); 
 
-var putSeatData = function(data){ console.log(data); 
+var putSeatData = function(data){ console.log(data);
 	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
       case appConstants.PUT_BACK:
           CommonActions.setPutBackData(data.state_data);
@@ -39606,6 +40861,9 @@ var putSeatData = function(data){ console.log(data);
       case appConstants.PICK_FRONT: 
           CommonActions.setPickFrontData(data.state_data);
         break;
+       case appConstants.AUDIT: 
+          CommonActions.setAuditData(data.state_data);
+        break;
       default:
         return true; 
       }
@@ -39613,4 +40871,4 @@ var putSeatData = function(data){ console.log(data);
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":269,"../constants/configConstants":270,"events":14,"react/lib/Object.assign":121}]},{},[274]);
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../constants/configConstants":276,"events":14,"react/lib/Object.assign":121}]},{},[280]);

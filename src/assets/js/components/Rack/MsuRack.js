@@ -1,10 +1,45 @@
 var React = require('react');
 var RackRow = require('./RackRow');
 
+var drawRackStyle = {
+    flexGrow:"1",
+    flexBasis:"0",
+    width:"50%"};
+
+var lastSlot = {
+    flexBasis:"4vh"};
 
 var MsuRack = React.createClass({
-	render: function(){
 
+     totalRackHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var totalHeight = 0;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][1];
+            });
+            for(var i in eachRowHeight) { 
+                totalHeight += eachRowHeight[i]; 
+            }
+               return totalHeight;
+        },
+
+        eachRowHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][1];
+            });
+            return eachRowHeight;
+        },
+
+    componentDidMount:function(){
+        if(this.props.type=="small"){
+
+        }
+    },
+	render: function(){
+        var type = this.props.type;
         var rackDetails = this.props.rackData.rack_type_rec;
         var compartment_details = this.props.rackData.slot_barcodes;
         var slotStart,slotEnd,i;
@@ -26,26 +61,29 @@ var MsuRack = React.createClass({
         for (i = slotStart; i <= slotEnd; i++) {
             slotIndexList.push(i);
         };
-
-        var rackRange = selectedRackRow;
        
+        var rackRange = selectedRackRow;
+        var totalRackHeight = this.totalRackHeight(); 
+        var eachRowHeight = this.eachRowHeight();
+        
         
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)
                 return (
-                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} />
+                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""}   />
                     );
 
             else
                 return (
-        				<RackRow slots={row[1]} key={index} rackRange={rackRange} />
+        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} />
         			);
         	});
 
 
 		return (
-				<div className="drawRack">
+				<div className="drawRack" style={this.props.type=="small" ? drawRackStyle:{} }>
 					{eachRow.reverse()}
+                    <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
 				</div>
 			);
 	}

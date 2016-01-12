@@ -5,19 +5,21 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent;
+var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent, _messageJson;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
   data:"",
   type:""
 };
-
 function setPopUpVisible(status){
   popupVisible = status;
   mainstore.emit(CHANGE_EVENT);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
@@ -36,7 +38,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSpinnerState : function(){
     return _showSpinner;
   },
-  setCurrentSeat:function(data){ 
+  setCurrentSeat:function(data){
     _showSpinner = false;
     _seatData = data;
     _seatName = data.seat_name;
@@ -52,11 +54,57 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatName);
   },
   cancelScanAll : function(barcode){
-    var data = {
+    
+    if(_currentSeat == appConstants.AUDIT){
+      var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_audit"
+      }
+    };
+    }else{
+      var data = {
       "event_name": _cancelEvent,
       "event_data":{}
     };
+    }
     utils.postDataToInterface(data, _seatName);
+  },
+  finishBox:function(){
+     var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_box"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  generateReport:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"generate_report"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  cancelFinishAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"cancel_finish_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
+  },
+  finishCurrentAudit:function(){
+    var data = {
+      "event_name": _cancelEvent,
+      "event_data":{
+        "type":"finish_current_audit"
+      }
+    };
+      utils.postDataToInterface(data, _seatName);
   },
   getModalContent:function(){
     return modalContent.data;
@@ -88,14 +136,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         break;
       case appConstants.PICK_BACK:
           _pptlEvent = 'secondary_button_press';
-
+          _cancelEvent = 'cancel_tote_scan';
         break;
       case appConstants.PICK_FRONT:
           _pptlEvent = 'primary_button_press';
           _cancelEvent = 'cancel_scan_all';
         break;
+      case appConstants.AUDIT:
+          _cancelEvent = 'audit_actions';
+        break;
       default:
-        return true; 
+        //return true; 
     }
     return _currentSeat;
   },
@@ -113,15 +164,46 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   barcodeScan : function(data){
     utils.postDataToInterface(data, _seatName);
+  },
+  setServerMessages : function(data){
+    _messageJson = data;
+  },
+  getServerMessages : function(){
+    return _messageJson;
+  },
+  changeLanguage : function(data){
+    utils.changeLanguage(data);
+  },
+  checkListSubmit: function(data){
+     var data = {
+      "event_name": "pick_checklist_update",
+      "event_data": {
+        "pick_checklist" : data,
+        
+      }
+    };
+    utils.postDataToInterface(data, _seatName);
+  },
+  sendToteData: function(data){
+    var data = {
+      "event_name": "confirm_close_tote",
+      "event_data": {
+        "close_value" : data.close_value,
+        "barcode" : data.toteId
+        
+      }
+    };
+    console.log(data);
+   utils.postDataToInterface(data, _seatName); 
   }
 
 });
 
-AppDispatcher.register(function(payload){ 
-  var action = payload.action;
+AppDispatcher.register(function(payload){    
+  var action = payload.action; console.log(action.actionType);
   switch(action.actionType){
     case appConstants.WEBSOCKET_CONNECT:
-      utils.connectToWebSocket();
+      utils.connectToWebSocket(); 
       mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SET_CURRENT_SEAT:
@@ -143,7 +225,27 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.cancelScan(action.data);
       mainstore.emit(CHANGE_EVENT);
-      break;         
+      break;       
+     case appConstants.FINISH_BOX:
+      mainstore.showSpinner();
+      mainstore.finishBox();
+      mainstore.emit(CHANGE_EVENT);
+      break;           
+    case appConstants.GENERATE_REPORT:
+      mainstore.showSpinner();
+      mainstore.generateReport();
+      mainstore.emit(CHANGE_EVENT);
+      break;       
+     case appConstants.CANCEL_FINISH_AUDIT:
+      mainstore.showSpinner();
+      mainstore.cancelFinishAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;  
+     case appConstants.FINISH_CURRENT_AUDIT:
+      mainstore.showSpinner();
+      mainstore.finishCurrentAudit();
+      mainstore.emit(CHANGE_EVENT);
+      break;      
     case appConstants.LOAD_MODAL:
       mainstore.setModalContent(action.data);
        mainstore.emit(CHANGE_EVENT);
@@ -162,7 +264,28 @@ AppDispatcher.register(function(payload){
       mainstore.showSpinner();
       mainstore.cancelScanAll();
        mainstore.emit(CHANGE_EVENT);
-      break;          
+      break;
+    case appConstants.SET_SERVER_MESSAGES:
+       mainstore.setServerMessages(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.CHANGE_LANGUAGE:
+       mainstore.changeLanguage(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break; 
+    case appConstants.SET_LANGUAGE:
+       mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.CHECKLIST_SUBMIT:
+       mainstore.showSpinner();
+       mainstore.checkListSubmit(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.TOTE_ACTION:
+       mainstore.showSpinner();
+       mainstore.sendToteData(action.data);
+       mainstore.emit(CHANGE_EVENT);
+      break;                        
     default:
       return true;
   }

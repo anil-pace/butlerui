@@ -48,7 +48,7 @@ var PutFront = React.createClass({
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
-      this._notification = <Notification notification={this.state.PutFrontNotification} />
+      this._notification = <Notification notification={this.state.PutFrontNotification} navMessagesJson={this.props.navMessagesJson} />
     else
       this._notification = "";
   },
@@ -106,7 +106,7 @@ var PutFront = React.createClass({
     return (
       <div className="main">
         <Header />
-        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} />
+        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>
         {this._component}
         {this._notification}
       </div> 

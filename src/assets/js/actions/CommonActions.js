@@ -40,7 +40,7 @@ var commonActions = {
     })
   },
 
-  setCurrentSeat:function(seat){
+  setCurrentSeat:function(seat){ 
     AppDispatcher.handleAction({
       actionType: appConstants.SET_CURRENT_SEAT,
       data:seat
@@ -63,6 +63,13 @@ var commonActions = {
   setPickBackData :function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PICK_BACK_DATA,
+      data:data
+    })
+  },
+
+  setAuditData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_AUDIT_DATA,
       data:data
     })
   },
@@ -101,7 +108,30 @@ var commonActions = {
       data: data
     });
   },
-
+  finishBox:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_BOX, 
+      data: data
+    });
+  },
+  generateReport:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.GENERATE_REPORT, 
+      data: data
+    });
+  },
+  cancelFinishAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CANCEL_FINISH_AUDIT, 
+      data: data
+    });
+  },
+  finishCurrentAudit:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FINISH_CURRENT_AUDIT, 
+      data: data
+    });
+  },
   showModal:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
@@ -132,6 +162,36 @@ var commonActions = {
       data: data
     });
   },
+  setServerMessages : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_SERVER_MESSAGES,
+      data:data
+    });
+  },
+  changeLanguage: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_LANGUAGE,
+      data:data
+    }); 
+  },
+  setLanguage: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_LANGUAGE,
+      data:data
+    }); 
+  },
+  checkListSubmit : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHECKLIST_SUBMIT,
+      data:data
+    });
+  },
+  toteAction : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.TOTE_ACTION,
+      data:data
+    });
+  }
 
 };
 

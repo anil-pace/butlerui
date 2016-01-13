@@ -1,7 +1,0 @@
-Package: butler_ui
-Version: 1.0-1
-Section: base
-Priority: optional
-Architecture: all
-Maintainer: Grey Orange <support@greyorange.sg>
-Description: Process that controls the activities at UI

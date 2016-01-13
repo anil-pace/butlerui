@@ -2,6 +2,7 @@ var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
 var appConstants = require('../../constants/appConstants');
+var MainStore = require('../../stores/mainstore');
 
 var Bin = React.createClass({
 
@@ -11,11 +12,15 @@ var Bin = React.createClass({
         return false;
     },
     pressPptl : function(bin_id, binState){
-        var data  ={
-            'bin_id' : bin_id,
-            'bin_state' : binState
+        var data = {
+            "event_name":"",
+            "event_data":{}
         };
-        ActionCreators.pptlPress(data);
+        data["event_name"] = "process_ppsbin_event";
+        data["event_data"]["ppsbin_id"] = bin_id;
+        data["event_data"]["ppsbin_state"] = binState;
+        data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
+        ActionCreators.postDataToInterface(data);
     },
     showModal: function(data,type,e) {
          ActionCreators.showModal({

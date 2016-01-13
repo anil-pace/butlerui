@@ -47,6 +47,13 @@ var commonActions = {
     })
   },
 
+  postDataToInterface:function(data){
+     AppDispatcher.handleAction({
+      actionType: appConstants.POST_DATA_TO_INTERFACE,
+      data:data
+    })
+   },
+
   setPutBackData :function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PUT_BACK_DATA,
@@ -74,12 +81,6 @@ var commonActions = {
     })
   },
 
-  kq_operation : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.KQ_OPERATION, 
-      data: data
-    });
-  },
   updatePopupVisible:function(status){   
     AppDispatcher.handleAction({
       actionType: appConstants.POPUP_VISIBLE,
@@ -102,36 +103,6 @@ var commonActions = {
       data: data
     });
   },
-  cancelScan:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CANCEL_SCAN, 
-      data: data
-    });
-  },
-  finishBox:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.FINISH_BOX, 
-      data: data
-    });
-  },
-  generateReport:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.GENERATE_REPORT, 
-      data: data
-    });
-  },
-  cancelFinishAudit:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CANCEL_FINISH_AUDIT, 
-      data: data
-    });
-  },
-  finishCurrentAudit:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.FINISH_CURRENT_AUDIT, 
-      data: data
-    });
-  },
   showModal:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
@@ -150,18 +121,6 @@ var commonActions = {
       data:data
     })
   },
-  barcodeScan :function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.BARCODE_SCAN,
-      data:data
-    })
-  },
-  cancelScanAll:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CANCEL_SCAN_ALL, 
-      data: data
-    });
-  },
   setServerMessages : function(){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_SERVER_MESSAGES
@@ -178,18 +137,6 @@ var commonActions = {
       actionType: appConstants.SET_LANGUAGE,
       data:data
     }); 
-  },
-  checkListSubmit : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CHECKLIST_SUBMIT,
-      data:data
-    });
-  },
-  toteAction : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.TOTE_ACTION,
-      data:data
-    });
   }
 
 };

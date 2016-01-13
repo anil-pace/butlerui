@@ -34,6 +34,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
   	postDataToInterface : function(data, seat_name){ 
+      console.log(data);
+      console.log(seat_name);
   		$.ajax({
         type: 'POST',
         url: configConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,

@@ -47,7 +47,7 @@ var Header = React.createClass({
                             "barcode": e.target.value,
                         }
                     }
-                    CommonActions.barcodeScan(data);
+                    CommonActions.postDataToInterface(data);
                 }
             }
         })

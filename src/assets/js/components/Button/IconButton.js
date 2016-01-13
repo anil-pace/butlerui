@@ -4,11 +4,17 @@ var appConstants = require('../../constants/appConstants');
 
 var IconButton = React.createClass({
     performAction:function(module,action){
+        var data = {
+                    "event_name": "",
+                    "event_data": {}
+                };
         switch(module){
             case appConstants.AUDIT:
                 switch(action){
                     case appConstants.FINISH_BOX:
-                        ActionCreators.finishBox();
+                        data["event_name"] = "audit_actions";
+                        data["event_data"]["type"] = "finish_box";
+                        ActionCreators.postDataToInterface(data);
                         break;    
                      default:
                         return true; 

@@ -36520,6 +36520,13 @@ var commonActions = {
     })
   },
 
+  postDataToInterface:function(data){
+     AppDispatcher.handleAction({
+      actionType: appConstants.POST_DATA_TO_INTERFACE,
+      data:data
+    })
+   },
+
   setPutBackData :function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PUT_BACK_DATA,
@@ -36547,12 +36554,6 @@ var commonActions = {
     })
   },
 
-  kq_operation : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.KQ_OPERATION, 
-      data: data
-    });
-  },
   updatePopupVisible:function(status){   
     AppDispatcher.handleAction({
       actionType: appConstants.POPUP_VISIBLE,
@@ -36575,36 +36576,6 @@ var commonActions = {
       data: data
     });
   },
-  cancelScan:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CANCEL_SCAN, 
-      data: data
-    });
-  },
-  finishBox:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.FINISH_BOX, 
-      data: data
-    });
-  },
-  generateReport:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.GENERATE_REPORT, 
-      data: data
-    });
-  },
-  cancelFinishAudit:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CANCEL_FINISH_AUDIT, 
-      data: data
-    });
-  },
-  finishCurrentAudit:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.FINISH_CURRENT_AUDIT, 
-      data: data
-    });
-  },
   showModal:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
@@ -36623,18 +36594,6 @@ var commonActions = {
       data:data
     })
   },
-  barcodeScan :function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.BARCODE_SCAN,
-      data:data
-    })
-  },
-  cancelScanAll:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CANCEL_SCAN_ALL, 
-      data: data
-    });
-  },
   setServerMessages : function(){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_SERVER_MESSAGES
@@ -36651,18 +36610,6 @@ var commonActions = {
       actionType: appConstants.SET_LANGUAGE,
       data:data
     }); 
-  },
-  checkListSubmit : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.CHECKLIST_SUBMIT,
-      data:data
-    });
-  },
-  toteAction : function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.TOTE_ACTION,
-      data:data
-    });
   }
 
 };
@@ -36848,6 +36795,7 @@ var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
 var appConstants = require('../../constants/appConstants');
+var MainStore = require('../../stores/mainstore');
 
 var Bin = React.createClass({displayName: "Bin",
 
@@ -36857,11 +36805,15 @@ var Bin = React.createClass({displayName: "Bin",
         return false;
     },
     pressPptl : function(bin_id, binState){
-        var data  ={
-            'bin_id' : bin_id,
-            'bin_state' : binState
+        var data = {
+            "event_name":"",
+            "event_data":{}
         };
-        ActionCreators.pptlPress(data);
+        data["event_name"] = "process_ppsbin_event";
+        data["event_data"]["ppsbin_id"] = bin_id;
+        data["event_data"]["ppsbin_state"] = binState;
+        data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
+        ActionCreators.postDataToInterface(data);
     },
     showModal: function(data,type,e) {
          ActionCreators.showModal({
@@ -36985,7 +36937,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"../Modal/Modal":243,"react":230}],236:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"../../stores/mainstore":289,"../Modal/Modal":243,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37097,112 +37049,139 @@ var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 
 var Button1 = React.createClass({displayName: "Button1",
-    _checklistClass : '',
-    performAction:function(module,action){
-        switch(module){
-            case appConstants.PUT_BACK:
-                switch(action){
-                    case appConstants.STAGE_ONE_BIN: 
-                        ActionCreators.stageOneBin();
-                        break;
-                    case appConstants.STAGE_ALL:
-                        ActionCreators.stageAllBins();
-                        break;
-                    case appConstants.CANCEL_SCAN:
-                        ActionCreators.cancelScan(this.props.barcode);
-                        break;
-                    case appConstants.CANCEL_TOTE:
-                    case appConstants.CLOSE_TOTE:
-                        var data = {
-                            "close_value" : this.props.status,
-                            "toteId" : this.props.toteId
+            _checklistClass: '',
+            performAction: function(module, action) {
+                var data = {
+                    "event_name": "",
+                    "event_data": {}
+                };
+                switch (module) {
+                    case appConstants.PUT_BACK:
+                        switch (action) {
+                            case appConstants.STAGE_ONE_BIN:
+                                ActionCreators.stageOneBin();
+                                break;
+                            case appConstants.STAGE_ALL:
+                                ActionCreators.stageAllBins();
+                                break;
+                            case appConstants.CANCEL_SCAN:
+                                data["event_name"] = "cancel_barcode_scan";
+                                data["event_data"]["barcode"] = this.props.barcode;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_TOTE:
+                            case appConstants.CLOSE_TOTE:
+                                data["event_name"] = "confirm_close_tote";
+                                data["event_data"]["close_value"] = this.props.status;
+                                data["event_data"]["toteId"] = this.props.toteId;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            default:
+                                return true;
                         }
-                        ActionCreators.toteAction(data);
-                        break;            
-                     default:
-                        return true; 
-                }
-            break;
-            case appConstants.PUT_FRONT:
-                switch(action){
-                    case appConstants.CANCEL_SCAN:
-                        ActionCreators.cancelScan(this.props.barcode);
-                        break;    
-                     default:
-                        return true; 
-                }
-            break;
-            case appConstants.PICK_FRONT:
-                switch(action){
-                    case appConstants.CANCEL_SCAN:
-                        ActionCreators.cancelScanAll();
-                        break;   
-                    case appConstants.CHECKLIST_SUBMIT:
-                        var checklist_index = this.props.checkListData.checklist_index;
-                        var checkList = this.props.checkListData;console.log(JSON.stringify(checkList));
-                        checkList.checklist_data[checklist_index-1].map(function(value,index){
-                            var keyvalue = Object.keys(value);
-                            console.log(keyvalue[0]);
-                            console.log(checkList.checklist_data[checklist_index-1][index][keyvalue[0]]);
-                            checkList.checklist_data[checklist_index-1][index][keyvalue[0]].value = document.getElementById("checklist_field"+index).value;
-                        });
-                        console.log(JSON.stringify(checkList));
-                        ActionCreators.checkListSubmit(checkList);
-                        break;       
-                     default:
-                        return true; 
-                }
-            break;
-            case appConstants.PICK_BACK:
-                switch(action){
-                    case appConstants.CANCEL_SCAN:
-                        ActionCreators.cancelScan(this.props.barcode);
-                        break;    
-                     default:
-                        return true; 
-                }
-            break;
-            case appConstants.AUDIT:
-                switch(action){
-                    case appConstants.CANCEL_SCAN:
-                        ActionCreators.cancelScanAll();
-                        break;    
-                    case appConstants.GENERATE_REPORT:
-                        ActionCreators.generateReport();
-                        break;    
-                     case appConstants.CANCEL_FINISH_AUDIT:
-                        ActionCreators.cancelFinishAudit();
-                        break;   
-                     case appConstants.FINISH_CURRENT_AUDIT:
-                        ActionCreators.finishCurrentAudit();
-                        break;   
-                     default:
-                        return true; 
-                }
-            break;
+                        break;
+                    case appConstants.PUT_FRONT:
+                        switch (action) {
+                            case appConstants.CANCEL_SCAN:
+                                data["event_name"] = "cancel_scan_all";
+                                data["event_data"]["barcode"] = this.props.barcode;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            default:
+                                return true;
+                        }
+                        break;
+                    case appConstants.PICK_FRONT:
+                        switch (action) {
+                            case appConstants.CANCEL_SCAN:
+                                data["event_name"] = "cancel_scan_all";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CHECKLIST_SUBMIT:
+                                var checklist_index = this.props.checkListData.checklist_index;
+                                var checkList = this.props.checkListData;
+                                console.log(JSON.stringify(checkList));
+                                checkList.checklist_data[checklist_index - 1].map(function(value, index) {
+                                    var keyvalue = Object.keys(value);
+                                    console.log(keyvalue[0]);
+                                    console.log(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]]);
+                                    checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index).value;
+                                });
+                                console.log(JSON.stringify(checkList));
+                                data["event_name"] = "pick_checklist_update";
+                                data["event_data"]["pick_checklist"] = checkList;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            default:
+                                return true;
+                        }
+                        break;
+                    case appConstants.PICK_BACK:
+                        switch (action) {
+                            case appConstants.CANCEL_SCAN:
+                                data["event_name"] = "cancel_tote_scan";
+                                data["event_data"]["barcode"] = this.props.barcode;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            default:
+                                return true;
+                        }
+                        break;
+                    case appConstants.AUDIT:
+                        data["event_name"] = "audit_actions";
+                        switch (action) {
+                            case appConstants.CANCEL_SCAN:
+                                data["event_data"]["type"] = "cancel_audit";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.GENERATE_REPORT:
+                                data["event_data"]["type"] = "generate_report";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_FINISH_AUDIT:
+                                data["event_data"]["type"] = "cancel_finish_audit";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.FINISH_CURRENT_AUDIT:
+                                data["event_data"]["type"] = "finish_current_audit";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            default:
+                                return true;
+                        }
+                        break;
 
-             default:
-                return true; 
-        }
-    },
-    render: function() { console.log(this.props.checkListData);
-       if(this.props.buttonChecklist != undefined){
-            _checklistClass = 'checklistButtonSubmit';
-       }else{
-            _checklistClass = '';
-       }
-        if(this.props.disabled == false)
-            return (
-                React.createElement("a", {className: this.props.color == "orange"? "custom-button orange "+_checklistClass : "custom-button black "+_checklistClass, onClick: this.performAction.bind(this,this.props.module,this.props.action)}, this.props.text)
-            );        
-        else
-            return (
-                React.createElement("a", {className: this.props.color == "orange"? "custom-button disabled orange" : "custom-button disabled black"}, this.props.text)
-            );        
-    }
-});
+                    default:
+                        return true;
+                }
+            },
+            render: function() {
+                console.log(this.props.checkListData);
+                if (this.props.buttonChecklist != undefined) {
+                    _checklistClass = 'checklistButtonSubmit';
+                } else {
+                    _checklistClass = '';
+                }
+                if (this.props.disabled == false)
+                    return ( React.createElement("a", {className: 
+                            this.props.color == "orange" ? "custom-button orange " + _checklistClass : "custom-button black " + _checklistClass, 
+                        
+                        onClick: 
+                            this.performAction.bind(this, this.props.module, this.props.action)
+                        }, " ", 
+                            this.props.text, 
+                        " ")
+                    );
+                else
+                    return ( React.createElement("a", {className: 
+                            this.props.color == "orange" ? "custom-button disabled orange" : "custom-button disabled black"
+                        }, " ", 
+                            this.props.text, 
+                        " "));
+                    }
+            });
 
-module.exports = Button1;
+        module.exports = Button1;
 
 },{"../../actions/CommonActions":233,"../../constants/appConstants":275,"react":230}],239:[function(require,module,exports){
 var React = require('react');
@@ -37211,11 +37190,17 @@ var appConstants = require('../../constants/appConstants');
 
 var IconButton = React.createClass({displayName: "IconButton",
     performAction:function(module,action){
+        var data = {
+                    "event_name": "",
+                    "event_data": {}
+                };
         switch(module){
             case appConstants.AUDIT:
                 switch(action){
                     case appConstants.FINISH_BOX:
-                        ActionCreators.finishBox();
+                        data["event_name"] = "audit_actions";
+                        data["event_data"]["type"] = "finish_box";
+                        ActionCreators.postDataToInterface(data);
                         break;    
                      default:
                         return true; 
@@ -37322,7 +37307,7 @@ var Header = React.createClass({displayName: "Header",
                             "barcode": e.target.value,
                         }
                     }
-                    CommonActions.barcodeScan(data);
+                    CommonActions.postDataToInterface(data);
                 }
             }
         })
@@ -38418,7 +38403,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "quantity_updated":parseInt(e.target.value)
                     }
                   }
-                CommonActions.kq_operation(data);
+                CommonActions.postDataToInterface(data);
               }
             }
       });
@@ -39473,7 +39458,8 @@ var appConstants = {
 	CHECKLIST_SUBMIT :'CHECKLIST_SUBMIT',
 	CANCEL_TOTE :'CANCEL_TOTE',
 	CLOSE_TOTE : 'CLOSE_TOTE',
-	TOTE_ACTION :'TOTE_ACTION'
+	TOTE_ACTION :'TOTE_ACTION',
+	POST_DATA_TO_INTERFACE:"POST_DATA_TO_INTERFACE"
 
 };
 
@@ -40613,294 +40599,141 @@ var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent, _messageJson;
+var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson;
 var popupVisible = false;
 var _showSpinner = true;
 var modalContent = {
-  data:"",
-  type:""
+    data: "",
+    type: ""
 };
-function setPopUpVisible(status){
-  popupVisible = status;
-  mainstore.emit(CHANGE_EVENT);
+
+function setPopUpVisible(status) {
+    popupVisible = status;
+    mainstore.emit(CHANGE_EVENT);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-  addChangeListener: function(cb){
-    this.on(CHANGE_EVENT, cb);
-  },
-  removeChangeListener: function(cb){
-    this.removeListener(CHANGE_EVENT, cb);
-  },
-  getPopUpVisible: function(data){
-    return popupVisible;
-  },
-  kqOperation: function(data){
-    utils.postDataToInterface(data, _seatName);
-  },
-  showSpinner : function(){
-    _showSpinner = true;
-  },
-  getSpinnerState : function(){
-    return _showSpinner;
-  },
-  setCurrentSeat:function(data){
-    _showSpinner = false;
-    _seatData = data;
-    _seatName = data.seat_name;
-    _currentSeat  = data.mode + "_" + data.seat_type;
-  },
-  cancelScan : function(barcode){
-    var data = {
-      "event_name": _cancelEvent,
-      "event_data": {
-        "barcode": barcode
-      }
-    };
-    utils.postDataToInterface(data, _seatName);
-  },
-  cancelScanAll : function(barcode){
-    
-    if(_currentSeat == appConstants.AUDIT){
-      var data = {
-      "event_name": _cancelEvent,
-      "event_data":{
-        "type":"cancel_audit"
-      }
-    };
-    }else{
-      var data = {
-      "event_name": _cancelEvent,
-      "event_data":{}
-    };
-    }
-    utils.postDataToInterface(data, _seatName);
-  },
-  finishBox:function(){
-     var data = {
-      "event_name": _cancelEvent,
-      "event_data":{
-        "type":"finish_box"
-      }
-    };
-      utils.postDataToInterface(data, _seatName);
-  },
-  generateReport:function(){
-    var data = {
-      "event_name": _cancelEvent,
-      "event_data":{
-        "type":"generate_report"
-      }
-    };
-      utils.postDataToInterface(data, _seatName);
-  },
-  cancelFinishAudit:function(){
-    var data = {
-      "event_name": _cancelEvent,
-      "event_data":{
-        "type":"cancel_finish_audit"
-      }
-    };
-      utils.postDataToInterface(data, _seatName);
-  },
-  finishCurrentAudit:function(){
-    var data = {
-      "event_name": _cancelEvent,
-      "event_data":{
-        "type":"finish_current_audit"
-      }
-    };
-      utils.postDataToInterface(data, _seatName);
-  },
-  getModalContent:function(){
-    return modalContent.data;
-  },
-  getSystemIdleState : function(){ 
-    if(_seatData != undefined){
-      return _seatData.is_idle;
-    }
-    else{
-      return null;
-    }
-  },
-  getModalType:function(){
-    return modalContent.type;
-  },
-  setModalContent:function(data){
-    modalContent = data;
-  },
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
+    addChangeListener: function(cb) {
+        this.on(CHANGE_EVENT, cb);
+    },
+    removeChangeListener: function(cb) {
+        this.removeListener(CHANGE_EVENT, cb);
+    },
+    getPopUpVisible: function(data) {
+        return popupVisible;
+    },
+    showSpinner: function() {
+        _showSpinner = true;
+    },
+    getSpinnerState: function() {
+        return _showSpinner;
+    },
+    setCurrentSeat: function(data) {
+        _showSpinner = false;
+        _seatData = data;
+        _seatName = data.seat_name;
+        _currentSeat = data.mode + "_" + data.seat_type;
+    },
+    getModalContent: function() {
+        return modalContent.data;
+    },
+    getSystemIdleState: function() {
+        if (_seatData != undefined) {
+            return _seatData.is_idle;
+        } else {
+            return null;
+        }
+    },
+    getModalType: function() {
+        return modalContent.type;
+    },
+    setModalContent: function(data) {
+        modalContent = data;
+    },
 
-  getCurrentSeat:function(){
-    switch(_currentSeat){
-      case appConstants.PUT_BACK:
-         _pptlEvent = 'secondary_button_press';
-         _cancelEvent = 'cancel_barcode_scan';
-        break;
-      case appConstants.PUT_FRONT:
-          _pptlEvent = 'primary_button_press';
-          _cancelEvent = 'cancel_scan_all';
-        break;
-      case appConstants.PICK_BACK:
-          _pptlEvent = 'secondary_button_press';
-          _cancelEvent = 'cancel_tote_scan';
-        break;
-      case appConstants.PICK_FRONT:
-          _pptlEvent = 'primary_button_press';
-          _cancelEvent = 'cancel_scan_all';
-        break;
-      case appConstants.AUDIT:
-          _cancelEvent = 'audit_actions';
-        break;
-      default:
-        //return true; 
+    getPPTLEvent:function(){
+      switch (_currentSeat) {
+            case appConstants.PUT_BACK:
+                _pptlEvent = 'secondary_button_press';
+                break;
+            case appConstants.PUT_FRONT:
+                _pptlEvent = 'primary_button_press';
+                break;
+            case appConstants.PICK_BACK:
+                _pptlEvent = 'secondary_button_press';
+                break;
+            case appConstants.PICK_FRONT:
+                _pptlEvent = 'primary_button_press';
+                break;
+            default:
+                //return true; 
+        }
+        return _pptlEvent;
+    },
+    getCurrentSeat: function() {
+        return _currentSeat;
+    },
+    setServerMessages: function(data) {
+        _messageJson = serverMessages;
+    },
+    getServerMessages: function() {
+        return _messageJson;
+    },
+    changeLanguage: function(data) {
+        switch (data) {
+            case "chinese":
+                _.setTranslation(chinese);
+        }
+    },
+    postDataToInterface: function(data) {
+        utils.postDataToInterface(data, _seatName);
     }
-    return _currentSeat;
-  },
-  pptlPress : function(data){ 
-    var data = {
-      "event_name": "process_ppsbin_event",
-      "event_data": {
-        "ppsbin_id" : data.bin_id,
-        "ppsbin_state": data.bin_state,
-        "ppsbin_event" : _pptlEvent
-      }
-    };
-    utils.postDataToInterface(data, _seatName);
-
-  },
-  barcodeScan : function(data){
-    utils.postDataToInterface(data, _seatName);
-  },
-  setServerMessages : function(data){
-    _messageJson = serverMessages;
-  },
-  getServerMessages : function(){
-    return _messageJson;
-  },
-  changeLanguage : function(data){
-    switch(data){
-      case "chinese":
-        _.setTranslation(chinese);
-    }
-  },
-  checkListSubmit: function(data){
-     var data = {
-      "event_name": "pick_checklist_update",
-      "event_data": {
-        "pick_checklist" : data,
-        
-      }
-    };
-    console.log(JSON.stringify(data));
-    utils.postDataToInterface(data, _seatName);
-  },
-  sendToteData: function(data){
-    var data = {
-      "event_name": "confirm_close_tote",
-      "event_data": {
-        "close_value" : data.close_value,
-        "barcode" : data.toteId
-        
-      }
-    };
-    console.log(data);
-   utils.postDataToInterface(data, _seatName); 
-  }
 
 });
 
-AppDispatcher.register(function(payload){    
-  var action = payload.action; console.log(action.actionType);
-  switch(action.actionType){
-    case appConstants.WEBSOCKET_CONNECT:
-      utils.connectToWebSocket(); 
-      mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.SET_CURRENT_SEAT:
-      mainstore.setCurrentSeat(action.data);
-      mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.POPUP_VISIBLE:
-      setPopUpVisible(action.status);
-      break;
-    case appConstants.KQ_OPERATION:
-      mainstore.showSpinner();
-      mainstore.kqOperation(action.data);
-      mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.RESET_NUMPAD:
-      mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.CANCEL_SCAN:
-      mainstore.showSpinner();
-      mainstore.cancelScan(action.data);
-      mainstore.emit(CHANGE_EVENT);
-      break;       
-     case appConstants.FINISH_BOX:
-      mainstore.showSpinner();
-      mainstore.finishBox();
-      mainstore.emit(CHANGE_EVENT);
-      break;           
-    case appConstants.GENERATE_REPORT:
-      mainstore.showSpinner();
-      mainstore.generateReport();
-      mainstore.emit(CHANGE_EVENT);
-      break;       
-     case appConstants.CANCEL_FINISH_AUDIT:
-      mainstore.showSpinner();
-      mainstore.cancelFinishAudit();
-      mainstore.emit(CHANGE_EVENT);
-      break;  
-     case appConstants.FINISH_CURRENT_AUDIT:
-      mainstore.showSpinner();
-      mainstore.finishCurrentAudit();
-      mainstore.emit(CHANGE_EVENT);
-      break;      
-    case appConstants.LOAD_MODAL:
-      mainstore.setModalContent(action.data);
-       mainstore.emit(CHANGE_EVENT);
-      break; 
-    case appConstants.PPTL_PRESS:
-      mainstore.showSpinner();
-      mainstore.pptlPress(action.data);
-       mainstore.emit(CHANGE_EVENT);
-      break;  
-    case appConstants.BARCODE_SCAN:
-      mainstore.showSpinner();
-      mainstore.barcodeScan(action.data);
-       mainstore.emit(CHANGE_EVENT);
-      break; 
-    case appConstants.CANCEL_SCAN_ALL:
-      mainstore.showSpinner();
-      mainstore.cancelScanAll();
-       mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.SET_SERVER_MESSAGES:
-       mainstore.setServerMessages();
-       mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.CHANGE_LANGUAGE:
-       mainstore.changeLanguage(action.data);
-       mainstore.emit(CHANGE_EVENT);
-      break; 
-    case appConstants.SET_LANGUAGE:
-       mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.CHECKLIST_SUBMIT:
-       mainstore.showSpinner();
-       mainstore.checkListSubmit(action.data);
-       mainstore.emit(CHANGE_EVENT);
-      break;
-    case appConstants.TOTE_ACTION:
-       mainstore.showSpinner();
-       mainstore.sendToteData(action.data);
-       mainstore.emit(CHANGE_EVENT);
-      break;                        
-    default:
-      return true;
-  }
+AppDispatcher.register(function(payload) {
+    var action = payload.action;
+    console.log(action.actionType);
+    switch (action.actionType) {
+        case appConstants.WEBSOCKET_CONNECT:
+            utils.connectToWebSocket();
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.SET_CURRENT_SEAT:
+            mainstore.setCurrentSeat(action.data);
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.POPUP_VISIBLE:
+            setPopUpVisible(action.status);
+            break;
+        case appConstants.POST_DATA_TO_INTERFACE:
+            mainstore.showSpinner();
+            mainstore.postDataToInterface(action.data);
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.RESET_NUMPAD:
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.LOAD_MODAL:
+            mainstore.setModalContent(action.data);
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.SET_SERVER_MESSAGES:
+            mainstore.setServerMessages();
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.CHANGE_LANGUAGE:
+            mainstore.changeLanguage(action.data);
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.SET_LANGUAGE:
+            mainstore.emit(CHANGE_EVENT);
+            break;
+        default:
+            return true;
+    }
 });
 
 module.exports = mainstore;
@@ -40942,6 +40775,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       setTimeout(CommonActions.operatorSeat, 0, true);
   	},
   	postDataToInterface : function(data, seat_name){ 
+      console.log(data);
+      console.log(seat_name);
   		$.ajax({
         type: 'POST',
         url: configConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,

@@ -54,7 +54,7 @@ var KQ = React.createClass({
                         "quantity_updated":parseInt(e.target.value)
                     }
                   }
-                CommonActions.kq_operation(data);
+                CommonActions.postDataToInterface(data);
               }
             }
       });

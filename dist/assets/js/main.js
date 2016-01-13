@@ -36713,6 +36713,9 @@ var Audit = React.createClass({displayName: "Audit",
   _component:'',
   _notification:'',
   _cancelStatus:'',
+  _boxSerial:'',
+  _currentBox:'',
+  _looseItems:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -36746,16 +36749,31 @@ var Audit = React.createClass({displayName: "Audit",
           }else{
             this._cancelStatus = '';
           }
+          if(this.state.AuditBoxSerialData.length > 0 ){
+            _boxSerial = (React.createElement(TabularData, {data: this.state.AuditBoxSerialData}));
+          }else{
+            _boxSerial = '';
+          }
+          if(this.state.AuditCurrentBoxSerialData.length > 1 ){
+            _currentBox = (React.createElement(TabularData, {data: this.state.AuditCurrentBoxSerialData, size: "double"}));
+          }else{
+            _currentBox = '';
+          }
+          if(this.state.AuditLooseItemsData.length > 1 ){
+            _looseItems = (React.createElement(TabularData, {data: this.state.AuditLooseItemsData, size: "triple"}));
+          }else{
+            _looseItems = '';
+          }
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
                      React.createElement(Rack, {rackData: this.state.AuditRackDetails, type: "small"}), 
-                    React.createElement(TabularData, {data: this.state.AuditBoxSerialData})
+                      _boxSerial
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
-                    React.createElement(TabularData, {data: this.state.AuditCurrentBoxSerialData, size: "double"}), 
-                   React.createElement(TabularData, {data: this.state.AuditLooseItemsData, size: "triple"})
+                    _currentBox, 
+                    _looseItems
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
                     React.createElement(Img, null), 
@@ -36880,20 +36898,6 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
-            return (
-                React.createElement("div", {className: "bin  selected blink1"}, 
-                     React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
-                    ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
-                )
-            );
-
-
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")) && compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
             return (
                 React.createElement("div", {className: "bin selected"}, 
@@ -36907,6 +36911,17 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
+
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
+            return (
+                React.createElement("div", {className: "bin  selected blink1"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+
+
+        
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")))
             return (
@@ -39468,8 +39483,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://localhost:8888/ws",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "ws://192.168.3.128:8888/ws",
+	INTERFACE_IP : "https://192.168.3.128:5000"
 };
 
 module.exports = configConstants;
@@ -40843,7 +40858,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     getServerErrorMapping : function(){
       $.ajax({
         type: 'GET',
-        url: '/assets/js/localization/server_messages.json',
+        url: 'http://192.168.3.93:3000/static/server_messages.json',
         }).done(function(response) { 
           CommonActions.setServerMessages(response);
         }).fail(function(jqXhr) {

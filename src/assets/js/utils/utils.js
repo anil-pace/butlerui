@@ -53,7 +53,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     getServerErrorMapping : function(){
       $.ajax({
         type: 'GET',
-        url: '/assets/js/localization/server_messages.json',
+        url: 'http://192.168.3.93:3000/static/server_messages.json',
         }).done(function(response) { 
           CommonActions.setServerMessages(response);
         }).fail(function(jqXhr) {

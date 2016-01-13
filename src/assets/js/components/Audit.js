@@ -40,6 +40,9 @@ var Audit = React.createClass({
   _component:'',
   _notification:'',
   _cancelStatus:'',
+  _boxSerial:'',
+  _currentBox:'',
+  _looseItems:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -73,16 +76,31 @@ var Audit = React.createClass({
           }else{
             this._cancelStatus = '';
           }
+          if(this.state.AuditBoxSerialData.length > 0 ){
+            _boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
+          }else{
+            _boxSerial = '';
+          }
+          if(this.state.AuditCurrentBoxSerialData.length > 1 ){
+            _currentBox = (<TabularData data = {this.state.AuditCurrentBoxSerialData} size="double"/>);
+          }else{
+            _currentBox = '';
+          }
+          if(this.state.AuditLooseItemsData.length > 1 ){
+            _looseItems = (<TabularData data = {this.state.AuditLooseItemsData} size="triple"/>);
+          }else{
+            _looseItems = '';
+          }
           this._component = (
               <div className='grid-container'>
                 <div className='main-container'>
                   <div className="audit-scan-left">
                      <Rack rackData = {this.state.AuditRackDetails} type="small"/>
-                    <TabularData data = {this.state.AuditBoxSerialData}/>
+                      {_boxSerial}
                   </div>
                   <div className="audit-scan-middle">
-                    <TabularData data = {this.state.AuditCurrentBoxSerialData} size="double"/>
-                   <TabularData data = {this.state.AuditLooseItemsData} size="triple"/>
+                    {_currentBox}
+                    {_looseItems}
                   </div>
                   <div className="audit-scan-right">
                     <Img />

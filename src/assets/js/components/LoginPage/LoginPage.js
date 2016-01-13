@@ -26,11 +26,12 @@ var LoginPage = React.createClass({
     var data = {
         'data_type': 'auth',
         'data': {
-              'username': this.state.username,
-              'password': this.state.password,
+              'username': this.refs.username.value,
+              'password': this.refs.password.value,
               'seat_name': this.refs.seat_name.value
           }
       }
+      console.log(data);
     CommonActions.login(data);  
   }, 
   componentDidMount: function(){
@@ -56,8 +57,6 @@ var LoginPage = React.createClass({
       accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
-        
-        console.log(usernameValue , passwordValue);
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
           $('#loginBtn').prop('disabled', false);
         }else{
@@ -123,11 +122,11 @@ var LoginPage = React.createClass({
 
               <div className="form-group">
                 <label >{_(resourceConstants.USERNAME)}</label>
-                  <input type="text" className="form-control" id="username" placeholder="Enter Username" valueLink={this.linkState('username')}  />
+                  <input type="text" className="form-control" id="username" placeholder="Enter Username" ref='username' valueLink={this.linkState('username')}  />
               </div>
               <div className="form-group">
                 <label >{_(resourceConstants.PASSWORD)}</label>
-                  <input type="password" className="form-control" id="password" placeholder="Enter Password" valueLink={this.linkState('password')} />
+                  <input type="password" className="form-control" id="password" placeholder="Enter Password" ref='password' valueLink={this.linkState('password')} />
               </div>
               <select className="selectLang" ref='language' onChange={this.changeLanguage}>
                   <option value="english">English</option>

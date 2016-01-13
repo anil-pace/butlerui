@@ -1,4 +1,4 @@
-{
+var serverMessages = {
     "PtB.B.001": "Scan item / Stage pps bin",
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
@@ -50,8 +50,8 @@
     "PkB.B.008" : "After scannning tote barcode, please scan pptl barcode",
     "PkB.B.009" : "Wrong Ppsbin button pressed.Please press those buttons having color blue",
     "PkB.B.010" : "Please complete process for pending ppsbin and then proceed",
-   	"PkB.B.011" : "No totes associated. Pease keep totes in the Bin and then scan",
-   	"PkB.B.012" : "Documents printed Successfully",
+    "PkB.B.011" : "No totes associated. Pease keep totes in the Bin and then scan",
+    "PkB.B.012" : "Documents printed Successfully",
     "PkB.B.013": "No tote scanned",
     "PkB.B.014": "Tote cancelled",
     "PkB.B.015" : "Tote already associated with ppsbin",
@@ -81,4 +81,17 @@
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successfull",
     "AdF.B.003" :"Item Scan successfull"
-}
+};
+
+
+module.exports = serverMessages;
+
+
+
+
+
+
+
+
+
+

@@ -36635,10 +36635,9 @@ var commonActions = {
       data: data
     });
   },
-  setServerMessages : function(data){
+  setServerMessages : function(){
     AppDispatcher.handleAction({
-      actionType: appConstants.SET_SERVER_MESSAGES,
-      data:data
+      actionType: appConstants.SET_SERVER_MESSAGES
     });
   },
   changeLanguage: function(data){
@@ -36844,7 +36843,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../constants/appConstants":275,"../stores/AuditStore":281,"./Button/Button":238,"./Button/Button.js":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductImage.js":254,"./Rack/MsuRack.js":262,"./Reconcile":266,"./Spinner/LoaderButler":267,"./SystemIdle":270,"./TabularData":273,"react":230}],235:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/AuditStore":283,"./Button/Button":238,"./Button/Button.js":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductImage.js":254,"./Rack/MsuRack.js":262,"./Reconcile":266,"./Spinner/LoaderButler":267,"./SystemIdle":270,"./TabularData":273,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37052,7 +37051,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":284,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
+},{"../../stores/PutBackStore":286,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -37360,7 +37359,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/svgConstants":278,"../stores/mainstore":287,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],242:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/svgConstants":278,"../stores/mainstore":289,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],242:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -37389,11 +37388,12 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var data = {
         'data_type': 'auth',
         'data': {
-              'username': this.state.username,
-              'password': this.state.password,
+              'username': this.refs.username.value,
+              'password': this.refs.password.value,
               'seat_name': this.refs.seat_name.value
           }
       }
+      console.log(data);
     CommonActions.login(data);  
   }, 
   componentDidMount: function(){
@@ -37419,8 +37419,6 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
-        
-        console.log(usernameValue , passwordValue);
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
           $('#loginBtn').prop('disabled', false);
         }else{
@@ -37486,11 +37484,11 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", null, _(resourceConstants.USERNAME)), 
-                  React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", valueLink: this.linkState('username')})
+                  React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", ref: "username", valueLink: this.linkState('username')})
               ), 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", null, _(resourceConstants.PASSWORD)), 
-                  React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", valueLink: this.linkState('password')})
+                  React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", ref: "password", valueLink: this.linkState('password')})
               ), 
               React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
                   React.createElement("option", {value: "english"}, "English"), 
@@ -37522,7 +37520,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../constants/svgConstants":278,"../../stores/loginstore":286,"../../stores/mainstore":287,"../Operator":250,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],243:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../constants/svgConstants":278,"../../stores/loginstore":288,"../../stores/mainstore":289,"../Operator":250,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],243:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -37709,7 +37707,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/mainstore":287,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],244:[function(require,module,exports){
+},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/mainstore":289,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],244:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -37743,7 +37741,7 @@ var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
-        var d = this.props.serverNavData;
+        //var d = this.props.serverNavData;
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
@@ -37766,9 +37764,9 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
-                            //var header_message = _.apply(null, message_args);
-                            //return header_message;
-                            return d.description;
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                           // return d.description;
                         }
                        
                         }
@@ -37851,9 +37849,9 @@ var Notification = React.createClass({displayName: "Notification",
 
                             if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
-                               // var notification_message = _.apply(null, message_args);
-                                //return notification_message;
-                                return compData.description;
+                                var notification_message = _.apply(null, message_args);
+                                return notification_message;
+                               // return compData.description;
                             }
                            
                             }
@@ -37872,9 +37870,9 @@ var Notification = React.createClass({displayName: "Notification",
 
                             if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
-                                //var notification_message = _.apply(null, message_args);
-                                //return notification_message;
-                                return compData.description;
+                                var notification_message = _.apply(null, message_args);
+                                return notification_message;
+                                //return compData.description;
                             }
                            
                             }
@@ -37978,7 +37976,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":275,"../stores/mainstore":287,"./Audit":234,"./PickBack":251,"./PickFront":252,"./PutBack":260,"./PutFront":261,"./Spinner/Overlay":268,"./SystemIdle":270,"react":230}],251:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/mainstore":289,"./Audit":234,"./PickBack":251,"./PickFront":252,"./PutBack":260,"./PutFront":261,"./Spinner/Overlay":268,"./SystemIdle":270,"react":230}],251:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -38090,7 +38088,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickBackStore":282,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"react":230}],252:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickBackStore":284,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"react":230}],252:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var Header = require('./Header');
@@ -38291,7 +38289,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickFrontStore":283,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductDetails.js":253,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],253:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickFrontStore":285,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductDetails.js":253,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],253:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -38488,7 +38486,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":287,"react":230}],257:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":289,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -38600,7 +38598,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../stores/mainstore":287,"../Modal/Modal":243,"./PopUp":257,"react":230}],259:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../stores/mainstore":289,"../Modal/Modal":243,"./PopUp":257,"react":230}],259:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -38633,7 +38631,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":287,"./KQ":256,"./PopUp":257,"./ProductInfo":258,"react":230}],260:[function(require,module,exports){
+},{"../../stores/mainstore":289,"./KQ":256,"./PopUp":257,"./ProductInfo":258,"react":230}],260:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -38764,7 +38762,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":275,"../stores/PutBackStore":284,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"./TabularData":273,"react":230}],261:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/PutBackStore":286,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"./TabularData":273,"react":230}],261:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -38885,7 +38883,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":275,"../stores/PutFrontStore":285,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],262:[function(require,module,exports){
+},{"../constants/appConstants":275,"../stores/PutFrontStore":287,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],262:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -39483,8 +39481,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.128:8888/ws",
-	INTERFACE_IP : "https://192.168.3.128:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "http://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
@@ -39568,6 +39566,106 @@ ReactDOM.render(
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./components/LoginPage/LoginPage":242,"./components/Operator":250,"jquery":67,"react":230,"react-dom":74}],281:[function(require,module,exports){
+var chinese = {
+    "Password": "\u5bc6\u7801",
+    "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
+    "Scan Tote to associate with Bin": "\u626b\u63cf\u624b\u63d0\u5305\u4e0e\u5bbe\u5173\u8054",
+    "Scan item / Stage pps bin": "\u626b\u63cf\u9879\u76ee/\u821e\u53f0PPS\u658c",
+    "User Name": "\u7528\u6237\u540d"
+};
+
+module.exports = chinese;
+
+},{}],282:[function(require,module,exports){
+var serverMessages = {
+    "PtB.B.001": "Scan item / Stage pps bin",
+    "PtB.H.001" : "Stage Bin or Scan Entity",
+    "PtB.H.002" : "Place Entity in Bin and Press PPTL",
+    "PtB.H.003": "Are you sure you want to close Tote",
+    "PtB.H.004": "Scan Tote / Stage PpsBin",
+    "PtB.H.005" : "Item Not Found in Tote",
+    "PtB.E.001" : "Tote already opened.Scan some other tote",
+    "PtB.E.002" : "Tote already closed.Scan some other tote",
+    "PtB.E.003" : "No matching tote found",
+    "PtB.E.004" : "Wrong entity scanned. Please scan tote",
+    "PtB.E.005" : "No entities added yet. Scan entities and then PPS bin",
+    "PtB.E.006" : "Wrong entity scanned. Please scan Container/Item.",
+    "PtB.E.007" : "Cannot cancel scan. No scanned box found",
+    "PtB.E.008" : "Entity scan not expected.Waiting for button press",
+    "PtB.E.009" : "PpsBin selected for put. Cannot be staged",
+    "PtB.E.010" : "SKU not present in Database. WMS Notified.",
+    "PtB.E.011" : "Warehouse Full! Remove all entities from bin number and press PPTL.",
+    "PtB.E.012" : "No free Pps bins. Please scan later",
+    "PtB.E.013" : "Wrong button pressed. Please try another",    
+    "PtB.E.015" : "Please put it in IRT bin and confirm",
+    "PtB.I.001" : "Tote scan successfull",
+    "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
+    "PtB.I.003" : "Cancel scan successfull.",
+    "PtB.I.004" : "Tote close successfull.",
+    "PtB.I.005" : "Tote not closed.",
+    "PtB.I.006" : "Entity scan successfull.",
+    "PtB.I.007" : "PPtl Button press successfull",
+    "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
+    "PtB.I.009" : "Invalid item in tote recorded.",
+    "PtB.W.001" : "Container already stored in the warehouse",
+    "PtB.W.002" : "Entity already scanned.Waiting for Pptl button press",
+    "PtB.W.003" : "No PpsBins available to stage",
+    "PtB.W.004" : "PpsBin already staged. Ignoring event",
+    "PtB.W.005" : "PpsBin empty. Cannot be staged",
+    "PkF.A.012" : "Scan {0} items",
+    "PtF.C.007" :"Waiting for MSU to arrive",
+    "PkF.E.013" : "Scan items and place in Bin {0}",
+    "PkF.D.010" :"Scan box barcode",
+    "PkB.A.001" : "Scan Tote to associate with Bin",
+    "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
+    "PkB.A.003" : "Press PpsBin {0} to remove items",
+    "PkB.B.001" : "Tote is already scanned.Expecting pptl scan.",
+    "PkB.B.002" : "Totes are not required.Please don't scan tote barcode",
+    "PkB.B.003" : "Wrong PPS bin scanned",
+    "PkB.B.004" : "Please scan the tote first and then scan pptl barcode",
+    "PkB.B.005": "Tote scanned.Expecting pptl scan.",
+    "PkB.B.006": "Pptl scan not allowed. Totes are not required",
+    "PkB.B.007": "Tote didn't get associated",
+    "PkB.B.008" : "After scannning tote barcode, please scan pptl barcode",
+    "PkB.B.009" : "Wrong Ppsbin button pressed.Please press those buttons having color blue",
+    "PkB.B.010" : "Please complete process for pending ppsbin and then proceed",
+    "PkB.B.011" : "No totes associated. Pease keep totes in the Bin and then scan",
+    "PkB.B.012" : "Documents printed Successfully",
+    "PkB.B.013": "No tote scanned",
+    "PkB.B.014": "Tote cancelled",
+    "PkB.B.015" : "Tote already associated with ppsbin",
+    "PkB.B.016" : "Please press ppsbin button which does not have any totes associated",
+    "PkB.B.017" :"Tote assigned successfully to ppsbin {0}",
+    "PkB.B.019":"Bin {0} items removed successfully",
+    "PkB.B.020" : "Totes are not required",
+    "PkB.B.021" : "Wrong Barcode scanned",
+    "PkB.B.022" : "Tote could not be reserved as already reserved",
+    "PkB.B.023" : "Exception invalid as totes are not required with this PPS",
+    "PkB.B.024" : "Override tote not possible",
+    "PkB.B.025" :"Scanning pptl barcode not allowed",
+    "PkB.B.027" : "Please press those buttons having color blink_blue",
+    "PkB.B.028" : "Unhandled event ocurred",
+    "PkB.B.029" : "Barcode didn't match with current tote barcode",
+    "Common.000": "Testing configuration {0} and {1}",
+    "Common.001": "Processing. Please wait and scan later",
+    "Common.002": "Waiting for rack",
+    "Common.003": "Current PPS mode does not support back seat. Please logout.",
+    "AdF.A.001" :"Scan Box/Items from Slot",
+    "AdF.A.002" :"Scan Remaining Item In Box",
+    "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
+    "AdF.A.006" :"Status To Reconcile",
+    "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
+    "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
+    "AdF.A.009" :"Waiting for MSU to arrive",
+    "AdF.B.001" :"Wrong Barcode.",
+    "AdF.B.002" :"Box Scan successfull",
+    "AdF.B.003" :"Item Scan successfull"
+};
+
+
+module.exports = serverMessages;
+
+},{}],283:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -39792,7 +39890,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],282:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],284:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -39898,7 +39996,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],283:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],285:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -40078,7 +40176,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],284:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],286:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -40289,7 +40387,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],285:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],287:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -40407,7 +40505,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"object-assign":68}],286:[function(require,module,exports){
+},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],288:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -40505,12 +40603,14 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":275,"../constants/configConstants":276,"../dispatchers/AppDispatcher":279,"../utils/utils.js":288,"events":14,"react/lib/Object.assign":121}],287:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":275,"../constants/configConstants":276,"../dispatchers/AppDispatcher":279,"../utils/utils.js":290,"events":14,"react/lib/Object.assign":121}],289:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
+var serverMessages = require('../serverMessages/server_messages');
+var chinese = require('../serverMessages/chinese');
 
 var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent, _messageJson;
@@ -40674,13 +40774,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatName);
   },
   setServerMessages : function(data){
-    _messageJson = data;
+    _messageJson = serverMessages;
   },
   getServerMessages : function(){
     return _messageJson;
   },
   changeLanguage : function(data){
-    utils.changeLanguage(data);
+    switch(data){
+      case "chinese":
+        _.setTranslation(chinese);
+    }
   },
   checkListSubmit: function(data){
      var data = {
@@ -40775,7 +40878,7 @@ AppDispatcher.register(function(payload){
        mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SET_SERVER_MESSAGES:
-       mainstore.setServerMessages(action.data);
+       mainstore.setServerMessages();
        mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.CHANGE_LANGUAGE:
@@ -40802,7 +40905,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":288,"events":14,"react/lib/Object.assign":121}],288:[function(require,module,exports){
+},{"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../serverMessages/chinese":281,"../serverMessages/server_messages":282,"../utils/utils":290,"events":14,"react/lib/Object.assign":121}],290:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -40820,11 +40923,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      };     
 	      ws.onmessage = function (evt){
 	        var received_msg = evt.data;
-	        //setTimeout(CommonActions.seatData, 0, evt.data);
 	        var data = JSON.parse(evt.data);
 	        putSeatData(data);
 	        CommonActions.setCurrentSeat(data.state_data);
-	        utils.getServerErrorMapping();
+          CommonActions.setServerMessages();
 	      };
 	      ws.onclose = function(){ 
 	         alert("Connection is closed..."); 
@@ -40854,28 +40956,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(jqXhr) {
                      
         });
-  	},
-    getServerErrorMapping : function(){
-      $.ajax({
-        type: 'GET',
-        url: 'http://192.168.3.93:3000/static/server_messages.json',
-        }).done(function(response) { 
-          CommonActions.setServerMessages(response);
-        }).fail(function(jqXhr) {
-                     
-        });
-    },
-    changeLanguage : function(language){ 
-      $.ajax({
-        type: 'GET',
-        url: '/assets/js/localization/'+language+'.json',
-        }).done(function(response) { 
-          //_.setTranslation(response);
-          CommonActions.setLanguage(response);
-        }).fail(function(jqXhr) {
-                     
-        }); 
-    }
+  	}
 }); 
 
 var putSeatData = function(data){ console.log(data);

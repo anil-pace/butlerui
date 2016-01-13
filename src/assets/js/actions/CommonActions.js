@@ -162,10 +162,9 @@ var commonActions = {
       data: data
     });
   },
-  setServerMessages : function(data){
+  setServerMessages : function(){
     AppDispatcher.handleAction({
-      actionType: appConstants.SET_SERVER_MESSAGES,
-      data:data
+      actionType: appConstants.SET_SERVER_MESSAGES
     });
   },
   changeLanguage: function(data){

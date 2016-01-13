@@ -3,6 +3,8 @@ var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
+var serverMessages = require('../serverMessages/server_messages');
+var chinese = require('../serverMessages/chinese');
 
 var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _seatName, _pptlEvent , _cancelEvent, _messageJson;
@@ -166,13 +168,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatName);
   },
   setServerMessages : function(data){
-    _messageJson = data;
+    _messageJson = serverMessages;
   },
   getServerMessages : function(){
     return _messageJson;
   },
   changeLanguage : function(data){
-    utils.changeLanguage(data);
+    switch(data){
+      case "chinese":
+        _.setTranslation(chinese);
+    }
   },
   checkListSubmit: function(data){
      var data = {
@@ -267,7 +272,7 @@ AppDispatcher.register(function(payload){
        mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SET_SERVER_MESSAGES:
-       mainstore.setServerMessages(action.data);
+       mainstore.setServerMessages();
        mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.CHANGE_LANGUAGE:

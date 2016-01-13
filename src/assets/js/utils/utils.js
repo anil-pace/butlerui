@@ -15,11 +15,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 	      };     
 	      ws.onmessage = function (evt){
 	        var received_msg = evt.data;
-	        //setTimeout(CommonActions.seatData, 0, evt.data);
 	        var data = JSON.parse(evt.data);
 	        putSeatData(data);
 	        CommonActions.setCurrentSeat(data.state_data);
-	        utils.getServerErrorMapping();
+          CommonActions.setServerMessages();
 	      };
 	      ws.onclose = function(){ 
 	         alert("Connection is closed..."); 
@@ -49,28 +48,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(jqXhr) {
                      
         });
-  	},
-    getServerErrorMapping : function(){
-      $.ajax({
-        type: 'GET',
-        url: 'http://192.168.3.93:3000/static/server_messages.json',
-        }).done(function(response) { 
-          CommonActions.setServerMessages(response);
-        }).fail(function(jqXhr) {
-                     
-        });
-    },
-    changeLanguage : function(language){ 
-      $.ajax({
-        type: 'GET',
-        url: '/assets/js/localization/'+language+'.json',
-        }).done(function(response) { 
-          //_.setTranslation(response);
-          CommonActions.setLanguage(response);
-        }).fail(function(jqXhr) {
-                     
-        }); 
-    }
+  	}
 }); 
 
 var putSeatData = function(data){ console.log(data);

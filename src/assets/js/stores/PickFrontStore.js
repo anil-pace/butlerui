@@ -104,15 +104,16 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
 
      getChecklistDetails:function(){
         if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            console.log(_PickFrontData.checklist_details.pick_checklist.length + "jindal");
             if(_PickFrontData.checklist_details.pick_checklist.length > 0){
                 return _PickFrontData.checklist_details.pick_checklist;
             }
             else{
-                return null;
+                return [];
             }     
             
         }else{
-            return null;
+            return [];
         }
     },
     getChecklistIndex:function(){

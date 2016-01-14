@@ -38229,7 +38229,7 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        if(this.state.PickFrontChecklistOverlayStatus === false){
+        if(this.state.PickFrontChecklistOverlayStatus === false && this.state.PickFrontChecklistDetails.length > 0){
           var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';
@@ -39501,8 +39501,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.128:8888/ws",
-	INTERFACE_IP : "https://192.168.3.128:5000"
+	WEBSOCKET_IP : "ws://192.168.1.95:8888/ws",
+	INTERFACE_IP : "https://192.168.1.95:5000"
 };
 
 module.exports = configConstants;
@@ -40123,15 +40123,16 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
 
      getChecklistDetails:function(){
         if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            console.log(_PickFrontData.checklist_details.pick_checklist.length + "jindal");
             if(_PickFrontData.checklist_details.pick_checklist.length > 0){
                 return _PickFrontData.checklist_details.pick_checklist;
             }
             else{
-                return null;
+                return [];
             }     
             
         }else{
-            return null;
+            return [];
         }
     },
     getChecklistIndex:function(){

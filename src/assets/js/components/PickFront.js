@@ -133,7 +133,7 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        if(this.state.PickFrontChecklistOverlayStatus === false){
+        if(this.state.PickFrontChecklistOverlayStatus === false && this.state.PickFrontChecklistDetails.length > 0){
           var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';

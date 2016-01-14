@@ -1,6 +1,7 @@
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
+var PickFrontStore = require('../../stores/PickFrontStore');
 
 var Button1 = React.createClass({
             _checklistClass: '',
@@ -55,15 +56,29 @@ var Button1 = React.createClass({
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
                                 console.log(JSON.stringify(checkList));
-                                checkList.checklist_data[checklist_index - 1].map(function(value, index) {
-                                    var keyvalue = Object.keys(value);
-                                    console.log(keyvalue[0]);
-                                    console.log(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]]);
-                                    checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index).value;
-                                });
+                                if (checklist_index != "all") {
+                                    checkList.checklist_data[checklist_index - 1].map(function(value, index) {
+                                        var keyvalue = Object.keys(value);
+                                        console.log(keyvalue[0]);
+                                        console.log(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]]);
+                                        checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                    });
+                                } else {
+                                    checkList.checklist_data.map(function(value, index) {
+                                        if(index < PickFrontStore.scanDetails()["current_qty"])
+                                        value.map(function(value1, index1) {
+                                            var keyvalue = Object.keys(value1);
+                                            checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                        })
+                                    });
+                                }
                                 console.log(JSON.stringify(checkList));
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.EDIT_DETAILS:
+                                data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:
@@ -122,7 +137,7 @@ var Button1 = React.createClass({
                         }
                         onClick = {
                             this.performAction.bind(this, this.props.module, this.props.action)
-                        } > {
+                        }  > {
                             this.props.text
                         } < /a>
                     );

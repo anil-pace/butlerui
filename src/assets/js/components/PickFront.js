@@ -75,7 +75,7 @@ var PickFront = React.createClass({
               data:data,
               type:'pick_checklist'
       });
-      $('.modal').modal();
+      $('.modal').modal({backdrop: 'static', keyboard: false});
       return false;
       }),0)
 
@@ -133,7 +133,7 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        if(this.state.PickFrontChecklistOverlayStatus === true){
+        if(this.state.PickFrontChecklistOverlayStatus === false){
           var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';

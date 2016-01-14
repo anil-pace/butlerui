@@ -99,7 +99,21 @@ var PutBack = React.createClass({
                 </div>
               </div>
             );
-        break;  
+        break; 
+      case appConstants.PUT_BACK_EXCEPTION:
+          this._component = (
+              <div className='grid-container'>
+                <Modal />
+                <div className='main-container'>
+                    <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
+                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} barcode={this.state.PutBackItemUid} color={"black"}/>
+                </div>
+              </div>
+            );
+        break; 
       default:
         return true; 
     }

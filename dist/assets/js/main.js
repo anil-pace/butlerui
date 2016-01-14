@@ -37047,6 +37047,7 @@ module.exports  = BoxSerial;
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
+var PickFrontStore = require('../../stores/PickFrontStore');
 
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
@@ -37101,15 +37102,29 @@ var Button1 = React.createClass({displayName: "Button1",
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
                                 console.log(JSON.stringify(checkList));
-                                checkList.checklist_data[checklist_index - 1].map(function(value, index) {
-                                    var keyvalue = Object.keys(value);
-                                    console.log(keyvalue[0]);
-                                    console.log(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]]);
-                                    checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index).value;
-                                });
+                                if (checklist_index != "all") {
+                                    checkList.checklist_data[checklist_index - 1].map(function(value, index) {
+                                        var keyvalue = Object.keys(value);
+                                        console.log(keyvalue[0]);
+                                        console.log(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]]);
+                                        checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                    });
+                                } else {
+                                    checkList.checklist_data.map(function(value, index) {
+                                        if(index < PickFrontStore.scanDetails()["current_qty"])
+                                        value.map(function(value1, index1) {
+                                            var keyvalue = Object.keys(value1);
+                                            checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                        })
+                                    });
+                                }
                                 console.log(JSON.stringify(checkList));
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.EDIT_DETAILS:
+                                data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:
@@ -37183,7 +37198,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"../../stores/PickFrontStore":285,"react":230}],239:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37509,6 +37524,7 @@ module.exports = LoginPage;
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
+var PickFrontStore = require('../../stores/PickFrontStore');
 var ModalFooter = require('./ModalFooter');
 var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
@@ -37610,9 +37626,8 @@ function loadComponent(modalType,modalData){
       title = "Input Extra Details";
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
-            if(modalData.checklist_index === (index+1) || modalData.checklist_index === null || modalData.checklist_index === undefined){
-              return (
-                  data.map(function(data1,index1){
+            if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < PickFrontStore.scanDetails()["current_qty"])){
+              var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
                       return (React.createElement("div", null, 
@@ -37620,11 +37635,16 @@ function loadComponent(modalType,modalData){
                                       keyvalue
                                   ), 
                                   React.createElement("div", {className: "row dataCaptureInput removeBorder"}, 
-                                      React.createElement("input", {type: "text", id: "checklist_field"+index1, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1)})
+                                      React.createElement("input", {type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)})
                                   )
                               )
                         );
                   })
+              return (
+                  React.createElement("div", {className: "item-input"}, 
+                    React.createElement("div", {className: "heading"}, "Item " + (index+1)), 
+                  d
+                  )
                 );
                   
             }
@@ -37692,7 +37712,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/mainstore":289,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],244:[function(require,module,exports){
+},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/PickFrontStore":285,"../../stores/mainstore":289,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],244:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -37726,7 +37746,7 @@ var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
-        //var d = this.props.serverNavData;
+        var d = this.props.serverNavData;
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
@@ -37746,13 +37766,13 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                     
             		React.createElement("div", {className: "action"}, 
             		(function(){
-
-                        if(navMessagesJson != undefined){
+                         return d.description;
+                       /* if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
                             var header_message = _.apply(null, message_args);
                             return header_message;
                            // return d.description;
-                        }
+                        }*/
                        
                         }
                     )()
@@ -37831,13 +37851,13 @@ var Notification = React.createClass({displayName: "Notification",
                     		)
                     	), 
                     	(function(){
-
-                            if(navMessagesJson != undefined){
+                            return compData.description;
+                            /*if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
                                 var notification_message = _.apply(null, message_args);
                                 return notification_message;
                                // return compData.description;
-                            }
+                            }*/
                            
                             }
                         )()
@@ -37852,13 +37872,13 @@ var Notification = React.createClass({displayName: "Notification",
                             )
                         ), 
                         (function(){
-
-                            if(navMessagesJson != undefined){
+                            return compData.description;
+                           /* if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
                                 var notification_message = _.apply(null, message_args);
                                 return notification_message;
                                 //return compData.description;
-                            }
+                            }*/
                            
                             }
                         )()
@@ -38151,7 +38171,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               data:data,
               type:'pick_checklist'
       });
-      $('.modal').modal();
+      $('.modal').modal({backdrop: 'static', keyboard: false});
       return false;
       }),0)
 
@@ -38209,7 +38229,7 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        if(this.state.PickFrontChecklistOverlayStatus === true){
+        if(this.state.PickFrontChecklistOverlayStatus === false){
           var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';
@@ -38718,7 +38738,21 @@ var PutBack = React.createClass({displayName: "PutBack",
                 )
               )
             );
-        break;  
+        break; 
+      case appConstants.PUT_BACK_EXCEPTION:
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
+                React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
+                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
+                )
+              )
+            );
+        break; 
       default:
         return true; 
     }
@@ -39467,8 +39501,8 @@ module.exports = appConstants;
 
 },{}],276:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://192.168.3.128:8888/ws",
+	INTERFACE_IP : "https://192.168.3.128:5000"
 };
 
 module.exports = configConstants;

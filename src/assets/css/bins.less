@@ -1,13 +1,13 @@
 .bins {
-   /* padding-top: 3.75em;
+    /* padding-top: 3.75em;
     padding-bottom: 3.75em;
     padding-left: 3.75em;
     padding-right: 3.75em;*/
     display: flex;
-    flex-flow:column;
-    flex-grow:1;
-    flex-shrink:1;
-    flex-wrap:nowrap;
+    flex-flow: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -17,31 +17,70 @@
         flex-flow: row;
         flex-wrap: nowrap;
         width: 100%;
-        flex:0 1 auto;
-        justify-content:center;
+        flex: 0 1 auto;
+        justify-content: center;
         .bin {
             position: relative;
             border: 2px solid @text-color;
-            &.use{
+            &.use {
                 background: @bin-selected-bck;
                 color: white;
             }
-            &.empty{
+            &.empty {
                 background: white;
-                color:@bin-inactive-text;
+                color: @bin-inactive-text;
             }
-            &.selected{
-                border: 5px solid @bin-selected-bck;
+            &.selected {
+                border: 2px solid @bin-selected-bck;
             }
-            &.staged{
+            &.completed{
+             border: 2px solid green;   
+            }
+            &.staged {
                 background: @bin-staged-bck;
-                color:@bin-inactive-text;
+                color: @bin-inactive-text;
             }
-            &.selected-staging{
-                 border: 5px solid @brand-primary;
+            &.selected-staging {
+                border: 2px solid @brand-primary;
             }
-            .info-icon{
+             @keyframes blink {
+               0% {
+                   border-color: @bin-selected-bck;
+               }
+               50% {
+                   border-color: @text-color;
+               }
+               100% {
+                   border-color: @bin-selected-bck;
+               }
+           }
+           &.blink1 {
+               animation: blink 2s step-end infinite;
+           }
+            .tote {
                 position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 2.2em;
+                top: 0;
+                margin: 10px;
+                background: @bin-staged-bck;
+                .info-icon {
+                    position: absolute;
+                    left: 6px;
+                    top: 6px;
+                }
+                .text {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    font-size: 1.5em;
+                }
+            }
+            .info-icon {
+                position: absolute;
+                color: white;
+                font-size: 1.5em;
                 right: 6px;
                 top: 6px;
             }
@@ -51,16 +90,34 @@
                 width: 100%;
                 /*min-height: 15%;*/
                 display: flex;
-                align-items:center;
-                justify-content:center;
-                align-items:center;
+                align-items: center;
+                justify-content: center;
+                align-items: center;
                 background: @text-color;
                 text-align: center;
                 color: white;
                 font-size: @font-size-body-small;
-                 &.selected{
+                &.selected {
                     background: @bin-selected-bck;
                     color: white;
+                }
+                &.completed {
+                    background: green;
+                    color: white;
+                }
+                &.blink {
+                    animation: blink 2s steps(2, start) infinite;
+                    -webkit-animation: blink 2s steps(2, start) infinite;
+                }
+                @keyframes blink {
+                    to {
+                        background: @text-color;
+                    }
+                }
+                @-webkit-keyframes blink {
+                    to {
+                        background: @text-color;
+                    }
                 }
             }
             .item-count {
@@ -71,8 +128,8 @@
                 width: 50%;
                 margin: auto;
                 display: flex;
-                justify-content:center;
-                align-items:center;
+                justify-content: center;
+                align-items: center;
                 text-align: center;
                 left: 0;
                 right: 0;
@@ -81,4 +138,3 @@
         }
     }
 }
-

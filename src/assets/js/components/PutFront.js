@@ -23,7 +23,8 @@ function getStateData(){
            PutFrontProductDetails : PutFrontStore.productDetails(),
            PutFrontRackDetails: PutFrontStore.getRackDetails(),
            PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData()
+           PutFrontServerNavData : PutFrontStore.getServerNavData(),
+           PutFrontItemUid : PutFrontStore.getItemUid()
     };
 
 };
@@ -47,7 +48,7 @@ var PutFront = React.createClass({
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
-      this._notification = <Notification notification={this.state.PutFrontNotification} />
+      this._notification = <Notification notification={this.state.PutFrontNotification} navMessagesJson={this.props.navMessagesJson} />
     else
       this._notification = "";
   },
@@ -70,7 +71,7 @@ var PutFront = React.createClass({
                 <Modal />
                 <div className='main-container'>
                   <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                 </div>
               </div>
             );
@@ -81,13 +82,14 @@ var PutFront = React.createClass({
                 <Modal />
                 <div className="single-bin">
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
+                      <div className="text">CURRENT BIN</div>
                 </div>
                 <div className='main-container'>
                   <Rack rackData = {this.state.PutFrontRackDetails}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} />
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontProductDetails.product_sku} color={"black"}/>
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
                 </div>
 
               </div>
@@ -104,7 +106,7 @@ var PutFront = React.createClass({
     return (
       <div className="main">
         <Header />
-        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} />
+        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>
         {this._component}
         {this._notification}
       </div> 

@@ -13,6 +13,7 @@ var BoxSerial = require('./BoxSerial.js');
 var Modal = require('./Modal/Modal');
 var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
+var CommonActions = require('../actions/CommonActions');
 
 function getStateData(){
   return {
@@ -24,9 +25,13 @@ function getStateData(){
            PickFrontProductDetails : PickFrontStore.productDetails(),
            PickFrontRackDetails: PickFrontStore.getRackDetails(),
            PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
-          PickFrontServerNavData : PickFrontStore.getServerNavData(),
-          PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin()
-
+           PickFrontServerNavData : PickFrontStore.getServerNavData(),
+           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
+           PickFrontItemUid : PickFrontStore.getItemUid(),
+           PickFrontSlotDetails :PickFrontStore.getCurrentSlot(),
+           PickFrontChecklistDetails :PickFrontStore.getChecklistDetails(),
+           PickFrontChecklistIndex : PickFrontStore.getChecklistIndex(),
+           PickFrontChecklistOverlayStatus :PickFrontStore.getChecklistOverlayStatus()
     };
 };
 
@@ -37,6 +42,9 @@ var PickFront = React.createClass({
     return getStateData();
   },
   componentWillMount: function(){
+    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
+        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }
     PickFrontStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
@@ -44,17 +52,44 @@ var PickFront = React.createClass({
   },
   onChange: function(){ 
 	this.setState(getStateData());
+   if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
+        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
+    }else{
+      $('.modal').modal('hide');
+      $('.modal-backdrop').remove();
+    }
   },
   getNotificationComponent:function(){
     if(this.state.PickFrontNotification != undefined)
-      this._notification = <Notification notification={this.state.PickFrontNotification} />
+      this._notification = <Notification notification={this.state.PickFrontNotification} navMessagesJson={this.props.navMessagesJson} />
     else
       this._notification = "";
+  },
+  showModal:function(data,index){
+    var data ={
+      'checklist_data' : data,
+      "checklist_index" : index
+    };
+    if(this.state.PickFrontChecklistOverlayStatus === true ){
+    setTimeout((function(){CommonActions.showModal({
+              data:data,
+              type:'pick_checklist'
+      });
+      $('.modal').modal();
+      return false;
+      }),0)
+
+    }
+    else {
+      $('.modal').modal('hide');
+      $('.modal-backdrop fade in').remove();
+    }
+
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
      
-      case appConstants.PICK_FRONT_WAITING_FOR_RACK:
+      case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
@@ -64,7 +99,7 @@ var PickFront = React.createClass({
             );
       break;
 
-      case appConstants.PICK_FRONT_SCAN_SLOT_BARCODE:
+      case appConstants.PICK_FRONT_LOCATION_SCAN:
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
@@ -74,19 +109,19 @@ var PickFront = React.createClass({
             );
       break;
 
-      case appConstants.PICK_FRONT_SCAN_ITEM_BARCODE:
+      case appConstants.PICK_FRONT_ITEM_SCAN:
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
                     <Rack rackData = {this.state.PickFrontRackDetails}/>
-                     <PrdtDetails />
+                     <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
                  </div>
               </div>
             );
       break;
 
 
-       case appConstants.PICK_FRONT_SCAN_BOX_BARCODE:
+       case appConstants.PICK_FRONT_CONTAINER_SCAN:
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
@@ -97,33 +132,44 @@ var PickFront = React.createClass({
             );
       break;
 
-      case appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN:
+      case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               <div className='grid-container'>
                 <Modal />             
-                <CurrentSlot />
+                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
-                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} />
+                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                 </div>
                 <div className = 'actions'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/>
-                   <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> 
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                   {editButton}
                 </div>
               </div>
             );
       break;
 
-      case appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM:
+      case appConstants.PICK_FRONT_PPTL_PRESS:
+        if(this.state.PickFrontChecklistOverlayStatus === true){
+          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+        }else{
+          var editButton ='';
+        }
         this._component = (
               <div className='grid-container'>
                 <Modal />
-                <CurrentSlot />
+                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PickFrontProductDetails.product_sku} color={"black"}/> 
+                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
+                    {editButton}
                 </div>
               </div>
             );
@@ -134,6 +180,7 @@ var PickFront = React.createClass({
         return true;
     }
   },
+  
   render: function(data){ 
 	  this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
@@ -141,8 +188,9 @@ var PickFront = React.createClass({
 	return (
 		<div className="main">
 			<Header />
-			<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} />
+			<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>
 			{this._component}
+      {this._notification}
 	  </div>   
 	  )
   }

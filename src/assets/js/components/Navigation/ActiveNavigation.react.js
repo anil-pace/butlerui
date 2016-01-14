@@ -2,12 +2,11 @@ var React = require('react');
 
 var ActiveNavigation = React.createClass({
     render: function() {
+        var d = this.props.serverNavData;
+        var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.data;
-        var message_args  = compData.message.slice(0);
-        console.log(this.props.serverNavData);
-       /* console.log(message_args);
-       var m = message_args.unshift(compData.message[this.props.serverNavData.code]);
-       console.log(m);*/
+        var message_args  = this.props.serverNavData.details.slice(0);
+        var errorCode = this.props.serverNavData.code;
         return (
             	<div className="active-navigation">
                     {
@@ -22,7 +21,17 @@ var ActiveNavigation = React.createClass({
                         })()
                     }
             		<div className = "action">
-            			{this.props.serverNavData.description}
+            		{(function(){
+
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            //var header_message = _.apply(null, message_args);
+                            //return header_message;
+                            return d.description;
+                        }
+                       
+                        }
+                    )()}         
             		</div>
             	</div>
         );

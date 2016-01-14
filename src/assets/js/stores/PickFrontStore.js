@@ -25,7 +25,7 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
 
     getNavData: function() {
-        if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_RACK) {
+        if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_MSU) {
             _NavData = navConfig.pickFront[0];
             _NavData[0].type = 'active';
         } else {
@@ -102,6 +102,40 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         return _PickFrontData.box_serials;
     },
 
+     getChecklistDetails:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.pick_checklist.length > 0){
+                return _PickFrontData.checklist_details.pick_checklist;
+            }
+            else{
+                return null;
+            }     
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistIndex:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            if(_PickFrontData.checklist_details.checklist_index!= null){
+                return _PickFrontData.checklist_details.checklist_index;
+            } 
+            else{
+                return null;
+            }    
+            
+        }else{
+            return null;
+        }
+    },
+    getChecklistOverlayStatus:function(){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
+            return _PickFrontData.checklist_details.display_checklist_overlay;
+          }else{
+            return null;
+        }
+    },
+
     getCurrentSelectedBin: function() {
         if (_PickFrontData["ppsbin_list"] != undefined) {
             var binData = {};
@@ -116,6 +150,16 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
             return binData;
         } else
             return null;
+    },
+    getItemUid : function(){
+        return _PickFrontData.item_uid;
+    },
+    getCurrentSlot : function(){        
+        if(_PickFrontData.hasOwnProperty('rack_details')){       
+            return _PickFrontData.rack_details.slot_barcodes;
+        }else{
+            return null;
+        }
     }
 
 });

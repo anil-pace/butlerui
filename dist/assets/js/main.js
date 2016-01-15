@@ -37142,7 +37142,6 @@ var Button1 = React.createClass({displayName: "Button1",
                                         })
                                     });
                                 }
-                                console.log(JSON.stringify(checkList));
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
@@ -37402,8 +37401,8 @@ var Header = React.createClass({displayName: "Header",
         virtualKeyBoard = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
-              'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+              'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -37481,8 +37480,8 @@ function getState(){
    return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
-      username : 'kerry',
-      password : 'gorapj'
+      username : '',
+      password : ''
   }
 }
 
@@ -37491,7 +37490,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
   getInitialState: function(){
     return getState();
   }, 
-  handleLogin: function(e){    
+  handleLogin: function(e){   
+  
     var data = {
         'data_type': 'auth',
         'data': {
@@ -37512,8 +37512,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     virtualKeyBoard = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
-        'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+        'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -37524,6 +37524,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       visible : function(e, keypressed, el){
         el.value = '';
       },
+      
       accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
@@ -37550,7 +37551,9 @@ var LoginPage = React.createClass({displayName: "LoginPage",
   changeLanguage : function(){
     CommonActions.changeLanguage(this.refs.language.value);
   },
-
+  removeNotify:function(){
+       $('.errorNotify').css('display','none');
+      },
   render: function(){
     var d = new Date();
     var n = d.getFullYear();   
@@ -37594,6 +37597,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                 React.createElement("label", null, _(resourceConstants.USERNAME)), 
                   React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", ref: "username", valueLink: this.linkState('username')})
               ), 
+
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", null, _(resourceConstants.PASSWORD)), 
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", ref: "password", valueLink: this.linkState('password')})
@@ -37854,7 +37858,7 @@ var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
-        var d = this.props.serverNavData;
+       // var d = this.props.serverNavData;
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
@@ -37874,13 +37878,12 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                     
             		React.createElement("div", {className: "action"}, 
             		(function(){
-                         return d.description;
-                       /* if(navMessagesJson != undefined){
+                         //return d.description;
+                        if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
                             var header_message = _.apply(null, message_args);
                             return header_message;
-                           // return d.description;
-                        }*/
+                        }
                        
                         }
                     )()
@@ -37959,13 +37962,13 @@ var Notification = React.createClass({displayName: "Notification",
                     		)
                     	), 
                     	(function(){
-                            return compData.description;
-                            /*if(navMessagesJson != undefined){
+                           // return compData.description;
+                            if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
                                 var notification_message = _.apply(null, message_args);
                                 return notification_message;
                                // return compData.description;
-                            }*/
+                            }
                            
                             }
                         )()
@@ -37980,13 +37983,13 @@ var Notification = React.createClass({displayName: "Notification",
                             )
                         ), 
                         (function(){
-                            return compData.description;
-                           /* if(navMessagesJson != undefined){
+                            //return compData.description;
+                           if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
                                 var notification_message = _.apply(null, message_args);
                                 return notification_message;
                                 //return compData.description;
-                            }*/
+                            }
                            
                             }
                         )()
@@ -38337,7 +38340,7 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        if(this.state.PickFrontChecklistOverlayStatus === false && this.state.PickFrontChecklistDetails.length > 0){
+        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
           var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';
@@ -38359,7 +38362,7 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
-        if(this.state.PickFrontChecklistOverlayStatus === true){
+        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
           var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';

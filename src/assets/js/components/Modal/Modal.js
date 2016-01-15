@@ -1,6 +1,7 @@
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
+var PickFrontStore = require('../../stores/PickFrontStore');
 var ModalFooter = require('./ModalFooter');
 var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
@@ -102,9 +103,8 @@ function loadComponent(modalType,modalData){
       title = "Input Extra Details";
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
-            if(modalData.checklist_index === (index+1) || modalData.checklist_index === null || modalData.checklist_index === undefined){
-              return (
-                  data.map(function(data1,index1){
+            if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < PickFrontStore.scanDetails()["current_qty"])){
+              var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
                       return (<div>
@@ -112,11 +112,16 @@ function loadComponent(modalType,modalData){
                                       {keyvalue}
                                   </div>
                                   <div className="row dataCaptureInput removeBorder">
-                                      <input type="text" id={"checklist_field"+index1} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1)} />
+                                      <input type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />
                                   </div>
                               </div>
                         );
                   })
+              return (
+                  <div className = "item-input">
+                    <div className="heading">{"Item " + (index+1)}</div>
+                  {d}
+                  </div>
                 );
                   
             }

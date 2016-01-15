@@ -16,13 +16,13 @@ var Notification = React.createClass({
                     		</div>
                     	</div>
                     	{(function(){
-
-                            if(navMessagesJson != undefined){
+                            return compData.description;
+                            /*if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
                                 var notification_message = _.apply(null, message_args);
                                 return notification_message;
                                // return compData.description;
-                            }
+                            }*/
                            
                             }
                         )()}
@@ -37,13 +37,13 @@ var Notification = React.createClass({
                             </div>
                         </div>
                         {(function(){
-
-                            if(navMessagesJson != undefined){
+                            return compData.description;
+                           /* if(navMessagesJson != undefined){
                                 message_args.unshift(navMessagesJson[errorCode]);
                                 var notification_message = _.apply(null, message_args);
                                 return notification_message;
                                 //return compData.description;
-                            }
+                            }*/
                            
                             }
                         )()}

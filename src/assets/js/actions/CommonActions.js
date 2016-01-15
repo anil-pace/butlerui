@@ -137,6 +137,24 @@ var commonActions = {
       actionType: appConstants.SET_LANGUAGE,
       data:data
     }); 
+  },
+  logError: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOG_ERROR,
+      data:data
+    }); 
+  },
+  enableException:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ENABLE_EXCEPTION,
+      data:data
+    }); 
+  },
+  setActiveException:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_ACTIVE_EXCEPTION,
+      data:data
+    }); 
   }
 
 };

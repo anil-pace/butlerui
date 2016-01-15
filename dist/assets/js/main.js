@@ -36610,13 +36610,31 @@ var commonActions = {
       actionType: appConstants.SET_LANGUAGE,
       data:data
     }); 
+  },
+  logError: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOG_ERROR,
+      data:data
+    }); 
+  },
+  enableException:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ENABLE_EXCEPTION,
+      data:data
+    }); 
+  },
+  setActiveException:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_ACTIVE_EXCEPTION,
+      data:data
+    }); 
   }
 
 };
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":275,"../dispatchers/AppDispatcher":279}],234:[function(require,module,exports){
+},{"../constants/appConstants":279,"../dispatchers/AppDispatcher":283}],234:[function(require,module,exports){
 
 var React = require('react');
 var AuditStore = require('../stores/AuditStore');
@@ -36633,6 +36651,8 @@ var Img = require('./PrdtDetails/ProductImage.js');
 var Rack = require('./Rack/MsuRack.js');
 var Spinner = require("./Spinner/LoaderButler");
 var Reconcile = require("./Reconcile");
+var utils = require("../utils/utils.js");
+var ActionCreators = require('../actions/CommonActions');
 
 
 function getStateData(){
@@ -36735,6 +36755,7 @@ var Audit = React.createClass({displayName: "Audit",
 
         break;
       case appConstants.AUDIT_RECONCILE:
+          console.log("jiiiii");
           var subComponent='';
           var messageType = 'large';
           if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
@@ -36790,7 +36811,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../constants/appConstants":275,"../stores/AuditStore":283,"./Button/Button":238,"./Button/Button.js":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductImage.js":254,"./Rack/MsuRack.js":262,"./Reconcile":266,"./Spinner/LoaderButler":267,"./SystemIdle":270,"./TabularData":273,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":279,"../stores/AuditStore":287,"../utils/utils.js":294,"./Button/Button":238,"./Button/Button.js":238,"./Header":245,"./Modal/Modal":247,"./Navigation/Navigation.react":251,"./Notification/Notification":253,"./PrdtDetails/ProductImage.js":258,"./Rack/MsuRack.js":266,"./Reconcile":270,"./Spinner/LoaderButler":271,"./SystemIdle":274,"./TabularData":277,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -36937,7 +36958,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"../../stores/mainstore":289,"../Modal/Modal":243,"react":230}],236:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":279,"../../stores/mainstore":293,"../Modal/Modal":247,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37003,7 +37024,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":286,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
+},{"../../stores/PutBackStore":290,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -37043,7 +37064,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":277,"react":230}],238:[function(require,module,exports){
+},{"../constants/resourceConstants":281,"react":230}],238:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37069,6 +37090,9 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "cancel_barcode_scan";
                                 data["event_data"]["barcode"] = this.props.barcode;
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_EXCEPTION:
+                                ActionCreators.enableException(false);
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
@@ -37198,7 +37222,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"../../stores/PickFrontStore":285,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":279,"../../stores/PickFrontStore":289,"react":230}],239:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37247,7 +37271,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":275,"react":230}],240:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":279,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -37272,7 +37296,86 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":277,"./Header":241,"react":230}],241:[function(require,module,exports){
+},{"../constants/resourceConstants":281,"./Header":245,"react":230}],241:[function(require,module,exports){
+var React = require('react');[]
+var ExceptionHeader = require('./ExceptionHeader');
+var ExceptionList = require('./ExceptionList');
+
+var Exception = React.createClass({displayName: "Exception", 
+    render: function() {
+        return (
+            React.createElement("div", {className: "exception"}, 
+                React.createElement(ExceptionHeader, {data: this.props.data.header}), 
+                React.createElement(ExceptionList, {data: this.props.data.list})
+            )
+        );
+    },
+});
+
+module.exports = Exception;
+
+},{"./ExceptionHeader":242,"./ExceptionList":243,"react":230}],242:[function(require,module,exports){
+var React = require('react');
+
+var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
+    
+    render: function() {
+        return (
+            React.createElement("div", {className: "exception-header"}, 
+               this.props.data
+      		)
+        );
+    },
+});
+
+module.exports = ExceptionHeader;
+
+},{"react":230}],243:[function(require,module,exports){
+var React = require('react');
+var ExceptionListItem = require('./ExceptionListItem');
+
+var ExceptionList = React.createClass({displayName: "ExceptionList", 
+    _exceptionListItems:[],
+    getExceptionListItems:function(){
+    	var comp =[];
+    	this.props.data.map(function(value,index){
+    		comp.push((React.createElement(ExceptionListItem, {data: value})));
+    	})
+    	this._exceptionListItems = comp;
+    },
+    render: function() {
+    	this.getExceptionListItems();
+        return (
+            React.createElement("div", {className: "exception-list"}, 
+               this._exceptionListItems
+            )
+        );
+    },
+});
+
+module.exports = ExceptionList;
+
+},{"./ExceptionListItem":244,"react":230}],244:[function(require,module,exports){
+var React = require('react');
+var CommonActions = require('../../actions/CommonActions');
+
+var ExceptionListItem = React.createClass({displayName: "ExceptionListItem", 
+	_component:[],
+	setCurrentException:function(data){
+		CommonActions.setActiveException(data);
+	},
+    render: function() {
+        return (
+            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data.text)}, 
+               this.props.data.text
+      		)
+        );
+    },
+});
+
+module.exports = ExceptionListItem;
+
+},{"../../actions/CommonActions":233,"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -37291,6 +37394,9 @@ var Header = React.createClass({displayName: "Header",
     openKeyboard: function() {
         $('#barcode').data('keyboard').reveal();
         return false;
+    },
+    enableException:function(){
+        CommonActions.enableException(true);
     },
     componentDidMount: function() {
         virtualKeyBoard = $('#barcode').keyboard({
@@ -37349,7 +37455,7 @@ var Header = React.createClass({displayName: "Header",
                   React.createElement("img", {src: allSvgConstants.scanHeader}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
-              React.createElement("div", {className: "header-actions"}, 
+              React.createElement("div", {className: "header-actions", onClick: this.enableException}, 
                  React.createElement("img", {src: allSvgConstants.menu})
               )
             )
@@ -37359,7 +37465,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/svgConstants":278,"../stores/mainstore":289,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],242:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/svgConstants":282,"../stores/mainstore":293,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],246:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -37369,6 +37475,7 @@ var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
 var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
+var utils = require('../../utils/utils.js');
 
 function getState(){
    return {
@@ -37393,7 +37500,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
               'seat_name': this.refs.seat_name.value
           }
       }
-      console.log(data);
+    utils.generateSessionId();
+    console.log(data);
     CommonActions.login(data);  
   }, 
   componentDidMount: function(){
@@ -37520,7 +37628,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../constants/svgConstants":278,"../../stores/loginstore":288,"../../stores/mainstore":289,"../Operator":250,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],243:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":281,"../../constants/svgConstants":282,"../../stores/loginstore":292,"../../stores/mainstore":293,"../../utils/utils.js":294,"../Operator":254,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],247:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -37712,7 +37820,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":275,"../../constants/svgConstants":278,"../../stores/PickFrontStore":285,"../../stores/mainstore":289,"../Button/Button":238,"./ModalFooter":244,"./ModalHeader":245,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],244:[function(require,module,exports){
+},{"../../constants/appConstants":279,"../../constants/svgConstants":282,"../../stores/PickFrontStore":289,"../../stores/mainstore":293,"../Button/Button":238,"./ModalFooter":248,"./ModalHeader":249,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],248:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -37725,7 +37833,7 @@ var ModalFooter = React.createClass({displayName: "ModalFooter",
 
 module.exports = ModalFooter;
 
-},{"react":230}],245:[function(require,module,exports){
+},{"react":230}],249:[function(require,module,exports){
 var React = require('react');
 var ModalHeader = React.createClass({displayName: "ModalHeader",
   render: function () {
@@ -37741,7 +37849,7 @@ var ModalHeader = React.createClass({displayName: "ModalHeader",
 
 module.exports = ModalHeader;
 
-},{"react":230}],246:[function(require,module,exports){
+},{"react":230}],250:[function(require,module,exports){
 var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -37784,7 +37892,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"react":230}],247:[function(require,module,exports){
+},{"react":230}],251:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -37811,7 +37919,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
 
-},{"./ActiveNavigation.react":246,"./PassiveNavigation.react":248,"react":230}],248:[function(require,module,exports){
+},{"./ActiveNavigation.react":250,"./PassiveNavigation.react":252,"react":230}],252:[function(require,module,exports){
 var React = require('react');
 
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
@@ -37832,7 +37940,7 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 
 module.exports = PassiveNavigation;
 
-},{"react":230}],249:[function(require,module,exports){
+},{"react":230}],253:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -37890,7 +37998,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":233,"react":230}],250:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"react":230}],254:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -37981,7 +38089,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":275,"../stores/mainstore":289,"./Audit":234,"./PickBack":251,"./PickFront":252,"./PutBack":260,"./PutFront":261,"./Spinner/Overlay":268,"./SystemIdle":270,"react":230}],251:[function(require,module,exports){
+},{"../constants/appConstants":279,"../stores/mainstore":293,"./Audit":234,"./PickBack":255,"./PickFront":256,"./PutBack":264,"./PutFront":265,"./Spinner/Overlay":272,"./SystemIdle":274,"react":230}],255:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -38093,7 +38201,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickBackStore":284,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"react":230}],252:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":279,"../stores/PickBackStore":288,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":245,"./Modal/Modal":247,"./Navigation/Navigation.react":251,"./Notification/Notification":253,"./ProductDetails/Wrapper":263,"./SystemIdle":274,"react":230}],256:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var Header = require('./Header');
@@ -38294,7 +38402,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":275,"../stores/PickFrontStore":285,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./PrdtDetails/ProductDetails.js":253,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],253:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":279,"../stores/PickFrontStore":289,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Header":245,"./Modal/Modal":247,"./Navigation/Navigation.react":251,"./Notification/Notification":253,"./PrdtDetails/ProductDetails.js":257,"./ProductDetails/Wrapper":263,"./Rack/MsuRack.js":266,"./Spinner/LoaderButler":271,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -38316,7 +38424,7 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
 
 module.exports = ProductDetails;
 
-},{"./ProductImage":254,"./ProductInfo":255,"react":230}],254:[function(require,module,exports){
+},{"./ProductImage":258,"./ProductInfo":259,"react":230}],258:[function(require,module,exports){
 var React = require('react');
 
 var ProductImage = React.createClass({displayName: "ProductImage",
@@ -38334,7 +38442,7 @@ var ProductImage = React.createClass({displayName: "ProductImage",
 
 module.exports = ProductImage;
 
-},{"react":230}],255:[function(require,module,exports){
+},{"react":230}],259:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = React.createClass({displayName: "ProductInfo",
@@ -38366,7 +38474,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"react":230}],256:[function(require,module,exports){
+},{"react":230}],260:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -38491,7 +38599,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":289,"react":230}],257:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":293,"react":230}],261:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -38537,7 +38645,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],258:[function(require,module,exports){
+},{"react":230}],262:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -38603,7 +38711,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":277,"../../stores/mainstore":289,"../Modal/Modal":243,"./PopUp":257,"react":230}],259:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":281,"../../stores/mainstore":293,"../Modal/Modal":247,"./PopUp":261,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -38636,7 +38744,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":289,"./KQ":256,"./PopUp":257,"./ProductInfo":258,"react":230}],260:[function(require,module,exports){
+},{"../../stores/mainstore":293,"./KQ":260,"./PopUp":261,"./ProductInfo":262,"react":230}],264:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -38650,7 +38758,7 @@ var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
 var TabularData = require('./TabularData');
-
+var Exception = require('./Exception/Exception');
 
 
 function getStateData(){
@@ -38667,6 +38775,8 @@ function getStateData(){
            PutBackItemUid : PutBackStore.getItemUid(),
            PutBackReconciliation : PutBackStore.getReconcileData(),
            PutBackToteId : PutBackStore.getToteId(),
+           PutBackExceptionStatus:PutBackStore.getExceptionStatus(),
+           PutBackExceptionData:PutBackStore.getExceptionData()
 
     };
 }
@@ -38674,6 +38784,7 @@ function getStateData(){
 var PutBack = React.createClass({displayName: "PutBack",
   _component:'',
   _notification:'',
+  _exception:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -38685,6 +38796,32 @@ var PutBack = React.createClass({displayName: "PutBack",
   },
   onChange: function(){ 
     this.setState(getStateData());
+  },
+  getExceptionComponent:function(){
+      var _rightComponent = '';
+      switch(this.state.PutBackExceptionData["activeException"]){
+        case appConstants.DAMAGED_BARCODE:
+          _rightComponent = (React.createElement("div", {className: "exception-right"}, "DAMAGED_BARCODE"));
+        break;
+        case appConstants.OVERSIZED_ITEMS:
+          _rightComponent = (React.createElement("div", {className: "exception-right"}, "OVERSIZED_ITEMS"))
+        break;
+        case appConstants.EXCESS_ITEMS_IN_PPS_BINS:
+          _rightComponent = (React.createElement("div", {className: "exception-right"}, "EXCESS_ITEMS_IN_PPS_BINS"))
+        break;
+        default:
+          _rightComponent = '';
+       }
+      return (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                _rightComponent, 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                )
+              )
+            );
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -38705,6 +38842,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
         break;
       case appConstants.PUT_BACK_SCAN:
+          if(this.state.PutBackExceptionStatus == false){
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -38717,8 +38855,12 @@ var PutBack = React.createClass({displayName: "PutBack",
                 )
               )
             );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
         break;
       case appConstants.PUT_BACK_TOTE_CLOSE:
+          if(this.state.PutBackExceptionStatus == false){
           var subComponent='';
           var messageType = 'large';
             subComponent=(
@@ -38738,18 +38880,15 @@ var PutBack = React.createClass({displayName: "PutBack",
                 )
               )
             );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
         break; 
       case appConstants.PUT_BACK_EXCEPTION:
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
-                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
-                )
+                React.createElement(Exception, {data: {"header":"","list":[]}})
               )
             );
         break; 
@@ -38764,7 +38903,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     else
       this._notification = "";
   },
-  render: function(data){ console.log(this.state.PutBackReconciliation);
+  render: function(data){ 
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
       return (
@@ -38781,7 +38920,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":275,"../stores/PutBackStore":286,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./SystemIdle":270,"./TabularData":273,"react":230}],261:[function(require,module,exports){
+},{"../constants/appConstants":279,"../stores/PutBackStore":290,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":245,"./Modal/Modal":247,"./Navigation/Navigation.react":251,"./Notification/Notification":253,"./ProductDetails/Wrapper":263,"./SystemIdle":274,"./TabularData":277,"react":230}],265:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -38902,7 +39041,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":275,"../stores/PutFrontStore":287,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":241,"./Modal/Modal":243,"./Navigation/Navigation.react":247,"./Notification/Notification":249,"./ProductDetails/Wrapper":259,"./Rack/MsuRack.js":262,"./Spinner/LoaderButler":267,"react":230}],262:[function(require,module,exports){
+},{"../constants/appConstants":279,"../stores/PutFrontStore":291,"./Bins/Bins.react":236,"./Button/Button":238,"./Header":245,"./Modal/Modal":247,"./Navigation/Navigation.react":251,"./Notification/Notification":253,"./ProductDetails/Wrapper":263,"./Rack/MsuRack.js":266,"./Spinner/LoaderButler":271,"react":230}],266:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -38996,7 +39135,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":263,"react":230}],263:[function(require,module,exports){
+},{"./RackRow":267,"react":230}],267:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -39044,7 +39183,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":264,"react":230}],264:[function(require,module,exports){
+},{"./RackSlot":268,"react":230}],268:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -39086,7 +39225,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":265,"react":230}],265:[function(require,module,exports){
+},{"./SingleSlot":269,"react":230}],269:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -39106,7 +39245,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],266:[function(require,module,exports){
+},{"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -39129,7 +39268,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 
 module.exports = ReconcileStatus;
 
-},{"../constants/resourceConstants":277,"./Header":241,"react":230}],267:[function(require,module,exports){
+},{"../constants/resourceConstants":281,"./Header":245,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
@@ -39149,7 +39288,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":230}],268:[function(require,module,exports){
+},{"react":230}],272:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -39167,7 +39306,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":267,"./SpinnerButler":269,"react":230}],269:[function(require,module,exports){
+},{"./LoaderButler":271,"./SpinnerButler":273,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
@@ -39194,7 +39333,7 @@ var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 
 module.exports = SpinnerButler;
 
-},{"react":230}],270:[function(require,module,exports){
+},{"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -39214,7 +39353,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":277,"./Header":241,"react":230}],271:[function(require,module,exports){
+},{"../constants/resourceConstants":281,"./Header":245,"react":230}],275:[function(require,module,exports){
 var React = require('react');
 
 var TableHeader = React.createClass({displayName: "TableHeader", 
@@ -39230,7 +39369,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"react":230}],272:[function(require,module,exports){
+},{"react":230}],276:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -39270,7 +39409,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../constants/appConstants":275,"./Button/IconButton":239,"react":230}],273:[function(require,module,exports){
+},{"../constants/appConstants":279,"./Button/IconButton":239,"react":230}],277:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -39302,7 +39441,7 @@ var TabularData = React.createClass({displayName: "TabularData",
 
 module.exports = TabularData;
 
-},{"./TableHeader":271,"./TableRow":272,"react":230}],274:[function(require,module,exports){
+},{"./TableHeader":275,"./TableRow":276,"react":230}],278:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
@@ -39427,7 +39566,7 @@ var navData = {
 
 module.exports = navData;
 
-},{"../constants/svgConstants":278}],275:[function(require,module,exports){
+},{"../constants/svgConstants":282}],279:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
@@ -39455,6 +39594,7 @@ var appConstants = {
 	PUT_BACK_SCAN : "put_back_scan",
 	PUT_BACK_TOTE_CLOSE : "put_back_tote_close",
 	PUT_BACK_SCAN_TOTE :'put_back_scan_tote',
+	PUT_BACK_EXCEPTION:"put_back_exception",
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_FRONT_SCAN:"put_front_scan",
@@ -39493,21 +39633,28 @@ var appConstants = {
 	CANCEL_TOTE :'CANCEL_TOTE',
 	CLOSE_TOTE : 'CLOSE_TOTE',
 	TOTE_ACTION :'TOTE_ACTION',
-	POST_DATA_TO_INTERFACE:"POST_DATA_TO_INTERFACE"
+	POST_DATA_TO_INTERFACE:"POST_DATA_TO_INTERFACE",
+	LOG_ERROR:"LOG_ERROR",
+	ENABLE_EXCEPTION:"ENABLE_EXCEPTION",
+	CANCEL_EXCEPTION:"CANCEL_EXCEPTION",
+	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",
+	DAMAGED_BARCODE:"Damaged Barcode",
+	OVERSIZED_ITEMS:"Oversized Items",
+	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins"
 
 };
 
 module.exports = appConstants;
 
-},{}],276:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.1.95:8888/ws",
-	INTERFACE_IP : "https://192.168.1.95:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "http://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
 
-},{}],277:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',
@@ -39522,7 +39669,7 @@ var resourceConstants = {
 };
 module.exports = resourceConstants;
 
-},{}],278:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -39542,7 +39689,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],279:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -39556,7 +39703,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":46}],280:[function(require,module,exports){
+},{"flux":46}],284:[function(require,module,exports){
 (function (global){
 global.jQuery = global.$ = require("jquery");
 var React = require('react');
@@ -39585,7 +39732,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":242,"./components/Operator":250,"jquery":67,"react":230,"react-dom":74}],281:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":246,"./components/Operator":254,"jquery":67,"react":230,"react-dom":74}],285:[function(require,module,exports){
 var chinese = {
     "Password": "\u5bc6\u7801",
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
@@ -39596,7 +39743,7 @@ var chinese = {
 
 module.exports = chinese;
 
-},{}],282:[function(require,module,exports){
+},{}],286:[function(require,module,exports){
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage pps bin",
     "PtB.H.001" : "Stage Bin or Scan Entity",
@@ -39685,7 +39832,7 @@ var serverMessages = {
 
 module.exports = serverMessages;
 
-},{}],283:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -39887,7 +40034,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
     getScreenId: function() {
-        return _AuditData.screen_id;
+            return _AuditData.screen_id; 
     }
 
 
@@ -39910,7 +40057,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],284:[function(require,module,exports){
+},{"../config/navConfig":278,"../constants/appConstants":279,"../constants/resourceConstants":281,"../dispatchers/AppDispatcher":283,"../utils/utils":294,"events":14,"object-assign":68}],288:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -40016,7 +40163,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],285:[function(require,module,exports){
+},{"../config/navConfig":278,"../constants/appConstants":279,"../constants/resourceConstants":281,"../dispatchers/AppDispatcher":283,"../utils/utils":294,"events":14,"object-assign":68}],289:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -40197,7 +40344,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],286:[function(require,module,exports){
+},{"../config/navConfig":278,"../constants/appConstants":279,"../dispatchers/AppDispatcher":283,"../utils/utils":294,"events":14,"object-assign":68}],290:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -40208,7 +40355,8 @@ var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
-var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData, _enableException = false,
+    _activeException = null;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -40242,6 +40390,32 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         }
     },
 
+    getExceptionData: function() {
+        var data = {};
+        data["activeException"] = this.getActiveException();
+        data["list"] = [];
+        data["header"] = "Exceptions";
+        _PutBackData.exception_allowed.map(function(value, index) {
+            if (value.exception_name == data["activeException"])
+                data["list"].push({
+                    "text": value.exception_name,
+                    "selected": true
+                });
+            else
+                data["list"].push({
+                    "text": value.exception_name,
+                    "selected": false
+                });
+        })
+        return data;
+    },
+
+    setActiveException: function(data) {
+        _activeException = data;
+    },
+    getActiveException: function() {
+        return _activeException;
+    },
     getStageActiveStatus: function() {
         if (_PutBackData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -40307,6 +40481,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         return binData;
     },
 
+
     getScreenId: function() {
         return _PutBackData.screen_id;
     },
@@ -40369,12 +40544,19 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             return data;
         }
     },
-    getToteId : function(){
-        if(_PutBackData.hasOwnProperty('tote_id')){
+    getToteId: function() {
+        if (_PutBackData.hasOwnProperty('tote_id')) {
             return _PutBackData.tote_id;
-        }else{
+        } else {
             return null;
         }
+    },
+
+    enableException: function(data) {
+        _enableException = data;
+    },
+    getExceptionStatus: function() {
+        return _enableException;
     }
 });
 
@@ -40400,6 +40582,14 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
             PutBackStore.emitChange();
             break;
 
+        case ActionTypes.ENABLE_EXCEPTION:
+            PutBackStore.enableException(action.action.data);
+            PutBackStore.emitChange();
+            break;
+        case ActionTypes.SET_ACTIVE_EXCEPTION:
+            PutBackStore.setActiveException(action.action.data);
+            PutBackStore.emitChange();
+            break;
         default:
             // do nothing
     }
@@ -40408,7 +40598,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../constants/resourceConstants":277,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],287:[function(require,module,exports){
+},{"../config/navConfig":278,"../constants/appConstants":279,"../constants/resourceConstants":281,"../dispatchers/AppDispatcher":283,"../utils/utils":294,"events":14,"object-assign":68}],291:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -40526,7 +40716,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":274,"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../utils/utils":290,"events":14,"object-assign":68}],288:[function(require,module,exports){
+},{"../config/navConfig":278,"../constants/appConstants":279,"../dispatchers/AppDispatcher":283,"../utils/utils":294,"events":14,"object-assign":68}],292:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -40624,7 +40814,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":275,"../constants/configConstants":276,"../dispatchers/AppDispatcher":279,"../utils/utils.js":290,"events":14,"react/lib/Object.assign":121}],289:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":279,"../constants/configConstants":280,"../dispatchers/AppDispatcher":283,"../utils/utils.js":294,"events":14,"react/lib/Object.assign":121}],293:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -40637,6 +40827,7 @@ var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson;
 var popupVisible = false;
 var _showSpinner = true;
+var _enableException = false;
 var modalContent = {
     data: "",
     type: ""
@@ -40724,7 +40915,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     postDataToInterface: function(data) {
         utils.postDataToInterface(data, _seatName);
+    },
+    logError:function(data){
+        utils.logError(data);
     }
+    
 
 });
 
@@ -40766,6 +40961,9 @@ AppDispatcher.register(function(payload) {
         case appConstants.SET_LANGUAGE:
             mainstore.emit(CHANGE_EVENT);
             break;
+        case appConstants.LOG_ERROR:
+            mainstore.logError(action.data);
+            break;
         default:
             return true;
     }
@@ -40773,7 +40971,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":275,"../dispatchers/AppDispatcher":279,"../serverMessages/chinese":281,"../serverMessages/server_messages":282,"../utils/utils":290,"events":14,"react/lib/Object.assign":121}],290:[function(require,module,exports){
+},{"../constants/appConstants":279,"../dispatchers/AppDispatcher":283,"../serverMessages/chinese":285,"../serverMessages/server_messages":286,"../utils/utils":294,"events":14,"react/lib/Object.assign":121}],294:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -40784,73 +40982,98 @@ var ws = new WebSocket(configConstants.WEBSOCKET_IP);
 
 
 var utils = objectAssign({}, EventEmitter.prototype, {
-	connectToWebSocket : function(data){
-		if ("WebSocket" in window) {
-	      ws.onopen = function(){
-	         console.log("connected");
-	      };     
-	      ws.onmessage = function (evt){
-	        var received_msg = evt.data;
-	        var data = JSON.parse(evt.data);
-	        putSeatData(data);
-	        CommonActions.setCurrentSeat(data.state_data);
-          CommonActions.setServerMessages();
-	      };
-	      ws.onclose = function(){ 
-	         alert("Connection is closed..."); 
-	      };
-	    }
-	    else
-	    {
-	      alert("WebSocket NOT supported by your Browser!");
-	    }
-	},
-	 postDataToWebsockets: function(data){ 
-      ws.send(JSON.stringify(data));
-      setTimeout(CommonActions.operatorSeat, 0, true);
-  	},
-  	postDataToInterface : function(data, seat_name){ 
-      console.log(data);
-      console.log(seat_name);
-  		$.ajax({
-        type: 'POST',
-        url: configConstants.INTERFACE_IP+appConstants.API+appConstants.PPS_SEATS+seat_name+appConstants.SEND_DATA,
-        data: JSON.stringify(data),
-        dataType:"json",
-        headers: {
-         'content-type' : 'application/json',
-         'accept' : 'application/json'
+    connectToWebSocket: function(data) {
+        if ("WebSocket" in window) {
+            ws.onopen = function() {
+                console.log("connected");
+            };
+            ws.onmessage = function(evt) {
+                var received_msg = evt.data;
+                var data = JSON.parse(evt.data);
+                putSeatData(data);
+                CommonActions.setCurrentSeat(data.state_data);
+                CommonActions.setServerMessages();
+            };
+            ws.onclose = function() {
+                alert("Connection is closed...");
+            };
+        } else {
+            alert("WebSocket NOT supported by your Browser!");
         }
+    },
+    postDataToWebsockets: function(data) {
+        ws.send(JSON.stringify(data));
+        setTimeout(CommonActions.operatorSeat, 0, true);
+    },
+    postDataToInterface: function(data, seat_name) {
+        console.log(data);
+        console.log(seat_name);
+        $.ajax({
+            type: 'POST',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,
+            data: JSON.stringify(data),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            }
         }).done(function(response) {
 
         }).fail(function(jqXhr) {
-                     
-        });
-  	}
-}); 
 
-var putSeatData = function(data){ console.log(data);
-	 switch(data.state_data.mode + "_" + data.state_data.seat_type){
-      case appConstants.PUT_BACK:
-          CommonActions.setPutBackData(data.state_data);
-      break;
-      case appConstants.PUT_FRONT: 
-          CommonActions.setPutFrontData(data.state_data);
-        break;
-      case appConstants.PICK_BACK:
-          CommonActions.setPickBackData(data.state_data);
-        break;
-      case appConstants.PICK_FRONT: 
-          CommonActions.setPickFrontData(data.state_data);
-        break;
-       case appConstants.AUDIT: 
-          CommonActions.setAuditData(data.state_data);
-        break;
-      default:
-        return true; 
-      }
+        });
+    },
+    generateSessionId: function() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 50; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        localStorage.setItem("session",text);
+    },
+    createLogData: function(message, type) {
+        var data = {};
+        data["message"] = message;
+        data["type"] = type;
+        data["session"] = localStorage.getItem("session");
+        return data;
+    },
+    logError: function(data) {
+        $.ajax({
+            type: 'POST',
+            url: "http://192.168.3.93:300/api/log",
+            data: data,
+            dataType: "json"
+        }).success(function(response) {
+            console.log("Error logged Successfully");
+            console.log("Log Details :");
+            console.log(JSON.stringify(data));
+        });
+    }
+});
+
+var putSeatData = function(data) {
+    console.log(data);
+    switch (data.state_data.mode + "_" + data.state_data.seat_type) {
+        case appConstants.PUT_BACK:
+            CommonActions.setPutBackData(data.state_data);
+            break;
+        case appConstants.PUT_FRONT:
+            CommonActions.setPutFrontData(data.state_data);
+            break;
+        case appConstants.PICK_BACK:
+            CommonActions.setPickBackData(data.state_data);
+            break;
+        case appConstants.PICK_FRONT:
+            CommonActions.setPickFrontData(data.state_data);
+            break;
+        case appConstants.AUDIT:
+            CommonActions.setAuditData(data.state_data);
+            break;
+        default:
+            return true;
+    }
 }
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":275,"../constants/configConstants":276,"events":14,"react/lib/Object.assign":121}]},{},[280]);
+},{"../actions/CommonActions":233,"../constants/appConstants":279,"../constants/configConstants":280,"events":14,"react/lib/Object.assign":121}]},{},[284]);

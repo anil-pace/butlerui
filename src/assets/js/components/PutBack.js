@@ -11,7 +11,7 @@ var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
 var TabularData = require('./TabularData');
-
+var Exception = require('./Exception/Exception');
 
 
 function getStateData(){
@@ -28,6 +28,8 @@ function getStateData(){
            PutBackItemUid : PutBackStore.getItemUid(),
            PutBackReconciliation : PutBackStore.getReconcileData(),
            PutBackToteId : PutBackStore.getToteId(),
+           PutBackExceptionStatus:PutBackStore.getExceptionStatus(),
+           PutBackExceptionData:PutBackStore.getExceptionData()
 
     };
 }
@@ -35,6 +37,7 @@ function getStateData(){
 var PutBack = React.createClass({
   _component:'',
   _notification:'',
+  _exception:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -46,6 +49,32 @@ var PutBack = React.createClass({
   },
   onChange: function(){ 
     this.setState(getStateData());
+  },
+  getExceptionComponent:function(){
+      var _rightComponent = '';
+      switch(this.state.PutBackExceptionData["activeException"]){
+        case appConstants.DAMAGED_BARCODE:
+          _rightComponent = (<div className="exception-right">{"DAMAGED_BARCODE"}</div>);
+        break;
+        case appConstants.OVERSIZED_ITEMS:
+          _rightComponent = (<div className="exception-right">{"OVERSIZED_ITEMS"}</div>)
+        break;
+        case appConstants.EXCESS_ITEMS_IN_PPS_BINS:
+          _rightComponent = (<div className="exception-right">{"EXCESS_ITEMS_IN_PPS_BINS"}</div>)
+        break;
+        default:
+          _rightComponent = '';
+       }
+      return (
+              <div className='grid-container'>
+                <Modal />
+                <Exception data={this.state.PutBackExceptionData}/>
+                {_rightComponent}
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                </div>
+              </div>
+            );
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -66,6 +95,7 @@ var PutBack = React.createClass({
 
         break;
       case appConstants.PUT_BACK_SCAN:
+          if(this.state.PutBackExceptionStatus == false){
           this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -78,8 +108,12 @@ var PutBack = React.createClass({
                 </div>
               </div>
             );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
         break;
       case appConstants.PUT_BACK_TOTE_CLOSE:
+          if(this.state.PutBackExceptionStatus == false){
           var subComponent='';
           var messageType = 'large';
             subComponent=(
@@ -99,18 +133,15 @@ var PutBack = React.createClass({
                 </div>
               </div>
             );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
         break; 
       case appConstants.PUT_BACK_EXCEPTION:
           this._component = (
               <div className='grid-container'>
                 <Modal />
-                <div className='main-container'>
-                    <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} barcode={this.state.PutBackItemUid} color={"black"}/>
-                </div>
+                <Exception data={{"header":"","list":[]}}/>
               </div>
             );
         break; 
@@ -125,7 +156,7 @@ var PutBack = React.createClass({
     else
       this._notification = "";
   },
-  render: function(data){ console.log(this.state.PutBackReconciliation);
+  render: function(data){ 
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
       return (

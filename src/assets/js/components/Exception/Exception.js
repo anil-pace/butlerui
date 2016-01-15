@@ -1,8 +1,8 @@
-var React = require('react');
-var ExceptionHeader = require('./TableRow');
-var ExceptionList = require('./TableHeader');
+var React = require('react');[]
+var ExceptionHeader = require('./ExceptionHeader');
+var ExceptionList = require('./ExceptionList');
 
-var TabularData = React.createClass({ 
+var Exception = React.createClass({ 
     render: function() {
         return (
             <div className="exception">
@@ -13,4 +13,4 @@ var TabularData = React.createClass({
     },
 });
 
-module.exports = TabularData;
+module.exports = Exception;

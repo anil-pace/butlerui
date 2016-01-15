@@ -10,6 +10,7 @@ var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson;
 var popupVisible = false;
 var _showSpinner = true;
+var _enableException = false;
 var modalContent = {
     data: "",
     type: ""
@@ -97,7 +98,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     postDataToInterface: function(data) {
         utils.postDataToInterface(data, _seatName);
+    },
+    logError:function(data){
+        utils.logError(data);
     }
+    
 
 });
 
@@ -138,6 +143,9 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.SET_LANGUAGE:
             mainstore.emit(CHANGE_EVENT);
+            break;
+        case appConstants.LOG_ERROR:
+            mainstore.logError(action.data);
             break;
         default:
             return true;

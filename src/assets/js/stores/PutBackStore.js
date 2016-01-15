@@ -8,7 +8,8 @@ var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
-var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData;
+var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData, _enableException = false,
+    _activeException = null;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -42,6 +43,32 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         }
     },
 
+    getExceptionData: function() {
+        var data = {};
+        data["activeException"] = this.getActiveException();
+        data["list"] = [];
+        data["header"] = "Exceptions";
+        _PutBackData.exception_allowed.map(function(value, index) {
+            if (value.exception_name == data["activeException"])
+                data["list"].push({
+                    "text": value.exception_name,
+                    "selected": true
+                });
+            else
+                data["list"].push({
+                    "text": value.exception_name,
+                    "selected": false
+                });
+        })
+        return data;
+    },
+
+    setActiveException: function(data) {
+        _activeException = data;
+    },
+    getActiveException: function() {
+        return _activeException;
+    },
     getStageActiveStatus: function() {
         if (_PutBackData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -107,6 +134,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         return binData;
     },
 
+
     getScreenId: function() {
         return _PutBackData.screen_id;
     },
@@ -169,12 +197,19 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             return data;
         }
     },
-    getToteId : function(){
-        if(_PutBackData.hasOwnProperty('tote_id')){
+    getToteId: function() {
+        if (_PutBackData.hasOwnProperty('tote_id')) {
             return _PutBackData.tote_id;
-        }else{
+        } else {
             return null;
         }
+    },
+
+    enableException: function(data) {
+        _enableException = data;
+    },
+    getExceptionStatus: function() {
+        return _enableException;
     }
 });
 
@@ -200,6 +235,14 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
             PutBackStore.emitChange();
             break;
 
+        case ActionTypes.ENABLE_EXCEPTION:
+            PutBackStore.enableException(action.action.data);
+            PutBackStore.emitChange();
+            break;
+        case ActionTypes.SET_ACTIVE_EXCEPTION:
+            PutBackStore.setActiveException(action.action.data);
+            PutBackStore.emitChange();
+            break;
         default:
             // do nothing
     }

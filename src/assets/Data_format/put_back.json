@@ -257,19 +257,13 @@
 		"logout_allowed": "true",
 		"exception_allowed": [{
 			"exception_id": "PtB004",
-			"exception_name": "Extra Items"
+			"exception_name": "Damaged Barcode"
 		}, {
 			"exception_id": "PtB003",
-			"exception_name": "Item Damaged"
+			"exception_name": "Oversized Items"
 		}, {
 			"exception_id": "PtB002",
-			"exception_name": "Item Over Sized"
-		}, {
-			"exception_id": "PtB001",
-			"exception_name": "PPTL Not Glowing"
-		}, {
-			"exception_id": "Common000",
-			"exception_name": "Reset Scanner"
+			"exception_name": "Excess Items in PPS Bins"
 		}],
 		"mode": "put",
 		"is_idle": false,

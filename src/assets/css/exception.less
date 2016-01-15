@@ -1,0 +1,29 @@
+.exception {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20%;
+    left: 0;
+    border-right: 1px solid @text-color;
+    .exception-header {
+        background: orange;
+        color: white;
+        font-size: 2em;
+        padding: 10px;
+        padding-left: 30px;
+    }
+    .exception-list {
+        .exception-list-item {
+            color: black;
+            padding: 20px;
+            padding-left: 30px;
+            font-size: 2em;
+            border-bottom: 1px solid black;
+            cursor: pointer;
+            &.selected{
+            	background: orange;
+            	color: white;
+            }
+        }
+    }
+}

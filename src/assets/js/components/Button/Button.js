@@ -24,6 +24,9 @@ var Button1 = React.createClass({
                                 data["event_data"]["barcode"] = this.props.barcode;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CANCEL_EXCEPTION:
+                                ActionCreators.enableException(false);
+                                break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
                                 data["event_name"] = "confirm_close_tote";

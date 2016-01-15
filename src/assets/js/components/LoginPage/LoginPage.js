@@ -7,6 +7,7 @@ var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
 var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
+var utils = require('../../utils/utils.js');
 
 function getState(){
    return {
@@ -32,6 +33,8 @@ var LoginPage = React.createClass({
               'seat_name': this.refs.seat_name.value
           }
       }
+    utils.generateSessionId();
+    console.log(data);
     CommonActions.login(data);  
   }, 
   componentDidMount: function(){

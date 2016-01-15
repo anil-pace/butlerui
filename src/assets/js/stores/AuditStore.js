@@ -199,7 +199,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
     getScreenId: function() {
-        return _AuditData.screen_id;
+            return _AuditData.screen_id; 
     }
 
 

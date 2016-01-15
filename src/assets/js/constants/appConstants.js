@@ -25,6 +25,7 @@ var appConstants = {
 	PUT_BACK_SCAN : "put_back_scan",
 	PUT_BACK_TOTE_CLOSE : "put_back_tote_close",
 	PUT_BACK_SCAN_TOTE :'put_back_scan_tote',
+	PUT_BACK_EXCEPTION:"put_back_exception",
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_FRONT_SCAN:"put_front_scan",
@@ -63,7 +64,14 @@ var appConstants = {
 	CANCEL_TOTE :'CANCEL_TOTE',
 	CLOSE_TOTE : 'CLOSE_TOTE',
 	TOTE_ACTION :'TOTE_ACTION',
-	POST_DATA_TO_INTERFACE:"POST_DATA_TO_INTERFACE"
+	POST_DATA_TO_INTERFACE:"POST_DATA_TO_INTERFACE",
+	LOG_ERROR:"LOG_ERROR",
+	ENABLE_EXCEPTION:"ENABLE_EXCEPTION",
+	CANCEL_EXCEPTION:"CANCEL_EXCEPTION",
+	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",
+	DAMAGED_BARCODE:"Damaged Barcode",
+	OVERSIZED_ITEMS:"Oversized Items",
+	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins"
 
 };
 

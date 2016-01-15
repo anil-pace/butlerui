@@ -1,17 +1,18 @@
 var React = require('react');
-var IconButton = require('./Button/IconButton');
-var appConstants = require('../constants/appConstants');
+var CommonActions = require('../../actions/CommonActions');
 
-var TableRow = React.createClass({ 
+var ExceptionListItem = React.createClass({ 
 	_component:[],
+	setCurrentException:function(data){
+		CommonActions.setActiveException(data);
+	},
     render: function() {
-    	this.getComponent();
         return (
-            <div className="exception-list-item">
-               {this.props.data}
+            <div className={this.props.data.selected==true?"exception-list-item selected":"exception-list-item"} onClick={this.setCurrentException.bind(this,this.props.data.text)}>
+               {this.props.data.text}
       		</div>
         );
     },
 });
 
-module.exports = TableRow;
+module.exports = ExceptionListItem;

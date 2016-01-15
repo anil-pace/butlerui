@@ -17,6 +17,9 @@ var Header = React.createClass({
         $('#barcode').data('keyboard').reveal();
         return false;
     },
+    enableException:function(){
+        CommonActions.enableException(true);
+    },
     componentDidMount: function() {
         virtualKeyBoard = $('#barcode').keyboard({
             layout: 'custom',
@@ -74,7 +77,7 @@ var Header = React.createClass({
                   <img src={allSvgConstants.scanHeader} />
                   <input id="barcode" type="text" value='' />
                 </div>
-              <div className="header-actions">
+              <div className="header-actions" onClick = {this.enableException}>
                  <img src={allSvgConstants.menu} />
               </div>
             </div>

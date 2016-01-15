@@ -14,6 +14,8 @@ var Img = require('./PrdtDetails/ProductImage.js');
 var Rack = require('./Rack/MsuRack.js');
 var Spinner = require("./Spinner/LoaderButler");
 var Reconcile = require("./Reconcile");
+var utils = require("../utils/utils.js");
+var ActionCreators = require('../actions/CommonActions');
 
 
 function getStateData(){
@@ -116,6 +118,7 @@ var Audit = React.createClass({
 
         break;
       case appConstants.AUDIT_RECONCILE:
+          console.log("jiiiii");
           var subComponent='';
           var messageType = 'large';
           if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){

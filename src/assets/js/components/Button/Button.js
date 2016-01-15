@@ -72,7 +72,6 @@ var Button1 = React.createClass({
                                         })
                                     });
                                 }
-                                console.log(JSON.stringify(checkList));
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);

@@ -45,6 +45,18 @@ function attachKeyboard(id){
    $('#'+id).data('keyboard').reveal(); 
 }
 
+function attachNumpad(id){ 
+     virtualNumpad = $('#'+id).keyboard({
+            layout: 'custom',
+            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
+            reposition   : true,
+            alwaysOpen   : false,
+            initialFocus : true,
+            accepted: function(e, keypressed, el) {
+            }
+      });
+   $('#'+id).data('keyboard').reveal(); 
+}
 function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
@@ -107,19 +119,23 @@ function loadComponent(modalType,modalData){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
+                    if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer"){
+                      var inputBox = (<input type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                    }else{
+                      var inputBox = (<input type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                    }
                       return (<div>
                                   <div className="row dataCaptureHead removeBorder">
                                       {keyvalue}
                                   </div>
                                   <div className="row dataCaptureInput removeBorder">
-                                      <input type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />
+                                      {inputBox}
                                   </div>
                               </div>
                         );
                   })
               return (
                   <div className = "item-input">
-                    <div className="heading">{"Item " + (index+1)}</div>
                   {d}
                   </div>
                 );

@@ -55,12 +55,9 @@ var Button1 = React.createClass({
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
-                                console.log(JSON.stringify(checkList));
                                 if (checklist_index != "all") {
                                     checkList.checklist_data[checklist_index - 1].map(function(value, index) {
                                         var keyvalue = Object.keys(value);
-                                        console.log(keyvalue[0]);
-                                        console.log(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]]);
                                         checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
                                     });
                                 } else {

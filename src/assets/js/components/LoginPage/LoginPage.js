@@ -12,8 +12,8 @@ function getState(){
    return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
-      username : '',
-      password : ''
+      username : 'kerry',
+      password : 'gorapj'
   }
 }
 

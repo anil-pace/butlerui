@@ -91,5 +91,7 @@ function server_messages_list() {
     _("Box Scan successfull");
     _("Item Scan successfull");
     _("Waiting for MSU to arrive");
+    _('Item Scan successfull');
+    _('Press PPTL for Bin {0} to confirm');
 
 }

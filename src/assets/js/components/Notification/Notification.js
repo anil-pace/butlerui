@@ -7,48 +7,35 @@ var Notification = React.createClass({
         var compData = this.props.notification;
         var message_args  = this.props.notification.details.slice(0);
         var errorCode = this.props.notification.code;
-            if(this.props.notification.level!=undefined && this.props.notification.level == "error")
-                return (
-                    <div className="notify-error" role="alert">
-                    	<div className="error-icon">
-                    		<div className="border-glyp">
-                    			<span className="glyphicon glyphicon-remove"></span>
-                    		</div>
-                    	</div>
-                    	{(function(){
-                           // return compData.description;
-                            if(navMessagesJson != undefined){
-                                message_args.unshift(navMessagesJson[errorCode]);
-                                var notification_message = _.apply(null, message_args);
-                                return notification_message;
-                               // return compData.description;
-                            }
-                           
-                            }
-                        )()}
-                    </div>
-                );  
-            else
-                return (
-                    <div className="notify" role="alert">
-                        <div className="success-icon">
-                            <div className="border-glyp">
-                                <span className="glyphicon glyphicon-ok"></span>
-                            </div>
-                        </div>
-                        {(function(){
-                            //return compData.description;
-                           if(navMessagesJson != undefined){
-                                message_args.unshift(navMessagesJson[errorCode]);
-                                var notification_message = _.apply(null, message_args);
-                                return notification_message;
-                                //return compData.description;
-                            }
-                           
-                            }
-                        )()}
-                    </div>
-                );  
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error"){
+            var appendClass1 = 'error-icon';
+            var appendClass2 = 'glyphicon-remove';
+        }else{
+            var appendClass1 = 'success-icon';
+            var appendClass2 = 'glyphicon-ok';
+        }
+        return (
+            <div className="notify-error" role="alert">
+            	<div className={appendClass1}>
+            		<div className="border-glyp">
+            			<span className={"glyphicon "+appendClass2}></span>
+             		</div>
+            	</div>
+            	{(function(){
+                   // return compData.description;
+                    if(navMessagesJson != undefined){
+                        message_args.unshift(navMessagesJson[errorCode]);
+                        console.log(message_args);
+                        var notification_message = _.apply(null, message_args);
+                        return notification_message;
+                       // return compData.description;
+                    }
+                   
+                    }
+                )()}
+            </div>
+        );  
+        
 
     }
 });

@@ -12,8 +12,8 @@ function getState(){
    return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
-      username : 'kerry',
-      password : 'gorapj'
+      username : '',
+      password : ''
   }
 }
 
@@ -22,7 +22,11 @@ var LoginPage = React.createClass({
   getInitialState: function(){
     return getState();
   }, 
-  handleLogin: function(e){    
+  handleLogin: function(e){   
+  if(this.refs.username.value === "" && this.refs.password.value === ""){
+      $('.errorNotify').css('display','block');
+  }
+  else {
     var data = {
         'data_type': 'auth',
         'data': {
@@ -33,6 +37,7 @@ var LoginPage = React.createClass({
       }
       console.log(data);
     CommonActions.login(data);  
+    }
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
@@ -54,6 +59,7 @@ var LoginPage = React.createClass({
       visible : function(e, keypressed, el){
         el.value = '';
       },
+      
       accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
@@ -80,7 +86,9 @@ var LoginPage = React.createClass({
   changeLanguage : function(){
     CommonActions.changeLanguage(this.refs.language.value);
   },
-
+  removeNotify:function(){
+       $('.errorNotify').css('display','none');
+      },
   render: function(){
     var d = new Date();
     var n = d.getFullYear();   
@@ -122,11 +130,18 @@ var LoginPage = React.createClass({
 
               <div className="form-group">
                 <label >{_(resourceConstants.USERNAME)}</label>
-                  <input type="text" className="form-control" id="username" placeholder="Enter Username" ref='username' valueLink={this.linkState('username')}  />
+                  <input type="text" className="form-control" id="username" placeholder="Enter Username" ref='username' valueLink={this.linkState('username')} onFocus={this.removeNotify} />
+                  <div className="errorNotify">
+                    **User Name field cannot be empty
+                  </div>
               </div>
+
               <div className="form-group">
                 <label >{_(resourceConstants.PASSWORD)}</label>
                   <input type="password" className="form-control" id="password" placeholder="Enter Password" ref='password' valueLink={this.linkState('password')} />
+                  <div className="errorNotify">
+                    **Password field cannot be empty
+                  </div>
               </div>
               <select className="selectLang" ref='language' onChange={this.changeLanguage}>
                   <option value="english">English</option>

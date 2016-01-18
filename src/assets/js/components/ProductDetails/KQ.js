@@ -16,7 +16,7 @@ var KQ = React.createClass({
             "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
         }
       }
-      CommonActions.kq_operation(data);
+      CommonActions.postDataToInterface(data);
     }
   },
   handleDecrement: function(event){
@@ -29,7 +29,7 @@ var KQ = React.createClass({
               "quantity_updated":parseInt(this.props.scanDetails.current_qty) - 1
           }
         }
-        CommonActions.kq_operation(data);
+        CommonActions.postDataToInterface(data);
       }
     }
   },

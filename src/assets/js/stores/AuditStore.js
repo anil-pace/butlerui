@@ -44,6 +44,10 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         return _NavData;
     },
 
+    getScanDetails: function() {
+        return _AuditData.scan_details;
+    },
+
     getServerNavData: function() {
         if (_AuditData.header_msge_list.length > 0) {
             _serverNavData = _AuditData.header_msge_list[0];
@@ -54,7 +58,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType,buttonStatus) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -66,39 +70,69 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         this.centerAlign = centerAlign;
         this.type = type;
         this.buttonType = buttonType;
+        this.buttonStatus = buttonStatus;
     },
 
     getBoxSerialData: function() {
         var data = {};
-        data["header"] = "Box Serial Numbers";
+        data["header"] = [];
         data["tableRows"] = [];
         var self = this;
+        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
         _AuditData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status != "close")
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", value.Scan_status == "open", "large", false, true, false, false)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true),
+                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+                ]);
             else
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false), 
-                    new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )", "complete", value.Scan_status == "open", "large", false, false, false, false)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false),
+                    new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true),
+                    new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true),
+                    new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+                ]);
         });
+
         _AuditData.Extra_box_list.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false),
-                                        new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " ) ", "extra", value.Scan_status == "open", "large", false, true, false, false)]);
+            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false),
+                new self.tableCol(value.Expected_qty, "extra", false, "large", true, false, false, false, true),
+                new self.tableCol(value.Actual_qty, "extra", false, "large", true, false, false, false, true),
+                new self.tableCol("0", "extra", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+            ]);
         });
+
         return data;
+
     },
 
     getCurrentBoxSerialData: function() {
         var data = {};
-        data["header"] = "SKU Box Serial Number";
+        data["header"] = [];
         data["tableRows"] = [];
         var self = this;
+        data["header"].push(new this.tableCol("Current Box Serial Numbers", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Expected", "header", false, "small", true, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", true, false, true, false, true));
+        data["header"].push(new this.tableCol("Finish", "header", false, "small", true, false, true, false, true));
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Finish", "enabled", false, "small", true, false, true, false, true)]);
         if (_AuditData.Current_box_details.length > 0) {
             _AuditData.Current_box_details.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish")]);
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true),
+                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish")
+                ]);
             });
         } else {
-            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)]);
+            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true),
+                new this.tableCol("0", "enabled", false, "large", true, false, false, true, true),
+                new this.tableCol("0", "enabled", false, "large", true, false, false, true, true),
+                new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)
+            ]);
         }
 
         return data;
@@ -111,9 +145,14 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getReconcileBoxSerialData: function() {
         var data = {};
-        data["header"] = "Box Serial Numbers";
+        data["header"] = [];
         data["tableRows"] = [];
         var self = this;
+        data["header"].push([new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false),
+            new this.tableCol("Expected", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Actual", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Finish", "header", false, "small", true, false, true, false, true)
+        ]);
         data["tableRows"].push([new this.tableCol("Box Serial", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status != "no_scan")
@@ -131,8 +170,13 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getReconcileLooseItemsData: function() {
         var data = {};
-        data["header"] = "Loose Items";
+        data["header"] = [];
         data["tableRows"] = [];
+        data["header"].push([new this.tableCol("Loose Items", "header", false, "small", false, true, true, false),
+            new this.tableCol("Expected", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Actual", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Finish", "header", false, "small", true, false, true, false, true)
+        ]);
         var self = this;
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Loose_sku_list.map(function(value, index) {
@@ -148,13 +192,15 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     getLooseItemsData: function() {
         var data = {};
         var disabledStatus;
-        if (_AuditData.Current_box_details.length > 0) {
-            disabledStatus = true;
-        }
-        data["header"] = "Loose Items";
+        //if (_AuditData.Current_box_details.length > 0) {
+            disabledStatus = false;
+        //}
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
         data["tableRows"] = [];
         var self = this;
-        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Loose_sku_list.map(function(value, index) {
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true), new self.tableCol(value.Actual_qty, "enabled", false, "large", true, false, false, disabledStatus, true)]);
         });
@@ -163,12 +209,13 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getItemDetailsData: function() {
         var data = {};
-        data["header"] = "Details";
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         var self = this;
         for (var key in _AuditData.product_info) {
             if (_AuditData.product_info.hasOwnProperty(key)) {
-               data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+                data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
             }
         }
         return data;
@@ -199,7 +246,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
     getScreenId: function() {
-            return _AuditData.screen_id; 
+        return _AuditData.screen_id;
     }
 
 

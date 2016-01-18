@@ -16,6 +16,7 @@ var Spinner = require("./Spinner/LoaderButler");
 var Reconcile = require("./Reconcile");
 var utils = require("../utils/utils.js");
 var ActionCreators = require('../actions/CommonActions');
+var KQ = require('./ProductDetails/KQ.js');
 
 
 function getStateData(){
@@ -32,7 +33,8 @@ function getStateData(){
            AuditReconcileLooseItemsData:AuditStore.getReconcileLooseItemsData(),
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
            AuditRackDetails:AuditStore.getRackDetails(),
-           AuditCancelScanStatus:AuditStore.getCancelScanStatus()
+           AuditCancelScanStatus:AuditStore.getCancelScanStatus(),
+           AuditScanDetails:AuditStore.getScanDetails()
 
     };
 }
@@ -97,16 +99,15 @@ var Audit = React.createClass({
               <div className='grid-container'>
                 <div className='main-container'>
                   <div className="audit-scan-left">
-                     <Rack rackData = {this.state.AuditRackDetails} type="small"/>
-                      {_boxSerial}
+                      <TabularData data = {this.state.AuditBoxSerialData}/>
+                      <TabularData data = {this.state.AuditLooseItemsData} />
                   </div>
                   <div className="audit-scan-middle">
-                    {_currentBox}
-                    {_looseItems}
+                   <Img />
+                   <TabularData data = {this.state.AuditItemDetailsData}/>
                   </div>
                   <div className="audit-scan-right">
-                    <Img />
-                   <TabularData data = {this.state.AuditItemDetailsData}/>
+                    <KQ scanDetails = {this.state.AuditScanDetails}/>
                    <div className = 'finish-scan'>
                     <Button1 disabled = {!this.state.AuditCurrentBoxSerialData.tableRows[1][0].disabled} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
                   </div>

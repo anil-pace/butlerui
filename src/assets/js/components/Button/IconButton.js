@@ -25,11 +25,19 @@ var IconButton = React.createClass({
         }
     },
     render: function() { 
-            if(this.props.type == "finish")
+            if(this.props.type == "finish" && this.props.status == true)
                 return (
                     <div className="success-icon" onClick={this.performAction.bind(this,this.props.module,this.props.action)}>
                         <div className="border-glyp">
-                            <span className="glyphicon glyphicon-ok"></span>
+                            <span className="glyphicon glyphicon-ok-circle"></span>
+                        </div>
+                    </div>
+                );
+            else if(this.props.type == "finish" && this.props.status == false)
+                return (
+                    <div className="success-icon disabled" >
+                        <div className="border-glyp">
+                            <span className="glyphicon glyphicon-ok-circle"></span>
                         </div>
                     </div>
                 );

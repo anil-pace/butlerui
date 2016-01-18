@@ -19,7 +19,7 @@ var TableRow = React.createClass({
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
             if((value.type != undefined && value.type=="button"))
-                comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} /></div>));
+                comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus}/></div>));
             else
     		  comp.push((<div className={classes} title={value.text}>{value.text}</div>));
     	});

@@ -33,7 +33,7 @@ var KQ = React.createClass({
       }
     }
   },
-  componentDidMount: function(){
+  componentDidMount: function(){    
     if(this.props.scanDetails.kq_allowed === true){
       var qty = this.props.scanDetails.current_qty;
       var itemUid = this.props.itemUid;
@@ -42,8 +42,12 @@ var KQ = React.createClass({
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
-            accepted: function(e, keypressed, el) {
+            initialFocus : true, 
+            visible: function(e, keypressed, el) {    
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+            },
+            accepted: function(e, keypressed, el) {              
               if (e.target.value === '' || e.target.value === '0') {
                 CommonActions.resetNumpadVal(parseInt(qty));
               } else{

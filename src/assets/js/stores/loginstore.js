@@ -70,6 +70,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   seatList : function(){ 
     return currentSeat;
+  },
+  getAuthToken : function(data){
+    utils.getAuthToken(data);
   }
 });
 
@@ -81,7 +84,7 @@ AppDispatcher.register(function(payload){
       getParameterByName('seat_name');
       break;
     case appConstants.LOGIN:
-      utils.postDataToWebsockets(action.data);
+      loginstore.getAuthToken(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.OPERATOR_SEAT: 

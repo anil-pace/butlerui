@@ -34,7 +34,6 @@ var LoginPage = React.createClass({
           }
       }
     utils.generateSessionId();
-    console.log(data);
     CommonActions.login(data);  
   }, 
   componentDidMount: function(){

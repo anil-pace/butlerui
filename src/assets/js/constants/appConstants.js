@@ -3,6 +3,8 @@ var appConstants = {
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
 	API : '/api',
+	AUTH : '/auth',
+	TOKEN : '/token',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
@@ -71,7 +73,7 @@ var appConstants = {
 	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",
 	DAMAGED_BARCODE:"Damaged Barcode",
 	OVERSIZED_ITEMS:"Oversized Items",
-	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins"
+	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
 
 };
 

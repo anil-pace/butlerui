@@ -12,6 +12,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         if ("WebSocket" in window) {
             ws.onopen = function() {
                 console.log("connected");
+                utils.checkSessionStorage();
             };
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
@@ -27,11 +28,27 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             alert("WebSocket NOT supported by your Browser!");
         }
     },
+    checkSessionStorage : function(){
+        var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
+        if(sessionData === null){  
+        }else{
+            var webSocketData = {
+                "auth_token" : sessionData.auth_token,
+                "seat_name" : sessionData.seat_name
+            };
+            utils.postDataToWebsockets(webSocketData); 
+        }
+    },
     postDataToWebsockets: function(data) {
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },
+    storeSession : function(data){
+        // Put the object into storage
+        sessionStorage.setItem('sessionData', JSON.stringify(data));
+    },
     getAuthToken : function(data){
+        sessionStorage.setItem('sessionData', null);
         var loginData ={
           "username" : data.data.username,
           "password" : data.data.password
@@ -49,8 +66,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             var webSocketData = {
                 "auth_token" : response.auth_token,
                 "seat_name" : data.data.seat_name
-            }
-            utils.postDataToWebsockets(data);
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(data); // utils.postDataToWebsockets(webSocketData)
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status);
             alert(textStatus);
@@ -59,6 +77,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     postDataToInterface: function(data, seat_name) {
+        var retrieved_token = sessionStorage.getItem('sessionData');
+ 
+            var authentication_token = JSON.parse(retrieved_token)["auth_token"];
+        
+        console.log(authentication_token)
         $.ajax({
             type: 'POST',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,
@@ -66,7 +89,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
-                'accept': 'application/json'
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
 

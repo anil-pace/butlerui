@@ -12,16 +12,16 @@ var flag = false;
 var currentSeat = [];
 
 function getParameterByName(name){
-    /*name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search); console.log(regex);
-        if(results === null){
-          results = decodeURIComponent(results[1].replace(/\+/g, " ")); 
-        }else{
-          results = '';
-        } console.log(results);*/
-     //results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); 
-    listPpsSeat(null);
+    var l = document.createElement("a");
+    l.href = window.location.href;
+    console.debug(l.hash);
+    var url_exist = window.location.href.split('=');
+    if(url_exist[1] == undefined){
+      listPpsSeat(null);
+    }else{
+      currentSeat.push(url_exist[1]);
+      loginstore.emit(CHANGE_EVENT);
+    }
 }
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
@@ -41,7 +41,7 @@ function listPpsSeat(seat){
         dataType : "json",
         beforeSend : xhrConfig 
         }).done(function(response) {
-          currentSeat.push(response.pps_seats);
+          currentSeat = response.pps_seats;
           loginstore.emit(CHANGE_EVENT); 
         }).fail(function(jqXhr) {
                      

@@ -36,7 +36,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 "auth_token" : sessionData.auth_token,
                 "seat_name" : sessionData.seat_name
             };
-            utils.postDataToWebsockets(webSocketData); 
+            //utils.postDataToWebsockets(webSocketData); 
         }
     },
     postDataToWebsockets: function(data) {

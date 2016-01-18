@@ -7,9 +7,13 @@ var KQ = React.createClass({
   _appendClassUp : '',
   _qtyComponent : null,
   virtualKeyboard : null,
-  handleIncrement: function(event){
+  handleIncrement: function(event){    
     if(this.props.scanDetails.kq_allowed === true){
-      var data  = {
+      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+          return false;          
+      }
+      else{
+        var data  = {
         "event_name":"quantity_update_from_gui",
         "event_data":{
             "item_uid":this.props.itemUid,
@@ -17,7 +21,8 @@ var KQ = React.createClass({
         }
       }
       CommonActions.postDataToInterface(data);
-    }
+      }      
+    }    
   },
   handleDecrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
@@ -77,18 +82,24 @@ var KQ = React.createClass({
     this.setState(getState());
   },
   checkKqAllowed : function(){
-    if(this.props.scanDetails.kq_allowed === false){
-      this._appendClassUp = 'topArrow disable';
-      this._appendClassDown = 'downArrow disable';
-    }else{
-      this._appendClassUp = 'topArrow enable';
-      if(this.props.scanDetails.current_qty == 1){
-        this._appendClassDown = 'downArrow disable';
-      }else{
-        this._appendClassDown = 'downArrow enable';
+    if(this.props.scanDetails.kq_allowed === true){
+      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable';          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+            if(this.props.scanDetails.current_qty == 1){
+              this._appendClassDown = 'downArrow disable';
+            }else{
+              this._appendClassDown = 'downArrow enable';
+            }
       }
     }
-    
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+    }    
   },
   handleTotalQty : function(){
     if(this.props.scanDetails.total_qty != 0 ){

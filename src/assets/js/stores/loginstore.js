@@ -11,7 +11,7 @@ var CHANGE_EVENT = 'change';
 var flag = false;
 var currentSeat = [];
 
-function getParameterByName(name){
+function getParameterByName(){
     var l = document.createElement("a");
     l.href = window.location.href;
     console.debug(l.hash);
@@ -81,7 +81,7 @@ AppDispatcher.register(function(payload){
   var action = payload.action;
   switch(action.actionType){
     case appConstants.LIST_SEATS:
-      getParameterByName('seat_name');
+      getParameterByName();
       break;
     case appConstants.LOGIN:
       loginstore.getAuthToken(action.data);

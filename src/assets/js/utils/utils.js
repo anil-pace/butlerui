@@ -50,7 +50,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 "auth_token" : response.auth_token,
                 "seat_name" : data.data.seat_name
             }
-            console.log(webSocketData);
             utils.postDataToWebsockets(data);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status);

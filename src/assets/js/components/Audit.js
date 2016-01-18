@@ -17,6 +17,7 @@ var Reconcile = require("./Reconcile");
 var utils = require("../utils/utils.js");
 var ActionCreators = require('../actions/CommonActions');
 var KQ = require('./ProductDetails/KQ.js');
+var CurrentSlot = require('./CurrentSlot');
 
 
 function getStateData(){
@@ -34,7 +35,8 @@ function getStateData(){
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
            AuditRackDetails:AuditStore.getRackDetails(),
            AuditCancelScanStatus:AuditStore.getCancelScanStatus(),
-           AuditScanDetails:AuditStore.getScanDetails()
+           AuditScanDetails:AuditStore.getScanDetails(),
+           AuditSlotDetails :AuditStore.getCurrentSlot()
 
     };
 }
@@ -97,6 +99,7 @@ var Audit = React.createClass({
           }
           this._component = (
               <div className='grid-container'>
+                <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 <div className='main-container'>
                   <div className="audit-scan-left">
                       <TabularData data = {this.state.AuditBoxSerialData}/>

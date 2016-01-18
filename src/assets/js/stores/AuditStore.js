@@ -58,7 +58,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType,buttonStatus) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -87,13 +87,13 @@ var AuditStore = assign({}, EventEmitter.prototype, {
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                     new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true),
-                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open")
                 ]);
             else
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false),
                     new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true),
                     new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true),
-                    new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+                    new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open")
                 ]);
         });
 
@@ -101,7 +101,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
             data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false),
                 new self.tableCol(value.Expected_qty, "extra", false, "large", true, false, false, false, true),
                 new self.tableCol(value.Actual_qty, "extra", false, "large", true, false, false, false, true),
-                new self.tableCol("0", "extra", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+                new self.tableCol("0", "extra", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open")
             ]);
         });
 
@@ -193,7 +193,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         var data = {};
         var disabledStatus;
         //if (_AuditData.Current_box_details.length > 0) {
-            disabledStatus = false;
+        disabledStatus = false;
         //}
         data["header"] = [];
         data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
@@ -213,11 +213,27 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         var self = this;
-        for (var key in _AuditData.product_info) {
-            if (_AuditData.product_info.hasOwnProperty(key)) {
-                data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+        if (_AuditData.product_info !=undefined && Object.keys(_AuditData.product_info).length > 0) {
+            for (var key in _AuditData.product_info) {
+                if (_AuditData.product_info.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+                }
             }
+        } else {
+            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
         }
+
         return data;
     },
 
@@ -247,6 +263,14 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getScreenId: function() {
         return _AuditData.screen_id;
+    },
+
+    getCurrentSlot : function(){        
+        if(_AuditData.hasOwnProperty('rack_details')){       
+            return _AuditData.rack_details.slot_barcodes;
+        }else{
+            return null;
+        }
     }
 
 

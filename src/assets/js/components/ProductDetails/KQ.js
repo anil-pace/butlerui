@@ -9,7 +9,7 @@ var KQ = React.createClass({
   virtualKeyboard : null,
   handleIncrement: function(event){    
     if(this.props.scanDetails.kq_allowed === true){
-      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+      if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0")){          
           return false;          
       }
       else{
@@ -83,7 +83,7 @@ var KQ = React.createClass({
   },
   checkKqAllowed : function(){
     if(this.props.scanDetails.kq_allowed === true){
-      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+      if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0") ){          
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
       }

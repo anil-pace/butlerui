@@ -13,7 +13,7 @@ case "$1" in
 	install -d butler_ui-$RELVSN/usr/local/bin/
 	install -d butler_ui-$RELVSN/etc/butler_ui
 	install -d butler_ui-$RELVSN/etc/init.d
-	cp -r ../dpkg_conf/butler-ui butler_ui-$RELVSN/etc/init.d/butler-ui
+	cp -r ../dpkg_conf/butler_ui butler_ui-$RELVSN/etc/init.d/butler_ui
 	mkdir butler_ui-$RELVSN/DEBIAN
 	cp ../dpkg_conf/butler_ui/control butler_ui-$RELVSN/DEBIAN/control
 	cp ../dpkg_conf/butler_ui/rules butler_ui-$RELVSN/DEBIAN/rules

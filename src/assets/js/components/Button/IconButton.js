@@ -1,8 +1,19 @@
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
+var AuditStore = require('../../stores/AuditStore');
 
 var IconButton = React.createClass({
+    showModal: function(data,type) {
+         ActionCreators.showModal({
+            data:data,
+            type:type
+         });
+         $('.modal').modal();
+        // alert("hiii");
+         //e.stopPropagation();
+         return false;
+     },
     performAction:function(module,action){
         var data = {
                     "event_name": "",
@@ -12,6 +23,12 @@ var IconButton = React.createClass({
             case appConstants.AUDIT:
                 switch(action){
                     case appConstants.FINISH_BOX:
+                         console.log("gggg");
+                         console.log(AuditStore.getCurrentBoxSerialData());
+                         if(AuditStore.getCurrentBoxSerialData()[0].Actual_qty > AuditStore.getCurrentBoxSerialData()[0].Expected_qty )
+                        this.showModal({
+                            "message":"Place extra " + (AuditStore.getCurrentBoxSerialData()[0].Actual_qty - AuditStore.getCurrentBoxSerialData()[0].Expected_qty) + " items in Exception area"
+                        },"message");
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "finish_box";
                         ActionCreators.postDataToInterface(data);

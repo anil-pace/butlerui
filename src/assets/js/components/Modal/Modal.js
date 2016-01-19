@@ -108,6 +108,11 @@ function loadComponent(modalType,modalData){
       
       title = "Associate tote with bin";
       break;
+    case "message":
+      component = [];
+      component.push((<div className="col-md-12 value">{modalData["message"]} </div>));
+      title = "Perform Action";
+    break;
     case "pick_checklist":
       component = [];
       footer = [];

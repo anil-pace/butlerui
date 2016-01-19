@@ -88,9 +88,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
-        var authentication_token = JSON.parse(retrieved_token)["auth_token"];
-        
-        console.log(authentication_token)
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         $.ajax({
             type: 'POST',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,

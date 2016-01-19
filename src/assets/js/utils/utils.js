@@ -11,6 +11,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     connectToWebSocket: function(data) {
         if ("WebSocket" in window) {
             ws.onopen = function() {
+                $("#username, #password").prop('disabled', false);
                 console.log("connected");
                 utils.checkSessionStorage();
             };
@@ -22,10 +23,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 CommonActions.setServerMessages();
             };
             ws.onclose = function() {
+                $("#username, #password").prop('disabled', true);
                 alert("Connection is closed...");
             };
         } else {
-            alert("WebSocket NOT supported by your Browser!");
+            alert("WebSocket NOT supported by your Browser!");            
         }
     },
     checkSessionStorage : function(){

@@ -9,7 +9,7 @@
         padding-left: 0.6em;
         padding-right: 0.6em;
         color: #1a252d;
-        min-width: 20%;
+        min-width: 15%;
         justify-content: center;
         white-space: nowrap;
         overflow: hidden;
@@ -53,10 +53,15 @@
         &.extra{
          background: @bin-staged-bck;
             color: white;   
+             border-left: 1px solid white;
         }
         .success-icon{
             color: green;
             cursor: pointer;
+            &.disabled{
+                opacity: 0.3;
+                cursor: none;
+            }
         }
         .edit-icon{
             color: @bin-staged-bck;

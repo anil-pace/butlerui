@@ -7,17 +7,22 @@ var KQ = React.createClass({
   _appendClassUp : '',
   _qtyComponent : null,
   virtualKeyboard : null,
-  handleIncrement: function(event){
+  handleIncrement: function(event){    
     if(this.props.scanDetails.kq_allowed === true){
-      var data  = {
+      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+          return false;          
+      }
+      else{
+        var data  = {
         "event_name":"quantity_update_from_gui",
         "event_data":{
             "item_uid":this.props.itemUid,
             "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
         }
       }
-      CommonActions.kq_operation(data);
-    }
+      CommonActions.postDataToInterface(data);
+      }      
+    }    
   },
   handleDecrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
@@ -29,11 +34,11 @@ var KQ = React.createClass({
               "quantity_updated":parseInt(this.props.scanDetails.current_qty) - 1
           }
         }
-        CommonActions.kq_operation(data);
+        CommonActions.postDataToInterface(data);
       }
     }
   },
-  componentDidMount: function(){
+  componentDidMount: function(){    
     if(this.props.scanDetails.kq_allowed === true){
       var qty = this.props.scanDetails.current_qty;
       var itemUid = this.props.itemUid;
@@ -42,8 +47,12 @@ var KQ = React.createClass({
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
-            accepted: function(e, keypressed, el) {
+            initialFocus : true, 
+            visible: function(e, keypressed, el) {    
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+            },
+            accepted: function(e, keypressed, el) {              
               if (e.target.value === '' || e.target.value === '0') {
                 CommonActions.resetNumpadVal(parseInt(qty));
               } else{
@@ -73,18 +82,24 @@ var KQ = React.createClass({
     this.setState(getState());
   },
   checkKqAllowed : function(){
-    if(this.props.scanDetails.kq_allowed === false){
-      this._appendClassUp = 'topArrow disable';
-      this._appendClassDown = 'downArrow disable';
-    }else{
-      this._appendClassUp = 'topArrow enable';
-      if(this.props.scanDetails.current_qty == 1){
-        this._appendClassDown = 'downArrow disable';
-      }else{
-        this._appendClassDown = 'downArrow enable';
+    if(this.props.scanDetails.kq_allowed === true){
+      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable';          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+            if(this.props.scanDetails.current_qty == 1){
+              this._appendClassDown = 'downArrow disable';
+            }else{
+              this._appendClassDown = 'downArrow enable';
+            }
       }
     }
-    
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+    }    
   },
   handleTotalQty : function(){
     if(this.props.scanDetails.total_qty != 0 ){

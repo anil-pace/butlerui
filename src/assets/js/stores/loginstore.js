@@ -11,10 +11,9 @@ var CHANGE_EVENT = 'change';
 var flag = false;
 var currentSeat = [];
 
-function getParameterByName(name){
+function getParameterByName(){
     var l = document.createElement("a");
     l.href = window.location.href;
-    console.debug(l.hash);
     var url_exist = window.location.href.split('=');
     if(url_exist[1] == undefined){
       listPpsSeat(null);
@@ -70,6 +69,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   seatList : function(){ 
     return currentSeat;
+  },
+  getAuthToken : function(data){
+    utils.getAuthToken(data);
   }
 });
 
@@ -78,10 +80,10 @@ AppDispatcher.register(function(payload){
   var action = payload.action;
   switch(action.actionType){
     case appConstants.LIST_SEATS:
-      getParameterByName('seat_name');
+      getParameterByName();
       break;
     case appConstants.LOGIN:
-      utils.postDataToWebsockets(action.data);
+      loginstore.getAuthToken(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.OPERATOR_SEAT: 

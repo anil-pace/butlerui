@@ -36653,6 +36653,7 @@ var Spinner = require("./Spinner/LoaderButler");
 var Reconcile = require("./Reconcile");
 var utils = require("../utils/utils.js");
 var ActionCreators = require('../actions/CommonActions');
+var KQ = require('./ProductDetails/KQ.js');
 
 
 function getStateData(){
@@ -36669,7 +36670,8 @@ function getStateData(){
            AuditReconcileLooseItemsData:AuditStore.getReconcileLooseItemsData(),
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
            AuditRackDetails:AuditStore.getRackDetails(),
-           AuditCancelScanStatus:AuditStore.getCancelScanStatus()
+           AuditCancelScanStatus:AuditStore.getCancelScanStatus(),
+           AuditScanDetails:AuditStore.getScanDetails()
 
     };
 }
@@ -36734,16 +36736,15 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
-                     React.createElement(Rack, {rackData: this.state.AuditRackDetails, type: "small"}), 
-                      _boxSerial
+                      React.createElement(TabularData, {data: this.state.AuditBoxSerialData}), 
+                      React.createElement(TabularData, {data: this.state.AuditLooseItemsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
-                    _currentBox, 
-                    _looseItems
+                   React.createElement(Img, null), 
+                   React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
-                    React.createElement(Img, null), 
-                   React.createElement(TabularData, {data: this.state.AuditItemDetailsData}), 
+                    React.createElement(KQ, {scanDetails: this.state.AuditScanDetails}), 
                    React.createElement("div", {className: "finish-scan"}, 
                     React.createElement(Button1, {disabled: !this.state.AuditCurrentBoxSerialData.tableRows[1][0].disabled, text: "Finish", module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
                   )
@@ -36811,7 +36812,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":279,"../stores/AuditStore":287,"../utils/utils.js":294,"./Button/Button":238,"./Button/Button.js":238,"./Header":245,"./Modal/Modal":247,"./Navigation/Navigation.react":251,"./Notification/Notification":253,"./PrdtDetails/ProductImage.js":258,"./Rack/MsuRack.js":266,"./Reconcile":270,"./Spinner/LoaderButler":271,"./SystemIdle":274,"./TabularData":277,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":279,"../stores/AuditStore":287,"../utils/utils.js":294,"./Button/Button":238,"./Button/Button.js":238,"./Header":245,"./Modal/Modal":247,"./Navigation/Navigation.react":251,"./Notification/Notification":253,"./PrdtDetails/ProductImage.js":258,"./ProductDetails/KQ.js":260,"./Rack/MsuRack.js":266,"./Reconcile":270,"./Spinner/LoaderButler":271,"./SystemIdle":274,"./TabularData":277,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37125,12 +37126,9 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
-                                console.log(JSON.stringify(checkList));
                                 if (checklist_index != "all") {
                                     checkList.checklist_data[checklist_index - 1].map(function(value, index) {
                                         var keyvalue = Object.keys(value);
-                                        console.log(keyvalue[0]);
-                                        console.log(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]]);
                                         checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
                                     });
                                 } else {
@@ -37249,11 +37247,19 @@ var IconButton = React.createClass({displayName: "IconButton",
         }
     },
     render: function() { 
-            if(this.props.type == "finish")
+            if(this.props.type == "finish" && this.props.status == true)
                 return (
                     React.createElement("div", {className: "success-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
                         React.createElement("div", {className: "border-glyp"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-ok"})
+                            React.createElement("span", {className: "glyphicon glyphicon-ok-circle"})
+                        )
+                    )
+                );
+            else if(this.props.type == "finish" && this.props.status == false)
+                return (
+                    React.createElement("div", {className: "success-icon disabled"}, 
+                        React.createElement("div", {className: "border-glyp"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-ok-circle"})
                         )
                     )
                 );
@@ -37402,7 +37408,7 @@ var Header = React.createClass({displayName: "Header",
             layout: 'custom',
             customLayout: {
               'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -37480,8 +37486,8 @@ function getState(){
    return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
-      username : '',
-      password : ''
+      username : 'kerry',
+      password : 'gorapj'
   }
 }
 
@@ -37501,7 +37507,6 @@ var LoginPage = React.createClass({displayName: "LoginPage",
           }
       }
     utils.generateSessionId();
-    console.log(data);
     CommonActions.login(data);  
   }, 
   componentDidMount: function(){
@@ -37513,7 +37518,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       layout: 'custom',
       customLayout: {
         'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -37558,17 +37563,23 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var d = new Date();
     var n = d.getFullYear();   
     var seatData;
-      var display = this.state.flag === true ? 'block' : 'none';
-      if(this.state.seatList.length > 0){ 
-          seatData = this.state.seatList[0].map(function(data, index){ 
+    var display = this.state.flag === true ? 'block' : 'none';
+      if(this.state.seatList.length > 0){
+          seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                return (
                   React.createElement("option", {key: 'pps' + index, value: data.seat_name}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
-            }else{console.log(data);
-                 return( React.createElement("option", {key: index, value: data}, data))
+            }else{
+              var parseSeatID = data.split('_');
+              seatName = parseSeatID[0] +' '+parseSeatID[1];
+              return (
+                React.createElement("option", {key: 'pps' + index, value: data}, "PPS ", seatName)
+              )
             }
           });
+      }else{
+
       }
       if(this.state.flag === false){
         return (
@@ -37662,7 +37673,7 @@ function attachKeyboard(id){
             layout: 'custom',
             customLayout: {
             'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
-            'shift': ['1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+            'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
             },
             css: {
               container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -37680,6 +37691,18 @@ function attachKeyboard(id){
    $('#'+id).data('keyboard').reveal(); 
 }
 
+function attachNumpad(id){ 
+     virtualNumpad = $('#'+id).keyboard({
+            layout: 'custom',
+            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
+            reposition   : true,
+            alwaysOpen   : false,
+            initialFocus : true,
+            accepted: function(e, keypressed, el) {
+            }
+      });
+   $('#'+id).data('keyboard').reveal(); 
+}
 function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
@@ -37742,19 +37765,23 @@ function loadComponent(modalType,modalData){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
+                    if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer"){
+                      var inputBox = (React.createElement("input", {type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                    }else{
+                      var inputBox = (React.createElement("input", {type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                    }
                       return (React.createElement("div", null, 
                                   React.createElement("div", {className: "row dataCaptureHead removeBorder"}, 
                                       keyvalue
                                   ), 
                                   React.createElement("div", {className: "row dataCaptureInput removeBorder"}, 
-                                      React.createElement("input", {type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)})
+                                      inputBox
                                   )
                               )
                         );
                   })
               return (
                   React.createElement("div", {className: "item-input"}, 
-                    React.createElement("div", {className: "heading"}, "Item " + (index+1)), 
                   d
                   )
                 );
@@ -37858,7 +37885,7 @@ var React = require('react');
 
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
-       // var d = this.props.serverNavData;
+        var server_message = this.props.serverNavData.description;
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
@@ -37878,11 +37905,14 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                     
             		React.createElement("div", {className: "action"}, 
             		(function(){
-                         //return d.description;
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
                             var header_message = _.apply(null, message_args);
                             return header_message;
+                            }
                         }
                        
                         }
@@ -37953,48 +37983,38 @@ var Notification = React.createClass({displayName: "Notification",
         var compData = this.props.notification;
         var message_args  = this.props.notification.details.slice(0);
         var errorCode = this.props.notification.code;
-            if(this.props.notification.level!=undefined && this.props.notification.level == "error")
-                return (
-                    React.createElement("div", {className: "notify-error", role: "alert"}, 
-                    	React.createElement("div", {className: "error-icon"}, 
-                    		React.createElement("div", {className: "border-glyp"}, 
-                    			React.createElement("span", {className: "glyphicon glyphicon-remove"})
-                    		)
-                    	), 
-                    	(function(){
-                           // return compData.description;
-                            if(navMessagesJson != undefined){
-                                message_args.unshift(navMessagesJson[errorCode]);
-                                var notification_message = _.apply(null, message_args);
-                                return notification_message;
-                               // return compData.description;
-                            }
-                           
-                            }
-                        )()
-                    )
-                );  
-            else
-                return (
-                    React.createElement("div", {className: "notify", role: "alert"}, 
-                        React.createElement("div", {className: "success-icon"}, 
-                            React.createElement("div", {className: "border-glyp"}, 
-                                React.createElement("span", {className: "glyphicon glyphicon-ok"})
-                            )
-                        ), 
-                        (function(){
-                            //return compData.description;
-                           if(navMessagesJson != undefined){
-                                message_args.unshift(navMessagesJson[errorCode]);
-                                var notification_message = _.apply(null, message_args);
-                                return notification_message;
-                                //return compData.description;
-                            }
-                           
-                            }
-                        )()
-                    )
-                );  
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error"){
+            var appendClass = 'notify-error';
+            var appendClass1 = 'error-icon';
+            var appendClass2 = 'glyphicon-remove';
+        }else{
+            var appendClass = 'notify';
+            var appendClass1 = 'success-icon';
+            var appendClass2 = 'glyphicon-ok';
+        }
+        return (
+            React.createElement("div", {className: appendClass, role: "alert"}, 
+            	React.createElement("div", {className: appendClass1}, 
+            		React.createElement("div", {className: "border-glyp"}, 
+            			React.createElement("span", {className: "glyphicon "+appendClass2})
+             		)
+            	), 
+            	(function(){
+                    if(navMessagesJson != undefined){
+                        message_args.unshift(navMessagesJson[errorCode]);
+                        if(message_args[0] == undefined){
+                            return compData.description;  
+                        }else{
+                            var notification_message = _.apply(null, message_args);
+                            return notification_message;
+                        }
+                    }
+                   
+                    }
+                )()
+            )
+        );  
+        
 
     }
 });
@@ -38496,7 +38516,7 @@ var KQ = React.createClass({displayName: "KQ",
             "quantity_updated":parseInt(this.props.scanDetails.current_qty) + 1
         }
       }
-      CommonActions.kq_operation(data);
+      CommonActions.postDataToInterface(data);
     }
   },
   handleDecrement: function(event){
@@ -38509,11 +38529,11 @@ var KQ = React.createClass({displayName: "KQ",
               "quantity_updated":parseInt(this.props.scanDetails.current_qty) - 1
           }
         }
-        CommonActions.kq_operation(data);
+        CommonActions.postDataToInterface(data);
       }
     }
   },
-  componentDidMount: function(){
+  componentDidMount: function(){    
     if(this.props.scanDetails.kq_allowed === true){
       var qty = this.props.scanDetails.current_qty;
       var itemUid = this.props.itemUid;
@@ -38522,8 +38542,12 @@ var KQ = React.createClass({displayName: "KQ",
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
-            accepted: function(e, keypressed, el) {
+            initialFocus : true, 
+            visible: function(e, keypressed, el) {    
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+            },
+            accepted: function(e, keypressed, el) {              
               if (e.target.value === '' || e.target.value === '0') {
                 CommonActions.resetNumpadVal(parseInt(qty));
               } else{
@@ -39358,13 +39382,38 @@ module.exports = SystemIdle;
 
 },{"../constants/resourceConstants":281,"./Header":245,"react":230}],275:[function(require,module,exports){
 var React = require('react');
+var IconButton = require('./Button/IconButton');
+var appConstants = require('../constants/appConstants');
 
 var TableHeader = React.createClass({displayName: "TableHeader", 
-    
+	_component:[],
+    getComponent:function(data){
+    	var comp = [];
+    	data.map(function(value,index){
+    		var classes = "table-col ";
+    		var border = value.border == true ? classes = classes + "border-left " : "";
+    		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
+    		var selected = value.selected == true ? classes = classes + "selected ":"";
+    		var large = value.size == "large" ? classes = classes + "large ":classes = classes + "small ";
+    		var bold = value.bold == true ? classes = classes + "bold ":"";
+    		var disabled = value.disabled == true ? classes = classes + "disabled ":"";
+    		var center = value.centerAlign == true ? classes = classes + "center-align ":"";
+            var complete = value.status == "complete" ? classes = classes + "complete ":"";
+            var missing = value.status == "missing" ? classes = classes + "missing ":"";
+            var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
+            if((value.type != undefined && value.type=="button"))
+                comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX}))));
+            else
+    		  comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
+    	});
+    	this._component = comp;
+    },
     render: function() {
+    	console.log(this.props.data);
+    	this.getComponent(this.props.data);
         return (
             React.createElement("div", {className: "table-header"}, 
-               this.props.data
+               this._component
       		)
         );
     },
@@ -39372,7 +39421,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"react":230}],276:[function(require,module,exports){
+},{"../constants/appConstants":279,"./Button/IconButton":239,"react":230}],276:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -39394,7 +39443,7 @@ var TableRow = React.createClass({displayName: "TableRow",
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
             if((value.type != undefined && value.type=="button"))
-                comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX}))));
+                comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX, status: value.buttonStatus}))));
             else
     		  comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
     	});
@@ -39575,6 +39624,8 @@ var appConstants = {
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
 	API : '/api',
+	AUTH : '/auth',
+	TOKEN : '/token',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
@@ -39643,7 +39694,7 @@ var appConstants = {
 	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",
 	DAMAGED_BARCODE:"Damaged Barcode",
 	OVERSIZED_ITEMS:"Oversized Items",
-	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins"
+	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
 
 };
 
@@ -39784,7 +39835,9 @@ var serverMessages = {
     "PtB.W.005" : "PpsBin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
+    "PkF.E.011" : "Item Scan successfull",
     "PkF.E.013" : "Scan items and place in Bin {0}",
+    "PkF.E.014" : "Press PPTL for Bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
@@ -39882,6 +39935,10 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         return _NavData;
     },
 
+    getScanDetails: function() {
+        return _AuditData.scan_details;
+    },
+
     getServerNavData: function() {
         if (_AuditData.header_msge_list.length > 0) {
             _serverNavData = _AuditData.header_msge_list[0];
@@ -39892,7 +39949,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType,buttonStatus) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -39904,39 +39961,69 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         this.centerAlign = centerAlign;
         this.type = type;
         this.buttonType = buttonType;
+        this.buttonStatus = buttonStatus;
     },
 
     getBoxSerialData: function() {
         var data = {};
-        data["header"] = "Box Serial Numbers";
+        data["header"] = [];
         data["tableRows"] = [];
         var self = this;
+        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
         _AuditData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status != "close")
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", value.Scan_status == "open", "large", false, true, false, false)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true),
+                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+                ]);
             else
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", value.Scan_status == "open", "large", false, true, false, false), 
-                    new self.tableCol("( " + value.Actual_qty + "/" + value.Expected_qty + " )", "complete", value.Scan_status == "open", "large", false, false, false, false)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false),
+                    new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true),
+                    new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true),
+                    new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+                ]);
         });
+
         _AuditData.Extra_box_list.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", value.Scan_status == "open", "large", false, true, false, false),
-                                        new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " ) ", "extra", value.Scan_status == "open", "large", false, true, false, false)]);
+            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false),
+                new self.tableCol(value.Expected_qty, "extra", false, "large", true, false, false, false, true),
+                new self.tableCol(value.Actual_qty, "extra", false, "large", true, false, false, false, true),
+                new self.tableCol("0", "extra", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
+            ]);
         });
+
         return data;
+
     },
 
     getCurrentBoxSerialData: function() {
         var data = {};
-        data["header"] = "SKU Box Serial Number";
+        data["header"] = [];
         data["tableRows"] = [];
         var self = this;
+        data["header"].push(new this.tableCol("Current Box Serial Numbers", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Expected", "header", false, "small", true, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", true, false, true, false, true));
+        data["header"].push(new this.tableCol("Finish", "header", false, "small", true, false, true, false, true));
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Finish", "enabled", false, "small", true, false, true, false, true)]);
         if (_AuditData.Current_box_details.length > 0) {
             _AuditData.Current_box_details.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true), new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish")]);
+                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true),
+                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish")
+                ]);
             });
         } else {
-            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("0", "enabled", false, "large", true, false, false, true, true), new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)]);
+            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true),
+                new this.tableCol("0", "enabled", false, "large", true, false, false, true, true),
+                new this.tableCol("0", "enabled", false, "large", true, false, false, true, true),
+                new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)
+            ]);
         }
 
         return data;
@@ -39949,9 +40036,14 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getReconcileBoxSerialData: function() {
         var data = {};
-        data["header"] = "Box Serial Numbers";
+        data["header"] = [];
         data["tableRows"] = [];
         var self = this;
+        data["header"].push([new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false),
+            new this.tableCol("Expected", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Actual", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Finish", "header", false, "small", true, false, true, false, true)
+        ]);
         data["tableRows"].push([new this.tableCol("Box Serial", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status != "no_scan")
@@ -39969,8 +40061,13 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getReconcileLooseItemsData: function() {
         var data = {};
-        data["header"] = "Loose Items";
+        data["header"] = [];
         data["tableRows"] = [];
+        data["header"].push([new this.tableCol("Loose Items", "header", false, "small", false, true, true, false),
+            new this.tableCol("Expected", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Actual", "header", false, "small", true, false, true, false, true),
+            new this.tableCol("Finish", "header", false, "small", true, false, true, false, true)
+        ]);
         var self = this;
         data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Loose_sku_list.map(function(value, index) {
@@ -39986,13 +40083,15 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     getLooseItemsData: function() {
         var data = {};
         var disabledStatus;
-        if (_AuditData.Current_box_details.length > 0) {
-            disabledStatus = true;
-        }
-        data["header"] = "Loose Items";
+        //if (_AuditData.Current_box_details.length > 0) {
+            disabledStatus = false;
+        //}
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
         data["tableRows"] = [];
         var self = this;
-        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true)]);
         _AuditData.Loose_sku_list.map(function(value, index) {
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true), new self.tableCol(value.Actual_qty, "enabled", false, "large", true, false, false, disabledStatus, true)]);
         });
@@ -40001,12 +40100,13 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getItemDetailsData: function() {
         var data = {};
-        data["header"] = "Details";
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         var self = this;
         for (var key in _AuditData.product_info) {
             if (_AuditData.product_info.hasOwnProperty(key)) {
-               data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+                data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
             }
         }
         return data;
@@ -40037,7 +40137,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
     getScreenId: function() {
-            return _AuditData.screen_id; 
+        return _AuditData.screen_id;
     }
 
 
@@ -40733,17 +40833,17 @@ var CHANGE_EVENT = 'change';
 var flag = false;
 var currentSeat = [];
 
-function getParameterByName(name){
-    /*name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search); console.log(regex);
-        if(results === null){
-          results = decodeURIComponent(results[1].replace(/\+/g, " ")); 
-        }else{
-          results = '';
-        } console.log(results);*/
-     //results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); 
-    listPpsSeat(null);
+function getParameterByName(){
+    var l = document.createElement("a");
+    l.href = window.location.href;
+    console.debug(l.hash);
+    var url_exist = window.location.href.split('=');
+    if(url_exist[1] == undefined){
+      listPpsSeat(null);
+    }else{
+      currentSeat.push(url_exist[1]);
+      loginstore.emit(CHANGE_EVENT);
+    }
 }
 var retrieved_token = sessionStorage.getItem('store_data');
 if(retrieved_token != null){
@@ -40763,7 +40863,7 @@ function listPpsSeat(seat){
         dataType : "json",
         beforeSend : xhrConfig 
         }).done(function(response) {
-          currentSeat.push(response.pps_seats);
+          currentSeat = response.pps_seats;
           loginstore.emit(CHANGE_EVENT); 
         }).fail(function(jqXhr) {
                      
@@ -40792,6 +40892,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   seatList : function(){ 
     return currentSeat;
+  },
+  getAuthToken : function(data){
+    utils.getAuthToken(data);
   }
 });
 
@@ -40800,10 +40903,10 @@ AppDispatcher.register(function(payload){
   var action = payload.action;
   switch(action.actionType){
     case appConstants.LIST_SEATS:
-      getParameterByName('seat_name');
+      getParameterByName();
       break;
     case appConstants.LOGIN:
-      utils.postDataToWebsockets(action.data);
+      loginstore.getAuthToken(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.OPERATOR_SEAT: 
@@ -41008,9 +41111,34 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },
+    getAuthToken : function(data){
+        var loginData ={
+          "username" : data.data.username,
+          "password" : data.data.password
+        }
+        $.ajax({
+            type: 'POST',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
+            data: JSON.stringify(loginData),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            }
+        }).done(function(response) {
+            var webSocketData = {
+                "auth_token" : response.auth_token,
+                "seat_name" : data.data.seat_name
+            }
+            utils.postDataToWebsockets(data);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status);
+            alert(textStatus);
+            alert(errorThrown);
+        });
+       
+    },
     postDataToInterface: function(data, seat_name) {
-        console.log(data);
-        console.log(seat_name);
         $.ajax({
             type: 'POST',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,

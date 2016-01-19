@@ -47,55 +47,7 @@
         }
     }
 
-    .kq-wrapper {
-        a {
-            flex:1.5 0 0;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            border: 1px solid @kq-border-color;
-            font-size:@font-size-body-medium;
-            &:hover, &:focus{
-                text-decoration:none;
-            }
-            &.enable{
-                color:@btn-default-bck;
-            }
-            &.disable{
-                color: @kq-arrow-disabled;
-            }
-        }
-        #textbox{
-            flex:4 0 0;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            border-left: 1px solid @kq-border-color;
-            border-right: 1px solid @kq-border-color;
-            font-size: @font-size-body-kq;            
-            #keyboard {
-                background: #fff;
-                border: none;  
-                color:@kq-number;
-                width:100%;
-                border-radius:0;
-                padding:0;
-                text-align:center;
-
-                &.current-quantity{
-                    text-align:right;
-                    width:40%;
-                }
-            }
-            .separator{
-                width:10%;
-            }    
-            .total-quantity{
-                width:40%;
-            }         
-        }        
-        box-shadow: 0 7px 7px -3px @kq-box-shadow;
-    }
+    
 
     .product-details-wrapper, .kq-wrapper {
         flex:1 0 0;
@@ -175,3 +127,56 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
     }
 }
 
+.kq-wrapper {
+    display: flex;
+    flex-flow:column;
+    flex-grow:1;
+    flex-basis:0;
+        a {
+            flex:1.5 0 0;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border: 1px solid @kq-border-color;
+            font-size:@font-size-body-medium;
+            &:hover, &:focus{
+                text-decoration:none;
+            }
+            &.enable{
+                color:@btn-default-bck;
+            }
+            &.disable{
+                color: @kq-arrow-disabled;
+            }
+        }
+        #textbox{
+            flex:4 0 0;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border-left: 1px solid @kq-border-color;
+            border-right: 1px solid @kq-border-color;
+            font-size: @font-size-body-kq;            
+            #keyboard {
+                background: #fff;
+                border: none;  
+                color:@kq-number;
+                width:100%;
+                border-radius:0;
+                padding:0;
+                text-align:center;
+
+                &.current-quantity{
+                    text-align:right;
+                    width:40%;
+                }
+            }
+            .separator{
+                width:10%;
+            }    
+            .total-quantity{
+                width:40%;
+            }         
+        }        
+        box-shadow: 0 7px 7px -3px @kq-box-shadow;
+    }

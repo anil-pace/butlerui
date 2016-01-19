@@ -37486,8 +37486,8 @@ function getState(){
    return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
-      username : 'kerry',
-      password : 'gorapj'
+      username : '',
+      password : ''
   }
 }
 
@@ -37617,7 +37617,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   React.createElement("option", {value: "english"}, "English"), 
                   React.createElement("option", {value: "chinese"}, "Chinese")
               ), 
-              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", onClick: this.handleLogin, value: "Login"})
+              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
           )
           )
                 )
@@ -38507,9 +38507,13 @@ var KQ = React.createClass({displayName: "KQ",
   _appendClassUp : '',
   _qtyComponent : null,
   virtualKeyboard : null,
-  handleIncrement: function(event){
+  handleIncrement: function(event){    
     if(this.props.scanDetails.kq_allowed === true){
-      var data  = {
+      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+          return false;          
+      }
+      else{
+        var data  = {
         "event_name":"quantity_update_from_gui",
         "event_data":{
             "item_uid":this.props.itemUid,
@@ -38517,7 +38521,8 @@ var KQ = React.createClass({displayName: "KQ",
         }
       }
       CommonActions.postDataToInterface(data);
-    }
+      }      
+    }    
   },
   handleDecrement: function(event){
     if(this.props.scanDetails.kq_allowed === true){
@@ -38577,18 +38582,24 @@ var KQ = React.createClass({displayName: "KQ",
     this.setState(getState());
   },
   checkKqAllowed : function(){
-    if(this.props.scanDetails.kq_allowed === false){
-      this._appendClassUp = 'topArrow disable';
-      this._appendClassDown = 'downArrow disable';
-    }else{
-      this._appendClassUp = 'topArrow enable';
-      if(this.props.scanDetails.current_qty == 1){
-        this._appendClassDown = 'downArrow disable';
-      }else{
-        this._appendClassDown = 'downArrow enable';
+    if(this.props.scanDetails.kq_allowed === true){
+      if(this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty){          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable';          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+            if(this.props.scanDetails.current_qty == 1){
+              this._appendClassDown = 'downArrow disable';
+            }else{
+              this._appendClassDown = 'downArrow enable';
+            }
       }
     }
-    
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+    }    
   },
   handleTotalQty : function(){
     if(this.props.scanDetails.total_qty != 0 ){
@@ -39702,8 +39713,8 @@ module.exports = appConstants;
 
 },{}],280:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "http://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "https://localhost:5000"
 };
 
 module.exports = configConstants;
@@ -40836,7 +40847,6 @@ var currentSeat = [];
 function getParameterByName(){
     var l = document.createElement("a");
     l.href = window.location.href;
-    console.debug(l.hash);
     var url_exist = window.location.href.split('=');
     if(url_exist[1] == undefined){
       listPpsSeat(null);
@@ -41092,6 +41102,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         if ("WebSocket" in window) {
             ws.onopen = function() {
                 console.log("connected");
+                utils.checkSessionStorage();
             };
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
@@ -41107,11 +41118,27 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             alert("WebSocket NOT supported by your Browser!");
         }
     },
+    checkSessionStorage : function(){
+        var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
+        if(sessionData === null){  
+        }else{
+            var webSocketData = {
+                "auth_token" : sessionData.auth_token,
+                "seat_name" : sessionData.seat_name
+            };
+            //utils.postDataToWebsockets(webSocketData); 
+        }
+    },
     postDataToWebsockets: function(data) {
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },
+    storeSession : function(data){
+        // Put the object into storage
+        sessionStorage.setItem('sessionData', JSON.stringify(data));
+    },
     getAuthToken : function(data){
+        sessionStorage.setItem('sessionData', null);
         var loginData ={
           "username" : data.data.username,
           "password" : data.data.password
@@ -41129,8 +41156,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             var webSocketData = {
                 "auth_token" : response.auth_token,
                 "seat_name" : data.data.seat_name
-            }
-            utils.postDataToWebsockets(data);
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(data); // utils.postDataToWebsockets(webSocketData)
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status);
             alert(textStatus);
@@ -41139,6 +41167,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     postDataToInterface: function(data, seat_name) {
+        var retrieved_token = sessionStorage.getItem('sessionData');
+ 
+            var authentication_token = JSON.parse(retrieved_token)["auth_token"];
+        
+        console.log(authentication_token)
         $.ajax({
             type: 'POST',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,
@@ -41146,7 +41179,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
-                'accept': 'application/json'
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
 

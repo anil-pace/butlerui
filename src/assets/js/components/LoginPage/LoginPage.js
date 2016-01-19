@@ -13,8 +13,8 @@ function getState(){
    return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
-      username : 'kerry',
-      password : 'gorapj'
+      username : '',
+      password : ''
   }
 }
 
@@ -144,7 +144,7 @@ var LoginPage = React.createClass({
                   <option value="english">English</option>
                   <option value="chinese">Chinese</option>
               </select>
-              <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" onClick={this.handleLogin} value="Login" />
+              <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value="Login" />
           </form>
           </div>
                 </div>

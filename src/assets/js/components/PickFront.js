@@ -68,7 +68,8 @@ var PickFront = React.createClass({
   showModal:function(data,index){
     var data ={
       'checklist_data' : data,
-      "checklist_index" : index
+      "checklist_index" : index,
+      "product_details" : this.state.PickFrontProductDetails
     };
     if(this.state.PickFrontChecklistOverlayStatus === true ){
     setTimeout((function(){CommonActions.showModal({

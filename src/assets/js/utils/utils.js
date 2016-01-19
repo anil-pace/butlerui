@@ -24,7 +24,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             };
             ws.onclose = function() {
                 alert("Connection is closed...");
-                setTimeout(utils.connectToWebSocket, 10000);
+                setTimeout(utils.connectToWebSocket, 1000);
             };
         } else {
             alert("WebSocket NOT supported by your Browser!");
@@ -35,13 +35,16 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         if(sessionData === null){  
         }else{
             var webSocketData = {
-                "auth_token" : sessionData.auth_token,
-                "seat_name" : sessionData.seat_name
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : sessionData.data["auth-token"],
+                    "seat_name" : sessionData.data.seat_name
+                }
             };
-            //utils.postDataToWebsockets(webSocketData); 
+            utils.postDataToWebsockets(webSocketData); 
         }
     },
-    postDataToWebsockets: function(data) {
+    postDataToWebsockets: function(data) { 
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },
@@ -66,11 +69,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }).done(function(response) {
             var webSocketData = {
-                "auth_token" : response.auth_token,
-                "seat_name" : data.data.seat_name
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : response.auth_token,
+                    "seat_name" : data.data.seat_name
+                }
             };
             utils.storeSession(webSocketData);
-            utils.postDataToWebsockets(data); // utils.postDataToWebsockets(webSocketData)
+            utils.postDataToWebsockets(webSocketData);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status);
             alert(textStatus);

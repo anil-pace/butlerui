@@ -8,7 +8,7 @@ var navConfig = require('../config/navConfig');
 var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
-var _AuditData, _NavData, _NotificationData, modalContent, _serverNavData;
+var _AuditData, _NavData, _NotificationData, modalContent, _serverNavData, _finishAuditFlag = true;
 
 
 var AuditStore = assign({}, EventEmitter.prototype, {
@@ -45,7 +45,17 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
     getScanDetails: function() {
-        return _AuditData.scan_details;
+        var data = {
+            "scan_details": {
+                "current_qty": _AuditData.Current_box_details.length > 0 ? _AuditData.Current_box_details[0]["Actual_qty"] : "0",
+                "total_qty": "0",
+                "kq_allowed": _AuditData["enable_kq"] != undefined ? _AuditData["enable_kq"] : false
+            }
+        };
+        if (_AuditData.scan_details != undefined)
+            return _AuditData.scan_details;
+        else
+            return data.scan_details;
     },
 
     getServerNavData: function() {
@@ -58,7 +68,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType,buttonStatus) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -73,36 +83,65 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         this.buttonStatus = buttonStatus;
     },
 
+    getModalStatus:function(){
+        var data = {};
+        data["showModal"] = "";
+        data["message"] = "";
+        if(_AuditData.Current_box_details.length >0 && _AuditData.Current_box_details[0].Box_serial == null && (_AuditData.Current_box_details[0].Actual_qty > _AuditData.Current_box_details[0].Expected_qty)){
+            return {
+                "showModal":true,
+                "message":"Place extra " + (_AuditData.Current_box_details[0].Actual_qty - _AuditData.Current_box_details[0].Expected_qty) + " items in Exception area ."
+            }
+        }else
+            return data;
+    },
+
     getBoxSerialData: function() {
         var data = {};
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
         data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
+        _finishAuditFlag = true;
+         var d = [];
         _AuditData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "close")
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true),
-                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
-                ]);
-            else
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false),
-                    new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true),
-                    new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true),
-                    new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
-                ]);
+            d = [];
+            if (value.Scan_status != "close") {
+                d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
+                if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
+                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+                data["tableRows"].push(d);
+            } else {
+                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+                if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+                data["tableRows"].push(d);
+            }
+
+            if (value.Scan_status == "open") {
+                _finishAuditFlag = false;
+            }
         });
 
         _AuditData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false),
-                new self.tableCol(value.Expected_qty, "extra", false, "large", true, false, false, false, true),
-                new self.tableCol(value.Actual_qty, "extra", false, "large", true, false, false, false, true),
-                new self.tableCol("0", "extra", false, "large", true, false, false, false, true, "button", "finish",value.Scan_status == "open")
-            ]);
+            d = [];
+            d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
+            if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
+            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+            data["tableRows"].push(d);
+            if (value.Scan_status == "open") {
+                _finishAuditFlag = false;
+            }
         });
 
         return data;
@@ -110,32 +149,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     },
 
     getCurrentBoxSerialData: function() {
-        var data = {};
-        data["header"] = [];
-        data["tableRows"] = [];
-        var self = this;
-        data["header"].push(new this.tableCol("Current Box Serial Numbers", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Expected", "header", false, "small", true, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", true, false, true, false, true));
-        data["header"].push(new this.tableCol("Finish", "header", false, "small", true, false, true, false, true));
-        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Finish", "enabled", false, "small", true, false, true, false, true)]);
-        if (_AuditData.Current_box_details.length > 0) {
-            _AuditData.Current_box_details.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(value.Actual_qty, "enabled", true, "large", true, false, false, false, true),
-                    new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish")
-                ]);
-            });
-        } else {
-            data["tableRows"].push([new this.tableCol("No Box selected", "enabled", false, "large", false, true, false, true),
-                new this.tableCol("0", "enabled", false, "large", true, false, false, true, true),
-                new this.tableCol("0", "enabled", false, "large", true, false, false, true, true),
-                new this.tableCol("--", "enabled", false, "large", true, false, false, true, true)
-            ]);
-        }
-
-        return data;
+        return _AuditData.Current_box_details;
     },
 
     getCancelScanStatus: function() {
@@ -148,21 +162,26 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
-        data["header"].push([new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false),
-            new this.tableCol("Expected", "header", false, "small", true, false, true, false, true),
-            new this.tableCol("Actual", "header", false, "small", true, false, true, false, true),
-            new this.tableCol("Finish", "header", false, "small", true, false, true, false, true)
-        ]);
-        data["tableRows"].push([new this.tableCol("Box Serial", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
+
         _AuditData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status != "no_scan")
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
+                ]);
             else
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                    new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
+                ]);
 
         });
         _AuditData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false), new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)]);
+            data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
+            ]);
         });
 
         return data;
@@ -172,13 +191,11 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         var data = {};
         data["header"] = [];
         data["tableRows"] = [];
-        data["header"].push([new this.tableCol("Loose Items", "header", false, "small", false, true, true, false),
-            new this.tableCol("Expected", "header", false, "small", true, false, true, false, true),
-            new this.tableCol("Actual", "header", false, "small", true, false, true, false, true),
-            new this.tableCol("Finish", "header", false, "small", true, false, true, false, true)
-        ]);
+        data["header"].push(new this.tableCol("Loose Items SKU", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var self = this;
-        data["tableRows"].push([new this.tableCol("SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Missing", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Extra", "enabled", false, "small", true, false, true, false, true)]);
+
         _AuditData.Loose_sku_list.map(function(value, index) {
             if (value.Scan_status != "no_scan")
                 data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
@@ -193,18 +210,38 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         var data = {};
         var disabledStatus;
         //if (_AuditData.Current_box_details.length > 0) {
-            disabledStatus = false;
+        disabledStatus = false;
         //}
         data["header"] = [];
         data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
         data["tableRows"] = [];
         var self = this;
+        var d = [];
         _AuditData.Loose_sku_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true), new self.tableCol(value.Actual_qty, "enabled", false, "large", true, false, false, disabledStatus, true)]);
+            d= [];
+             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
+            if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
+            d.push(new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+            console.log("jkkkk");
+            console.log(d);
+            data["tableRows"].push(d);
+
+           /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
+                    if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+                        new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true);
+                })(),
+                new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
+            ]);*/
         });
         return data;
+    },
+
+    getFinishAuditFlag: function() {
+        return _finishAuditFlag;
     },
 
     getItemDetailsData: function() {
@@ -213,11 +250,27 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         var self = this;
-        for (var key in _AuditData.product_info) {
-            if (_AuditData.product_info.hasOwnProperty(key)) {
-                data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+        if (_AuditData.product_info != undefined && Object.keys(_AuditData.product_info).length > 0) {
+            for (var key in _AuditData.product_info) {
+                if (_AuditData.product_info.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_AuditData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+                }
             }
+        } else {
+            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
         }
+
         return data;
     },
 
@@ -247,6 +300,14 @@ var AuditStore = assign({}, EventEmitter.prototype, {
 
     getScreenId: function() {
         return _AuditData.screen_id;
+    },
+
+    getCurrentSlot: function() {
+        if (_AuditData.hasOwnProperty('rack_details')) {
+            return _AuditData.rack_details.slot_barcodes;
+        } else {
+            return null;
+        }
     }
 
 

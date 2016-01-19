@@ -151,6 +151,11 @@
  			"Actual_qty": 0,
  			"Expected_qty": 5
  		}],
+ 		"scan_details": {
+			"current_qty": "1",
+			"total_qty": "1",
+			"kq_allowed": false
+		},
 		"screen_id": "audit_scan",
 		"screen_version": "1",
 		"notification_list": [{

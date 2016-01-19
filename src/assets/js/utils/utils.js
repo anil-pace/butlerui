@@ -4,15 +4,16 @@ var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 
-var ws = new WebSocket(configConstants.WEBSOCKET_IP);
-
+var ws;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
-    connectToWebSocket: function(data) {
+    connectToWebSocket: function(data) { 
+        ws = new WebSocket(configConstants.WEBSOCKET_IP);
         if ("WebSocket" in window) {
             ws.onopen = function() {
                 console.log("connected");
                 utils.checkSessionStorage();
+                clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
@@ -23,6 +24,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             };
             ws.onclose = function() {
                 alert("Connection is closed...");
+                setTimeout(utils.connectToWebSocket, 10000);
             };
         } else {
             alert("WebSocket NOT supported by your Browser!");
@@ -78,8 +80,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
- 
-            var authentication_token = JSON.parse(retrieved_token)["auth_token"];
+        var authentication_token = JSON.parse(retrieved_token)["auth_token"];
         
         console.log(authentication_token)
         $.ajax({

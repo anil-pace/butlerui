@@ -107,20 +107,15 @@ var Audit = React.createClass({
           }else{
             this._cancelStatus = '';
           }
-          if(this.state.AuditBoxSerialData.length > 0 ){
-            _boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
+          if(this.state.AuditBoxSerialData["tableRows"].length > 0 ){
+            this._boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
           }else{
-            _boxSerial = '';
+            this._boxSerial = '';
           }
-          if(this.state.AuditCurrentBoxSerialData.length > 1 ){
-            _currentBox = (<TabularData data = {this.state.AuditCurrentBoxSerialData} size="double"/>);
+          if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
+            this._looseItems = (<TabularData data = {this.state.AuditLooseItemsData} />);
           }else{
-            _currentBox = '';
-          }
-          if(this.state.AuditLooseItemsData.length > 1 ){
-            _looseItems = (<TabularData data = {this.state.AuditLooseItemsData} size="triple"/>);
-          }else{
-            _looseItems = '';
+            this._looseItems = '';
           }
           this._component = (
               <div className='grid-container'>
@@ -128,8 +123,8 @@ var Audit = React.createClass({
                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 <div className='main-container space-left'>
                   <div className="audit-scan-left">
-                      <TabularData data = {this.state.AuditBoxSerialData}/>
-                      <TabularData data = {this.state.AuditLooseItemsData} />
+                      {this._boxSerial}
+                      {this._looseItems}
                   </div>
                   <div className="audit-scan-middle">
                    <Img />
@@ -163,6 +158,7 @@ var Audit = React.createClass({
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>
+                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 {subComponent}
                  <div className = 'staging-action' >
                   <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>

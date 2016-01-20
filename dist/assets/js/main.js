@@ -36744,20 +36744,15 @@ var Audit = React.createClass({displayName: "Audit",
           }else{
             this._cancelStatus = '';
           }
-          if(this.state.AuditBoxSerialData.length > 0 ){
-            _boxSerial = (React.createElement(TabularData, {data: this.state.AuditBoxSerialData}));
+          if(this.state.AuditBoxSerialData["tableRows"].length > 0 ){
+            this._boxSerial = (React.createElement(TabularData, {data: this.state.AuditBoxSerialData}));
           }else{
-            _boxSerial = '';
+            this._boxSerial = '';
           }
-          if(this.state.AuditCurrentBoxSerialData.length > 1 ){
-            _currentBox = (React.createElement(TabularData, {data: this.state.AuditCurrentBoxSerialData, size: "double"}));
+          if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
+            this._looseItems = (React.createElement(TabularData, {data: this.state.AuditLooseItemsData}));
           }else{
-            _currentBox = '';
-          }
-          if(this.state.AuditLooseItemsData.length > 1 ){
-            _looseItems = (React.createElement(TabularData, {data: this.state.AuditLooseItemsData, size: "triple"}));
-          }else{
-            _looseItems = '';
+            this._looseItems = '';
           }
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
@@ -36765,8 +36760,8 @@ var Audit = React.createClass({displayName: "Audit",
                 React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
                 React.createElement("div", {className: "main-container space-left"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
-                      React.createElement(TabularData, {data: this.state.AuditBoxSerialData}), 
-                      React.createElement(TabularData, {data: this.state.AuditLooseItemsData})
+                      this._boxSerial, 
+                      this._looseItems
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
                    React.createElement(Img, null), 
@@ -36800,6 +36795,7 @@ var Audit = React.createClass({displayName: "Audit",
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                 React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
                   React.createElement(Button1, {disabled: false, text: "Back", module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 

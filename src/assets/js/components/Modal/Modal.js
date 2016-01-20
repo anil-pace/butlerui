@@ -133,8 +133,11 @@ function loadComponent(modalType,modalData){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer"){
-                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index)} />)
-                    }else{
+                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                    }else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String"){
+                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                    }
+                    else{
                       var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index)} />)
                     }
                       return (<div className="col-md-6">

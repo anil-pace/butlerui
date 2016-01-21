@@ -9,8 +9,6 @@ var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
 var jqueryPosition = require('jquery-ui/position');
 var virtualkeyboard = require('virtual-keyboard');
-var datetimepicker = require('jquery-datetimepicker');
-
 
 var component,title;
 

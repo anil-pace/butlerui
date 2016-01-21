@@ -36628,6 +36628,13 @@ var commonActions = {
       actionType: appConstants.SET_ACTIVE_EXCEPTION,
       data:data
     }); 
+  },
+
+  updateDamagedBarcodeQuantity:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_DAMAGED_BARCODE_QUANTITY,
+      data:data
+    });
   }
 
 };
@@ -37089,6 +37096,7 @@ var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 var PickFrontStore = require('../../stores/PickFrontStore');
+var PutBackStore = require('../../stores/PutBackStore');
 
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
@@ -37113,6 +37121,17 @@ var Button1 = React.createClass({displayName: "Button1",
                                 break;
                             case appConstants.CANCEL_EXCEPTION:
                                 ActionCreators.enableException(false);
+                                break;
+                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SEND_DAMAGED_BARCODE_QTY:
+                                data["event_name"] = "exception_response_from_ui";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
+                                ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
@@ -37238,7 +37257,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/PickFrontStore":290,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/PickFrontStore":290,"../../stores/PutBackStore":291,"react":230}],239:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37347,7 +37366,7 @@ var Exception = React.createClass({displayName: "Exception",
         return (
             React.createElement("div", {className: "exception"}, 
                 React.createElement(ExceptionHeader, {data: this.props.data.header}), 
-                React.createElement(ExceptionList, {data: this.props.data.list})
+                React.createElement(ExceptionList, {data: this.props.data.list, action: this.props.action})
             )
         );
     },
@@ -37379,8 +37398,9 @@ var ExceptionList = React.createClass({displayName: "ExceptionList",
     _exceptionListItems:[],
     getExceptionListItems:function(){
     	var comp =[];
+        var self = this;
     	this.props.data.map(function(value,index){
-    		comp.push((React.createElement(ExceptionListItem, {data: value})));
+    		comp.push((React.createElement(ExceptionListItem, {data: value, action: self.props.action})));
     	})
     	this._exceptionListItems = comp;
     },
@@ -37403,13 +37423,27 @@ var CommonActions = require('../../actions/CommonActions');
 var ExceptionListItem = React.createClass({displayName: "ExceptionListItem", 
 	_component:[],
 	setCurrentException:function(data){
-		CommonActions.setActiveException(data);
+     var data1 = {
+        "event_name": "",
+        "event_data": {}
+    };
+    data1["event_name"] = "exception";
+    data1["event_data"]["event"] = data["event"];
+    CommonActions.postDataToInterface(data1);
+		CommonActions.setActiveException(data.text);
 	},
     render: function() {
+        if(this.props.action!=undefined && this.props.action == true)
         return (
-            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data.text)}, 
+            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
                this.props.data.text
       		)
+        );
+      else
+        return (
+            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item"}, 
+               this.props.data.text
+            )
         );
     },
 });
@@ -38586,6 +38620,7 @@ module.exports = ProductInfo;
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
+var appConstants = require('../../constants/appConstants');
 
 var KQ = React.createClass({displayName: "KQ",
   _appendClassDown : '',
@@ -38601,6 +38636,10 @@ var KQ = React.createClass({displayName: "KQ",
           if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                return true;
+            }
             if (mainstore.getCurrentSeat() == "audit_front") {
                 data = {
                     "event_name": "audit_actions",
@@ -38625,6 +38664,10 @@ var KQ = React.createClass({displayName: "KQ",
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) != 1) {
                 var data = {};
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                    CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                     return true;
+                }
                 if (mainstore.getCurrentSeat() == "audit_front") {
                     data = {
                         "event_name": "audit_actions",
@@ -38668,6 +38711,10 @@ var KQ = React.createClass({displayName: "KQ",
                     } else {
 
                         var data = {};
+                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                            CommonActions.updateDamagedBarcodeQuantity(parseInt(e.target.value));
+                             return true;
+                        }
                         if (mainstore.getCurrentSeat() == "audit_front") {
                             data = {
                                 "event_name": "audit_actions",
@@ -38757,7 +38804,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":294,"react":230}],262:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/mainstore":294,"react":230}],262:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -38938,11 +38985,12 @@ function getStateData(){
            PutBackToteId : PutBackStore.getToteId(),
            PutBackExceptionStatus:PutBackStore.getExceptionStatus(),
            PutBackExceptionData:PutBackStore.getExceptionData(),
-           PutBackDamagedBarcodeScanDetails:PutBackStore.getScanDetails()
+           PutBackDamagedBarcodeScanDetails:PutBackStore.getScanDetails(),
+           PutBackExceptionProductDetails:PutBackStore.getItemDetailsData()
 
     };
-}
 
+}
 var PutBack = React.createClass({displayName: "PutBack",
   _component:'',
   _notification:'',
@@ -38979,7 +39027,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       return (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData, action: true}), 
                 _rightComponent, 
                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
@@ -38992,6 +39040,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
+         if(this.state.PutBackExceptionStatus == false){
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -39004,6 +39053,9 @@ var PutBack = React.createClass({displayName: "PutBack",
                 )
               )
             );
+          }else{
+          this._component = this.getExceptionComponent();
+        }
 
         break;
       case appConstants.PUT_BACK_SCAN:
@@ -39058,8 +39110,11 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
                   React.createElement(KQ, {scanDetails: this.state.PutBackDamagedBarcodeScanDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange"})
+                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_DAMAGED_BARCODE_QTY})
                   )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39071,11 +39126,34 @@ var PutBack = React.createClass({displayName: "PutBack",
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
-                  React.createElement(Img, null), 
-                  React.createElement(KQ, {scanDetails: this.state.PutBackDamagedBarcodeScanDetails}), 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement(Img, null), 
+                    React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
+                    React.createElement(KQ, {scanDetails: this.state.PutBackDamagedBarcodeScanDetails})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break; 
+       case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
+          this._navigation = '';
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                   React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                    React.createElement("div", {className: "main-container exception1"}, 
+                      React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange"})
                   )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39832,6 +39910,8 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
+	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_oversized_items",
+	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_excess_items_in_bins",
 	EDIT_DETAILS:"EDIT_DETAILS",
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
@@ -39846,13 +39926,16 @@ var appConstants = {
 	CHANGE_LANGUAGE :'CHANGE_LANGUAGE',
 	SET_LANGUAGE :'SET_LANGUAGE',
 	CHECKLIST_SUBMIT :'CHECKLIST_SUBMIT',
+	UPDATE_DAMAGED_BARCODE_QUANTITY:"UPDATE_DAMAGED_BARCODE_QUANTITY",
 	CANCEL_TOTE :'CANCEL_TOTE',
 	CLOSE_TOTE : 'CLOSE_TOTE',
 	TOTE_ACTION :'TOTE_ACTION',
 	POST_DATA_TO_INTERFACE:"POST_DATA_TO_INTERFACE",
 	LOG_ERROR:"LOG_ERROR",
+	SEND_DAMAGED_BARCODE_QTY:"SEND_DAMAGED_BARCODE_QTY",
 	ENABLE_EXCEPTION:"ENABLE_EXCEPTION",
 	CANCEL_EXCEPTION:"CANCEL_EXCEPTION",
+	CANCEL_EXCEPTION_TO_SERVER:"CANCEL_EXCEPTION_TO_SERVER",
 	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",
 	DAMAGED_BARCODE:"Damaged Barcode",
 	OVERSIZED_ITEMS:"Oversized Items",
@@ -39864,8 +39947,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.211:8888/ws",
-	INTERFACE_IP : "https://192.168.2.211:5000"
+	WEBSOCKET_IP : "ws://192.168.3.148:8888/ws",
+	INTERFACE_IP : "https://192.168.3.148:5000"
 };
 
 module.exports = configConstants;
@@ -40682,7 +40765,7 @@ var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
 var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData, _enableException = false,
-    _activeException = null;
+    _activeException = null , _damagedBarcodeQty = 0 ;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -40722,18 +40805,26 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         data["list"] = [];
         data["header"] = "Exceptions";
         _PutBackData.exception_allowed.map(function(value, index) {
-            if (value.exception_name == data["activeException"])
+            if ((_PutBackData["exception_type"] !=undefined && value.event == _PutBackData["exception_type"]) || value.exception_name == data["activeException"])
                 data["list"].push({
                     "text": value.exception_name,
-                    "selected": true
+                    "selected": true,
+                    "event":value["event"]!=undefined ? value["event"]:""
                 });
             else
                 data["list"].push({
                     "text": value.exception_name,
-                    "selected": false
+                    "selected": false,
+                    "event":value["event"]!=undefined ? value["event"]:""
                 });
         })
+        console.log("www");
+        console.log(JSON.stringify(data));
         return data;
+    },
+
+    getExceptionType:function(){
+        return _PutBackData["exception_type"];
     },
 
     setActiveException: function(data) {
@@ -40859,7 +40950,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     getReconcileData: function() {
         if (_PutBackData.hasOwnProperty('reconciliation')) {
             var data = {};
-            data["header"] = "Box Serial Numbers";
+            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
             data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
@@ -40879,6 +40970,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
 
     enableException: function(data) {
+        data["activeException"] = "";
         _enableException = data;
     },
     getExceptionStatus: function() {
@@ -40888,12 +40980,50 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     getScanDetails: function() {
         var data = {
             "scan_details": {
-                "current_qty": "0",
+                "current_qty": _damagedBarcodeQty,
                 "total_qty": "0",
                 "kq_allowed": true
             }
         };
             return data.scan_details;
+    },
+
+    getItemDetailsData: function() {
+        var data = {};
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        var self = this;
+        if (_PutBackData.product_info != undefined && Object.keys(_PutBackData.product_info).length > 0) {
+            for (var key in _PutBackData.product_info) {
+                if (_PutBackData.product_info.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_PutBackData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+                }
+            }
+        } else {
+            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+        }
+
+        return data;
+    },
+
+    setDamagedBarcodeQuanity:function(data){
+        _damagedBarcodeQty = data;
+    },
+
+    getDamagedBarcodeQuanity:function(){
+        return _damagedBarcodeQty;
     }
 
 });
@@ -40926,6 +41056,10 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
             break;
         case ActionTypes.SET_ACTIVE_EXCEPTION:
             PutBackStore.setActiveException(action.action.data);
+            PutBackStore.emitChange();
+            break;
+        case ActionTypes.UPDATE_DAMAGED_BARCODE_QUANTITY:
+            PutBackStore.setDamagedBarcodeQuanity(action.action.data);
             PutBackStore.emitChange();
             break;
         default:
@@ -41164,7 +41298,7 @@ var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson;
+var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson , _screenId;
 var popupVisible = false;
 var _showSpinner = true;
 var _enableException = false;
@@ -41201,6 +41335,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData = data;
         _seatName = data.seat_name;
         _currentSeat = data.mode + "_" + data.seat_type;
+        _screenId = data.screen_id;
     },
     getModalContent: function() {
         return modalContent.data;
@@ -41258,6 +41393,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     logError:function(data){
         utils.logError(data);
+    },
+    getScreenId:function(){
+        return _screenId;
     }
     
 

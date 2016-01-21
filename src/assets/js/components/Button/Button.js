@@ -2,6 +2,7 @@ var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 var PickFrontStore = require('../../stores/PickFrontStore');
+var PutBackStore = require('../../stores/PutBackStore');
 
 var Button1 = React.createClass({
             _checklistClass: '',
@@ -26,6 +27,17 @@ var Button1 = React.createClass({
                                 break;
                             case appConstants.CANCEL_EXCEPTION:
                                 ActionCreators.enableException(false);
+                                break;
+                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SEND_DAMAGED_BARCODE_QTY:
+                                data["event_name"] = "exception_response_from_ui";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
+                                ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:

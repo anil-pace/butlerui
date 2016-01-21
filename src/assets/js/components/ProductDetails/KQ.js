@@ -1,6 +1,7 @@
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
+var appConstants = require('../../constants/appConstants');
 
 var KQ = React.createClass({
   _appendClassDown : '',
@@ -16,6 +17,10 @@ var KQ = React.createClass({
           if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                return true;
+            }
             if (mainstore.getCurrentSeat() == "audit_front") {
                 data = {
                     "event_name": "audit_actions",
@@ -40,6 +45,10 @@ var KQ = React.createClass({
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) != 1) {
                 var data = {};
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                    CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                     return true;
+                }
                 if (mainstore.getCurrentSeat() == "audit_front") {
                     data = {
                         "event_name": "audit_actions",
@@ -83,6 +92,10 @@ var KQ = React.createClass({
                     } else {
 
                         var data = {};
+                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                            CommonActions.updateDamagedBarcodeQuantity(parseInt(e.target.value));
+                             return true;
+                        }
                         if (mainstore.getCurrentSeat() == "audit_front") {
                             data = {
                                 "event_name": "audit_actions",

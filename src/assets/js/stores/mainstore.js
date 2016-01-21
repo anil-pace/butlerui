@@ -7,7 +7,7 @@ var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson;
+var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson , _screenId;
 var popupVisible = false;
 var _showSpinner = true;
 var _enableException = false;
@@ -44,6 +44,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData = data;
         _seatName = data.seat_name;
         _currentSeat = data.mode + "_" + data.seat_type;
+        _screenId = data.screen_id;
     },
     getModalContent: function() {
         return modalContent.data;
@@ -101,6 +102,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     logError:function(data){
         utils.logError(data);
+    },
+    getScreenId:function(){
+        return _screenId;
     }
     
 

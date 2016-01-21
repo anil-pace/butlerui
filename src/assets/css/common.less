@@ -18,10 +18,23 @@
         box-sizing: border-box;
         .exception-right{
             margin-left: 20%;
+            display: flex;
+            flex-flow:column;
+            flex-grow:1;
+            align-items:center;
+            justify-content:center;
+            .finish-damaged-barcode{
+                padding-top: 5em;
+            }
         }
         &.exception{
             border-top: 1px solid @text-color;
-            background: gray;
+            background: #f0f0f0;
+        }
+        .exception-head{
+            color: orange;
+            font-size: 5rem;
+            padding-bottom: 1em;
         }
         .single-bin {
             position: absolute;
@@ -58,7 +71,7 @@
             flex-wrap: nowrap;
             box-sizing: border-box;
             width: 100%;
-            overflow: auto;
+            overflow: hidden;
             &.space-left{
                 padding-left: 80px;
             }

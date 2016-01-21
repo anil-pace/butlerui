@@ -106,32 +106,6 @@ var KQ = React.createClass({
             });
         }
     },
-    componentWillMount: function() {
-        mainstore.removeChangeListener(this.onChange);
-    },
-    componentWillUnmount: function() {
-        mainstore.removeChangeListener(this.onChange);
-        if (this.virtualKeyboard != null) {
-            virtualKeyboard.getkeyboard().close();
-        }
-    },
-    onChange: function() {
-        this.setState(getState());
-    },
-    checkKqAllowed: function() {
-        if (this.props.scanDetails.kq_allowed === false) {
-            this._appendClassUp = 'topArrow disable';
-            this._appendClassDown = 'downArrow disable';
-        } else {
-            this._appendClassUp = 'topArrow enable';
-            if (this.props.scanDetails.current_qty == 1) {
-                this._appendClassDown = 'downArrow disable';
-            } else {
-                this._appendClassDown = 'downArrow enable';
-            }
-
-      }
-  },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
@@ -182,41 +156,15 @@ var KQ = React.createClass({
         }
 
     },
-    handleTotalQty: function() {
-        if (this.props.scanDetails.total_qty != 0) {
-            this._qtyComponent = ( < div id = 'textbox' >
-                < input id = "keyboard" className = "current-quantity" value = {parseInt(this.props.scanDetails.current_qty)}/> < span className = "separator" > /</span >
-                < span className = "total-quantity" > {
-                    parseInt(this.props.scanDetails.total_qty)
-                } < /span>  < /div>
-            );
-        } else {
-            this._qtyComponent = ( < div id = 'textbox' >
-                < input id = "keyboard" value = { parseInt(this.props.scanDetails.current_qty)}/>  < /div>
-            );
-        }
-    },
     render: function(data) {
         this.checkKqAllowed();
         this.handleTotalQty();
         return ( < div className = "kq-wrapper" >
-            < a href = "#"
-            className = {
-                this._appendClassUp
-            }
-            onClick = {
-                this.handleIncrement
-            } >
-            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {
-                this._qtyComponent
-            } < a href = "#"
-            className = {
-                this._appendClassDown
-            }
-            onClick = {
-                this.handleDecrement
-            } >
-            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a> < /div>
+            < a href = "#" className = {this._appendClassUp} onClick = {this.handleIncrement} >
+            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent} 
+            < a href = "#" className = {this._appendClassDown} onClick = {this.handleDecrement} >
+            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a> 
+            < /div>
         )
 
     }

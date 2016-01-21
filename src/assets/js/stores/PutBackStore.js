@@ -210,7 +210,19 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
     getExceptionStatus: function() {
         return _enableException;
+    },
+
+    getScanDetails: function() {
+        var data = {
+            "scan_details": {
+                "current_qty": "0",
+                "total_qty": "0",
+                "kq_allowed": true
+            }
+        };
+            return data.scan_details;
     }
+
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {

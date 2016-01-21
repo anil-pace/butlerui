@@ -49,6 +49,7 @@ var appConstants = {
 	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
+	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
 	EDIT_DETAILS:"EDIT_DETAILS",
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",

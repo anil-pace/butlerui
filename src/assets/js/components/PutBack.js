@@ -12,6 +12,9 @@ var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
 var TabularData = require('./TabularData');
 var Exception = require('./Exception/Exception');
+var ExceptionHeader = require('./ExceptionHeader');
+var KQ = require('./ProductDetails/KQ');
+var Img = require('./PrdtDetails/ProductImage.js');
 
 
 function getStateData(){
@@ -29,7 +32,8 @@ function getStateData(){
            PutBackReconciliation : PutBackStore.getReconcileData(),
            PutBackToteId : PutBackStore.getToteId(),
            PutBackExceptionStatus:PutBackStore.getExceptionStatus(),
-           PutBackExceptionData:PutBackStore.getExceptionData()
+           PutBackExceptionData:PutBackStore.getExceptionData(),
+           PutBackDamagedBarcodeScanDetails:PutBackStore.getScanDetails()
 
     };
 }
@@ -38,6 +42,7 @@ var PutBack = React.createClass({
   _component:'',
   _notification:'',
   _exception:'',
+  _navigation:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -52,6 +57,7 @@ var PutBack = React.createClass({
   },
   getExceptionComponent:function(){
       var _rightComponent = '';
+      this._navigation = '';
       switch(this.state.PutBackExceptionData["activeException"]){
         case appConstants.DAMAGED_BARCODE:
           _rightComponent = (<div className="exception-right">{"DAMAGED_BARCODE"}</div>);
@@ -66,7 +72,7 @@ var PutBack = React.createClass({
           _rightComponent = '';
        }
       return (
-              <div className='grid-container'>
+              <div className='grid-container exception'>
                 <Modal />
                 <Exception data={this.state.PutBackExceptionData}/>
                 {_rightComponent}
@@ -77,6 +83,7 @@ var PutBack = React.createClass({
             );
   },
   getScreenComponent : function(screen_id){
+    this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
@@ -137,11 +144,34 @@ var PutBack = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break; 
-      case appConstants.PUT_BACK_EXCEPTION:
+      case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
+          this._navigation = '';
           this._component = (
-              <div className='grid-container'>
-                <Modal />
-                <Exception data={{"header":"","list":[]}}/>
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                  <KQ scanDetails = {this.state.PutBackDamagedBarcodeScanDetails} />
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} />  
+                  </div>
+                </div>
+              </div>
+            );
+        break; 
+       case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
+          this._navigation = '';
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                  <Img />
+                  <KQ scanDetails = {this.state.PutBackDamagedBarcodeScanDetails} />
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} />  
+                  </div>
+                </div>
               </div>
             );
         break; 
@@ -162,7 +192,7 @@ var PutBack = React.createClass({
       return (
         <div className="main">
           <Header />
-          <Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>
+          {this._navigation}
           {this._component}
           {this._notification}
         </div> 

@@ -150,6 +150,12 @@ var commonActions = {
       data:data
     }); 
   },
+  logoutSession:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOGOUT_SESSION,
+      data:data
+    }); 
+  },
   setActiveException:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_ACTIVE_EXCEPTION,

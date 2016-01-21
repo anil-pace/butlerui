@@ -17,6 +17,8 @@ var Reconcile = require("./Reconcile");
 var utils = require("../utils/utils.js");
 var ActionCreators = require('../actions/CommonActions');
 var KQ = require('./ProductDetails/KQ.js');
+var CurrentSlot = require('./CurrentSlot');
+var Modal = require('./Modal/Modal');
 
 
 function getStateData(){
@@ -34,7 +36,10 @@ function getStateData(){
            AuditItemDetailsData:AuditStore.getItemDetailsData(),
            AuditRackDetails:AuditStore.getRackDetails(),
            AuditCancelScanStatus:AuditStore.getCancelScanStatus(),
-           AuditScanDetails:AuditStore.getScanDetails()
+           AuditScanDetails:AuditStore.getScanDetails(),
+           AuditSlotDetails :AuditStore.getCurrentSlot(),
+           AuditFinishFlag:AuditStore.getFinishAuditFlag(),
+           AuditShowModal:AuditStore.getModalStatus()
 
     };
 }
@@ -47,17 +52,39 @@ var Audit = React.createClass({
   _boxSerial:'',
   _currentBox:'',
   _looseItems:'',
+  showModal: function() {
+        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true){
+          var self = this;
+
+          setTimeout((function(){ActionCreators.showModal({
+              data:{
+              "message":self.state.AuditShowModal.message
+            },
+            type:"message"
+          });
+        $('.modal').modal();
+      return false;
+      }),0)
+
+       }
+  },
   getInitialState: function(){
     return getStateData();
   },
   componentWillMount: function(){
+    //this.showModal();
     AuditStore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
     AuditStore.removeChangeListener(this.onChange);
   },
+  componentDidMount:function(){
+    this.showModal();
+    AuditStore.addChangeListener(this.onChange);
+  },
   onChange: function(){ 
     this.setState(getStateData());
+     this.showModal();
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -80,27 +107,24 @@ var Audit = React.createClass({
           }else{
             this._cancelStatus = '';
           }
-          if(this.state.AuditBoxSerialData.length > 0 ){
-            _boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
+          if(this.state.AuditBoxSerialData["tableRows"].length > 0 ){
+            this._boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
           }else{
-            _boxSerial = '';
+            this._boxSerial = '';
           }
-          if(this.state.AuditCurrentBoxSerialData.length > 1 ){
-            _currentBox = (<TabularData data = {this.state.AuditCurrentBoxSerialData} size="double"/>);
+          if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
+            this._looseItems = (<TabularData data = {this.state.AuditLooseItemsData} />);
           }else{
-            _currentBox = '';
-          }
-          if(this.state.AuditLooseItemsData.length > 1 ){
-            _looseItems = (<TabularData data = {this.state.AuditLooseItemsData} size="triple"/>);
-          }else{
-            _looseItems = '';
+            this._looseItems = '';
           }
           this._component = (
               <div className='grid-container'>
-                <div className='main-container'>
+                <Modal />
+                <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
+                <div className='main-container space-left'>
                   <div className="audit-scan-left">
-                      <TabularData data = {this.state.AuditBoxSerialData}/>
-                      <TabularData data = {this.state.AuditLooseItemsData} />
+                      {this._boxSerial}
+                      {this._looseItems}
                   </div>
                   <div className="audit-scan-middle">
                    <Img />
@@ -109,7 +133,7 @@ var Audit = React.createClass({
                   <div className="audit-scan-right">
                     <KQ scanDetails = {this.state.AuditScanDetails}/>
                    <div className = 'finish-scan'>
-                    <Button1 disabled = {!this.state.AuditCurrentBoxSerialData.tableRows[1][0].disabled} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
+                    <Button1 disabled = {!this.state.AuditFinishFlag} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
                   </div>
                   </div>
                 </div>
@@ -119,7 +143,6 @@ var Audit = React.createClass({
 
         break;
       case appConstants.AUDIT_RECONCILE:
-          console.log("jiiiii");
           var subComponent='';
           var messageType = 'large';
           if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
@@ -127,9 +150,7 @@ var Audit = React.createClass({
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
                     <TabularData data = {this.state.AuditReconcileBoxSerialData}/>
-                  </div>
-                  <div className="audit-reconcile-right">
-                   <TabularData data = {this.state.AuditReconcileLooseItemsData} size="triple"/>
+                    <TabularData data = {this.state.AuditReconcileLooseItemsData} />
                   </div>
                 </div>
               );
@@ -137,9 +158,7 @@ var Audit = React.createClass({
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>
-                <div className={messageType=="small"?"reconcilation-message":"reconcilation-message large"}>
-                  <Reconcile message={(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1) ? "Reconcile the below Item":"No Items to renconcile"}/>
-                </div>
+                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 {subComponent}
                  <div className = 'staging-action' >
                   <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>

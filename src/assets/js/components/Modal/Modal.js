@@ -15,7 +15,7 @@ var component,title;
 function getStateData(){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
-  loadComponent(modalType,modalData)
+  loadComponent(modalType,modalData);
   return {
       data:modalData,
       type:modalType
@@ -57,6 +57,11 @@ function attachNumpad(id){
       });
    $('#'+id).data('keyboard').reveal(); 
 }
+
+function attachDateTime(id){ 
+  $('#'+id).datetimepicker({});
+}
+
 function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
@@ -108,6 +113,11 @@ function loadComponent(modalType,modalData){
       
       title = "Associate tote with bin";
       break;
+    case "message":
+      component = [];
+      component.push((<div className="col-md-12 value">{modalData["message"]} </div>));
+      title = "Perform Action";
+    break;
     case "pick_checklist":
       component = [];
       footer = [];
@@ -115,28 +125,39 @@ function loadComponent(modalType,modalData){
       title = "Input Extra Details";
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
+            serial = index;
             if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < PickFrontStore.scanDetails()["current_qty"])){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer"){
-                      var inputBox = (<input type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)} />)
-                    }else{
-                      var inputBox = (<input type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                    }else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String"){
+                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />)
                     }
-                      return (<div>
-                                  <div className="row dataCaptureHead removeBorder">
+                    else{
+                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                    }
+                      return (<div className="col-md-6">
+                                  <div className="dataCaptureHead removeBorder">
                                       {keyvalue}
                                   </div>
-                                  <div className="row dataCaptureInput removeBorder">
+                                  <div className="dataCaptureInput removeBorder">
                                       {inputBox}
                                   </div>
                               </div>
                         );
                   })
               return (
-                  <div className = "item-input">
-                  {d}
+                  <div className ="row item-input">
+                    <div className="col-md-12">
+                        <div className="col-md-1 serial">
+                            {serial+1}.
+                        </div>
+                        <div className="col-md-11">
+                            {d}
+                        </div>
+                    </div>
                   </div>
                 );
                   
@@ -146,6 +167,7 @@ function loadComponent(modalType,modalData){
       return (
               component.push((
                 <div>
+                <header>{modalData.product_details.product_sku}</header>
                   {rowData}
                       <div className="modal-footer removeBorder">
                           <div className="buttonContainer center-block chklstButtonContainer">
@@ -174,8 +196,7 @@ var Modal = React.createClass({
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });*/
-    
+    });*/    
   },
  
   componentWillMount: function(){

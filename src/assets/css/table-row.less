@@ -19,7 +19,7 @@
         }
         &.flex-grow {
             flex-grow: 1;
-            flex-basis:0;
+            flex-basis: 0;
         }
         &.selected {
             background: @bin-selected-bck;
@@ -43,27 +43,29 @@
         &.center-align {
             text-align: center;
         }
-        &.complete{
+        &.complete {
             color: green;
         }
-        &.missing{
+        &.missing {
             background: red;
             color: white;
+            min-width: 30%;
         }
-        &.extra{
-         background: @bin-staged-bck;
-            color: white;   
-             border-left: 1px solid white;
+        &.extra {
+            background: @bin-staged-bck;
+            color: white;
+            border-left: 1px solid white;
+            min-width: 30%;
         }
-        .success-icon{
+        .success-icon {
             color: green;
             cursor: pointer;
-            &.disabled{
+            &.disabled {
                 opacity: 0.3;
                 cursor: none;
             }
         }
-        .edit-icon{
+        .edit-icon {
             color: @bin-staged-bck;
             cursor: pointer;
         }

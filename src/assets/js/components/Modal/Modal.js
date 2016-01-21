@@ -15,7 +15,7 @@ var component,title;
 function getStateData(){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
-  loadComponent(modalType,modalData)
+  loadComponent(modalType,modalData);
   return {
       data:modalData,
       type:modalType
@@ -57,6 +57,11 @@ function attachNumpad(id){
       });
    $('#'+id).data('keyboard').reveal(); 
 }
+
+function attachDateTime(id){ 
+  $('#'+id).datetimepicker({});
+}
+
 function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
@@ -127,8 +132,11 @@ function loadComponent(modalType,modalData){
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer"){
                       var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)} />)
-                    }else{
+                    }else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String"){
                       var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                    }
+                    else{
+                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index)} />)
                     }
                       return (<div className="col-md-6">
                                   <div className="dataCaptureHead removeBorder">
@@ -188,8 +196,7 @@ var Modal = React.createClass({
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });*/
-    
+    });*/    
   },
  
   componentWillMount: function(){

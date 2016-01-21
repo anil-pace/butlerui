@@ -4,14 +4,17 @@ var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 
-var ws = new WebSocket(configConstants.WEBSOCKET_IP);
-
+var ws;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
-    connectToWebSocket: function(data) {
+    connectToWebSocket: function(data) { 
+        ws = new WebSocket(configConstants.WEBSOCKET_IP);
         if ("WebSocket" in window) {
             ws.onopen = function() {
+                $("#username, #password").prop('disabled', false);
                 console.log("connected");
+                utils.checkSessionStorage();
+                clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
@@ -21,17 +24,38 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 CommonActions.setServerMessages();
             };
             ws.onclose = function() {
+                $("#username, #password").prop('disabled', true);
                 alert("Connection is closed...");
+                setTimeout(utils.connectToWebSocket, 1000);
             };
         } else {
-            alert("WebSocket NOT supported by your Browser!");
+            alert("WebSocket NOT supported by your Browser!");            
         }
     },
-    postDataToWebsockets: function(data) {
+    checkSessionStorage : function(){
+        var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
+        if(sessionData === null){  
+        }else{
+            var webSocketData = {
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : sessionData.data["auth-token"],
+                    "seat_name" : sessionData.data.seat_name
+                }
+            };
+            utils.postDataToWebsockets(webSocketData); 
+        }
+    },
+    postDataToWebsockets: function(data) { 
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },
+    storeSession : function(data){
+        // Put the object into storage
+        sessionStorage.setItem('sessionData', JSON.stringify(data));
+    },
     getAuthToken : function(data){
+        sessionStorage.setItem('sessionData', null);
         var loginData ={
           "username" : data.data.username,
           "password" : data.data.password
@@ -47,10 +71,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }).done(function(response) {
             var webSocketData = {
-                "auth_token" : response.auth_token,
-                "seat_name" : data.data.seat_name
-            }
-            utils.postDataToWebsockets(data);
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : response.auth_token,
+                    "seat_name" : data.data.seat_name
+                }
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(webSocketData);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status);
             alert(textStatus);
@@ -59,6 +87,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     postDataToInterface: function(data, seat_name) {
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         $.ajax({
             type: 'POST',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,
@@ -66,7 +96,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
-                'accept': 'application/json'
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
 

@@ -14,7 +14,6 @@ var currentSeat = [];
 function getParameterByName(){
     var l = document.createElement("a");
     l.href = window.location.href;
-    console.debug(l.hash);
     var url_exist = window.location.href.split('=');
     if(url_exist[1] == undefined){
       listPpsSeat(null);

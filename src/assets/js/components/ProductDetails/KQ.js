@@ -3,12 +3,18 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 
 var KQ = React.createClass({
+  _appendClassDown : '',
+  _appendClassUp : '',
+  _qtyComponent : null,
+  virtualKeyboard : null,
     _appendClassDown: '',
     _appendClassUp: '',
     _qtyComponent: null,
     virtualKeyboard: null,
     handleIncrement: function(event) {
         if (this.props.scanDetails.kq_allowed === true) {
+          if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
+            return false;          
             var data = {};
             if (mainstore.getCurrentSeat() == "audit_front") {
                 data = {
@@ -123,6 +129,56 @@ var KQ = React.createClass({
             } else {
                 this._appendClassDown = 'downArrow enable';
             }
+
+      }
+  },
+  componentWillMount: function(){
+    mainstore.removeChangeListener(this.onChange);
+  },
+  componentWillUnmount: function(){    
+    mainstore.removeChangeListener(this.onChange);
+    if(this.virtualKeyboard != null){
+      virtualKeyboard.getkeyboard().close();
+    }
+  },
+  onChange: function(){ 
+    this.setState(getState());
+  },
+  checkKqAllowed : function(){
+    if(this.props.scanDetails.kq_allowed === true){
+      if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0") ){          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable';          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+            if(this.props.scanDetails.current_qty == 1){
+              this._appendClassDown = 'downArrow disable';
+            }else{
+              this._appendClassDown = 'downArrow enable';
+            }
+      }
+    }
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+    }    
+  },
+  handleTotalQty : function(){
+    if(this.props.scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          <div id='textbox'>
+            <input id="keyboard" className="current-quantity"  value={parseInt(this.props.scanDetails.current_qty)}/>
+            <span className="separator">/</span>
+            <span className="total-quantity">{parseInt(this.props.scanDetails.total_qty)}</span> 
+          </div>
+        );
+    }else{
+      this._qtyComponent = (
+          <div id='textbox'>
+            <input id="keyboard"  value={parseInt(this.props.scanDetails.current_qty)}/> 
+          </div>
+      );
         }
 
     },
@@ -162,6 +218,7 @@ var KQ = React.createClass({
             } >
             < span className = "glyphicon glyphicon-menu-down" > < /span> < /a> < /div>
         )
+
     }
 });
 

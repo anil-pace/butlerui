@@ -37522,8 +37522,8 @@ function getState(){
    return {
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
-      username : 'kerry',
-      password : 'gorapj'
+      username : '',
+      password : ''
   }
 }
 
@@ -37600,6 +37600,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var n = d.getFullYear();   
     var seatData;
     var display = this.state.flag === true ? 'block' : 'none';
+    console.log("data  " + this.state.seatList.length );
       if(this.state.seatList.length > 0){
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
@@ -37610,10 +37611,17 @@ var LoginPage = React.createClass({displayName: "LoginPage",
               var parseSeatID = data.split('_');
               seatName = parseSeatID[0] +' '+parseSeatID[1];
               return (
-                React.createElement("option", {key: 'pps' + index, value: data}, "PPS ", seatName)
+                React.createElement("header", {className: "ppsSeat", key: 'pps' + index}, "PPS ", seatName)
               )
             }
           });
+          if(this.state.seatList.length == 1){
+            var ppsOption = seatData;
+          }
+          else{
+            var ppsOption =  React.createElement("select", {className: "selectPPS", ref: "seat_name"}, seatData) ;
+          }
+
       }else{
 
       }
@@ -37635,9 +37643,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                     ), 
                     React.createElement("div", {className: "userFormLoginPage"}, 
                         React.createElement("form", null, 
-                            React.createElement("select", {className: "selectPPS", ref: "seat_name"}, 
-                               seatData
-                            ), 
+                            ppsOption, 
 
 
               React.createElement("div", {className: "form-group"}, 
@@ -37653,7 +37659,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   React.createElement("option", {value: "english"}, "English"), 
                   React.createElement("option", {value: "chinese"}, "Chinese")
               ), 
-              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", onClick: this.handleLogin, value: "Login"})
+              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
           )
           )
                 )
@@ -37697,7 +37703,7 @@ var component,title;
 function getStateData(){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
-  loadComponent(modalType,modalData)
+  loadComponent(modalType,modalData);
   return {
       data:modalData,
       type:modalType
@@ -37739,6 +37745,11 @@ function attachNumpad(id){
       });
    $('#'+id).data('keyboard').reveal(); 
 }
+
+function attachDateTime(id){ 
+  $('#'+id).datetimepicker({});
+}
+
 function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
@@ -37802,28 +37813,39 @@ function loadComponent(modalType,modalData){
       title = "Input Extra Details";
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
+            serial = index;
             if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < PickFrontStore.scanDetails()["current_qty"])){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer"){
-                      var inputBox = (React.createElement("input", {type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)}))
-                    }else{
-                      var inputBox = (React.createElement("input", {type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                    }else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String"){
+                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
                     }
-                      return (React.createElement("div", null, 
-                                  React.createElement("div", {className: "row dataCaptureHead removeBorder"}, 
+                    else{
+                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                    }
+                      return (React.createElement("div", {className: "col-md-6"}, 
+                                  React.createElement("div", {className: "dataCaptureHead removeBorder"}, 
                                       keyvalue
                                   ), 
-                                  React.createElement("div", {className: "row dataCaptureInput removeBorder"}, 
+                                  React.createElement("div", {className: "dataCaptureInput removeBorder"}, 
                                       inputBox
                                   )
                               )
                         );
                   })
               return (
-                  React.createElement("div", {className: "item-input"}, 
-                  d
+                  React.createElement("div", {className: "row item-input"}, 
+                    React.createElement("div", {className: "col-md-12"}, 
+                        React.createElement("div", {className: "col-md-1 serial"}, 
+                            serial+1, "."
+                        ), 
+                        React.createElement("div", {className: "col-md-11"}, 
+                            d
+                        )
+                    )
                   )
                 );
                   
@@ -37833,6 +37855,7 @@ function loadComponent(modalType,modalData){
       return (
               component.push((
                 React.createElement("div", null, 
+                React.createElement("header", null, modalData.product_details.product_sku), 
                   rowData, 
                       React.createElement("div", {className: "modal-footer removeBorder"}, 
                           React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
@@ -37861,8 +37884,7 @@ var Modal = React.createClass({displayName: "Modal",
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });*/
-    
+    });*/    
   },
  
   componentWillMount: function(){
@@ -38336,7 +38358,8 @@ var PickFront = React.createClass({displayName: "PickFront",
   showModal:function(data,index){
     var data ={
       'checklist_data' : data,
-      "checklist_index" : index
+      "checklist_index" : index,
+      "product_details" : this.state.PickFrontProductDetails
     };
     if(this.state.PickFrontChecklistOverlayStatus === true ){
     setTimeout((function(){CommonActions.showModal({
@@ -38550,12 +38573,18 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 
 var KQ = React.createClass({displayName: "KQ",
+  _appendClassDown : '',
+  _appendClassUp : '',
+  _qtyComponent : null,
+  virtualKeyboard : null,
     _appendClassDown: '',
     _appendClassUp: '',
     _qtyComponent: null,
     virtualKeyboard: null,
     handleIncrement: function(event) {
         if (this.props.scanDetails.kq_allowed === true) {
+          if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
+            return false;          
             var data = {};
             if (mainstore.getCurrentSeat() == "audit_front") {
                 data = {
@@ -38670,6 +38699,56 @@ var KQ = React.createClass({displayName: "KQ",
             } else {
                 this._appendClassDown = 'downArrow enable';
             }
+
+      }
+  },
+  componentWillMount: function(){
+    mainstore.removeChangeListener(this.onChange);
+  },
+  componentWillUnmount: function(){    
+    mainstore.removeChangeListener(this.onChange);
+    if(this.virtualKeyboard != null){
+      virtualKeyboard.getkeyboard().close();
+    }
+  },
+  onChange: function(){ 
+    this.setState(getState());
+  },
+  checkKqAllowed : function(){
+    if(this.props.scanDetails.kq_allowed === true){
+      if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0") ){          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable';          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+            if(this.props.scanDetails.current_qty == 1){
+              this._appendClassDown = 'downArrow disable';
+            }else{
+              this._appendClassDown = 'downArrow enable';
+            }
+      }
+    }
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+    }    
+  },
+  handleTotalQty : function(){
+    if(this.props.scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: parseInt(this.props.scanDetails.current_qty)}), 
+            React.createElement("span", {className: "separator"}, "/"), 
+            React.createElement("span", {className: "total-quantity"}, parseInt(this.props.scanDetails.total_qty))
+          )
+        );
+    }else{
+      this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", value: parseInt(this.props.scanDetails.current_qty)})
+          )
+      );
         }
 
     },
@@ -38709,6 +38788,7 @@ var KQ = React.createClass({displayName: "KQ",
             }, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " "), " ")
         )
+
     }
 });
 
@@ -40985,7 +41065,6 @@ var currentSeat = [];
 function getParameterByName(){
     var l = document.createElement("a");
     l.href = window.location.href;
-    console.debug(l.hash);
     var url_exist = window.location.href.split('=');
     if(url_exist[1] == undefined){
       listPpsSeat(null);
@@ -41233,14 +41312,17 @@ var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 
-var ws = new WebSocket(configConstants.WEBSOCKET_IP);
-
+var ws;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
-    connectToWebSocket: function(data) {
+    connectToWebSocket: function(data) { 
+        ws = new WebSocket(configConstants.WEBSOCKET_IP);
         if ("WebSocket" in window) {
             ws.onopen = function() {
+                $("#username, #password").prop('disabled', false);
                 console.log("connected");
+                utils.checkSessionStorage();
+                clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
@@ -41250,17 +41332,38 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 CommonActions.setServerMessages();
             };
             ws.onclose = function() {
+                $("#username, #password").prop('disabled', true);
                 alert("Connection is closed...");
+                setTimeout(utils.connectToWebSocket, 1000);
             };
         } else {
-            alert("WebSocket NOT supported by your Browser!");
+            alert("WebSocket NOT supported by your Browser!");            
         }
     },
-    postDataToWebsockets: function(data) {
+    checkSessionStorage : function(){
+        var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
+        if(sessionData === null){  
+        }else{
+            var webSocketData = {
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : sessionData.data["auth-token"],
+                    "seat_name" : sessionData.data.seat_name
+                }
+            };
+            utils.postDataToWebsockets(webSocketData); 
+        }
+    },
+    postDataToWebsockets: function(data) { 
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },
+    storeSession : function(data){
+        // Put the object into storage
+        sessionStorage.setItem('sessionData', JSON.stringify(data));
+    },
     getAuthToken : function(data){
+        sessionStorage.setItem('sessionData', null);
         var loginData ={
           "username" : data.data.username,
           "password" : data.data.password
@@ -41276,10 +41379,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }).done(function(response) {
             var webSocketData = {
-                "auth_token" : response.auth_token,
-                "seat_name" : data.data.seat_name
-            }
-            utils.postDataToWebsockets(data);
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : response.auth_token,
+                    "seat_name" : data.data.seat_name
+                }
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(webSocketData);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status);
             alert(textStatus);
@@ -41288,6 +41395,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     postDataToInterface: function(data, seat_name) {
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         $.ajax({
             type: 'POST',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,
@@ -41295,7 +41404,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
-                'accept': 'application/json'
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
 

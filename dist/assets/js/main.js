@@ -36623,6 +36623,12 @@ var commonActions = {
       data:data
     }); 
   },
+  logoutSession:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOGOUT_SESSION,
+      data:data
+    }); 
+  },
   setActiveException:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_ACTIVE_EXCEPTION,
@@ -37527,6 +37533,11 @@ var Header = React.createClass({displayName: "Header",
     },
     enableException:function(){
         CommonActions.enableException(true);
+        $("#actionMenu").hide();
+    },
+    logoutSession:function(){
+        CommonActions.logoutSession(true);
+        $("#actionMenu").hide();
     },
     componentDidMount: function() {
         virtualKeyBoard = $('#barcode').keyboard({
@@ -37563,6 +37574,9 @@ var Header = React.createClass({displayName: "Header",
             }
         })
     },
+    showMenu: function(){
+        $("#actionMenu").toggle();
+    },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
     },
@@ -37576,7 +37590,7 @@ var Header = React.createClass({displayName: "Header",
         } else{
             cssClass = 'keyboard-actions'
         }
-        return (
+        return (React.createElement("div", null, 
             React.createElement("div", {className: "head"}, 
               React.createElement("div", {className: "logo"}, 
               React.createElement("img", {src: allSvgConstants.logo})
@@ -37585,9 +37599,19 @@ var Header = React.createClass({displayName: "Header",
                   React.createElement("img", {src: allSvgConstants.scanHeader}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
-              React.createElement("div", {className: "header-actions", onClick: this.enableException}, 
+              React.createElement("div", {className: "header-actions", onClick: this.showMenu}, 
                  React.createElement("img", {src: allSvgConstants.menu})
+                 
               )
+            ), 
+            React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
+                    React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
+                        "Exception"
+                    ), 
+                    React.createElement("div", {className: "actionItem", onClick: this.logoutSession}, 
+                        "Logout"
+                    )
+            )
             )
         );
     },
@@ -37799,7 +37823,7 @@ function getStateData(){
     };
 }
 
-function attachKeyboard(id){ 
+function attachKeyboard(id){   
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
@@ -37813,13 +37837,13 @@ function attachKeyboard(id){
             alwaysOpen: false,
             initialFocus: true,
             visible : function(e, keypressed, el){
-              el.value = '';
+              el.value = '';              
             },
             accepted: function(e, keypressed, el) {
 
             }
         });
-   $('#'+id).data('keyboard').reveal(); 
+   $('#'+id).data('keyboard').reveal();
 }
 
 function attachNumpad(id){ 
@@ -37830,13 +37854,18 @@ function attachNumpad(id){
             alwaysOpen   : false,
             initialFocus : true,
             accepted: function(e, keypressed, el) {
+            },
+            visible : function(e, keypressed, el){
+              el.value = '';             
             }
       });
-   $('#'+id).data('keyboard').reveal(); 
+   $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id){ 
-  $('#'+id).datetimepicker({});
+function attachDateTime(id, toggleTime){
+  console.log("toggle time"+toggleTime);
+  $('.ui-keyboard').css({"display" : "none"});   
+  $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");  
 }
 
 function removeTextField(){
@@ -37907,14 +37936,28 @@ function loadComponent(modalType,modalData){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
-                    if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer"){
+                    if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer" || modalData.checklist_data[index][index1][keyvalue[0]].Format == "Float")
+                    {                              
                       var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)}))
-                    }else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String"){
+                      
+                    }
+                    else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String")
+                    {                      
                       var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                       
                     }
-                    else{
-                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index)}))
-                    }
+                     else{
+                          if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Datetime")
+                          {                      
+                            var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, true)}))                            
+                          }
+                          else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Date")
+                          {                       
+                            var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, false)}))
+                          }
+                    }                
+
+
                       return (React.createElement("div", {className: "col-md-6"}, 
                                   React.createElement("div", {className: "dataCaptureHead removeBorder"}, 
                                       keyvalue
@@ -37973,7 +38016,7 @@ var Modal = React.createClass({displayName: "Modal",
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });*/    
+    });*/      
   },
  
   componentWillMount: function(){
@@ -37983,6 +38026,7 @@ var Modal = React.createClass({displayName: "Modal",
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
+    this.forceUpdate();
     this.setState(getStateData());
    // virtualKeyBoard1.getkeyboard().close();
   },
@@ -40053,6 +40097,7 @@ var appConstants = {
 	ENABLE_EXCEPTION:"ENABLE_EXCEPTION",
 	CANCEL_EXCEPTION:"CANCEL_EXCEPTION",
 	CANCEL_EXCEPTION_TO_SERVER:"CANCEL_EXCEPTION_TO_SERVER",
+	LOGOUT_SESSION:"LOGOUT_SESSION",
 	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",
 	DAMAGED_BARCODE:"Damaged Barcode",
 	OVERSIZED_ITEMS:"Oversized Items",
@@ -41402,6 +41447,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   getAuthToken : function(data){
     utils.getAuthToken(data);
+  },
+  sessionLogout: function(data){
+    utils.sessionLogout(data);
   }
 });
 
@@ -41414,6 +41462,10 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.LOGIN:
       loginstore.getAuthToken(action.data);
+      loginstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.LOGOUT_SESSION:
+      loginstore.sessionLogout(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.OPERATOR_SEAT: 
@@ -41684,6 +41736,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             alert(errorThrown);
         });
        
+    },
+    sessionLogout:function(data){
+        sessionStorage.setItem('sessionData', null);
+        location.reload();
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');

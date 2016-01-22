@@ -9,7 +9,7 @@ var utils = require('../utils/utils');
 var resourceConstants = require('../constants/resourceConstants');
 
 var _PutBackData, _NavData, _NotificationData, _scanDetails, _prodDetails, modalContent, _serverNavData, _enableException = false,
-    _activeException = null;
+    _activeException = null , _damagedBarcodeQty = 0 ;
 
 
 var PutBackStore = assign({}, EventEmitter.prototype, {
@@ -49,18 +49,26 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         data["list"] = [];
         data["header"] = "Exceptions";
         _PutBackData.exception_allowed.map(function(value, index) {
-            if (value.exception_name == data["activeException"])
+            if ((_PutBackData["exception_type"] !=undefined && value.event == _PutBackData["exception_type"]) || value.exception_name == data["activeException"])
                 data["list"].push({
                     "text": value.exception_name,
-                    "selected": true
+                    "selected": true,
+                    "event":value["event"]!=undefined ? value["event"]:""
                 });
             else
                 data["list"].push({
                     "text": value.exception_name,
-                    "selected": false
+                    "selected": false,
+                    "event":value["event"]!=undefined ? value["event"]:""
                 });
         })
+        console.log("www");
+        console.log(JSON.stringify(data));
         return data;
+    },
+
+    getExceptionType:function(){
+        return _PutBackData["exception_type"];
     },
 
     setActiveException: function(data) {
@@ -128,6 +136,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         return _PutBackData.notification_list[0];
     },
     setPutBackData: function(data) {
+        _enableException = false;
+        _damagedBarcodeQty = 0;
+        _activeException = "";
         _PutBackData = data;
     },
 
@@ -158,6 +169,19 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             });
 
             utils.postDataToInterface(data, _PutBackData.seat_name);
+        }
+    },
+
+    getSelectedBin:function(){
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var data = "";
+            _PutBackData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                   data =  value.ppsbin_id;
+                }
+            });
+
+           return data;
         }
     },
 
@@ -194,7 +218,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     getReconcileData: function() {
         if (_PutBackData.hasOwnProperty('reconciliation')) {
             var data = {};
-            data["header"] = "Box Serial Numbers";
+            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
             data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
@@ -214,11 +238,68 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
 
     enableException: function(data) {
+        _damagedBarcodeQty = 0;
+        //data["activeException"] = "";
+        _activeException = "";
         _enableException = data;
     },
     getExceptionStatus: function() {
         return _enableException;
+    },
+
+    getScanDetails: function() {
+        if(_PutBackData["scan_details"] == undefined){
+        var data = {
+            "scan_details": {
+                "current_qty": _damagedBarcodeQty,
+                "total_qty": "0",
+                "kq_allowed": true
+            }
+        };
+            return data.scan_details;
+        }else{
+            return _PutBackData["scan_details"];
+        }
+    },
+
+    getItemDetailsData: function() {
+        var data = {};
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        var self = this;
+        if (_PutBackData.product_info != undefined && Object.keys(_PutBackData.product_info).length > 0) {
+            for (var key in _PutBackData.product_info) {
+                if (_PutBackData.product_info.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_PutBackData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+                }
+            }
+        } else {
+            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+        }
+
+        return data;
+    },
+
+    setDamagedBarcodeQuanity:function(data){
+        _damagedBarcodeQty = data;
+    },
+
+    getDamagedBarcodeQuanity:function(){
+        return _damagedBarcodeQty;
     }
+
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
@@ -249,6 +330,10 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
             break;
         case ActionTypes.SET_ACTIVE_EXCEPTION:
             PutBackStore.setActiveException(action.action.data);
+            PutBackStore.emitChange();
+            break;
+        case ActionTypes.UPDATE_DAMAGED_BARCODE_QUANTITY:
+            PutBackStore.setDamagedBarcodeQuanity(action.action.data);
             PutBackStore.emitChange();
             break;
         default:

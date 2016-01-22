@@ -90,19 +90,27 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             return flag;
         }
     },
-    getNavData: function() {
+    getNavData: function() {        
         _NavData = navConfig.putBack;
-        _NavData.map(function(data, index) {
+        //alert(JSON.stringify(_NavData));
+        _NavData.map(function(data, index) {            
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_PutBackData.screen_id) != -1) {
+                    if(_PutBackData.screen_id === "put_back_tote_close"){
+                        _NavData[index].image = 'assets/images/tote.png';
+                    }
                     _NavData[index].type = 'active';
+                    //alert(_NavData[index].image[0]);
+                    
                 } else {
                     _NavData[index].type = 'passive';
+                    
                 }
-            } else if (_PutBackData.screen_id === data.screen_id) {
-                _NavData[index].type = 'active';
+            }             
+            else if (_PutBackData.screen_id === data.screen_id) {
+                _NavData[index].type = 'active';                
             } else {
-                _NavData[index].type = 'passive';
+                _NavData[index].type = 'passive';                
             }
         });
 

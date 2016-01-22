@@ -36875,7 +36875,21 @@ var Bin = React.createClass({displayName: "Bin",
    
     render: function() {
         var compData = this.props.binData;
-        if(compData.ppsbin_state == "staged" )
+        if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+            return (
+                React.createElement("div", {className: "bin no-excess-item"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 )
+            return (
+                React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_state == "staged" )
             return (
                 React.createElement("div", {className: "bin staged"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37127,11 +37141,37 @@ var Button1 = React.createClass({displayName: "Button1",
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.SEND_DAMAGED_BARCODE_QTY:
-                                data["event_name"] = "exception_response_from_ui";
+                                data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
                                 data["event_data"]["event"] = PutBackStore.getExceptionType();
                                 data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
+                                  data["event_name"] = "put_back_exception";
+                                  data["event_data"]["action"] ="finish_exception";
+                                  data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SEND_EXCESS_ITEMS_BIN:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="extra_items_bin_select";
+                                data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                data["event_data"]["bin_id"] = PutBackStore.getSelectedBin();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SEND_EXTRA_ITEM_QTY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
+                                 data["event_name"] = "put_back_exception";
+                                 data["event_data"]["action"] ="finish_exception";
+                                 data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
@@ -38636,7 +38676,7 @@ var KQ = React.createClass({displayName: "KQ",
           if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
                 CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
                 return true;
             }
@@ -38648,7 +38688,18 @@ var KQ = React.createClass({displayName: "KQ",
                         "quantity": parseInt(this.props.scanDetails.current_qty) + 1
                     }
                 };
-            } else {
+            } 
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(this.props.scanDetails.current_qty) + 1,
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+            }  
+            else {
                 data = {
                     "event_name": "quantity_update_from_gui",
                     "event_data": {
@@ -38664,7 +38715,7 @@ var KQ = React.createClass({displayName: "KQ",
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) != 1) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
                     CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
                      return true;
                 }
@@ -38676,7 +38727,18 @@ var KQ = React.createClass({displayName: "KQ",
                             "quantity": parseInt(this.props.scanDetails.current_qty) - 1
                         }
                     };
-                } else {
+                }
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(this.props.scanDetails.current_qty) - 1,
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+                }   
+                else {
                     data = {
                         "event_name": "quantity_update_from_gui",
                         "event_data": {
@@ -38711,7 +38773,7 @@ var KQ = React.createClass({displayName: "KQ",
                     } else {
 
                         var data = {};
-                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
                             CommonActions.updateDamagedBarcodeQuantity(parseInt(e.target.value));
                              return true;
                         }
@@ -38723,7 +38785,18 @@ var KQ = React.createClass({displayName: "KQ",
                                     "quantity": parseInt(e.target.value)
                                 }
                             };
-                        } else {
+                        }
+                        else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                             data = {
+                                "event_name": "put_back_exception",
+                                "event_data": {
+                                    "action": "confirm_quantity_update",
+                                    "quantity": parseInt(e.target.value),
+                                    "event":mainstore.getExceptionType()
+                                }
+                            };
+                         }   
+                        else {
                             data = {
                                 "event_name": "quantity_update_from_gui",
                                 "event_data": {
@@ -39130,6 +39203,9 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(Img, null), 
                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
                     React.createElement(KQ, {scanDetails: this.state.PutBackDamagedBarcodeScanDetails})
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -39149,7 +39225,42 @@ var PutBack = React.createClass({displayName: "PutBack",
                       React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                    ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange"})
+                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXCESS_ITEMS_BIN})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break; 
+      case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
+          this._navigation = '';
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                  React.createElement(KQ, {scanDetails: this.state.PutBackDamagedBarcodeScanDetails}), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXTRA_ITEM_QTY})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break; 
+      case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
+          this._navigation = '';
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -39890,6 +40001,8 @@ var appConstants = {
 	PUT_BACK_EXCEPTION:"put_back_exception",
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
+	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
+	CONFIRM_ITEM_PLACE_IN_IRT:"CONFIRM_ITEM_PLACE_IN_IRT",
 	PUT_FRONT_SCAN:"put_front_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
 	STAGE_ALL : 'STAGE_ALL',
@@ -39910,11 +40023,15 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
-	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_oversized_items",
-	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_excess_items_in_bins",
+	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
+	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
+	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
+	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
+	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
 	EDIT_DETAILS:"EDIT_DETAILS",
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
+	SEND_EXCESS_ITEMS_BIN:"SEND_EXCESS_ITEMS_BIN",
 	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",
@@ -39947,8 +40064,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.148:8888/ws",
-	INTERFACE_IP : "https://192.168.3.148:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "https://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
@@ -40884,6 +41001,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         return _PutBackData.notification_list[0];
     },
     setPutBackData: function(data) {
+        _enableException = false;
+        _damagedBarcodeQty = 0;
+        _activeException = "";
         _PutBackData = data;
     },
 
@@ -40914,6 +41034,19 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             });
 
             utils.postDataToInterface(data, _PutBackData.seat_name);
+        }
+    },
+
+    getSelectedBin:function(){
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var data = "";
+            _PutBackData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                   data =  value.ppsbin_id;
+                }
+            });
+
+           return data;
         }
     },
 
@@ -40970,7 +41103,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
 
     enableException: function(data) {
-        data["activeException"] = "";
+        _damagedBarcodeQty = 0;
+        //data["activeException"] = "";
+        _activeException = "";
         _enableException = data;
     },
     getExceptionStatus: function() {
@@ -40978,6 +41113,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
 
     getScanDetails: function() {
+        if(_PutBackData["scan_details"] == undefined){
         var data = {
             "scan_details": {
                 "current_qty": _damagedBarcodeQty,
@@ -40986,6 +41122,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             }
         };
             return data.scan_details;
+        }else{
+            return _PutBackData["scan_details"];
+        }
     },
 
     getItemDetailsData: function() {
@@ -41298,7 +41437,7 @@ var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson , _screenId;
+var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson , _screenId , _itemUid , _exceptionType;
 var popupVisible = false;
 var _showSpinner = true;
 var _enableException = false;
@@ -41335,6 +41474,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData = data;
         _seatName = data.seat_name;
         _currentSeat = data.mode + "_" + data.seat_type;
+        _itemUid = data["item_uid"]!=undefined?data["item_uid"]:"";
+        _exceptionType = data["exception_type"]!=undefined?data["exception_type"]:"";
         _screenId = data.screen_id;
     },
     getModalContent: function() {
@@ -41346,6 +41487,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         } else {
             return null;
         }
+    },
+    getItemUid:function(){
+       return _itemUid;
+    },
+    getExceptionType:function(){
+        return _exceptionType;
     },
     getModalType: function() {
         return modalContent.type;

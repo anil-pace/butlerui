@@ -17,7 +17,7 @@ var KQ = React.createClass({
           if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
                 CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
                 return true;
             }
@@ -29,7 +29,18 @@ var KQ = React.createClass({
                         "quantity": parseInt(this.props.scanDetails.current_qty) + 1
                     }
                 };
-            } else {
+            } 
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(this.props.scanDetails.current_qty) + 1,
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+            }  
+            else {
                 data = {
                     "event_name": "quantity_update_from_gui",
                     "event_data": {
@@ -45,7 +56,7 @@ var KQ = React.createClass({
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) != 1) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
                     CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
                      return true;
                 }
@@ -57,7 +68,18 @@ var KQ = React.createClass({
                             "quantity": parseInt(this.props.scanDetails.current_qty) - 1
                         }
                     };
-                } else {
+                }
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(this.props.scanDetails.current_qty) - 1,
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+                }   
+                else {
                     data = {
                         "event_name": "quantity_update_from_gui",
                         "event_data": {
@@ -92,7 +114,7 @@ var KQ = React.createClass({
                     } else {
 
                         var data = {};
-                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE){
+                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
                             CommonActions.updateDamagedBarcodeQuantity(parseInt(e.target.value));
                              return true;
                         }
@@ -104,7 +126,18 @@ var KQ = React.createClass({
                                     "quantity": parseInt(e.target.value)
                                 }
                             };
-                        } else {
+                        }
+                        else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                             data = {
+                                "event_name": "put_back_exception",
+                                "event_data": {
+                                    "action": "confirm_quantity_update",
+                                    "quantity": parseInt(e.target.value),
+                                    "event":mainstore.getExceptionType()
+                                }
+                            };
+                         }   
+                        else {
                             data = {
                                 "event_name": "quantity_update_from_gui",
                                 "event_data": {

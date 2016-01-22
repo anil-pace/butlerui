@@ -128,6 +128,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         return _PutBackData.notification_list[0];
     },
     setPutBackData: function(data) {
+        _enableException = false;
+        _damagedBarcodeQty = 0;
+        _activeException = "";
         _PutBackData = data;
     },
 
@@ -158,6 +161,19 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             });
 
             utils.postDataToInterface(data, _PutBackData.seat_name);
+        }
+    },
+
+    getSelectedBin:function(){
+        if (_PutBackData.hasOwnProperty('ppsbin_list')) {
+            var data = "";
+            _PutBackData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                   data =  value.ppsbin_id;
+                }
+            });
+
+           return data;
         }
     },
 
@@ -214,7 +230,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
 
     enableException: function(data) {
-        data["activeException"] = "";
+        _damagedBarcodeQty = 0;
+        //data["activeException"] = "";
+        _activeException = "";
         _enableException = data;
     },
     getExceptionStatus: function() {
@@ -222,6 +240,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
 
     getScanDetails: function() {
+        if(_PutBackData["scan_details"] == undefined){
         var data = {
             "scan_details": {
                 "current_qty": _damagedBarcodeQty,
@@ -230,6 +249,9 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             }
         };
             return data.scan_details;
+        }else{
+            return _PutBackData["scan_details"];
+        }
     },
 
     getItemDetailsData: function() {

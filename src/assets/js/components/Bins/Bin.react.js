@@ -34,7 +34,21 @@ var Bin = React.createClass({
    
     render: function() {
         var compData = this.props.binData;
-        if(compData.ppsbin_state == "staged" )
+        if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+            return (
+                <div className = "bin no-excess-item" >
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl">{compData.ppsbin_id}</div>
+                </div>
+            );
+        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 )
+            return (
+                <div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)} >
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl">{compData.ppsbin_id}</div>
+                </div>
+            );
+        else if(compData.ppsbin_state == "staged" )
             return (
                 <div className = "bin staged" >
                     <div className ="item-count">{compData.ppsbin_count}</div>

@@ -33,11 +33,37 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.SEND_DAMAGED_BARCODE_QTY:
-                                data["event_name"] = "exception_response_from_ui";
+                                data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
                                 data["event_data"]["event"] = PutBackStore.getExceptionType();
                                 data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
+                                  data["event_name"] = "put_back_exception";
+                                  data["event_data"]["action"] ="finish_exception";
+                                  data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SEND_EXCESS_ITEMS_BIN:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="extra_items_bin_select";
+                                data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                data["event_data"]["bin_id"] = PutBackStore.getSelectedBin();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SEND_EXTRA_ITEM_QTY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
+                                 data["event_name"] = "put_back_exception";
+                                 data["event_data"]["action"] ="finish_exception";
+                                 data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:

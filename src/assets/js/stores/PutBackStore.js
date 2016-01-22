@@ -210,6 +210,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     getReconcileData: function() {
         if (_PutBackData.hasOwnProperty('reconciliation')) {
             var data = {};
+            data["header"] = [];
             data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;

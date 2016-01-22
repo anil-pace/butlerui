@@ -61,13 +61,13 @@ var PutBack = React.createClass({
       this._navigation = '';
       switch(this.state.PutBackExceptionData["activeException"]){
         case appConstants.DAMAGED_BARCODE:
-          _rightComponent = (<div className="exception-right">{"DAMAGED_BARCODE"}</div>);
+          _rightComponent = (<div className="exception-right"></div>);
         break;
         case appConstants.OVERSIZED_ITEMS:
-          _rightComponent = (<div className="exception-right">{"OVERSIZED_ITEMS"}</div>)
+          _rightComponent = (<div className="exception-right"></div>)
         break;
         case appConstants.EXCESS_ITEMS_IN_PPS_BINS:
-          _rightComponent = (<div className="exception-right">{"EXCESS_ITEMS_IN_PPS_BINS"}</div>)
+          _rightComponent = (<div className="exception-right"></div>)
         break;
         default:
           _rightComponent = '';

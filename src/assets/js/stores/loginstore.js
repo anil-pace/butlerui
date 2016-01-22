@@ -72,6 +72,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   getAuthToken : function(data){
     utils.getAuthToken(data);
+  },
+  sessionLogout: function(data){
+    utils.sessionLogout(data);
   }
 });
 
@@ -84,6 +87,10 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.LOGIN:
       loginstore.getAuthToken(action.data);
+      loginstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.LOGOUT_SESSION:
+      loginstore.sessionLogout(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.OPERATOR_SEAT: 

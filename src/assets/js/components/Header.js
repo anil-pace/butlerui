@@ -19,6 +19,11 @@ var Header = React.createClass({
     },
     enableException:function(){
         CommonActions.enableException(true);
+        $("#actionMenu").hide();
+    },
+    logoutSession:function(){
+        CommonActions.logoutSession(true);
+        $("#actionMenu").hide();
     },
     componentDidMount: function() {
         virtualKeyBoard = $('#barcode').keyboard({
@@ -55,6 +60,9 @@ var Header = React.createClass({
             }
         })
     },
+    showMenu: function(){
+        $("#actionMenu").toggle();
+    },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
     },
@@ -68,7 +76,7 @@ var Header = React.createClass({
         } else{
             cssClass = 'keyboard-actions'
         }
-        return (
+        return (<div>
             <div className="head">
               <div className="logo">
               <img src={allSvgConstants.logo} />
@@ -77,9 +85,19 @@ var Header = React.createClass({
                   <img src={allSvgConstants.scanHeader} />
                   <input id="barcode" type="text" value='' />
                 </div>
-              <div className="header-actions" onClick = {this.enableException}>
+              <div className="header-actions" onClick={this.showMenu} >
                  <img src={allSvgConstants.menu} />
+                 
               </div>
+            </div>
+            <div className="actionMenu" id="actionMenu" >
+                    <div className="actionItem" onClick = {this.enableException} >
+                        Exception
+                    </div>
+                    <div className="actionItem" onClick = {this.logoutSession} >
+                        Logout
+                    </div>
+            </div>
             </div>
         );
     },

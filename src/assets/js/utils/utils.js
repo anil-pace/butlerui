@@ -86,6 +86,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         });
        
     },
+    sessionLogout:function(data){
+        sessionStorage.setItem('sessionData', null);
+        location.reload();
+    },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];

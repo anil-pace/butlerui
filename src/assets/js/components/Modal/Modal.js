@@ -11,8 +11,6 @@ var jqueryPosition = require('jquery-ui/position');
 var virtualkeyboard = require('virtual-keyboard');
 
 var component,title;
-var virtualKeyBoard1;
-var virtualNumpad;
 
 function getStateData(){
   var modalType = mainstore.getModalType();
@@ -24,9 +22,7 @@ function getStateData(){
     };
 }
 
-function attachKeyboard(id){
-    alert("kb"); 
-    $(".ui-keyboard ui-keyboard ui-widget-content").remove();    
+function attachKeyboard(id){   
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
@@ -49,10 +45,7 @@ function attachKeyboard(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachNumpad(id){
- alert("num"); 
-
-    $(".ui-keyboard").remove();
+function attachNumpad(id){ 
      virtualNumpad = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
@@ -68,7 +61,9 @@ function attachNumpad(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id, toggleTime){   
+function attachDateTime(id, toggleTime){
+  console.log("toggle time"+toggleTime);
+  $('.ui-keyboard').css({"display" : "none"});   
   $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");  
 }
 
@@ -140,7 +135,7 @@ function loadComponent(modalType,modalData){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
-                    if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer")
+                    if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer" || modalData.checklist_data[index][index1][keyvalue[0]].Format == "Float")
                     {                              
                       var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)} />)
                       
@@ -230,6 +225,7 @@ var Modal = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
+    this.forceUpdate();
     this.setState(getStateData());
    // virtualKeyBoard1.getkeyboard().close();
   },

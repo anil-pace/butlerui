@@ -12,7 +12,8 @@ var allSvgConstants = {
 	forma1 : 'assets/images/Forma1.png',
 	headerbg : 'assets/images/headerbg.png',
 	scanHeader :'assets/images/scan_header.png',
-	iconBar :'assets/images/Icon.png'	
+	iconBar :'assets/images/Icon.png',
+	tote:'assets/images/Tote.svg'
 }
 
 module.exports = allSvgConstants;

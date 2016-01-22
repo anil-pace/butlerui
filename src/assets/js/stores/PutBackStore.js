@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
+var SVGConstants = require('../constants/svgConstants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var ActionTypes = AppConstants;
@@ -99,14 +100,15 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         }
     },
     getNavData: function() {        
-        _NavData = navConfig.putBack;
-        //alert(JSON.stringify(_NavData));
+        _NavData = navConfig.putBack;        
         _NavData.map(function(data, index) {            
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_PutBackData.screen_id) != -1) {
-                    if(_PutBackData.screen_id === "put_back_tote_close"){
-                        _NavData[index].image = 'assets/images/Tote.svg';
+                    if(_PutBackData.screen_id === AppConstants.PUT_BACK_TOTE_CLOSE){                       
+                        _NavData[index].image = SVGConstants.tote;
                     }
+                    else
+                        _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';                    
                 } else {
                     _NavData[index].type = 'passive';                    

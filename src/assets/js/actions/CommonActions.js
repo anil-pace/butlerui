@@ -161,6 +161,13 @@ var commonActions = {
       actionType: appConstants.SET_ACTIVE_EXCEPTION,
       data:data
     }); 
+  },
+
+  updateDamagedBarcodeQuantity:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_DAMAGED_BARCODE_QUANTITY,
+      data:data
+    });
   }
 
 };

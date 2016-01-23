@@ -5,8 +5,9 @@ var ExceptionList = React.createClass({
     _exceptionListItems:[],
     getExceptionListItems:function(){
     	var comp =[];
+        var self = this;
     	this.props.data.map(function(value,index){
-    		comp.push((<ExceptionListItem data={value} />));
+    		comp.push((<ExceptionListItem data={value} action={self.props.action} />));
     	})
     	this._exceptionListItems = comp;
     },

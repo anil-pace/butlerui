@@ -17,7 +17,25 @@
         justify-content: center;
         box-sizing: border-box;
         .exception-right{
-            margin-left: 20%;
+            width: 100%;
+            padding-left:20%;
+            display: flex;
+            flex-flow:column;
+            flex-grow:1;
+            align-items:center;
+            justify-content:center;
+            .finish-damaged-barcode{
+                padding-top: 5em;
+            }
+        }
+        &.exception{
+            border-top: 1px solid #d1d1d1;
+            background: #f9f9f9;
+        }
+        .exception-head{
+            color: orange;
+            font-size: 5rem;
+            padding-bottom: 1em;
         }
         .single-bin {
             position: absolute;
@@ -54,9 +72,18 @@
             flex-wrap: nowrap;
             box-sizing: border-box;
             width: 100%;
-            overflow: auto;
+            overflow: hidden;
             &.space-left{
                 padding-left: 80px;
+            }
+            &.exception1{
+                flex-basis:40vh;
+                flex-grow:0;
+                background: #f9f9f9;
+                .productImage,.kq-wrappper,.tabular-data{
+                    margin-right: 20px;
+                }
+                
             }
         }
         .staging-action {

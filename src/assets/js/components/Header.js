@@ -6,7 +6,7 @@ var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 
 var Header = React.createClass({
-    virtualKeyBoard: '',
+    virtualKeyBoard_header: '',
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
@@ -14,19 +14,7 @@ var Header = React.createClass({
         }
     },
     openKeyboard: function() {
-        $('#barcode').data('keyboard').reveal();
-        return false;
-    },
-    enableException:function(){
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
-    logoutSession:function(){
-        CommonActions.logoutSession(true);
-        $("#actionMenu").hide();
-    },
-    componentDidMount: function() {
-        virtualKeyBoard = $('#barcode').keyboard({
+       virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
               'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -59,6 +47,17 @@ var Header = React.createClass({
                 }
             }
         })
+        $('#barcode').data('keyboard').reveal();
+    },
+    enableException:function(){
+        CommonActions.enableException(true);
+        $("#actionMenu").hide();
+    },
+    logoutSession:function(){
+        CommonActions.logoutSession(true);
+        $("#actionMenu").hide();
+    },
+    componentDidMount: function() {
     },
     showMenu: function(){
         $("#actionMenu").toggle();
@@ -67,7 +66,7 @@ var Header = React.createClass({
         mainstore.addChangeListener(this.onChange);
     },
     onChange: function() {
-        virtualKeyBoard.getkeyboard().close();
+        virtualKeyBoard_header.getkeyboard().close();
     },
     render: function() { 
         var cssClass;        

@@ -806,6 +806,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackScreenId"] = this.getScreenId();
                 data["PickBackServerNavData"] = this.getServerNavData();
                 data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 break;
             default:
         }

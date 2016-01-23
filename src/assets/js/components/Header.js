@@ -24,7 +24,7 @@ var Header = React.createClass({
     },
     logoutSession:function(){
         $("#actionMenu").hide();
-        if(this.state.logoutState === "false"){             
+        if(this.state.logoutState === "false" || this.state.logoutState === false){             
             return false;
         }
         else{
@@ -84,7 +84,7 @@ var Header = React.createClass({
         } else{
             cssClass = 'keyboard-actions'
         }
-        if(this.state.logoutState === "false"){
+        if(this.state.logoutState === "false" || this.state.logoutState === false){
             logoutClass = 'actionItem disable'
         } else{
             logoutClass = 'actionItem'

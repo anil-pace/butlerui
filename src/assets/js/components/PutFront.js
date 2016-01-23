@@ -184,7 +184,7 @@ var PutFront = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
-                  <div className="main-container">
+                  <div className="main-container exception1">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Take the Items out from the Bin"}</div>
                     </div>

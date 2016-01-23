@@ -7,6 +7,7 @@ var jqueryPosition = require('jquery-ui/position');
 
 var Header = React.createClass({
     virtualKeyBoard: '',
+    exceptionMenu:'',
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
@@ -69,8 +70,17 @@ var Header = React.createClass({
     onChange: function() {
         virtualKeyBoard.getkeyboard().close();
     },
+    getExceptionMenu:function(){
+         if(mainstore.getExceptionAllowed().length > 0 )
+            this.exceptionMenu =   (<div className="actionItem" onClick = {this.enableException} >
+                                        Exception
+                                    </div>);
+        else
+            this.exceptionMenu = '';
+    },
     render: function() { 
-        var cssClass;        
+        var cssClass;      
+        this.getExceptionMenu();  
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else{
@@ -91,9 +101,7 @@ var Header = React.createClass({
               </div>
             </div>
             <div className="actionMenu" id="actionMenu" >
-                    <div className="actionItem" onClick = {this.enableException} >
-                        Exception
-                    </div>
+                    {this.exceptionMenu}
                     <div className="actionItem" onClick = {this.logoutSession} >
                         Logout
                     </div>

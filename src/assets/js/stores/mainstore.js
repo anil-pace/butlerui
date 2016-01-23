@@ -253,6 +253,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return data;
     },
+    getExceptionAllowed:function(){
+        return _seatData.exception_allowed;
+    },
 
     scanDetails: function() {
         _scanDetails = _seatData.scan_details;

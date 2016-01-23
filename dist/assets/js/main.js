@@ -37588,6 +37588,7 @@ var jqueryPosition = require('jquery-ui/position');
 
 var Header = React.createClass({displayName: "Header",
     virtualKeyBoard: '',
+    exceptionMenu:'',
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
@@ -37650,8 +37651,17 @@ var Header = React.createClass({displayName: "Header",
     onChange: function() {
         virtualKeyBoard.getkeyboard().close();
     },
+    getExceptionMenu:function(){
+         if(mainstore.getExceptionAllowed().length > 0 )
+            this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
+                                        "Exception"
+                                    ));
+        else
+            this.exceptionMenu = '';
+    },
     render: function() { 
-        var cssClass;        
+        var cssClass;      
+        this.getExceptionMenu();  
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else{
@@ -37672,9 +37682,7 @@ var Header = React.createClass({displayName: "Header",
               )
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
-                    React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
-                        "Exception"
-                    ), 
+                    this.exceptionMenu, 
                     React.createElement("div", {className: "actionItem", onClick: this.logoutSession}, 
                         "Logout"
                     )
@@ -39718,7 +39726,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
+                  React.createElement("div", {className: "main-container exception1"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Take the Items out from the Bin")
                     )
@@ -40436,8 +40444,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "https://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://192.168.3.148:8888/ws",
+	INTERFACE_IP : "https://192.168.3.148:5000"
 };
 
 module.exports = configConstants;
@@ -41989,6 +41997,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 });
         })
         return data;
+    },
+    getExceptionAllowed:function(){
+        return _seatData.exception_allowed;
     },
 
     scanDetails: function() {

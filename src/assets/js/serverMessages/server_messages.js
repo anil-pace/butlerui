@@ -82,7 +82,9 @@ var serverMessages = {
     "AdF.A.009" :"Waiting for MSU to arrive",
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successfull",
-    "AdF.B.003" :"Item Scan successfull"
+    "AdF.B.003" :"Item Scan successfull",
+    'CLIENTCODE_001' : 'Bin {0} selected',
+    'CLIENTCODE_002' : 'Bin {0} unselected',
 };
 
 

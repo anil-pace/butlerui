@@ -9,7 +9,9 @@ var resourceConstants = {
 	NO_RECONCILE: 'No Items To Reconcile',
 	YES_RECONCILE:'List Of Items To Reconcile',
 	USERNAME :'User Name',
-	PASSWORD : 'Password'
+	PASSWORD : 'Password',
+	CLIENTCODE_001 : 'CLIENTCODE_001',
+	CLIENTCODE_002 : 'CLIENTCODE_002'
 };
 module.exports = resourceConstants;
 

@@ -40409,8 +40409,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.148:8888/ws",
-	INTERFACE_IP : "https://192.168.3.148:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "https://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
@@ -40427,7 +40427,9 @@ var resourceConstants = {
 	NO_RECONCILE: 'No Items To Reconcile',
 	YES_RECONCILE:'List Of Items To Reconcile',
 	USERNAME :'User Name',
-	PASSWORD : 'Password'
+	PASSWORD : 'Password',
+	CLIENTCODE_001 : 'CLIENTCODE_001',
+	CLIENTCODE_002 : 'CLIENTCODE_002'
 };
 module.exports = resourceConstants;
 
@@ -40590,7 +40592,9 @@ var serverMessages = {
     "AdF.A.009" :"Waiting for MSU to arrive",
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successfull",
-    "AdF.B.003" :"Item Scan successfull"
+    "AdF.B.003" :"Item Scan successfull",
+    'CLIENTCODE_001' : 'Bin {0} selected',
+    'CLIENTCODE_002' : 'Bin {0} unselected',
 };
 
 
@@ -41712,6 +41716,7 @@ var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var navConfig = require('../config/navConfig');
+var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
@@ -41757,19 +41762,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData["ppsbin_list"].map(function(value, index) {
             if (value.ppsbin_id == bin_id) {
                 if (value["selected_for_staging"] != undefined) {
-                    value["selected_for_staging"] = !value["selected_for_staging"];
                     flag = !value["selected_for_staging"];
+                    value["selected_for_staging"] = !value["selected_for_staging"];
                 } else {
                     value["selected_for_staging"] = true;
                     flag = true;
                 }
             } else if (value["selected_for_staging"] != undefined) {
                 value["selected_for_staging"] = false;
-                flag = false;
             }
         });
         if (_seatData.notification_list.length != 0) {
-            _seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
+            alert(flag);
+            _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
+            _seatData.notification_list[0].details[0] = bin_id;
+            //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
         }
     },
 
@@ -42608,7 +42615,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../dispatchers/AppDispatcher":284,"../serverMessages/chinese":286,"../serverMessages/server_messages":287,"../utils/utils":295,"events":14,"react/lib/Object.assign":121}],295:[function(require,module,exports){
+},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../dispatchers/AppDispatcher":284,"../serverMessages/chinese":286,"../serverMessages/server_messages":287,"../utils/utils":295,"events":14,"react/lib/Object.assign":121}],295:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');

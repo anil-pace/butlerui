@@ -6,6 +6,7 @@ var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var navConfig = require('../config/navConfig');
+var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
@@ -51,19 +52,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData["ppsbin_list"].map(function(value, index) {
             if (value.ppsbin_id == bin_id) {
                 if (value["selected_for_staging"] != undefined) {
-                    value["selected_for_staging"] = !value["selected_for_staging"];
                     flag = !value["selected_for_staging"];
+                    value["selected_for_staging"] = !value["selected_for_staging"];
                 } else {
                     value["selected_for_staging"] = true;
                     flag = true;
                 }
             } else if (value["selected_for_staging"] != undefined) {
                 value["selected_for_staging"] = false;
-                flag = false;
             }
         });
         if (_seatData.notification_list.length != 0) {
-            _seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
+            alert(flag);
+            _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
+            _seatData.notification_list[0].details[0] = bin_id;
+            //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
         }
     },
 

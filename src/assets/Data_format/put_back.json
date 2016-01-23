@@ -379,3 +379,33 @@
  		"tote_id": "TOTEAB"
  	}
  }
+
+ {
+	"state_data": {
+		"seat_name": "back_10",
+		"screen_id": "put_back_invalid_tote_item",
+		"screen_version": "1",
+		"notification_list": [{
+			"details": [],
+			"code": "PtB.E.015",
+			"description": "Please put it in IRT bin and confirm",
+			"level": "error"
+		}],
+		"all_peripheral_status": "true",
+		"item_uid": "973b2132-b682-45f4-aac9-a3d01ec594d8",
+		"mode": "put",
+		"is_idle": false,
+		"logout_allowed": "false",
+		"seat_type": "back",
+		"time_stamp": "1452534790",
+		"header_msge_list": [{
+			"details": [
+				[51]
+			],
+			"code": "PtB.H.006",
+			"description": "3 excess quantity of item found in tote",
+			"level": "error"
+		}],
+		"api_version": "1"
+	}
+}

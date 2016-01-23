@@ -83,6 +83,9 @@ var Button1 = React.createClass({
                             case appConstants.GET_MISSING_AND_DAMAGED_QTY:
                                 ActionCreators.changePutFrontExceptionScreen("damaged_or_missing");
                                 break;
+                            case appConstants.GET_REVISED_QUANTITY:
+                                 ActionCreators.changePutFrontExceptionScreen("revised_quantity");
+                                break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);

@@ -132,7 +132,7 @@ var PutFront = React.createClass({
         break;
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
-          if(this.state.PutFrontExceptionGoodOrDamaged == "good"){
+          if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
@@ -152,7 +152,7 @@ var PutFront = React.createClass({
                 </div>
               </div>
             );
-          }else{
+          }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
@@ -179,7 +179,27 @@ var PutFront = React.createClass({
           }
         break; 
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
-          this._component = (
+           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
+              this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Take the Items out from the Bin"}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_REVISED_QUANTITY} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+            this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
@@ -198,6 +218,8 @@ var PutFront = React.createClass({
                 </div>
               </div>
             );
+           }
+          
         break;
       default:
         return true; 

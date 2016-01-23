@@ -16,7 +16,7 @@ var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, 
     _showSpinner = true,
     _goodQuantity = 0,
     _damagedQuantity = 0,
-    _screenGoodOrDamaged = "good",
+    _putFrontExceptionScreen = "good",
     _missingQuantity = 0;
 var modalContent = {
     data: "",
@@ -422,7 +422,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setCurrentSeat: function(data) {
         _enableException = false;
         _KQQty = 0;
-        _screenGoodOrDamaged = "good";
+        _putFrontExceptionScreen = "good";
         _goodQuantity = 0;
         _damagedQuantity = 0;
         _missingQuantity = 0;
@@ -435,6 +435,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        if(_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+            _putFrontExceptionScreen = "good";
+        else if(_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
+            _putFrontExceptionScreen = "take_item_from_bin";
+            _
     },
     getModalContent: function() {
         return modalContent.data;
@@ -542,10 +547,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setPutFrontExceptionScreen: function(data) {
-        _screenGoodOrDamaged = data;
+        _putFrontExceptionScreen = data;
     },
-    getMissingDamagedGoodScreen: function() {
-        return _screenGoodOrDamaged;
+    getPutFrontExceptionScreen: function() {
+        return _putFrontExceptionScreen;
     },
 
     validateAndSendPutDataToServer: function() {
@@ -709,7 +714,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontGoodQuantity"] = this.getGoodScanDetails();
                 data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
-                data["PutFrontExceptionGoodOrDamaged"] = this.getMissingDamagedGoodScreen();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -717,6 +722,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontKQQuantity"] = this.getScanDetails();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:

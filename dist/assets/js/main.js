@@ -37237,6 +37237,9 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.GET_MISSING_AND_DAMAGED_QTY:
                                 ActionCreators.changePutFrontExceptionScreen("damaged_or_missing");
                                 break;
+                            case appConstants.GET_REVISED_QUANTITY:
+                                 ActionCreators.changePutFrontExceptionScreen("revised_quantity");
+                                break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
@@ -39663,7 +39666,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
-          if(this.state.PutFrontExceptionGoodOrDamaged == "good"){
+          if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
@@ -39683,7 +39686,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 )
               )
             );
-          }else{
+          }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
@@ -39710,7 +39713,27 @@ var PutFront = React.createClass({displayName: "PutFront",
           }
         break; 
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
-          this._component = (
+           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
+              this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Take the Items out from the Bin")
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
@@ -39729,6 +39752,8 @@ var PutFront = React.createClass({displayName: "PutFront",
                 )
               )
             );
+           }
+          
         break;
       default:
         return true; 
@@ -40377,6 +40402,7 @@ var appConstants = {
 	AUDIT_SCAN:"audit_scan",
 	AUDIT_RECONCILE:"audit_reconcile",
 	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
+	GET_REVISED_QUANTITY:"GET_REVISED_QUANTITY",
 	BARCODE_SCAN : 'BARCODE_SCAN',
 	GET_SERVER_MESSAGES :'GET_SERVER_MESSAGES',
 	SET_SERVER_MESSAGES : 'SET_SERVER_MESSAGES',
@@ -41727,7 +41753,7 @@ var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, 
     _showSpinner = true,
     _goodQuantity = 0,
     _damagedQuantity = 0,
-    _screenGoodOrDamaged = "good",
+    _putFrontExceptionScreen = "good",
     _missingQuantity = 0;
 var modalContent = {
     data: "",
@@ -42133,7 +42159,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setCurrentSeat: function(data) {
         _enableException = false;
         _KQQty = 0;
-        _screenGoodOrDamaged = "good";
+        _putFrontExceptionScreen = "good";
         _goodQuantity = 0;
         _damagedQuantity = 0;
         _missingQuantity = 0;
@@ -42146,6 +42172,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        if(_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+            _putFrontExceptionScreen = "good";
+        else if(_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
+            _putFrontExceptionScreen = "take_item_from_bin";
+            _
     },
     getModalContent: function() {
         return modalContent.data;
@@ -42253,10 +42284,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setPutFrontExceptionScreen: function(data) {
-        _screenGoodOrDamaged = data;
+        _putFrontExceptionScreen = data;
     },
-    getMissingDamagedGoodScreen: function() {
-        return _screenGoodOrDamaged;
+    getPutFrontExceptionScreen: function() {
+        return _putFrontExceptionScreen;
     },
 
     validateAndSendPutDataToServer: function() {
@@ -42420,7 +42451,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontGoodQuantity"] = this.getGoodScanDetails();
                 data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
-                data["PutFrontExceptionGoodOrDamaged"] = this.getMissingDamagedGoodScreen();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -42428,6 +42459,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontKQQuantity"] = this.getScanDetails();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:

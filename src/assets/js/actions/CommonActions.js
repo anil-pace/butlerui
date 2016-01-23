@@ -191,9 +191,10 @@ var commonActions = {
     });
   },
 
-  changeScreenToDamagedAndMissing:function(){
+  changePutFrontExceptionScreen:function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.CHANGE_SCREEN_TO_DAMAGED_AND_MISSING
+      actionType: appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN,
+      data:data
     });
   },
 

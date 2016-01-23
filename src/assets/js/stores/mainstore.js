@@ -541,8 +541,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    setMissingDamagedGoodScreen: function() {
-        _screenGoodOrDamaged = "damaged_missing";
+    setPutFrontExceptionScreen: function(data) {
+        _screenGoodOrDamaged = data;
     },
     getMissingDamagedGoodScreen: function() {
         return _screenGoodOrDamaged;
@@ -686,6 +686,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
                 break;
             case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -698,6 +699,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -885,8 +887,8 @@ AppDispatcher.register(function(payload) {
             mainstore.setMissingQuanity(action.data);
             mainstore.emitChange();
             break;
-        case appConstants.CHANGE_SCREEN_TO_DAMAGED_AND_MISSING:
-            mainstore.setMissingDamagedGoodScreen();
+        case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
+            mainstore.setPutFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:

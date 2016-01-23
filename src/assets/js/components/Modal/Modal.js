@@ -224,7 +224,6 @@ var Modal = React.createClass({
   },
   onChange: function(){ 
     this.forceUpdate();
-    $(':input').unbind();
     this.setState(getStateData());
   },
   render: function () {

@@ -4,9 +4,8 @@ var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
-
+var virtualKeyBoard_header = null;
 var Header = React.createClass({
-    virtualKeyBoard_header: '',
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
@@ -66,7 +65,9 @@ var Header = React.createClass({
         mainstore.addChangeListener(this.onChange);
     },
     onChange: function() {
-        virtualKeyBoard_header.getkeyboard().close();
+        if(virtualKeyBoard_header != null){
+            virtualKeyBoard_header.getkeyboard().close();
+        }
     },
     render: function() { 
         var cssClass;        

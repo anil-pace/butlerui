@@ -9,6 +9,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var utils = require('../../utils/utils.js');
 
+var virtualKeyBoard_login;
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -41,7 +42,7 @@ var LoginPage = React.createClass({
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();   
-    virtualKeyBoard = $('#username, #password').keyboard({
+    virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
         'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],

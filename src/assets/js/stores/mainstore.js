@@ -556,6 +556,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _putFrontExceptionScreen;
     },
 
+    getCurrentSlot : function(){        
+        if(_seatData.hasOwnProperty('rack_details')){       
+            return _seatData.rack_details.slot_barcodes;
+        }else{
+            return null;
+        }
+    },
+
     validateAndSendPutDataToServer: function() {
         if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {

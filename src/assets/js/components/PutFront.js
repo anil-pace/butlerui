@@ -11,10 +11,13 @@ var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var Modal = require('./Modal/Modal');
+var mainstore = require('../stores/mainstore');
+var Exception = require('./Exception/Exception');
+var KQ = require('./ProductDetails/KQ');
 
 
 function getStateData(){
-  return {
+  /*return {
            PutFrontNavData : PutFrontStore.getNavData(),
            PutFrontNotification : PutFrontStore.getNotificationData(),
            PutFrontScreenId:PutFrontStore.getScreenId(),
@@ -25,21 +28,23 @@ function getStateData(){
            PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
            PutFrontServerNavData : PutFrontStore.getServerNavData(),
            PutFrontItemUid : PutFrontStore.getItemUid()
-    };
-
+          
+    };*/
+     return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({
   _notification:'',
   _component:'',
+  _navigation:'',
   getInitialState: function(){
     return getStateData();
   },
   componentWillMount: function(){
-    PutFrontStore.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    PutFrontStore.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
     this.setState(getStateData());
@@ -53,9 +58,26 @@ var PutFront = React.createClass({
       this._notification = "";
   },
 
+  getExceptionComponent:function(){
+      var _rightComponent = '';
+      this._navigation = '';
+      return (
+              <div className='grid-container exception'>
+                <Modal />
+                <Exception data={this.state.PutFrontExceptionData} action={true}/>
+                <div className="exception-right"></div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                </div>
+              </div>
+            );
+  },
+
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
+        if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
@@ -63,9 +85,14 @@ var PutFront = React.createClass({
                  </div>
               </div>
             );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
 
         break;
       case appConstants.PUT_FRONT_SCAN:
+         if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -75,8 +102,13 @@ var PutFront = React.createClass({
                 </div>
               </div>
             );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
         break;
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
+      if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -94,6 +126,78 @@ var PutFront = React.createClass({
 
               </div>
             );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+      case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
+          this._navigation = '';
+          if(this.state.PutFrontExceptionGoodOrDamaged == "good"){
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Good Quantity"}</div>
+                      <KQ scanDetails = {this.state.PutFrontGoodQuantity} action={"GOOD"} />
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          }else{
+            this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Missing Quantity"}</div>
+                      <KQ scanDetails = {this.state.PutFrontMissingQuantity} action={"MISSING"} />
+                    </div>
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Damaged Quantity"}</div>
+                      <KQ scanDetails = {this.state.PutFrontDamagedQuantity} action={"DAMAGED"} />
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          }
+        break; 
+      case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Revised Quantity"}</div>
+                      <KQ scanDetails = {this.state.PutFrontKQQuantity}  />
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
         break;
       default:
         return true; 
@@ -106,7 +210,7 @@ var PutFront = React.createClass({
     return (
       <div className="main">
         <Header />
-        <Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>
+        {this._navigation}
         {this._component}
         {this._notification}
       </div> 

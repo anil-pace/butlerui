@@ -1,6 +1,7 @@
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
+var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Notification = require("./Notification/Notification");
@@ -18,25 +19,28 @@ var Img = require('./PrdtDetails/ProductImage.js');
 
 
 function getStateData(){
-  return {
-           StageActive:PutBackStore.getStageActiveStatus(),
-           StageAllActive:PutBackStore.getStageAllActiveStatus(),
-           PutBackNavData : PutBackStore.getNavData(),
-           PutBackNotification : PutBackStore.getNotificationData(),
-           PutBackBinData: PutBackStore.getBinData(),
-           PutBackScreenId:PutBackStore.getScreenId(),
-           PutBackScanDetails : PutBackStore.scanDetails(),
-           PutBackProductDetails : PutBackStore.productDetails(),
-           PutBackServerNavData : PutBackStore.getServerNavData(),
-           PutBackItemUid : PutBackStore.getItemUid(),
-           PutBackReconciliation : PutBackStore.getReconcileData(),
-           PutBackToteId : PutBackStore.getToteId(),
-           PutBackExceptionStatus:PutBackStore.getExceptionStatus(),
-           PutBackExceptionData:PutBackStore.getExceptionData(),
-           PutBackDamagedBarcodeScanDetails:PutBackStore.getScanDetails(),
-           PutBackExceptionProductDetails:PutBackStore.getItemDetailsData()
+ /* return {
+           StageActive:mainstore.getStageActiveStatus(),
+           StageAllActive:mainstore.getStageAllActiveStatus(),
+           PutBackNavData : mainstore.getNavData(),
+           PutBackNotification : mainstore.getNotificationData(),
+           PutBackBinData: mainstore.getBinData(),
+           PutBackScreenId:mainstore.getScreenId(),
+           PutBackScanDetails : mainstore.scanDetails(),
+           PutBackProductDetails : mainstore.productDetails(),
+           PutBackServerNavData : mainstore.getServerNavData(),
+           PutBackItemUid : mainstore.getItemUid(),
+           PutBackReconciliation : mainstore.getReconcileData(),
+           PutBackToteId : mainstore.getToteId(),
+           PutBackExceptionStatus:mainstore.getExceptionStatus(),
+           PutBackExceptionData:mainstore.getExceptionData(),
+           PutBackKQDetails:mainstore.getScanDetails(),
+           PutBackExceptionProductDetails:mainstore.getItemDetailsData()
 
-    };
+
+    };*/
+    console.log(mainstore.getScreenData());
+    return mainstore.getScreenData();
 
 }
 var PutBack = React.createClass({
@@ -48,10 +52,12 @@ var PutBack = React.createClass({
     return getStateData();
   },
   componentWillMount: function(){
-    PutBackStore.addChangeListener(this.onChange);
+    //PutBackStore.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    PutBackStore.removeChangeListener(this.onChange);
+    //PutBackStore.removeChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   onChange: function(){ 
     this.setState(getStateData());
@@ -59,24 +65,11 @@ var PutBack = React.createClass({
   getExceptionComponent:function(){
       var _rightComponent = '';
       this._navigation = '';
-      switch(this.state.PutBackExceptionData["activeException"]){
-        case appConstants.DAMAGED_BARCODE:
-          _rightComponent = (<div className="exception-right"></div>);
-        break;
-        case appConstants.OVERSIZED_ITEMS:
-          _rightComponent = (<div className="exception-right"></div>)
-        break;
-        case appConstants.EXCESS_ITEMS_IN_PPS_BINS:
-          _rightComponent = (<div className="exception-right"></div>)
-        break;
-        default:
-          _rightComponent = '';
-       }
       return (
               <div className='grid-container exception'>
                 <Modal />
                 <Exception data={this.state.PutBackExceptionData} action={true}/>
-                {_rightComponent}
+                <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
@@ -84,11 +77,11 @@ var PutBack = React.createClass({
             );
   },
   getScreenComponent : function(screen_id){
-    this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
          if(this.state.PutBackExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -108,6 +101,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.PUT_BACK_SCAN:
           if(this.state.PutBackExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -126,6 +120,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.PUT_BACK_TOTE_CLOSE:
           if(this.state.PutBackExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var subComponent='';
           var messageType = 'large';
             subComponent=(
@@ -156,9 +151,9 @@ var PutBack = React.createClass({
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
-                  <KQ scanDetails = {this.state.PutBackDamagedBarcodeScanDetails} />
+                  <KQ scanDetails = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_DAMAGED_BARCODE_QTY} />  
+                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
@@ -177,7 +172,7 @@ var PutBack = React.createClass({
                   <div className="main-container exception1">
                     <Img />
                     <TabularData data = {this.state.PutBackExceptionProductDetails}/>
-                    <KQ scanDetails = {this.state.PutBackDamagedBarcodeScanDetails} />
+                    <KQ scanDetails = {this.state.PutBackKQDetails} />
                   </div>
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />  
@@ -191,6 +186,7 @@ var PutBack = React.createClass({
         break; 
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
+          console.log(this.state.PutBackServerNavData);
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
@@ -216,9 +212,9 @@ var PutBack = React.createClass({
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
-                  <KQ scanDetails = {this.state.PutBackDamagedBarcodeScanDetails} />
+                  <KQ scanDetails = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_EXTRA_ITEM_QTY} />  
+                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

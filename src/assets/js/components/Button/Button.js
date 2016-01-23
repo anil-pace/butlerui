@@ -3,6 +3,7 @@ var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
 var PickFrontStore = require('../../stores/PickFrontStore');
 var PutBackStore = require('../../stores/PutBackStore');
+var mainstore = require('../../stores/mainstore');
 
 var Button1 = React.createClass({
             _checklistClass: '',
@@ -32,37 +33,30 @@ var Button1 = React.createClass({
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                            case appConstants.SEND_DAMAGED_BARCODE_QTY:
+                            case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
-                                data["event_data"]["event"] = PutBackStore.getExceptionType();
-                                data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                                   data["event_name"] = "put_back_exception";
                                   data["event_data"]["action"] ="finish_exception";
-                                  data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="extra_items_bin_select";
-                                data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["bin_id"] = PutBackStore.getSelectedBin();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.SEND_EXTRA_ITEM_QTY:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
-                                data["event_data"]["event"] = PutBackStore.getExceptionType();
-                                data["event_data"]["quantity"] = PutBackStore.getDamagedBarcodeQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
                                  data["event_name"] = "put_back_exception";
                                  data["event_data"]["action"] ="finish_exception";
-                                 data["event_data"]["event"] = PutBackStore.getExceptionType();
+                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                  ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_TOTE:
@@ -82,6 +76,22 @@ var Button1 = React.createClass({
                                 data["event_name"] = "cancel_scan_all";
                                 data["event_data"]["barcode"] = this.props.barcode;
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_EXCEPTION:
+                                ActionCreators.enableException(false);
+                                break;
+                            case appConstants.GET_MISSING_AND_DAMAGED_QTY:
+                                ActionCreators.changeScreenToDamagedAndMissing();
+                                break;
+                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendPutDataToServer();
+                                break;
+                            case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendSpaceUnavailableDataToServer();
                                 break;
                             default:
                                 return true;
@@ -118,6 +128,13 @@ var Button1 = React.createClass({
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CANCEL_EXCEPTION:
+                                ActionCreators.enableException(false);
+                                break;
+                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
+                                break;
                             default:
                                 return true;
                         }
@@ -127,6 +144,13 @@ var Button1 = React.createClass({
                             case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_tote_scan";
                                 data["event_data"]["barcode"] = this.props.barcode;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_EXCEPTION:
+                                ActionCreators.enableException(false);
+                                break;
+                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:

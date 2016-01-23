@@ -163,12 +163,51 @@ var commonActions = {
     }); 
   },
 
-  updateDamagedBarcodeQuantity:function(data){
+  updateKQQuantity:function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.UPDATE_DAMAGED_BARCODE_QUANTITY,
+      actionType: appConstants.UPDATE_KQ_QUANTITY,
       data:data
     });
-  }
+  },
+
+  updateMissingQuantity:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_MISSING_QUANTITY,
+      data:data
+    });
+  },
+
+  updateGoodQuantity:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_GOOD_QUANTITY,
+      data:data
+    });
+  },
+
+  updateDamagedQuantity:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_DAMAGED_QUANTITY,
+      data:data
+    });
+  },
+
+  changeScreenToDamagedAndMissing:function(){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_SCREEN_TO_DAMAGED_AND_MISSING
+    });
+  },
+
+  validateAndSendPutDataToServer:function(){
+     AppDispatcher.handleAction({
+      actionType: appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER
+    });
+   },
+
+   validateAndSendSpaceUnavailableDataToServer:function(){
+     AppDispatcher.handleAction({
+      actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
+    });
+   }
 
 };
 

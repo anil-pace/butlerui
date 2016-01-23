@@ -1,6 +1,7 @@
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',
+	UNSELECTED:"Unselected",
 	SYS_IDLE : 'System is Idle',
 	CURR_SLOT: 'CURRENT SLOT',
 	VIEW_MORE: 'View More',

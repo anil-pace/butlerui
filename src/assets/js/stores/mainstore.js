@@ -58,6 +58,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+    getLogoutState: function(){               
+        return _seatData.logout_allowed;
+    },
     getItemUid:function(){
        return _itemUid;
     },

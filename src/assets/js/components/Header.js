@@ -10,7 +10,8 @@ var Header = React.createClass({
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState()
+            systemIsIdle: mainstore.getSystemIdleState(),
+            logoutState: mainstore.getLogoutState()
         }
     },
     openKeyboard: function() {
@@ -22,8 +23,14 @@ var Header = React.createClass({
         $("#actionMenu").hide();
     },
     logoutSession:function(){
-        CommonActions.logoutSession(true);
         $("#actionMenu").hide();
+        if(this.state.logoutState === "false"){             
+            return false;
+        }
+        else{
+            CommonActions.logoutSession(true);
+        }        
+        
     },
     componentDidMount: function() {
         virtualKeyBoard = $('#barcode').keyboard({
@@ -70,11 +77,17 @@ var Header = React.createClass({
         virtualKeyBoard.getkeyboard().close();
     },
     render: function() { 
-        var cssClass;        
+        var cssClass;     
+        var logoutClass;   
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else{
             cssClass = 'keyboard-actions'
+        }
+        if(this.state.logoutState === "false"){
+            logoutClass = 'actionItem disable'
+        } else{
+            logoutClass = 'actionItem'
         }
         return (<div>
             <div className="head">
@@ -94,7 +107,7 @@ var Header = React.createClass({
                     <div className="actionItem" onClick = {this.enableException} >
                         Exception
                     </div>
-                    <div className="actionItem" onClick = {this.logoutSession} >
+                    <div className={logoutClass} onClick = {this.logoutSession} >
                         Logout
                     </div>
             </div>

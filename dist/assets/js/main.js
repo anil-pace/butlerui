@@ -37518,9 +37518,8 @@ var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
-
+var virtualKeyBoard_header = null;
 var Header = React.createClass({displayName: "Header",
-    virtualKeyBoard_header: '',
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
@@ -37580,7 +37579,9 @@ var Header = React.createClass({displayName: "Header",
         mainstore.addChangeListener(this.onChange);
     },
     onChange: function() {
-        virtualKeyBoard_header.getkeyboard().close();
+        if(virtualKeyBoard_header != null){
+            virtualKeyBoard_header.getkeyboard().close();
+        }
     },
     render: function() { 
         var cssClass;        
@@ -37630,6 +37631,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var utils = require('../../utils/utils.js');
 
+var virtualKeyBoard_login;
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -37662,7 +37664,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();   
-    virtualKeyBoard = $('#username, #password').keyboard({
+    virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
         'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -38024,7 +38026,6 @@ var Modal = React.createClass({displayName: "Modal",
   },
   onChange: function(){ 
     this.forceUpdate();
-    $(':input').unbind();
     this.setState(getStateData());
   },
   render: function () {

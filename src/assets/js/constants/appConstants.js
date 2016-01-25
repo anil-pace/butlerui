@@ -98,6 +98,7 @@ var appConstants = {
 	DAMAGED_BARCODE:"Damaged Barcode",
 	OVERSIZED_ITEMS:"Oversized Items",
 	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
+	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE"
 
 };
 

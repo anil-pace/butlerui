@@ -47,6 +47,13 @@ var commonActions = {
     })
   },
 
+  showErrorMessage:function(seat){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SHOW_ERROR_MESSAGE,
+      data:seat
+    })
+  },
+
   postDataToInterface:function(data){
      AppDispatcher.handleAction({
       actionType: appConstants.POST_DATA_TO_INTERFACE,

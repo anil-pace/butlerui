@@ -10,7 +10,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,_logoutStatus,
     _activeException = "",
     _enableException = false,
     popupVisible = false,
@@ -44,8 +44,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     showSpinner: function() {
         _showSpinner = true;
     },
+    setLogoutState : function(){
+        _logoutStatus = _seatData.logout_allowed;
+    },
     getSpinnerState: function() {
         return _showSpinner;
+    },
+    getLogoutState: function(){
+       return _logoutStatus;
+        
     },
 
     toggleBinSelection: function(bin_id) {
@@ -96,7 +103,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
-
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
@@ -112,7 +118,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
-                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
+                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.pickFront[0];
                 else
                     _NavData = navConfig.pickFront[1];
@@ -126,10 +132,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     if(_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE){                       
                         _NavData[index].image = SVGConstants.tote;
                     }
-                    else{
+                    else
                         _NavData[index].image = SVGConstants.scan;
-                        _NavData[index].type = 'active';
-                    }
+                    _NavData[index].type = 'active';
                 } else {
                     _NavData[index].type = 'passive';
                 }
@@ -449,7 +454,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putFrontExceptionScreen = "good";
         else if(_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
             _putFrontExceptionScreen = "take_item_from_bin";
-            _
+
     },
     getModalContent: function() {
         return modalContent.data;
@@ -751,7 +756,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_LOCATION_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -762,7 +766,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -774,7 +777,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -786,7 +788,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -803,7 +804,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
@@ -817,7 +817,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:
@@ -863,6 +862,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.SET_CURRENT_SEAT:
             mainstore.setCurrentSeat(action.data);
+            mainstore.setLogoutState();
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.POPUP_VISIBLE:

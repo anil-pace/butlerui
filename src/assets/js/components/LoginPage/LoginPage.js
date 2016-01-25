@@ -15,7 +15,8 @@ function getState(){
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
       username : '',
-      password : ''
+      password : '',
+      showError: loginstore.getErrorMessage()
   }
 }
 
@@ -41,7 +42,7 @@ var LoginPage = React.createClass({
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
-    CommonActions.listSeats();   
+    CommonActions.listSeats();
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -56,6 +57,7 @@ var LoginPage = React.createClass({
       initialFocus: true,     
       visible : function(e, keypressed, el){
         el.value = '';
+        //$(".authNotify").css("display","none"); 
       },
       
       accepted: function(e, keypressed, el) {
@@ -74,11 +76,8 @@ var LoginPage = React.createClass({
     mainstore.removeChangeListener(this.onChange);
     loginstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
-    this.setState({
-      flag: loginstore.getFlag(),
-      seatList : loginstore.seatList()
-    });
+  onChange: function(){    
+    this.setState(getState());
 
   },
   changeLanguage : function(){
@@ -118,6 +117,11 @@ var LoginPage = React.createClass({
 
       }
       if(this.state.flag === false){
+        if(this.state.showError != null){
+            errorClass = 'ErrorMsg showErr'
+        } else{
+            errorClass = 'ErrorMsg'
+        }
         return (
         <div>
           <div className="headerLoginPage">
@@ -136,8 +140,9 @@ var LoginPage = React.createClass({
                     <div className="userFormLoginPage">
                         <form>
                             {ppsOption}
+              <div className={errorClass}>{this.state.showError}
 
-
+              </div>
               <div className="form-group">
                 <label >{_(resourceConstants.USERNAME)}</label>
                   <input type="text" className="form-control" id="username" placeholder="Enter Username" ref='username' valueLink={this.linkState('username')} />

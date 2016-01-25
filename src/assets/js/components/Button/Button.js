@@ -50,7 +50,7 @@ var Button1 = React.createClass({
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="extra_items_bin_select";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["bin_id"] = PutBackStore.getSelectedBin();
+                                data["event_data"]["bin_id"] = mainstore.getSelectedBin();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
@@ -116,7 +116,7 @@ var Button1 = React.createClass({
                                     });
                                 } else {
                                     checkList.checklist_data.map(function(value, index) {
-                                        if(index < PickFrontStore.scanDetails()["current_qty"])
+                                        if(index < mainstore.scanDetails()["current_qty"])
                                         value.map(function(value1, index1) {
                                             var keyvalue = Object.keys(value1);
                                             checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;

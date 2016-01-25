@@ -37217,7 +37217,7 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.CLOSE_TOTE:
                                 data["event_name"] = "confirm_close_tote";
                                 data["event_data"]["close_value"] = this.props.status;
-                                data["event_data"]["toteId"] = this.props.toteId;
+                                data["event_data"]["barcode"] = this.props.toteId;
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:

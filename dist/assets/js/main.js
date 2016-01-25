@@ -38100,8 +38100,7 @@ var Modal = React.createClass({displayName: "Modal",
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){ 
-    this.forceUpdate();
+  onChange: function(){
     this.setState(getStateData());
   },
   render: function () {
@@ -40580,7 +40579,7 @@ var serverMessages = {
     "PtB.W.005" : "PpsBin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
-    "PkF.E.011" : "Item Scan successfull",
+    "PkF.E.011" : "Press PPTL for Bin {0} to confirm",
     "PkF.E.013" : "Scan items and place in Bin {0}",
     "PkF.E.014" : "Press PPTL for Bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
@@ -41864,7 +41863,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
-                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
+                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
                 else
                     _NavData = navConfig.pickFront[1];
@@ -41878,9 +41877,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     if(_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE){                       
                         _NavData[index].image = SVGConstants.tote;
                     }
-                    else
+                    else{
                         _NavData[index].image = SVGConstants.scan;
-                    _NavData[index].type = 'active';
+                        _NavData[index].type = 'active';
+                    }
                 } else {
                     _NavData[index].type = 'passive';
                 }

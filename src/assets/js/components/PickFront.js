@@ -42,6 +42,7 @@ var PickFront = React.createClass({
   _notification:'',
   _component:'',
   _navigation:'',
+  _showModal:false,
   getInitialState: function(){
     return getStateData();
   },
@@ -69,13 +70,17 @@ var PickFront = React.createClass({
     else
       this._notification = "";
   },
+  getModalStatus:function(){
+    return _showModal;
+  },
   showModal:function(data,index){
+    console.log("show modal");
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
       "product_details" : this.state.PickFrontProductDetails
     };
-    if(this.state.PickFrontChecklistOverlayStatus === true ){
+    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
     setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
@@ -85,7 +90,7 @@ var PickFront = React.createClass({
       }),0)
 
     }
-    else {
+    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) {
       $('.modal').modal('hide');
       $('.modal-backdrop fade in').remove();
     }

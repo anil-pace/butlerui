@@ -189,7 +189,6 @@ var Button1 = React.createClass({
                 }
             },
             render: function() {
-                console.log(this.props.checkListData);
                 if (this.props.buttonChecklist != undefined) {
                     _checklistClass = 'checklistButtonSubmit';
                 } else {

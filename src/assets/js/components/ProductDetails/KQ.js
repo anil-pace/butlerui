@@ -17,8 +17,25 @@ var KQ = React.createClass({
           if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
-                CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE){
+                CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                return true;
+            }
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                        break;
+                        default:
+                    }
+                }
                 return true;
             }
             if (mainstore.getCurrentSeat() == "audit_front") {
@@ -56,9 +73,26 @@ var KQ = React.createClass({
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) != 1) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
-                    CommonActions.updateDamagedBarcodeQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE){
+                    CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
                      return true;
+                }
+                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                        break;
+                        default:
+                    }
+                }
+                return true;
                 }
                 if (mainstore.getCurrentSeat() == "audit_front") {
                     data = {
@@ -114,9 +148,26 @@ var KQ = React.createClass({
                     } else {
 
                         var data = {};
-                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE){
-                            CommonActions.updateDamagedBarcodeQuantity(parseInt(e.target.value));
+                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE){
+                            CommonActions.updateKQQuantity(parseInt(e.target.value));
                              return true;
+                        }
+                        if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                            if(this.props.action != undefined){
+                                switch(this.props.action){
+                                    case "GOOD":
+                                        CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                    break;
+                                    case "MISSING":
+                                        CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                    break;
+                                    case "DAMAGED":
+                                        CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                    break;
+                                    default:
+                                }
+                            }
+                            return true;
                         }
                         if (mainstore.getCurrentSeat() == "audit_front") {
                             data = {

@@ -102,7 +102,8 @@ var PickBack = React.createClass({
     }
   },
   showModal: function(data) { 
-    if(data.tote_status === true){ 
+
+    if(data.tote_status === true && !$('.modal').hasClass('in')){ 
       setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'scan_bin_barcode'
@@ -110,7 +111,7 @@ var PickBack = React.createClass({
       $('.modal').modal();
       return false;
       }),0)
-    }else{ 
+    }else if(data.tote_status === false && $('.modal').hasClass('in')){ 
       $('.modal').modal('hide');
     }
   },

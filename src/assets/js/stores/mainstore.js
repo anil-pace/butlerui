@@ -600,20 +600,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    getChecklistIndex:function(){
-        if(_seatData.hasOwnProperty('checklist_details')){ 
-            if(_seatData.checklist_details.checklist_index!= null){
-                return _seatData.checklist_details.checklist_index;
-            } 
-            else{
-                return null;
-            }    
-            
-        }else{
-            return null;
-        }
-    },
-
     validateAndSendSpaceUnavailableDataToServer:function(){
         if ((_KQQty) > _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {

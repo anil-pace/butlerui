@@ -37204,7 +37204,7 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="extra_items_bin_select";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["bin_id"] = PutBackStore.getSelectedBin();
+                                data["event_data"]["bin_id"] = mainstore.getSelectedBin();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
@@ -37270,7 +37270,7 @@ var Button1 = React.createClass({displayName: "Button1",
                                     });
                                 } else {
                                     checkList.checklist_data.map(function(value, index) {
-                                        if(index < PickFrontStore.scanDetails()["current_qty"])
+                                        if(index < mainstore.scanDetails()["current_qty"])
                                         value.map(function(value1, index1) {
                                             var keyvalue = Object.keys(value1);
                                             checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
@@ -38007,7 +38007,7 @@ function loadComponent(modalType,modalData){
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
             serial = index;
-            if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < PickFrontStore.scanDetails()["current_qty"])){
+            if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < mainstore.scanDetails()["current_qty"])){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];

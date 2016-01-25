@@ -129,7 +129,7 @@ function loadComponent(modalType,modalData){
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
             serial = index;
-            if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < PickFrontStore.scanDetails()["current_qty"])){
+            if((modalData.checklist_index === (index+1)  ) || (modalData.checklist_index === "all" && index < mainstore.scanDetails()["current_qty"])){
               var d = data.map(function(data1,index1){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];

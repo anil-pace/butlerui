@@ -112,7 +112,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
-                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
+                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
                 else
                     _NavData = navConfig.pickFront[1];
@@ -126,9 +126,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     if(_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE){                       
                         _NavData[index].image = SVGConstants.tote;
                     }
-                    else
+                    else{
                         _NavData[index].image = SVGConstants.scan;
-                    _NavData[index].type = 'active';
+                        _NavData[index].type = 'active';
+                    }
                 } else {
                     _NavData[index].type = 'passive';
                 }

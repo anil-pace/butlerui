@@ -1,6 +1,7 @@
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
+var SVGConstants = require('../constants/svgConstants');
 var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
@@ -122,7 +123,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _NavData.map(function(data, index) {
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                    if(_seatData.screen_id === AppConstants.PUT_BACK_TOTE_CLOSE){                       
+                    if(_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE){                       
                         _NavData[index].image = SVGConstants.tote;
                     }
                     else

@@ -85,6 +85,7 @@ var serverMessages = {
     "AdF.B.003" :"Item Scan successfull",
     'CLIENTCODE_001' : 'Bin {0} selected',
     'CLIENTCODE_002' : 'Bin {0} unselected',
+    'CLIENTCODE_003' : 'Connection is closed. Connecting...',
 };
 
 

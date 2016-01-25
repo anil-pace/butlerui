@@ -51,7 +51,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _showSpinner;
     },
     getLogoutState: function(){
-       return _logoutStatus;
+       if(_seatData.hasOwnProperty("logout_allowed"))
+            return _seatData.logout_allowed;
         
     },
 
@@ -466,9 +467,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    getLogoutState: function(){               
-        return _seatData.logout_allowed;
-    },
+    
     getItemUid:function(){
        return _itemUid;
     },
@@ -865,7 +864,6 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.SET_CURRENT_SEAT:
             mainstore.setCurrentSeat(action.data);
-            mainstore.setLogoutState();
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.POPUP_VISIBLE:

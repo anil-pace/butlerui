@@ -56,8 +56,8 @@ var Header = React.createClass({
         $("#actionMenu").hide();
     },
     logoutSession:function(){
-        $("#actionMenu").hide();
-        if(this.state.logoutState === "false" || this.state.logoutState === false){             
+        $("#actionMenu").hide();        
+        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
             return false;
         }
         else{
@@ -69,10 +69,6 @@ var Header = React.createClass({
     },
     enableException:function(){
         CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
-    logoutSession:function(){
-        CommonActions.logoutSession(true);
         $("#actionMenu").hide();
     },
     componentDidMount: function() {
@@ -96,6 +92,7 @@ var Header = React.createClass({
         else
             this.exceptionMenu = '';
     },
+
     render: function() {    
         var logoutClass;
         var cssClass;      
@@ -105,7 +102,7 @@ var Header = React.createClass({
         } else{
             cssClass = 'keyboard-actions'
         }
-        if(this.state.logoutState === "false" || this.state.logoutState === false){
+        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){
             logoutClass = 'actionItem disable'
         } else{
             logoutClass = 'actionItem'
@@ -126,7 +123,7 @@ var Header = React.createClass({
             </div>
             <div className="actionMenu" id="actionMenu" >
                 {this.exceptionMenu}    
-                <div className="actionItem" onClick = {this.logoutSession} >
+                <div className={logoutClass} onClick = {this.logoutSession} >
                     Logout
                 </div>
             </div>

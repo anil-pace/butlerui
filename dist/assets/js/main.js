@@ -37585,7 +37585,7 @@ var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
-
+var virtualKeyBoard_header = null;
 var Header = React.createClass({displayName: "Header",
     virtualKeyBoard: '',
     exceptionMenu:'',
@@ -37596,19 +37596,7 @@ var Header = React.createClass({displayName: "Header",
         }
     },
     openKeyboard: function() {
-        $('#barcode').data('keyboard').reveal();
-        return false;
-    },
-    enableException:function(){
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
-    logoutSession:function(){
-        CommonActions.logoutSession(true);
-        $("#actionMenu").hide();
-    },
-    componentDidMount: function() {
-        virtualKeyBoard = $('#barcode').keyboard({
+       virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
               'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -37641,6 +37629,17 @@ var Header = React.createClass({displayName: "Header",
                 }
             }
         })
+        $('#barcode').data('keyboard').reveal();
+    },
+    enableException:function(){
+        CommonActions.enableException(true);
+        $("#actionMenu").hide();
+    },
+    logoutSession:function(){
+        CommonActions.logoutSession(true);
+        $("#actionMenu").hide();
+    },
+    componentDidMount: function() {
     },
     showMenu: function(){
         $("#actionMenu").toggle();
@@ -37649,7 +37648,9 @@ var Header = React.createClass({displayName: "Header",
         mainstore.addChangeListener(this.onChange);
     },
     onChange: function() {
-        virtualKeyBoard.getkeyboard().close();
+        if(virtualKeyBoard_header != null){
+            virtualKeyBoard_header.getkeyboard().close();
+        }
     },
     getExceptionMenu:function(){
          if(mainstore.getExceptionAllowed().length > 0 )
@@ -37706,6 +37707,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var utils = require('../../utils/utils.js');
 
+var virtualKeyBoard_login;
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -37738,7 +37740,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();   
-    virtualKeyBoard = $('#username, #password').keyboard({
+    virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
         'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -37921,8 +37923,8 @@ function attachKeyboard(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachNumpad(id){ 
-     virtualNumpad = $('#'+id).keyboard({
+function attachNumpad(id){
+     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
@@ -37937,9 +37939,7 @@ function attachNumpad(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id, toggleTime){
-  console.log("toggle time"+toggleTime);
-  $('.ui-keyboard').css({"display" : "none"});   
+function attachDateTime(id, toggleTime){ 
   $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");  
 }
 
@@ -38103,7 +38103,6 @@ var Modal = React.createClass({displayName: "Modal",
   onChange: function(){ 
     this.forceUpdate();
     this.setState(getStateData());
-   // virtualKeyBoard1.getkeyboard().close();
   },
   render: function () {
     return (React.createElement("div", {className: "modal fade"}, 
@@ -40483,7 +40482,8 @@ var allSvgConstants = {
 	forma1 : 'assets/images/Forma1.png',
 	headerbg : 'assets/images/headerbg.png',
 	scanHeader :'assets/images/scan_header.png',
-	iconBar :'assets/images/Icon.png'
+	iconBar :'assets/images/Icon.png',
+	tote:'assets/images/Tote.png'
 }
 
 module.exports = allSvgConstants;
@@ -41258,6 +41258,7 @@ module.exports = PickFrontStore;
 },{"../config/navConfig":279,"../constants/appConstants":280,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],291:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
+var SVGConstants = require('../constants/svgConstants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var ActionTypes = AppConstants;
@@ -41322,19 +41323,25 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             return flag;
         }
     },
-    getNavData: function() {
-        _NavData = navConfig.putBack;
-        _NavData.map(function(data, index) {
+    getNavData: function() {        
+        _NavData = navConfig.putBack;        
+        _NavData.map(function(data, index) {            
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_PutBackData.screen_id) != -1) {
-                    _NavData[index].type = 'active';
+                    if(_PutBackData.screen_id === AppConstants.PUT_BACK_TOTE_CLOSE){                       
+                        _NavData[index].image = SVGConstants.tote;
+                    }
+                    else
+                        _NavData[index].image = SVGConstants.scan;
+                    _NavData[index].type = 'active';                    
                 } else {
-                    _NavData[index].type = 'passive';
+                    _NavData[index].type = 'passive';                    
                 }
-            } else if (_PutBackData.screen_id === data.screen_id) {
-                _NavData[index].type = 'active';
+            }             
+            else if (_PutBackData.screen_id === data.screen_id) {
+                _NavData[index].type = 'active';                
             } else {
-                _NavData[index].type = 'passive';
+                _NavData[index].type = 'passive';                
             }
         });
 
@@ -41517,7 +41524,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],292:[function(require,module,exports){
+},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../constants/svgConstants":283,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],292:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -41867,6 +41874,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _NavData.map(function(data, index) {
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
+                    if(_seatData.screen_id === AppConstants.PUT_BACK_TOTE_CLOSE){                       
+                        _NavData[index].image = SVGConstants.tote;
+                    }
+                    else
+                        _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';
                 } else {
                     _NavData[index].type = 'passive';
@@ -42301,6 +42313,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _putFrontExceptionScreen;
     },
 
+    getCurrentSlot : function(){        
+        if(_seatData.hasOwnProperty('rack_details')){       
+            return _seatData.rack_details.slot_barcodes;
+        }else{
+            return null;
+        }
+    },
+
     validateAndSendPutDataToServer: function() {
         if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {
@@ -42551,6 +42571,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackScreenId"] = this.getScreenId();
                 data["PickBackServerNavData"] = this.getServerNavData();
                 data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 break;
             default:
         }

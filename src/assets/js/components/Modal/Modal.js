@@ -45,8 +45,8 @@ function attachKeyboard(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachNumpad(id){ 
-     virtualNumpad = $('#'+id).keyboard({
+function attachNumpad(id){
+     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
@@ -61,9 +61,7 @@ function attachNumpad(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id, toggleTime){
-  console.log("toggle time"+toggleTime);
-  $('.ui-keyboard').css({"display" : "none"});   
+function attachDateTime(id, toggleTime){ 
   $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");  
 }
 
@@ -227,7 +225,6 @@ var Modal = React.createClass({
   onChange: function(){ 
     this.forceUpdate();
     this.setState(getStateData());
-   // virtualKeyBoard1.getkeyboard().close();
   },
   render: function () {
     return (<div className="modal fade">

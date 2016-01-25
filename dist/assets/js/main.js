@@ -36520,6 +36520,13 @@ var commonActions = {
     })
   },
 
+  showErrorMessage:function(seat){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SHOW_ERROR_MESSAGE,
+      data:seat
+    })
+  },
+
   postDataToInterface:function(data){
      AppDispatcher.handleAction({
       actionType: appConstants.POST_DATA_TO_INTERFACE,
@@ -37731,7 +37738,8 @@ function getState(){
       flag: loginstore.getFlag(),
       seatList : loginstore.seatList(),
       username : '',
-      password : ''
+      password : '',
+      showError: loginstore.getErrorMessage()
   }
 }
 
@@ -37757,7 +37765,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
-    CommonActions.listSeats();   
+    CommonActions.listSeats();
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -37772,6 +37780,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       initialFocus: true,     
       visible : function(e, keypressed, el){
         el.value = '';
+        //$(".authNotify").css("display","none"); 
       },
       
       accepted: function(e, keypressed, el) {
@@ -37790,11 +37799,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     mainstore.removeChangeListener(this.onChange);
     loginstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
-    this.setState({
-      flag: loginstore.getFlag(),
-      seatList : loginstore.seatList()
-    });
+  onChange: function(){    
+    this.setState(getState());
 
   },
   changeLanguage : function(){
@@ -37834,6 +37840,11 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
       }
       if(this.state.flag === false){
+        if(this.state.showError != null){
+            errorClass = 'ErrorMsg showErr'
+        } else{
+            errorClass = 'ErrorMsg'
+        }
         return (
         React.createElement("div", null, 
           React.createElement("div", {className: "headerLoginPage"}, 
@@ -37852,8 +37863,9 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                     React.createElement("div", {className: "userFormLoginPage"}, 
                         React.createElement("form", null, 
                             ppsOption, 
+              React.createElement("div", {className: errorClass}, this.state.showError
 
-
+              ), 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", null, _(resourceConstants.USERNAME)), 
                   React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", ref: "username", valueLink: this.linkState('username')})
@@ -40572,6 +40584,7 @@ var appConstants = {
 	DAMAGED_BARCODE:"Damaged Barcode",
 	OVERSIZED_ITEMS:"Oversized Items",
 	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
+	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE"
 
 };
 
@@ -40579,8 +40592,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.15:8888/ws",
-	INTERFACE_IP : "https://192.168.2.15:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "https://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
@@ -41791,6 +41804,7 @@ var utils  = require('../utils/utils.js');
 var CHANGE_EVENT = 'change';
 var flag = false;
 var currentSeat = [];
+var _errMsg = null;
 
 function getParameterByName(){
     var l = document.createElement("a");
@@ -41839,6 +41853,9 @@ var showBox = function(index){
 
 
 var loginstore = objectAssign({}, EventEmitter.prototype, {
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
@@ -41856,12 +41873,19 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   sessionLogout: function(data){
     utils.sessionLogout(data);
-  }
+  },
+  getErrorMessage: function(){    
+   return _errMsg; 
+  },
+  showErrorMessage : function(data){
+    _errMsg = data;
+  },
 });
 
 
 AppDispatcher.register(function(payload){
   var action = payload.action;
+  console.log(action.data);
   switch(action.actionType){
     case appConstants.LIST_SEATS:
       getParameterByName();
@@ -41878,6 +41902,9 @@ AppDispatcher.register(function(payload){
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
+    case appConstants.SHOW_ERROR_MESSAGE:
+      loginstore.showErrorMessage(action.data);
+      loginstore.emitChange();  
     default:
       return true;
   }
@@ -41898,7 +41925,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,_logoutStatus,
     _activeException = "",
     _enableException = false,
     popupVisible = false,
@@ -41933,8 +41960,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     showSpinner: function() {
         _showSpinner = true;
     },
+    setLogoutState : function(){
+        _logoutStatus = _seatData.logout_allowed;
+    },
     getSpinnerState: function() {
         return _showSpinner;
+    },
+    getLogoutState: function(){
+       return _logoutStatus;
+        
     },
 
     toggleBinSelection: function(bin_id) {
@@ -41985,7 +42019,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
-
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
@@ -42001,7 +42034,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
-                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
+                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.pickFront[0];
                 else
                     _NavData = navConfig.pickFront[1];
@@ -42012,12 +42045,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _NavData.map(function(data, index) {
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                    if (_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE) {
+                    if (_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE) 
                         _NavData[index].image = SVGConstants.tote;
-                    } else {
+                    else
                         _NavData[index].image = SVGConstants.scan;
-                        _NavData[index].type = 'active';
-                    }
+                    _NavData[index].type = 'active';
                 } else {
                     _NavData[index].type = 'passive';
                 }
@@ -42669,7 +42701,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_LOCATION_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -42680,7 +42711,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -42692,7 +42722,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -42704,7 +42733,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -42721,7 +42749,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
@@ -42735,7 +42762,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PickFrontScreenId"] = this.getScreenId();
@@ -42799,6 +42825,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.SET_CURRENT_SEAT:
             mainstore.setCurrentSeat(action.data);
+            mainstore.setLogoutState();
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.POPUP_VISIBLE:
@@ -42883,7 +42910,7 @@ var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
-
+var serverMessages = require('../serverMessages/server_messages');
 var ws;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
@@ -42904,9 +42931,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 CommonActions.setServerMessages();
             };
             ws.onclose = function() {
-                $("#username, #password").prop('disabled', true);
-                alert("Connection is closed...");
-                setTimeout(utils.connectToWebSocket, 1000);
+                //serverMessages.CLIENTCODE_003;
+                console.log(serverMessages.CLIENTCODE_003);
+                CommonActions.showErrorMessage(serverMessages.CLIENTCODE_003);
+                //$("#username, #password").prop('disabled', true);
+                //alert("Connection is closed...");
+                setTimeout(utils.connectToWebSocket, 100);
             };
         } else {
             alert("WebSocket NOT supported by your Browser!");            
@@ -42959,10 +42989,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             };
             utils.storeSession(webSocketData);
             utils.postDataToWebsockets(webSocketData);
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status);
-            alert(textStatus);
-            alert(errorThrown);
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            CommonActions.showErrorMessage(data.responseJSON.error);
         });
        
     },
@@ -43042,4 +43070,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../constants/configConstants":281,"events":14,"react/lib/Object.assign":121}]},{},[285]);
+},{"../actions/CommonActions":233,"../constants/appConstants":280,"../constants/configConstants":281,"../serverMessages/server_messages":287,"events":14,"react/lib/Object.assign":121}]},{},[285]);

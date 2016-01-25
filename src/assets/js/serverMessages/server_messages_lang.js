@@ -93,5 +93,8 @@ function server_messages_list() {
     _("Waiting for MSU to arrive");
     _('Item Scan successfull');
     _('Press PPTL for Bin {0} to confirm');
+    _('Bin {0} selected');
+    _('Bin {0} unselected');
+    _('Connection is closed. Connecting...');
 
 }

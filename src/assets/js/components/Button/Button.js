@@ -127,6 +127,18 @@ var Button1 = React.createClass({
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.GET_MISSING_AND_DAMAGED_QTY:
+                                ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");
+                                break;
+                            case appConstants.CONFIRM_FROM_USER:
+                                ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
+                                break;
+                             case appConstants.PLACE_ITEM_BACK:
+                                ActionCreators.changePickFrontExceptionScreen("put_back_quantity");
+                                break;
+                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendPutDataToServer();
+                                break;
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);

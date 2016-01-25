@@ -21,7 +21,7 @@ var KQ = React.createClass({
                 CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
                 return true;
             }
-            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":

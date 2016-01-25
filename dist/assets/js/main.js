@@ -36671,6 +36671,13 @@ var commonActions = {
     });
   },
 
+  changePickFrontExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   validateAndSendPutDataToServer:function(){
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER
@@ -37281,6 +37288,18 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.GET_MISSING_AND_DAMAGED_QTY:
+                                ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");
+                                break;
+                            case appConstants.CONFIRM_FROM_USER:
+                                ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
+                                break;
+                             case appConstants.PLACE_ITEM_BACK:
+                                ActionCreators.changePickFrontExceptionScreen("put_back_quantity");
+                                break;
+                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendPutDataToServer();
+                                break;
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);
@@ -37343,7 +37362,6 @@ var Button1 = React.createClass({displayName: "Button1",
                 }
             },
             render: function() {
-                console.log(this.props.checkListData);
                 if (this.props.buttonChecklist != undefined) {
                     _checklistClass = 'checklistButtonSubmit';
                 } else {
@@ -38566,6 +38584,7 @@ var PickFront = React.createClass({displayName: "PickFront",
   _notification:'',
   _component:'',
   _navigation:'',
+  _showModal:false,
   getInitialState: function(){
     return getStateData();
   },
@@ -38593,13 +38612,17 @@ var PickFront = React.createClass({displayName: "PickFront",
     else
       this._notification = "";
   },
+  getModalStatus:function(){
+    return _showModal;
+  },
   showModal:function(data,index){
+    console.log("show modal");
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
       "product_details" : this.state.PickFrontProductDetails
     };
-    if(this.state.PickFrontChecklistOverlayStatus === true ){
+    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
     setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
@@ -38609,7 +38632,7 @@ var PickFront = React.createClass({displayName: "PickFront",
       }),0)
 
     }
-    else {
+    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) {
       $('.modal').modal('hide');
       $('.modal-backdrop fade in').remove();
     }
@@ -38747,7 +38770,117 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._component = this.getExceptionComponent();
         }
       break;
-     
+      
+      case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
+          this._navigation = '';
+          if(this.state.PickFrontExceptionScreen == "good"){
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
+                      React.createElement(KQ, {scanDetails: this.state.PickFrontGoodQuantity, action: "GOOD"})
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
+                      React.createElement(KQ, {scanDetails: this.state.PickFrontMissingQuantity, action: "MISSING"})
+                    ), 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
+                      React.createElement(KQ, {scanDetails: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                     React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          }else if(this.state.PickFrontExceptionScreen == "put_back_quantity"){
+              this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Please Put Back Damaged Item Quantity into Exception Area . ")
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+           }
+        break;      
+        case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
+          this._navigation = '';
+          if(this.state.PickFrontExceptionScreen == "box_serial"){
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                     React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Missing Boxes"), 
+                      React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
+              this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Are You sure Given Boxes are not present in Slot ? ")
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+           }
+          break;
 
       default:
         return true;
@@ -38873,7 +39006,7 @@ var KQ = React.createClass({displayName: "KQ",
                 CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
                 return true;
             }
-            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
@@ -40369,6 +40502,7 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
+	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_damaged_or_missing",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",
@@ -40378,9 +40512,12 @@ var appConstants = {
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
+	PLACE_ITEM_BACK:"PLACE_ITEM_BACK",
+	CONFIRM_FROM_USER:"CONFIRM_FROM_USER",
 	RESET_NUMPAD :'RESET_NUMPAD',
 	CANCEL_FINISH_AUDIT:"CANCEL_FINISH_AUDIT",
 	FINISH_CURRENT_AUDIT:"FINISH_CURRENT_AUDIT",
+	CHANGE_PICK_FRONT_EXCEPTION_SCREEN:"CHANGE_PICK_FRONT_EXCEPTION_SCREEN",
 	CANCEL_SCAN : 'CANCEL_SCAN',
 	FINISH_BOX:"FINISH_BOX",
 	GENERATE_REPORT:"GENERATE_REPORT",
@@ -40442,8 +40579,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.148:8888/ws",
-	INTERFACE_IP : "https://192.168.3.148:5000"
+	WEBSOCKET_IP : "ws://192.168.2.15:8888/ws",
+	INTERFACE_IP : "https://192.168.2.15:5000"
 };
 
 module.exports = configConstants;
@@ -41769,6 +41906,7 @@ var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, 
     _goodQuantity = 0,
     _damagedQuantity = 0,
     _putFrontExceptionScreen = "good",
+    _pickFrontExceptionScreen = "good",
     _missingQuantity = 0;
 var modalContent = {
     data: "",
@@ -41874,10 +42012,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _NavData.map(function(data, index) {
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                    if(_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE){                       
+                    if (_seatData.screen_id === appConstants.PUT_BACK_TOTE_CLOSE) {
                         _NavData[index].image = SVGConstants.tote;
-                    }
-                    else{
+                    } else {
                         _NavData[index].image = SVGConstants.scan;
                         _NavData[index].type = 'active';
                     }
@@ -42011,7 +42148,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return data;
     },
-    getExceptionAllowed:function(){
+    getExceptionAllowed: function() {
         return _seatData.exception_allowed;
     },
 
@@ -42176,10 +42313,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-
-
-
-
     setCurrentSeat: function(data) {
         _enableException = false;
         _KQQty = 0;
@@ -42196,11 +42329,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
-        if(_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+        if (_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
             _putFrontExceptionScreen = "good";
-        else if(_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
+        else if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
             _putFrontExceptionScreen = "take_item_from_bin";
-            _
+        else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+            _pickFrontExceptionScreen = "good";
+        else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
+            _pickFrontExceptionScreen = "box_serial";
     },
     getModalContent: function() {
         return modalContent.data;
@@ -42310,14 +42446,42 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
     },
+
+    setPickFrontExceptionScreen: function(data) {
+        if (data == "put_back_quantity") {
+            if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
+                if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = "1234";
+                    data["level"] = "error";
+                    data["description"] = "Pick Quantity should be equal to damaged ,missing and good";
+                    data["details"] = [];
+                    _seatData.notification_list.push(data);
+                    _pickFrontExceptionScreen = "good";
+                } else {
+                    _seatData.notification_list[0].description = "Pick Quantity should be equal to damaged ,missing and good";
+                    _seatData.notification_list[0].level = "error";
+                }
+            } else {
+                _pickFrontExceptionScreen = data;
+            }
+        } else {
+            _pickFrontExceptionScreen = data;
+        }
+    },
+
     getPutFrontExceptionScreen: function() {
         return _putFrontExceptionScreen;
     },
 
-    getCurrentSlot : function(){        
-        if(_seatData.hasOwnProperty('rack_details')){       
+    getPickFrontExceptionScreen: function() {
+        return _pickFrontExceptionScreen;
+    },
+
+    getCurrentSlot: function() {
+        if (_seatData.hasOwnProperty('rack_details')) {
             return _seatData.rack_details.slot_barcodes;
-        }else{
+        } else {
             return null;
         }
     },
@@ -42331,14 +42495,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["description"] = "Put Quantity should be equal to damaged ,missing and good";
                 data["details"] = [];
                 _seatData.notification_list.push(data);
-                _screenGoodOrDamaged = "good";
-            }else{
+                _putFrontExceptionScreen = "good";
+            } else {
                 _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
                 _seatData.notification_list[0].level = "error";
             }
         } else {
             var data = {};
-            data["event_name"] = "put_front_exception";
+            if(_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+                 data["event_name"] = "put_front_exception";
+            else if(_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+                data["event_name"] = "pick_front_exception";
             data["event_data"] = {};
             data["event_data"]["action"] = "confirm_quantity_update";
             data["event_data"]["event"] = _seatData.exception_type;
@@ -42351,7 +42518,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    validateAndSendSpaceUnavailableDataToServer:function(){
+    validateAndSendSpaceUnavailableDataToServer: function() {
         if ((_KQQty) > _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
@@ -42360,7 +42527,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["description"] = "Revised Quantity should be less than or equal to put quantity";
                 data["details"] = [];
                 _seatData.notification_list.push(data);
-            }else{
+            } else {
                 _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
                 _seatData.notification_list[0].level = "error";
             }
@@ -42570,6 +42737,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 break;
+            case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                break;
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:
                 data["PickBackNavData"] = this.getNavData();
@@ -42671,6 +42856,10 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.setPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:
+            mainstore.setPickFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:

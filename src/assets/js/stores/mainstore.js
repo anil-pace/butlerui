@@ -118,7 +118,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
-                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
+                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
                 else
                     _NavData = navConfig.pickFront[1];

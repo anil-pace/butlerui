@@ -2,6 +2,7 @@ var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
+var KQ = require('./ProductDetails/KQ');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -275,12 +276,12 @@ var PickFront = React.createClass({
                 </div>
               </div>
             );
-          }else if(this.state.PickFrontExceptionScreen == "put_back_quantity"){
+          }else if(this.state.PickFrontExceptionScreen == "pick_front_quantity"){
               this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
-                  <div className="main-container exception1">
+                  <div className="main-container exception2">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Please Put Back Damaged Item Quantity into Exception Area . "}</div>
                     </div>
@@ -323,13 +324,13 @@ var PickFront = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
-                  <div className="main-container exception1">
+                  <div className="main-container exception2">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Are You sure Given Boxes are not present in Slot ? "}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> 
+                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

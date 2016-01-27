@@ -743,7 +743,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setPickFrontExceptionScreen: function(data) {
-        if (data == "put_back_quantity") {
+        if (data == "pick_front_quantity") {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
@@ -782,17 +782,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     validateAndSendPutDataToServer: function() {
-        if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity) {
+        var flag = false;
+        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.pick_quantity;
+        else
+              flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.put_quantity;
+        if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
                 data["code"] = "1234";
                 data["level"] = "error";
-                data["description"] = "Put Quantity should be equal to damaged ,missing and good";
+                data["description"] = "Quantity should be equal to damaged ,missing and good";
                 data["details"] = [];
                 _seatData.notification_list.push(data);
                 _putFrontExceptionScreen = "good";
             } else {
-                _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].description = "Quantity should be equal to damaged ,missing and good";
                 _seatData.notification_list[0].level = "error";
             }
         } else {
@@ -812,6 +817,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
+
+   
 
     validateAndSendSpaceUnavailableDataToServer: function() {
         if ((_KQQty) > _seatData.put_quantity) {
@@ -1108,16 +1115,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
-                data["AuditNavData"] = this.getNavData();
-                data["AuditNotification"] = this.getNotificationData();
-                data["AuditScreenId"] = this.getScreenId();
-                data["AuditServerNavData"] = this.getServerNavData();
-                data["AuditExceptionData"] = this.getExceptionData();
-                data["AuditExceptionStatus"] = this.getExceptionStatus();
-                data["AuditShowModal"] = this.getModalStatus();
-                data["AuditKQDetails"] = this.getScanDetails();
-                break;
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
+            case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditScreenId"] = this.getScreenId();

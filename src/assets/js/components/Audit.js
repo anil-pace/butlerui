@@ -4,6 +4,7 @@ var AuditStore = require('../stores/AuditStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
+var Exception = require('./Exception/Exception');
 var SystemIdle = require("./SystemIdle");
 var Notification = require("./Notification/Notification");
 var Button1 = require("./Button/Button");
@@ -54,6 +55,7 @@ var Audit = React.createClass({
   _boxSerial:'',
   _currentBox:'',
   _looseItems:'',
+  _navigation:'',
   showModal: function() {
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
@@ -106,6 +108,7 @@ var Audit = React.createClass({
     switch(screen_id){
       case appConstants.AUDIT_WAITING_FOR_MSU:
          if(this.state.AuditExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
@@ -119,6 +122,7 @@ var Audit = React.createClass({
         break;
       case appConstants.AUDIT_SCAN:
        if(this.state.AuditExceptionStatus == false){
+           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               <div className = 'cancel-scan'>
@@ -196,6 +200,8 @@ var Audit = React.createClass({
         }
         break;
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
+      case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
+      case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
           this._component = (
               <div className='grid-container exception'>
@@ -213,24 +219,7 @@ var Audit = React.createClass({
               </div>
             );
         break; 
-        case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
-          this._navigation = '';
-          this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.AuditExceptionData}/>
-                <div className="exception-right">
-                  <ExceptionHeader text={this.state.AuditServerNavData["description"]} />
-                  <KQ scanDetails = {this.state.AuditKQDetails} />
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.AUDIT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-        break; 
+        
       default:
         return true; 
     }
@@ -247,7 +236,7 @@ var Audit = React.createClass({
       return (
         <div className="main">
           <Header />
-          <Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>
+          {this._navigation}
           {this._component}
           {this._notification}
         </div> 

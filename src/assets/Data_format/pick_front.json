@@ -315,6 +315,11 @@ after container scan
             "description": "Box Scan successfull",
             "level": "info"
         }],
+        "scan_details": {
+            "current_qty": "1",
+            "total_qty": "2",
+            "kq_allowed": true
+        },
         "logout_allowed": "false",
         "exception_allowed": [{
             "exception_id": "Common000",

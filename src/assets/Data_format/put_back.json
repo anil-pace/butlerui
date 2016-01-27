@@ -360,6 +360,7 @@
  			"actual_quantity": 0,
  			"expected_quantity": 5
  		}],
+ 		"exception_allowed": [],
  		"notification_list": [],
  		"seat_name": "back_10",
  		"screen_id": "put_back_tote_close",

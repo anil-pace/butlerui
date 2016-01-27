@@ -8,7 +8,7 @@ var navData = {
             "image": svgConstants.scan,
             "message": "Unexpected Item",
             "showImage": true,
-            "level": 1,
+            "level": null,
             "type": 'active'
         }],
         [{

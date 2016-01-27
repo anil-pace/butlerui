@@ -7,6 +7,13 @@ var ActiveNavigation = React.createClass({
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
         var errorCode = this.props.serverNavData.code;
+        var level;
+
+        if(compData.level == null){
+            level ='' ;
+        }else{
+            level = (<div className="index"><span>{compData.level}</span></div>); 
+        }
         return (
             	<div className="active-navigation">
                     {
@@ -14,8 +21,8 @@ var ActiveNavigation = React.createClass({
                             if(compData.showImage)
                             return (
                                     <div className = "nav-detail">
-                                        <div className="index"><span>{compData.level}</span></div>
-                                        <img src={compData.image} />
+                                    {level}
+                                    <img src={compData.image} />
                                     </div>
                                 );
                         })()

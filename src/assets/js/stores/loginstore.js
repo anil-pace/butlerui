@@ -91,7 +91,6 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(payload){
   var action = payload.action;
-  console.log(action.data);
   switch(action.actionType){
     case appConstants.LIST_SEATS:
       getParameterByName();

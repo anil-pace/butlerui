@@ -861,7 +861,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(payload) {
     var action = payload.action;
-    console.log(action.actionType);
     switch (action.actionType) {
         case appConstants.TOGGLE_BIN_SELECTION:
             mainstore.toggleBinSelection(action.bin_id);

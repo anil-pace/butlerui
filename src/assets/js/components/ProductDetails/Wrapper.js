@@ -18,7 +18,7 @@ var Wrapper = React.createClass({
   },
   onChange: function(){ 
   },
-  render: function(data){ console.log(this.props.productDetails.product_sku);
+  render: function(data){
       return (
         <div className='rightWrapper'>
            <ProductInfo productDetails={this.props.productDetails}/>

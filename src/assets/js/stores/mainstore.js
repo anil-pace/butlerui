@@ -1042,6 +1042,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontExceptionData"] = this.getExceptionData();
@@ -1137,7 +1138,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(payload) {
     var action = payload.action;
-    console.log(action.actionType);
     switch (action.actionType) {
         case appConstants.TOGGLE_BIN_SELECTION:
             mainstore.toggleBinSelection(action.bin_id);

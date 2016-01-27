@@ -70,6 +70,8 @@ var appConstants = {
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
 	SEND_EXCESS_ITEMS_BIN:"SEND_EXCESS_ITEMS_BIN",
+	AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:"audit_loose_item_damaged_barcode",
+	AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:"audit_box_damaged_barcode",
 	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",

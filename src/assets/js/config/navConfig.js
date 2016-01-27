@@ -92,7 +92,7 @@ var navData = {
     }],
     "audit": [
         [{
-            "screen_id": "pick_front_waiting_for_msu",
+            "screen_id": "audit_front_waiting_for_msu",
             "code": "Common.000",
             "message": "Wait For MSU",
             "showImage": false,

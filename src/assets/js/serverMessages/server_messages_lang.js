@@ -96,5 +96,6 @@ function server_messages_list() {
     _('Bin {0} selected');
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
+    _('Extra item found please put back item in Exception bin');
 
 }

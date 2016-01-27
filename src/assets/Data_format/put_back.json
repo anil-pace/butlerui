@@ -391,6 +391,7 @@
 			"description": "Please put it in IRT bin and confirm",
 			"level": "error"
 		}],
+		"exception_allowed": [],
 		"all_peripheral_status": "true",
 		"item_uid": "973b2132-b682-45f4-aac9-a3d01ec594d8",
 		"mode": "put",
@@ -399,13 +400,18 @@
 		"seat_type": "back",
 		"time_stamp": "1452534790",
 		"header_msge_list": [{
-			"details": [
-				[51]
-			],
+			"details": [51],
 			"code": "PtB.H.006",
 			"description": "3 excess quantity of item found in tote",
 			"level": "error"
 		}],
-		"api_version": "1"
+		"api_version": "1",
+		"exception_msg" :[{
+			"details": [51],
+			"code": "PtB.H.006",
+			"description": "3 excess quantity of item found in tote",
+			"level": "info"
+
+		}]
 	}
 }

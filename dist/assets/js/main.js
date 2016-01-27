@@ -37598,11 +37598,12 @@ var Header = React.createClass({displayName: "Header",
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState()
+            systemIsIdle: mainstore.getSystemIdleState(),
+            logoutState: mainstore.getLogoutState()
         }
     },
     openKeyboard: function() {
-       virtualKeyBoard_header = $('#barcode').keyboard({
+         virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
               'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -37642,6 +37643,22 @@ var Header = React.createClass({displayName: "Header",
         $("#actionMenu").hide();
     },
     logoutSession:function(){
+        $("#actionMenu").hide();
+        if(this.state.logoutState === "false" || this.state.logoutState === false){             
+            return false;
+        }
+        else{
+            CommonActions.logoutSession(true);
+        }        
+        
+    },
+    componentDidMount: function() { 
+    },
+    enableException:function(){
+        CommonActions.enableException(true);
+        $("#actionMenu").hide();
+    },
+    logoutSession:function(){
         CommonActions.logoutSession(true);
         $("#actionMenu").hide();
     },
@@ -37666,13 +37683,19 @@ var Header = React.createClass({displayName: "Header",
         else
             this.exceptionMenu = '';
     },
-    render: function() { 
+    render: function() {    
+        var logoutClass;
         var cssClass;      
-        this.getExceptionMenu();  
+        this.getExceptionMenu();
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else{
             cssClass = 'keyboard-actions'
+        }
+        if(this.state.logoutState === "false" || this.state.logoutState === false){
+            logoutClass = 'actionItem disable'
+        } else{
+            logoutClass = 'actionItem'
         }
         return (React.createElement("div", null, 
             React.createElement("div", {className: "head"}, 
@@ -37689,10 +37712,10 @@ var Header = React.createClass({displayName: "Header",
               )
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
-                    this.exceptionMenu, 
-                    React.createElement("div", {className: "actionItem", onClick: this.logoutSession}, 
-                        "Logout"
-                    )
+                this.exceptionMenu, 
+                React.createElement("div", {className: "actionItem", onClick: this.logoutSession}, 
+                    "Logout"
+                )
             )
             )
         );
@@ -42236,8 +42259,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    getItemUid: function() {
-        return _itemUid;
+    getLogoutState: function(){               
+        return _seatData.logout_allowed;
+    },
+    getItemUid:function(){
+       return _itemUid;
     },
     getExceptionType: function() {
         return _exceptionType;

@@ -91,7 +91,6 @@ var LoginPage = React.createClass({
     var n = d.getFullYear();   
     var seatData;
     var display = this.state.flag === true ? 'block' : 'none';
-    console.log("data  " + this.state.seatList.length );
       if(this.state.seatList.length > 0){
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){

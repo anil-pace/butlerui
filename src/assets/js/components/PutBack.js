@@ -40,7 +40,6 @@ function getStateData(){
 
 
     };*/
-    console.log(mainstore.getScreenData());
     return mainstore.getScreenData();
 
 }

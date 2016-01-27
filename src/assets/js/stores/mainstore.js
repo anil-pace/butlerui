@@ -110,7 +110,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
-                _NavData = navConfig.putBack;
+                if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
+                    _NavData = navConfig.putBack[0];
+                else
+                    _NavData = navConfig.putBack[1];
                 break;
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
@@ -834,7 +837,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
-
+    getToteException: function(){
+        if(_seatData.hasOwnProperty('exception_msg')){
+            return _seatData.exception_msg[0];
+        }else{
+            return null;
+        }
+    },
     getScreenData: function() {
         var data = {};
         switch (_screenId) {
@@ -849,6 +858,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackToteException"] = this.getToteException();
                 break;
             case appConstants.PUT_BACK_SCAN:
                 data["PutBackBinData"] = this.getBinData();
@@ -1000,6 +1018,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();

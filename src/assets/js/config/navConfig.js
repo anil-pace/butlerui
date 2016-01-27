@@ -1,23 +1,34 @@
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
-    "putBack": [{
-        "screen_id": ["put_back_stage","put_back_scan_tote"],
-        "code": "Common.000",
-        "image": svgConstants.stage,
-        "message": "Stage Bin or Scan Item",
-        "showImage": true,
-        "level": 1,
-        "type": 'passive'
-    }, {
-        "screen_id": ["put_back_scan","put_back_tote_close"],
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan & Confirm",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
-    }],
+    "putBack": [
+        [{
+            "screen_id": "put_back_invalid_tote_item",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": 1,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": ["put_back_stage","put_back_scan_tote"],
+            "code": "Common.000",
+            "image": svgConstants.stage,
+            "message": "Stage Bin or Scan Item",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": ["put_back_scan","put_back_tote_close"],
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Scan & Confirm",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }]
+    ],
     "putFront": [
         [{
             "screen_id": "put_front_waiting_for_rack",

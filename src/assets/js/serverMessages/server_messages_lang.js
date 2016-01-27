@@ -65,7 +65,7 @@ function server_messages_list() {
     _("No free Pps bins. Please scan later");
     _("Wrong button pressed. Please try another");
     _("Wrong button pressed. Please try another");
-    _("Please put it in IRT bin and confirm");
+    _("Invalid entity found in tote. Please put it in IRT bin and confirm");
     _("Wrong bin chosen.Try selecting another bin");
     _("Please scan same type of entity to finish this exception.");
     _("Entity scan not expected.");
@@ -178,5 +178,6 @@ function server_messages_list() {
     _("Damaged and missing entity reported.");
     _("Space unavailable reported.");
     _("Unknown Barcode Scanned");
+    _("{0} excess quantity of item found in tote")
 
 }

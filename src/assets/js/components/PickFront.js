@@ -2,6 +2,7 @@ var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
+var KQ = require('./ProductDetails/KQ');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -228,7 +229,117 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
       break;
-     
+      
+      case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
+          this._navigation = '';
+          if(this.state.PickFrontExceptionScreen == "good"){
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Good Quantity"}</div>
+                      <KQ scanDetails = {this.state.PickFrontGoodQuantity} action={"GOOD"} />
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
+            this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Missing Quantity"}</div>
+                      <KQ scanDetails = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
+                    </div>
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Damaged Quantity"}</div>
+                      <KQ scanDetails = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                     <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} /> 
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          }else if(this.state.PickFrontExceptionScreen == "pick_front_quantity"){
+              this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Please Put Back Damaged Item Quantity into Exception Area . "}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode"> 
+                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> 
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+           }
+        break;      
+        case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
+          this._navigation = '';
+          if(this.state.PickFrontExceptionScreen == "box_serial"){
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                     <div className = "kq-exception">
+                      <div className="kq-header">{"Missing Boxes"}</div>
+                      <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
+              this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Are You sure Given Boxes are not present in Slot ? "}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode"> 
+                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+           }
+          break;
 
       default:
         return true;

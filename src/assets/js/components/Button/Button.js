@@ -66,6 +66,12 @@ var Button1 = React.createClass({
                                 data["event_data"]["barcode"] = this.props.toteId;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CONFIRM_TOTE_EXCEPTION:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] = "confirm_invalid_item_in_tote",
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["item_uid"] = mainstore.getItemUid();
+                                ActionCreators.postDataToInterface(data);  
                             default:
                                 return true;
                         }
@@ -127,6 +133,23 @@ var Button1 = React.createClass({
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.GET_MISSING_AND_DAMAGED_QTY:
+                                ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");
+                                break;
+                            case appConstants.CONFIRM_FROM_USER:
+                                ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
+                                break;
+                             case appConstants.PLACE_ITEM_BACK:
+                                ActionCreators.changePickFrontExceptionScreen("pick_front_quantity");
+                                break;
+                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendPutDataToServer();
+                                break;
+                            case appConstants.SEND_MISSING_BOX_EXCEPTION:
+                                 data["event_name"] = "pick_front_exception";
+                                 data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);
@@ -177,6 +200,13 @@ var Button1 = React.createClass({
                                 break;
                             case appConstants.FINISH_CURRENT_AUDIT:
                                 data["event_data"]["type"] = "finish_current_audit";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                             case appConstants.SEND_KQ_QTY:
+                                data["event_name"] = "audit_action";
+                                data["event_data"]["type"] = "exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:

@@ -205,6 +205,13 @@ var commonActions = {
     });
   },
 
+  changePickFrontExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   validateAndSendPutDataToServer:function(){
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER

@@ -1,8 +1,10 @@
 
 var React = require('react');
 var AuditStore = require('../stores/AuditStore');
+var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
+var Exception = require('./Exception/Exception');
 var SystemIdle = require("./SystemIdle");
 var Notification = require("./Notification/Notification");
 var Button1 = require("./Button/Button");
@@ -23,7 +25,7 @@ var Modal = require('./Modal/Modal');
 
 function getStateData(){
   console.log(AuditStore.getBoxSerialData());
-  return {
+ /* return {
            AuditNavData : AuditStore.getNavData(),
            AuditNotification : AuditStore.getNotificationData(),
            AuditScreenId:AuditStore.getScreenId(),
@@ -41,7 +43,8 @@ function getStateData(){
            AuditFinishFlag:AuditStore.getFinishAuditFlag(),
            AuditShowModal:AuditStore.getModalStatus()
 
-    };
+    };*/
+     return mainstore.getScreenData();
 }
 
 
@@ -52,8 +55,9 @@ var Audit = React.createClass({
   _boxSerial:'',
   _currentBox:'',
   _looseItems:'',
+  _navigation:'',
   showModal: function() {
-        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true){
+        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
 
           setTimeout((function(){ActionCreators.showModal({
@@ -73,10 +77,10 @@ var Audit = React.createClass({
   },
   componentWillMount: function(){
     //this.showModal();
-    AuditStore.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    AuditStore.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   componentDidMount:function(){
     this.showModal();
@@ -86,9 +90,25 @@ var Audit = React.createClass({
     this.setState(getStateData());
      this.showModal();
   },
+  getExceptionComponent:function(){
+      var _rightComponent = '';
+      this._navigation = '';
+      return (
+              <div className='grid-container exception'>
+                <Modal />
+                <Exception data={this.state.AuditExceptionData} action={true}/>
+                <div className="exception-right"></div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                </div>
+              </div>
+            );
+  },
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.AUDIT_WAITING_FOR_MSU:
+         if(this.state.AuditExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
@@ -96,8 +116,13 @@ var Audit = React.createClass({
                  </div>
               </div>
             );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
         break;
       case appConstants.AUDIT_SCAN:
+       if(this.state.AuditExceptionStatus == false){
+           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               <div className = 'cancel-scan'>
@@ -140,9 +165,13 @@ var Audit = React.createClass({
                 {this._cancelStatus}
               </div>
             );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
 
         break;
       case appConstants.AUDIT_RECONCILE:
+          if(this.state.AuditExceptionStatus == false){
           var subComponent='';
           var messageType = 'large';
           if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
@@ -166,7 +195,31 @@ var Audit = React.createClass({
                 </div>
               </div>
             );
+          }else{
+          this._component = this.getExceptionComponent();
+        }
         break;
+      case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
+      case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
+      case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
+          this._navigation = '';
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.AuditExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader text={this.state.AuditServerNavData["description"]} />
+                  <KQ scanDetails = {this.state.AuditKQDetails} />
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.AUDIT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break; 
+        
       default:
         return true; 
     }
@@ -183,7 +236,7 @@ var Audit = React.createClass({
       return (
         <div className="main">
           <Header />
-          <Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>
+          {this._navigation}
           {this._component}
           {this._notification}
         </div> 

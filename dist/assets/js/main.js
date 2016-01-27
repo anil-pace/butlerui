@@ -37815,7 +37815,6 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var n = d.getFullYear();   
     var seatData;
     var display = this.state.flag === true ? 'block' : 'none';
-    console.log("data  " + this.state.seatList.length );
       if(this.state.seatList.length > 0){
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
@@ -39291,7 +39290,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
   },
   onChange: function(){ 
   },
-  render: function(data){ console.log(this.props.productDetails.product_sku);
+  render: function(data){
       return (
         React.createElement("div", {className: "rightWrapper"}, 
            React.createElement(ProductInfo, {productDetails: this.props.productDetails}), 
@@ -39346,7 +39345,6 @@ function getStateData(){
 
 
     };*/
-    console.log(mainstore.getScreenData());
     return mainstore.getScreenData();
 
 }
@@ -41898,7 +41896,6 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(payload){
   var action = payload.action;
-  console.log(action.data);
   switch(action.actionType){
     case appConstants.LIST_SEATS:
       getParameterByName();
@@ -42789,7 +42786,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(payload) {
     var action = payload.action;
-    console.log(action.actionType);
     switch (action.actionType) {
         case appConstants.TOGGLE_BIN_SELECTION:
             mainstore.toggleBinSelection(action.bin_id);

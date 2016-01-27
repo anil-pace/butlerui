@@ -69,7 +69,6 @@ function server_messages_list() {
     _("Wrong bin chosen.Try selecting another bin");
     _("Please scan same type of entity to finish this exception.");
     _("Entity scan not expected.");
-
     _("Tote scan successfull.");
     _("PPS is in paused mode. Cannot process new box. Take the entity back.");
     _("Cancel scan successfull.");
@@ -83,9 +82,6 @@ function server_messages_list() {
     _("extra entity recorder in bin.WMS Notified.");
     _("Oversized entity recorded.WMS notified.");
     _("Exception cancelled successfully");
-
-
-
     _("Container already stored in the warehouse");
     _("Entity already scanned.Waiting for Pptl button press");
     _("No PpsBins available to stage");
@@ -107,21 +103,17 @@ function server_messages_list() {
     _('Bin {0} selected');
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
-
-
     _("Enter Damaged Entity Quantity");
     _("Scan Oversized Entity Quantity");
     _("Please Select The Bin With Excess Entity");
     _("Enter Excess Entity Quantity");
     _("Please put it in IRT bin and confirm");
-
     _("Place Entity in Slot and Scan More");
     _("Scan Slot to Confirm");
     _("Wait for MSU");
     _("Scan Entity From Bin");
     _("Enter Good Quantity to be put in slot");
     _("Put Back Entity in PPS Bin");
-
     _("Wait for MSU");
     _("Confirm MSU Release");
     _("Scan Slot");
@@ -129,21 +121,17 @@ function server_messages_list() {
     _("Scan Box");
     _("Scan Items and Place in Bin");
     _("Press PPTL for Bin to confirm");
-
     _("Scan tote to associate with bin");
     _("Press bin PPTL or scan a tote");
     _("Press PpsBin to remove items");
-
     _("Pick Complete. Waiting for next rack.");
     _("Location Scan successful");
     _("Box Scan successful");
     _("Item Scan successful");
     _("Cancel Scan successful");
     _("PPTL button press successful");
-
     _("Expecting MSU release confirmation from GUI, got invalid event.");
     _("Cannot cancel scan. No Scanned box found");
-
     _("Wrong location scan.Scan correct location");
     _("Wrong box scanned. Please try again");
     _("Scan a box first");
@@ -154,22 +142,19 @@ function server_messages_list() {
     _("Waiting for rack. Please wait and scan later");
     _("Scanned item details not found");
     _("No PPS bins empty. Please empty them");
-
     _("Barcode didn't match current tote barcode");
     _("Totes are not required");
     _("Exception invalid");
     _("No totes associated. Please keep totes in bin and then scan");
     _("Wrong ppsbin button pressed");
     _("Tote didn't get associated");
-
     _("Exception cancelled");
     _("Tote scan cancelled");
     _("Documents printed successfully");
     _("Bin entities removed successfully");
     _("Tote assigned successfully to ppsbin ");
     _("Please scan pptl");
-    _("All totes deassociated from PpsBin ");
-    
+    _("All totes deassociated from PpsBin ");    
     _("Please complete process for pending ppsbin and then proceed");
     _("Tote already reserved");
     _("Wrong barcode scanned");
@@ -179,7 +164,6 @@ function server_messages_list() {
     _("Pptl scan not allowed. Totes are not required");
     _("Pptl scan not allowed");
     _("Scan pptl barcode after scannning tote barcode");
-
     _("Entity scanned is not from bin. Replace and scan from bin");
     _("Wrong entity scanned");
     _("Waiting for MSU. Please scan entity later.");
@@ -187,13 +171,11 @@ function server_messages_list() {
     _("Wrong scan! Entity scan expected but slot barcode scanned.");
     _("Actual put quantity not equal to sum of Good and Expection quantity.");
     _("Actual put quantity less than than revised quantity.");
-
     _("Entity scan successful");
     _("Slot scan successful");
     _("Slot scan successful");
     _("Damaged and missing entity reported.");
     _("Space unavailable reported.");
     _("Unknown Barcode Scanned");
-
 
 }

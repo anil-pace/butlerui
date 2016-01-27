@@ -53,9 +53,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getSpinnerState: function() {
         return _showSpinner;
     },
-    getLogoutState: function() {
-        return _logoutStatus;
 
+    getLogoutState: function(){
+       if(_seatData.hasOwnProperty("logout_allowed"))
+            return _seatData.logout_allowed;
     },
 
     toggleBinSelection: function(bin_id) {
@@ -121,7 +122,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
-                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
+                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
                 else
                     _NavData = navConfig.pickFront[1];
@@ -638,8 +639,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    getItemUid: function() {
-        return _itemUid;
+    
+    getItemUid:function(){
+       return _itemUid;
     },
     getExceptionType: function() {
         return _exceptionType;
@@ -1140,7 +1142,6 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.SET_CURRENT_SEAT:
             mainstore.setCurrentSeat(action.data);
-            mainstore.setLogoutState();
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.POPUP_VISIBLE:

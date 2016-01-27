@@ -11,11 +11,12 @@ var Header = React.createClass({
     getInitialState: function() {
         return {
             spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState()
+            systemIsIdle: mainstore.getSystemIdleState(),
+            logoutState: mainstore.getLogoutState()
         }
     },
     openKeyboard: function() {
-       virtualKeyBoard_header = $('#barcode').keyboard({
+         virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
               'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -55,7 +56,19 @@ var Header = React.createClass({
         $("#actionMenu").hide();
     },
     logoutSession:function(){
-        CommonActions.logoutSession(true);
+        $("#actionMenu").hide();        
+        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
+            return false;
+        }
+        else{
+            CommonActions.logoutSession(true);
+        }        
+        
+    },
+    componentDidMount: function() { 
+    },
+    enableException:function(){
+        CommonActions.enableException(true);
         $("#actionMenu").hide();
     },
     componentDidMount: function() {
@@ -79,13 +92,20 @@ var Header = React.createClass({
         else
             this.exceptionMenu = '';
     },
-    render: function() { 
+
+    render: function() {    
+        var logoutClass;
         var cssClass;      
-        this.getExceptionMenu();  
+        this.getExceptionMenu();
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else{
             cssClass = 'keyboard-actions'
+        }
+        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){
+            logoutClass = 'actionItem disable'
+        } else{
+            logoutClass = 'actionItem'
         }
         return (<div>
             <div className="head">
@@ -102,10 +122,10 @@ var Header = React.createClass({
               </div>
             </div>
             <div className="actionMenu" id="actionMenu" >
-                    {this.exceptionMenu}
-                    <div className="actionItem" onClick = {this.logoutSession} >
-                        Logout
-                    </div>
+                {this.exceptionMenu}    
+                <div className={logoutClass} onClick = {this.logoutSession} >
+                    Logout
+                </div>
             </div>
             </div>
         );

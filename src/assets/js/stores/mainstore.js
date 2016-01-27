@@ -781,7 +781,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    validateAndSendPutDataToServer: function() {
+    validateAndSendDataToServer: function() {
         var flag = false;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.pick_quantity;
@@ -1124,7 +1124,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditServerNavData"] = this.getServerNavData();
                 data["AuditExceptionData"] = this.getExceptionData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
-                data["AuditShowModal"] = this.getModalStatus();
+                //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
                 break;
             default:
@@ -1223,8 +1223,8 @@ AppDispatcher.register(function(payload) {
             mainstore.setPickFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
-        case appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:
-            mainstore.validateAndSendPutDataToServer();
+        case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+            mainstore.validateAndSendDataToServer();
             mainstore.emitChange();
             break;
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:

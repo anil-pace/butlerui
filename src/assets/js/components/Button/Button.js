@@ -91,7 +91,7 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendPutDataToServer();
+                                ActionCreators.validateAndSendDataToServer();
                                 break;
                             case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendSpaceUnavailableDataToServer();
@@ -137,7 +137,7 @@ var Button1 = React.createClass({
                                 ActionCreators.changePickFrontExceptionScreen("pick_front_quantity");
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendPutDataToServer();
+                                ActionCreators.validateAndSendDataToServer();
                                 break;
                             case appConstants.SEND_MISSING_BOX_EXCEPTION:
                                  data["event_name"] = "pick_front_exception";
@@ -197,8 +197,8 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                              case appConstants.SEND_KQ_QTY:
-                                data["event_name"] = "audit_action";
-                                data["event_data"]["type"] = "exception";
+                                data["event_name"] = "audit_actions";
+                                data["event_data"]["type"] = "exception_response";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);

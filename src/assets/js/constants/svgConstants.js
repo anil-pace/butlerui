@@ -13,7 +13,7 @@ var allSvgConstants = {
 	headerbg : 'assets/images/headerbg.png',
 	scanHeader :'assets/images/scan_header.png',
 	iconBar :'assets/images/Icon.png',
-	tote:'assets/images/Tote.png'
+	tote:'assets/images/tote.png'
 }
 
 module.exports = allSvgConstants;

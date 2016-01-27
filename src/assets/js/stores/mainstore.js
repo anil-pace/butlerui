@@ -659,6 +659,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackNavData"] = this.getNavData();
+                data["PutBackItemUid"] = this.getItemUid();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();

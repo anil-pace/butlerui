@@ -16,6 +16,7 @@ var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
 var Img = require('./PrdtDetails/ProductImage.js');
+var Reconcile = require("./Reconcile");
 
 
 function getStateData(){
@@ -239,7 +240,19 @@ var PutBack = React.createClass({
                 </div>
               </div>
             );
-        break; 
+        break;
+      case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
+          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+     
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                 <Reconcile navMessagesJson={this.props.navMessagesJson} message={this.state.PutBackToteException} />
+                 <div className = 'staging-action' >
+                  <Button1 disabled = {false} text = {"Confirm"} module ={appConstants.PUT_BACK} status={true} action={appConstants.CONFIRM_TOTE_EXCEPTION} color={"orange"} />  
+                </div>
+              </div>
+            );
+        break;   
       default:
         return true; 
     }

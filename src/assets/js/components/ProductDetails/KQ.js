@@ -192,7 +192,7 @@ var KQ = React.createClass({
                             data = {
                                 "event_name": "quantity_update_from_gui",
                                 "event_data": {
-                                    "item_uid": this.props.itemUid,
+                                    "item_uid": itemUid,
                                     "quantity_updated": parseInt(e.target.value)
                                 }
                             };

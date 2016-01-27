@@ -97,31 +97,79 @@ function server_messages_list() {
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
 
+
+    _("Enter Damaged Entity Quantity");
+    _("Scan Oversized Entity Quantity");
+    _("Please Select The Bin With Excess Entity");
+    _("Enter Excess Entity Quantity");
+    _("Please put it in IRT bin and confirm");
+
+    _("Place Entity in Slot and Scan More");
+    _("Scan Slot to Confirm");
+    _("Wait for MSU");
+    _("Scan Entity From Bin");
+    _("Enter Good Quantity to be put in slot");
+    _("Put Back Entity in PPS Bin");
+
+    _("Wait for MSU");
+    _("Confirm MSU Release");
+    _("Scan Slot");
+    _("Scan Items");
+    _("Scan Box");
+    _("Scan Items and Place in Bin");
+    _("Press PPTL for Bin to confirm");
+
+    _("Scan tote to associate with bin");
+    _("Press bin PPTL or scan a tote");
+    _("Press PpsBin to remove items");
+
+    _("Pick Complete. Waiting for next rack.");
+    _("Location Scan successful");
+    _("Box Scan successful");
+    _("Item Scan successful");
+    _("Cancel Scan successful");
+    _("PPTL button press successful");
+
+    _("Expecting MSU release confirmation from GUI, got invalid event.");
+    _("Cannot cancel scan. No Scanned box found");
+
+    _("Wrong location scan.Scan correct location");
+    _("Wrong box scanned. Please try again");
+    _("Scan a box first");
+    _("Wrong ppsbin button pressed. Please press correct button");
+    _("Picked quantity more than expected. Not Allowed");
+    _("Wrong item quantity update");
+    _("Wrong item scanned. Please scan correct item");
+    _("Waiting for rack. Please wait and scan later");
+    _("Scanned item details not found");
+    _("No PPS bins empty. Please empty them");
+
+    _("Barcode didn't match current tote barcode");
+    _("Totes are not required");
+    _("Exception invalid");
+    _("No totes associated. Please keep totes in bin and then scan");
+    _("Wrong ppsbin button pressed");
+    _("Tote didn't get associated");
+
+    _("Exception cancelled");
+    _("Tote scan cancelled");
+    _("Documents printed successfully");
+    _("Bin entities removed successfully");
+    _("Tote assigned successfully to ppsbin ");
+    _("Please scan pptl");
+    _("All totes deassociated from PpsBin ");
     
-    _('Enter Damaged Entity Quantity');
-    _('Scan Oversized Entity Quantity');
-    _('Please Select The Bin With Excess Entity');
-    _('Enter Excess Entity Quantity');
-    _('Please put it in IRT bin and confirm');
+    _("Please complete process for pending ppsbin and then proceed");
+    _("Tote already reserved");
+    _("Wrong barcode scanned");
+    _("Please scan the tote first and then scan pptl barcode");
+    _("No tote scanned");
+    _("Please press ppsbin button which does not have any totes associated");
+    _("Pptl scan not allowed. Totes are not required");
+    _("Pptl scan not allowed");
+    _("Scan pptl barcode after scannning tote barcode");
 
-    _('Place Entity in Slot and Scan More');
-    _('Scan Slot to Confirm');
-    _('Wait for MSU');
-    _('Scan Entity From Bin');
-    _('Enter Good Quantity to be put in slot');
-    _('Put Back Entity in PPS Bin');
 
-    _('Wait for MSU');
-    _('Confirm MSU Release');
-    _('Scan Slot');
-    _('Scan Items');
-    _('Scan Box');
-    _('Scan Items and Place in Bin');
-    _('Press PPTL for Bin to confirm');
-
-    _('Scan tote to associate with bin');
-    _('Press bin PPTL or scan a tote');
-    _('Press PpsBin to remove items');
 
 
 }

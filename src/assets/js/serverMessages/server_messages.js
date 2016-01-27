@@ -118,6 +118,57 @@ var serverMessages = {
     'CLIENTCODE_001' : 'Bin {0} selected',
     'CLIENTCODE_002' : 'Bin {0} unselected',
     'CLIENTCODE_003' : 'Connection is closed. Connecting...',
+
+    "PkF.I.001" : "Pick Complete. Waiting for next rack.",
+    "PkF.I.002" : "Location Scan successful",
+    "PkF.I.003" : "Box Scan successful",
+    "PkF.I.004" : "Item Scan successful",
+    "PkF.I.005" : "Cancel Scan successful",
+    "PkF.I.006" : "PPTL button press successful",
+
+    "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
+    "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
+
+    "PkF.E.001" : "Wrong location scan.Scan correct location",
+    "PkF.E.002" : "Wrong box scanned. Please try again",
+    "PkF.E.003" : "Scan a box first",
+    "PkF.E.004" : "Wrong ppsbin button pressed. Please press correct button",
+    "PkF.E.005" : "Picked quantity more than expected. Not Allowed",
+    "PkF.E.006" : "Wrong item quantity update",
+    "PkF.E.007" : "Wrong item scanned. Please scan correct item",
+    "PkF.E.008" : "Waiting for rack. Please wait and scan later",
+    "PkF.E.009" : "Scanned item details not found",
+    "PkF.E.010" : "No PPS bins empty. Please empty them",
+
+    "PkB.E.001" : "Barcode didn't match current tote barcode",
+    "PkB.E.002" : "Totes are not required",
+    "PkB.E.003" : "Exception invalid",
+    "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
+    "PkB.E.005" : "Wrong ppsbin button pressed",
+    "PkB.E.006" : "Tote didn't get associated",
+   
+    "PkB.I.001" : "Exception cancelled",
+    "PkB.I.002" : "Tote scan cancelled",
+    "PkB.I.003" : "Documents printed successfully",
+    "PkB.I.004" : "Bin entities removed successfully",
+    "PkB.I.005" : "Tote assigned successfully to ppsbin ",
+    "PkB.I.006" : "Please scan pptl",
+    "PkB.I.007" : "All totes deassociated from PpsBin ",
+
+    "PkB.W.001" : "Please complete process for pending ppsbin and then proceed",
+    "PkB.W.002" : "Tote already reserved",
+    "PkB.W.003" : "Wrong barcode scanned",
+    "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
+    "PkB.W.005" : "No tote scanned",
+    "PkB.W.006" : "Please press ppsbin button which does not have any totes associated",
+    "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
+    "PkB.W.008" : "Pptl scan not allowed",
+    "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",
+    
+
+
+
+
 };
 
 

@@ -37643,8 +37643,8 @@ var Header = React.createClass({displayName: "Header",
         $("#actionMenu").hide();
     },
     logoutSession:function(){
-        $("#actionMenu").hide();
-        if(this.state.logoutState === "false" || this.state.logoutState === false){             
+        $("#actionMenu").hide();        
+        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
             return false;
         }
         else{
@@ -37656,10 +37656,6 @@ var Header = React.createClass({displayName: "Header",
     },
     enableException:function(){
         CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
-    logoutSession:function(){
-        CommonActions.logoutSession(true);
         $("#actionMenu").hide();
     },
     componentDidMount: function() {
@@ -37683,6 +37679,7 @@ var Header = React.createClass({displayName: "Header",
         else
             this.exceptionMenu = '';
     },
+
     render: function() {    
         var logoutClass;
         var cssClass;      
@@ -37692,7 +37689,7 @@ var Header = React.createClass({displayName: "Header",
         } else{
             cssClass = 'keyboard-actions'
         }
-        if(this.state.logoutState === "false" || this.state.logoutState === false){
+        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){
             logoutClass = 'actionItem disable'
         } else{
             logoutClass = 'actionItem'
@@ -37713,7 +37710,7 @@ var Header = React.createClass({displayName: "Header",
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
                 this.exceptionMenu, 
-                React.createElement("div", {className: "actionItem", onClick: this.logoutSession}, 
+                React.createElement("div", {className: logoutClass, onClick: this.logoutSession}, 
                     "Logout"
                 )
             )
@@ -39325,6 +39322,7 @@ var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
 var Img = require('./PrdtDetails/ProductImage.js');
+var Reconcile = require("./Reconcile");
 
 
 function getStateData(){
@@ -39548,7 +39546,19 @@ var PutBack = React.createClass({displayName: "PutBack",
                 )
               )
             );
-        break; 
+        break;
+      case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
+     
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                 React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
+                 React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "Confirm", module: appConstants.PUT_BACK, status: true, action: appConstants.CONFIRM_TOTE_EXCEPTION, color: "orange"})
+                )
+              )
+            );
+        break;   
       default:
         return true; 
     }
@@ -39577,7 +39587,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":280,"../stores/PutBackStore":291,"../stores/mainstore":294,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./SystemIdle":275,"./TabularData":278,"react":230}],266:[function(require,module,exports){
+},{"../constants/appConstants":280,"../stores/PutBackStore":291,"../stores/mainstore":294,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Reconcile":271,"./SystemIdle":275,"./TabularData":278,"react":230}],266:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -40035,12 +40045,27 @@ var allresourceConstants = require('../constants/resourceConstants');
 
 var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 	render:function(){		
-				
-		
+		var server_message = this.props.message.description;
+        var navMessagesJson = this.props.navMessagesJson;		
+		var message_args  = this.props.message.details.slice(0);
+        var errorCode = this.props.message.code
 		return (
 				React.createElement("div", {className: "reconcileWrapper"}, 
-					React.createElement("div", {className: "reconcileStatus"}, " ", this.props.message, " "), 
-					React.createElement("div", {className: "reconcileAction"}, " Please Place The Box Back in Slot A1 ")					
+					React.createElement("div", {className: "reconcileStatus"}, 
+					(function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
+					)				
 				)
 				
 					
@@ -40253,23 +40278,34 @@ module.exports = TabularData;
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
-    "putBack": [{
-        "screen_id": ["put_back_stage","put_back_scan_tote"],
-        "code": "Common.000",
-        "image": svgConstants.stage,
-        "message": "Stage Bin or Scan Item",
-        "showImage": true,
-        "level": 1,
-        "type": 'passive'
-    }, {
-        "screen_id": ["put_back_scan","put_back_tote_close"],
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan & Confirm",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
-    }],
+    "putBack": [
+        [{
+            "screen_id": "put_back_invalid_tote_item",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": 1,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": ["put_back_stage","put_back_scan_tote"],
+            "code": "Common.000",
+            "image": svgConstants.stage,
+            "message": "Stage Bin or Scan Item",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": ["put_back_scan","put_back_tote_close"],
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Scan & Confirm",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }]
+    ],
     "putFront": [
         [{
             "screen_id": "put_front_waiting_for_rack",
@@ -40436,6 +40472,7 @@ var appConstants = {
 	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
+	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
@@ -40475,7 +40512,8 @@ var appConstants = {
 	DAMAGED_BARCODE:"Damaged Barcode",
 	OVERSIZED_ITEMS:"Oversized Items",
 	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
-	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE"
+	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE",
+	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION'
 
 };
 
@@ -40591,6 +40629,11 @@ var serverMessages = {
     "PtB.H.003": "Are you sure you want to close Tote",
     "PtB.H.004": "Scan Tote / Stage PpsBin",
     "PtB.H.005" : "Item Not Found in Tote",
+    "PtB.H.007" : "Enter Damaged Entity Quantity",
+    "PtB.H.008" : "Scan Oversized Entity Quantity",
+    "PtB.H.009" : "Please Select The Bin With Excess Entity",
+    "PtB.H.010" : "Enter Excess Entity Quantity",
+    "PtB.H.011" : "Please put it in IRT bin and confirm",
     "PtB.E.001" : "Tote already opened.Scan some other tote",
     "PtB.E.002" : "Tote already closed.Scan some other tote",
     "PtB.E.003" : "No matching tote found",
@@ -40603,8 +40646,28 @@ var serverMessages = {
     "PtB.E.010" : "SKU not present in Database. WMS Notified.",
     "PtB.E.011" : "Warehouse Full! Remove all entities from bin number and press PPTL.",
     "PtB.E.012" : "No free Pps bins. Please scan later",
-    "PtB.E.013" : "Wrong button pressed. Please try another",    
+    "PtB.E.013" : "Wrong button pressed. Please try another", 
+    "PtB.E.014" : "Extra item found please put back item in Exception bin",   
     "PtB.E.015" : "Please put it in IRT bin and confirm",
+    "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
+    "PtB.E.017" : "Please scan same type of entity to finish this exception.",
+    "PtB.E.018" : "Entity scan not expected.",  
+    "PtF.H.001" : "Place Entity in Slot and Scan More",
+    "PtF.H.002" : "Scan Slot to Confirm",
+    "PtF.H.003" : "Wait for MSU",
+    "PtF.H.004" : "Scan Entity From Bin",
+    "PtF.H.005" : "Enter Good Quantity to be put in slot",
+    "PtF.H.006" : "Put Back Entity in PPS Bin",
+    "PkF.H.001" : "Wait for MSU",
+    "PkF.H.002" : "Confirm MSU Release",
+    "PkF.H.003" : "Scan Slot",
+    "PkF.H.004" : "Scan Items",
+    "PkF.H.005" : "Scan Box",
+    "PkF.H.006" : "Scan Items and Place in Bin",
+    "PkF.H.007" : "Press PPTL for Bin to confirm",
+    "PkB.H.001" : "Scan tote to associate with bin",
+    "PtF.H.002" : "Press bin PPTL or scan a tote",
+    "PtF.H.003" : "Press PpsBin to remove items",
     "PtB.I.001" : "Tote scan successfull",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
     "PtB.I.003" : "Cancel scan successfull.",
@@ -40614,6 +40677,10 @@ var serverMessages = {
     "PtB.I.007" : "PPtl Button press successfull",
     "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
     "PtB.I.009" : "Invalid item in tote recorded.",
+    "PtB.I.010" : "damaged entity recorder.WMS Notified.",
+    "PtB.I.011" : "extra entity recorder in bin.WMS Notified.",
+    "PtB.I.012" : "Oversized entity recorded.WMS notified.",
+    "PtB.I.013" : "Exception cancelled successfully",
     "PtB.W.001" : "Container already stored in the warehouse",
     "PtB.W.002" : "Entity already scanned.Waiting for Pptl button press",
     "PtB.W.003" : "No PpsBins available to stage",
@@ -40669,8 +40736,62 @@ var serverMessages = {
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successfull",
     "AdF.B.003" :"Item Scan successfull",
-    'CLIENTCODE_001' : 'Bin {0} selected',
-    'CLIENTCODE_002' : 'Bin {0} unselected',
+    "CLIENTCODE_001" : "Bin {0} selected",
+    "CLIENTCODE_002" : "Bin {0} unselected",
+    "CLIENTCODE_003" : "Connection is closed. Connecting...",
+    "PkF.I.001" : "Pick Complete. Waiting for next rack.",
+    "PkF.I.002" : "Location Scan successful",
+    "PkF.I.003" : "Box Scan successful",
+    "PkF.I.004" : "Item Scan successful",
+    "PkF.I.005" : "Cancel Scan successful",
+    "PkF.I.006" : "PPTL button press successful",
+    "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
+    "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
+    "PkF.E.001" : "Wrong location scan.Scan correct location",
+    "PkF.E.002" : "Wrong box scanned. Please try again",
+    "PkF.E.003" : "Scan a box first",
+    "PkF.E.004" : "Wrong ppsbin button pressed. Please press correct button",
+    "PkF.E.005" : "Picked quantity more than expected. Not Allowed",
+    "PkF.E.006" : "Wrong item quantity update",
+    "PkF.E.007" : "Wrong item scanned. Please scan correct item",
+    "PkF.E.008" : "Waiting for rack. Please wait and scan later",
+    "PkF.E.009" : "Scanned item details not found",
+    "PkF.E.010" : "No PPS bins empty. Please empty them",
+    "PkB.E.001" : "Barcode didn't match current tote barcode",
+    "PkB.E.002" : "Totes are not required",
+    "PkB.E.003" : "Exception invalid",
+    "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
+    "PkB.E.005" : "Wrong ppsbin button pressed",
+    "PkB.E.006" : "Tote didn't get associated",   
+    "PkB.I.001" : "Exception cancelled",
+    "PkB.I.002" : "Tote scan cancelled",
+    "PkB.I.003" : "Documents printed successfully",
+    "PkB.I.004" : "Bin entities removed successfully",
+    "PkB.I.005" : "Tote assigned successfully to ppsbin ",
+    "PkB.I.006" : "Please scan pptl",
+    "PkB.I.007" : "All totes deassociated from PpsBin ",
+    "PkB.W.001" : "Please complete process for pending ppsbin and then proceed",
+    "PkB.W.002" : "Tote already reserved",
+    "PkB.W.003" : "Wrong barcode scanned",
+    "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
+    "PkB.W.005" : "No tote scanned",
+    "PkB.W.006" : "Please press ppsbin button which does not have any totes associated",
+    "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
+    "PkB.W.008" : "Pptl scan not allowed",
+    "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
+    "PtF.E.001" : "Entity scanned is not from bin. Replace and scan from bin",
+    "PtF.E.002" : "Wrong entity scanned",
+    "PtF.E.003" : "Waiting for MSU. Please scan entity later.",
+    "PtF.E.004" : "Expected quantity exceeded.",
+    "PtF.E.005" : "Wrong scan! Entity scan expected but slot barcode scanned.",
+    "PtF.E.006" : "Actual put quantity not equal to sum of Good and Expection quantity.",
+    "PtF.E.007" : "Actual put quantity less than than revised quantity.",   
+    "PtF.I.001" : "Entity scan successful",
+    "PtF.I.002" : "Slot scan successful",
+    "PtF.I.003" : "Slot scan successful",
+    "PtF.I.004" : "Damaged and missing entity reported.",
+    "PtF.I.005" : "Space unavailable reported.",
+    "PtF.I.006" : "Unknown Barcode Scanned"
 };
 
 
@@ -41858,7 +41979,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _showSpinner;
     },
     getLogoutState: function(){
-       return _logoutStatus;
+       if(_seatData.hasOwnProperty("logout_allowed"))
+            return _seatData.logout_allowed;
         
     },
 
@@ -41913,7 +42035,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
-                _NavData = navConfig.putBack;
+                if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
+                    _NavData = navConfig.putBack[0];
+                else
+                    _NavData = navConfig.putBack[1];
                 break;
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
@@ -42273,9 +42398,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    getLogoutState: function(){               
-        return _seatData.logout_allowed;
-    },
+    
     getItemUid:function(){
        return _itemUid;
     },
@@ -42439,7 +42562,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
-
+    getToteException: function(){
+        if(_seatData.hasOwnProperty('exception_msg')){
+            return _seatData.exception_msg[0];
+        }else{
+            return null;
+        }
+    },
     getScreenData: function() {
         var data = {};
         switch (_screenId) {
@@ -42454,6 +42583,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackToteException"] = this.getToteException();
                 break;
             case appConstants.PUT_BACK_SCAN:
                 data["PutBackBinData"] = this.getBinData();
@@ -42605,6 +42743,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
@@ -42621,6 +42760,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontExceptionData"] = this.getExceptionData();
@@ -42672,7 +42812,6 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.SET_CURRENT_SEAT:
             mainstore.setCurrentSeat(action.data);
-            mainstore.setLogoutState();
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.POPUP_VISIBLE:

@@ -21,10 +21,10 @@ var ActionCreators = require('../actions/CommonActions');
 var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
+var ExceptionHeader = require('./ExceptionHeader');
 
 
 function getStateData(){
-  console.log(AuditStore.getBoxSerialData());
  /* return {
            AuditNavData : AuditStore.getNavData(),
            AuditNotification : AuditStore.getNotificationData(),
@@ -57,6 +57,7 @@ var Audit = React.createClass({
   _looseItems:'',
   _navigation:'',
   showModal: function() {
+      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
 
@@ -71,6 +72,7 @@ var Audit = React.createClass({
       }),0)
 
        }
+     }
   },
   getInitialState: function(){
     return getStateData();

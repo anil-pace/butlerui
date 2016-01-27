@@ -832,6 +832,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontExceptionData"] = this.getExceptionData();

@@ -97,4 +97,31 @@ function server_messages_list() {
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
 
+    
+    _('Enter Damaged Entity Quantity');
+    _('Scan Oversized Entity Quantity');
+    _('Please Select The Bin With Excess Entity');
+    _('Enter Excess Entity Quantity');
+    _('Please put it in IRT bin and confirm');
+
+    _('Place Entity in Slot and Scan More');
+    _('Scan Slot to Confirm');
+    _('Wait for MSU');
+    _('Scan Entity From Bin');
+    _('Enter Good Quantity to be put in slot');
+    _('Put Back Entity in PPS Bin');
+
+    _('Wait for MSU');
+    _('Confirm MSU Release');
+    _('Scan Slot');
+    _('Scan Items');
+    _('Scan Box');
+    _('Scan Items and Place in Bin');
+    _('Press PPTL for Bin to confirm');
+
+    _('Scan tote to associate with bin');
+    _('Press bin PPTL or scan a tote');
+    _('Press PpsBin to remove items');
+
+
 }

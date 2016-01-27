@@ -5,6 +5,15 @@ var serverMessages = {
     "PtB.H.003": "Are you sure you want to close Tote",
     "PtB.H.004": "Scan Tote / Stage PpsBin",
     "PtB.H.005" : "Item Not Found in Tote",
+    "PtB.H.007" : "Enter Damaged Entity Quantity",
+    "PtB.H.008" : "Scan Oversized Entity Quantity",
+    "PtB.H.009" : "Please Select The Bin With Excess Entity",
+    "PtB.H.010" : "Enter Excess Entity Quantity",
+    "PtB.H.011" : "Please put it in IRT bin and confirm",
+
+
+
+
     "PtB.E.001" : "Tote already opened.Scan some other tote",
     "PtB.E.002" : "Tote already closed.Scan some other tote",
     "PtB.E.003" : "No matching tote found",
@@ -19,6 +28,29 @@ var serverMessages = {
     "PtB.E.012" : "No free Pps bins. Please scan later",
     "PtB.E.013" : "Wrong button pressed. Please try another",    
     "PtB.E.015" : "Please put it in IRT bin and confirm",
+
+    "PtF.H.001" : "Place Entity in Slot and Scan More",
+    "PtF.H.002" : "Scan Slot to Confirm",
+    "PtF.H.003" : "Wait for MSU",
+    "PtF.H.004" : "Scan Entity From Bin",
+    "PtF.H.005" : "Enter Good Quantity to be put in slot",
+    "PtF.H.006" : "Put Back Entity in PPS Bin",
+
+    "PkF.H.001" : "Wait for MSU",
+    "PkF.H.002" : "Confirm MSU Release",
+    "PkF.H.003" : "Scan Slot",
+    "PkF.H.004" : "Scan Items",
+    "PkF.H.005" : "Scan Box",
+    "PkF.H.006" : "Scan Items and Place in Bin",
+    "PkF.H.007" : "Press PPTL for Bin to confirm",
+
+
+    "PkB.H.001" : "Scan tote to associate with bin",
+    "PtF.H.002" : "Press bin PPTL or scan a tote",
+    "PtF.H.003" : "Press PpsBin to remove items",
+
+
+
     "PtB.I.001" : "Tote scan successfull",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
     "PtB.I.003" : "Cancel scan successfull.",

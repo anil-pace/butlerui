@@ -66,6 +66,10 @@ function server_messages_list() {
     _("Wrong button pressed. Please try another");
     _("Wrong button pressed. Please try another");
     _("Please put it in IRT bin and confirm");
+    _("Wrong bin chosen.Try selecting another bin");
+    _("Please scan same type of entity to finish this exception.");
+    _("Entity scan not expected.");
+
     _("Tote scan successfull.");
     _("PPS is in paused mode. Cannot process new box. Take the entity back.");
     _("Cancel scan successfull.");
@@ -75,6 +79,13 @@ function server_messages_list() {
     _("PPtl Button press successfull");
     _("Excess item in tote recorded.Now press Pptl");
     _("Invalid item in tote recorded.");
+    _("damaged entity recorder.WMS Notified.");
+    _("extra entity recorder in bin.WMS Notified.");
+    _("Oversized entity recorded.WMS notified.");
+    _("Exception cancelled successfully");
+
+
+
     _("Container already stored in the warehouse");
     _("Entity already scanned.Waiting for Pptl button press");
     _("No PpsBins available to stage");
@@ -169,7 +180,20 @@ function server_messages_list() {
     _("Pptl scan not allowed");
     _("Scan pptl barcode after scannning tote barcode");
 
+    _("Entity scanned is not from bin. Replace and scan from bin");
+    _("Wrong entity scanned");
+    _("Waiting for MSU. Please scan entity later.");
+    _("Expected quantity exceeded.");
+    _("Wrong scan! Entity scan expected but slot barcode scanned.");
+    _("Actual put quantity not equal to sum of Good and Expection quantity.");
+    _("Actual put quantity less than than revised quantity.");
 
+    _("Entity scan successful");
+    _("Slot scan successful");
+    _("Slot scan successful");
+    _("Damaged and missing entity reported.");
+    _("Space unavailable reported.");
+    _("Unknown Barcode Scanned");
 
 
 }

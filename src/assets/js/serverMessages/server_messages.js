@@ -28,6 +28,10 @@ var serverMessages = {
     "PtB.E.012" : "No free Pps bins. Please scan later",
     "PtB.E.013" : "Wrong button pressed. Please try another",    
     "PtB.E.015" : "Please put it in IRT bin and confirm",
+    "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
+    "PtB.E.017" : "Please scan same type of entity to finish this exception.",
+    "PtB.E.018" : "Entity scan not expected.",   
+
 
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
@@ -60,6 +64,13 @@ var serverMessages = {
     "PtB.I.007" : "PPtl Button press successfull",
     "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
     "PtB.I.009" : "Invalid item in tote recorded.",
+    "PtB.I.010" : "damaged entity recorder.WMS Notified.",
+    "PtB.I.011" : "extra entity recorder in bin.WMS Notified.",
+    "PtB.I.012" : "Oversized entity recorded.WMS notified.",
+    "PtB.I.013" : "Exception cancelled successfully",
+
+
+
     "PtB.W.001" : "Container already stored in the warehouse",
     "PtB.W.002" : "Entity already scanned.Waiting for Pptl button press",
     "PtB.W.003" : "No PpsBins available to stage",
@@ -165,7 +176,21 @@ var serverMessages = {
     "PkB.W.008" : "Pptl scan not allowed",
     "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",
     
-
+    "PtF.E.001" : "Entity scanned is not from bin. Replace and scan from bin",
+    "PtF.E.002" : "Wrong entity scanned",
+    "PtF.E.003" : "Waiting for MSU. Please scan entity later.",
+    "PtF.E.004" : "Expected quantity exceeded.",
+    "PtF.E.005" : "Wrong scan! Entity scan expected but slot barcode scanned.",
+    "PtF.E.006" : "Actual put quantity not equal to sum of Good and Expection quantity.",
+    "PtF.E.007" : "Actual put quantity less than than revised quantity.",
+   
+    "PtF.I.001" : "Entity scan successful",
+    "PtF.I.002" : "Slot scan successful",
+    "PtF.I.003" : "Slot scan successful",
+    "PtF.I.004" : "Damaged and missing entity reported.",
+    "PtF.I.005" : "Space unavailable reported.",
+    "PtF.I.006" : "Unknown Barcode Scanned",
+    
 
 
 

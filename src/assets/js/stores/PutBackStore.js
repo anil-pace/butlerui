@@ -44,40 +44,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         }
     },
 
-    getExceptionData: function() {
-        var data = {};
-        data["activeException"] = this.getActiveException();
-        data["list"] = [];
-        data["header"] = "Exceptions";
-        _PutBackData.exception_allowed.map(function(value, index) {
-            if ((_PutBackData["exception_type"] !=undefined && value.event == _PutBackData["exception_type"]) || value.exception_name == data["activeException"])
-                data["list"].push({
-                    "text": value.exception_name,
-                    "selected": true,
-                    "event":value["event"]!=undefined ? value["event"]:""
-                });
-            else
-                data["list"].push({
-                    "text": value.exception_name,
-                    "selected": false,
-                    "event":value["event"]!=undefined ? value["event"]:""
-                });
-        })
-        console.log("www");
-        console.log(JSON.stringify(data));
-        return data;
-    },
-
-    getExceptionType:function(){
-        return _PutBackData["exception_type"];
-    },
-
-    setActiveException: function(data) {
-        _activeException = data;
-    },
-    getActiveException: function() {
-        return _activeException;
-    },
     getStageActiveStatus: function() {
         if (_PutBackData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -135,9 +101,6 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         return _PutBackData.notification_list[0];
     },
     setPutBackData: function(data) {
-        _enableException = false;
-        _damagedBarcodeQty = 0;
-        _activeException = "";
         _PutBackData = data;
     },
 
@@ -237,30 +200,8 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         }
     },
 
-    enableException: function(data) {
-        _damagedBarcodeQty = 0;
-        //data["activeException"] = "";
-        _activeException = "";
-        _enableException = data;
-    },
-    getExceptionStatus: function() {
-        return _enableException;
-    },
 
-    getScanDetails: function() {
-        if(_PutBackData["scan_details"] == undefined){
-        var data = {
-            "scan_details": {
-                "current_qty": _damagedBarcodeQty,
-                "total_qty": "0",
-                "kq_allowed": true
-            }
-        };
-            return data.scan_details;
-        }else{
-            return _PutBackData["scan_details"];
-        }
-    },
+    
 
     getItemDetailsData: function() {
         var data = {};
@@ -292,29 +233,22 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         return data;
     },
 
-    setDamagedBarcodeQuanity:function(data){
-        _damagedBarcodeQty = data;
-    },
-
-    getDamagedBarcodeQuanity:function(){
-        return _damagedBarcodeQty;
-    }
 
 });
 
 PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
     switch (action.action.actionType) {
-        case ActionTypes.TOGGLE_BIN_SELECTION:
+      /*  case ActionTypes.TOGGLE_BIN_SELECTION:
             PutBackStore.toggleBinSelection(action.action.bin_id);
             PutBackStore.emitChange();
             break;
-
+*/
         case ActionTypes.SET_PUT_BACK_DATA:
             PutBackStore.setPutBackData(action.action.data);
             PutBackStore.emitChange();
             break;
 
-        case ActionTypes.STAGE_ONE_BIN:
+     /*   case ActionTypes.STAGE_ONE_BIN:
             PutBackStore.stageOneBin();
             PutBackStore.emitChange();
             break;
@@ -322,20 +256,8 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
         case ActionTypes.STAGE_ALL:
             PutBackStore.stageAllBin();
             PutBackStore.emitChange();
-            break;
+            break;*/
 
-        case ActionTypes.ENABLE_EXCEPTION:
-            PutBackStore.enableException(action.action.data);
-            PutBackStore.emitChange();
-            break;
-        case ActionTypes.SET_ACTIVE_EXCEPTION:
-            PutBackStore.setActiveException(action.action.data);
-            PutBackStore.emitChange();
-            break;
-        case ActionTypes.UPDATE_DAMAGED_BARCODE_QUANTITY:
-            PutBackStore.setDamagedBarcodeQuanity(action.action.data);
-            PutBackStore.emitChange();
-            break;
         default:
             // do nothing
     }

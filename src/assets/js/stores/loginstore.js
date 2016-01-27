@@ -10,6 +10,7 @@ var utils  = require('../utils/utils.js');
 var CHANGE_EVENT = 'change';
 var flag = false;
 var currentSeat = [];
+var _errMsg = null;
 
 function getParameterByName(){
     var l = document.createElement("a");
@@ -58,6 +59,9 @@ var showBox = function(index){
 
 
 var loginstore = objectAssign({}, EventEmitter.prototype, {
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
   addChangeListener: function(cb){
     this.on(CHANGE_EVENT, cb);
   },
@@ -75,12 +79,19 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   sessionLogout: function(data){
     utils.sessionLogout(data);
-  }
+  },
+  getErrorMessage: function(){    
+   return _errMsg; 
+  },
+  showErrorMessage : function(data){
+    _errMsg = data;
+  },
 });
 
 
 AppDispatcher.register(function(payload){
   var action = payload.action;
+  console.log(action.data);
   switch(action.actionType){
     case appConstants.LIST_SEATS:
       getParameterByName();
@@ -97,6 +108,9 @@ AppDispatcher.register(function(payload){
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
+    case appConstants.SHOW_ERROR_MESSAGE:
+      loginstore.showErrorMessage(action.data);
+      loginstore.emitChange();  
     default:
       return true;
   }

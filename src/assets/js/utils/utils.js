@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
-
+var serverMessages = require('../serverMessages/server_messages');
 var ws;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
@@ -24,9 +24,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 CommonActions.setServerMessages();
             };
             ws.onclose = function() {
-                $("#username, #password").prop('disabled', true);
-                alert("Connection is closed...");
-                setTimeout(utils.connectToWebSocket, 1000);
+                //serverMessages.CLIENTCODE_003;
+                console.log(serverMessages.CLIENTCODE_003);
+                CommonActions.showErrorMessage(serverMessages.CLIENTCODE_003);
+                //$("#username, #password").prop('disabled', true);
+                //alert("Connection is closed...");
+                setTimeout(utils.connectToWebSocket, 100);
             };
         } else {
             alert("WebSocket NOT supported by your Browser!");            
@@ -79,10 +82,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             };
             utils.storeSession(webSocketData);
             utils.postDataToWebsockets(webSocketData);
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status);
-            alert(textStatus);
-            alert(errorThrown);
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            CommonActions.showErrorMessage(data.responseJSON.error);
         });
        
     },

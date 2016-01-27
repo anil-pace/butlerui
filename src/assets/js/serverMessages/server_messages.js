@@ -35,7 +35,7 @@ var serverMessages = {
     "PtB.W.005" : "PpsBin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
-    "PkF.E.011" : "Item Scan successfull",
+    "PkF.E.011" : "Press PPTL for Bin {0} to confirm",
     "PkF.E.013" : "Scan items and place in Bin {0}",
     "PkF.E.014" : "Press PPTL for Bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
@@ -82,7 +82,9 @@ var serverMessages = {
     "AdF.A.009" :"Waiting for MSU to arrive",
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successfull",
-    "AdF.B.003" :"Item Scan successfull"
+    "AdF.B.003" :"Item Scan successfull",
+    'CLIENTCODE_001' : 'Bin {0} selected',
+    'CLIENTCODE_002' : 'Bin {0} unselected',
 };
 
 

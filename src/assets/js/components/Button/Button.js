@@ -71,7 +71,14 @@ var Button1 = React.createClass({
                                 data["event_data"]["action"] = "confirm_invalid_item_in_tote",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["item_uid"] = mainstore.getItemUid();
-                                ActionCreators.postDataToInterface(data);  
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_TOTE_EXCEPTION:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] = "cancel_invalid_item_in_tote",
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["item_uid"] = mainstore.getItemUid();
+                                ActionCreators.postDataToInterface(data);      
                             default:
                                 return true;
                         }

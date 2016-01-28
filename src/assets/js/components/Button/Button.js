@@ -179,6 +179,21 @@ var Button1 = React.createClass({
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.REPRINT_INVOICE:
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SKIP_PRINTING:
+                                 data["event_name"] = "pick_back_exception";
+                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
+                                 data["event_data"]["type"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.DIS_ASSOCIATE_TOTE:
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.OVERRIDE_TOTE:
+                                ActionCreators.postDataToInterface(data);
+                                break;
                             default:
                                 return true;
                         }

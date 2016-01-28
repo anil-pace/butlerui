@@ -37018,11 +37018,19 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl completed"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == appConstants.PUT_BACK_STAGE)
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE ))
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+
+        else if((compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING  ))
+            return (
+                React.createElement("div", {className: "bin excess-select", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 )
             );
 
@@ -37059,7 +37067,36 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
-        
+         else if((this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")) && compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                     React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+
+
+        else if((this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) ))
+            return (
+                React.createElement("div", {className: "bin  selected blink1"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink"}, compData.ppsbin_id)
+                )
+            );
+
+        else if((this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")))
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+       
         else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM )){
 
             return (
@@ -37083,6 +37120,13 @@ var Bin = React.createClass({displayName: "Bin",
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING )
+            return (
+                React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 )
             );
         else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
@@ -37289,6 +37333,12 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_data"]["barcode"] = this.props.toteId;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CONFIRM_TOTE_EXCEPTION:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] = "confirm_invalid_item_in_tote",
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["item_uid"] = mainstore.getItemUid();
+                                ActionCreators.postDataToInterface(data);  
                             default:
                                 return true;
                         }
@@ -37394,6 +37444,21 @@ var Button1 = React.createClass({displayName: "Button1",
                                 break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.REPRINT_INVOICE:
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.SKIP_PRINTING:
+                                 data["event_name"] = "pick_back_exception";
+                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
+                                 data["event_data"]["type"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.DIS_ASSOCIATE_TOTE:
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.OVERRIDE_TOTE:
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:
@@ -38275,6 +38340,13 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
         var errorCode = this.props.serverNavData.code;
+        var level;
+
+        if(compData.level == null){
+            level ='' ;
+        }else{
+            level = (React.createElement("div", {className: "index"}, React.createElement("span", null, compData.level))); 
+        }
         return (
             	React.createElement("div", {className: "active-navigation"}, 
                     
@@ -38282,8 +38354,8 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                             if(compData.showImage)
                             return (
                                     React.createElement("div", {className: "nav-detail"}, 
-                                        React.createElement("div", {className: "index"}, React.createElement("span", null, compData.level)), 
-                                        React.createElement("img", {src: compData.image})
+                                    level, 
+                                    React.createElement("img", {src: compData.image})
                                     )
                                 );
                         })(), 
@@ -38513,6 +38585,7 @@ var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
+var ExceptionHeader = require('./ExceptionHeader');
 
 
 function getStateData(){
@@ -38532,6 +38605,7 @@ var PickBack = React.createClass({displayName: "PickBack",
   _component:'',
   _notification:'',
   _navigation:'',
+  _exceptionAction:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -38563,6 +38637,25 @@ var PickBack = React.createClass({displayName: "PickBack",
                 )
               )
             );
+  },
+  getExceptionAction:function(screen_id){
+    console.log(this.state.PickBackSelectedBin);
+     switch(screen_id){
+        case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+          this._exceptionAction = (React.createElement(Button1, {disabled: false, text: "Print", color: "orange", module: appConstants.PICK_BACK, action: appConstants.REPRINT_INVOICE}));
+          break;
+        case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Skip Printing", color: "orange", module: appConstants.PICK_BACK, action: appConstants.SKIP_PRINTING}));
+          break;
+        case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Dis-associate Tote", color: "orange", module: appConstants.PICK_BACK, action: appConstants.DIS_ASSOCIATE_TOTE}));
+          break;
+        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Override", color: "orange", module: appConstants.PICK_BACK, action: appConstants.OVERRIDE_TOTE}));
+          break;
+        default:
+          return true;
+      }
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -38597,6 +38690,31 @@ var PickBack = React.createClass({displayName: "PickBack",
           this._component = this.getExceptionComponent();
         }
         break;
+       case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+       case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+       case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+       case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+          this.getExceptionAction(screen_id);
+          this._navigation = '';
+          console.log(this.state.PickBackServerNavData);
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                   React.createElement(ExceptionHeader, {text: this.state.PickBackServerNavData["description"]}), 
+                    React.createElement("div", {className: "main-container exception1"}, 
+                      React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
+                   ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    this._exceptionAction
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break; 
       default:
         return true; 
     }
@@ -38638,7 +38756,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickBackStore":289,"../stores/mainstore":294,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":264,"./SystemIdle":275,"react":230}],257:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickBackStore":289,"../stores/mainstore":294,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":264,"./SystemIdle":275,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
@@ -40480,7 +40598,7 @@ var navData = {
             "image": svgConstants.scan,
             "message": "Unexpected Item",
             "showImage": true,
-            "level": 1,
+            "level": null,
             "type": 'active'
         }],
         [{
@@ -40632,6 +40750,14 @@ var appConstants = {
 	SET_PUT_FRONT_DATA:"SET_PUT_FRONT_DATA",
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
+	REPRINT_INVOICE:"REPRINT_INVOICE",
+	SKIP_PRINTING:"SKIP_PRINTING",
+	DIS_ASSOCIATE_TOTE:"DIS_ASSOCIATE_TOTE",
+	OVERRIDE_TOTE:"OVERRIDE_TOTE",
+	PICK_BACK_EXCEPTION_REPRINT:"pick_back_reprint_required",
+	PICK_BACK_EXCEPTION_SKIP_PRINTING:"pick_back_skip_print",
+	PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:"pick_back_tote_deassociation",
+	PICK_BACK_EXCEPTION_OVERRIDE_TOTE:"pick_back_override_tote_required",
 	PUT_BACK_SCAN : "put_back_scan",
 	PUT_BACK_TOTE_CLOSE : "put_back_tote_close",
 	PUT_BACK_SCAN_TOTE :'put_back_scan_tote',
@@ -40725,8 +40851,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.211:8888/ws",
-	INTERFACE_IP : "https://192.168.2.211:5000"
+	WEBSOCKET_IP : "ws://192.168.1.148:8888/ws",
+	INTERFACE_IP : "https://192.168.1.148:5000"
 };
 
 module.exports = configConstants;
@@ -40765,7 +40891,7 @@ var allSvgConstants = {
 	headerbg : 'assets/images/headerbg.png',
 	scanHeader :'assets/images/scan_header.png',
 	iconBar :'assets/images/Icon.png',
-	tote:'assets/images/Tote.png'
+	tote:'assets/images/tote.png'
 }
 
 module.exports = allSvgConstants;
@@ -40831,7 +40957,7 @@ var serverMessages = {
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
     "PtB.H.004": "Scan Tote / Stage PpsBin",
-    "PtB.H.005" : "Item Not Found in Tote",
+    "PtB.H.005" : "Unexpected Entity in Tote",
     "PtB.H.007" : "Enter Damaged Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
@@ -40850,8 +40976,8 @@ var serverMessages = {
     "PtB.E.011" : "Warehouse Full! Remove all entities from bin number and press PPTL.",
     "PtB.E.012" : "No free Pps bins. Please scan later",
     "PtB.E.013" : "Wrong button pressed. Please try another", 
-    "PtB.E.014" : "Extra item found please put back item in Exception bin",   
-    "PtB.E.015" : "Please put it in IRT bin and confirm",
+    "PtB.E.014" : "{0} excess quantity of item found in tote",   
+    "PtB.E.015" : "Invalid entity found in tote. Please put it in IRT bin and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same type of entity to finish this exception.",
     "PtB.E.018" : "Entity scan not expected.",  
@@ -42184,8 +42310,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _showSpinner;
     },
 
-    getLogoutState: function(){
-       if(_seatData.hasOwnProperty("logout_allowed"))
+    getLogoutState: function() {
+        if (_seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
 
@@ -42433,7 +42559,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getSelectedBin: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var data = "";
+            var data = null;
             _seatData.ppsbin_list.map(function(value, index) {
                 if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
                     data = value.ppsbin_id;
@@ -42441,7 +42567,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }
+        }else
+            return null;
+    },
+
+    getCurrentState: function() {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var data = null;
+            _seatData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data = value.ppsbin_state;
+                }
+            });
+
+            return data;
+        }else
+            return null;
     },
 
     stageAllBin: function() {
@@ -42772,9 +42913,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    
-    getItemUid:function(){
-       return _itemUid;
+
+    getItemUid: function() {
+        return _itemUid;
     },
     getExceptionType: function() {
         return _exceptionType;
@@ -42914,9 +43055,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     validateAndSendDataToServer: function() {
         var flag = false;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.pick_quantity;
+            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
         else
-              flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.put_quantity;
+            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
@@ -42948,7 +43089,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-   
+
 
     validateAndSendSpaceUnavailableDataToServer: function() {
         if ((_KQQty) > _seatData.put_quantity) {
@@ -42974,10 +43115,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
-    getToteException: function(){
-        if(_seatData.hasOwnProperty('exception_msg')){
+    getToteException: function() {
+        if (_seatData.hasOwnProperty('exception_msg')) {
             return _seatData.exception_msg[0];
-        }else{
+        } else {
             return null;
         }
     },
@@ -42999,6 +43140,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackNavData"] = this.getNavData();
+                data["PutBackItemUid"] = this.getItemUid();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
@@ -43207,6 +43349,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackServerNavData"] = this.getServerNavData();
                 data["PickBackToteDetails"] = this.getToteDetails();
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                break;
+            case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+            case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+            case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+            case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackSelectedBin"] = this.getSelectedBin();
                 break;
             case appConstants.AUDIT_WAITING_FOR_MSU:
                 data["AuditNavData"] = this.getNavData();

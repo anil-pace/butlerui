@@ -37018,7 +37018,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl completed"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && this.props.screenId == appConstants.PUT_BACK_STAGE)
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37076,7 +37076,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && this.props.screenId == appConstants.PUT_BACK_STAGE )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -37294,7 +37294,14 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_data"]["action"] = "confirm_invalid_item_in_tote",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["item_uid"] = mainstore.getItemUid();
-                                ActionCreators.postDataToInterface(data);  
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_TOTE_EXCEPTION:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] = "cancel_invalid_item_in_tote",
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["item_uid"] = mainstore.getItemUid();
+                                ActionCreators.postDataToInterface(data);      
                             default:
                                 return true;
                         }
@@ -37955,7 +37962,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                     React.createElement("div", {className: "userFormLoginPage"}, 
                         React.createElement("form", null, 
                             ppsOption, 
-              React.createElement("div", {className: errorClass}, this.state.showError
+              React.createElement("div", {className: errorClass}, React.createElement("span", null, this.state.showError)
 
               ), 
               React.createElement("div", {className: "form-group"}, 
@@ -38061,8 +38068,13 @@ function attachNumpad(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id, toggleTime){ 
-  $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");  
+function attachDateTime(id, toggleTime){  
+  if(toggleTime === "true" || toggleTime === true){
+      $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");
+  }
+  else{
+      $('#'+id).datetimepicker({timepicker:toggleTime,format:'Y/m/d'}).datetimepicker("show");
+  }   
 }
 
 function removeTextField(){
@@ -39762,6 +39774,7 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                  React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
                  React.createElement("div", {className: "staging-action"}, 
+                  React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
                   React.createElement(Button1, {disabled: false, text: "Confirm", module: appConstants.PUT_BACK, status: true, action: appConstants.CONFIRM_TOTE_EXCEPTION, color: "orange"})
                 )
               )
@@ -40490,7 +40503,7 @@ var navData = {
         [{
             "screen_id": "put_back_invalid_tote_item",
             "code": "Common.000",
-            "image": svgConstants.scan,
+            "image": svgConstants.exception,
             "message": "Unexpected Item",
             "showImage": true,
             "level": null,
@@ -40730,7 +40743,8 @@ var appConstants = {
 	OVERSIZED_ITEMS:"Oversized Items",
 	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
 	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE",
-	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION'
+	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION',
+	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION'
 
 };
 
@@ -40780,7 +40794,8 @@ var allSvgConstants = {
 	headerbg : 'assets/images/headerbg.png',
 	scanHeader :'assets/images/scan_header.png',
 	iconBar :'assets/images/Icon.png',
-	tote:'assets/images/tote.png'
+	tote:'assets/images/tote.png',
+	exception:'assets/images/exceptionIcon.png'
 }
 
 module.exports = allSvgConstants;
@@ -40886,19 +40901,19 @@ var serverMessages = {
     "PkB.H.001" : "Scan tote to associate with bin",
     "PtF.H.002" : "Press bin PPTL or scan a tote",
     "PtF.H.003" : "Press PpsBin to remove items",
-    "PtB.I.001" : "Tote scan successfull",
+    "PtB.I.001" : "Tote scan successful",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
-    "PtB.I.003" : "Cancel scan successfull.",
-    "PtB.I.004" : "Tote close successfull.",
+    "PtB.I.003" : "Cancel scan successful.",
+    "PtB.I.004" : "Tote close successful.",
     "PtB.I.005" : "Tote not closed.",
-    "PtB.I.006" : "Entity scan successfull.",
-    "PtB.I.007" : "PPtl Button press successfull",
+    "PtB.I.006" : "Entity scan successful.",
+    "PtB.I.007" : "PPtl Button press successful",
     "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
     "PtB.I.009" : "Invalid item in tote recorded.",
     "PtB.I.010" : "damaged entity recorder.WMS Notified.",
     "PtB.I.011" : "extra entity recorder in bin.WMS Notified.",
     "PtB.I.012" : "Oversized entity recorded.WMS notified.",
-    "PtB.I.013" : "Exception cancelled successfully",
+    "PtB.I.013" : "Exception cancelled successfuly",
     "PtB.W.001" : "Container already stored in the warehouse",
     "PtB.W.002" : "Entity already scanned.Waiting for Pptl button press",
     "PtB.W.003" : "No PpsBins available to stage",
@@ -40929,8 +40944,8 @@ var serverMessages = {
     "PkB.B.014": "Tote cancelled",
     "PkB.B.015" : "Tote already associated with ppsbin",
     "PkB.B.016" : "Please press ppsbin button which does not have any totes associated",
-    "PkB.B.017" :"Tote assigned successfully to ppsbin {0}",
-    "PkB.B.019":"Bin {0} items removed successfully",
+    "PkB.B.017" :"Tote assigned successfuly to ppsbin {0}",
+    "PkB.B.019":"Bin {0} items removed successfuly",
     "PkB.B.020" : "Totes are not required",
     "PkB.B.021" : "Wrong Barcode scanned",
     "PkB.B.022" : "Tote could not be reserved as already reserved",
@@ -40952,8 +40967,8 @@ var serverMessages = {
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
     "AdF.A.009" :"Waiting for MSU to arrive",
     "AdF.B.001" :"Wrong Barcode.",
-    "AdF.B.002" :"Box Scan successfull",
-    "AdF.B.003" :"Item Scan successfull",
+    "AdF.B.002" :"Box Scan successful",
+    "AdF.B.003" :"Item Scan successful",
     "CLIENTCODE_001" : "Bin {0} selected",
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
@@ -40983,9 +40998,9 @@ var serverMessages = {
     "PkB.E.006" : "Tote didn't get associated",   
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
-    "PkB.I.003" : "Documents printed successfully",
-    "PkB.I.004" : "Bin entities removed successfully",
-    "PkB.I.005" : "Tote assigned successfully to ppsbin ",
+    "PkB.I.003" : "Documents printed successfuly",
+    "PkB.I.004" : "Bin entities removed successfuly",
+    "PkB.I.005" : "Tote assigned successfuly to ppsbin ",
     "PkB.I.006" : "Please scan pptl",
     "PkB.I.007" : "All totes deassociated from PpsBin ",
     "PkB.W.001" : "Please complete process for pending ppsbin and then proceed",

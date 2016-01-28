@@ -36685,9 +36685,9 @@ var commonActions = {
     });
   },
 
-  validateAndSendPutDataToServer:function(){
+  validateAndSendDataToServer:function(){
      AppDispatcher.handleAction({
-      actionType: appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER
+      actionType: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER
     });
    },
 
@@ -36725,10 +36725,10 @@ var ActionCreators = require('../actions/CommonActions');
 var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
+var ExceptionHeader = require('./ExceptionHeader');
 
 
 function getStateData(){
-  console.log(AuditStore.getBoxSerialData());
  /* return {
            AuditNavData : AuditStore.getNavData(),
            AuditNotification : AuditStore.getNotificationData(),
@@ -36761,6 +36761,7 @@ var Audit = React.createClass({displayName: "Audit",
   _looseItems:'',
   _navigation:'',
   showModal: function() {
+      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
 
@@ -36775,6 +36776,7 @@ var Audit = React.createClass({displayName: "Audit",
       }),0)
 
        }
+     }
   },
   getInitialState: function(){
     return getStateData();
@@ -36951,7 +36953,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/AuditStore":288,"../stores/mainstore":294,"../utils/utils.js":295,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ.js":261,"./Rack/MsuRack.js":267,"./Reconcile":271,"./Spinner/LoaderButler":272,"./SystemIdle":275,"./TabularData":278,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/AuditStore":288,"../stores/mainstore":294,"../utils/utils.js":295,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ.js":261,"./Rack/MsuRack.js":267,"./Reconcile":271,"./Spinner/LoaderButler":272,"./SystemIdle":275,"./TabularData":278,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37318,7 +37320,7 @@ var Button1 = React.createClass({displayName: "Button1",
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendPutDataToServer();
+                                ActionCreators.validateAndSendDataToServer();
                                 break;
                             case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendSpaceUnavailableDataToServer();
@@ -37364,7 +37366,7 @@ var Button1 = React.createClass({displayName: "Button1",
                                 ActionCreators.changePickFrontExceptionScreen("pick_front_quantity");
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendPutDataToServer();
+                                ActionCreators.validateAndSendDataToServer();
                                 break;
                             case appConstants.SEND_MISSING_BOX_EXCEPTION:
                                  data["event_name"] = "pick_front_exception";
@@ -37424,8 +37426,8 @@ var Button1 = React.createClass({displayName: "Button1",
                                 ActionCreators.postDataToInterface(data);
                                 break;
                              case appConstants.SEND_KQ_QTY:
-                                data["event_name"] = "audit_action";
-                                data["event_data"]["type"] = "exception";
+                                data["event_name"] = "audit_actions";
+                                data["event_data"]["type"] = "exception_response";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
@@ -39113,7 +39115,7 @@ var KQ = React.createClass({displayName: "KQ",
           if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE){
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
                 return true;
             }
@@ -39169,7 +39171,7 @@ var KQ = React.createClass({displayName: "KQ",
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) != 1) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE){
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                     CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
                      return true;
                 }
@@ -39244,7 +39246,7 @@ var KQ = React.createClass({displayName: "KQ",
                     } else {
 
                         var data = {};
-                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE){
+                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                             CommonActions.updateKQQuantity(parseInt(e.target.value));
                              return true;
                         }
@@ -40692,8 +40694,8 @@ var appConstants = {
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
 	SEND_EXCESS_ITEMS_BIN:"SEND_EXCESS_ITEMS_BIN",
-	AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:"audit_loose_item_damaged_exception",
-	AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:"audit_box_damaged_exception",
+	AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:"audit_loose_item_damage_exception",
+	AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:"audit_box_damage_exception",
 	AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:"audit_item_in_box_damage_exception",
 	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
@@ -42924,7 +42926,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    validateAndSendPutDataToServer: function() {
+    validateAndSendDataToServer: function() {
         var flag = false;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.pick_quantity;
@@ -43268,7 +43270,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditServerNavData"] = this.getServerNavData();
                 data["AuditExceptionData"] = this.getExceptionData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
-                data["AuditShowModal"] = this.getModalStatus();
+                //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
                 break;
             default:
@@ -43367,8 +43369,8 @@ AppDispatcher.register(function(payload) {
             mainstore.setPickFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
-        case appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:
-            mainstore.validateAndSendPutDataToServer();
+        case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+            mainstore.validateAndSendDataToServer();
             mainstore.emitChange();
             break;
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:

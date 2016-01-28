@@ -212,9 +212,9 @@ var commonActions = {
     });
   },
 
-  validateAndSendPutDataToServer:function(){
+  validateAndSendDataToServer:function(){
      AppDispatcher.handleAction({
-      actionType: appConstants.VALIDATE_AND_SEND_PUT_DATA_TO_SERVER
+      actionType: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER
     });
    },
 

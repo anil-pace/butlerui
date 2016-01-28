@@ -61,8 +61,13 @@ function attachNumpad(id){
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id, toggleTime){ 
-  $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");  
+function attachDateTime(id, toggleTime){  
+  if(toggleTime === "true" || toggleTime === true){
+      $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");
+  }
+  else{
+      $('#'+id).datetimepicker({timepicker:toggleTime,format:'Y/m/d'}).datetimepicker("show");
+  }   
 }
 
 function removeTextField(){

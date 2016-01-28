@@ -247,6 +247,7 @@ var PutBack = React.createClass({
               <div className='grid-container audit-reconcilation'>
                  <Reconcile navMessagesJson={this.props.navMessagesJson} message={this.state.PutBackToteException} />
                  <div className = 'staging-action' >
+                  <Button1 disabled = {false} text = {"Cancel"} module ={appConstants.PUT_BACK} status={true} action={appConstants.CANCEL_TOTE_EXCEPTION} color={"black"} /> 
                   <Button1 disabled = {false} text = {"Confirm"} module ={appConstants.PUT_BACK} status={true} action={appConstants.CONFIRM_TOTE_EXCEPTION} color={"orange"} />  
                 </div>
               </div>

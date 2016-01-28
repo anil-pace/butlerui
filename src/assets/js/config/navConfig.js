@@ -5,7 +5,7 @@ var navData = {
         [{
             "screen_id": "put_back_invalid_tote_item",
             "code": "Common.000",
-            "image": svgConstants.scan,
+            "image": svgConstants.exception,
             "message": "Unexpected Item",
             "showImage": true,
             "level": null,

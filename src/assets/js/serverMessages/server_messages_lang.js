@@ -178,6 +178,9 @@ function server_messages_list() {
     _("Damaged and missing entity reported.");
     _("Space unavailable reported.");
     _("Unknown Barcode Scanned");
-    _("{0} excess quantity of item found in tote")
+    _("{0} excess quantity of item found in tote");
+    _("Cancelled excess entity in tote");
+    _("Cancelled invalid entity in tote");
+    _("Invalid entity in tote recorded");
 
 }

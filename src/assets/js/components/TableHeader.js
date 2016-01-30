@@ -26,7 +26,6 @@ var TableHeader = React.createClass({
     	this._component = comp;
     },
     render: function() {
-    	console.log(this.props.data);
     	this.getComponent(this.props.data);
         return (
             <div className="table-header">

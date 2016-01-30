@@ -482,8 +482,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            console.log("jkkkk");
-            console.log(d);
             data["tableRows"].push(d);
 
             /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
@@ -567,7 +565,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 "scan_details": {
                     "current_qty": this.getkQQuanity(),
                     "total_qty": "0",
-                    "kq_allowed": true
+                    "kq_allowed": this.kQstatus()
                 }
             };
             return data.scan_details;
@@ -575,8 +573,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
-
-
+    kQstatus: function(){
+        if(_seatData.hasOwnProperty('enable_kq')){
+            return _seatData.enable_kq;
+        }else{
+            return true;
+        }
+    },
     getGoodScanDetails: function() {
         if (_seatData["scan_details"] == undefined) {
             var data = {
@@ -742,7 +745,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _damagedQuantity = data;
     },
     getkQQuanity: function() {
-        return _KQQty;
+        if(_seatData.hasOwnProperty('Current_box_details')){
+            _KQQty = _seatData.Current_box_details[0].Actual_qty;
+            return _KQQty;
+        }else{
+            return _KQQty;
+        }
     },
 
     getToteDetails: function() {

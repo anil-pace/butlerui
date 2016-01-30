@@ -180,6 +180,9 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.REPRINT_INVOICE:
+                                 data["event_name"] = "pick_back_exception";
+                                 data["event_data"]["ppsbin_id"] = "undefined";
+                                 data["event_data"]["type"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.SKIP_PRINTING:

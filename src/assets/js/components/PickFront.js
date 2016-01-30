@@ -75,7 +75,6 @@ var PickFront = React.createClass({
     return _showModal;
   },
   showModal:function(data,index){
-    console.log("show modal");
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
@@ -91,7 +90,7 @@ var PickFront = React.createClass({
       }),0)
 
     }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) {
+    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
       $('.modal').modal('hide');
       $('.modal-backdrop fade in').remove();
     }
@@ -190,7 +189,7 @@ var PickFront = React.createClass({
                 <Modal />             
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN}/>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                 </div>
                 <div className = 'actions'>
@@ -217,7 +216,7 @@ var PickFront = React.createClass({
                 <Modal />
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PRESS_PPTL_TO_CONFIRM}/>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 

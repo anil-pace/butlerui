@@ -139,7 +139,7 @@ var LoginPage = React.createClass({
                     <div className="userFormLoginPage">
                         <form>
                             {ppsOption}
-              <div className={errorClass}>{this.state.showError}
+              <div className={errorClass}><span>{this.state.showError}</span>
 
               </div>
               <div className="form-group">

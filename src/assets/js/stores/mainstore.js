@@ -54,8 +54,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _showSpinner;
     },
 
-    getLogoutState: function(){
-       if(_seatData.hasOwnProperty("logout_allowed"))
+    getLogoutState: function() {
+        if (_seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
 
@@ -303,7 +303,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getSelectedBin: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var data = "";
+            var data = null;
             _seatData.ppsbin_list.map(function(value, index) {
                 if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
                     data = value.ppsbin_id;
@@ -311,7 +311,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }
+        }else
+            return null;
+    },
+
+    getCurrentState: function() {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var data = null;
+            _seatData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data = value.ppsbin_state;
+                }
+            });
+
+            return data;
+        }else
+            return null;
     },
 
     stageAllBin: function() {
@@ -642,9 +657,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    
-    getItemUid:function(){
-       return _itemUid;
+
+    getItemUid: function() {
+        return _itemUid;
     },
     getExceptionType: function() {
         return _exceptionType;
@@ -784,9 +799,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     validateAndSendDataToServer: function() {
         var flag = false;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.pick_quantity;
+            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
         else
-              flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.put_quantity;
+            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
@@ -818,7 +833,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-   
+
 
     validateAndSendSpaceUnavailableDataToServer: function() {
         if ((_KQQty) > _seatData.put_quantity) {
@@ -844,10 +859,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
-    getToteException: function(){
-        if(_seatData.hasOwnProperty('exception_msg')){
+    getToteException: function() {
+        if (_seatData.hasOwnProperty('exception_msg')) {
             return _seatData.exception_msg[0];
-        }else{
+        } else {
             return null;
         }
     },
@@ -1078,6 +1093,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackServerNavData"] = this.getServerNavData();
                 data["PickBackToteDetails"] = this.getToteDetails();
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                break;
+            case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+            case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+            case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+            case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackSelectedBin"] = this.getSelectedBin();
                 break;
             case appConstants.AUDIT_WAITING_FOR_MSU:
                 data["AuditNavData"] = this.getNavData();

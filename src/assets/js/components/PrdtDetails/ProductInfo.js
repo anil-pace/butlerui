@@ -5,7 +5,6 @@ var ProductInfo = React.createClass({
         var infoDetails = this.props.infoDetails;
         var arr1 = [];
         $.each(infoDetails, function(key, value) {
-            if(key != "product_local_image_url" )
             return arr1.push(
                 <tr>
 	  				<td className="key"> {key.toUpperCase()} </td>

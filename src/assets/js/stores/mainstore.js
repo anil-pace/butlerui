@@ -746,7 +746,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getkQQuanity: function() {
         if(_seatData.hasOwnProperty('Current_box_details')){
-            _KQQty = _seatData.Current_box_details[0].Actual_qty;
+            if(_seatData.Current_box_details.length > 0){
+                _KQQty = _seatData.Current_box_details[0].Actual_qty;
+            }
             return _KQQty;
         }else{
             return _KQQty;

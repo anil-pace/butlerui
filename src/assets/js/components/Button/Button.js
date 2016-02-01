@@ -199,9 +199,15 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.DIS_ASSOCIATE_TOTE:
+                                 data["event_name"] = "pick_back_exception";
+                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
+                                 data["event_data"]["type"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.OVERRIDE_TOTE:
+                                 data["event_name"] = "pick_back_exception";
+                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
+                                 data["event_data"]["type"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:

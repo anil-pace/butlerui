@@ -13,6 +13,7 @@ var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
+var ExceptionHeader = require('./ExceptionHeader');
 
 
 function getStateData(){
@@ -32,6 +33,7 @@ var PickBack = React.createClass({
   _component:'',
   _notification:'',
   _navigation:'',
+  _exceptionAction:'',
   getInitialState: function(){
     return getStateData();
   },
@@ -63,6 +65,25 @@ var PickBack = React.createClass({
                 </div>
               </div>
             );
+  },
+  getExceptionAction:function(screen_id){
+    console.log(this.state.PickBackSelectedBin);
+     switch(screen_id){
+        case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+          this._exceptionAction = (<Button1 disabled = {false} text = {"Print"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.REPRINT_INVOICE}  />);
+          break;
+        case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Skip Printing"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.SKIP_PRINTING}  />);
+          break;
+        case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Dis-associate Tote"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
+          break;
+        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Override"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.OVERRIDE_TOTE}  />);
+          break;
+        default:
+          return true;
+      }
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -97,6 +118,31 @@ var PickBack = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+       case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+       case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+       case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+       case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+          this.getExceptionAction(screen_id);
+          this._navigation = '';
+          console.log(this.state.PickBackServerNavData);
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickBackExceptionData}/>
+                <div className="exception-right">
+                   <ExceptionHeader text={this.state.PickBackServerNavData["description"]} />
+                    <div className="main-container exception1">
+                      <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>
+                   </div>
+                  <div className = "finish-damaged-barcode">
+                    {this._exceptionAction} 
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break; 
       default:
         return true; 
     }

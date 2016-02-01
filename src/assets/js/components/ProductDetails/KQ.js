@@ -71,9 +71,9 @@ var KQ = React.createClass({
     },
     handleDecrement: function(event) {
         if (this.props.scanDetails.kq_allowed === true) {
-            if (parseInt(this.props.scanDetails.current_qty) != 1) {
+            if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                     CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
                      return true;
                 }
@@ -223,10 +223,18 @@ var KQ = React.createClass({
       }
       else{
           this._appendClassUp = 'topArrow enable';
-            if(this.props.scanDetails.current_qty == 1){
-              this._appendClassDown = 'downArrow disable';
+          if (mainstore.getCurrentSeat() == "audit_front"){
+               if(this.props.scanDetails.current_qty == 0){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                } 
             }else{
-              this._appendClassDown = 'downArrow enable';
+                if(this.props.scanDetails.current_qty == 1 || this.props.scanDetails.current_qty == 0){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                }
             }
       }
     }

@@ -60,7 +60,6 @@ var Audit = React.createClass({
       if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
-
           setTimeout((function(){ActionCreators.showModal({
               data:{
               "message":self.state.AuditShowModal.message
@@ -71,7 +70,14 @@ var Audit = React.createClass({
       return false;
       }),0)
 
+       }else if(this.state.AuditShowModal["showModal"] == '' && $('.modal').hasClass('in')){
+        $('.modal').modal('hide');
+        $('.modal-backdrop fade in').remove();
        }
+     }else{
+
+      $('.modal').modal('hide');
+        $('.modal-backdrop fade in').remove();
      }
   },
   getInitialState: function(){
@@ -174,6 +180,7 @@ var Audit = React.createClass({
         break;
       case appConstants.AUDIT_RECONCILE:
           if(this.state.AuditExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);  
           var subComponent='';
           var messageType = 'large';
           if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
@@ -236,7 +243,7 @@ var Audit = React.createClass({
     this.getNotificationComponent();
     this.getScreenComponent(this.state.AuditScreenId);
       return (
-        <div className="main">
+        <div className="main">  
           <Header />
           {this._navigation}
           {this._component}

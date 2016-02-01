@@ -54,8 +54,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _showSpinner;
     },
 
-    getLogoutState: function(){
-       if(_seatData.hasOwnProperty("logout_allowed"))
+    getLogoutState: function() {
+        if (_seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
 
@@ -164,7 +164,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-        if (_seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
             return {
                 "showModal": true,
                 "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
@@ -303,7 +303,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getSelectedBin: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var data = "";
+            var data = null;
             _seatData.ppsbin_list.map(function(value, index) {
                 if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
                     data = value.ppsbin_id;
@@ -311,7 +311,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }
+        }else
+            return null;
+    },
+
+    getCurrentState: function() {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var data = null;
+            _seatData.ppsbin_list.map(function(value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data = value.ppsbin_state;
+                }
+            });
+
+            return data;
+        }else
+            return null;
     },
 
     stageAllBin: function() {
@@ -425,19 +440,34 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-
+        var noScanMissing = 0;
         _seatData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "no_scan")
+            if (value.Scan_status != "no_scan"){
+                var totalMissing ;
+
+                _seatData.item_in_box_barcode_damage.map(function(data, index){
+                    if(data.Box_serial == value.Box_serial){
+                        totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
+                    }
+                });
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0)+totalMissing, "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
                 ]);
-            else
+            }
+            else{
+                noScanMissing  = noScanMissing + 1;
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                     new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
                 ]);
+            }
 
         });
+        var barcodeDamaged = " ("+_seatData.box_barcode_damage+' Barcode Damaged )';
+        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(noScanMissing + barcodeDamaged, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
+        ]);
         _seatData.Extra_box_list.map(function(value, index) {
             data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                 new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
@@ -467,8 +497,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            console.log("jkkkk");
-            console.log(d);
             data["tableRows"].push(d);
 
             /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
@@ -493,14 +521,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var self = this;
-
+        var totalLooseItemsMissing = 0;
+        var extraLooseItemsMissing = 0;
         _seatData.Loose_sku_list.map(function(value, index) {
+            if(value.Expected_qty >= value.Actual_qty){
+                totalLooseItemsMissing = totalLooseItemsMissing +  parseInt(value.Expected_qty - value.Actual_qty);
+            }
+            if(value.Expected_qty <= value.Actual_qty){
+              extraLooseItemsMissing = extraLooseItemsMissing + Math.abs(parseInt(value.Expected_qty - value.Actual_qty)); 
+            }
             if (value.Scan_status != "no_scan")
                 data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
             else
                 data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
 
         });
+        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(totalLooseItemsMissing, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(extraLooseItemsMissing, "enabled", false, "large", true, false, false, false, true)
+        ]);
         return data;
     },
 
@@ -552,7 +591,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 "scan_details": {
                     "current_qty": this.getkQQuanity(),
                     "total_qty": "0",
-                    "kq_allowed": true
+                    "kq_allowed": this.kQstatus()
                 }
             };
             return data.scan_details;
@@ -560,8 +599,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
-
-
+    kQstatus: function(){
+        if(_seatData.hasOwnProperty('enable_kq')){
+            return _seatData.enable_kq;
+        }else{
+            return true;
+        }
+    },
     getGoodScanDetails: function() {
         if (_seatData["scan_details"] == undefined) {
             var data = {
@@ -642,9 +686,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    
-    getItemUid:function(){
-       return _itemUid;
+
+    getItemUid: function() {
+        return _itemUid;
     },
     getExceptionType: function() {
         return _exceptionType;
@@ -727,7 +771,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _damagedQuantity = data;
     },
     getkQQuanity: function() {
-        return _KQQty;
+        if(_seatData.hasOwnProperty('Current_box_details')){
+            if(_seatData.Current_box_details.length > 0){
+                _KQQty = _seatData.Current_box_details[0].Actual_qty;
+            }
+            return _KQQty;
+        }else{
+            return _KQQty;
+        }
     },
 
     getToteDetails: function() {
@@ -784,9 +835,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     validateAndSendDataToServer: function() {
         var flag = false;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.pick_quantity;
+            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
         else
-              flag = (_goodQuantity + _damagedQuantity + _missingQuantity) !=  _seatData.put_quantity;
+            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
@@ -818,7 +869,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-   
+
 
     validateAndSendSpaceUnavailableDataToServer: function() {
         if ((_KQQty) > _seatData.put_quantity) {
@@ -844,10 +895,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
-    getToteException: function(){
-        if(_seatData.hasOwnProperty('exception_msg')){
+    getToteException: function() {
+        if (_seatData.hasOwnProperty('exception_msg')) {
             return _seatData.exception_msg[0];
-        }else{
+        } else {
             return null;
         }
     },
@@ -1078,6 +1129,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackServerNavData"] = this.getServerNavData();
                 data["PickBackToteDetails"] = this.getToteDetails();
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                break;
+            case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+            case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+            case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+            case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackSelectedBin"] = this.getSelectedBin();
                 break;
             case appConstants.AUDIT_WAITING_FOR_MSU:
                 data["AuditNavData"] = this.getNavData();

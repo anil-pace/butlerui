@@ -57,7 +57,7 @@ var Audit = React.createClass({
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
           setTimeout((function(){ActionCreators.showModal({
@@ -209,7 +209,7 @@ var Audit = React.createClass({
         }
         break;
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
-      case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
+      case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
           this._component = (

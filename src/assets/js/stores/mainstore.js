@@ -164,7 +164,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-        if (_seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
             return {
                 "showModal": true,
                 "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
@@ -440,19 +440,34 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-
+        var noScanMissing = 0;
         _seatData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "no_scan")
+            if (value.Scan_status != "no_scan"){
+                var totalMissing ;
+
+                _seatData.item_in_box_barcode_damage.map(function(data, index){
+                    if(data.Box_serial == value.Box_serial){
+                        totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
+                    }
+                });
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0)+totalMissing, "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
                 ]);
-            else
+            }
+            else{
+                noScanMissing  = noScanMissing + 1;
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                     new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
                 ]);
+            }
 
         });
+        var barcodeDamaged = " ("+_seatData.box_barcode_damage+' Barcode Damaged )';
+        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(noScanMissing + barcodeDamaged, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
+        ]);
         _seatData.Extra_box_list.map(function(value, index) {
             data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                 new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
@@ -506,14 +521,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var self = this;
-
+        var totalLooseItemsMissing = 0;
+        var extraLooseItemsMissing = 0;
         _seatData.Loose_sku_list.map(function(value, index) {
+            if(value.Expected_qty >= value.Actual_qty){
+                totalLooseItemsMissing = totalLooseItemsMissing +  parseInt(value.Expected_qty - value.Actual_qty);
+            }
+            if(value.Expected_qty <= value.Actual_qty){
+              extraLooseItemsMissing = extraLooseItemsMissing + Math.abs(parseInt(value.Expected_qty - value.Actual_qty)); 
+            }
             if (value.Scan_status != "no_scan")
                 data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
             else
                 data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
 
         });
+        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(totalLooseItemsMissing, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(extraLooseItemsMissing, "enabled", false, "large", true, false, false, false, true)
+        ]);
         return data;
     },
 

@@ -7,6 +7,10 @@ var mainstore = require('../../stores/mainstore');
 
 var Button1 = React.createClass({
             _checklistClass: '',
+            removeTextField: function(){
+                  $('.modal-body').find('input:text').val('');
+                },
+
             performAction: function(module, action) {
                 var data = {
                     "event_name": "",
@@ -168,6 +172,9 @@ var Button1 = React.createClass({
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                                case appConstants.CHECKLIST_CLEARALL:
+                                this.removeTextField();
+                                break;
                             default:
                                 return true;
                         }
@@ -253,15 +260,12 @@ var Button1 = React.createClass({
                         return true;
                 }
             },
+
             render: function() {
-                if (this.props.buttonChecklist != undefined) {
-                    _checklistClass = 'checklistButtonSubmit';
-                } else {
-                    _checklistClass = '';
-                }
+                
                 if (this.props.disabled == false)
                     return ( < a className = {
-                            this.props.color == "orange" ? "custom-button orange " + _checklistClass : "custom-button black " + _checklistClass
+                            this.props.color == "orange" ? "custom-button orange " : "custom-button black "
                         }
                         onClick = {
                             this.performAction.bind(this, this.props.module, this.props.action)

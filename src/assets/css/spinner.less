@@ -1,8 +1,47 @@
+/*
 .sk-fading-circle {
   margin: 0 auto;
   width: 14%;
   height: 28%;
   position: relative;
+}
+*/
+
+.overlay{
+       align-items: center;
+    /*display: flex;
+    flex: 1 1 auto;
+    flex-flow: row nowrap;*/
+    position: absolute;
+    width:100%;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    flex-wrap: nowrap;
+    justify-content: center; background:rgba(0,0,0,0.3); z-index:9999;
+    .sk-fading-circle {
+  margin: 0 auto;
+  width: 14%;
+  height: 28%;
+  position: relative;
+} 
+    }
+
+.loaderButler{
+    width: 100%;
+    height: 52vh;
+    /* display: flex; */
+    /* flex-flow: row; */
+    flex-wrap: nowrap;
+    justify-content: center;
+    /* background: rgba(0,0,0,.3); */
+    z-index: 9999; 
+    .sk-fading-circle {
+  margin: 0 auto;
+  width: 15%;
+  height: 50%;
+  position: relative;
+}
 }
 
 .sk-fading-circle .sk-circle {

@@ -108,68 +108,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
 	"state_data": {
-		"Cancel_scan":true,
-		"Box_qty_list": [{
-			"Box_serial": "A000000037",
-			"Scan_status": "no_scan",
-			"Actual_qty": 0,
-			"Expected_qty": 5
-		},
-		{
-			"Box_serial": "A000000038",
-			"Scan_status": "open",
-			"Actual_qty": 0,
-			"Expected_qty": 5
-		},
-		{
-			"Box_serial": "A000000038",
-			"Scan_status": "close",
-			"Actual_qty": 0,
-			"Expected_qty": 5
-		}
-		],
-		"Current_box_details": [{
- 			"Box_serial": "A000000037",
- 			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
- 			"Actual_qty": 0,
- 			"Expected_qty": 5
- 		}],
- 		"scan_details": {
-			"current_qty": "1",
-			"total_qty": "1",
-			"kq_allowed": false
-		},
-		"screen_id": "audit_scan",
-		"screen_version": "1",
-		"notification_list": [{
-			"details": [],
-			"code": "AdF.A.009",
-			"description": "Waiting for MSU to arrive",
-			"level": "info"
-		}],
-		"logout_allowed": "true",
-		"exception_allowed": [{
-			"exception_id": "Common.000",
-			"exception_name": "Reset Scanner"
-		}],
-		"Extra_box_list": [{"Box_serial": "A000000039", "Scan_status": "open", "Actual_qty": 0, "Expected_qty": 0}],
+		"seat_name": "front_10",
+		"notification_list": [],
 		"rack_details": {
 			"rack_type_rec": [
 				["A", [
@@ -236,27 +178,82 @@
 					]
 				]]
 			],
-			"slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+			"slot_barcodes": ["080.0.A.01", "080.0.A.06"]
 		},
-		"mode": "audit",
-		"is_idle": false,
+		"exception_allowed": [{
+			"exception_id": "AdF003",
+			"exception_name": "Loose Item Barcode Damaged",
+			"event": "loose_item_damage"
+		}, {
+			"exception_id": "AdF002",
+			"exception_name": "Damaged Box Barcode",
+			"event": "box_damage"
+		}],
+		"show_expected_qty": true,
+		"screen_id": "audit_scan",
+		"Cancel_scan": false,
+		"all_peripheral_status": "true",
+		"logout_allowed": "true",
 		"seat_type": "front",
-		"time_stamp": "1452087202",
-		"header_msge_list": [{
-            "details": [2],
-            "code": "PkF.A.012",
-            "description": "Waiting for Rack",
-            "level": "info"
-        }],
+		"product_info": [],
+		"time_stamp": "1454146877",
 		"api_version": "1",
 		"Loose_sku_list": [{
-			"Sku": "3728ea2d1a1c457092f7bc2b9295cd33",
+			"Sku": "4de68cc826794b53ba8397f3d5dcedd4",
 			"Actual_qty": 0,
-			"Expected_qty": 2
+			"Expected_qty": 4
+		}, {
+			"Sku": "23084982cee04e4fa971acafdac016ad",
+			"Actual_qty": 0,
+			"Expected_qty": 4
+		}],
+		"Box_qty_list": [{
+			"Box_serial": "A000000054",
+			"Scan_status": "no_scan",
+			"Actual_qty": 0,
+			"Expected_qty": 4
+		}],
+		"Extra_box_list": [],
+		"Current_box_details": [],
+		"item_in_box_barcode_damage": [],
+		"peripheral_data": [{
+			"pp_type": "projector",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "1",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"coordinate": "undefined",
+				"bot_deltas": [0, 0, 0],
+				"bot_direction": "3"
+			},
+			"pp_id": {
+				"pp_type": "projector",
+				"id": "1"
+			}
+		}],
+		"screen_version": "1",
+		"enable_kq": false,
+		"loose_item_barcode_damage": 0,
+		"mode": "audit",
+		"is_idle": false,
+		"box_barcode_damage": 0,
+		"header_msge_list": [{
+			"details": [],
+			"code": "AdF.H.001",
+			"description": "Scan Box/Items from Slot",
+			"level": "info"
 		}]
 	}
-
 }
+
+
+
+
+
+
 
 
 

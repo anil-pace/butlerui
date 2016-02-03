@@ -34,37 +34,65 @@ var Bin = React.createClass({
    
     render: function() {
         var compData = this.props.binData;
-        /*if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
-            var binClass = 'bin ';
+        if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
             var tote = '';
-            var pptlClass = 'pptl ';
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
-                binClass = binClass + "selected ";
-                pptlClass = pptlClass + "selected ";
-            }
-            if(compData["selected_for_staging"] !=undefined && (compData.selected_for_staging == true || compData.selected_for_staging == "true"))
-                binClass = binClass + "excess-select ";
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="text">TOTE</span>
                         <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
                         </span>
                     </div>);
-
-            if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
-                return (<div className = {binClass} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                     <div className="tote">
-                        <span className="text">TOTE</span>
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
-                    </div>
+            return (<div className = {compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}>
+                    {tote}
                     <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className={(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))?"pptl selected":"pptl"} >{compData.ppsbin_id}</div>
-                </div>)
-            }
-
-        }*/
-        /*else*/ if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+                    <div className={compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"} >{compData.ppsbin_id}</div>
+                </div>);
+        }
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (<div className="tote">
+                        <span className="text">TOTE</span>
+                        <span className="glyphicon glyphicon-info-sign info-icon"  >
+                        </span>
+                    </div>);
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+                return (<div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                    {tote}
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl selected" >{compData.ppsbin_id}</div>
+                </div>);
+            }else{
+            return (<div className = "bin no-excess-item">
+                    {tote}
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl no-excess-item" >{compData.ppsbin_id}</div>
+                </div>);
+        }
+        }
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (<div className="tote">
+                        <span className="text">TOTE</span>
+                        <span className="glyphicon glyphicon-info-sign info-icon"  >
+                        </span>
+                    </div>);
+            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")){
+                return (<div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                    {tote}
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl excess-item" >{compData.ppsbin_id}</div>
+                </div>);
+            }else{
+            return (<div className = "bin no-excess-item">
+                    {tote}
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl no-excess-item" >{compData.ppsbin_id}</div>
+                </div>);
+        }
+        }
+        else if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
             return (
                 <div className = "bin no-excess-item" >
                     <div className ="item-count">{compData.ppsbin_count}</div>
@@ -101,59 +129,10 @@ var Bin = React.createClass({
                 </div>
             );
 
-        else if((compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING  ) && ( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
-            return (
-                <div className = "bin excess-select" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                     <div className="tote">
-                        <span className="text">TOTE</span>
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
-                    </div>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className={(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))?"pptl selected":"pptl"} >{compData.ppsbin_id}</div>
-                </div>
-            );
-
-         else if(( (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING  )) && ( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
-            return (
-                <div className = {(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))?"bin selected":"bin"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                     <div className="tote">
-                        <span className="text">TOTE</span>
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
-                    </div>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className={(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))?"pptl selected":"pptl"} onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
-                </div>
-            );
-
-       
-
-        else if((compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING  ))
-            return (
-                <div className = "bin excess-select" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected">{compData.ppsbin_id}</div>
-                </div>
-            );
-
-
-        else if((this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING  ) && ( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
-            return (
-                <div className = {(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))?"bin selected":"bin"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                     <div className="tote">
-                        <span className="text">TOTE</span>
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
-                    </div>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className={(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))?"pptl selected":"pptl"} >{compData.ppsbin_id}</div>
-                </div>
-            );
-
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )){
             var tote = '';
+            var binClass = 'bin ';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="text">TOTE</span>
@@ -171,29 +150,8 @@ var Bin = React.createClass({
         }
         
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")))
-            return (
-                <div className = "bin selected">
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
-                </div>
-            );
-         else if((this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING ) && ((compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")) && compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")))
-            return (
-                <div className = "bin selected">
-                     <div className="tote">
-                        <span className="text">TOTE</span>
-                        <span className="glyphicon glyphicon-info-sign info-icon"  >
-                        </span>
-                    </div>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" >{compData.ppsbin_id}</div>
-                </div>
-            );
-
-
-        else if((this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )){
-             var tote = '';
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
+            var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="text">TOTE</span>
@@ -201,21 +159,31 @@ var Bin = React.createClass({
                         </span>
                     </div>);
             return (
-                <div className = "bin  selected blink1">
+                <div className = "bin selected">
                     {tote}
                     <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected blink" >{compData.ppsbin_id}</div>
+                    <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
 
-        else if((this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")))
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) ){
+            var tote = '';
+            if((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (<div className="tote">
+                        <span className="text">TOTE</span>
+                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
+                        </span>
+                    </div>);
             return (
-                <div className = "bin selected">
+                <div className = "bin">
+                    {tote}
                     <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" >{compData.ppsbin_id}</div>
+                    <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
+        }
+         
         
         else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )){
 

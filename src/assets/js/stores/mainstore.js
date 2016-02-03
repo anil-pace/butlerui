@@ -443,15 +443,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var noScanMissing = 0;
         _seatData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status != "no_scan"){
-                var totalMissing ;
-
-                _seatData.item_in_box_barcode_damage.map(function(data, index){
-                    if(data.Box_serial == value.Box_serial){
-                        totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
-                    }
-                });
+                var totalMissing = '';
+                    if(_seatData.item_in_box_barcode_damage.length > 0){
+                    _seatData.item_in_box_barcode_damage.map(function(data, index){
+                        if(data.Box_serial == value.Box_serial){
+                            totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
+                        }
+                    });
+                }
+                var missingBoxSerials = Math.max(parseInt(value.Expected_qty) - parseInt(value.Actual_qty),0);
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0)+totalMissing, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(missingBoxSerials + totalMissing, "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
                 ]);
             }
@@ -1183,7 +1185,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
-            case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
+            case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();

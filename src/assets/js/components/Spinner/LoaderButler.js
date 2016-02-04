@@ -1,15 +1,12 @@
 var React = require('react');
+var SpinnerButler = require('./SpinnerButler');
 
 var LoaderButler = React.createClass({
 	render:function(){
 		return (
 
-			<div className="loader">
-				
-					<div className="hexdots-loader">
-  						Loading…
-					</div>
-				
+			<div className="loaderButler">
+				<SpinnerButler />
 			</div>
 			);
 	}

@@ -50,6 +50,7 @@ function server_messages_list() {
     _("Place Entity in Bin and Press PPTL");
     _("Are you sure you want to close Tote");
     _("Scan Tote / Stage PpsBin");
+    _("Unexpected Entity in Tote");
     _("Item Not Found in Tote");
     _("Tote already opened.Scan some other tote");
     _("Tote already closed.Scan some other tote");

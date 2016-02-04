@@ -194,7 +194,7 @@ function loadComponent(modalType,modalData){
                       <div className="modal-footer removeBorder">
                           <div className="buttonContainer center-block chklstButtonContainer">
                                 <div className="row removeBorder">
-                                    <div className="col-md-6"><input className="btn btn-default checklistButtonClear" type="button" value="Clear All" onClick={removeTextField} /></div>
+                                    <div className="col-md-6"><Button1 disabled = {false} text ={"Clear All"} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CHECKLIST_CLEARALL}/></div>
                                     <div className="col-md-6"><Button1 disabled = {false} text ={"Submit"} color={"orange"} buttonChecklist={"checklist"} checkListData={modalData} module ={appConstants.PICK_FRONT} action={appConstants.CHECKLIST_SUBMIT}/></div>
                                 </div>
                           </div>

@@ -4,13 +4,11 @@ var objectAssign = require('react/lib/Object.assign');
 var SVGConstants = require('../constants/svgConstants');
 var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
-var serverMessages = require('../serverMessages/server_messages');
-var chinese = require('../serverMessages/chinese');
-var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+var _seatData, _currentSeat, _seatName, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+    _flag = false,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -41,6 +39,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     removeChangeListener: function(cb) {
         this.removeListener(CHANGE_EVENT, cb);
     },
+    getAuthToken : function(data){
+        utils.getAuthToken(data);
+    },
     getPopUpVisible: function(data) {
         return popupVisible;
     },
@@ -58,49 +59,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
-
-    toggleBinSelection: function(bin_id) {
-        var flag = false;
-        _seatData["ppsbin_list"].map(function(value, index) {
-            if (value.ppsbin_id == bin_id) {
-                if (value["selected_for_staging"] != undefined) {
-                    flag = !value["selected_for_staging"];
-                    value["selected_for_staging"] = !value["selected_for_staging"];
-                } else {
-                    value["selected_for_staging"] = true;
-                    flag = true;
-                }
-            } else if (value["selected_for_staging"] != undefined) {
-                value["selected_for_staging"] = false;
-            }
-        });
-        if (_seatData.notification_list.length != 0) {
-            _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
-            _seatData.notification_list[0].details[0] = bin_id;
-            //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
-        }
-    },
-
-    getStageActiveStatus: function() {
-        if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var flag = false;
-            _seatData["ppsbin_list"].map(function(value, index) {
-                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true)
-                    flag = true;
-            });
-            return flag;
-        }
-    },
-
-    getStageAllActiveStatus: function() {
-        if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var flag = false;
-            _seatData["ppsbin_list"].map(function(value, index) {
-                if (value.ppsbin_count > 0 && value.ppsbin_state != "staged")
-                    flag = true;
-            });
-            return flag;
-        }
+    getFlag : function(){
+        return _flag;
     },
 
     getPutQuantity: function() {
@@ -125,10 +85,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
-                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
-                    _NavData = navConfig.pickFront[0];
-                else
-                    _NavData = navConfig.pickFront[1];
+                _NavData = _seatData.header_msge_list[0];
                 break;
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
@@ -139,23 +96,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             default:
                 //return true; 
         }
-        _NavData.map(function(data, index) {
-            if (data.screen_id instanceof Array) {
-                if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                    if (_seatData.screen_id == appConstants.PUT_BACK_TOTE_CLOSE)
-                        _NavData[index].image = SVGConstants.tote;
-                    else
-                        _NavData[index].image = SVGConstants.scan;
-                    _NavData[index].type = 'active';
-                } else {
-                    _NavData[index].type = 'passive';
-                }
-            } else if (_seatData.screen_id == data.screen_id) {
-                _NavData[index].type = 'active';
-            } else {
-                _NavData[index].type = 'passive';
-            }
-        });
 
         return _NavData;
     },
@@ -286,21 +226,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return binData;
     },
 
-    stageOneBin: function() {
-        if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var data = {};
-            _seatData.ppsbin_list.map(function(value, index) {
-                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
-                    data["event_name"] = "stage_ppsbin";
-                    data["event_data"] = {};
-                    data["event_data"]["ppsbin_id"] = value.ppsbin_id;
-                }
-            });
-
-            utils.postDataToInterface(data, _seatData.seat_name);
-        }
-    },
-
     getSelectedBin: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var data = null;
@@ -328,14 +253,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }else
             return null;
     },
-
-    stageAllBin: function() {
-        var data = {};
-        data["event_name"] = "stage_all";
-        data["event_data"] = '';
-        utils.postDataToInterface(data, _seatData.seat_name);
-    },
-
 
     getExceptionData: function() {
         var data = {};
@@ -677,6 +594,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+
+
+        _flag = true;
+        
     },
     getModalContent: function() {
         return modalContent.data;
@@ -904,6 +825,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+    getListItems : function(){
+        console.log(_seatData);
+        if(_seatData.hasOwnProperty('list_items')){
+            return _seatData.list_items;
+        }else{
+            return null;
+        }
+    },
     getScreenData: function() {
         var data = {};
         switch (_screenId) {
@@ -1036,6 +965,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
+                data["ListItems"] = this.getListItems();
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
@@ -1207,22 +1137,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(payload) {
     var action = payload.action;
+    console.log(action.actionType);
     switch (action.actionType) {
-        case appConstants.TOGGLE_BIN_SELECTION:
-            mainstore.toggleBinSelection(action.bin_id);
-            mainstore.emitChange();
-            break;
-        case appConstants.STAGE_ONE_BIN:
-            mainstore.showSpinner();
-            mainstore.stageOneBin();
-            mainstore.emitChange();
-            break;
-
-        case appConstants.STAGE_ALL:
-            mainstore.showSpinner();
-            mainstore.stageAllBin();
-            mainstore.emitChange();
-            break;
+        case appConstants.LOGIN:
+          mainstore.getAuthToken(action.data);
+          mainstore.emit(CHANGE_EVENT);
+          break;
         case appConstants.WEBSOCKET_CONNECT:
             utils.connectToWebSocket();
             mainstore.emit(CHANGE_EVENT);
@@ -1244,10 +1164,6 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.LOAD_MODAL:
             mainstore.setModalContent(action.data);
-            mainstore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.SET_SERVER_MESSAGES:
-            mainstore.setServerMessages();
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.CHANGE_LANGUAGE:

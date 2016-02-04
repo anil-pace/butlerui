@@ -1,23 +1,12 @@
 var React = require('react');
-var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
-var KQ = require('./ProductDetails/KQ');
-var Navigation = require("./Navigation/Navigation.react");
-var Spinner = require("./Spinner/LoaderButler");
-var Notification = require("./Notification/Notification");
-var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
-var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
-var BoxSerial = require('./BoxSerial.js');
-var Modal = require('./Modal/Modal');
-var CurrentSlot = require('./CurrentSlot');
-var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
-var Exception = require('./Exception/Exception');
-
+var Navigation = require("./Navigation/Navigation.react");
+var ListItems = require("./ListItems")
 function getStateData(){
   /*return {
            PickFrontNavData : PickFrontStore.getNavData(),
@@ -48,9 +37,6 @@ var PickFront = React.createClass({
     return getStateData();
   },
   componentWillMount: function(){
-    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
-        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
@@ -66,10 +52,10 @@ var PickFront = React.createClass({
     }
   },
   getNotificationComponent:function(){
-    if(this.state.PickFrontNotification != undefined)
+/*    if(this.state.PickFrontNotification != undefined)
       this._notification = <Notification notification={this.state.PickFrontNotification} navMessagesJson={this.props.navMessagesJson} />
     else
-      this._notification = "";
+      this._notification = "";*/
   },
   getModalStatus:function(){
     return _showModal;
@@ -111,15 +97,16 @@ var PickFront = React.createClass({
             );
   },
   getScreenComponent : function(screen_id){
+    console.log(this.state.ListItems);
     switch(screen_id){
      
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
        if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._navigation = (<Navigation navData ={this.state.PickFrontNavData} />);
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                    <Spinner />
+                   <ListItems ListItems={this.state.ListItems}/>
                  </div>
               </div>
             );

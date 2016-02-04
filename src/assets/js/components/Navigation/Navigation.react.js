@@ -1,24 +1,14 @@
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
-var PassiveNavigation = require('./PassiveNavigation.react');
 
 var Navigation = React.createClass({ 
     
     render: function() {
         return (
             <div className="navigation">
-                {this.props.navData.map(function(value,index){
-                    if(value.type == "active")
-                        return (
-                                <ActiveNavigation key={index} data={value} serverNavData={this.props.serverNavData} navMessagesJson={this.props.navMessagesJson} />
-                            );
-                    else
-                        return (
-                                <PassiveNavigation data={value} />
-                            );
-                },this)}
+                 <ActiveNavigation  data={this.props.navData} />             
       		</div>
-        );
+        )
     },
 });
 

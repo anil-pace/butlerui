@@ -38,15 +38,8 @@ gulp.task('copy', function(){
 		.pipe(gulp.dest('dist/assets/images'));
   gulp.src('src/assets/fonts/*.*')
     .pipe(gulp.dest('dist/assets/fonts'));
-  gulp.src('src/assets/js/utils/vendor/**/*.*')
-    .pipe(gulp.dest('dist/assets/js/vendor/'));   		
 });
-gulp.task('json', function() {
-        gulp.src('src/assets/js/serverMessages/server_messages.json')
-        .pipe(gulp.dest('dist/assets/js/localization/'));
-        gulp.src('src/assets/js/utils/vendor/i18n/*.json')
-        .pipe(gulp.dest('dist/assets/js/localization/'));  
-});
+
 gulp.task('build-less', function(){
     return gulp.src('src/assets/css/styles.less')
         .pipe(less())
@@ -58,7 +51,7 @@ gulp.task('build-less', function(){
     .pipe(uglify())
     .pipe(gulp.dest('dist/assets/js'));
 });
-*/gulp.task('default',['json' ,'browserify', 'build-less' , 'copy'], function(){
-	return gulp.watch('src/**/*.*', ['json','browserify','build-less','copy'])
+*/gulp.task('default',['browserify', 'build-less' , 'copy'], function(){
+	return gulp.watch('src/**/*.*', ['browserify','build-less','copy'])
 });
 

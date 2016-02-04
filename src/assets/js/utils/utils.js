@@ -3,7 +3,6 @@ var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
-var serverMessages = require('../serverMessages/server_messages');
 var ws;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
@@ -11,10 +10,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         ws = new WebSocket(configConstants.WEBSOCKET_IP);
         if ("WebSocket" in window) {
             ws.onopen = function() {
-                $("#username, #password").prop('disabled', false);
                 console.log("connected");
-                utils.checkSessionStorage();
-                clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
@@ -59,6 +55,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     getAuthToken : function(data){
         sessionStorage.setItem('sessionData', null);
+        console.log(data);
         var loginData ={
           "username" : data.data.username,
           "password" : data.data.password

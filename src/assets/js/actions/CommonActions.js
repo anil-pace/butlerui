@@ -2,10 +2,9 @@ var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
 var commonActions = {
-  webSocketConnection: function(data){
+  webSocketConnection: function(){
     AppDispatcher.handleAction({
-      actionType: appConstants.WEBSOCKET_CONNECT, 
-      data: data
+      actionType: appConstants.WEBSOCKET_CONNECT
     });
   },
   listSeats: function(data){

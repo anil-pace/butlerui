@@ -1,22 +1,19 @@
 var React = require('react');
 var mainstore = require('../stores/mainstore');
-var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
-var PickBack = require('./PickBack');
 var PickFront = require('./PickFront');
-var Audit = require('./Audit');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
-
-
+var CommonActions = require('../actions/CommonActions');
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
-      navMessages : mainstore.getServerMessages()
+      navMessages : mainstore.getServerMessages(),
+      flag : mainstore.getFlag()
   }
 }
 var Operator = React.createClass({
@@ -26,6 +23,17 @@ var Operator = React.createClass({
     return getState();
   },
   componentDidMount: function(){
+    mainstore.addChangeListener(this.onChange);
+     var data = {
+        'data_type': 'auth',
+        'data': {
+              'username': 'kerry',
+              'password': 'gorapj',
+              'seat_name': 'front_20'
+          }
+    }
+    CommonActions.webSocketConnection();
+    CommonActions.login(data);
     mainstore.addChangeListener(this.onChange);
   },
   componentWillMount: function(){
@@ -60,26 +68,34 @@ var Operator = React.createClass({
   },
 
   render: function(data){ 
-     this.getSeatType(this.state.currentSeat);
+
       if(this.state.spinner === true){
        this._spinner = <Spinner />
       }else{
         this._spinner ='';
       }
-       if(this.state.systemIsIdle === true){
-          return (
-            <div className="main">
-              <SystemIdle />
-            </div> 
-          )
-        }else{
-          return (
-            <div>
-              {this._spinner}
-              {this._currentSeat}
-            </div> 
+       if(this.state.flag === true){
+        console.log(this.state.currentSeat);
+        this.getSeatType(this.state.currentSeat);
+         if(this.state.systemIsIdle === true){
+            return (
+              <div className="main">
+                <SystemIdle />
+              </div> 
+            )
+          }else{
+            return (
+              <div>
+                {this._spinner}
+                {this._currentSeat}
+              </div> 
 
-          )
+            )
+         }
+       }else{
+        return (<div className="main">
+          {this._spinner}
+        </div>) 
        }
       
      

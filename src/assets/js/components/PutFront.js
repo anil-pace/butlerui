@@ -1,19 +1,11 @@
 
 var React = require('react');
-var PutFrontStore = require('../stores/PutFrontStore');
 var Header = require('./Header');
-var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
-var Notification = require("./Notification/Notification");
-var Bins = require("./Bins/Bins.react");
 var Button1 = require("./Button/Button");
-var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
-var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
-var Exception = require('./Exception/Exception');
-var KQ = require('./ProductDetails/KQ');
 
 
 function getStateData(){
@@ -205,7 +197,7 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Revised Quantity"}</div>
+                      <div className="kq-header">{"Revised Quantit[y"}</div>
                       <KQ scanDetails = {this.state.PutFrontKQQuantity}  />
                     </div>
                   </div>

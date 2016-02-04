@@ -1,8 +1,6 @@
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
-var PickFrontStore = require('../../stores/PickFrontStore');
-var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 var Button1 = React.createClass({
@@ -199,15 +197,9 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.DIS_ASSOCIATE_TOTE:
-                                 data["event_name"] = "pick_back_exception";
-                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
-                                 data["event_data"]["type"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.OVERRIDE_TOTE:
-                                 data["event_name"] = "pick_back_exception";
-                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
-                                 data["event_data"]["type"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:

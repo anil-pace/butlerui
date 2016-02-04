@@ -37011,7 +37011,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
                 ));
         }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
@@ -37025,6 +37025,36 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 ));
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
+                   return (React.createElement("div", {className: "bin excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                ));
+                }else{
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                ));
+            }
             }else{
             return (React.createElement("div", {className: "bin no-excess-item"}, 
                     tote, 
@@ -39494,7 +39524,7 @@ var KQ = React.createClass({displayName: "KQ",
   },
   checkKqAllowed : function(){
     if(this.props.scanDetails.kq_allowed === true){
-      if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0") ){          
+      if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") ){          
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
       }
@@ -40474,17 +40504,14 @@ module.exports = ReconcileStatus;
 
 },{"../constants/resourceConstants":282,"./Header":246,"react":230}],272:[function(require,module,exports){
 var React = require('react');
+var SpinnerButler = require('./SpinnerButler');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
 	render:function(){
 		return (
 
-			React.createElement("div", {className: "loader"}, 
-				
-					React.createElement("div", {className: "hexdots-loader"}, 
-  						"Loading…"
-					)
-				
+			React.createElement("div", {className: "loaderButler"}, 
+				React.createElement(SpinnerButler, null)
 			)
 			);
 	}
@@ -40492,7 +40519,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":230}],273:[function(require,module,exports){
+},{"./SpinnerButler":274,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -40936,8 +40963,6 @@ module.exports = appConstants;
 var configConstants = {
 	WEBSOCKET_IP : "ws://localhost:8888/ws",
 	INTERFACE_IP : "https://localhost:5000"
-
-
 };
 
 module.exports = configConstants;
@@ -41175,7 +41200,7 @@ var serverMessages = {
     "PkF.E.008" : "Waiting for rack. Please wait and scan later",
     "PkF.E.009" : "Scanned item details not found",
     "PkF.E.010" : "No PPS bins empty. Please empty them",
-    "PkB.E.001" : "Barcode didn't match the current tote barcode",
+    "PkB.E.001" : "Tote already associated with pps bin {0}",
     "PkB.E.002" : "Totes are not required",
     "PkB.E.003" : "Exception invalid",
     "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",

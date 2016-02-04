@@ -10,8 +10,8 @@ var ListItems = React.createClass({
               return(
                 <div  className='row'>
                     <ImageComponent imageSrc={data.img}/>
-                    <PriceCommponent title={"Test"} price={'1$'} />
-                    <Description description={'teteteteteteteteteetetetet'} />  
+                    <PriceCommponent title={data.title} price={data.price} />
+                    <Description description={data.description} />  
                 </div>    
               )
           });

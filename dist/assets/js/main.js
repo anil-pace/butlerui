@@ -36761,7 +36761,7 @@ var Audit = React.createClass({displayName: "Audit",
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
           setTimeout((function(){ActionCreators.showModal({
@@ -36913,7 +36913,7 @@ var Audit = React.createClass({displayName: "Audit",
         }
         break;
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
-      case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
+      case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
           this._component = (
@@ -37011,7 +37011,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
                 ));
         }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
@@ -37025,6 +37025,36 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 ));
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
+                   return (React.createElement("div", {className: "bin excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                ));
+                }else{
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                ));
+            }
             }else{
             return (React.createElement("div", {className: "bin no-excess-item"}, 
                     tote, 
@@ -39294,7 +39324,7 @@ var KQ = React.createClass({displayName: "KQ",
           if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
                 return true;
             }
@@ -39350,7 +39380,7 @@ var KQ = React.createClass({displayName: "KQ",
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                     CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
                      return true;
                 }
@@ -39425,7 +39455,7 @@ var KQ = React.createClass({displayName: "KQ",
                     } else {
 
                         var data = {};
-                         if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                         if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                             CommonActions.updateKQQuantity(parseInt(e.target.value));
                              return true;
                         }
@@ -40889,7 +40919,7 @@ var appConstants = {
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
 	SEND_EXCESS_ITEMS_BIN:"SEND_EXCESS_ITEMS_BIN",
-	AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:"audit_loose_item_damage_exception",
+	AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:"audit_loose_item_damage_exception",
 	AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:"audit_box_damage_exception",
 	AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:"audit_item_in_box_damage_exception",
 	AUDIT:"audit_front",
@@ -40934,8 +40964,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.104:8888/ws",
-	INTERFACE_IP : "https://192.168.3.104:5000"
+	WEBSOCKET_IP : "ws://192.168.1.148:8888/ws",
+	INTERFACE_IP : "https://192.168.1.148:5000"
 };
 
 module.exports = configConstants;
@@ -41173,7 +41203,7 @@ var serverMessages = {
     "PkF.E.008" : "Waiting for rack. Please wait and scan later",
     "PkF.E.009" : "Scanned item details not found",
     "PkF.E.010" : "No PPS bins empty. Please empty them",
-    "PkB.E.001" : "Barcode didn't match the current tote barcode",
+    "PkB.E.001" : "Tote already associated with pps bin {0}",
     "PkB.E.002" : "Totes are not required",
     "PkB.E.003" : "Exception invalid",
     "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
@@ -42786,15 +42816,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var noScanMissing = 0;
         _seatData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status != "no_scan"){
-                var totalMissing ;
-
-                _seatData.item_in_box_barcode_damage.map(function(data, index){
-                    if(data.Box_serial == value.Box_serial){
-                        totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
-                    }
-                });
+                var totalMissing = '';
+                    if(_seatData.item_in_box_barcode_damage.length > 0){
+                    _seatData.item_in_box_barcode_damage.map(function(data, index){
+                        if(data.Box_serial == value.Box_serial){
+                            totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
+                        }
+                    });
+                }
+                var missingBoxSerials = Math.max(parseInt(value.Expected_qty) - parseInt(value.Actual_qty),0);
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0)+totalMissing, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(missingBoxSerials + totalMissing, "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
                 ]);
             }
@@ -43526,7 +43558,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
-            case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_BARCODE:
+            case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();

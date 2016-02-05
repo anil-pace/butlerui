@@ -41186,6 +41186,8 @@ var serverMessages = {
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
+    "PkF.I.007" : "Data capture valid so far",
+    "PkF.W.003" : "Cannot cancel scan. No Scanned box found",
     "PkF.I.002" : "Location Scan successful",
     "PkF.I.003" : "Box Scan successful",
     "PkF.I.004" : "Item Scan successful",
@@ -42450,6 +42452,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
             _seatData.notification_list[0].details[0] = bin_id;
+            _seatData.notification_list[0].level = "info";
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
         }
     },

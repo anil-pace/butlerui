@@ -119,6 +119,8 @@ var serverMessages = {
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
+    "PkF.I.007" : "Data capture valid so far",
+    "PkF.W.003" : "Cannot cancel scan. No Scanned box found",
     "PkF.I.002" : "Location Scan successful",
     "PkF.I.003" : "Box Scan successful",
     "PkF.I.004" : "Item Scan successful",

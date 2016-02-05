@@ -39524,7 +39524,7 @@ var KQ = React.createClass({displayName: "KQ",
   },
   checkKqAllowed : function(){
     if(this.props.scanDetails.kq_allowed === true){
-      if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0") ){          
+      if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") ){          
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
       }
@@ -40504,17 +40504,14 @@ module.exports = ReconcileStatus;
 
 },{"../constants/resourceConstants":282,"./Header":246,"react":230}],272:[function(require,module,exports){
 var React = require('react');
+var SpinnerButler = require('./SpinnerButler');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
 	render:function(){
 		return (
 
-			React.createElement("div", {className: "loader"}, 
-				
-					React.createElement("div", {className: "hexdots-loader"}, 
-  						"Loading…"
-					)
-				
+			React.createElement("div", {className: "loaderButler"}, 
+				React.createElement(SpinnerButler, null)
 			)
 			);
 	}
@@ -40522,7 +40519,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":230}],273:[function(require,module,exports){
+},{"./SpinnerButler":274,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');

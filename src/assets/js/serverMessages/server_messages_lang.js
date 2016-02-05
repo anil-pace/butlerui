@@ -77,6 +77,7 @@ function server_messages_list() {
     _("Tote not closed.");
     _("Entity scan successful.");
     _("PPTL button press successful");
+    _("Data capture valid so far");
     _("Excess item in tote recorded.Now press PPTL");
     _("Invalid item in tote recorded.");
     _("{0} damaged entity recorder.WMS Notified.");

@@ -39321,7 +39321,7 @@ var KQ = React.createClass({displayName: "KQ",
     virtualKeyboard: null,
     handleIncrement: function(event) {
         if (this.props.scanDetails.kq_allowed === true) {
-          if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
+          if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
@@ -41183,6 +41183,8 @@ var serverMessages = {
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
+    "PkF.I.007" : "Data capture valid so far",
+    "PkF.W.003" : "Cannot cancel scan. No Scanned box found",
     "PkF.I.002" : "Location Scan successful",
     "PkF.I.003" : "Box Scan successful",
     "PkF.I.004" : "Item Scan successful",
@@ -42447,6 +42449,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
             _seatData.notification_list[0].details[0] = bin_id;
+            _seatData.notification_list[0].level = "info";
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
         }
     },

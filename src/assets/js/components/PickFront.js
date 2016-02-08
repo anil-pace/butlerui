@@ -5,27 +5,23 @@ var Button1 = require("./Button/Button");
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var CommonActions = require('../actions/CommonActions');
-var Navigation = require("./Navigation/Navigation.react");
-var ListItems = require("./ListItems")
+var MessageNavigation = require("./MessageNavigation");
+var ListItems = require("./ListItems");
+var NotificationBar = require("./NotificationBar");
+var Spinner = require('./Spinner/Overlay');
+var LoaderButler = require('./Spinner/LoaderButler');
+var CommonButton = require("./CommonButton");
+
 function getStateData(){
-  /*return {
-           PickFrontNavData : PickFrontStore.getNavData(),
-           PickFrontNotification : PickFrontStore.getNotificationData(),
-           PickFrontBinData: PickFrontStore.getBinData(),
-           PickFrontScreenId:PickFrontStore.getScreenId(),
-           PickFrontScanDetails : PickFrontStore.scanDetails(),
-           PickFrontProductDetails : PickFrontStore.productDetails(),
-           PickFrontRackDetails: PickFrontStore.getRackDetails(),
-           PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
-           PickFrontServerNavData : PickFrontStore.getServerNavData(),
-           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
-           PickFrontItemUid : PickFrontStore.getItemUid(),
-           PickFrontSlotDetails :PickFrontStore.getCurrentSlot(),
-           PickFrontChecklistDetails :PickFrontStore.getChecklistDetails(),
-           PickFrontChecklistIndex : PickFrontStore.getChecklistIndex(),
-           PickFrontChecklistOverlayStatus :PickFrontStore.getChecklistOverlayStatus()
-    };*/
-    return mainstore.getScreenData();
+  return {
+           PickFrontNavData : mainstore.getNavData(),
+           PickFrontNotificationData : mainstore.getNotificationData(),
+           PickFrontScreenId: mainstore.getScreenId(),
+           PickFrontRackDetails: mainstore.getRackDetails(),
+           PickFrontServerNavData : mainstore.getServerNavData(),
+           PickFrontItemUid : mainstore.getItemUid(),
+           ListItems : mainstore.getListItems(),
+    };
 };
 
 var PickFront = React.createClass({
@@ -57,275 +53,51 @@ var PickFront = React.createClass({
     else
       this._notification = "";*/
   },
-  getModalStatus:function(){
-    return _showModal;
-  },
-  showModal:function(data,index){
-    var data ={
-      'checklist_data' : data,
-      "checklist_index" : index,
-      "product_details" : this.state.PickFrontProductDetails
-    };
-    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
-    setTimeout((function(){CommonActions.showModal({
-              data:data,
-              type:'pick_checklist'
-      });
-      $('.modal').modal({backdrop: 'static', keyboard: false});
-      return false;
-      }),0)
-
-    }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
-      $('.modal').modal('hide');
-      $('.modal-backdrop fade in').remove();
-    }
-
-  },
-  getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              <div className='grid-container exception'>
-                <Modal />
-                <Exception data={this.state.PickFrontExceptionData} action={true}/>
-                <div className="exception-right"></div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
-                </div>
-              </div>
-            );
-  },
+ 
   getScreenComponent : function(screen_id){
     console.log(this.state.ListItems);
     switch(screen_id){
      
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-       if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (<Navigation navData ={this.state.PickFrontNavData} />);
-        this._component = (
-              <div className='grid-container'>
-                 <div className='main-container'>
-                   <ListItems ListItems={this.state.ListItems}/>
-                 </div>
-              </div>
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
+        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+        this._component = (<ListItems ListItems={this.state.ListItems}/>);
       break;
 
       case appConstants.PICK_FRONT_LOCATION_SCAN:
-         if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-        this._component = (
-              <div className='grid-container'>
-                 <div className='main-container'>
-                    <Rack rackData = {this.state.PickFrontRackDetails}/>
-                 </div>
-              </div>
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
+        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+        this._component = ( 
+            <div className="row grid-container">
+                <div className="mainRackContainer">
+                  <Rack rackData = {this.state.PickFrontRackDetails}/>
+                </div>
+                <div className="confirmShelfButton">
+                    <CommonButton text={"Confirm"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM} />
+                  </div>
+            </div>
+          );
       break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
-       if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-        this._component = (
-              <div className='grid-container'>
-                 <div className='main-container'>
-                    <Rack rackData = {this.state.PickFrontRackDetails}/>
-                     <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
-                 </div>
-              </div>
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
+      this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+        this._component = ( 
+                <div className="grid-container">
+                <div className="main-container">
+                  <Rack rackData = {this.state.PickFrontRackDetails}/>
+                  <Button1 disabled = {true} text = {"Confirm"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                </div>
+            </div>
+          );
       break;
 
 
        case appConstants.PICK_FRONT_CONTAINER_SCAN:
-        if(this.state.PickFrontExceptionStatus == false){
-           this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-        this._component = (
-              <div className='grid-container'>
-                 <div className='main-container'>
-                    <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
-                    <Rack rackData = {this.state.PickFrontRackDetails}/>
-                 </div>
-              </div>
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
+       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+        this._component = (<LoaderButler />);
       break;
-
-      case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
-        }else{
-          var editButton ='';
-        }
-        this._component = (
-              <div className='grid-container'>
-                <Modal />             
-                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-                <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
-                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
-                </div>
-                <div className = 'actions'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
-                   {editButton}
-                </div>
-              </div>
-            );
-        }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-
-      case appConstants.PICK_FRONT_PPTL_PRESS:
-         if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
-        }else{
-          var editButton ='';
-        }
-        this._component = (
-              <div className='grid-container'>
-                <Modal />
-                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-                <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
-                    {editButton}
-                </div>
-              </div>
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-      
-      case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
-          if(this.state.PickFrontExceptionScreen == "good"){
-          this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PickFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{"Good Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontGoodQuantity} action={"GOOD"} />
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-          }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
-            this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PickFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{"Missing Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
-                    </div>
-                    <div className = "kq-exception">
-                      <div className="kq-header">{"Damaged Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                     <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} /> 
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-          }else if(this.state.PickFrontExceptionScreen == "pick_front_quantity"){
-              this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PickFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{"Please Put Back Damaged Item Quantity into Exception Area . "}</div>
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode"> 
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> 
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-           }
-        break;      
-        case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
-          this._navigation = '';
-          if(this.state.PickFrontExceptionScreen == "box_serial"){
-          this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PickFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                     <div className = "kq-exception">
-                      <div className="kq-header">{"Missing Boxes"}</div>
-                      <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-          }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
-              this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PickFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{"Are You sure Given Boxes are not present in Slot ? "}</div>
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode"> 
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-           }
-          break;
 
       default:
         return true;
@@ -337,12 +109,12 @@ var PickFront = React.createClass({
     this.getScreenComponent(this.state.PickFrontScreenId);
 	
 	return (
-		<div className="main">
-			<Header />
-			{this._navigation}
-			{this._component}
+    <div className="">
+      <Header/>
+      {this._navigation}
       {this._notification}
-	  </div>   
+      {this._component}
+    </div>   
 	  )
   }
 });

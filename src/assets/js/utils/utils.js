@@ -15,6 +15,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
+                console.log(data);
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
@@ -80,7 +81,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             utils.storeSession(webSocketData);
             utils.postDataToWebsockets(webSocketData);
         }).fail(function(data,jqXHR, textStatus, errorThrown) {
-            CommonActions.showErrorMessage(data.responseJSON.error);
         });
        
     },

@@ -69,29 +69,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getNavData: function() {
         switch (_currentSeat) {
-            case appConstants.PUT_BACK:
-                if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
-                    _NavData = navConfig.putBack[0];
-                else
-                    _NavData = navConfig.putBack[1];
+            case appConstants.PICK_FRONT:
+                    _NavData = _seatData.header_msge_list[0]
                 break;
             case appConstants.PUT_FRONT:
-                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
-                    _NavData = navConfig.putFront[0];
-                else
-                    _NavData = navConfig.putFront[1];
-                break;
-            case appConstants.PICK_BACK:
-                _NavData = navConfig.pickBack;
-                break;
-            case appConstants.PICK_FRONT:
-                _NavData = _seatData.header_msge_list[0];
-                break;
-            case appConstants.AUDIT:
-                if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
-                    _NavData = navConfig.audit[0];
-                else
-                    _NavData = navConfig.audit[1];
+                    _NavData = _seatData.header_msge_list[0];
                 break;
             default:
                 //return true; 
@@ -100,111 +82,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _NavData;
     },
 
-    getModalStatus: function() {
-        var data = {};
-        data["showModal"] = "";
-        data["message"] = "";
-        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
-            return {
-                "showModal": true,
-                "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
-            }
-        } else
-            return data;
-    },
-
-    getBoxSerialData: function() {
-        var data = {};
-        data["header"] = [];
-        data["tableRows"] = [];
-        var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
-        _finishAuditFlag = true;
-        var d = [];
-        _seatData.Box_qty_list.map(function(value, index) {
-            d = [];
-            if (value.Scan_status != "close") {
-                d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
-                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
-                data["tableRows"].push(d);
-            } else {
-                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
-                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
-                data["tableRows"].push(d);
-            }
-
-            if (value.Scan_status == "open") {
-                _finishAuditFlag = false;
-            }
-        });
-
-        _seatData.Extra_box_list.map(function(value, index) {
-            d = [];
-            d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
-            data["tableRows"].push(d);
-            if (value.Scan_status == "open") {
-                _finishAuditFlag = false;
-            }
-        });
-
-        return data;
-
-    },
-
-
-    getBoxDetails: function() {
-        if (_seatData.hasOwnProperty('box_serials'))
-            return _seatData.box_serials;
-    },
-
-    getChecklistDetails: function() {
-        if (_seatData.hasOwnProperty('checklist_details')) {
-            console.log(_seatData.checklist_details.pick_checklist.length + "jindal");
-            if (_seatData.checklist_details.pick_checklist.length > 0) {
-                return _seatData.checklist_details.pick_checklist;
-            } else {
-                return [];
-            }
-
-        } else {
-            return [];
-        }
-    },
-
-    getChecklistIndex: function() {
-        if (_seatData.hasOwnProperty('checklist_details')) {
-            if (_seatData.checklist_details.checklist_index != null) {
-                return _seatData.checklist_details.checklist_index;
-            } else {
-                return null;
-            }
-
-        } else {
-            return null;
-        }
-    },
-
-    getChecklistOverlayStatus: function() {
-        if (_seatData.hasOwnProperty('checklist_details')) {
-            return _seatData.checklist_details.display_checklist_overlay;
-        } else {
-            return null;
-        }
-    },
 
     getServerNavData: function() {
         if (_seatData.header_msge_list.length > 0) {
@@ -217,27 +94,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getNotificationData: function() {
         return _seatData.notification_list[0];
-    },
-
-    getBinData: function() {
-        var binData = {};
-        binData["structure"] = _seatData.structure;
-        binData["ppsbin_list"] = _seatData.ppsbin_list;
-        return binData;
-    },
-
-    getSelectedBin: function() {
-        if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var data = null;
-            _seatData.ppsbin_list.map(function(value, index) {
-                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
-                    data = value.ppsbin_id;
-                }
-            });
-
-            return data;
-        }else
-            return null;
     },
 
     getCurrentState: function() {
@@ -254,41 +110,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
     },
 
-    getExceptionData: function() {
-        var data = {};
-        data["activeException"] = this.getActiveException();
-        data["list"] = [];
-        data["header"] = "Exceptions";
-        _seatData.exception_allowed.map(function(value, index) {
-            if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) || value.exception_name == data["activeException"])
-                data["list"].push({
-                    "text": value.exception_name,
-                    "selected": true,
-                    "event": value["event"] != undefined ? value["event"] : ""
-                });
-            else
-                data["list"].push({
-                    "text": value.exception_name,
-                    "selected": false,
-                    "event": value["event"] != undefined ? value["event"] : ""
-                });
-        })
-        return data;
-    },
-    getExceptionAllowed: function() {
-        return _seatData.exception_allowed;
-    },
-
-    scanDetails: function() {
-        _scanDetails = _seatData.scan_details;
-        return _scanDetails;
-    },
-
-    productDetails: function() {
-        _prodDetails = _seatData.product_info;
-        return _prodDetails;
-    },
-
     getItemUid: function() {
         return _seatData.item_uid;
     },
@@ -296,277 +117,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getRackDetails: function() {
         if (_seatData.hasOwnProperty('rack_details')) {
             return _seatData.rack_details;
-        }
-    },
-
-    getCurrentSelectedBin: function() {
-        var binData = {};
-        binData["structure"] = [1, 1];
-        binData["ppsbin_list"] = [];
-        _seatData.ppsbin_list.map(function(value, index) {
-            if (value.selected_state == true)
-                binData["ppsbin_list"].push(value);
-        })
-        return binData;
-    },
-
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
-        this.text = text;
-        this.status = status;
-        this.selected = selected;
-        this.size = size;
-        this.border = border;
-        this.grow = grow;
-        this.bold = bold;
-        this.disabled = disabled;
-        this.centerAlign = centerAlign;
-        this.type = type;
-        this.buttonType = buttonType;
-        this.buttonStatus = buttonStatus;
-    },
-
-    getReconcileData: function() {
-        if (_seatData.hasOwnProperty('reconciliation')) {
-            var data = {};
-            data["header"] = [];
-            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-            data["tableRows"] = [];
-            var self = this;
-            data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
-            _seatData.reconciliation.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
-
-            });
-            return data;
-        }
-    },
-
-    getCurrentBoxSerialData: function() {
-        return _seatData.Current_box_details;
-    },
-
-    getCancelScanStatus: function() {
-        return _seatData.Cancel_scan;
-    },
-
-    getReconcileBoxSerialData: function() {
-        var data = {};
-        data["header"] = [];
-        data["tableRows"] = [];
-        var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-        var noScanMissing = 0;
-        _seatData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "no_scan"){
-                var totalMissing = '';
-                    if(_seatData.item_in_box_barcode_damage.length > 0){
-                    _seatData.item_in_box_barcode_damage.map(function(data, index){
-                        if(data.Box_serial == value.Box_serial){
-                            totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
-                        }
-                    });
-                }
-                var missingBoxSerials = Math.max(parseInt(value.Expected_qty) - parseInt(value.Actual_qty),0);
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(missingBoxSerials + totalMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
-                ]);
-            }
-            else{
-                noScanMissing  = noScanMissing + 1;
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
-                ]);
-            }
-
-        });
-        var barcodeDamaged = " ("+_seatData.box_barcode_damage+' Barcode Damaged )';
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(noScanMissing + barcodeDamaged, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
-        ]);
-        _seatData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
-            ]);
-        });
-
-        return data;
-    },
-
-    getLooseItemsData: function() {
-        var data = {};
-        var disabledStatus;
-        //if (_seatData.Current_box_details.length > 0) {
-        disabledStatus = false;
-        //}
-        data["header"] = [];
-        data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
-        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["tableRows"] = [];
-        var self = this;
-        var d = [];
-        _seatData.Loose_sku_list.map(function(value, index) {
-            d = [];
-            d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            data["tableRows"].push(d);
-
-            /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
-                     if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                         new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true);
-                 })(),
-                 new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
-             ]);*/
-        });
-        return data;
-    },
-
-    getFinishAuditFlag: function() {
-        return _finishAuditFlag;
-    },
-
-    getReconcileLooseItemsData: function() {
-        var data = {};
-        data["header"] = [];
-        data["tableRows"] = [];
-        data["header"].push(new this.tableCol("Loose Items SKU", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-        var self = this;
-        var totalLooseItemsMissing = 0;
-        var extraLooseItemsMissing = 0;
-        _seatData.Loose_sku_list.map(function(value, index) {
-            if(value.Expected_qty >= value.Actual_qty){
-                totalLooseItemsMissing = totalLooseItemsMissing +  parseInt(value.Expected_qty - value.Actual_qty);
-            }
-            if(value.Expected_qty <= value.Actual_qty){
-              extraLooseItemsMissing = extraLooseItemsMissing + Math.abs(parseInt(value.Expected_qty - value.Actual_qty)); 
-            }
-            if (value.Scan_status != "no_scan")
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
-            else
-                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
-
-        });
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(totalLooseItemsMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(extraLooseItemsMissing, "enabled", false, "large", true, false, false, false, true)
-        ]);
-        return data;
-    },
-
-
-
-    getToteId: function() {
-        if (_seatData.hasOwnProperty('tote_id')) {
-            return _seatData.tote_id;
-        } else {
-            return null;
-        }
-    },
-
-
-    getItemDetailsData: function() {
-        var data = {};
-        data["header"] = [];
-        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
-        data["tableRows"] = [];
-        var self = this;
-        if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
-            for (var key in _seatData.product_info) {
-                if (_seatData.product_info.hasOwnProperty(key)) {
-                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_seatData.product_info[key], "enabled", false, "small", false, true, false, false)]);
-                }
-            }
-        } else {
-            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-        }
-
-        return data;
-    },
-
-
-    getScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": this.getkQQuanity(),
-                    "total_qty": "0",
-                    "kq_allowed": this.kQstatus()
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
-        }
-    },
-    kQstatus: function(){
-        if(_seatData.hasOwnProperty('enable_kq')){
-            return _seatData.enable_kq;
-        }else{
-            return true;
-        }
-    },
-    getGoodScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": _goodQuantity,
-                    "total_qty": "0",
-                    "kq_allowed": true
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
-        }
-    },
-
-    getMissingScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": _missingQuantity,
-                    "total_qty": "0",
-                    "kq_allowed": true
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
-        }
-    },
-
-    getDamagedScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": _damagedQuantity,
-                    "total_qty": "0",
-                    "kq_allowed": true
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
         }
     },
 
@@ -599,49 +149,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _flag = true;
         
     },
-    getModalContent: function() {
-        return modalContent.data;
-    },
-    getSystemIdleState: function() {
-        if (_seatData != undefined) {
-            return _seatData.is_idle;
-        } else {
-            return null;
-        }
-    },
 
     getItemUid: function() {
         return _itemUid;
     },
-    getExceptionType: function() {
-        return _exceptionType;
-    },
-    getModalType: function() {
-        return modalContent.type;
-    },
-    setModalContent: function(data) {
-        modalContent = data;
-    },
 
-    getPPTLEvent: function() {
-        switch (_currentSeat) {
-            case appConstants.PUT_BACK:
-                _pptlEvent = 'secondary_button_press';
-                break;
-            case appConstants.PUT_FRONT:
-                _pptlEvent = 'primary_button_press';
-                break;
-            case appConstants.PICK_BACK:
-                _pptlEvent = 'secondary_button_press';
-                break;
-            case appConstants.PICK_FRONT:
-                _pptlEvent = 'primary_button_press';
-                break;
-            default:
-                //return true; 
-        }
-        return _pptlEvent;
-    },
     getCurrentSeat: function() {
         return _currentSeat;
     },
@@ -650,12 +162,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getServerMessages: function() {
         return _messageJson;
-    },
-    changeLanguage: function(data) {
-        switch (data) {
-            case "chinese":
-                _.setTranslation(chinese);
-        }
     },
     postDataToInterface: function(data) {
         utils.postDataToInterface(data, _seatName);
@@ -666,165 +172,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenId: function() {
         return _screenId;
     },
-    enableException: function(data) {
-        _KQQty = 0;
-        _activeException = "";
-        _enableException = data;
-    },
-    getExceptionStatus: function() {
-        return _enableException;
-    },
 
-    setActiveException: function(data) {
-        _activeException = data;
-    },
-    getActiveException: function() {
-        return _activeException;
-    },
-    setKQQuanity: function(data) {
-        _KQQty = data;
-    },
-    setGoodQuanity: function(data) {
-        _goodQuantity = data;
-    },
-    setMissingQuanity: function(data) {
-        _missingQuantity = data;
-    },
-    setDamagedQuanity: function(data) {
-        _damagedQuantity = data;
-    },
-    getkQQuanity: function() {
-        if(_seatData.hasOwnProperty('Current_box_details')){
-            if(_seatData.Current_box_details.length > 0){
-                _KQQty = _seatData.Current_box_details[0].Actual_qty;
-            }
-            return _KQQty;
-        }else{
-            return _KQQty;
-        }
-    },
-
-    getToteDetails: function() {
-        if (_seatData.hasOwnProperty('tote_details')) {
-            return _seatData.tote_details
-        } else {
-            return null;
-        }
-    },
-
-    setPutFrontExceptionScreen: function(data) {
-        _putFrontExceptionScreen = data;
-    },
-
-    setPickFrontExceptionScreen: function(data) {
-        if (data == "pick_front_quantity") {
-            if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
-                if (_seatData.notification_list.length == 0) {
-                    var data = {};
-                    data["code"] = "1234";
-                    data["level"] = "error";
-                    data["description"] = "Pick Quantity should be equal to damaged ,missing and good";
-                    data["details"] = [];
-                    _seatData.notification_list.push(data);
-                    _pickFrontExceptionScreen = "good";
-                } else {
-                    _seatData.notification_list[0].description = "Pick Quantity should be equal to damaged ,missing and good";
-                    _seatData.notification_list[0].level = "error";
-                }
-            } else {
-                _pickFrontExceptionScreen = data;
-            }
-        } else {
-            _pickFrontExceptionScreen = data;
-        }
-    },
-
-    getPutFrontExceptionScreen: function() {
-        return _putFrontExceptionScreen;
-    },
-
-    getPickFrontExceptionScreen: function() {
-        return _pickFrontExceptionScreen;
-    },
-
-    getCurrentSlot: function() {
-        if (_seatData.hasOwnProperty('rack_details')) {
-            return _seatData.rack_details.slot_barcodes;
-        } else {
-            return null;
-        }
-    },
-
-    validateAndSendDataToServer: function() {
-        var flag = false;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
-        else
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
-        if (flag) {
-            if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = "1234";
-                data["level"] = "error";
-                data["description"] = "Quantity should be equal to damaged ,missing and good";
-                data["details"] = [];
-                _seatData.notification_list.push(data);
-                _putFrontExceptionScreen = "good";
-            } else {
-                _seatData.notification_list[0].description = "Quantity should be equal to damaged ,missing and good";
-                _seatData.notification_list[0].level = "error";
-            }
-        } else {
-            var data = {};
-            if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-                data["event_name"] = "put_front_exception";
-            else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-                data["event_name"] = "pick_front_exception";
-            data["event_data"] = {};
-            data["event_data"]["action"] = "confirm_quantity_update";
-            data["event_data"]["event"] = _seatData.exception_type;
-            data["event_data"]["quantity"] = {};
-            data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
-            data["event_data"]["quantity"]["missing"] = _missingQuantity;
-            this.showSpinner();
-            utils.postDataToInterface(data, _seatData.seat_name);
-        }
-    },
-
-
-
-    validateAndSendSpaceUnavailableDataToServer: function() {
-        if ((_KQQty) > _seatData.put_quantity) {
-            if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = "1234";
-                data["level"] = "error";
-                data["description"] = "Revised Quantity should be less than or equal to put quantity";
-                data["details"] = [];
-                _seatData.notification_list.push(data);
-            } else {
-                _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
-                _seatData.notification_list[0].level = "error";
-            }
-        } else {
-            var data = {};
-            data["event_name"] = "put_front_exception";
-            data["event_data"] = {};
-            data["event_data"]["action"] = "confirm_quantity_update";
-            data["event_data"]["event"] = _seatData.exception_type;
-            data["event_data"]["quantity"] = _KQQty;
-            this.showSpinner();
-            utils.postDataToInterface(data, _seatData.seat_name);
-        }
-    },
-    getToteException: function() {
-        if (_seatData.hasOwnProperty('exception_msg')) {
-            return _seatData.exception_msg[0];
-        } else {
-            return null;
-        }
-    },
     getListItems : function(){
         console.log(_seatData);
         if(_seatData.hasOwnProperty('list_items')){
@@ -833,6 +181,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+
     getScreenData: function() {
         var data = {};
         switch (_screenId) {
@@ -1151,71 +500,14 @@ AppDispatcher.register(function(payload) {
             mainstore.setCurrentSeat(action.data);
             mainstore.emit(CHANGE_EVENT);
             break;
-        case appConstants.POPUP_VISIBLE:
-            setPopUpVisible(action.status);
-            break;
         case appConstants.POST_DATA_TO_INTERFACE:
             mainstore.showSpinner();
             mainstore.postDataToInterface(action.data);
             mainstore.emit(CHANGE_EVENT);
             break;
-        case appConstants.RESET_NUMPAD:
-            mainstore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.LOAD_MODAL:
-            mainstore.setModalContent(action.data);
-            mainstore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.CHANGE_LANGUAGE:
-            mainstore.changeLanguage(action.data);
-            mainstore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.SET_LANGUAGE:
-            mainstore.emit(CHANGE_EVENT);
-            break;
         case appConstants.LOG_ERROR:
             mainstore.logError(action.data);
             break;
-        case appConstants.ENABLE_EXCEPTION:
-            mainstore.enableException(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.SET_ACTIVE_EXCEPTION:
-            mainstore.setActiveException(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_KQ_QUANTITY:
-            mainstore.setKQQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_GOOD_QUANTITY:
-            mainstore.setGoodQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_DAMAGED_QUANTITY:
-            mainstore.setDamagedQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_MISSING_QUANTITY:
-            mainstore.setMissingQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
-            mainstore.setPutFrontExceptionScreen(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:
-            mainstore.setPickFrontExceptionScreen(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-            mainstore.validateAndSendDataToServer();
-            mainstore.emitChange();
-            break;
-        case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
-            mainstore.validateAndSendSpaceUnavailableDataToServer();
-            mainstore.emitChange();
-
         default:
             return true;
     }

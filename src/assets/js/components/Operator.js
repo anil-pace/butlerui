@@ -11,7 +11,6 @@ function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
       spinner : mainstore.getSpinnerState(),
-      systemIsIdle : mainstore.getSystemIdleState(),
       navMessages : mainstore.getServerMessages(),
       flag : mainstore.getFlag()
   }
@@ -29,7 +28,7 @@ var Operator = React.createClass({
         'data': {
               'username': 'kerry',
               'password': 'gorapj',
-              'seat_name': 'front_20'
+              'seat_name': 'front_10'
           }
     }
     CommonActions.webSocketConnection();
@@ -47,20 +46,11 @@ var Operator = React.createClass({
   },
   getSeatType:function(seat){
      switch(seat){
-      case appConstants.PUT_BACK:
-          this._currentSeat = <PutBack navMessagesJson={this.state.navMessages}/>;
-        break;
-      case appConstants.PUT_FRONT:
-          this._currentSeat = <PutFront navMessagesJson={this.state.navMessages}/>;
-        break;
-      case appConstants.PICK_BACK:
-          this._currentSeat = <PickBack navMessagesJson={this.state.navMessages}/>;
-        break;
       case appConstants.PICK_FRONT:
           this._currentSeat = <PickFront navMessagesJson={this.state.navMessages}/>;
-        break;
-      case appConstants.AUDIT:
-          this._currentSeat = <Audit navMessagesJson={this.state.navMessages}/>;
+        break; 
+      case appConstants.PUT_FRONT:
+          this._currentSeat = <PutFront navMessagesJson={this.state.navMessages}/>;
         break;
       default:
         return true; 

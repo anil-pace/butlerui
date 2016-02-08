@@ -3,7 +3,7 @@
 
 
 .drawRack{
-	//margin:2% 0 0 5%;
+    //margin:2% 0 0 5%;
     //width: 22vw; //452px
     //width: -moz-min-content;
     //width: -webkit-min-content;
@@ -14,43 +14,45 @@
     //height: 85%;
     display: flex;
     flex-flow:column;
-    border-top: 0.625vw solid #939598;
+    border-top: 6px solid #939598;
     margin-bottom: 20px;
-    max-width: 25vw;
-    width: 100%;
+    //max-width: 22vw; //25vw;
+    //width: 100%;
+    width: 290px;
     .rackRow{
          
-    	//border: 0.15vw solid #939598;
-    	//height: 7.2vh;
-    	display: flex;
+        //border: 0.15vw solid #939598;
+        //height: 7.2vh;
+        display: flex;
         flex-basis:0;
-    	//flex: 0 1 auto;
+        //flex: 0 1 auto;
         //flex-grow:1;
-    	flex-direction: row;
+        flex-direction: row;
        /* &:first-child {
                 border-top: 0.625vw solid #939598;
             }*/
-        border-left: 0.625vw solid #939598;
-        border-right: 0.625vw solid #939598;
-        border-bottom: 0.312vw solid #939598;
+        border-left: 6px solid #939598;
+        border-right: 6px solid #939598;
+        border-bottom: 4px solid #939598;
         border-top: none;
          
-    	.rackSlot{
+        .rackSlot{
             &:first-child {
                 border-left: none;
             }
             &:last-child {
                 border-right: none;
             }
-    		border: 0.16vw solid #939598;
+            border: 2px solid #939598;
             border-bottom:none;
             border-top: none; 
-    		//width: 3.66vw;
-    		height: auto;//6.9vh
-    		display: flex;
-    		background: #ebebeb;
+            //width: 3.66vw;
+            height: auto;//6.9vh
+            display: flex;
+            background: #ebebeb;
             .singleslot{
-                font-size: 4rem;
+                //font-size: 4rem;
+                font-size: 2.5rem;
                 font-weight: bold;
                  //width: 4.2vw;
                  height: inherit - 0.5vh;
@@ -70,7 +72,7 @@
              
 
            
-    	}
+        }
         &:last-child {
                border-bottom: 0.16vw solid #939598;
             }
@@ -79,8 +81,8 @@
     }
     .lastRow{
         //height: 15%;
-        flex:0 1 10vh;
-        border: 0.625vw solid #939598;
+        flex:0 1 8vh;
+        border: 6px solid #939598;
         border-top: none;
         border-bottom: none;
     }

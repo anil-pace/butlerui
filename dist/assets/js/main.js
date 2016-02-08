@@ -1949,511 +1949,6 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 }).call(this,require('_process'))
 },{"_process":2}],33:[function(require,module,exports){
-var jQuery = require('jquery');
-
-/*!
- * jQuery UI Position 1.10.4
- * http://jqueryui.com
- *
- * Copyright 2014 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://api.jqueryui.com/position/
- */
-(function( $, undefined ) {
-
-$.ui = $.ui || {};
-
-var cachedScrollbarWidth,
-	max = Math.max,
-	abs = Math.abs,
-	round = Math.round,
-	rhorizontal = /left|center|right/,
-	rvertical = /top|center|bottom/,
-	roffset = /[\+\-]\d+(\.[\d]+)?%?/,
-	rposition = /^\w+/,
-	rpercent = /%$/,
-	_position = $.fn.position;
-
-function getOffsets( offsets, width, height ) {
-	return [
-		parseFloat( offsets[ 0 ] ) * ( rpercent.test( offsets[ 0 ] ) ? width / 100 : 1 ),
-		parseFloat( offsets[ 1 ] ) * ( rpercent.test( offsets[ 1 ] ) ? height / 100 : 1 )
-	];
-}
-
-function parseCss( element, property ) {
-	return parseInt( $.css( element, property ), 10 ) || 0;
-}
-
-function getDimensions( elem ) {
-	var raw = elem[0];
-	if ( raw.nodeType === 9 ) {
-		return {
-			width: elem.width(),
-			height: elem.height(),
-			offset: { top: 0, left: 0 }
-		};
-	}
-	if ( $.isWindow( raw ) ) {
-		return {
-			width: elem.width(),
-			height: elem.height(),
-			offset: { top: elem.scrollTop(), left: elem.scrollLeft() }
-		};
-	}
-	if ( raw.preventDefault ) {
-		return {
-			width: 0,
-			height: 0,
-			offset: { top: raw.pageY, left: raw.pageX }
-		};
-	}
-	return {
-		width: elem.outerWidth(),
-		height: elem.outerHeight(),
-		offset: elem.offset()
-	};
-}
-
-$.position = {
-	scrollbarWidth: function() {
-		if ( cachedScrollbarWidth !== undefined ) {
-			return cachedScrollbarWidth;
-		}
-		var w1, w2,
-			div = $( "<div style='display:block;position:absolute;width:50px;height:50px;overflow:hidden;'><div style='height:100px;width:auto;'></div></div>" ),
-			innerDiv = div.children()[0];
-
-		$( "body" ).append( div );
-		w1 = innerDiv.offsetWidth;
-		div.css( "overflow", "scroll" );
-
-		w2 = innerDiv.offsetWidth;
-
-		if ( w1 === w2 ) {
-			w2 = div[0].clientWidth;
-		}
-
-		div.remove();
-
-		return (cachedScrollbarWidth = w1 - w2);
-	},
-	getScrollInfo: function( within ) {
-		var overflowX = within.isWindow || within.isDocument ? "" :
-				within.element.css( "overflow-x" ),
-			overflowY = within.isWindow || within.isDocument ? "" :
-				within.element.css( "overflow-y" ),
-			hasOverflowX = overflowX === "scroll" ||
-				( overflowX === "auto" && within.width < within.element[0].scrollWidth ),
-			hasOverflowY = overflowY === "scroll" ||
-				( overflowY === "auto" && within.height < within.element[0].scrollHeight );
-		return {
-			width: hasOverflowY ? $.position.scrollbarWidth() : 0,
-			height: hasOverflowX ? $.position.scrollbarWidth() : 0
-		};
-	},
-	getWithinInfo: function( element ) {
-		var withinElement = $( element || window ),
-			isWindow = $.isWindow( withinElement[0] ),
-			isDocument = !!withinElement[ 0 ] && withinElement[ 0 ].nodeType === 9;
-		return {
-			element: withinElement,
-			isWindow: isWindow,
-			isDocument: isDocument,
-			offset: withinElement.offset() || { left: 0, top: 0 },
-			scrollLeft: withinElement.scrollLeft(),
-			scrollTop: withinElement.scrollTop(),
-			width: isWindow ? withinElement.width() : withinElement.outerWidth(),
-			height: isWindow ? withinElement.height() : withinElement.outerHeight()
-		};
-	}
-};
-
-$.fn.position = function( options ) {
-	if ( !options || !options.of ) {
-		return _position.apply( this, arguments );
-	}
-
-	// make a copy, we don't want to modify arguments
-	options = $.extend( {}, options );
-
-	var atOffset, targetWidth, targetHeight, targetOffset, basePosition, dimensions,
-		target = $( options.of ),
-		within = $.position.getWithinInfo( options.within ),
-		scrollInfo = $.position.getScrollInfo( within ),
-		collision = ( options.collision || "flip" ).split( " " ),
-		offsets = {};
-
-	dimensions = getDimensions( target );
-	if ( target[0].preventDefault ) {
-		// force left top to allow flipping
-		options.at = "left top";
-	}
-	targetWidth = dimensions.width;
-	targetHeight = dimensions.height;
-	targetOffset = dimensions.offset;
-	// clone to reuse original targetOffset later
-	basePosition = $.extend( {}, targetOffset );
-
-	// force my and at to have valid horizontal and vertical positions
-	// if a value is missing or invalid, it will be converted to center
-	$.each( [ "my", "at" ], function() {
-		var pos = ( options[ this ] || "" ).split( " " ),
-			horizontalOffset,
-			verticalOffset;
-
-		if ( pos.length === 1) {
-			pos = rhorizontal.test( pos[ 0 ] ) ?
-				pos.concat( [ "center" ] ) :
-				rvertical.test( pos[ 0 ] ) ?
-					[ "center" ].concat( pos ) :
-					[ "center", "center" ];
-		}
-		pos[ 0 ] = rhorizontal.test( pos[ 0 ] ) ? pos[ 0 ] : "center";
-		pos[ 1 ] = rvertical.test( pos[ 1 ] ) ? pos[ 1 ] : "center";
-
-		// calculate offsets
-		horizontalOffset = roffset.exec( pos[ 0 ] );
-		verticalOffset = roffset.exec( pos[ 1 ] );
-		offsets[ this ] = [
-			horizontalOffset ? horizontalOffset[ 0 ] : 0,
-			verticalOffset ? verticalOffset[ 0 ] : 0
-		];
-
-		// reduce to just the positions without the offsets
-		options[ this ] = [
-			rposition.exec( pos[ 0 ] )[ 0 ],
-			rposition.exec( pos[ 1 ] )[ 0 ]
-		];
-	});
-
-	// normalize collision option
-	if ( collision.length === 1 ) {
-		collision[ 1 ] = collision[ 0 ];
-	}
-
-	if ( options.at[ 0 ] === "right" ) {
-		basePosition.left += targetWidth;
-	} else if ( options.at[ 0 ] === "center" ) {
-		basePosition.left += targetWidth / 2;
-	}
-
-	if ( options.at[ 1 ] === "bottom" ) {
-		basePosition.top += targetHeight;
-	} else if ( options.at[ 1 ] === "center" ) {
-		basePosition.top += targetHeight / 2;
-	}
-
-	atOffset = getOffsets( offsets.at, targetWidth, targetHeight );
-	basePosition.left += atOffset[ 0 ];
-	basePosition.top += atOffset[ 1 ];
-
-	return this.each(function() {
-		var collisionPosition, using,
-			elem = $( this ),
-			elemWidth = elem.outerWidth(),
-			elemHeight = elem.outerHeight(),
-			marginLeft = parseCss( this, "marginLeft" ),
-			marginTop = parseCss( this, "marginTop" ),
-			collisionWidth = elemWidth + marginLeft + parseCss( this, "marginRight" ) + scrollInfo.width,
-			collisionHeight = elemHeight + marginTop + parseCss( this, "marginBottom" ) + scrollInfo.height,
-			position = $.extend( {}, basePosition ),
-			myOffset = getOffsets( offsets.my, elem.outerWidth(), elem.outerHeight() );
-
-		if ( options.my[ 0 ] === "right" ) {
-			position.left -= elemWidth;
-		} else if ( options.my[ 0 ] === "center" ) {
-			position.left -= elemWidth / 2;
-		}
-
-		if ( options.my[ 1 ] === "bottom" ) {
-			position.top -= elemHeight;
-		} else if ( options.my[ 1 ] === "center" ) {
-			position.top -= elemHeight / 2;
-		}
-
-		position.left += myOffset[ 0 ];
-		position.top += myOffset[ 1 ];
-
-		// if the browser doesn't support fractions, then round for consistent results
-		if ( !$.support.offsetFractions ) {
-			position.left = round( position.left );
-			position.top = round( position.top );
-		}
-
-		collisionPosition = {
-			marginLeft: marginLeft,
-			marginTop: marginTop
-		};
-
-		$.each( [ "left", "top" ], function( i, dir ) {
-			if ( $.ui.position[ collision[ i ] ] ) {
-				$.ui.position[ collision[ i ] ][ dir ]( position, {
-					targetWidth: targetWidth,
-					targetHeight: targetHeight,
-					elemWidth: elemWidth,
-					elemHeight: elemHeight,
-					collisionPosition: collisionPosition,
-					collisionWidth: collisionWidth,
-					collisionHeight: collisionHeight,
-					offset: [ atOffset[ 0 ] + myOffset[ 0 ], atOffset [ 1 ] + myOffset[ 1 ] ],
-					my: options.my,
-					at: options.at,
-					within: within,
-					elem : elem
-				});
-			}
-		});
-
-		if ( options.using ) {
-			// adds feedback as second argument to using callback, if present
-			using = function( props ) {
-				var left = targetOffset.left - position.left,
-					right = left + targetWidth - elemWidth,
-					top = targetOffset.top - position.top,
-					bottom = top + targetHeight - elemHeight,
-					feedback = {
-						target: {
-							element: target,
-							left: targetOffset.left,
-							top: targetOffset.top,
-							width: targetWidth,
-							height: targetHeight
-						},
-						element: {
-							element: elem,
-							left: position.left,
-							top: position.top,
-							width: elemWidth,
-							height: elemHeight
-						},
-						horizontal: right < 0 ? "left" : left > 0 ? "right" : "center",
-						vertical: bottom < 0 ? "top" : top > 0 ? "bottom" : "middle"
-					};
-				if ( targetWidth < elemWidth && abs( left + right ) < targetWidth ) {
-					feedback.horizontal = "center";
-				}
-				if ( targetHeight < elemHeight && abs( top + bottom ) < targetHeight ) {
-					feedback.vertical = "middle";
-				}
-				if ( max( abs( left ), abs( right ) ) > max( abs( top ), abs( bottom ) ) ) {
-					feedback.important = "horizontal";
-				} else {
-					feedback.important = "vertical";
-				}
-				options.using.call( this, props, feedback );
-			};
-		}
-
-		elem.offset( $.extend( position, { using: using } ) );
-	});
-};
-
-$.ui.position = {
-	fit: {
-		left: function( position, data ) {
-			var within = data.within,
-				withinOffset = within.isWindow ? within.scrollLeft : within.offset.left,
-				outerWidth = within.width,
-				collisionPosLeft = position.left - data.collisionPosition.marginLeft,
-				overLeft = withinOffset - collisionPosLeft,
-				overRight = collisionPosLeft + data.collisionWidth - outerWidth - withinOffset,
-				newOverRight;
-
-			// element is wider than within
-			if ( data.collisionWidth > outerWidth ) {
-				// element is initially over the left side of within
-				if ( overLeft > 0 && overRight <= 0 ) {
-					newOverRight = position.left + overLeft + data.collisionWidth - outerWidth - withinOffset;
-					position.left += overLeft - newOverRight;
-				// element is initially over right side of within
-				} else if ( overRight > 0 && overLeft <= 0 ) {
-					position.left = withinOffset;
-				// element is initially over both left and right sides of within
-				} else {
-					if ( overLeft > overRight ) {
-						position.left = withinOffset + outerWidth - data.collisionWidth;
-					} else {
-						position.left = withinOffset;
-					}
-				}
-			// too far left -> align with left edge
-			} else if ( overLeft > 0 ) {
-				position.left += overLeft;
-			// too far right -> align with right edge
-			} else if ( overRight > 0 ) {
-				position.left -= overRight;
-			// adjust based on position and margin
-			} else {
-				position.left = max( position.left - collisionPosLeft, position.left );
-			}
-		},
-		top: function( position, data ) {
-			var within = data.within,
-				withinOffset = within.isWindow ? within.scrollTop : within.offset.top,
-				outerHeight = data.within.height,
-				collisionPosTop = position.top - data.collisionPosition.marginTop,
-				overTop = withinOffset - collisionPosTop,
-				overBottom = collisionPosTop + data.collisionHeight - outerHeight - withinOffset,
-				newOverBottom;
-
-			// element is taller than within
-			if ( data.collisionHeight > outerHeight ) {
-				// element is initially over the top of within
-				if ( overTop > 0 && overBottom <= 0 ) {
-					newOverBottom = position.top + overTop + data.collisionHeight - outerHeight - withinOffset;
-					position.top += overTop - newOverBottom;
-				// element is initially over bottom of within
-				} else if ( overBottom > 0 && overTop <= 0 ) {
-					position.top = withinOffset;
-				// element is initially over both top and bottom of within
-				} else {
-					if ( overTop > overBottom ) {
-						position.top = withinOffset + outerHeight - data.collisionHeight;
-					} else {
-						position.top = withinOffset;
-					}
-				}
-			// too far up -> align with top
-			} else if ( overTop > 0 ) {
-				position.top += overTop;
-			// too far down -> align with bottom edge
-			} else if ( overBottom > 0 ) {
-				position.top -= overBottom;
-			// adjust based on position and margin
-			} else {
-				position.top = max( position.top - collisionPosTop, position.top );
-			}
-		}
-	},
-	flip: {
-		left: function( position, data ) {
-			var within = data.within,
-				withinOffset = within.offset.left + within.scrollLeft,
-				outerWidth = within.width,
-				offsetLeft = within.isWindow ? within.scrollLeft : within.offset.left,
-				collisionPosLeft = position.left - data.collisionPosition.marginLeft,
-				overLeft = collisionPosLeft - offsetLeft,
-				overRight = collisionPosLeft + data.collisionWidth - outerWidth - offsetLeft,
-				myOffset = data.my[ 0 ] === "left" ?
-					-data.elemWidth :
-					data.my[ 0 ] === "right" ?
-						data.elemWidth :
-						0,
-				atOffset = data.at[ 0 ] === "left" ?
-					data.targetWidth :
-					data.at[ 0 ] === "right" ?
-						-data.targetWidth :
-						0,
-				offset = -2 * data.offset[ 0 ],
-				newOverRight,
-				newOverLeft;
-
-			if ( overLeft < 0 ) {
-				newOverRight = position.left + myOffset + atOffset + offset + data.collisionWidth - outerWidth - withinOffset;
-				if ( newOverRight < 0 || newOverRight < abs( overLeft ) ) {
-					position.left += myOffset + atOffset + offset;
-				}
-			}
-			else if ( overRight > 0 ) {
-				newOverLeft = position.left - data.collisionPosition.marginLeft + myOffset + atOffset + offset - offsetLeft;
-				if ( newOverLeft > 0 || abs( newOverLeft ) < overRight ) {
-					position.left += myOffset + atOffset + offset;
-				}
-			}
-		},
-		top: function( position, data ) {
-			var within = data.within,
-				withinOffset = within.offset.top + within.scrollTop,
-				outerHeight = within.height,
-				offsetTop = within.isWindow ? within.scrollTop : within.offset.top,
-				collisionPosTop = position.top - data.collisionPosition.marginTop,
-				overTop = collisionPosTop - offsetTop,
-				overBottom = collisionPosTop + data.collisionHeight - outerHeight - offsetTop,
-				top = data.my[ 1 ] === "top",
-				myOffset = top ?
-					-data.elemHeight :
-					data.my[ 1 ] === "bottom" ?
-						data.elemHeight :
-						0,
-				atOffset = data.at[ 1 ] === "top" ?
-					data.targetHeight :
-					data.at[ 1 ] === "bottom" ?
-						-data.targetHeight :
-						0,
-				offset = -2 * data.offset[ 1 ],
-				newOverTop,
-				newOverBottom;
-			if ( overTop < 0 ) {
-				newOverBottom = position.top + myOffset + atOffset + offset + data.collisionHeight - outerHeight - withinOffset;
-				if ( ( position.top + myOffset + atOffset + offset) > overTop && ( newOverBottom < 0 || newOverBottom < abs( overTop ) ) ) {
-					position.top += myOffset + atOffset + offset;
-				}
-			}
-			else if ( overBottom > 0 ) {
-				newOverTop = position.top - data.collisionPosition.marginTop + myOffset + atOffset + offset - offsetTop;
-				if ( ( position.top + myOffset + atOffset + offset) > overBottom && ( newOverTop > 0 || abs( newOverTop ) < overBottom ) ) {
-					position.top += myOffset + atOffset + offset;
-				}
-			}
-		}
-	},
-	flipfit: {
-		left: function() {
-			$.ui.position.flip.left.apply( this, arguments );
-			$.ui.position.fit.left.apply( this, arguments );
-		},
-		top: function() {
-			$.ui.position.flip.top.apply( this, arguments );
-			$.ui.position.fit.top.apply( this, arguments );
-		}
-	}
-};
-
-// fraction support test
-(function () {
-	var testElement, testElementParent, testElementStyle, offsetLeft, i,
-		body = document.getElementsByTagName( "body" )[ 0 ],
-		div = document.createElement( "div" );
-
-	//Create a "fake body" for testing based on method used in jQuery.support
-	testElement = document.createElement( body ? "div" : "body" );
-	testElementStyle = {
-		visibility: "hidden",
-		width: 0,
-		height: 0,
-		border: 0,
-		margin: 0,
-		background: "none"
-	};
-	if ( body ) {
-		$.extend( testElementStyle, {
-			position: "absolute",
-			left: "-1000px",
-			top: "-1000px"
-		});
-	}
-	for ( i in testElementStyle ) {
-		testElement.style[ i ] = testElementStyle[ i ];
-	}
-	testElement.appendChild( div );
-	testElementParent = body || document.documentElement;
-	testElementParent.insertBefore( testElement, testElementParent.firstChild );
-
-	div.style.cssText = "position: absolute; left: 10.7432222px;";
-
-	offsetLeft = $( div ).offset().left;
-	$.support.offsetFractions = offsetLeft > 10 && offsetLeft < 11;
-
-	testElement.innerHTML = "";
-	testElementParent.removeChild( testElement );
-})();
-
-}( jQuery ) );
-
-},{"jquery":34}],34:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11665,12 +11160,12 @@ return jQuery;
 
 }));
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOM');
 
-},{"react/lib/ReactDOM":70}],36:[function(require,module,exports){
+},{"react/lib/ReactDOM":69}],35:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11707,7 +11202,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactMount":100,"./findDOMNode":143,"fbjs/lib/focusNode":12}],37:[function(require,module,exports){
+},{"./ReactMount":99,"./findDOMNode":142,"fbjs/lib/focusNode":12}],36:[function(require,module,exports){
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -12113,7 +11608,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventConstants":49,"./EventPropagators":53,"./FallbackCompositionState":54,"./SyntheticCompositionEvent":125,"./SyntheticInputEvent":129,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/keyOf":22}],38:[function(require,module,exports){
+},{"./EventConstants":48,"./EventPropagators":52,"./FallbackCompositionState":53,"./SyntheticCompositionEvent":124,"./SyntheticInputEvent":128,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/keyOf":22}],37:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12253,7 +11748,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12431,7 +11926,7 @@ ReactPerf.measureMethods(CSSPropertyOperations, 'CSSPropertyOperations', {
 
 module.exports = CSSPropertyOperations;
 }).call(this,require('_process'))
-},{"./CSSProperty":38,"./ReactPerf":106,"./dangerousStyleValue":140,"_process":2,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/camelizeStyleName":6,"fbjs/lib/hyphenateStyleName":17,"fbjs/lib/memoizeStringOnly":24,"fbjs/lib/warning":29}],40:[function(require,module,exports){
+},{"./CSSProperty":37,"./ReactPerf":105,"./dangerousStyleValue":139,"_process":2,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/camelizeStyleName":6,"fbjs/lib/hyphenateStyleName":17,"fbjs/lib/memoizeStringOnly":24,"fbjs/lib/warning":29}],39:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12527,7 +12022,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./PooledClass":58,"_process":2,"fbjs/lib/invariant":18}],41:[function(require,module,exports){
+},{"./Object.assign":56,"./PooledClass":57,"_process":2,"fbjs/lib/invariant":18}],40:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12849,7 +12344,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventConstants":49,"./EventPluginHub":50,"./EventPropagators":53,"./ReactUpdates":118,"./SyntheticEvent":127,"./getEventTarget":149,"./isEventSupported":154,"./isTextInputElement":155,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/keyOf":22}],42:[function(require,module,exports){
+},{"./EventConstants":48,"./EventPluginHub":49,"./EventPropagators":52,"./ReactUpdates":117,"./SyntheticEvent":126,"./getEventTarget":148,"./isEventSupported":153,"./isTextInputElement":154,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/keyOf":22}],41:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12873,7 +12368,7 @@ var ClientReactRootIndex = {
 };
 
 module.exports = ClientReactRootIndex;
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13005,7 +12500,7 @@ ReactPerf.measureMethods(DOMChildrenOperations, 'DOMChildrenOperations', {
 
 module.exports = DOMChildrenOperations;
 }).call(this,require('_process'))
-},{"./Danger":46,"./ReactMultiChildUpdateTypes":102,"./ReactPerf":106,"./setInnerHTML":159,"./setTextContent":160,"_process":2,"fbjs/lib/invariant":18}],44:[function(require,module,exports){
+},{"./Danger":45,"./ReactMultiChildUpdateTypes":101,"./ReactPerf":105,"./setInnerHTML":158,"./setTextContent":159,"_process":2,"fbjs/lib/invariant":18}],43:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13242,7 +12737,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/invariant":18}],45:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/invariant":18}],44:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13470,7 +12965,7 @@ ReactPerf.measureMethods(DOMPropertyOperations, 'DOMPropertyOperations', {
 
 module.exports = DOMPropertyOperations;
 }).call(this,require('_process'))
-},{"./DOMProperty":44,"./ReactPerf":106,"./quoteAttributeValueForBrowser":157,"_process":2,"fbjs/lib/warning":29}],46:[function(require,module,exports){
+},{"./DOMProperty":43,"./ReactPerf":105,"./quoteAttributeValueForBrowser":156,"_process":2,"fbjs/lib/warning":29}],45:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13618,7 +13113,7 @@ var Danger = {
 
 module.exports = Danger;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/createNodesFromMarkup":9,"fbjs/lib/emptyFunction":10,"fbjs/lib/getMarkupWrap":14,"fbjs/lib/invariant":18}],47:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/createNodesFromMarkup":9,"fbjs/lib/emptyFunction":10,"fbjs/lib/getMarkupWrap":14,"fbjs/lib/invariant":18}],46:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13646,7 +13141,7 @@ var keyOf = require('fbjs/lib/keyOf');
 var DefaultEventPluginOrder = [keyOf({ ResponderEventPlugin: null }), keyOf({ SimpleEventPlugin: null }), keyOf({ TapEventPlugin: null }), keyOf({ EnterLeaveEventPlugin: null }), keyOf({ ChangeEventPlugin: null }), keyOf({ SelectEventPlugin: null }), keyOf({ BeforeInputEventPlugin: null })];
 
 module.exports = DefaultEventPluginOrder;
-},{"fbjs/lib/keyOf":22}],48:[function(require,module,exports){
+},{"fbjs/lib/keyOf":22}],47:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13771,7 +13266,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventConstants":49,"./EventPropagators":53,"./ReactMount":100,"./SyntheticMouseEvent":131,"fbjs/lib/keyOf":22}],49:[function(require,module,exports){
+},{"./EventConstants":48,"./EventPropagators":52,"./ReactMount":99,"./SyntheticMouseEvent":130,"fbjs/lib/keyOf":22}],48:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13864,7 +13359,7 @@ var EventConstants = {
 };
 
 module.exports = EventConstants;
-},{"fbjs/lib/keyMirror":21}],50:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":21}],49:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14146,7 +13641,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":51,"./EventPluginUtils":52,"./ReactErrorUtils":91,"./accumulateInto":137,"./forEachAccumulated":145,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],51:[function(require,module,exports){
+},{"./EventPluginRegistry":50,"./EventPluginUtils":51,"./ReactErrorUtils":90,"./accumulateInto":136,"./forEachAccumulated":144,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],50:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14369,7 +13864,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/invariant":18}],52:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/invariant":18}],51:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14574,7 +14069,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 }).call(this,require('_process'))
-},{"./EventConstants":49,"./ReactErrorUtils":91,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],53:[function(require,module,exports){
+},{"./EventConstants":48,"./ReactErrorUtils":90,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],52:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14712,7 +14207,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 }).call(this,require('_process'))
-},{"./EventConstants":49,"./EventPluginHub":50,"./accumulateInto":137,"./forEachAccumulated":145,"_process":2,"fbjs/lib/warning":29}],54:[function(require,module,exports){
+},{"./EventConstants":48,"./EventPluginHub":49,"./accumulateInto":136,"./forEachAccumulated":144,"_process":2,"fbjs/lib/warning":29}],53:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14808,7 +14303,7 @@ assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./Object.assign":57,"./PooledClass":58,"./getTextContentAccessor":152}],55:[function(require,module,exports){
+},{"./Object.assign":56,"./PooledClass":57,"./getTextContentAccessor":151}],54:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15041,7 +14536,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":44,"fbjs/lib/ExecutionEnvironment":4}],56:[function(require,module,exports){
+},{"./DOMProperty":43,"fbjs/lib/ExecutionEnvironment":4}],55:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15178,7 +14673,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocations":108,"./ReactPropTypes":109,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],57:[function(require,module,exports){
+},{"./ReactPropTypeLocations":107,"./ReactPropTypes":108,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],56:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -15226,7 +14721,7 @@ function assign(target, sources) {
 }
 
 module.exports = assign;
-},{}],58:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15348,7 +14843,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/invariant":18}],59:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/invariant":18}],58:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15389,7 +14884,7 @@ React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
 React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 
 module.exports = React;
-},{"./Object.assign":57,"./ReactDOM":70,"./ReactDOMServer":80,"./ReactIsomorphic":98,"./deprecated":141}],60:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactDOM":69,"./ReactDOMServer":79,"./ReactIsomorphic":97,"./deprecated":140}],59:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15428,7 +14923,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 }).call(this,require('_process'))
-},{"./ReactInstanceMap":97,"./findDOMNode":143,"_process":2,"fbjs/lib/warning":29}],61:[function(require,module,exports){
+},{"./ReactInstanceMap":96,"./findDOMNode":142,"_process":2,"fbjs/lib/warning":29}],60:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15753,7 +15248,7 @@ ReactPerf.measureMethods(ReactBrowserEventEmitter, 'ReactBrowserEventEmitter', {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventConstants":49,"./EventPluginHub":50,"./EventPluginRegistry":51,"./Object.assign":57,"./ReactEventEmitterMixin":92,"./ReactPerf":106,"./ViewportMetrics":136,"./isEventSupported":154}],62:[function(require,module,exports){
+},{"./EventConstants":48,"./EventPluginHub":49,"./EventPluginRegistry":50,"./Object.assign":56,"./ReactEventEmitterMixin":91,"./ReactPerf":105,"./ViewportMetrics":135,"./isEventSupported":153}],61:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -15878,7 +15373,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./ReactReconciler":111,"./instantiateReactComponent":153,"./shouldUpdateReactComponent":161,"./traverseAllChildren":162,"_process":2,"fbjs/lib/warning":29}],63:[function(require,module,exports){
+},{"./ReactReconciler":110,"./instantiateReactComponent":152,"./shouldUpdateReactComponent":160,"./traverseAllChildren":161,"_process":2,"fbjs/lib/warning":29}],62:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16061,7 +15556,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-},{"./PooledClass":58,"./ReactElement":87,"./traverseAllChildren":162,"fbjs/lib/emptyFunction":10}],64:[function(require,module,exports){
+},{"./PooledClass":57,"./ReactElement":86,"./traverseAllChildren":161,"fbjs/lib/emptyFunction":10}],63:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16835,7 +16330,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./ReactComponent":65,"./ReactElement":87,"./ReactNoopUpdateQueue":104,"./ReactPropTypeLocationNames":107,"./ReactPropTypeLocations":108,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/keyMirror":21,"fbjs/lib/keyOf":22,"fbjs/lib/warning":29}],65:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactComponent":64,"./ReactElement":86,"./ReactNoopUpdateQueue":103,"./ReactPropTypeLocationNames":106,"./ReactPropTypeLocations":107,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/keyMirror":21,"fbjs/lib/keyOf":22,"fbjs/lib/warning":29}],64:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16960,7 +16455,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactComponent;
 }).call(this,require('_process'))
-},{"./ReactNoopUpdateQueue":104,"./canDefineProperty":139,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],66:[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":103,"./canDefineProperty":138,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],65:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17002,7 +16497,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./ReactDOMIDOperations":75,"./ReactMount":100}],67:[function(require,module,exports){
+},{"./ReactDOMIDOperations":74,"./ReactMount":99}],66:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -17056,7 +16551,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/invariant":18}],68:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/invariant":18}],67:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17753,7 +17248,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./ReactComponentEnvironment":67,"./ReactCurrentOwner":69,"./ReactElement":87,"./ReactInstanceMap":97,"./ReactPerf":106,"./ReactPropTypeLocationNames":107,"./ReactPropTypeLocations":108,"./ReactReconciler":111,"./ReactUpdateQueue":117,"./shouldUpdateReactComponent":161,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],69:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactComponentEnvironment":66,"./ReactCurrentOwner":68,"./ReactElement":86,"./ReactInstanceMap":96,"./ReactPerf":105,"./ReactPropTypeLocationNames":106,"./ReactPropTypeLocations":107,"./ReactReconciler":110,"./ReactUpdateQueue":116,"./shouldUpdateReactComponent":160,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],68:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17784,7 +17279,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-},{}],70:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17879,7 +17374,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":69,"./ReactDOMTextComponent":81,"./ReactDefaultInjection":84,"./ReactInstanceHandles":96,"./ReactMount":100,"./ReactPerf":106,"./ReactReconciler":111,"./ReactUpdates":118,"./ReactVersion":119,"./findDOMNode":143,"./renderSubtreeIntoContainer":158,"_process":2,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/warning":29}],71:[function(require,module,exports){
+},{"./ReactCurrentOwner":68,"./ReactDOMTextComponent":80,"./ReactDefaultInjection":83,"./ReactInstanceHandles":95,"./ReactMount":99,"./ReactPerf":105,"./ReactReconciler":110,"./ReactUpdates":117,"./ReactVersion":118,"./findDOMNode":142,"./renderSubtreeIntoContainer":157,"_process":2,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/warning":29}],70:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17930,7 +17425,7 @@ var ReactDOMButton = {
 };
 
 module.exports = ReactDOMButton;
-},{}],72:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18895,7 +18390,7 @@ assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mix
 
 module.exports = ReactDOMComponent;
 }).call(this,require('_process'))
-},{"./AutoFocusUtils":36,"./CSSPropertyOperations":39,"./DOMProperty":44,"./DOMPropertyOperations":45,"./EventConstants":49,"./Object.assign":57,"./ReactBrowserEventEmitter":61,"./ReactComponentBrowserEnvironment":66,"./ReactDOMButton":71,"./ReactDOMInput":76,"./ReactDOMOption":77,"./ReactDOMSelect":78,"./ReactDOMTextarea":82,"./ReactMount":100,"./ReactMultiChild":101,"./ReactPerf":106,"./ReactUpdateQueue":117,"./canDefineProperty":139,"./escapeTextContentForBrowser":142,"./isEventSupported":154,"./setInnerHTML":159,"./setTextContent":160,"./validateDOMNesting":163,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/keyOf":22,"fbjs/lib/shallowEqual":27,"fbjs/lib/warning":29}],73:[function(require,module,exports){
+},{"./AutoFocusUtils":35,"./CSSPropertyOperations":38,"./DOMProperty":43,"./DOMPropertyOperations":44,"./EventConstants":48,"./Object.assign":56,"./ReactBrowserEventEmitter":60,"./ReactComponentBrowserEnvironment":65,"./ReactDOMButton":70,"./ReactDOMInput":75,"./ReactDOMOption":76,"./ReactDOMSelect":77,"./ReactDOMTextarea":81,"./ReactMount":99,"./ReactMultiChild":100,"./ReactPerf":105,"./ReactUpdateQueue":116,"./canDefineProperty":138,"./escapeTextContentForBrowser":141,"./isEventSupported":153,"./setInnerHTML":158,"./setTextContent":159,"./validateDOMNesting":162,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/keyOf":22,"fbjs/lib/shallowEqual":27,"fbjs/lib/warning":29}],72:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19075,7 +18570,7 @@ var ReactDOMFactories = mapObject({
 
 module.exports = ReactDOMFactories;
 }).call(this,require('_process'))
-},{"./ReactElement":87,"./ReactElementValidator":88,"_process":2,"fbjs/lib/mapObject":23}],74:[function(require,module,exports){
+},{"./ReactElement":86,"./ReactElementValidator":87,"_process":2,"fbjs/lib/mapObject":23}],73:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19094,7 +18589,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],75:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19191,7 +18686,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 
 module.exports = ReactDOMIDOperations;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":43,"./DOMPropertyOperations":45,"./ReactMount":100,"./ReactPerf":106,"_process":2,"fbjs/lib/invariant":18}],76:[function(require,module,exports){
+},{"./DOMChildrenOperations":42,"./DOMPropertyOperations":44,"./ReactMount":99,"./ReactPerf":105,"_process":2,"fbjs/lib/invariant":18}],75:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19347,7 +18842,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMInput;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":56,"./Object.assign":57,"./ReactDOMIDOperations":75,"./ReactMount":100,"./ReactUpdates":118,"_process":2,"fbjs/lib/invariant":18}],77:[function(require,module,exports){
+},{"./LinkedValueUtils":55,"./Object.assign":56,"./ReactDOMIDOperations":74,"./ReactMount":99,"./ReactUpdates":117,"_process":2,"fbjs/lib/invariant":18}],76:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19436,7 +18931,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./ReactChildren":63,"./ReactDOMSelect":78,"_process":2,"fbjs/lib/warning":29}],78:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactChildren":62,"./ReactDOMSelect":77,"_process":2,"fbjs/lib/warning":29}],77:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19627,7 +19122,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMSelect;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":56,"./Object.assign":57,"./ReactMount":100,"./ReactUpdates":118,"_process":2,"fbjs/lib/warning":29}],79:[function(require,module,exports){
+},{"./LinkedValueUtils":55,"./Object.assign":56,"./ReactMount":99,"./ReactUpdates":117,"_process":2,"fbjs/lib/warning":29}],78:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19840,7 +19335,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":151,"./getTextContentAccessor":152,"fbjs/lib/ExecutionEnvironment":4}],80:[function(require,module,exports){
+},{"./getNodeForCharacterOffset":150,"./getTextContentAccessor":151,"fbjs/lib/ExecutionEnvironment":4}],79:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19867,7 +19362,7 @@ var ReactDOMServer = {
 };
 
 module.exports = ReactDOMServer;
-},{"./ReactDefaultInjection":84,"./ReactServerRendering":115,"./ReactVersion":119}],81:[function(require,module,exports){
+},{"./ReactDefaultInjection":83,"./ReactServerRendering":114,"./ReactVersion":118}],80:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19997,7 +19492,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":43,"./DOMPropertyOperations":45,"./Object.assign":57,"./ReactComponentBrowserEnvironment":66,"./ReactMount":100,"./escapeTextContentForBrowser":142,"./setTextContent":160,"./validateDOMNesting":163,"_process":2}],82:[function(require,module,exports){
+},{"./DOMChildrenOperations":42,"./DOMPropertyOperations":44,"./Object.assign":56,"./ReactComponentBrowserEnvironment":65,"./ReactMount":99,"./escapeTextContentForBrowser":141,"./setTextContent":159,"./validateDOMNesting":162,"_process":2}],81:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20113,7 +19608,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMTextarea;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":56,"./Object.assign":57,"./ReactDOMIDOperations":75,"./ReactUpdates":118,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],83:[function(require,module,exports){
+},{"./LinkedValueUtils":55,"./Object.assign":56,"./ReactDOMIDOperations":74,"./ReactUpdates":117,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],82:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20181,7 +19676,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./Object.assign":57,"./ReactUpdates":118,"./Transaction":135,"fbjs/lib/emptyFunction":10}],84:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactUpdates":117,"./Transaction":134,"fbjs/lib/emptyFunction":10}],83:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20281,7 +19776,7 @@ module.exports = {
   inject: inject
 };
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":37,"./ChangeEventPlugin":41,"./ClientReactRootIndex":42,"./DefaultEventPluginOrder":47,"./EnterLeaveEventPlugin":48,"./HTMLDOMPropertyConfig":55,"./ReactBrowserComponentMixin":60,"./ReactComponentBrowserEnvironment":66,"./ReactDOMComponent":72,"./ReactDOMTextComponent":81,"./ReactDefaultBatchingStrategy":83,"./ReactDefaultPerf":85,"./ReactEventListener":93,"./ReactInjection":94,"./ReactInstanceHandles":96,"./ReactMount":100,"./ReactReconcileTransaction":110,"./SVGDOMPropertyConfig":120,"./SelectEventPlugin":121,"./ServerReactRootIndex":122,"./SimpleEventPlugin":123,"_process":2,"fbjs/lib/ExecutionEnvironment":4}],85:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":36,"./ChangeEventPlugin":40,"./ClientReactRootIndex":41,"./DefaultEventPluginOrder":46,"./EnterLeaveEventPlugin":47,"./HTMLDOMPropertyConfig":54,"./ReactBrowserComponentMixin":59,"./ReactComponentBrowserEnvironment":65,"./ReactDOMComponent":71,"./ReactDOMTextComponent":80,"./ReactDefaultBatchingStrategy":82,"./ReactDefaultPerf":84,"./ReactEventListener":92,"./ReactInjection":93,"./ReactInstanceHandles":95,"./ReactMount":99,"./ReactReconcileTransaction":109,"./SVGDOMPropertyConfig":119,"./SelectEventPlugin":120,"./ServerReactRootIndex":121,"./SimpleEventPlugin":122,"_process":2,"fbjs/lib/ExecutionEnvironment":4}],84:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20519,7 +20014,7 @@ var ReactDefaultPerf = {
 };
 
 module.exports = ReactDefaultPerf;
-},{"./DOMProperty":44,"./ReactDefaultPerfAnalysis":86,"./ReactMount":100,"./ReactPerf":106,"fbjs/lib/performanceNow":26}],86:[function(require,module,exports){
+},{"./DOMProperty":43,"./ReactDefaultPerfAnalysis":85,"./ReactMount":99,"./ReactPerf":105,"fbjs/lib/performanceNow":26}],85:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20719,7 +20214,7 @@ var ReactDefaultPerfAnalysis = {
 };
 
 module.exports = ReactDefaultPerfAnalysis;
-},{"./Object.assign":57}],87:[function(require,module,exports){
+},{"./Object.assign":56}],86:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -20969,7 +20464,7 @@ ReactElement.isValidElement = function (object) {
 
 module.exports = ReactElement;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./ReactCurrentOwner":69,"./canDefineProperty":139,"_process":2}],88:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactCurrentOwner":68,"./canDefineProperty":138,"_process":2}],87:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -21253,7 +20748,7 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":69,"./ReactElement":87,"./ReactPropTypeLocationNames":107,"./ReactPropTypeLocations":108,"./canDefineProperty":139,"./getIteratorFn":150,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],89:[function(require,module,exports){
+},{"./ReactCurrentOwner":68,"./ReactElement":86,"./ReactPropTypeLocationNames":106,"./ReactPropTypeLocations":107,"./canDefineProperty":138,"./getIteratorFn":149,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],88:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -21305,7 +20800,7 @@ assign(ReactEmptyComponent.prototype, {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{"./Object.assign":57,"./ReactElement":87,"./ReactEmptyComponentRegistry":90,"./ReactReconciler":111}],90:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactElement":86,"./ReactEmptyComponentRegistry":89,"./ReactReconciler":110}],89:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -21354,7 +20849,7 @@ var ReactEmptyComponentRegistry = {
 };
 
 module.exports = ReactEmptyComponentRegistry;
-},{}],91:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21434,7 +20929,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactErrorUtils;
 }).call(this,require('_process'))
-},{"_process":2}],92:[function(require,module,exports){
+},{"_process":2}],91:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21473,7 +20968,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":50}],93:[function(require,module,exports){
+},{"./EventPluginHub":49}],92:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21685,7 +21180,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./Object.assign":57,"./PooledClass":58,"./ReactInstanceHandles":96,"./ReactMount":100,"./ReactUpdates":118,"./getEventTarget":149,"fbjs/lib/EventListener":3,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/getUnboundedScrollPosition":15}],94:[function(require,module,exports){
+},{"./Object.assign":56,"./PooledClass":57,"./ReactInstanceHandles":95,"./ReactMount":99,"./ReactUpdates":117,"./getEventTarget":148,"fbjs/lib/EventListener":3,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/getUnboundedScrollPosition":15}],93:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21724,7 +21219,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":44,"./EventPluginHub":50,"./ReactBrowserEventEmitter":61,"./ReactClass":64,"./ReactComponentEnvironment":67,"./ReactEmptyComponent":89,"./ReactNativeComponent":103,"./ReactPerf":106,"./ReactRootIndex":113,"./ReactUpdates":118}],95:[function(require,module,exports){
+},{"./DOMProperty":43,"./EventPluginHub":49,"./ReactBrowserEventEmitter":60,"./ReactClass":63,"./ReactComponentEnvironment":66,"./ReactEmptyComponent":88,"./ReactNativeComponent":102,"./ReactPerf":105,"./ReactRootIndex":112,"./ReactUpdates":117}],94:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21849,7 +21344,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":79,"fbjs/lib/containsNode":7,"fbjs/lib/focusNode":12,"fbjs/lib/getActiveElement":13}],96:[function(require,module,exports){
+},{"./ReactDOMSelection":78,"fbjs/lib/containsNode":7,"fbjs/lib/focusNode":12,"fbjs/lib/getActiveElement":13}],95:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22154,7 +21649,7 @@ var ReactInstanceHandles = {
 
 module.exports = ReactInstanceHandles;
 }).call(this,require('_process'))
-},{"./ReactRootIndex":113,"_process":2,"fbjs/lib/invariant":18}],97:[function(require,module,exports){
+},{"./ReactRootIndex":112,"_process":2,"fbjs/lib/invariant":18}],96:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22202,7 +21697,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],98:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22279,7 +21774,7 @@ var React = {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./ReactChildren":63,"./ReactClass":64,"./ReactComponent":65,"./ReactDOMFactories":73,"./ReactElement":87,"./ReactElementValidator":88,"./ReactPropTypes":109,"./ReactVersion":119,"./onlyChild":156,"_process":2}],99:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactChildren":62,"./ReactClass":63,"./ReactComponent":64,"./ReactDOMFactories":72,"./ReactElement":86,"./ReactElementValidator":87,"./ReactPropTypes":108,"./ReactVersion":118,"./onlyChild":155,"_process":2}],98:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22325,7 +21820,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":138}],100:[function(require,module,exports){
+},{"./adler32":137}],99:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -23178,7 +22673,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 
 module.exports = ReactMount;
 }).call(this,require('_process'))
-},{"./DOMProperty":44,"./Object.assign":57,"./ReactBrowserEventEmitter":61,"./ReactCurrentOwner":69,"./ReactDOMFeatureFlags":74,"./ReactElement":87,"./ReactEmptyComponentRegistry":90,"./ReactInstanceHandles":96,"./ReactInstanceMap":97,"./ReactMarkupChecksum":99,"./ReactPerf":106,"./ReactReconciler":111,"./ReactUpdateQueue":117,"./ReactUpdates":118,"./instantiateReactComponent":153,"./setInnerHTML":159,"./shouldUpdateReactComponent":161,"./validateDOMNesting":163,"_process":2,"fbjs/lib/containsNode":7,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],101:[function(require,module,exports){
+},{"./DOMProperty":43,"./Object.assign":56,"./ReactBrowserEventEmitter":60,"./ReactCurrentOwner":68,"./ReactDOMFeatureFlags":73,"./ReactElement":86,"./ReactEmptyComponentRegistry":89,"./ReactInstanceHandles":95,"./ReactInstanceMap":96,"./ReactMarkupChecksum":98,"./ReactPerf":105,"./ReactReconciler":110,"./ReactUpdateQueue":116,"./ReactUpdates":117,"./instantiateReactComponent":152,"./setInnerHTML":158,"./shouldUpdateReactComponent":160,"./validateDOMNesting":162,"_process":2,"fbjs/lib/containsNode":7,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],100:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -23677,7 +23172,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 }).call(this,require('_process'))
-},{"./ReactChildReconciler":62,"./ReactComponentEnvironment":67,"./ReactCurrentOwner":69,"./ReactMultiChildUpdateTypes":102,"./ReactReconciler":111,"./flattenChildren":144,"_process":2}],102:[function(require,module,exports){
+},{"./ReactChildReconciler":61,"./ReactComponentEnvironment":66,"./ReactCurrentOwner":68,"./ReactMultiChildUpdateTypes":101,"./ReactReconciler":110,"./flattenChildren":143,"_process":2}],101:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23710,7 +23205,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 });
 
 module.exports = ReactMultiChildUpdateTypes;
-},{"fbjs/lib/keyMirror":21}],103:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":21}],102:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -23807,7 +23302,7 @@ var ReactNativeComponent = {
 
 module.exports = ReactNativeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"_process":2,"fbjs/lib/invariant":18}],104:[function(require,module,exports){
+},{"./Object.assign":56,"_process":2,"fbjs/lib/invariant":18}],103:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -23928,7 +23423,7 @@ var ReactNoopUpdateQueue = {
 
 module.exports = ReactNoopUpdateQueue;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/warning":29}],105:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/warning":29}],104:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24022,7 +23517,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/invariant":18}],106:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/invariant":18}],105:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24121,7 +23616,7 @@ function _noMeasure(objName, fnName, func) {
 
 module.exports = ReactPerf;
 }).call(this,require('_process'))
-},{"_process":2}],107:[function(require,module,exports){
+},{"_process":2}],106:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24148,7 +23643,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactPropTypeLocationNames;
 }).call(this,require('_process'))
-},{"_process":2}],108:[function(require,module,exports){
+},{"_process":2}],107:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24171,7 +23666,7 @@ var ReactPropTypeLocations = keyMirror({
 });
 
 module.exports = ReactPropTypeLocations;
-},{"fbjs/lib/keyMirror":21}],109:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":21}],108:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24528,7 +24023,7 @@ function getClassName(propValue) {
 }
 
 module.exports = ReactPropTypes;
-},{"./ReactElement":87,"./ReactPropTypeLocationNames":107,"./getIteratorFn":150,"fbjs/lib/emptyFunction":10}],110:[function(require,module,exports){
+},{"./ReactElement":86,"./ReactPropTypeLocationNames":106,"./getIteratorFn":149,"fbjs/lib/emptyFunction":10}],109:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24680,7 +24175,7 @@ assign(ReactReconcileTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
-},{"./CallbackQueue":40,"./Object.assign":57,"./PooledClass":58,"./ReactBrowserEventEmitter":61,"./ReactDOMFeatureFlags":74,"./ReactInputSelection":95,"./Transaction":135}],111:[function(require,module,exports){
+},{"./CallbackQueue":39,"./Object.assign":56,"./PooledClass":57,"./ReactBrowserEventEmitter":60,"./ReactDOMFeatureFlags":73,"./ReactInputSelection":94,"./Transaction":134}],110:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24788,7 +24283,7 @@ var ReactReconciler = {
 };
 
 module.exports = ReactReconciler;
-},{"./ReactRef":112}],112:[function(require,module,exports){
+},{"./ReactRef":111}],111:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24867,7 +24362,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":105}],113:[function(require,module,exports){
+},{"./ReactOwner":104}],112:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24897,7 +24392,7 @@ var ReactRootIndex = {
 };
 
 module.exports = ReactRootIndex;
-},{}],114:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -24921,7 +24416,7 @@ var ReactServerBatchingStrategy = {
 };
 
 module.exports = ReactServerBatchingStrategy;
-},{}],115:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25007,7 +24502,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 }).call(this,require('_process'))
-},{"./ReactDefaultBatchingStrategy":83,"./ReactElement":87,"./ReactInstanceHandles":96,"./ReactMarkupChecksum":99,"./ReactServerBatchingStrategy":114,"./ReactServerRenderingTransaction":116,"./ReactUpdates":118,"./instantiateReactComponent":153,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18}],116:[function(require,module,exports){
+},{"./ReactDefaultBatchingStrategy":82,"./ReactElement":86,"./ReactInstanceHandles":95,"./ReactMarkupChecksum":98,"./ReactServerBatchingStrategy":113,"./ReactServerRenderingTransaction":115,"./ReactUpdates":117,"./instantiateReactComponent":152,"_process":2,"fbjs/lib/emptyObject":11,"fbjs/lib/invariant":18}],115:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -25095,7 +24590,7 @@ assign(ReactServerRenderingTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
-},{"./CallbackQueue":40,"./Object.assign":57,"./PooledClass":58,"./Transaction":135,"fbjs/lib/emptyFunction":10}],117:[function(require,module,exports){
+},{"./CallbackQueue":39,"./Object.assign":56,"./PooledClass":57,"./Transaction":134,"fbjs/lib/emptyFunction":10}],116:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -25355,7 +24850,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./ReactCurrentOwner":69,"./ReactElement":87,"./ReactInstanceMap":97,"./ReactUpdates":118,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],118:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactCurrentOwner":68,"./ReactElement":86,"./ReactInstanceMap":96,"./ReactUpdates":117,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],117:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25581,7 +25076,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 }).call(this,require('_process'))
-},{"./CallbackQueue":40,"./Object.assign":57,"./PooledClass":58,"./ReactPerf":106,"./ReactReconciler":111,"./Transaction":135,"_process":2,"fbjs/lib/invariant":18}],119:[function(require,module,exports){
+},{"./CallbackQueue":39,"./Object.assign":56,"./PooledClass":57,"./ReactPerf":105,"./ReactReconciler":110,"./Transaction":134,"_process":2,"fbjs/lib/invariant":18}],118:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25596,7 +25091,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '0.14.3';
-},{}],120:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25724,7 +25219,7 @@ var SVGDOMPropertyConfig = {
 };
 
 module.exports = SVGDOMPropertyConfig;
-},{"./DOMProperty":44}],121:[function(require,module,exports){
+},{"./DOMProperty":43}],120:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25926,7 +25421,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventConstants":49,"./EventPropagators":53,"./ReactInputSelection":95,"./SyntheticEvent":127,"./isTextInputElement":155,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/getActiveElement":13,"fbjs/lib/keyOf":22,"fbjs/lib/shallowEqual":27}],122:[function(require,module,exports){
+},{"./EventConstants":48,"./EventPropagators":52,"./ReactInputSelection":94,"./SyntheticEvent":126,"./isTextInputElement":154,"fbjs/lib/ExecutionEnvironment":4,"fbjs/lib/getActiveElement":13,"fbjs/lib/keyOf":22,"fbjs/lib/shallowEqual":27}],121:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25956,7 +25451,7 @@ var ServerReactRootIndex = {
 };
 
 module.exports = ServerReactRootIndex;
-},{}],123:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -26546,7 +26041,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 }).call(this,require('_process'))
-},{"./EventConstants":49,"./EventPropagators":53,"./ReactMount":100,"./SyntheticClipboardEvent":124,"./SyntheticDragEvent":126,"./SyntheticEvent":127,"./SyntheticFocusEvent":128,"./SyntheticKeyboardEvent":130,"./SyntheticMouseEvent":131,"./SyntheticTouchEvent":132,"./SyntheticUIEvent":133,"./SyntheticWheelEvent":134,"./getEventCharCode":146,"_process":2,"fbjs/lib/EventListener":3,"fbjs/lib/emptyFunction":10,"fbjs/lib/invariant":18,"fbjs/lib/keyOf":22}],124:[function(require,module,exports){
+},{"./EventConstants":48,"./EventPropagators":52,"./ReactMount":99,"./SyntheticClipboardEvent":123,"./SyntheticDragEvent":125,"./SyntheticEvent":126,"./SyntheticFocusEvent":127,"./SyntheticKeyboardEvent":129,"./SyntheticMouseEvent":130,"./SyntheticTouchEvent":131,"./SyntheticUIEvent":132,"./SyntheticWheelEvent":133,"./getEventCharCode":145,"_process":2,"fbjs/lib/EventListener":3,"fbjs/lib/emptyFunction":10,"fbjs/lib/invariant":18,"fbjs/lib/keyOf":22}],123:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26586,7 +26081,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":127}],125:[function(require,module,exports){
+},{"./SyntheticEvent":126}],124:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26624,7 +26119,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":127}],126:[function(require,module,exports){
+},{"./SyntheticEvent":126}],125:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26662,7 +26157,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":131}],127:[function(require,module,exports){
+},{"./SyntheticMouseEvent":130}],126:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -26842,7 +26337,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
 module.exports = SyntheticEvent;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./PooledClass":58,"_process":2,"fbjs/lib/emptyFunction":10,"fbjs/lib/warning":29}],128:[function(require,module,exports){
+},{"./Object.assign":56,"./PooledClass":57,"_process":2,"fbjs/lib/emptyFunction":10,"fbjs/lib/warning":29}],127:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26880,7 +26375,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":133}],129:[function(require,module,exports){
+},{"./SyntheticUIEvent":132}],128:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26919,7 +26414,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":127}],130:[function(require,module,exports){
+},{"./SyntheticEvent":126}],129:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27005,7 +26500,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":133,"./getEventCharCode":146,"./getEventKey":147,"./getEventModifierState":148}],131:[function(require,module,exports){
+},{"./SyntheticUIEvent":132,"./getEventCharCode":145,"./getEventKey":146,"./getEventModifierState":147}],130:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27079,7 +26574,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":133,"./ViewportMetrics":136,"./getEventModifierState":148}],132:[function(require,module,exports){
+},{"./SyntheticUIEvent":132,"./ViewportMetrics":135,"./getEventModifierState":147}],131:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27126,7 +26621,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":133,"./getEventModifierState":148}],133:[function(require,module,exports){
+},{"./SyntheticUIEvent":132,"./getEventModifierState":147}],132:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27187,7 +26682,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":127,"./getEventTarget":149}],134:[function(require,module,exports){
+},{"./SyntheticEvent":126,"./getEventTarget":148}],133:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27243,7 +26738,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":131}],135:[function(require,module,exports){
+},{"./SyntheticMouseEvent":130}],134:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27477,7 +26972,7 @@ var Transaction = {
 
 module.exports = Transaction;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/invariant":18}],136:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/invariant":18}],135:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27505,7 +27000,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],137:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -27567,7 +27062,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 }).call(this,require('_process'))
-},{"_process":2,"fbjs/lib/invariant":18}],138:[function(require,module,exports){
+},{"_process":2,"fbjs/lib/invariant":18}],137:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27610,7 +27105,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],139:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27637,7 +27132,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = canDefineProperty;
 }).call(this,require('_process'))
-},{"_process":2}],140:[function(require,module,exports){
+},{"_process":2}],139:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27693,7 +27188,7 @@ function dangerousStyleValue(name, value) {
 }
 
 module.exports = dangerousStyleValue;
-},{"./CSSProperty":38}],141:[function(require,module,exports){
+},{"./CSSProperty":37}],140:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27744,7 +27239,7 @@ function deprecated(fnName, newModule, newPackage, ctx, fn) {
 
 module.exports = deprecated;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"_process":2,"fbjs/lib/warning":29}],142:[function(require,module,exports){
+},{"./Object.assign":56,"_process":2,"fbjs/lib/warning":29}],141:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27783,7 +27278,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],143:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27835,7 +27330,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":69,"./ReactInstanceMap":97,"./ReactMount":100,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],144:[function(require,module,exports){
+},{"./ReactCurrentOwner":68,"./ReactInstanceMap":96,"./ReactMount":99,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],143:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27886,7 +27381,7 @@ function flattenChildren(children) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./traverseAllChildren":162,"_process":2,"fbjs/lib/warning":29}],145:[function(require,module,exports){
+},{"./traverseAllChildren":161,"_process":2,"fbjs/lib/warning":29}],144:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27916,7 +27411,7 @@ var forEachAccumulated = function (arr, cb, scope) {
 };
 
 module.exports = forEachAccumulated;
-},{}],146:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27967,7 +27462,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],147:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28071,7 +27566,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":146}],148:[function(require,module,exports){
+},{"./getEventCharCode":145}],147:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28116,7 +27611,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],149:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28146,7 +27641,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],150:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28187,7 +27682,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],151:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28261,7 +27756,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],152:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28295,7 +27790,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":4}],153:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":4}],152:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -28410,7 +27905,7 @@ function instantiateReactComponent(node) {
 
 module.exports = instantiateReactComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"./ReactCompositeComponent":68,"./ReactEmptyComponent":89,"./ReactNativeComponent":103,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],154:[function(require,module,exports){
+},{"./Object.assign":56,"./ReactCompositeComponent":67,"./ReactEmptyComponent":88,"./ReactNativeComponent":102,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],153:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28471,7 +27966,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":4}],155:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":4}],154:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28512,7 +28007,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],156:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -28548,7 +28043,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 }).call(this,require('_process'))
-},{"./ReactElement":87,"_process":2,"fbjs/lib/invariant":18}],157:[function(require,module,exports){
+},{"./ReactElement":86,"_process":2,"fbjs/lib/invariant":18}],156:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28575,7 +28070,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":142}],158:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":141}],157:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28592,7 +28087,7 @@ module.exports = quoteAttributeValueForBrowser;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":100}],159:[function(require,module,exports){
+},{"./ReactMount":99}],158:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28683,7 +28178,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"fbjs/lib/ExecutionEnvironment":4}],160:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":4}],159:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28724,7 +28219,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":142,"./setInnerHTML":159,"fbjs/lib/ExecutionEnvironment":4}],161:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":141,"./setInnerHTML":158,"fbjs/lib/ExecutionEnvironment":4}],160:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28768,7 +28263,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],162:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -28960,7 +28455,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":69,"./ReactElement":87,"./ReactInstanceHandles":96,"./getIteratorFn":150,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],163:[function(require,module,exports){
+},{"./ReactCurrentOwner":68,"./ReactElement":86,"./ReactInstanceHandles":95,"./getIteratorFn":149,"_process":2,"fbjs/lib/invariant":18,"fbjs/lib/warning":29}],162:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -29326,16 +28821,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = validateDOMNesting;
 }).call(this,require('_process'))
-},{"./Object.assign":57,"_process":2,"fbjs/lib/emptyFunction":10,"fbjs/lib/warning":29}],164:[function(require,module,exports){
+},{"./Object.assign":56,"_process":2,"fbjs/lib/emptyFunction":10,"fbjs/lib/warning":29}],163:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":59}],165:[function(require,module,exports){
-/*! jQuery UI Virtual Keyboard v1.25.11 */
-!function(a){"function"==typeof define&&define.amd?define(["jquery"],a):"object"==typeof module&&"object"==typeof module.exports?module.exports=a(require("jquery")):a(jQuery)}(function(a){"use strict";var b=a.keyboard=function(c,d){var e,f=this;f.version="1.25.11",f.$el=a(c),f.el=c,f.$el.data("keyboard",f),f.init=function(){var c,g,h,i=b.css,j=b.events;f.settings=d||{},d&&d.position&&(g=a.extend({},d.position),d.position=null),f.options=e=a.extend(!0,{},b.defaultOptions,d),g&&(e.position=g,d.position=g),f.el.active=!0,f.namespace=".keyboard"+Math.random().toString(16).slice(2),f.extensionNamespace=[],f.shiftActive=f.altActive=f.metaActive=f.sets=f.capsLock=!1,f.rows=["","-shift","-alt","-alt-shift"],f.inPlaceholder=f.$el.attr("placeholder")||"",f.watermark=b.watermark&&""!==f.inPlaceholder,f.repeatTime=1e3/(e.repeatRate||20),e.preventDoubleEventTime=e.preventDoubleEventTime||100,f.isOpen=!1,f.wheel=a.isFunction(a.fn.mousewheel),c=b.keyCodes,f.alwaysAllowed=[c.capsLock,c.pageUp,c.pageDown,c.end,c.home,c.left,c.up,c.right,c.down,c.insert,c["delete"]],f.$keyboard=[],f.enabled=!0,a.isEmptyObject(e.position)||(e.position.orig_at=e.position.at),f.checkCaret=e.lockInput||b.checkCaretSupport(),f.last={start:0,end:0,key:"",val:"",layout:"",virtual:!0,keyset:[!1,!1,!1],wheel_$Keys:null,wheelIndex:0,wheelLayers:[]},f.temp=["",0,0],a.each([j.kbInit,j.kbBeforeVisible,j.kbVisible,j.kbHidden,j.inputCanceled,j.inputAccepted,j.kbBeforeClose],function(b,c){a.isFunction(e[c])&&f.$el.bind(c+f.namespace,e[c])}),e.alwaysOpen&&(e.stayOpen=!0),h=a(document),f.el.ownerDocument!==document&&(h=h.add(f.el.ownerDocument)),h.bind("mousedown keyup touchstart checkkeyboard ".split(" ").join(f.namespace+" "),f.checkClose),f.$el.addClass(i.input+" "+e.css.input).attr({"aria-haspopup":"true",role:"textbox"}),(e.lockInput||f.el.readOnly)&&(e.lockInput=!0,f.$el.addClass(i.locked).attr({readonly:"readonly"})),(f.$el.is(":disabled")||f.$el.attr("readonly")&&!f.$el.hasClass(i.locked))&&f.$el.addClass(i.noKeyboard),e.openOn&&f.$el.bind(e.openOn+f.namespace,function(){f.focusOn()}),f.watermark||""!==f.$el.val()||""===f.inPlaceholder||""===f.$el.attr("placeholder")||f.$el.addClass(i.placeholder).val(f.inPlaceholder),f.$el.trigger(j.kbInit,[f,f.el]),e.alwaysOpen&&f.reveal()},f.toggle=function(){var a=f.$keyboard.find("."+b.css.keyToggle),c=!f.enabled;f.$preview.prop("readonly",c||f.options.lockInput),f.$keyboard.toggleClass(b.css.keyDisabled,c).find("."+b.css.keyButton).not(a).prop("disabled",c).attr("aria-disabled",c),a.toggleClass(b.css.keyDisabled,c),c&&f.typing_options&&(f.typing_options.text="")},f.setCurrent=function(){var c=b.css,d=a("."+c.isCurrent),e=d.data("keyboard");a.isEmptyObject(e)||e.close(e.options.autoAccept?"true":!1),d.removeClass(c.isCurrent),a("."+c.hasFocus).removeClass(c.hasFocus),f.$el.addClass(c.isCurrent),f.$keyboard.addClass(c.hasFocus),f.isCurrent(!0),f.isOpen=!0},f.isCurrent=function(a){var c=b.currentKeyboard||!1;return a?c=b.currentKeyboard=f.el:a===!1&&c===f.el&&(c=b.currentKeyboard=""),c===f.el},f.isVisible=function(){return f.$keyboard&&f.$keyboard.length?f.$keyboard.is(":visible"):!1},f.focusOn=function(){(f||!f.el.active)&&(f.isVisible()||(clearTimeout(f.timer),f.reveal()))},f.reveal=function(c){f.isOpen&&(c=!0);var d=b.css;return f.opening=!0,a("."+d.keyboard).not("."+d.alwaysOpen).remove(),c&&(f.isOpen=e.alwaysOpen,f.last.val=f.$preview&&f.$preview.val()||"",f.$keyboard.length&&(f.$keyboard.remove(),f.$keyboard=[],f.shiftActive=f.altActive=f.metaActive=!1)),f.$el.is(":disabled")||f.$el.attr("readonly")&&!f.$el.hasClass(d.locked)?void f.$el.addClass(d.noKeyboard):(f.$el.removeClass(d.noKeyboard),e.openOn&&f.$el.unbind(a.trim((e.openOn+" ").split(/\s+/).join(f.namespace+" "))),(!f.$keyboard||f.$keyboard&&(!f.$keyboard.length||a.contains(document.body,f.$keyboard[0])))&&f.startup(),f.watermark||f.el.value!==f.inPlaceholder||f.$el.removeClass(d.placeholder).val(""),f.originalContent=f.$el.val(),f.$preview.val(c?f.last.val:f.originalContent),e.acceptValid&&f.checkValid(),e.resetDefault&&(f.shiftActive=f.altActive=f.metaActive=!1),f.showSet(),f.isVisible()||f.$el.trigger(b.events.kbBeforeVisible,[f,f.el]),f.setCurrent(),f.toggle(),f.$keyboard.show(),e.usePreview&&b.msie&&("undefined"==typeof f.width&&(f.$preview.hide(),f.width=Math.ceil(f.$keyboard.width()),f.$preview.show()),f.$preview.width(f.width)),f.position=a.isEmptyObject(e.position)?!1:e.position,a.ui&&a.ui.position&&f.position&&(f.position.of=f.position.of||f.$el.data("keyboardPosition")||f.$el,f.position.collision=f.position.collision||"flipfit flipfit",e.position.at=e.usePreview?e.position.orig_at:e.position.at2,f.$keyboard.position(f.position)),f.checkDecimal(),f.lineHeight=parseInt(f.$preview.css("lineHeight"),10)||parseInt(f.$preview.css("font-size"),10)+4,e.caretToEnd&&f.saveCaret(f.originalContent.length,f.originalContent.length),b.allie&&(0===f.last.end&&f.last.start>0&&(f.last.end=f.last.start),f.last.start<0&&(f.last.start=f.last.end=f.originalContent.length)),c||(f.timer2=setTimeout(function(){var a;f.opening=!1,/(number|email)/i.test(f.el.type)||e.caretToEnd||f.saveCaret(a,a,f.$el),e.initialFocus&&b.caret(f.$preview,f.last),f.last.eventTime=(new Date).getTime(),f.$el.trigger(b.events.kbVisible,[f,f.el]),f.timer=setTimeout(function(){f&&f.saveCaret()},200)},10)),f)},f.updateLanguage=function(){var c=b.layouts,d=e.language||c[e.layout]&&c[e.layout].lang&&c[e.layout].lang||[e.language||"en"],g=b.language;d=(a.isArray(d)?d[0]:d).split("-")[0],e.display=a.extend(!0,{},g.en.display,g[d]&&g[d].display||{},f.settings.display),e.combos=a.extend(!0,{},g.en.combos,g[d]&&g[d].combos||{},f.settings.combos),e.wheelMessage=g[d]&&g[d].wheelMessage||g.en.wheelMessage,e.rtl=c[e.layout]&&c[e.layout].rtl||g[d]&&g[d].rtl||!1,f.regex=g[d]&&g[d].comboRegex||b.comboRegex,f.decimal=/^\./.test(e.display.dec),f.$el.toggleClass("rtl",e.rtl).css("direction",e.rtl?"rtl":"")},f.startup=function(){var c=b.css;e.alwaysOpen&&f.$preview||f.makePreview(),f.$keyboard&&f.$keyboard.length||("custom"===e.layout&&(e.layoutHash="custom"+f.customHash()),f.layout="custom"===e.layout?e.layoutHash:e.layout,f.last.layout=f.layout,f.updateLanguage(),"undefined"==typeof b.builtLayouts[f.layout]&&(a.isFunction(e.create)?f.$keyboard=e.create(f):f.$keyboard.length||f.buildKeyboard(f.layout,!0)),f.$keyboard=b.builtLayouts[f.layout].$keyboard.clone(),f.$keyboard.data("keyboard",f),""!==(f.el.id||"")&&f.$keyboard.attr("id",f.el.id+b.css.idSuffix),f.makePreview(),e.usePreview?a.isEmptyObject(e.position)||(e.position.at=e.position.orig_at):a.isEmptyObject(e.position)||(e.position.at=e.position.at2)),f.$decBtn=f.$keyboard.find("."+c.keyPrefix+"dec"),(e.enterNavigation||"TEXTAREA"===f.el.nodeName)&&f.alwaysAllowed.push(13),f.bindKeyboard(),f.$keyboard.appendTo(e.appendLocally?f.$el.parent():e.appendTo||"body"),f.bindKeys(),e.reposition&&a.ui&&a.ui.position&&"body"==e.appendTo&&a(window).bind("resize"+f.namespace,function(){f.position&&f.isVisible()&&f.$keyboard.position(f.position)})},f.makePreview=function(){if(e.usePreview){var c,d,g,h,i=b.css;for(f.$preview=f.$el.clone(!1).data("keyboard",f).removeClass(i.placeholder+" "+i.input).addClass(i.preview+" "+e.css.input).attr("tabindex","-1").show(),f.preview=f.$preview[0],"number"===f.preview.type&&(f.preview.type="text"),h=/^(data-|id|aria-haspopup)/i,d=f.$preview.get(0).attributes,c=d.length-1;c>=0;c--)g=d[c]&&d[c].name,h.test(g)&&f.preview.removeAttribute(g);a("<div />").addClass(i.wrapper).append(f.$preview).prependTo(f.$keyboard)}else f.$preview=f.$el,f.preview=f.el},f.saveCaret=function(a,c,d){var e=b.caret(d||f.$preview,a,c);f.last.start="undefined"==typeof a?e.start:a,f.last.end="undefined"==typeof c?e.end:c},f.setScroll=function(){if(f.last.virtual){var a,b,c,d,g="TEXTAREA"===f.preview.nodeName,h=f.last.val.substring(0,Math.max(f.last.start,f.last.end));f.$previewCopy||(f.$previewCopy=f.$preview.clone().removeAttr("id").css({position:"absolute",left:0,zIndex:-10,visibility:"hidden"}).addClass("ui-keyboard-preview-clone"),g||f.$previewCopy.css({"white-space":"pre",width:0}),e.usePreview?f.$preview.after(f.$previewCopy):f.$keyboard.prepend(f.$previewCopy)),g?(f.$previewCopy.height(f.lineHeight).val(h),f.preview.scrollTop=f.lineHeight*(Math.floor(f.$previewCopy[0].scrollHeight/f.lineHeight)-1)):(f.$previewCopy.val(h.replace(/\s/g," ")),c=/c/i.test(e.scrollAdjustment)?f.preview.clientWidth/2:e.scrollAdjustment,a=f.$previewCopy[0].scrollWidth-1,"undefined"==typeof f.last.scrollWidth&&(f.last.scrollWidth=a,f.last.direction=!0),d=f.last.scrollWidth===a?f.last.direction:f.last.scrollWidth<a,b=f.preview.clientWidth-c,d?b>a?f.preview.scrollLeft=0:f.preview.scrollLeft=a-b:a>=f.preview.scrollWidth-b?f.preview.scrollLeft=f.preview.scrollWidth-c:a-c>0?f.preview.scrollLeft=a-c:f.preview.scrollLeft=0,f.last.scrollWidth=a,f.last.direction=d)}},f.bindKeyboard=function(){var c,d=b.keyCodes,g=b.builtLayouts[f.layout];f.$preview.unbind("keypress keyup keydown mouseup touchend ".split(" ").join(f.namespace+" ")).bind("click"+f.namespace,function(){f.timer2=setTimeout(function(){f.saveCaret()},150)}).bind("keypress"+f.namespace,function(h){if(e.lockInput)return!1;var i=h.charCode||h.which,j=f.last.key=String.fromCharCode(i);if(f.last.virtual=!1,f.last.event=h,f.last.$key=[],f.checkCaret&&f.saveCaret(),f.capsLock=i>=d.A&&i<=d.Z&&!h.shiftKey||i>=d.a&&i<=d.z&&h.shiftKey?!0:!1,e.restrictInput){if((h.which===d.backSpace||0===h.which)&&a.inArray(h.keyCode,f.alwaysAllowed))return;-1===a.inArray(j,g.acceptedKeys)&&(h.preventDefault(),c=a.extend({},h),c.type=b.events.inputRestricted,f.$el.trigger(c,[f,f.el]),a.isFunction(e.restricted)&&e.restricted(c,f,f.el))}else if((h.ctrlKey||h.metaKey)&&(h.which===d.A||h.which===d.C||h.which===d.V||h.which>=d.X&&h.which<=d.Z))return;g.hasMappedKeys&&g.mappedKeys.hasOwnProperty(j)&&(f.last.key=g.mappedKeys[j],f.insertText(f.last.key),h.preventDefault()),f.checkMaxLength()}).bind("keyup"+f.namespace,function(c){switch(f.last.virtual=!1,c.which){case d.tab:if(f.tab&&e.tabNavigation&&!e.lockInput){f.shiftActive=c.shiftKey;var g=b.keyaction.tab(f);if(f.tab=!1,!g)return!1}else c.preventDefault();break;case d.escape:return e.ignoreEsc||f.close(e.autoAccept&&e.autoAcceptOnEsc?"true":!1),!1}return clearTimeout(f.throttled),f.throttled=setTimeout(function(){f.isVisible()&&f.checkCombos()},100),f.checkMaxLength(),f.$el.trigger(b.events.kbChange,[f,f.el]),f.last.val=f.$preview.val(),a.isFunction(e.change)?(e.change(a.Event(b.events.inputChange),f,f.el),!1):void 0}).bind("keydown"+f.namespace,function(a){if(e.alwaysOpen&&!f.isCurrent()&&f.reveal(),a.which===d.tab)return f.tab=!0,!1;if(e.lockInput)return!1;switch(f.last.virtual=!1,a.which){case d.backSpace:b.keyaction.bksp(f,null,a),a.preventDefault();break;case d.enter:b.keyaction.enter(f,null,a);break;case d.capsLock:f.shiftActive=f.capsLock=!f.capsLock,f.showSet();break;case d.V:if(a.ctrlKey||a.metaKey){if(e.preventPaste)return void a.preventDefault();f.checkCombos()}}}).bind("mouseup touchend ".split(" ").join(f.namespace+" "),function(){f.last.virtual=!0,f.checkCaret&&f.saveCaret()}),f.$keyboard.bind("mousedown click touchstart ".split(" ").join(f.namespace+" "),function(b){b.stopPropagation(),f.isCurrent()||(f.reveal(),a(document).trigger("checkkeyboard"+f.namespace)),e.noFocus||f.$preview.focus()}),e.preventPaste&&(f.$preview.bind("contextmenu"+f.namespace,function(a){a.preventDefault()}),f.$el.bind("contextmenu"+f.namespace,function(a){a.preventDefault()}))},f.bindKeys=function(){var c=b.css;f.$allKeys=f.$keyboard.find("button."+c.keyButton).unbind(f.namespace+" "+f.namespace+"kb").bind("mouseenter mouseleave touchstart ".split(" ").join(f.namespace+" "),function(b){if(e.alwaysOpen&&"mouseleave"!==b.type&&!f.isCurrent()&&f.reveal(),f.isCurrent()){var c,d,g=f.last,h=a(this),i=b.type;e.useWheel&&f.wheel&&(c=f.getLayers(h),d=(c.length?c.map(function(){return a(this).attr("data-value")||""}).get():"")||[h.text()],g.wheel_$Keys=c,g.wheelLayers=d,g.wheelIndex=a.inArray(h.attr("data-value"),d)),"mouseenter"!==i&&"touchstart"!==i||"password"===f.el.type||h.hasClass(e.css.buttonDisabled)||(h.addClass(e.css.buttonHover),e.useWheel&&f.wheel&&h.attr("title",function(a,b){return f.wheel&&""===b&&f.sets&&d.length>1&&"touchstart"!==i?e.wheelMessage:b})),"mouseleave"===i&&(h.removeClass("password"===f.el.type?"":e.css.buttonHover),e.useWheel&&f.wheel&&(g.wheelIndex=0,g.wheelLayers=[],g.wheel_$Keys=null,h.attr("title",function(a,b){return b===e.wheelMessage?"":b}).html(h.attr("data-html"))))}}).bind(e.keyBinding.split(" ").join(f.namespace+" ")+f.namespace+" "+b.events.kbRepeater,function(d){if(d.preventDefault(),!f.$keyboard.is(":visible"))return!1;var g,h,i=f.last,j=this,k=a(j),l=(new Date).getTime();if(e.useWheel&&f.wheel&&(h=i.wheel_$Keys,k=h&&i.wheelIndex>-1?h.eq(i.wheelIndex):k),g=k.attr("data-action"),g=":"===g?":":(g||"").split(":")[0],!(l-(i.eventTime||0)<e.preventDoubleEventTime)){if(i.eventTime=l,i.event=d,i.virtual=!0,e.noFocus||f.$preview.focus(),i.$key=k,i.key=k.attr("data-value"),f.checkCaret&&b.caret(f.$preview,i),g.match("meta")&&(g="meta"),g===i.key&&"string"==typeof b.keyaction[g])i.key=g=b.keyaction[g];else if(g in b.keyaction&&a.isFunction(b.keyaction[g])){if(b.keyaction[g](f,this,d)===!1)return!1;g=null}return"undefined"!=typeof g&&null!==g&&(i.key=a(this).hasClass(c.keyAction)?g:i.key,f.insertText(i.key),f.capsLock||e.stickyShift||d.shiftKey||(f.shiftActive=!1,f.showSet(k.attr("data-name")))),b.caret(f.$preview,i),f.checkCombos(),f.$el.trigger(b.events.kbChange,[f,f.el]),i.val=f.$preview.val(),a.isFunction(e.change)?(e.change(a.Event(b.events.inputChange),f,f.el),!1):void 0}}).bind("mouseup"+f.namespace+" "+"mouseleave touchend touchmove touchcancel ".split(" ").join(f.namespace+"kb "),function(c){f.last.virtual=!0;var d,g=a(this);if("touchmove"===c.type){if(d=g.offset(),d.right=d.left+g.outerWidth(),d.bottom=d.top+g.outerHeight(),c.originalEvent.touches[0].pageX>=d.left&&c.originalEvent.touches[0].pageX<d.right&&c.originalEvent.touches[0].pageY>=d.top&&c.originalEvent.touches[0].pageY<d.bottom)return!0}else/(mouseleave|touchend|touchcancel)/i.test(c.type)?g.removeClass(e.css.buttonHover):(!e.noFocus&&f.isVisible()&&f.isCurrent()&&f.$preview.focus(),f.checkCaret&&b.caret(f.$preview,f.last));return f.mouseRepeat=[!1,""],clearTimeout(f.repeater),!1}).bind("click"+f.namespace,function(){return!1}).not("."+c.keyAction).bind("mousewheel"+f.namespace,function(b,c){if(e.useWheel&&f.wheel){c=c||b.deltaY;var d,g=f.last.wheelLayers||[];return g.length>1?(d=f.last.wheelIndex+(c>0?-1:1),d>g.length-1&&(d=0),0>d&&(d=g.length-1)):d=0,f.last.wheelIndex=d,a(this).html(g[d]),!1}}).add("."+c.keyPrefix+"tab bksp space enter".split(" ").join(",."+c.keyPrefix),f.$keyboard).bind("mousedown touchstart ".split(" ").join(f.namespace+"kb "),function(){if(0!==e.repeatRate){var b=a(this);f.mouseRepeat=[!0,b],setTimeout(function(){f.mouseRepeat[0]&&f.mouseRepeat[1]===b&&f.repeatKey(b)},e.repeatDelay)}return!1})},f.insertText=function(a){if("undefined"!=typeof a){var c,d,e="\b"===a,g=f.$preview.val(),h=b.caret(f.$preview),i=g.length;h.end<h.start&&(h.end=h.start),h.start>i&&(h.end=h.start=i),"TEXTAREA"===f.preview.nodeName&&b.msie&&"\n"===g.substr(h.start,1)&&(h.start+=1,h.end+=1),"{d}"===a&&(a="",d=h.start,h.end+=1),c=e&&h.start===h.end,a=e?"":a,g=g.substr(0,h.start-(c?1:0))+a+g.substr(h.end),d=h.start+(c?-1:a.length),f.$preview.val(g),f.saveCaret(d,d),f.setScroll()}},f.checkMaxLength=function(){var a,c,d=f.$preview.val();e.maxLength!==!1&&d.length>e.maxLength&&(a=b.caret(f.$preview).start,c=Math.min(a,e.maxLength),e.maxInsert||(d=f.last.val,c=a-1),f.$preview.val(d.substring(0,e.maxLength)),f.saveCaret(c,c)),f.$decBtn.length&&f.checkDecimal()},f.repeatKey=function(a){a.trigger(b.events.kbRepeater),f.mouseRepeat[0]&&(f.repeater=setTimeout(function(){f.repeatKey(a)},f.repeatTime))},f.showKeySet=function(a){"string"==typeof a?(f.last.keyset=[f.shiftActive,f.altActive,f.metaActive],f.shiftActive=/shift/i.test(a),f.altActive=/alt/i.test(a),/meta/.test(a)?(f.metaActive=!0,f.showSet(a.match(/meta\d+/i)[0])):(f.metaActive=!1,f.showSet())):f.showSet(a)},f.showSet=function(a){e=f.options;var c=b.css,d="."+c.keyPrefix,g=e.css.buttonActive,h="",i=(f.shiftActive?1:0)+(f.altActive?2:0);return f.shiftActive||(f.capsLock=!1),f.metaActive?(h=/meta/i.test(a)?a:"",""===h?h=f.metaActive===!0?"":f.metaActive:f.metaActive=h,(!e.stickyShift&&f.last.keyset[2]!==f.metaActive||(f.shiftActive||f.altActive)&&!f.$keyboard.find("."+c.keySet+"-"+h+f.rows[i]).length)&&(f.shiftActive=f.altActive=!1)):!e.stickyShift&&f.last.keyset[2]!==f.metaActive&&f.shiftActive&&(f.shiftActive=f.altActive=!1),i=(f.shiftActive?1:0)+(f.altActive?2:0),h=0!==i||f.metaActive?""===h?"":"-"+h:"-normal",f.$keyboard.find("."+c.keySet+h+f.rows[i]).length?(f.$keyboard.find(d+"alt,"+d+"shift,."+c.keyAction+"[class*=meta]").removeClass(g).end().find(d+"alt").toggleClass(g,f.altActive).end().find(d+"shift").toggleClass(g,f.shiftActive).end().find(d+"lock").toggleClass(g,f.capsLock).end().find("."+c.keySet).hide().end().find("."+c.keyAction+d+h).addClass(g),f.$keyboard.find("."+c.keySet+h+f.rows[i])[0].style.display="inline-block",f.metaActive&&f.$keyboard.find(d+f.metaActive).toggleClass(g,f.metaActive!==!1),f.last.keyset=[f.shiftActive,f.altActive,f.metaActive],void f.$el.trigger(b.events.kbKeysetChange,[f,f.el])):(f.shiftActive=f.last.keyset[0],f.altActive=f.last.keyset[1],void(f.metaActive=f.last.keyset[2]))},f.checkCombos=function(){if(!f.isVisible())return f.$preview.val();var a,c,d,g,h=f.$preview.val(),i=b.caret(f.$preview),j=b.builtLayouts[f.layout],k=h.length;if(""===h)return h;if(i.end<i.start&&(i.end=i.start),i.start>k&&(i.end=i.start=k),b.msie&&"\n"===h.substr(i.start,1)&&(i.start+=1,i.end+=1),e.useCombos&&(b.msie?h=h.replace(f.regex,function(a,b,c){return e.combos.hasOwnProperty(b)?e.combos[b][c]||a:a}):f.$preview.length&&(d=i.start-(i.start-2>=0?2:0),b.caret(f.$preview,d,i.end),g=(b.caret(f.$preview).text||"").replace(f.regex,function(a,b,c){return e.combos.hasOwnProperty(b)?e.combos[b][c]||a:a}),f.$preview.val(b.caret(f.$preview).replaceStr(g)),h=f.$preview.val())),e.restrictInput&&""!==h){for(d=h,c=j.acceptedKeys.length,a=0;c>a;a++)""!==d&&(g=j.acceptedKeys[a],h.indexOf(g)>=0&&(/[\[|\]|\\|\^|\$|\.|\||\?|\*|\+|\(|\)|\{|\}]/g.test(g)&&(g="\\"+g),d=d.replace(new RegExp(g,"g"),"")));""!==d&&(h=h.replace(d,""))}return i.start+=h.length-k,i.end+=h.length-k,f.$preview.val(h),f.saveCaret(i.start,i.end),f.setScroll(),f.checkMaxLength(),e.acceptValid&&f.checkValid(),h},f.checkValid=function(){var c=b.css,d=f.$keyboard.find("."+c.keyPrefix+"accept"),g=!0;a.isFunction(e.validate)&&(g=e.validate(f,f.$preview.val(),!1)),d.toggleClass(c.inputInvalid,!g).toggleClass(c.inputValid,g).attr("title",d.attr("data-title")+" ("+e.display[g?"valid":"invalid"]+")")},f.checkDecimal=function(){f.decimal&&/\./g.test(f.preview.value)||!f.decimal&&/\,/g.test(f.preview.value)?f.$decBtn.attr({disabled:"disabled","aria-disabled":"true"}).removeClass(e.css.buttonHover).addClass(e.css.buttonDisabled):f.$decBtn.removeAttr("disabled").attr({"aria-disabled":"false"}).addClass(e.css.buttonDefault).removeClass(e.css.buttonDisabled)},f.getLayers=function(c){var d=b.css,e=c.attr("data-pos"),f=c.closest("."+d.keyboard).find('button[data-pos="'+e+'"]');return f.filter(function(){return""!==a(this).find("."+d.keyText).text()}).add(c)},f.switchInput=function(b,c){if(a.isFunction(e.switchInput))e.switchInput(f,b,c);else{f.$keyboard.length&&f.$keyboard.hide();var d,g=!1,h=a("button, input, textarea, a").filter(":visible").not(":disabled"),i=h.index(f.$el)+(b?1:-1);if(f.$keyboard.length&&f.$keyboard.show(),i>h.length-1&&(g=e.stopAtEnd,i=0),0>i&&(g=e.stopAtEnd,i=h.length-1),!g){if(c=f.close(c),!c)return;d=h.eq(i).data("keyboard"),d&&d.options.openOn.length?d.focusOn():h.eq(i).focus()}}return!1},f.close=function(c){if(f.isOpen){clearTimeout(f.throttled);var d=b.css,g=b.events,h=c?f.checkCombos():f.originalContent;if(c&&a.isFunction(e.validate)&&!e.validate(f,h,!0)&&(h=f.originalContent,c=!1,e.cancelClose))return;f.isCurrent(!1),f.isOpen=e.alwaysOpen,f.$preview.val(h),f.$el.removeClass(d.isCurrent+" "+d.inputAutoAccepted).addClass(c?c===!0?"":d.inputAutoAccepted:"").val(h).trigger(g.inputChange).trigger(e.alwaysOpen?"":g.kbBeforeClose,[f,f.el,c||!1]).trigger(c?g.inputAccepted:g.inputCanceled,[f,f.el]).trigger(e.alwaysOpen?g.kbInactive:g.kbHidden,[f,f.el]).blur(),f&&(f.last.eventTime=(new Date).getTime(),!e.alwaysOpen&&f.$keyboard&&(e.openOn&&(f.timer=setTimeout(function(){f&&f.el.active&&(f.$el.bind(e.openOn+f.namespace,function(){f.focusOn()}),a(":focus")[0]===f.el&&f.$el.blur())},500)),f.$keyboard.remove(),f.$keyboard=[],f.$previewCopy=null),f.watermark||""!==f.el.value||""===f.inPlaceholder||f.$el.addClass(d.placeholder).val(f.inPlaceholder))}return!!c},f.accept=function(){return f.close(!0)},f.checkClose=function(b){if(!f.opening){f.escClose(b);var c=a.keyboard.css,d=a(b.target);if(d.hasClass(c.input)){var e=d.data("keyboard");e!==f||e.$el.hasClass(c.isCurrent)||b.type!==e.options.openOn||e.focusOn()}}},f.escClose=function(c){if(c&&"keyup"===c.type)return c.which!==b.keyCodes.escape||e.ignoreEsc?"":f.close(e.autoAccept&&e.autoAcceptOnEsc?"true":!1);if(f.isOpen&&(!f.isCurrent()&&f.isOpen||f.isOpen&&c.target!==f.el)){if(e.stayOpen&&!a(c.target).hasClass("ui-keyboard-input"))return;b.allie&&c.preventDefault(),f.close(e.autoAccept?"true":!1)}},f.keyBtn=a("<button />").attr({role:"button",type:"button","aria-disabled":"false",tabindex:"-1"}).addClass(b.css.keyButton),f.processName=function(a){var b,c,d=(a||"").replace(/[^a-z0-9-_]/gi,""),e=d.length,f=[];if(e>1&&a===d)return a;if(e=a.length){for(b=0;e>b;b++)c=a[b],f.push(/[a-z0-9-_]/i.test(c)?/[-_]/.test(c)?"":c:(0===b?"":"-")+c.charCodeAt(0));return f.join("")}return a},f.addKey=function(c,d,g){var h,i,j,k,l=b.css,m=d.split(":"),n=m.length-1,o=g===!0?c:e.display[m[0]]||c,p={isAction:!g,action:c,name:f.processName(c.split(/[(:]/)[0])};return/\(.+\)/.test(o)&&(j=o.replace(/\(([^()]+)\)/,""),i=o.match(/\(([^()]+)\)/)[1],o=j,k=j.split(":"),j=""!==k[0]&&k.length>1?k[0]:j,b.builtLayouts[f.layout].mappedKeys[i]=j),k=o.split(":"),""===k[0]&&""===k[1]&&(o=":"),o=""!==k[0]&&k.length>1?k[0]:o,p.value=a.trim(g?o:m[1]||o),p.title=k.length>1?a.trim(k[1]).replace(/_/g," ")||"":n>0?m[n]||"":"",h=p.value.length>2?" "+l.keyWide:"",h+=g?"":" "+l.keyAction,p.html='<span class="'+l.keyText+'">'+p.value.replace(/[\u00A0-\u9999<>\&]/gim,function(a){return"&#"+a.charCodeAt(0)+";"})+"</span>",p.$key=f.keyBtn.clone().attr({"data-value":p.value,"data-name":p.name,"data-pos":f.temp[1]+","+f.temp[2],"data-title":p.title,title:p.title,"data-action":p.action,"data-html":p.html}).addClass((""===p.name?"":l.keyPrefix+p.name+h+" ")+e.css.buttonDefault).html(p.html).appendTo(f.temp[0]),"function"==typeof e.buildKey&&(p=e.buildKey(f,p),m=p.$key.html(),p.$key.attr("data-html",m)),p.$key},f.customHash=function(a){var b,c,d,f,g,h=[],i=[];a="undefined"==typeof a?e.customLayout:a;for(c in a)a.hasOwnProperty(c)&&h.push(a[c]);if(i=i.concat.apply(i,h).join(" "),d=0,g=i.length,0===g)return d;for(b=0;g>b;b++)f=i.charCodeAt(b),d=(d<<5)-d+f,d&=d;return d},f.buildKeyboard=function(c,d){a.isEmptyObject(e.display)&&f.updateLanguage();var g,h,i,j=b.css,k=0,l=b.builtLayouts[c||f.layout||e.layout]={mappedKeys:{},acceptedKeys:[]},m=l.acceptedKeys=e.restrictInclude?(""+e.restrictInclude).split(/\s+/)||[]:[],n=j.keyboard+" "+e.css.popup+" "+e.css.container+(e.alwaysOpen?" "+j.alwaysOpen:""),o=a("<div />").addClass(n).attr({role:"textbox"}).hide();return d&&"custom"===e.layout||!b.layouts.hasOwnProperty(e.layout)?(e.layout="custom",n=b.layouts.custom=e.customLayout||{normal:["{cancel}"]}):n=b.layouts[d?e.layout:c||f.layout||e.layout],a.each(n,function(b,c){if(""!==b&&!/^(name|lang|rtl)$/i.test(b))for("default"===b&&(b="normal"),k++,h=a("<div />").attr("name",b).addClass(j.keySet+" "+j.keySet+"-"+b).appendTo(o).toggle("normal"===b),g=0;g<c.length;g++)i=a.trim(c[g]).replace(/\{(\.?)[\s+]?:[\s+]?(\.?)\}/g,"{$1:$2}"),f.buildRow(h,g,i.split(/\s+/),m),h.find("."+j.keyButton+",."+j.keySpacer).filter(":last").after('<br class="'+j.endRow+'"/>')}),k>1&&(f.sets=!0),l.hasMappedKeys=!a.isEmptyObject(l.mappedKeys),l.$keyboard=o,o},f.buildRow=function(c,d,g,h){var i,j,k,l,m,n,o=b.css;for(k=0;k<g.length;k++)if(f.temp=[c,d,k],l=!1,0!==g[k].length)if(/^\{\S+\}$/.test(g[k])){if(m=g[k].match(/^\{(\S+)\}$/)[1],/\!\!/.test(m)&&(m=m.replace("!!",""),l=!0),/^sp:((\d+)?([\.|,]\d+)?)(em|px)?$/i.test(m)&&(n=parseFloat(m.replace(/,/,".").match(/^sp:((\d+)?([\.|,]\d+)?)(em|px)?$/i)[1]||0),a('<span class="'+o.keyText+'"></span>').width(m.match(/px/i)?n+"px":2*n+"em").addClass(o.keySpacer).appendTo(c)),/^empty(:((\d+)?([\.|,]\d+)?)(em|px)?)?$/i.test(m)&&(n=/:/.test(m)?parseFloat(m.replace(/,/,".").match(/^empty:((\d+)?([\.|,]\d+)?)(em|px)?$/i)[1]||0):"",f.addKey(""," ").addClass(e.css.buttonDisabled+" "+e.css.buttonEmpty).attr("aria-disabled",!0).width(n?m.match("px")?n+"px":2*n+"em":"")),/^meta\d+\:?(\w+)?/i.test(m)){f.addKey(m.split(":")[0],m).addClass(o.keyHasActive);continue}switch(j=m.split(":"),j[0].toLowerCase()){case"a":case"accept":f.addKey("accept",m).addClass(e.css.buttonAction+" "+o.keyAction);break;case"alt":case"altgr":f.addKey("alt",m).addClass(o.keyHasActive);break;case"b":case"bksp":f.addKey("bksp",m);break;case"c":case"cancel":f.addKey("cancel",m).addClass(e.css.buttonAction+" "+o.keyAction);break;case"combo":f.addKey("combo",m).addClass(o.keyHasActive).attr("title",function(a,b){return b+" ("+e.display[e.useCombos?"active":"disabled"]+")"}).toggleClass(e.css.buttonActive,e.useCombos);break;case"dec":h.push(f.decimal?".":","),f.addKey("dec",m);break;case"e":case"enter":f.addKey("enter",m).addClass(e.css.buttonAction+" "+o.keyAction);break;case"lock":f.addKey("lock",m).addClass(o.keyHasActive);break;case"s":case"shift":f.addKey("shift",m).addClass(o.keyHasActive);break;case"sign":h.push("-"),f.addKey("sign",m);break;case"space":h.push(" "),f.addKey("space",m);break;case"t":case"tab":f.addKey("tab",m);break;default:b.keyaction.hasOwnProperty(j[0])&&f.addKey(j[0],m).toggleClass(e.css.buttonAction+" "+o.keyAction,l)}}else i=g[k],h.push(":"===i?i:i.split(":")[0]),f.addKey(i,i,!0)},f.removeBindings=function(b){a(document).unbind(b),f.el.ownerDocument!==document&&a(f.el.ownerDocument).unbind(b),a(window).unbind(b),f.$el.unbind(b)},f.destroy=function(a){var c,d=b.css,g=f.extensionNamespace.length,h=[d.input,d.locked,d.placeholder,d.noKeyboard,d.alwaysOpen,e.css.input,d.isCurrent].join(" ");for(clearTimeout(f.timer),clearTimeout(f.timer2),f.removeBindings(f.namespace),c=0;g>c;c++)f.removeBindings(f.extensionNamespace[c]);f.el.active=!1,f.$keyboard.length&&f.$keyboard.remove(),f.$el.removeClass(h).removeAttr("aria-haspopup").removeAttr("role").removeData("keyboard"),f=null,"function"==typeof a&&a()},f.init()};return b.keyCodes={backSpace:8,tab:9,enter:13,capsLock:20,escape:27,space:32,pageUp:33,pageDown:34,end:35,home:36,left:37,up:38,right:39,down:40,insert:45,"delete":46,A:65,Z:90,V:86,C:67,X:88,a:97,z:122},b.css={idSuffix:"_keyboard",input:"ui-keyboard-input",wrapper:"ui-keyboard-preview-wrapper",preview:"ui-keyboard-preview",keyboard:"ui-keyboard",keySet:"ui-keyboard-keyset",keyButton:"ui-keyboard-button",keyWide:"ui-keyboard-widekey",keyPrefix:"ui-keyboard-",keyText:"ui-keyboard-text",keyHasActive:"ui-keyboard-hasactivestate",keyAction:"ui-keyboard-actionkey",keySpacer:"ui-keyboard-spacer",keyToggle:"ui-keyboard-toggle",keyDisabled:"ui-keyboard-disabled",locked:"ui-keyboard-lockedinput",alwaysOpen:"ui-keyboard-always-open",noKeyboard:"ui-keyboard-nokeyboard",placeholder:"ui-keyboard-placeholder",hasFocus:"ui-keyboard-has-focus",isCurrent:"ui-keyboard-input-current",inputValid:"ui-keyboard-valid-input",inputInvalid:"ui-keyboard-invalid-input",inputAutoAccepted:"ui-keyboard-autoaccepted",endRow:"ui-keyboard-button-endrow"},b.events={kbChange:"keyboardChange",kbBeforeClose:"beforeClose",kbBeforeVisible:"beforeVisible",kbVisible:"visible",kbInit:"initialized",kbInactive:"inactive",kbHidden:"hidden",kbRepeater:"repeater",kbKeysetChange:"keysetChange",inputAccepted:"accepted",inputCanceled:"canceled",inputChange:"change",inputRestricted:"restricted"},b.keyaction={accept:function(a){return a.close(!0),!1},alt:function(a){a.altActive=!a.altActive,a.showSet()},bksp:function(a){a.insertText("\b")},cancel:function(a){return a.close(),!1},clear:function(a){a.$preview.val(""),a.$decBtn.length&&a.checkDecimal()},combo:function(a){var c=a.options,d=!c.useCombos,e=a.$keyboard.find("."+b.css.keyPrefix+"combo");return c.useCombos=d,e.toggleClass(c.css.buttonActive,d).attr("title",e.attr("data-title")+" ("+c.display[d?"active":"disabled"]+")"),d&&a.checkCombos(),!1},dec:function(a){a.insertText(a.decimal?".":",")},del:function(a){a.insertText("{d}")},"default":function(a){a.shiftActive=a.altActive=a.metaActive=!1,a.showSet()},enter:function(c,d,e){var f=c.el.nodeName,g=c.options;return e.shiftKey?g.enterNavigation?c.switchInput(!e[g.enterMod],!0):c.close(!0):g.enterNavigation&&("TEXTAREA"!==f||e[g.enterMod])?c.switchInput(!e[g.enterMod],g.autoAccept?"true":!1):void("TEXTAREA"===f&&a(e.target).closest("button").length&&c.insertText((b.msie?" ":"")+"\n"))},lock:function(a){a.last.keyset[0]=a.shiftActive=a.capsLock=!a.capsLock,a.showSet()},left:function(a){var c=b.caret(a.$preview);c.start-1>=0&&(a.last.start=a.last.end=c.start-1,b.caret(a.$preview,a.last),a.setScroll())},meta:function(b,c){var d=a(c);b.metaActive=!d.hasClass(b.options.css.buttonActive),b.showSet(d.attr("data-name"))},next:function(a){return a.switchInput(!0,a.options.autoAccept),!1},normal:function(a){a.shiftActive=a.altActive=a.metaActive=!1,a.showSet()},prev:function(a){return a.switchInput(!1,a.options.autoAccept),!1},right:function(a){var c=b.caret(a.$preview);c.start+1<=a.$preview.val().length&&(a.last.start=a.last.end=c.start+1,b.caret(a.$preview,a.last),a.setScroll())},shift:function(a){a.last.keyset[0]=a.shiftActive=!a.shiftActive,a.showSet()},sign:function(a){/^\-?\d*\.?\d*$/.test(a.$preview.val())&&a.$preview.val(-1*a.$preview.val())},space:function(a){a.insertText(" ")},tab:function(a){var b=a.el.nodeName,c=a.options;return"INPUT"===b?c.tabNavigation?a.switchInput(!a.shiftActive,!0):!1:void a.insertText("	")},toggle:function(a){a.enabled=!a.enabled,a.toggle()},NBSP:" ",ZWSP:"​",ZWNJ:"‌",ZWJ:"‍",LRM:"‎",RLM:"‏"},b.builtLayouts={},b.layouts={alpha:{normal:["` 1 2 3 4 5 6 7 8 9 0 - = {bksp}","{tab} a b c d e f g h i j [ ] \\","k l m n o p q r s ; ' {enter}","{shift} t u v w x y z , . / {shift}","{accept} {space} {cancel}"],shift:["~ ! @ # $ % ^ & * ( ) _ + {bksp}","{tab} A B C D E F G H I J { } |",'K L M N O P Q R S : " {enter}',"{shift} T U V W X Y Z < > ? {shift}","{accept} {space} {cancel}"]},qwerty:{normal:["` 1 2 3 4 5 6 7 8 9 0 - = {bksp}","{tab} q w e r t y u i o p [ ] \\","a s d f g h j k l ; ' {enter}","{shift} z x c v b n m , . / {shift}","{accept} {space} {cancel}"],shift:["~ ! @ # $ % ^ & * ( ) _ + {bksp}","{tab} Q W E R T Y U I O P { } |",'A S D F G H J K L : " {enter}',"{shift} Z X C V B N M < > ? {shift}","{accept} {space} {cancel}"]},international:{normal:["` 1 2 3 4 5 6 7 8 9 0 - = {bksp}","{tab} q w e r t y u i o p [ ] \\","a s d f g h j k l ; ' {enter}","{shift} z x c v b n m , . / {shift}","{accept} {alt} {space} {alt} {cancel}"],shift:["~ ! @ # $ % ^ & * ( ) _ + {bksp}","{tab} Q W E R T Y U I O P { } |",'A S D F G H J K L : " {enter}',"{shift} Z X C V B N M < > ? {shift}","{accept} {alt} {space} {alt} {cancel}"],alt:["~ ¡ ² ³ ¤ € ¼ ½ ¾ ‘ ’ ¥ × {bksp}","{tab} ä å é ® þ ü ú í ó ö « » ¬","á ß ð f g h j k ø ¶ ´ {enter}","{shift} æ x © v b ñ µ ç > ¿ {shift}","{accept} {alt} {space} {alt} {cancel}"],"alt-shift":["~ ¹ ² ³ £ € ¼ ½ ¾ ‘ ’ ¥ ÷ {bksp}","{tab} Ä Å É ® Þ Ü Ú Í Ó Ö « » ¦","Ä § Ð F G H J K Ø ° ¨ {enter}","{shift} Æ X ¢ V B Ñ µ Ç . ¿ {shift}","{accept} {alt} {space} {alt} {cancel}"]},colemak:{normal:["` 1 2 3 4 5 6 7 8 9 0 - = {bksp}","{tab} q w f p g j l u y ; [ ] \\","{bksp} a r s t d h n e i o ' {enter}","{shift} z x c v b k m , . / {shift}","{accept} {space} {cancel}"],
-shift:["~ ! @ # $ % ^ & * ( ) _ + {bksp}","{tab} Q W F P G J L U Y : { } |",'{bksp} A R S T D H N E I O " {enter}',"{shift} Z X C V B K M < > ? {shift}","{accept} {space} {cancel}"]},dvorak:{normal:["` 1 2 3 4 5 6 7 8 9 0 [ ] {bksp}","{tab} ' , . p y f g c r l / = \\","a o e u i d h t n s - {enter}","{shift} ; q j k x b m w v z {shift}","{accept} {space} {cancel}"],shift:["~ ! @ # $ % ^ & * ( ) { } {bksp}",'{tab} " < > P Y F G C R L ? + |',"A O E U I D H T N S _ {enter}","{shift} : Q J K X B M W V Z {shift}","{accept} {space} {cancel}"]},num:{normal:["= ( ) {b}","{clear} / * -","7 8 9 +","4 5 6 {sign}","1 2 3 %","0 {dec} {a} {c}"]}},b.language=a.extend({},b.language,{en:{display:{a:"✔:Accept (Shift+Enter)",accept:"Accept:Accept (Shift+Enter)",alt:"Alt:⌥ AltGr",b:"⌫:Backspace",bksp:"Bksp:Backspace",c:"✖:Cancel (Esc)",cancel:"Cancel:Cancel (Esc)",clear:"C:Clear",combo:"ö:Toggle Combo Keys",dec:".:Decimal",e:"⏎:Enter",empty:" ",enter:"Enter:Enter ⏎",left:"←",lock:"Lock:⇪ Caps Lock",next:"Next ⇨",prev:"⇦ Prev",right:"→",s:"⇧:Shift",shift:"Shift:Shift",sign:"±:Change Sign",space:" :Space",t:"⇥:Tab",tab:"⇥ Tab:Tab",toggle:" ",valid:"valid",invalid:"invalid",active:"active",disabled:"disabled"},wheelMessage:"Use mousewheel to see other keys",comboRegex:/([`\'~\^\"ao])([a-z])/gim,combos:{"`":{a:"à",A:"À",e:"è",E:"È",i:"ì",I:"Ì",o:"ò",O:"Ò",u:"ù",U:"Ù",y:"ỳ",Y:"Ỳ"},"'":{a:"á",A:"Á",e:"é",E:"É",i:"í",I:"Í",o:"ó",O:"Ó",u:"ú",U:"Ú",y:"ý",Y:"Ý"},'"':{a:"ä",A:"Ä",e:"ë",E:"Ë",i:"ï",I:"Ï",o:"ö",O:"Ö",u:"ü",U:"Ü",y:"ÿ",Y:"Ÿ"},"^":{a:"â",A:"Â",e:"ê",E:"Ê",i:"î",I:"Î",o:"ô",O:"Ô",u:"û",U:"Û",y:"ŷ",Y:"Ŷ"},"~":{a:"ã",A:"Ã",e:"ẽ",E:"Ẽ",i:"ĩ",I:"Ĩ",o:"õ",O:"Õ",u:"ũ",U:"Ũ",y:"ỹ",Y:"Ỹ",n:"ñ",N:"Ñ"}}}}),b.defaultOptions={language:null,rtl:!1,layout:"qwerty",customLayout:null,position:{of:null,my:"center top",at:"center top",at2:"center bottom"},reposition:!0,usePreview:!0,alwaysOpen:!1,initialFocus:!0,noFocus:!1,stayOpen:!1,ignoreEsc:!1,css:{input:"ui-widget-content ui-corner-all",container:"ui-widget-content ui-widget ui-corner-all ui-helper-clearfix",popup:"",buttonDefault:"ui-state-default ui-corner-all",buttonHover:"ui-state-hover",buttonAction:"ui-state-active",buttonActive:"ui-state-active",buttonDisabled:"ui-state-disabled",buttonEmpty:"ui-keyboard-empty"},autoAccept:!1,autoAcceptOnEsc:!1,lockInput:!1,restrictInput:!1,restrictInclude:"",acceptValid:!1,cancelClose:!0,tabNavigation:!1,enterNavigation:!1,enterMod:"altKey",stopAtEnd:!0,appendLocally:!1,appendTo:"body",stickyShift:!0,preventPaste:!1,caretToEnd:!1,scrollAdjustment:10,maxLength:!1,maxInsert:!0,repeatDelay:500,repeatRate:20,resetDefault:!0,openOn:"focus",keyBinding:"mousedown touchstart",useWheel:!0,useCombos:!0,validate:function(a,b,c){return!0}},b.comboRegex=/([`\'~\^\"ao])([a-z])/gim,b.currentKeyboard="",a('<!--[if lte IE 8]><script>jQuery("body").addClass("oldie");</script><![endif]--><!--[if IE]><script>jQuery("body").addClass("ie");</script><![endif]-->').appendTo("body").remove(),b.msie=a("body").hasClass("oldie"),b.allie=a("body").hasClass("ie"),b.watermark="undefined"!=typeof document.createElement("input").placeholder,b.checkCaretSupport=function(){if("boolean"!=typeof b.checkCaret){var c=a('<div style="height:0px;width:0px;overflow:hidden;"><input type="text" value="testing"/></div>').prependTo("body");b.caret(c.find("input"),3,3),b.checkCaret=3!==b.caret(c.find("input").hide().show()).start,c.remove()}return b.checkCaret},b.caret=function(a,b,c){if(!a.length||a.is(":hidden")||"hidden"===a.css("visibility"))return{};var d,e,f,g,h=a.data("keyboard"),i=h&&h.options.noFocus;return i||a.focus(),"undefined"!=typeof b?("object"==typeof b&&"start"in b&&"end"in b?(d=b.start,e=b.end):"undefined"==typeof c&&(c=b),"number"==typeof b&&"number"==typeof c?(d=b,e=c):"start"===b?d=e=0:"string"==typeof b&&(d=e=a.val().length),a.caret(d,e,i)):(g=a.caret(),d=g.start,e=g.end,f=a[0].value||a.text()||"",{start:d,end:e,text:f.substring(d,e),replaceStr:function(a){return f.substring(0,d)+a+f.substring(e,f.length)}})},a.fn.keyboard=function(b){return this.each(function(){a(this).data("keyboard")||new a.keyboard(this,b)})},a.fn.getkeyboard=function(){return this.data("keyboard")},a.fn.caret=function(a,b,c){if("undefined"==typeof this[0]||this.is(":hidden")||"hidden"===this.css("visibility"))return this;var d,e,f,g,h,i=document.selection,j=this,k=j[0],l=k.scrollTop,m=!1,n=!0;try{m="selectionStart"in k}catch(o){n=!1}return n&&"undefined"!=typeof a?(/(email|number)/i.test(k.type)||(m?(k.selectionStart=a,k.selectionEnd=b):(d=k.createTextRange(),d.collapse(!0),d.moveStart("character",a),d.moveEnd("character",b-a),d.select())),c||!j.is(":visible")&&"hidden"===j.css("visibility")||k.focus(),k.scrollTop=l,this):(/(email|number)/i.test(k.type)?a=b=j.val().length:m?(a=k.selectionStart,b=k.selectionEnd):i?"TEXTAREA"===k.nodeName?(h=j.val(),e=i.createRange(),f=e.duplicate(),f.moveToElementText(k),f.setEndPoint("EndToEnd",e),a=f.text.replace(/\r/g,"\n").length,b=a+e.text.replace(/\r/g,"\n").length):(h=j.val().replace(/\r/g,"\n"),e=i.createRange().duplicate(),e.moveEnd("character",h.length),a=""===e.text?h.length:h.lastIndexOf(e.text),e=i.createRange().duplicate(),e.moveStart("character",-h.length),b=e.text.length):a=b=(k.value||"").length,g=k.value||"",{start:a,end:b,text:g.substring(a,b),replace:function(c){return g.substring(0,a)+c+g.substring(b,g.length)}})},b});
-},{"jquery":34}],166:[function(require,module,exports){
+},{"./lib/React":58}],164:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
@@ -29380,13 +28871,6 @@ var commonActions = {
   setCurrentSeat:function(seat){ 
     AppDispatcher.handleAction({
       actionType: appConstants.SET_CURRENT_SEAT,
-      data:seat
-    })
-  },
-
-  showErrorMessage:function(seat){
-    AppDispatcher.handleAction({
-      actionType: appConstants.SHOW_ERROR_MESSAGE,
       data:seat
     })
   },
@@ -29565,7 +29049,7 @@ var commonActions = {
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":183,"../dispatchers/AppDispatcher":187}],167:[function(require,module,exports){
+},{"../constants/appConstants":185,"../dispatchers/AppDispatcher":189}],165:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -29840,136 +29324,53 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":166,"../../constants/appConstants":183,"../../stores/mainstore":189,"react":164}],168:[function(require,module,exports){
+},{"../../actions/CommonActions":164,"../../constants/appConstants":185,"../../stores/mainstore":191,"react":163}],166:[function(require,module,exports){
 var React = require('react');
-var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
+var appConstants = require('../constants/appConstants');
 var mainstore = require('../stores/mainstore');
-var virtualkeyboard = require('virtual-keyboard');
-var jqueryPosition = require('jquery-ui/position');
-var virtualKeyBoard_header = null;
-var Header = React.createClass({displayName: "Header",
-    virtualKeyBoard: '',
-    exceptionMenu:'',
-    getInitialState: function() {
-        return {
-            spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState(),
-            logoutState: mainstore.getLogoutState()
-        }
-    },
-    openKeyboard: function() {
-         virtualKeyBoard_header = $('#barcode').keyboard({
-            layout: 'custom',
-            customLayout: {
-              'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
-            },
-            css: {
-                container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
-            },
-            reposition: true,
-            alwaysOpen: false,
-            initialFocus: true,
-            position: {
-                of: $('.keyboard-actions'),
-                my: 'center top',
-                at: 'center top'
-            },
-            visible : function(e, keypressed, el){
-                el.value = '';
-            },
-            accepted: function(e, keypressed, el) {
-                if (e.target.value === '') {
-                } else {
-                    var data = {
-                        "event_name": "process_barcode",
-                        "event_data": {
-                            "barcode": e.target.value,
-                        }
-                    }
-                    CommonActions.postDataToInterface(data);
-                }
-            }
-        })
-        $('#barcode').data('keyboard').reveal();
-    },
-    enableException:function(){
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
-    logoutSession:function(){
-        $("#actionMenu").hide();        
-        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
-            return false;
-        }
-        else{
-            CommonActions.logoutSession(true);
-        }        
-        
-    },
-    componentDidMount: function() { 
-    },
-    enableException:function(){
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
-    componentDidMount: function() {
-    },
-    showMenu: function(){
-        $("#actionMenu").toggle();
-    },
-    componentWillMount: function() {
-        mainstore.addChangeListener(this.onChange);
-    },
-    onChange: function() {
-        if(virtualKeyBoard_header != null){
-            virtualKeyBoard_header.getkeyboard().close();
-        }
-    },
-    getExceptionMenu:function(){
-         if(mainstore.getExceptionAllowed().length > 0 )
-            this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
-                                        "Exception"
-                                    ));
-        else
-            this.exceptionMenu = '';
-    },
 
-    render: function() {    
-        var logoutClass;
-        var cssClass;      
-        this.getExceptionMenu();
-        if(this.state.spinner || this.state.systemIsIdle){
-            cssClass = 'keyboard-actions hide-manual-barcode'
-        } else{
-            cssClass = 'keyboard-actions'
-        }
-        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){
-            logoutClass = 'actionItem disable'
-        } else{
-            logoutClass = 'actionItem'
-        }
-        return (React.createElement("div", null, 
-            React.createElement("div", {className: "head"}, 
-              React.createElement("div", {className: "logo"}, 
-              React.createElement("img", {src: allSvgConstants.logo})
-              ), 
-                React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
-                  React.createElement("img", {src: allSvgConstants.scanHeader}), 
-                  React.createElement("input", {id: "barcode", type: "text", value: ""})
-                ), 
-              React.createElement("div", {className: "header-actions", onClick: this.showMenu}, 
-                 React.createElement("img", {src: allSvgConstants.menu})
-                 
-              )
-            ), 
-            React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
-                this.exceptionMenu, 
-                React.createElement("div", {className: logoutClass, onClick: this.logoutSession}, 
-                    "Logout"
-                )
+
+var CommonButton = React.createClass({displayName: "CommonButton",
+	render: function(){
+		return (
+			 	React.createElement("a", {className: "commonButton"}, this.props.text)
+			);
+	}
+});
+
+module.exports = CommonButton;
+
+},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"react":163}],167:[function(require,module,exports){
+var React = require('react');
+var Description = React.createClass({displayName: "Description",
+    render: function() {
+
+        return (
+        	React.createElement("div", {className: "itemDescription"}, 
+            	 this.props.description
             )
+        );
+    }
+});
+
+module.exports = Description;  
+
+},{"react":163}],168:[function(require,module,exports){
+var React = require('react');
+
+var Header = React.createClass({displayName: "Header",
+    render: function() {
+        return (
+                React.createElement("div", {className: "row header"}, 
+                    React.createElement("div", {className: ""}, 
+                            React.createElement("div", {className: "col-md-2 col-sm-3 col-xs-5"}, 
+                                React.createElement("div", {className: "gorLogo"}, "GREYORANGE")
+                            ), 
+                            React.createElement("div", {className: "col-md-offset-9 col-md-1 col-sm-offset-7 col-sm-2 col-xs-offset-4 col-xs-2"}, 
+                                "ICON"
+                            )
+                    )
             )
         );
     },
@@ -29977,31 +29378,58 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":166,"../constants/svgConstants":186,"../stores/mainstore":189,"jquery-ui/position":33,"react":164,"virtual-keyboard":165}],169:[function(require,module,exports){
+},{"react":163}],169:[function(require,module,exports){
 var React = require('react');
+
+var ImageComponent = React.createClass({displayName: "ImageComponent",
+    render: function() {
+        return (
+            React.createElement("div", {className: "itemImage"}, 
+           		React.createElement("img", {className: "img-responsive", src: this.props.imgURL, alt: "PLACEHOLDER"})
+           	)
+        );
+    }
+});
+
+module.exports = ImageComponent;
+
+},{"react":163}],170:[function(require,module,exports){
+var React = require('react');
+var ImageComponent = require('./ImageComponent.js');
+var PriceComponent = require('./PriceComponent.js');
+var Description = require('./Description.js');
+
 
 var ListItems = React.createClass({displayName: "ListItems",
     render: function() {
         var tableStructure = this.props.ListItems.map(function(data, index){ 
               return(
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "column"}, 
-                        React.createElement("img", {src: data.img})
-                    ), 
-                    React.createElement("div", {className: "column"}, 
-                        React.createElement("h1", null, " Test "), 
-                        React.createElement("h1", null, " 1$ ")
-                    ), 
-                    React.createElement("div", {className: "column"}, 
-                        React.createElement("p", null, " test t1usshshshs ")
+                  React.createElement("div", {className: "col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10"}, 
+                      React.createElement("div", {className: "listItems"}, 
+                         React.createElement("div", {className: "row"}, 
+                              React.createElement("div", {className: "ItemContainer"}, 
+                                React.createElement("div", {className: "col-md-12"}, 
+                                  React.createElement("div", {className: "col-md-3 col-sm-4 col-xs-6"}, 
+                                    React.createElement(ImageComponent, null)
+                                  ), 
+                                  React.createElement("div", {className: "col-md-3 col-sm-2 col-xs-6"}, 
+                                      React.createElement(PriceComponent, null)
+                                  ), 
+                                  React.createElement("div", {className: "col-md-6 col-sm-6 col-xs-12"}, 
+                                    React.createElement(Description, null)
+                                  )
+                                )
+                              )
+                         )
+                      )
                     )
-                )    
-              )
+                  )
+            );
           });
         return (
             React.createElement("div", {className: "bins"}, 
                 tableStructure
-                
             )    
         )
     }
@@ -30009,44 +29437,47 @@ var ListItems = React.createClass({displayName: "ListItems",
 
 module.exports = ListItems;
 
-},{"react":164}],170:[function(require,module,exports){
+},{"./Description.js":167,"./ImageComponent.js":169,"./PriceComponent.js":175,"react":163}],171:[function(require,module,exports){
 var React = require('react');
 
-var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
-    render: function() {
-        var server_message = this.props.data.description;
-        var compData = this.props.data;
-        var level;
-        return (
-            	React.createElement("div", {className: "active-navigation"}, 
-            		React.createElement("div", {className: "action"}, 
-            		  server_message
-            		)
-            	)
-        )
-    }
-});
-
-module.exports = ActiveNavigation;
-
-},{"react":164}],171:[function(require,module,exports){
-var React = require('react');
-var ActiveNavigation = require('./ActiveNavigation.react');
-
-var Navigation = React.createClass({displayName: "Navigation", 
-    
+var MessageNavigation = React.createClass({displayName: "MessageNavigation",
     render: function() {
         return (
-            React.createElement("div", {className: "navigation"}, 
-                 React.createElement(ActiveNavigation, {data: this.props.navData})
-      		)
-        )
+            	React.createElement("div", {className: "row messageNavigation"}, 
+           		   React.createElement("div", {className: ""}, 
+           				   React.createElement("div", {className: "col-md-6 col-sm-6 msg"}, 
+                        this.props.navData.description
+                     )
+           		   )
+           	)
+        );
     },
 });
 
-module.exports = Navigation;
+module.exports = MessageNavigation;
 
-},{"./ActiveNavigation.react":170,"react":164}],172:[function(require,module,exports){
+},{"react":163}],172:[function(require,module,exports){
+var React = require('react');
+
+var NotificationBar = React.createClass({displayName: "NotificationBar",
+    render: function() {
+        return (
+            	React.createElement("div", {className: "row"}, 
+           		   React.createElement("div", {className: "notificationBar"}, 
+           				   React.createElement("div", {className: "col-md-6 col-sm-6 col-xs-12 notifier"}, 
+                          React.createElement("div", {className: ""}, 
+                              this.props.notificationData.description
+                          )
+                     )
+           		   )
+           	)
+        );
+    },
+});
+
+module.exports = NotificationBar;
+
+},{"react":163}],173:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutFront = require('./PutFront');
@@ -30060,7 +29491,6 @@ function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
       spinner : mainstore.getSpinnerState(),
-      systemIsIdle : mainstore.getSystemIdleState(),
       navMessages : mainstore.getServerMessages(),
       flag : mainstore.getFlag()
   }
@@ -30078,7 +29508,7 @@ var Operator = React.createClass({displayName: "Operator",
         'data': {
               'username': 'kerry',
               'password': 'gorapj',
-              'seat_name': 'front_20'
+              'seat_name': 'front_10'
           }
     }
     CommonActions.webSocketConnection();
@@ -30096,20 +29526,11 @@ var Operator = React.createClass({displayName: "Operator",
   },
   getSeatType:function(seat){
      switch(seat){
-      case appConstants.PUT_BACK:
-          this._currentSeat = React.createElement(PutBack, {navMessagesJson: this.state.navMessages});
-        break;
-      case appConstants.PUT_FRONT:
-          this._currentSeat = React.createElement(PutFront, {navMessagesJson: this.state.navMessages});
-        break;
-      case appConstants.PICK_BACK:
-          this._currentSeat = React.createElement(PickBack, {navMessagesJson: this.state.navMessages});
-        break;
       case appConstants.PICK_FRONT:
           this._currentSeat = React.createElement(PickFront, {navMessagesJson: this.state.navMessages});
-        break;
-      case appConstants.AUDIT:
-          this._currentSeat = React.createElement(Audit, {navMessagesJson: this.state.navMessages});
+        break; 
+      case appConstants.PUT_FRONT:
+          this._currentSeat = React.createElement(PutFront, {navMessagesJson: this.state.navMessages});
         break;
       default:
         return true; 
@@ -30153,7 +29574,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../actions/CommonActions":166,"../constants/appConstants":183,"../stores/mainstore":189,"./PickFront":173,"./PutFront":174,"./Spinner/Overlay":180,"./SystemIdle":182,"react":164}],173:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./PickFront":174,"./PutFront":176,"./Spinner/Overlay":182,"./SystemIdle":184,"react":163}],174:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
@@ -30161,27 +29582,23 @@ var Button1 = require("./Button/Button");
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var CommonActions = require('../actions/CommonActions');
-var Navigation = require("./Navigation/Navigation.react");
-var ListItems = require("./ListItems")
+var MessageNavigation = require("./MessageNavigation");
+var ListItems = require("./ListItems");
+var NotificationBar = require("./NotificationBar");
+var Spinner = require('./Spinner/Overlay');
+var LoaderButler = require('./Spinner/LoaderButler');
+var CommonButton = require("./CommonButton");
+
 function getStateData(){
-  /*return {
-           PickFrontNavData : PickFrontStore.getNavData(),
-           PickFrontNotification : PickFrontStore.getNotificationData(),
-           PickFrontBinData: PickFrontStore.getBinData(),
-           PickFrontScreenId:PickFrontStore.getScreenId(),
-           PickFrontScanDetails : PickFrontStore.scanDetails(),
-           PickFrontProductDetails : PickFrontStore.productDetails(),
-           PickFrontRackDetails: PickFrontStore.getRackDetails(),
-           PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
-           PickFrontServerNavData : PickFrontStore.getServerNavData(),
-           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
-           PickFrontItemUid : PickFrontStore.getItemUid(),
-           PickFrontSlotDetails :PickFrontStore.getCurrentSlot(),
-           PickFrontChecklistDetails :PickFrontStore.getChecklistDetails(),
-           PickFrontChecklistIndex : PickFrontStore.getChecklistIndex(),
-           PickFrontChecklistOverlayStatus :PickFrontStore.getChecklistOverlayStatus()
-    };*/
-    return mainstore.getScreenData();
+  return {
+           PickFrontNavData : mainstore.getNavData(),
+           PickFrontNotificationData : mainstore.getNotificationData(),
+           PickFrontScreenId: mainstore.getScreenId(),
+           PickFrontRackDetails: mainstore.getRackDetails(),
+           PickFrontServerNavData : mainstore.getServerNavData(),
+           PickFrontItemUid : mainstore.getItemUid(),
+           ListItems : mainstore.getListItems(),
+    };
 };
 
 var PickFront = React.createClass({displayName: "PickFront",
@@ -30213,275 +29630,51 @@ var PickFront = React.createClass({displayName: "PickFront",
     else
       this._notification = "";*/
   },
-  getModalStatus:function(){
-    return _showModal;
-  },
-  showModal:function(data,index){
-    var data ={
-      'checklist_data' : data,
-      "checklist_index" : index,
-      "product_details" : this.state.PickFrontProductDetails
-    };
-    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
-    setTimeout((function(){CommonActions.showModal({
-              data:data,
-              type:'pick_checklist'
-      });
-      $('.modal').modal({backdrop: 'static', keyboard: false});
-      return false;
-      }),0)
-
-    }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
-      $('.modal').modal('hide');
-      $('.modal-backdrop fade in').remove();
-    }
-
-  },
-  getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData, action: true}), 
-                React.createElement("div", {className: "exception-right"}), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
-                )
-              )
-            );
-  },
+ 
   getScreenComponent : function(screen_id){
     console.log(this.state.ListItems);
     switch(screen_id){
      
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-       if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                   React.createElement(ListItems, {ListItems: this.state.ListItems})
-                 )
-              )
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
+        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+        this._component = (React.createElement(ListItems, {ListItems: this.state.ListItems}));
       break;
 
       case appConstants.PICK_FRONT_LOCATION_SCAN:
-         if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
-                 )
-              )
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
+        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+        this._component = ( 
+            React.createElement("div", {className: "row grid-container"}, 
+                React.createElement("div", {className: "mainRackContainer"}, 
+                  React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
+                ), 
+                React.createElement("div", {className: "confirmShelfButton"}, 
+                    React.createElement(CommonButton, {text: "Confirm", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM})
+                  )
+            )
+          );
       break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
-       if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {rackData: this.state.PickFrontRackDetails}), 
-                     React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
+      this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+        this._component = ( 
+                React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Rack, {rackData: this.state.PickFrontRackDetails}), 
+                  React.createElement(Button1, {disabled: true, text: "Confirm", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
+                )
+            )
+          );
       break;
 
 
        case appConstants.PICK_FRONT_CONTAINER_SCAN:
-        if(this.state.PickFrontExceptionStatus == false){
-           this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
-                    React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
+       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+        this._component = (React.createElement(LoaderButler, null));
       break;
-
-      case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                ), 
-                React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                   editButton
-                )
-              )
-            );
-        }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-
-      case appConstants.PICK_FRONT_PPTL_PRESS:
-         if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                    editButton
-                )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-      
-      case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
-          if(this.state.PickFrontExceptionScreen == "good"){
-          this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontGoodQuantity, action: "GOOD"})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontMissingQuantity, action: "MISSING"})
-                    ), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                     React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          }else if(this.state.PickFrontExceptionScreen == "pick_front_quantity"){
-              this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Please Put Back Damaged Item Quantity into Exception Area . ")
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-           }
-        break;      
-        case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
-          this._navigation = '';
-          if(this.state.PickFrontExceptionScreen == "box_serial"){
-          this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Missing Boxes"), 
-                      React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
-              this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Are You sure Given Boxes are not present in Slot ? ")
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.SEND_MISSING_BOX_EXCEPTION})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-           }
-          break;
 
       default:
         return true;
@@ -30493,20 +29686,41 @@ var PickFront = React.createClass({displayName: "PickFront",
     this.getScreenComponent(this.state.PickFrontScreenId);
 	
 	return (
-		React.createElement("div", {className: "main"}, 
-			React.createElement(Header, null), 
-			this._navigation, 
-			this._component, 
-      this._notification
-	  )   
+    React.createElement("div", {className: ""}, 
+      React.createElement(Header, null), 
+      this._navigation, 
+      this._notification, 
+      this._component
+    )   
 	  )
   }
 });
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":166,"../constants/appConstants":183,"../stores/mainstore":189,"./Button/Button":167,"./Header":168,"./ListItems":169,"./Navigation/Navigation.react":171,"./Rack/MsuRack.js":175,"react":164}],174:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./Button/Button":165,"./CommonButton":166,"./Header":168,"./ListItems":170,"./MessageNavigation":171,"./NotificationBar":172,"./Rack/MsuRack.js":177,"./Spinner/LoaderButler":181,"./Spinner/Overlay":182,"react":163}],175:[function(require,module,exports){
+var React = require('react');
+var PriceComponent = React.createClass({displayName: "PriceComponent",
+    render: function() {
 
+        return (
+
+        	React.createElement("div", {className: ""}, 
+	        	React.createElement("div", {className: "row itemName"}, 
+	        		this.props.title, 
+	        		"ABCD"
+	        	), 
+	        	React.createElement("div", {className: "row itemPrice"}, 
+	        		"$ ", this.props.price
+	        	)
+           	)
+        )
+    }
+});
+
+module.exports = PriceComponent;  
+
+},{"react":163}],176:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var Spinner = require("./Spinner/LoaderButler");
@@ -30514,23 +29728,24 @@ var Button1 = require("./Button/Button");
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var mainstore = require('../stores/mainstore');
+var CommonActions = require('../actions/CommonActions');
+var MessageNavigation = require("./MessageNavigation");
+var ListItems = require("./ListItems");
+var NotificationBar = require("./NotificationBar");
+var ImageComponent = require('./ImageComponent.js');
 
 
 function getStateData(){
-  /*return {
-           PutFrontNavData : PutFrontStore.getNavData(),
-           PutFrontNotification : PutFrontStore.getNotificationData(),
-           PutFrontScreenId:PutFrontStore.getScreenId(),
-           PutFrontBinData: PutFrontStore.getBinData(),
-           PutFrontScanDetails : PutFrontStore.scanDetails(),
-           PutFrontProductDetails : PutFrontStore.productDetails(),
-           PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData(),
-           PutFrontItemUid : PutFrontStore.getItemUid()
-          
-    };*/
-     return mainstore.getScreenData();
+  return {
+           PutFrontNavData : mainstore.getNavData(),
+           PutFrontNotificationData : mainstore.getNotificationData(),
+           PutFrontScreenId:mainstore.getScreenId(),
+           PutFrontRackDetails: mainstore.getRackDetails(),
+           PutFrontServerNavData : mainstore.getServerNavData(),
+           PutFrontItemUid : mainstore.getItemUid(),
+           PickFrontRackDetails : mainstore.getRackDetails(),
+           ListItems : mainstore.getListItems(),
+    };
 };
 
 var PutFront = React.createClass({displayName: "PutFront",
@@ -30558,40 +29773,43 @@ var PutFront = React.createClass({displayName: "PutFront",
       this._notification = "";
   },
 
-  getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
-                React.createElement("div", {className: "exception-right"}), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
-                )
-              )
-            );
-  },
-
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
-        if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          var imageComponents =[];
+          this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData}));
+          this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PutFrontNotificationData}));
+          imageComponents = this.state.ListItems.map(function(data,index){
+                  return (
+                        React.createElement("div", {className: "col-md-4 col-sm-4"}, 
+                         React.createElement(ImageComponent, {imgURL: data.img})
+                      )
+                    );
+                });
           this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
-                 )
+              React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "col-md-8 col-sim-8"}, 
+                    React.createElement("div", {className: "row"}, 
+                      imageComponents
+                    ), 
+                    React.createElement("div", {className: "row"}, 
+                        
+                          React.createElement(Button1, {disabled: false, text: "Complete Put", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "orange"})
+                        
+                    )
+                ), 
+                React.createElement("div", {className: "col-md-4 col-sm-4"}, 
+                    React.createElement("div", {className: "row"}, 
+                      React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
+                    ), 
+                    React.createElement("div", {className: "row"}, 
+                      React.createElement(Button1, {disabled: false, text: "Complete Put", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "orange"})
+                    )
+                )
               )
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
-
+              );
         break;
       case appConstants.PUT_FRONT_SCAN:
-         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
@@ -30602,9 +29820,6 @@ var PutFront = React.createClass({displayName: "PutFront",
                 )
               )
             );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
         break;
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
@@ -30733,8 +29948,9 @@ var PutFront = React.createClass({displayName: "PutFront",
       React.createElement("div", {className: "main"}, 
         React.createElement(Header, null), 
         this._navigation, 
-        this._component, 
-        this._notification
+        this._notification, 
+        this._component
+        
       ) 
      
     );
@@ -30744,7 +29960,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":183,"../stores/mainstore":189,"./Button/Button":167,"./Header":168,"./Rack/MsuRack.js":175,"./Spinner/LoaderButler":179,"react":164}],175:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./Button/Button":165,"./Header":168,"./ImageComponent.js":169,"./ListItems":170,"./MessageNavigation":171,"./NotificationBar":172,"./Rack/MsuRack.js":177,"./Spinner/LoaderButler":181,"react":163}],177:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -30771,7 +29987,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
                return totalHeight;
         },
 
-        eachRowHeight: function(){
+    eachRowHeight: function(){
             var rackDetails = this.props.rackData.rack_type_rec;
             var eachRowHeight=[];
             var eachRowHeight = rackDetails.map(function(row,index){
@@ -30838,7 +30054,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":176,"react":164}],176:[function(require,module,exports){
+},{"./RackRow":178,"react":163}],178:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -30886,7 +30102,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":177,"react":164}],177:[function(require,module,exports){
+},{"./RackSlot":179,"react":163}],179:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -30928,7 +30144,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":178,"react":164}],178:[function(require,module,exports){
+},{"./SingleSlot":180,"react":163}],180:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -30948,7 +30164,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":164}],179:[function(require,module,exports){
+},{"react":163}],181:[function(require,module,exports){
 var React = require('react');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
@@ -30968,7 +30184,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":164}],180:[function(require,module,exports){
+},{"react":163}],182:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -30986,7 +30202,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":179,"./SpinnerButler":181,"react":164}],181:[function(require,module,exports){
+},{"./LoaderButler":181,"./SpinnerButler":183,"react":163}],183:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
@@ -31013,7 +30229,7 @@ var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 
 module.exports = SpinnerButler;
 
-},{"react":164}],182:[function(require,module,exports){
+},{"react":163}],184:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -31033,7 +30249,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":185,"./Header":168,"react":164}],183:[function(require,module,exports){
+},{"../constants/resourceConstants":187,"./Header":168,"react":163}],185:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
@@ -31160,15 +30376,15 @@ var appConstants = {
 
 module.exports = appConstants;
 
-},{}],184:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.1.35:8888/ws",
-	INTERFACE_IP : "https://192.168.1.35:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "https://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
 
-},{}],185:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 var resourceConstants = {
 	FRIEND_NAME :'Friend Name',
 	TOTALBILL : 'Total bill',
@@ -31177,7 +30393,7 @@ var resourceConstants = {
 };
 module.exports = resourceConstants;
 
-},{}],186:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -31199,7 +30415,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],187:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -31213,7 +30429,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":30}],188:[function(require,module,exports){
+},{"flux":30}],190:[function(require,module,exports){
 (function (global){
 global.jQuery = global.$ = require("jquery");
 var React = require('react');
@@ -31240,7 +30456,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/Operator":172,"jquery":34,"react":164,"react-dom":35}],189:[function(require,module,exports){
+},{"./components/Operator":173,"jquery":33,"react":163,"react-dom":34}],191:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -31312,29 +30528,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getNavData: function() {
         switch (_currentSeat) {
-            case appConstants.PUT_BACK:
-                if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
-                    _NavData = navConfig.putBack[0];
-                else
-                    _NavData = navConfig.putBack[1];
+            case appConstants.PICK_FRONT:
+                    _NavData = _seatData.header_msge_list[0]
                 break;
             case appConstants.PUT_FRONT:
-                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
-                    _NavData = navConfig.putFront[0];
-                else
-                    _NavData = navConfig.putFront[1];
-                break;
-            case appConstants.PICK_BACK:
-                _NavData = navConfig.pickBack;
-                break;
-            case appConstants.PICK_FRONT:
-                _NavData = _seatData.header_msge_list[0];
-                break;
-            case appConstants.AUDIT:
-                if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
-                    _NavData = navConfig.audit[0];
-                else
-                    _NavData = navConfig.audit[1];
+                    _NavData = _seatData.header_msge_list[0];
                 break;
             default:
                 //return true; 
@@ -31343,111 +30541,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _NavData;
     },
 
-    getModalStatus: function() {
-        var data = {};
-        data["showModal"] = "";
-        data["message"] = "";
-        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
-            return {
-                "showModal": true,
-                "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
-            }
-        } else
-            return data;
-    },
-
-    getBoxSerialData: function() {
-        var data = {};
-        data["header"] = [];
-        data["tableRows"] = [];
-        var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
-        _finishAuditFlag = true;
-        var d = [];
-        _seatData.Box_qty_list.map(function(value, index) {
-            d = [];
-            if (value.Scan_status != "close") {
-                d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
-                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
-                data["tableRows"].push(d);
-            } else {
-                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
-                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
-                data["tableRows"].push(d);
-            }
-
-            if (value.Scan_status == "open") {
-                _finishAuditFlag = false;
-            }
-        });
-
-        _seatData.Extra_box_list.map(function(value, index) {
-            d = [];
-            d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
-            data["tableRows"].push(d);
-            if (value.Scan_status == "open") {
-                _finishAuditFlag = false;
-            }
-        });
-
-        return data;
-
-    },
-
-
-    getBoxDetails: function() {
-        if (_seatData.hasOwnProperty('box_serials'))
-            return _seatData.box_serials;
-    },
-
-    getChecklistDetails: function() {
-        if (_seatData.hasOwnProperty('checklist_details')) {
-            console.log(_seatData.checklist_details.pick_checklist.length + "jindal");
-            if (_seatData.checklist_details.pick_checklist.length > 0) {
-                return _seatData.checklist_details.pick_checklist;
-            } else {
-                return [];
-            }
-
-        } else {
-            return [];
-        }
-    },
-
-    getChecklistIndex: function() {
-        if (_seatData.hasOwnProperty('checklist_details')) {
-            if (_seatData.checklist_details.checklist_index != null) {
-                return _seatData.checklist_details.checklist_index;
-            } else {
-                return null;
-            }
-
-        } else {
-            return null;
-        }
-    },
-
-    getChecklistOverlayStatus: function() {
-        if (_seatData.hasOwnProperty('checklist_details')) {
-            return _seatData.checklist_details.display_checklist_overlay;
-        } else {
-            return null;
-        }
-    },
 
     getServerNavData: function() {
         if (_seatData.header_msge_list.length > 0) {
@@ -31460,27 +30553,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getNotificationData: function() {
         return _seatData.notification_list[0];
-    },
-
-    getBinData: function() {
-        var binData = {};
-        binData["structure"] = _seatData.structure;
-        binData["ppsbin_list"] = _seatData.ppsbin_list;
-        return binData;
-    },
-
-    getSelectedBin: function() {
-        if (_seatData.hasOwnProperty('ppsbin_list')) {
-            var data = null;
-            _seatData.ppsbin_list.map(function(value, index) {
-                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
-                    data = value.ppsbin_id;
-                }
-            });
-
-            return data;
-        }else
-            return null;
     },
 
     getCurrentState: function() {
@@ -31497,41 +30569,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
     },
 
-    getExceptionData: function() {
-        var data = {};
-        data["activeException"] = this.getActiveException();
-        data["list"] = [];
-        data["header"] = "Exceptions";
-        _seatData.exception_allowed.map(function(value, index) {
-            if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) || value.exception_name == data["activeException"])
-                data["list"].push({
-                    "text": value.exception_name,
-                    "selected": true,
-                    "event": value["event"] != undefined ? value["event"] : ""
-                });
-            else
-                data["list"].push({
-                    "text": value.exception_name,
-                    "selected": false,
-                    "event": value["event"] != undefined ? value["event"] : ""
-                });
-        })
-        return data;
-    },
-    getExceptionAllowed: function() {
-        return _seatData.exception_allowed;
-    },
-
-    scanDetails: function() {
-        _scanDetails = _seatData.scan_details;
-        return _scanDetails;
-    },
-
-    productDetails: function() {
-        _prodDetails = _seatData.product_info;
-        return _prodDetails;
-    },
-
     getItemUid: function() {
         return _seatData.item_uid;
     },
@@ -31539,277 +30576,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getRackDetails: function() {
         if (_seatData.hasOwnProperty('rack_details')) {
             return _seatData.rack_details;
-        }
-    },
-
-    getCurrentSelectedBin: function() {
-        var binData = {};
-        binData["structure"] = [1, 1];
-        binData["ppsbin_list"] = [];
-        _seatData.ppsbin_list.map(function(value, index) {
-            if (value.selected_state == true)
-                binData["ppsbin_list"].push(value);
-        })
-        return binData;
-    },
-
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
-        this.text = text;
-        this.status = status;
-        this.selected = selected;
-        this.size = size;
-        this.border = border;
-        this.grow = grow;
-        this.bold = bold;
-        this.disabled = disabled;
-        this.centerAlign = centerAlign;
-        this.type = type;
-        this.buttonType = buttonType;
-        this.buttonStatus = buttonStatus;
-    },
-
-    getReconcileData: function() {
-        if (_seatData.hasOwnProperty('reconciliation')) {
-            var data = {};
-            data["header"] = [];
-            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-            data["tableRows"] = [];
-            var self = this;
-            data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
-            _seatData.reconciliation.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
-
-            });
-            return data;
-        }
-    },
-
-    getCurrentBoxSerialData: function() {
-        return _seatData.Current_box_details;
-    },
-
-    getCancelScanStatus: function() {
-        return _seatData.Cancel_scan;
-    },
-
-    getReconcileBoxSerialData: function() {
-        var data = {};
-        data["header"] = [];
-        data["tableRows"] = [];
-        var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-        var noScanMissing = 0;
-        _seatData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "no_scan"){
-                var totalMissing = '';
-                    if(_seatData.item_in_box_barcode_damage.length > 0){
-                    _seatData.item_in_box_barcode_damage.map(function(data, index){
-                        if(data.Box_serial == value.Box_serial){
-                            totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
-                        }
-                    });
-                }
-                var missingBoxSerials = Math.max(parseInt(value.Expected_qty) - parseInt(value.Actual_qty),0);
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(missingBoxSerials + totalMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
-                ]);
-            }
-            else{
-                noScanMissing  = noScanMissing + 1;
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
-                ]);
-            }
-
-        });
-        var barcodeDamaged = " ("+_seatData.box_barcode_damage+' Barcode Damaged )';
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(noScanMissing + barcodeDamaged, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
-        ]);
-        _seatData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
-            ]);
-        });
-
-        return data;
-    },
-
-    getLooseItemsData: function() {
-        var data = {};
-        var disabledStatus;
-        //if (_seatData.Current_box_details.length > 0) {
-        disabledStatus = false;
-        //}
-        data["header"] = [];
-        data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
-        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["tableRows"] = [];
-        var self = this;
-        var d = [];
-        _seatData.Loose_sku_list.map(function(value, index) {
-            d = [];
-            d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            data["tableRows"].push(d);
-
-            /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
-                     if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                         new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true);
-                 })(),
-                 new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
-             ]);*/
-        });
-        return data;
-    },
-
-    getFinishAuditFlag: function() {
-        return _finishAuditFlag;
-    },
-
-    getReconcileLooseItemsData: function() {
-        var data = {};
-        data["header"] = [];
-        data["tableRows"] = [];
-        data["header"].push(new this.tableCol("Loose Items SKU", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-        var self = this;
-        var totalLooseItemsMissing = 0;
-        var extraLooseItemsMissing = 0;
-        _seatData.Loose_sku_list.map(function(value, index) {
-            if(value.Expected_qty >= value.Actual_qty){
-                totalLooseItemsMissing = totalLooseItemsMissing +  parseInt(value.Expected_qty - value.Actual_qty);
-            }
-            if(value.Expected_qty <= value.Actual_qty){
-              extraLooseItemsMissing = extraLooseItemsMissing + Math.abs(parseInt(value.Expected_qty - value.Actual_qty)); 
-            }
-            if (value.Scan_status != "no_scan")
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
-            else
-                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
-
-        });
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(totalLooseItemsMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(extraLooseItemsMissing, "enabled", false, "large", true, false, false, false, true)
-        ]);
-        return data;
-    },
-
-
-
-    getToteId: function() {
-        if (_seatData.hasOwnProperty('tote_id')) {
-            return _seatData.tote_id;
-        } else {
-            return null;
-        }
-    },
-
-
-    getItemDetailsData: function() {
-        var data = {};
-        data["header"] = [];
-        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
-        data["tableRows"] = [];
-        var self = this;
-        if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
-            for (var key in _seatData.product_info) {
-                if (_seatData.product_info.hasOwnProperty(key)) {
-                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_seatData.product_info[key], "enabled", false, "small", false, true, false, false)]);
-                }
-            }
-        } else {
-            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-        }
-
-        return data;
-    },
-
-
-    getScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": this.getkQQuanity(),
-                    "total_qty": "0",
-                    "kq_allowed": this.kQstatus()
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
-        }
-    },
-    kQstatus: function(){
-        if(_seatData.hasOwnProperty('enable_kq')){
-            return _seatData.enable_kq;
-        }else{
-            return true;
-        }
-    },
-    getGoodScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": _goodQuantity,
-                    "total_qty": "0",
-                    "kq_allowed": true
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
-        }
-    },
-
-    getMissingScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": _missingQuantity,
-                    "total_qty": "0",
-                    "kq_allowed": true
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
-        }
-    },
-
-    getDamagedScanDetails: function() {
-        if (_seatData["scan_details"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": _damagedQuantity,
-                    "total_qty": "0",
-                    "kq_allowed": true
-                }
-            };
-            return data.scan_details;
-        } else {
-            return _seatData["scan_details"];
         }
     },
 
@@ -31842,49 +30608,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _flag = true;
         
     },
-    getModalContent: function() {
-        return modalContent.data;
-    },
-    getSystemIdleState: function() {
-        if (_seatData != undefined) {
-            return _seatData.is_idle;
-        } else {
-            return null;
-        }
-    },
 
     getItemUid: function() {
         return _itemUid;
     },
-    getExceptionType: function() {
-        return _exceptionType;
-    },
-    getModalType: function() {
-        return modalContent.type;
-    },
-    setModalContent: function(data) {
-        modalContent = data;
-    },
 
-    getPPTLEvent: function() {
-        switch (_currentSeat) {
-            case appConstants.PUT_BACK:
-                _pptlEvent = 'secondary_button_press';
-                break;
-            case appConstants.PUT_FRONT:
-                _pptlEvent = 'primary_button_press';
-                break;
-            case appConstants.PICK_BACK:
-                _pptlEvent = 'secondary_button_press';
-                break;
-            case appConstants.PICK_FRONT:
-                _pptlEvent = 'primary_button_press';
-                break;
-            default:
-                //return true; 
-        }
-        return _pptlEvent;
-    },
     getCurrentSeat: function() {
         return _currentSeat;
     },
@@ -31893,12 +30621,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getServerMessages: function() {
         return _messageJson;
-    },
-    changeLanguage: function(data) {
-        switch (data) {
-            case "chinese":
-                _.setTranslation(chinese);
-        }
     },
     postDataToInterface: function(data) {
         utils.postDataToInterface(data, _seatName);
@@ -31909,165 +30631,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenId: function() {
         return _screenId;
     },
-    enableException: function(data) {
-        _KQQty = 0;
-        _activeException = "";
-        _enableException = data;
-    },
-    getExceptionStatus: function() {
-        return _enableException;
-    },
 
-    setActiveException: function(data) {
-        _activeException = data;
-    },
-    getActiveException: function() {
-        return _activeException;
-    },
-    setKQQuanity: function(data) {
-        _KQQty = data;
-    },
-    setGoodQuanity: function(data) {
-        _goodQuantity = data;
-    },
-    setMissingQuanity: function(data) {
-        _missingQuantity = data;
-    },
-    setDamagedQuanity: function(data) {
-        _damagedQuantity = data;
-    },
-    getkQQuanity: function() {
-        if(_seatData.hasOwnProperty('Current_box_details')){
-            if(_seatData.Current_box_details.length > 0){
-                _KQQty = _seatData.Current_box_details[0].Actual_qty;
-            }
-            return _KQQty;
-        }else{
-            return _KQQty;
-        }
-    },
-
-    getToteDetails: function() {
-        if (_seatData.hasOwnProperty('tote_details')) {
-            return _seatData.tote_details
-        } else {
-            return null;
-        }
-    },
-
-    setPutFrontExceptionScreen: function(data) {
-        _putFrontExceptionScreen = data;
-    },
-
-    setPickFrontExceptionScreen: function(data) {
-        if (data == "pick_front_quantity") {
-            if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
-                if (_seatData.notification_list.length == 0) {
-                    var data = {};
-                    data["code"] = "1234";
-                    data["level"] = "error";
-                    data["description"] = "Pick Quantity should be equal to damaged ,missing and good";
-                    data["details"] = [];
-                    _seatData.notification_list.push(data);
-                    _pickFrontExceptionScreen = "good";
-                } else {
-                    _seatData.notification_list[0].description = "Pick Quantity should be equal to damaged ,missing and good";
-                    _seatData.notification_list[0].level = "error";
-                }
-            } else {
-                _pickFrontExceptionScreen = data;
-            }
-        } else {
-            _pickFrontExceptionScreen = data;
-        }
-    },
-
-    getPutFrontExceptionScreen: function() {
-        return _putFrontExceptionScreen;
-    },
-
-    getPickFrontExceptionScreen: function() {
-        return _pickFrontExceptionScreen;
-    },
-
-    getCurrentSlot: function() {
-        if (_seatData.hasOwnProperty('rack_details')) {
-            return _seatData.rack_details.slot_barcodes;
-        } else {
-            return null;
-        }
-    },
-
-    validateAndSendDataToServer: function() {
-        var flag = false;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
-        else
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
-        if (flag) {
-            if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = "1234";
-                data["level"] = "error";
-                data["description"] = "Quantity should be equal to damaged ,missing and good";
-                data["details"] = [];
-                _seatData.notification_list.push(data);
-                _putFrontExceptionScreen = "good";
-            } else {
-                _seatData.notification_list[0].description = "Quantity should be equal to damaged ,missing and good";
-                _seatData.notification_list[0].level = "error";
-            }
-        } else {
-            var data = {};
-            if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-                data["event_name"] = "put_front_exception";
-            else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-                data["event_name"] = "pick_front_exception";
-            data["event_data"] = {};
-            data["event_data"]["action"] = "confirm_quantity_update";
-            data["event_data"]["event"] = _seatData.exception_type;
-            data["event_data"]["quantity"] = {};
-            data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
-            data["event_data"]["quantity"]["missing"] = _missingQuantity;
-            this.showSpinner();
-            utils.postDataToInterface(data, _seatData.seat_name);
-        }
-    },
-
-
-
-    validateAndSendSpaceUnavailableDataToServer: function() {
-        if ((_KQQty) > _seatData.put_quantity) {
-            if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = "1234";
-                data["level"] = "error";
-                data["description"] = "Revised Quantity should be less than or equal to put quantity";
-                data["details"] = [];
-                _seatData.notification_list.push(data);
-            } else {
-                _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
-                _seatData.notification_list[0].level = "error";
-            }
-        } else {
-            var data = {};
-            data["event_name"] = "put_front_exception";
-            data["event_data"] = {};
-            data["event_data"]["action"] = "confirm_quantity_update";
-            data["event_data"]["event"] = _seatData.exception_type;
-            data["event_data"]["quantity"] = _KQQty;
-            this.showSpinner();
-            utils.postDataToInterface(data, _seatData.seat_name);
-        }
-    },
-    getToteException: function() {
-        if (_seatData.hasOwnProperty('exception_msg')) {
-            return _seatData.exception_msg[0];
-        } else {
-            return null;
-        }
-    },
     getListItems : function(){
         console.log(_seatData);
         if(_seatData.hasOwnProperty('list_items')){
@@ -32076,6 +30640,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+
     getScreenData: function() {
         var data = {};
         switch (_screenId) {
@@ -32394,71 +30959,14 @@ AppDispatcher.register(function(payload) {
             mainstore.setCurrentSeat(action.data);
             mainstore.emit(CHANGE_EVENT);
             break;
-        case appConstants.POPUP_VISIBLE:
-            setPopUpVisible(action.status);
-            break;
         case appConstants.POST_DATA_TO_INTERFACE:
             mainstore.showSpinner();
             mainstore.postDataToInterface(action.data);
             mainstore.emit(CHANGE_EVENT);
             break;
-        case appConstants.RESET_NUMPAD:
-            mainstore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.LOAD_MODAL:
-            mainstore.setModalContent(action.data);
-            mainstore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.CHANGE_LANGUAGE:
-            mainstore.changeLanguage(action.data);
-            mainstore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.SET_LANGUAGE:
-            mainstore.emit(CHANGE_EVENT);
-            break;
         case appConstants.LOG_ERROR:
             mainstore.logError(action.data);
             break;
-        case appConstants.ENABLE_EXCEPTION:
-            mainstore.enableException(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.SET_ACTIVE_EXCEPTION:
-            mainstore.setActiveException(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_KQ_QUANTITY:
-            mainstore.setKQQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_GOOD_QUANTITY:
-            mainstore.setGoodQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_DAMAGED_QUANTITY:
-            mainstore.setDamagedQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.UPDATE_MISSING_QUANTITY:
-            mainstore.setMissingQuanity(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
-            mainstore.setPutFrontExceptionScreen(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:
-            mainstore.setPickFrontExceptionScreen(action.data);
-            mainstore.emitChange();
-            break;
-        case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-            mainstore.validateAndSendDataToServer();
-            mainstore.emitChange();
-            break;
-        case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
-            mainstore.validateAndSendSpaceUnavailableDataToServer();
-            mainstore.emitChange();
-
         default:
             return true;
     }
@@ -32466,7 +30974,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":183,"../constants/resourceConstants":185,"../constants/svgConstants":186,"../dispatchers/AppDispatcher":187,"../utils/utils":190,"events":1,"react/lib/Object.assign":57}],190:[function(require,module,exports){
+},{"../constants/appConstants":185,"../constants/resourceConstants":187,"../constants/svgConstants":188,"../dispatchers/AppDispatcher":189,"../utils/utils":192,"events":1,"react/lib/Object.assign":56}],192:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -32484,6 +30992,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             ws.onmessage = function(evt) {
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
+                console.log(data);
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
@@ -32549,7 +31058,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             utils.storeSession(webSocketData);
             utils.postDataToWebsockets(webSocketData);
         }).fail(function(data,jqXHR, textStatus, errorThrown) {
-            CommonActions.showErrorMessage(data.responseJSON.error);
         });
        
     },
@@ -32629,4 +31137,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":166,"../constants/appConstants":183,"../constants/configConstants":184,"events":1,"react/lib/Object.assign":57}]},{},[188]);
+},{"../actions/CommonActions":164,"../constants/appConstants":185,"../constants/configConstants":186,"events":1,"react/lib/Object.assign":56}]},{},[190]);

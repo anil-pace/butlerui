@@ -1,4 +1,3 @@
-
 var React = require('react');
 var Header = require('./Header');
 var Spinner = require("./Spinner/LoaderButler");
@@ -6,23 +5,24 @@ var Button1 = require("./Button/Button");
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var mainstore = require('../stores/mainstore');
+var CommonActions = require('../actions/CommonActions');
+var MessageNavigation = require("./MessageNavigation");
+var ListItems = require("./ListItems");
+var NotificationBar = require("./NotificationBar");
+var ImageComponent = require('./ImageComponent.js');
 
 
 function getStateData(){
-  /*return {
-           PutFrontNavData : PutFrontStore.getNavData(),
-           PutFrontNotification : PutFrontStore.getNotificationData(),
-           PutFrontScreenId:PutFrontStore.getScreenId(),
-           PutFrontBinData: PutFrontStore.getBinData(),
-           PutFrontScanDetails : PutFrontStore.scanDetails(),
-           PutFrontProductDetails : PutFrontStore.productDetails(),
-           PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData(),
-           PutFrontItemUid : PutFrontStore.getItemUid()
-          
-    };*/
-     return mainstore.getScreenData();
+  return {
+           PutFrontNavData : mainstore.getNavData(),
+           PutFrontNotificationData : mainstore.getNotificationData(),
+           PutFrontScreenId:mainstore.getScreenId(),
+           PutFrontRackDetails: mainstore.getRackDetails(),
+           PutFrontServerNavData : mainstore.getServerNavData(),
+           PutFrontItemUid : mainstore.getItemUid(),
+           PickFrontRackDetails : mainstore.getRackDetails(),
+           ListItems : mainstore.getListItems(),
+    };
 };
 
 var PutFront = React.createClass({
@@ -50,40 +50,43 @@ var PutFront = React.createClass({
       this._notification = "";
   },
 
-  getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              <div className='grid-container exception'>
-                <Modal />
-                <Exception data={this.state.PutFrontExceptionData} action={true}/>
-                <div className="exception-right"></div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
-                </div>
-              </div>
-            );
-  },
-
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
-        if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          var imageComponents =[];
+          this._navigation = (<MessageNavigation navData ={this.state.PutFrontNavData} />);
+          this._notification = (<NotificationBar notificationData = {this.state.PutFrontNotificationData} />);
+          imageComponents = this.state.ListItems.map(function(data,index){
+                  return (
+                        <div className="col-md-4 col-sm-4">
+                         <ImageComponent imgURL={data.img}/>
+                      </div>
+                    );
+                });
           this._component = (
-              <div className='grid-container'>
-                 <div className='main-container'>
-                    <Spinner />
-                 </div>
+              <div className="row">
+                <div className="col-md-8 col-sim-8">
+                    <div className="row">
+                      {imageComponents}
+                    </div>
+                    <div className="row">
+                        
+                          <Button1 disabled={false} text = {"Complete Put"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"orange"} />
+                        
+                    </div>
+                </div>
+                <div className="col-md-4 col-sm-4">
+                    <div className="row">
+                      <Rack rackData = {this.state.PickFrontRackDetails} />
+                    </div>
+                    <div className="row">
+                      <Button1 disabled={false} text = {"Complete Put"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"orange"} />
+                    </div>
+                </div>
               </div>
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
-
+              );
         break;
       case appConstants.PUT_FRONT_SCAN:
-         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
@@ -94,9 +97,6 @@ var PutFront = React.createClass({
                 </div>
               </div>
             );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
         break;
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
@@ -225,8 +225,9 @@ var PutFront = React.createClass({
       <div className="main">
         <Header />
         {this._navigation}
-        {this._component}
         {this._notification}
+        {this._component}
+        
       </div> 
      
     );

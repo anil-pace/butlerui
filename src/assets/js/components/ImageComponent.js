@@ -1,12 +1,12 @@
 var React = require('react');
+
 var ImageComponent = React.createClass({
     render: function() {
-
         return (
-           <div  className='column'>
-                <img src={this.props.imageSrc} />
-            </div>  
-        )
+            <div className="itemImage">
+           		<img className="img-responsive" src={this.props.imgURL} alt="PLACEHOLDER" />
+           	</div>
+        );
     }
 });
 

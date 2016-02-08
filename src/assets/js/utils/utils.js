@@ -117,6 +117,38 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
     },
+    getPeripheralData : function(type, seat_name){
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+         $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+'?type='+type,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
+            }
+        }).done(function(response) {
+
+        }).fail(function(jqXhr) {
+            var data =  [
+                    {
+                     "barcode": "3",
+                     "peripheral_id": "C",
+                     "peripheral_type": "pptl",
+                     "pps_bin_id": "4"
+                    },
+                    {
+                     "barcode": "123",
+                     "peripheral_id": "PQR",
+                     "peripheral_type": "pptl",
+                     "pps_bin_id": "5"
+                    }
+                 ];
+             CommonActions.updateSeatData(data, type);        
+        });
+    },
     createLogData: function(message, type) {
         var data = {};
         data["message"] = message;

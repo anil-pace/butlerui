@@ -1,5 +1,5 @@
 var React = require('react');
-
+var appConstants = require('../../constants/appConstants');
 var ActiveNavigation = React.createClass({
     render: function() {
         var server_message = this.props.serverNavData.description;
@@ -25,7 +25,7 @@ var ActiveNavigation = React.createClass({
                                     <div className = "nav-detail">
                                     {level}
                                     {(function(){
-                                        if(navId !== "put_back_invalid_tote_item")
+                                        if(navId !== appConstants.PUT_BACK_INVALID_TOTE_ITEM &&  navId !== appConstants.PPTL_MANAGEMENT && navId !== appConstants.SCANNER_MANAGEMENT)
                                             return exceptionImg;
                                     })()}
                                     </div>
@@ -34,7 +34,7 @@ var ActiveNavigation = React.createClass({
                     }
             		<div className = "action">
                     {(function(){
-                        if(navId == "put_back_invalid_tote_item")
+                        if(navId == appConstants.PUT_BACK_INVALID_TOTE_ITEM || navId == appConstants.PPTL_MANAGEMENT || navId == appConstants.SCANNER_MANAGEMENT)
                             return (<img className="exceptionImg" src={compData.image} />);
                         })()}
             		{(function(){

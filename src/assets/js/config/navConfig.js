@@ -1,6 +1,26 @@
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
+    "utility": [
+        [{
+            "screen_id": "pptl_management",
+            "code": "Common.000",
+            "image": svgConstants.exception,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "scanner_management",
+            "code": "Common.000",
+            "image": svgConstants.exception,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }]
+    ],
     "putBack": [
         [{
             "screen_id": "put_back_invalid_tote_item",

@@ -92,7 +92,12 @@ var Header = React.createClass({
         else
             this.exceptionMenu = '';
     },
-
+    peripheralData : function(type){
+        CommonActions.getPeriPheralData(type);
+    },
+    utility : function(){
+        //CommonActions.displayperipheralMenu();
+    },
     render: function() {    
         var logoutClass;
         var cssClass;      
@@ -122,7 +127,16 @@ var Header = React.createClass({
               </div>
             </div>
             <div className="actionMenu" id="actionMenu" >
-                {this.exceptionMenu}    
+                {this.exceptionMenu}  
+                <div onClick = {this.utility} >
+                    Utility
+                    <div onClick={this.peripheralData.bind(this, 'pptl')}>
+                        PPTL Management
+                    </div>
+                    <div onClick={this.peripheralData.bind(this, 'barcode_scanner')}>
+                        Scanner Management
+                    </div>
+                </div>  
                 <div className={logoutClass} onClick = {this.logoutSession} >
                     Logout
                 </div>

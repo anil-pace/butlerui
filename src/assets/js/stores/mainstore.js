@@ -10,7 +10,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -113,27 +113,40 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK:
                 if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
                     _NavData = navConfig.putBack[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                    _NavData = navConfig.utility[0];
                 else
                     _NavData = navConfig.putBack[1];
                 break;
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.putFront[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                    _NavData = navConfig.utility[0];
                 else
                     _NavData = navConfig.putFront[1];
                 break;
             case appConstants.PICK_BACK:
-                _NavData = navConfig.pickBack;
+                if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                    _NavData = navConfig.utility[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                    _NavData = navConfig.utility[0];
+                else 
+                    _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
                 if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                    _NavData = navConfig.utility[0];
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                    _NavData = navConfig.utility[0];
                 else
                     _NavData = navConfig.audit[1];
                 break;
@@ -408,7 +421,26 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.buttonType = buttonType;
         this.buttonStatus = buttonStatus;
     },
+    getPptlData : function(){
+        if(_seatData.hasOwnProperty('utility')){
+            var data = {};
+            data["header"] = [];
+            data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Barcode", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Actions", "header", false, "small", false, true, true, false)); 
+            data["tableRows"] = [];
+            var self = this;
+            _seatData.utility.map(function(value, index) {
+                data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false, true), 
+                new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true)]);
 
+            });
+            return data;   
+        }
+    },
     getReconcileData: function() {
         if (_seatData.hasOwnProperty('reconciliation')) {
             var data = {};
@@ -655,6 +687,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
+        console.log(data);
         _enableException = false;
         _KQQty = 0;
         _putFrontExceptionScreen = "good";
@@ -670,6 +703,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        if(_seatData.hasOwnProperty('utility')){
+            _utility = _seatData.utility;
+        }
         if (_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
             _putFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
@@ -678,6 +714,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+
     },
     getModalContent: function() {
         return modalContent.data;
@@ -744,6 +781,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         utils.logError(data);
     },
     getScreenId: function() {
+        console.log(_screenId);
         return _screenId;
     },
     enableException: function(data) {
@@ -905,8 +943,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+    getPeripheralData : function(data){
+        utils.getPeripheralData(data, _seatData.seat_name);
+    },
+    updateSeatData : function(data, type){
+        if(type === 'pptl'){
+            _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
+        }else if(type === 'barcode_scanner'){
+            _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        }
+        _seatData["utility"] = data;
+        this.setCurrentSeat(_seatData);
+        console.log(_seatData);  
+    },
+    getUtility : function(){
+        return _utility;
+    },
     getScreenData: function() {
-        var data = {};
+        var data = {};console.log(_screenId);
         switch (_screenId) {
             case appConstants.PUT_BACK_STAGE:
             case appConstants.PUT_BACK_SCAN_TOTE:
@@ -1197,6 +1251,44 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
                 break;
+            case appConstants.PPTL_MANAGEMENT:
+                data["utility"] = this.getPptlData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["AuditScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+
+                break;    
             default:
         }
         return data;
@@ -1300,7 +1392,16 @@ AppDispatcher.register(function(payload) {
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
             mainstore.validateAndSendSpaceUnavailableDataToServer();
             mainstore.emitChange();
-
+            break;
+        case appConstants.PERIPHERAL_DATA:
+            mainstore.getPeripheralData(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.UPDATE_SEAT_DATA:
+            mainstore.showSpinner();
+            mainstore.updateSeatData(action.data, action.type);
+            mainstore.emitChange();
+            break;         
         default:
             return true;
     }

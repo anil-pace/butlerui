@@ -76,7 +76,7 @@ var PutBack = React.createClass({
               </div>
             );
   },
-  getScreenComponent : function(screen_id){
+  getScreenComponent : function(screen_id){console.log(screen_id);
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
@@ -252,7 +252,16 @@ var PutBack = React.createClass({
                 </div>
               </div>
             );
-        break;   
+        break;
+      case appConstants.PPTL_MANAGEMENT:
+          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+     
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                  <TabularData data = {this.state.utility}/>
+              </div>
+            );
+        break;      
       default:
         return true; 
     }

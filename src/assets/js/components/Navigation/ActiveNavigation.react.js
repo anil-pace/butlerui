@@ -7,7 +7,9 @@ var ActiveNavigation = React.createClass({
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
         var errorCode = this.props.serverNavData.code;
+        var navId = this.props.navId;
         var level;
+        var exceptionImg=(<img src={compData.image} />);
 
         if(compData.level == null){
             level ='' ;
@@ -22,12 +24,19 @@ var ActiveNavigation = React.createClass({
                             return (
                                     <div className = "nav-detail">
                                     {level}
-                                    <img src={compData.image} />
+                                    {(function(){
+                                        if(navId !== "put_back_invalid_tote_item")
+                                            return exceptionImg;
+                                    })()}
                                     </div>
                                 );
                         })()
                     }
             		<div className = "action">
+                    {(function(){
+                        if(navId == "put_back_invalid_tote_item")
+                            return (<img className="exceptionImg" src={compData.image} />);
+                        })()}
             		{(function(){
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);

@@ -1,7 +1,6 @@
 var configConstants = {
-	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	WEBSOCKET_IP : "wss://localhost:8888/wss",
 	INTERFACE_IP : "https://localhost:5000"
-
 
 };
 

@@ -37011,7 +37011,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
                 ));
         }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING || this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
@@ -37025,6 +37025,36 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 ));
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
+                   return (React.createElement("div", {className: "bin excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                ));
+                }else{
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                ));
+            }
             }else{
             return (React.createElement("div", {className: "bin no-excess-item"}, 
                     tote, 
@@ -37325,6 +37355,10 @@ var mainstore = require('../../stores/mainstore');
 
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
+            removeTextField: function(){
+                  $('.modal-body').find('input:text').val('');
+                },
+
             performAction: function(module, action) {
                 var data = {
                     "event_name": "",
@@ -37486,6 +37520,9 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                                case appConstants.CHECKLIST_CLEARALL:
+                                this.removeTextField();
+                                break;
                             default:
                                 return true;
                         }
@@ -37571,15 +37608,12 @@ var Button1 = React.createClass({displayName: "Button1",
                         return true;
                 }
             },
+
             render: function() {
-                if (this.props.buttonChecklist != undefined) {
-                    _checklistClass = 'checklistButtonSubmit';
-                } else {
-                    _checklistClass = '';
-                }
+                
                 if (this.props.disabled == false)
                     return ( React.createElement("a", {className: 
-                            this.props.color == "orange" ? "custom-button orange " + _checklistClass : "custom-button black " + _checklistClass, 
+                            this.props.color == "orange" ? "custom-button orange " : "custom-button black ", 
                         
                         onClick: 
                             this.performAction.bind(this, this.props.module, this.props.action)
@@ -38324,7 +38358,7 @@ function loadComponent(modalType,modalData){
                       React.createElement("div", {className: "modal-footer removeBorder"}, 
                           React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                                 React.createElement("div", {className: "row removeBorder"}, 
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement("input", {className: "btn btn-default checklistButtonClear", type: "button", value: "Clear All", onClick: removeTextField})), 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Clear All", color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})), 
                                     React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
                                 )
                           )
@@ -38416,7 +38450,9 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
         var errorCode = this.props.serverNavData.code;
+        var navId = this.props.navId;
         var level;
+        var exceptionImg=(React.createElement("img", {src: compData.image}));
 
         if(compData.level == null){
             level ='' ;
@@ -38431,12 +38467,19 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                             return (
                                     React.createElement("div", {className: "nav-detail"}, 
                                     level, 
-                                    React.createElement("img", {src: compData.image})
+                                    (function(){
+                                        if(navId !== "put_back_invalid_tote_item")
+                                            return exceptionImg;
+                                    })()
                                     )
                                 );
                         })(), 
                     
             		React.createElement("div", {className: "action"}, 
+                    (function(){
+                        if(navId == "put_back_invalid_tote_item")
+                            return (React.createElement("img", {className: "exceptionImg", src: compData.image}));
+                        })(), 
             		(function(){
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
@@ -38471,7 +38514,7 @@ var Navigation = React.createClass({displayName: "Navigation",
                 this.props.navData.map(function(value,index){
                     if(value.type == "active")
                         return (
-                                React.createElement(ActiveNavigation, {key: index, data: value, serverNavData: this.props.serverNavData, navMessagesJson: this.props.navMessagesJson})
+                                React.createElement(ActiveNavigation, {key: index, navId: this.props.navData[0].screen_id, data: value, serverNavData: this.props.serverNavData, navMessagesJson: this.props.navMessagesJson})
                             );
                     else
                         return (
@@ -39291,7 +39334,7 @@ var KQ = React.createClass({displayName: "KQ",
     virtualKeyboard: null,
     handleIncrement: function(event) {
         if (this.props.scanDetails.kq_allowed === true) {
-          if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0"))     
+          if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0"))     
             return false;          
             var data = {};
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
@@ -39494,7 +39537,7 @@ var KQ = React.createClass({displayName: "KQ",
   },
   checkKqAllowed : function(){
     if(this.props.scanDetails.kq_allowed === true){
-      if((this.props.scanDetails.current_qty >= this.props.scanDetails.total_qty) && (this.props.scanDetails.total_qty != 0 || this.props.scanDetails.total_qty != "0") ){          
+      if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") ){          
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
       }
@@ -40474,17 +40517,14 @@ module.exports = ReconcileStatus;
 
 },{"../constants/resourceConstants":282,"./Header":246,"react":230}],272:[function(require,module,exports){
 var React = require('react');
+var SpinnerButler = require('./SpinnerButler');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
 	render:function(){
 		return (
 
-			React.createElement("div", {className: "loader"}, 
-				
-					React.createElement("div", {className: "hexdots-loader"}, 
-  						"Loading…"
-					)
-				
+			React.createElement("div", {className: "loaderButler"}, 
+				React.createElement(SpinnerButler, null)
 			)
 			);
 	}
@@ -40492,7 +40532,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":230}],273:[function(require,module,exports){
+},{"./SpinnerButler":274,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -40934,9 +40974,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	WEBSOCKET_IP : "wss://localhost:8888/wss",
 	INTERFACE_IP : "https://localhost:5000"
-
 
 };
 
@@ -41043,67 +41082,67 @@ var serverMessages = {
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
     "PtB.H.004": "Scan Tote / Stage PpsBin",
-    "PtB.H.005" : "Unexpected Entity in Tote",
+    "PtB.H.005" : "Item Not Found in Tote",
     "PtB.H.007" : "Enter Damaged Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
-    "PtB.H.010" : "Enter Excess Quantity",
+    "PtB.H.010" : "Enter Excess Entity Quantity",
     "PtB.H.011" : "Please put it in IRT bin and confirm",
     "PtB.E.001" : "Tote already opened.Scan some other tote",
     "PtB.E.002" : "Tote already closed.Scan some other tote",
     "PtB.E.003" : "No matching tote found",
     "PtB.E.004" : "Wrong entity scanned. Please scan tote",
-    "PtB.E.005" : "No entities added yet. Scan entities and then pres PPTL",
-    "PtB.E.006" : "Wrong entity scanned. Please scan container/item.",
+    "PtB.E.005" : "No entities added yet. Scan entities and then PPS bin",
+    "PtB.E.006" : "Wrong entity scanned. Please scan Container/Item.",
     "PtB.E.007" : "Cannot cancel scan. No scanned box found",
-    "PtB.E.008" : "Entity scan not expected.Waiting for PPTL button press",
-    "PtB.E.009" : "Bin selected for put. Cannot be staged",
+    "PtB.E.008" : "Entity scan not expected.Waiting for button press",
+    "PtB.E.009" : "PpsBin selected for put. Cannot be staged",
     "PtB.E.010" : "SKU not present in database. WMS Notified.",
-    "PtB.E.011" : "Warehouse Full! Remove all entities from bin {0} and press PPTL.",
-    "PtB.E.012" : "No free bins. Please scan later",
-    "PtB.E.013" : "Wrong PPTL button pressed.", 
+    "PtB.E.011" : "Warehouse Full! Remove all entities from bin number and press PPTL.",
+    "PtB.E.012" : "No free Pps bins. Please scan later",
+    "PtB.E.013" : "Wrong button pressed. Please try another",
     "PtB.E.014" : "{0} excess quantity of item found in tote",   
-    "PtB.E.015" : "Invalid entity found in tote. Please put it in IRT bin and confirm",
+    "PtB.E.015" : "Please put it in IRT bin and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same type of entity to finish this exception.",
     "PtB.E.018" : "Entity scan not expected.",  
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
-    "PtF.H.004" : "Scan Entity From Bin {0}",
+    "PtF.H.004" : "Scan Entity From Bin",
     "PtF.H.005" : "Enter Good Quantity to be put in slot",
     "PtF.H.006" : "Put Back Entity in PPS Bin",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
-    "PkF.H.004" : "Scan {0} Item/s",
+    "PkF.H.004" : "Scan Items",
     "PkF.H.005" : "Scan Box",
-    "PkF.H.006" : "Scan {0} Item/s and Place in Bin {1}",
-    "PkF.H.007" : "Press PPTL for Bin {0} to confirm",
+    "PkF.H.006" : "Scan Items and Place in Bin",
+    "PkF.H.007" : "Press PPTL for Bin to confirm",
     "PkB.H.001" : "Scan tote to associate with bin",
-    "PkB.H.002" : "Press PPTL or scan a tote",
-    "PkB.H.003" : "Press PPTL for Bin {0} to remove items",
+    "PkB.H.002" : "Press bin PPTL or scan a tote",
+    "PkB.H.003" : "Press PpsBin to remove items",
     "PtB.I.001" : "Tote scan successful",
-    "PtB.I.002" : "PPS is in paused mode. Cannot process new entities. Take the entity back.",
+    "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
     "PtB.I.003" : "Cancel scan successful.",
     "PtB.I.004" : "Tote close successful.",
     "PtB.I.005" : "Tote not closed.",
     "PtB.I.006" : "Entity scan successful.",
-    "PtB.I.007" : "PPTL button press successful",
-    "PtB.I.008" : "Excess item in tote recorded.Now press PPTL",
+    "PtB.I.007" : "Pptl button press successful",
+    "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
     "PtB.I.009" : "Invalid item in tote recorded.",
-    "PtB.I.010" : "{0} damaged entity recorder.WMS Notified.",
-    "PtB.I.011" : "{0} extra entity recorder in bin.WMS Notified.",
+    "PtB.I.010" : "damaged entity recorder.WMS Notified.",
+    "PtB.I.011" : "extra entity recorder in bin.WMS Notified.",
     "PtB.I.012" : "Oversized entity recorded.WMS notified.",
-    "PtB.I.013" : "Exception cancelled successful",
+    "PtB.I.013" : "Exception cancelled successfully",
     "PtB.I.014" : "Cancelled excess entity in tote",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
     "PtB.W.001" : "Container already stored in the warehouse",
-    "PtB.W.002" : "Entity already scanned.Waiting for PPTL button press",
-    "PtB.W.003" : "No Bins available to stage",
-    "PtB.W.004" : "Bin already staged.",
-    "PtB.W.005" : "Bin empty. Cannot be staged",
+    "PtB.W.002" : "Entity already scanned.Waiting for Pptl button press",
+    "PtB.W.003" : "No PpsBins available to stage",
+    "PtB.W.004" : "PpsBin already staged. Ignoring event",
+    "PtB.W.005" : "PpsBin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
     "PkF.E.011" : "Press PPTL for Bin {0} to confirm",
@@ -41158,13 +41197,17 @@ var serverMessages = {
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
+    "PkF.I.007" : "Data capture valid so far",
+    "PkF.W.003" : "Cannot cancel scan. No Scanned box found",
     "PkF.I.002" : "Location Scan successful",
     "PkF.I.003" : "Box Scan successful",
     "PkF.I.004" : "Item Scan successful",
     "PkF.I.005" : "Cancel Scan successful",
     "PkF.I.006" : "PPTL button press successful",
+    "PkF.I.007" : "Data capture valid so far",
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
+    "PkF.W.003" : "Cannot cancel scan. No Scanned box found",
     "PkF.E.001" : "Wrong location scan.Scan correct location",
     "PkF.E.002" : "Wrong box scanned. Please try again",
     "PkF.E.003" : "Scan a box first",
@@ -41175,35 +41218,35 @@ var serverMessages = {
     "PkF.E.008" : "Waiting for rack. Please wait and scan later",
     "PkF.E.009" : "Scanned item details not found",
     "PkF.E.010" : "No PPS bins empty. Please empty them",
-    "PkB.E.001" : "Barcode didn't match the current tote barcode",
+    "PkB.E.001" : "Barcode didn't match current tote barcode",
     "PkB.E.002" : "Totes are not required",
     "PkB.E.003" : "Exception invalid",
     "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
-    "PkB.E.005" : "Wrong PTTL button pressed",
+    "PkB.E.005" : "Wrong ppsbin button pressed",
     "PkB.E.006" : "Tote didn't get associated",   
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfuly",
-    "PkB.I.004" : "Bin {0} entities removed successfuly",
-    "PkB.I.005" : "Tote assigned successfuly to bin {0}",
+    "PkB.I.004" : "Bin entities removed successfully",
+    "PkB.I.005" : "Tote assigned successfully to ppsbin",
     "PkB.I.006" : "Please scan pptl",
-    "PkB.I.007" : "All totes disassociate from Bin {0} ",
-    "PkB.W.001" : "Please complete process for pending bin and then proceed",
+    "PkB.I.007" : "All totes deassociated from PpsBin ",
+    "PkB.W.001" : "Please complete process for pending ppsbin and then proceed",
     "PkB.W.002" : "Tote already reserved",
     "PkB.W.003" : "Wrong barcode scanned",
     "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
     "PkB.W.005" : "No tote scanned",
-    "PkB.W.006" : "Please press PPTL button which does not have any totes associated",
-    "PkB.W.007" : "PPTL scan not allowed. Totes are not required",
-    "PkB.W.008" : "PPTL scan not allowed",
-    "PkB.W.009" : "Scan PPTL barcode after scannning tote barcode",    
-    "PtF.E.001" : "Wrong enitity scanned. Expecting scan from bin {0}",
+    "PkB.W.006" : "Please press ppsbin button which does not have any totes associated",
+    "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
+    "PkB.W.008" : "Pptl scan not allowed",
+    "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
+    "PtF.E.001" : "Entity scanned is not from bin. Replace and scan from bin",
     "PtF.E.002" : "Wrong entity scanned",
     "PtF.E.003" : "Waiting for MSU. Please scan entities later.",
     "PtF.E.004" : "Expected quantity exceeded.",
-    "PtF.E.005" : "Wrong scan. Expecting slot scan",
-    "PtF.E.006" : "Actual put quantity is not equal to the sum of Good and Expection quantity.",
-    "PtF.E.007" : "Actual put quantity is less than than revised quantity.",   
+    "PtF.E.005" : "Wrong scan! Entity scan expected but slot barcode scanned.",
+    "PtF.E.006" : "Actual put quantity not equal to sum of Good and Expection quantity.",
+    "PtF.E.007" : "Actual put quantity less than than revised quantity.", 
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
@@ -42422,6 +42465,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
             _seatData.notification_list[0].details[0] = bin_id;
+            _seatData.notification_list[0].level = "info";
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
         }
     },

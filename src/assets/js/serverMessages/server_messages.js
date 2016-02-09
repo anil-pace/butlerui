@@ -31,7 +31,7 @@ var serverMessages = {
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
-    "PtF.H.004" : "Scan Entity From Bin",
+    "PtF.H.004" : "Scan Entity From Bin {0}",
     "PtF.H.005" : "Enter Good Quantity to be put in slot",
     "PtF.H.006" : "Put Back Entity in PPS Bin",
     "PkF.H.001" : "Wait for MSU",

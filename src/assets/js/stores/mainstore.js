@@ -6,6 +6,7 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
+var english = require('../serverMessages/english');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
@@ -772,6 +773,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         switch (data) {
             case "chinese":
                 _.setTranslation(chinese);
+                break;
+            case "english":
+                _.setTranslation(english);
+                break;
+            default:
+                return true;    
         }
     },
     postDataToInterface: function(data) {

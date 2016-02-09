@@ -44,6 +44,7 @@ var MsuRack = React.createClass({
         var compartment_details = this.props.rackData.slot_barcodes;
         var slotStart,slotEnd,i;
         var slotIndexList = [];
+        var slotColor = this.props.rackSlotColor;
         var eachRow =[];
         if(compartment_details.length === 1){
             slotStart = (compartment_details[0].split(".")[3])%10;
@@ -70,18 +71,18 @@ var MsuRack = React.createClass({
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)
                 return (
-                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""}   />
+                        <RackRow slots={row[1]} slotColor={slotColor} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""}   />
                     );
 
             else
                 return (
-        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} />
+        				<RackRow slots={row[1]} slotColor={slotColor} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} />
         			);
         	});
 
 
 		return (
-				<div className="drawRack" style={this.props.type=="small" ? drawRackStyle:{} }>
+				<div className="drawRack center-block" style={this.props.type=="small" ? drawRackStyle:{} }>
 					{eachRow.reverse()}
                     <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
 				</div>

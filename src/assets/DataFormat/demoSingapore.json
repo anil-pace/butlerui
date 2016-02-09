@@ -1,12 +1,14 @@
+    
+
 {
     "state_data": {
         "seat_name": "front_10",
-        "screen_id": "pick_front_waiting_for_msu",
+        "screen_id": "pick_front_location_scan",
         "screen_version": "1",
         "notification_list": [{
             "details": [],
             "code": "Common.001",
-            "description": "Processing. Please wait and scan later",
+            "description": "Waiting for Order to Arrive",
             "level": "error"
         }],
         "list_items":[
@@ -35,13 +37,13 @@
             "rack_type_rec": [
                 ["A", [
                     [
-                        ["01", "02"], 44, 48
+                        ["01", "02"], 25, 48
                     ],
                     [
-                        ["03", "04"], 44, 48
+                        ["03", "04"], 25, 48
                     ],
                     [
-                        ["05", "06"], 44, 48
+                        ["05", "06"], 25, 48
                     ]
                 ]],
                 ["B", [
@@ -73,31 +75,9 @@
                     [
                         ["05", "06"], 25, 48
                     ]
-                ]],
-                ["E", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]],
-                ["F", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
                 ]]
             ],
-            "slot_barcodes": ["128.1.B.05", "128.1.B.06"]
+            "slot_barcodes": ["128.1.B.05"]
         },
         "exception_allowed": [{
             "exception_id": "Common000",

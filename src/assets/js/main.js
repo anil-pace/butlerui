@@ -9,7 +9,7 @@ var App = React.createClass({
   },
   render: function(){
     return (
-      <div className="body-container">
+      <div className="body-container container">
         <Operator />
       </div>
     );

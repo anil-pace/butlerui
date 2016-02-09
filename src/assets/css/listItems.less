@@ -1,23 +1,33 @@
-.listItems{
-	padding: 15px;
-	.ItemContainer{
-		padding: 15px;
-		border-top: 1px solid #ccc;
-		.itemName{
-		font-size: 2.1rem;
-		text-align: center;
-		}
-		.itemImage{
-			width: 170px;
-			margin: auto;
-		}
-		.itemPrice{
+.listItemContainer{
+	padding: 25px 4px;
+	.listItems{
+		//padding: 15px;
+		.itemContainer{
+			padding: 15px;
+			border-top: 1px solid #ccc;
+			cursor: pointer;
+			.itemName{
+			font-size: 2.1rem;
 			text-align: center;
-			font-size: 1.5rem;
+			}
+			.itemImage{
+				//border: 1px solid #fff;
+	    		border-radius: 50%;
+	    		height: 147px;
+	    		margin: auto;
+	    		width: 170px;
+			}
+			.itemPrice{
+				text-align: center;
+				font-size: 1.5rem;
+			}
+			.itemDescription{
+				word-wrap: break-word;
+			}
 		}
-		.itemDescription{
-			word-wrap: break-word;
+		.itemContainer:hover {
+			background:rgba(0, 0, 0, 0.04) none repeat scroll 0 0;
 		}
-	}
-	
+		
+}
 }

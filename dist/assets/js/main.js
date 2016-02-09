@@ -29332,10 +29332,56 @@ var mainstore = require('../stores/mainstore');
 
 
 var CommonButton = React.createClass({displayName: "CommonButton",
+
+	performAction:function(module,action){
+		var data = {
+			"event_name": "",
+            "event_data": {}
+		};
+		switch(module){
+			case appConstants.PICK_FRONT :
+				switch (action) {
+					case appConstants.CONFIRM_TO_CONTINUE:
+					CommonActions.postDataToInterface(data);
+					break;
+					default:
+                    return true;
+				}
+				break;
+			case appConstants.PUT_FRONT :
+				switch (action) {
+					case appConstants.CONFIRM:
+					CommonActions.postDataToInterface(data);
+					break;
+
+					case appConstants.COMPLETE_PUT:
+					CommonActions.postDataToInterface(data);
+					break;
+
+					case appConstants.PUT_FINISHED:
+					CommonActions.postDataToInterface(data);
+					break;
+
+					default:
+                    return true;
+				}
+				break;
+				default:
+            		return true;
+		}
+		  
+	},
+
 	render: function(){
+		if (this.props.disabled == false){
 		return (
-			 	React.createElement("a", {className: "commonButton"}, this.props.text)
+			 	React.createElement("a", {className: this.props.color == "orange" ? "commonButton orange ": "commonButton black", 
+			 	onClick: this.performAction.bind(this, this.props.module, this.props.action)}, this.props.text)
 			);
+		}else 
+		 return (
+			React.createElement("a", {className: this.props.color == "orange" ? "commonButton disabled orange" : "commonButton disabled black"}, this.props.text)
+		);
 	}
 });
 
@@ -29345,10 +29391,9 @@ module.exports = CommonButton;
 var React = require('react');
 var Description = React.createClass({displayName: "Description",
     render: function() {
-
         return (
         	React.createElement("div", {className: "itemDescription"}, 
-            	 this.props.description
+            	 this.props.data.description
             )
         );
     }
@@ -29380,12 +29425,24 @@ module.exports = Header;
 
 },{"react":163}],169:[function(require,module,exports){
 var React = require('react');
+var CommonActions = require('../actions/CommonActions');
 
 var ImageComponent = React.createClass({displayName: "ImageComponent",
+
+	selectItem:function(title){
+		var data = {
+                    "event_name": "item_selected",
+                    "event_data": title
+                };
+                console.log("data");
+                console.log(data["event_data"]);
+		CommonActions.postDataToInterface(data);
+	},
+
     render: function() {
         return (
-            React.createElement("div", {className: "itemImage"}, 
-           		React.createElement("img", {className: "img-responsive", src: this.props.imgURL, alt: "PLACEHOLDER"})
+            React.createElement("div", {className: "itemImage", onClick:  this.props.imageClickable== true ? this.selectItem.bind(this,this.props.data.title) : ""}, 
+           		React.createElement("img", {className: "img-responsive", src: this.props.data.imgURL, alt: "PLACEHOLDER"})
            	)
         );
     }
@@ -29393,7 +29450,7 @@ var ImageComponent = React.createClass({displayName: "ImageComponent",
 
 module.exports = ImageComponent;
 
-},{"react":163}],170:[function(require,module,exports){
+},{"../actions/CommonActions":164,"react":163}],170:[function(require,module,exports){
 var React = require('react');
 var ImageComponent = require('./ImageComponent.js');
 var PriceComponent = require('./PriceComponent.js');
@@ -29402,25 +29459,23 @@ var Description = require('./Description.js');
 
 var ListItems = React.createClass({displayName: "ListItems",
     render: function() {
+       var imageClickable = this.props.imageClickable;
         var tableStructure = this.props.ListItems.map(function(data, index){ 
               return(
                 React.createElement("div", {className: "row"}, 
                   React.createElement("div", {className: "col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10"}, 
                       React.createElement("div", {className: "listItems"}, 
-                         React.createElement("div", {className: "row"}, 
-                              React.createElement("div", {className: "ItemContainer"}, 
-                                React.createElement("div", {className: "col-md-12"}, 
+                         React.createElement("div", {className: "row itemContainer"}, 
                                   React.createElement("div", {className: "col-md-3 col-sm-4 col-xs-6"}, 
-                                    React.createElement(ImageComponent, null)
+                                    React.createElement(ImageComponent, {data: data, imageClickable: imageClickable})
                                   ), 
                                   React.createElement("div", {className: "col-md-3 col-sm-2 col-xs-6"}, 
-                                      React.createElement(PriceComponent, null)
+                                      React.createElement(PriceComponent, {data: data})
                                   ), 
-                                  React.createElement("div", {className: "col-md-6 col-sm-6 col-xs-12"}, 
-                                    React.createElement(Description, null)
+                                  React.createElement("div", {className: "col-md-6 col-sm-6 xs-hidden"}, 
+                                    React.createElement(Description, {data: data})
                                   )
-                                )
-                              )
+                              
                          )
                       )
                     )
@@ -29428,11 +29483,11 @@ var ListItems = React.createClass({displayName: "ListItems",
             );
           });
         return (
-            React.createElement("div", {className: "bins"}, 
+            React.createElement("div", {className: "listItemContainer"}, 
                 tableStructure
             )    
         )
-    }
+    },
 });
 
 module.exports = ListItems;
@@ -29617,12 +29672,6 @@ var PickFront = React.createClass({displayName: "PickFront",
   },
   onChange: function(){ 
 	this.setState(getStateData());
-   if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
-        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }else{
-      $('.modal').modal('hide');
-      $('.modal-backdrop').remove();
-    }
   },
   getNotificationComponent:function(){
 /*    if(this.state.PickFrontNotification != undefined)
@@ -29638,7 +29687,13 @@ var PickFront = React.createClass({displayName: "PickFront",
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
         this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
-        this._component = (React.createElement(ListItems, {ListItems: this.state.ListItems}));
+        this._component = (React.createElement(ListItems, {ListItems: this.state.ListItems, imageClickable: true}));
+      break;
+
+       case appConstants.PICK_FRONT_PPTL_PRESS:
+        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+        this._component = (React.createElement(LoaderButler, null));
       break;
 
       case appConstants.PICK_FRONT_LOCATION_SCAN:
@@ -29650,21 +29705,23 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
                 ), 
                 React.createElement("div", {className: "confirmShelfButton"}, 
-                    React.createElement(CommonButton, {text: "Confirm", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM})
+                    React.createElement(CommonButton, {disabled: false, text: "Confirm", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_TO_CONTINUE, color: "orange"})
                   )
             )
           );
       break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
-      this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
         this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
         this._component = ( 
-                React.createElement("div", {className: "grid-container"}, 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Rack, {rackData: this.state.PickFrontRackDetails}), 
-                  React.createElement(Button1, {disabled: true, text: "Confirm", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
-                )
+            React.createElement("div", {className: "row grid-container"}, 
+                React.createElement("div", {className: "mainRackContainer"}, 
+                  React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, rackSlotColor: true})
+                ), 
+                React.createElement("div", {className: "confirmShelfButton"}, 
+                    React.createElement(CommonButton, {disabled: true, text: "Confirm", color: "orange"})
+                  )
             )
           );
       break;
@@ -29707,11 +29764,10 @@ var PriceComponent = React.createClass({displayName: "PriceComponent",
 
         	React.createElement("div", {className: ""}, 
 	        	React.createElement("div", {className: "row itemName"}, 
-	        		this.props.title, 
-	        		"ABCD"
+	        		this.props.data.title
 	        	), 
 	        	React.createElement("div", {className: "row itemPrice"}, 
-	        		"$ ", this.props.price
+	        		"$ ", this.props.data.price
 	        	)
            	)
         )
@@ -29733,7 +29789,7 @@ var MessageNavigation = require("./MessageNavigation");
 var ListItems = require("./ListItems");
 var NotificationBar = require("./NotificationBar");
 var ImageComponent = require('./ImageComponent.js');
-
+var CommonButton = require("./CommonButton");
 
 function getStateData(){
   return {
@@ -29775,6 +29831,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
   getScreenComponent : function(screen_id){
     switch(screen_id){
+
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
           var imageComponents =[];
           this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData}));
@@ -29782,20 +29839,27 @@ var PutFront = React.createClass({displayName: "PutFront",
           imageComponents = this.state.ListItems.map(function(data,index){
                   return (
                         React.createElement("div", {className: "col-md-4 col-sm-4"}, 
-                         React.createElement(ImageComponent, {imgURL: data.img})
+                          React.createElement("div", {className: "row"}, 
+                             React.createElement(ImageComponent, {data: data, imageClickable: false})
+                          ), 
+                          React.createElement("div", {className: "row"}, 
+                              React.createElement("div", {className: "inputBox"}, 
+                                React.createElement("input", {type: "text", placeholder: ""})
+                              )
+                          )
                       )
                     );
                 });
           this._component = (
-              React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-md-8 col-sim-8"}, 
+              React.createElement("div", {className: "row imageQuantityContainer"}, 
+                React.createElement("div", {className: "col-md-8 col-sm-8 imageContainer"}, 
                     React.createElement("div", {className: "row"}, 
-                      imageComponents
+                        imageComponents
                     ), 
                     React.createElement("div", {className: "row"}, 
-                        
-                          React.createElement(Button1, {disabled: false, text: "Complete Put", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "orange"})
-                        
+                      React.createElement("div", {className: "confirmShelfButton"}, 
+                          React.createElement(CommonButton, {disabled: false, text: "Complete Put", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.COMPLETE_PUT})
+                      )
                     )
                 ), 
                 React.createElement("div", {className: "col-md-4 col-sm-4"}, 
@@ -29803,139 +29867,59 @@ var PutFront = React.createClass({displayName: "PutFront",
                       React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
                     ), 
                     React.createElement("div", {className: "row"}, 
-                      React.createElement(Button1, {disabled: false, text: "Complete Put", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "orange"})
+                      React.createElement("div", {className: "confirmShelfButton"}, 
+                          React.createElement(CommonButton, {disabled: true, text: "Finished", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISHED})
+                      )
                     )
                 )
               )
               );
         break;
-      case appConstants.PUT_FRONT_SCAN:
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-          this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                )
-              )
-            );
-        break;
-      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
-      if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-          this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                React.createElement("div", {className: "single-bin"}, 
-                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
-                      React.createElement("div", {className: "text"}, "CURRENT BIN")
-                ), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Rack, {rackData: this.state.PutFrontRackDetails}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
-                )
 
-              )
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
-      case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
-          if(this.state.PutFrontExceptionScreen == "good"){
+      case appConstants.PUT_FRONT_SCAN:
+          var imageComponents =[];
+          this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData}));
+          this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PutFrontNotificationData}));
+          imageComponents = this.state.ListItems.map(function(data,index){
+                  return (
+                        React.createElement("div", {className: "col-md-4 col-sm-4"}, 
+                          React.createElement("div", {className: "row"}, 
+                             React.createElement(ImageComponent, {data: data, imageClickable: false})
+                          ), 
+                          React.createElement("div", {className: "row"}, 
+                             React.createElement("div", {className: "inputBox"}, 
+                                React.createElement("input", {type: "text", min: "1", max: "3", placeholder: ""})
+                              )
+                          )
+                      )
+                    );
+                });
           this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontGoodQuantity, action: "GOOD"})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontMissingQuantity, action: "MISSING"})
+              React.createElement("div", {className: "row imageQuantityContainer"}, 
+                React.createElement("div", {className: "col-md-8 col-sm-8 imageContainer"}, 
+                    React.createElement("div", {className: "row"}, 
+                        imageComponents
                     ), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontDamagedQuantity, action: "DAMAGED"})
+                    React.createElement("div", {className: "row"}, 
+                      React.createElement("div", {className: "confirmShelfButton"}, 
+                          React.createElement(CommonButton, {disabled: true, text: "Complete Put", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.COMPLETE_PUT})
+                      )
                     )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-                  )
                 ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                React.createElement("div", {className: "col-md-4 col-sm-4"}, 
+                    React.createElement("div", {className: "row"}, 
+                      React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
+                    ), 
+                    React.createElement("div", {className: "row"}, 
+                      React.createElement("div", {className: "confirmShelfButton"}, 
+                          React.createElement(CommonButton, {disabled: false, text: "Finished", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISHED})
+                      )
+                    )
                 )
               )
-            );
-          }
-        break; 
-      case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
-           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
-              this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Take the Items out from the Bin")
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Revised Quantit[y"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontKQQuantity})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-           }
-          
+              );
         break;
+
       default:
         return true; 
     }
@@ -29960,7 +29944,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./Button/Button":165,"./Header":168,"./ImageComponent.js":169,"./ListItems":170,"./MessageNavigation":171,"./NotificationBar":172,"./Rack/MsuRack.js":177,"./Spinner/LoaderButler":181,"react":163}],177:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./Button/Button":165,"./CommonButton":166,"./Header":168,"./ImageComponent.js":169,"./ListItems":170,"./MessageNavigation":171,"./NotificationBar":172,"./Rack/MsuRack.js":177,"./Spinner/LoaderButler":181,"react":163}],177:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -30007,6 +29991,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         var compartment_details = this.props.rackData.slot_barcodes;
         var slotStart,slotEnd,i;
         var slotIndexList = [];
+        var slotColor = this.props.rackSlotColor;
         var eachRow =[];
         if(compartment_details.length === 1){
             slotStart = (compartment_details[0].split(".")[3])%10;
@@ -30033,18 +30018,18 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow)
                 return (
-                        React.createElement(RackRow, {slots: row[1], key: index, slotIndexArray: slotIndexList, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
+                        React.createElement(RackRow, {slots: row[1], slotColor: slotColor, key: index, slotIndexArray: slotIndexList, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
                     );
 
             else
                 return (
-        				React.createElement(RackRow, {slots: row[1], key: index, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
+        				React.createElement(RackRow, {slots: row[1], slotColor: slotColor, key: index, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
         			);
         	});
 
 
 		return (
-				React.createElement("div", {className: "drawRack", style: this.props.type=="small" ? drawRackStyle:{}}, 
+				React.createElement("div", {className: "drawRack center-block", style: this.props.type=="small" ? drawRackStyle:{}}, 
 					eachRow.reverse(), 
                     React.createElement("div", {className: "lastRow", style: this.props.type=="small" ?  lastSlot:{}})
 				)
@@ -30070,6 +30055,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 		var eachRowHeight = this.props.eachRowHeight;
 		var eachSlot =[];	
 		var type = this.props.type;
+		var slotColor = this.props.slotColor;
         /*var calculateHeight = (eachRowHeight/totalRackHeight)*100;
         var rackRowHeight = {
 				
@@ -30084,12 +30070,12 @@ var RackRow = React.createClass({displayName: "RackRow",
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, slotColor: slotColor, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type})
 					
 				);
 			else
 				return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, slotColor: slotColor, noOfRows: noOfRows, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type})
 					);
 		});
 		return (
@@ -30115,6 +30101,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		var noOfRows = this.props.noOfRows;
 		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
 		var type = this.props.type;
+		var slotColor = this.props.slotColor;
 		//var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {
 				width : calculateWidth + '%',
@@ -30125,11 +30112,11 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		var singleSlot = this.props.slotWidthData.map(function(singSlot,index){
 			if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
 				return(
-						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot%10, type: type})
+						React.createElement(SingleSlot, {slotColor: slotColor, selected: true, key: singSlot, rackRange: rackRange, index: singSlot%10, type: type})
 					);
 				else
 				return(
-						React.createElement(SingleSlot, {key: index, rackRange: rackRange, type: type})
+						React.createElement(SingleSlot, {slotColor: slotColor, key: index, rackRange: rackRange, type: type})
 					);
 			
 		});
@@ -30153,12 +30140,21 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 	render : function(){
 		var rackRange = this.props.rackRange;
 		var slotId = this.props.index;
-		
+		slotColor= this.props.slotColor;
+		if(slotColor == true){
 		return (
-			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : ''), style: this.props.type=="small"?fontSize:{}}, 
+			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlotLightGray' : ''), style: this.props.type=="small"?fontSize:{}}, 
 				this.props.selected ? rackRange + slotId : ''
 			)
 			);
+		} else
+		{
+			return (
+				React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : ''), style: this.props.type=="small"?fontSize:{}}, 
+					this.props.selected ? rackRange + slotId : ''
+				)
+				);
+		}
 	}
 });
 
@@ -30370,7 +30366,10 @@ var appConstants = {
 	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
 	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE",
 	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION',
-	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION'
+	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION',
+	CONFIRM_TO_CONTINUE : "CONFIRM_TO_CONTINUE",
+	COMPLETE_PUT:"COMPLETE_PUT",
+	PUT_FINISHED:"PUT_FINISHED"
 
 };
 
@@ -30442,7 +30441,7 @@ var App = React.createClass({displayName: "App",
   },
   render: function(){
     return (
-      React.createElement("div", {className: "body-container"}, 
+      React.createElement("div", {className: "body-container container"}, 
         React.createElement(Operator, null)
       )
     );

@@ -40,12 +40,6 @@ var PickFront = React.createClass({
   },
   onChange: function(){ 
 	this.setState(getStateData());
-   if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
-        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }else{
-      $('.modal').modal('hide');
-      $('.modal-backdrop').remove();
-    }
   },
   getNotificationComponent:function(){
 /*    if(this.state.PickFrontNotification != undefined)
@@ -61,7 +55,13 @@ var PickFront = React.createClass({
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
         this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
-        this._component = (<ListItems ListItems={this.state.ListItems}/>);
+        this._component = (<ListItems ListItems={this.state.ListItems} imageClickable={true} />);
+      break;
+
+       case appConstants.PICK_FRONT_PPTL_PRESS:
+        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+        this._component = (<LoaderButler />);
       break;
 
       case appConstants.PICK_FRONT_LOCATION_SCAN:
@@ -73,21 +73,23 @@ var PickFront = React.createClass({
                   <Rack rackData = {this.state.PickFrontRackDetails}/>
                 </div>
                 <div className="confirmShelfButton">
-                    <CommonButton text={"Confirm"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM} />
+                    <CommonButton disabled={false} text={"Confirm"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_TO_CONTINUE} color={"orange"} />
                   </div>
             </div>
           );
       break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
-      this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
         this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
         this._component = ( 
-                <div className="grid-container">
-                <div className="main-container">
-                  <Rack rackData = {this.state.PickFrontRackDetails}/>
-                  <Button1 disabled = {true} text = {"Confirm"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+            <div className="row grid-container">
+                <div className="mainRackContainer">
+                  <Rack rackData = {this.state.PickFrontRackDetails} rackSlotColor={true} />
                 </div>
+                <div className="confirmShelfButton">
+                    <CommonButton disabled={true} text={"Confirm"} color={"orange"} />
+                  </div>
             </div>
           );
       break;

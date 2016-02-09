@@ -6,11 +6,10 @@ var PriceComponent = React.createClass({
 
         	<div className="">
 	        	<div className="row itemName">
-	        		{this.props.title}
-	        		ABCD
+	        		{this.props.data.title}
 	        	</div>
 	        	<div className="row itemPrice">
-	        		$ {this.props.price}
+	        		$ {this.props.data.price}
 	        	</div>
            	</div>
         )

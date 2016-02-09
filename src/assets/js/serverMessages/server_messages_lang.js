@@ -133,7 +133,7 @@ function server_messages_list() {
     _("Cancel Scan successful");
     _("PPTL button press successful");
     _("Expecting MSU release confirmation from GUI, got invalid event.");
-    _("Cannot cancel scan. No Scanned box found");
+    _("Data capture failed at item");
     _("Wrong location scan.Scan correct location");
     _("Wrong box scanned. Please try again");
     _("Scan a box first");

@@ -408,7 +408,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return binData;
     },
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -421,22 +421,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.type = type;
         this.buttonType = buttonType;
         this.buttonStatus = buttonStatus;
+        this.mode = mode,
+        this.text_decoration = text_decoration,
+        this.color = color,
+        this.actionButton = actionButton
     },
     getPptlData : function(){
         if(_seatData.hasOwnProperty('utility')){
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Barcode", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Actions", "header", false, "small", false, true, true, false)); 
+            data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+            data["header"].push(new this.tableCol("Barcode", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+            data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+            data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
             data["tableRows"] = [];
             var self = this;
             _seatData.utility.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, true, false, false),
-                new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false, true), 
-                new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true)]);
+                data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
+                new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false,  false, true, true, false, "peripheral"), 
+                new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, false, true, true, false, "peripheral"),
+                new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true),
+                new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true)]); 
 
             });
             return data;   

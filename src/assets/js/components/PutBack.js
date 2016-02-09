@@ -76,7 +76,7 @@ var PutBack = React.createClass({
               </div>
             );
   },
-  getScreenComponent : function(screen_id){console.log(screen_id);
+  getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:

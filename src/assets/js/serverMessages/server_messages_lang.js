@@ -79,8 +79,8 @@ function server_messages_list() {
     _("Data capture valid so far");
     _("Excess item in tote recorded.Now press Pptl");
     _("Invalid item in tote recorded.");
-    _("damaged entity recorder.WMS Notified.");
-    _("extra entity recorder in bin.WMS Notified.");
+    _("damaged entity recorded.WMS Notified.");
+    _("extra entity recorded in bin.WMS Notified.");
     _("Oversized entity recorded.WMS notified.");
     _("Exception cancelled successfully");
     _("Container already stored in the warehouse");

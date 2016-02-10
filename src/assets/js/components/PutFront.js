@@ -25,6 +25,29 @@ function getStateData(){
     };
 };
 
+var listItemsArray = [
+            {
+             "Item_ID"    : 01,
+             "Image_url"  : "http://www.garnier.in/~/media/garnier%20local/en-in/prd-haircare/haircare_brands_fructis_triplenutrition/275x360productshot_shampoo.png?h=360&la=en-IN&w=275",
+             "Item_Name"  : "Garnier",
+             "Item_Price" : 20,
+             "Item_Desc"  : "Garnier hair care and skin care products is one of the highest luxury brands used in Asia, China, Japan & India. In the Brand Trust Report 2012, Garnier was ranked 73rd among India's most trusted brands and subsequently, according to the Brand Trust Report 2013, Garnier was ranked 47th among India's most trusted brands."         
+            },
+            {
+             "Item_ID"    : 02,
+             "Image_url"  : "http://images.fonearena.com/blog/wp-content/uploads/2015/07/Motorola-Moto-X-Play2.jpg",
+             "Item_Name"  : "Moto X Play",
+             "Item_Price" : 20,
+             "Item_Desc"  : "Garnier hair care and skin care products is one of the highest luxury brands used in Asia, China, Japan & India. In the Brand Trust Report 2012, Garnier was ranked 73rd among India's most trusted brands and subsequently, according to the Brand Trust Report 2013, Garnier was ranked 47th among India's most trusted brands."         
+            },{
+             "Item_ID"    : 03,
+             "Image_url"  : "http://blogs-images.forbes.com/jasonevangelho/files/2015/01/325753-apple-macbook-air-13-inch-mid-2013.jpg",
+             "Item_Name"  : "Apple MacBook",
+             "Item_Price" : 20,
+             "Item_Desc"  : "Garnier hair care and skin care products is one of the highest luxury brands used in Asia, China, Japan & India. In the Brand Trust Report 2012, Garnier was ranked 73rd among India's most trusted brands and subsequently, according to the Brand Trust Report 2013, Garnier was ranked 47th among India's most trusted brands."         
+            }
+                  ];
+
 var PutFront = React.createClass({
   _notification:'',
   _component:'',
@@ -53,11 +76,18 @@ var PutFront = React.createClass({
   getScreenComponent : function(screen_id){
     switch(screen_id){
 
+      case appConstants.PUT_BACK_STAGE:
+        this._navigation = (<MessageNavigation navData ={this.state.PutFrontNavData}  />);
+        this._notification = (<NotificationBar notificationData = {this.state.PutFrontNotificationData} />);
+        this._component = (<ListItems imageClickable={true} listItemsArray={listItemsArray} />);
+      break;
+
+
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
           var imageComponents =[];
-          this._navigation = (<MessageNavigation navData ={this.state.PutFrontNavData} />);
-          this._notification = (<NotificationBar notificationData = {this.state.PutFrontNotificationData} />);
-          imageComponents = this.state.ListItems.map(function(data,index){
+          this._navigation = (<MessageNavigation navData ={this.state.PutFrontNavData} color={"lightBlue"} />);
+          this._notification = (<NotificationBar notificationData = {this.state.PutFrontNotificationData} color={"lightGray"} />);
+          imageComponents = listItemsArray.map(function(data,index){
                   return (
                         <div className="col-md-4 col-sm-4">
                           <div className="row">
@@ -86,6 +116,7 @@ var PutFront = React.createClass({
                 <div className="col-md-4 col-sm-4">
                     <div className="row">
                       <Rack rackData = {this.state.PickFrontRackDetails} />
+                      <div className="overlayRack"></div>
                     </div>
                     <div className="row">
                       <div className="confirmShelfButton">
@@ -99,9 +130,9 @@ var PutFront = React.createClass({
 
       case appConstants.PUT_FRONT_SCAN:
           var imageComponents =[];
-          this._navigation = (<MessageNavigation navData ={this.state.PutFrontNavData} />);
-          this._notification = (<NotificationBar notificationData = {this.state.PutFrontNotificationData} />);
-          imageComponents = this.state.ListItems.map(function(data,index){
+          this._navigation = (<MessageNavigation navData ={this.state.PutFrontNavData} color={"lightBlue"} />);
+          this._notification = (<NotificationBar notificationData = {this.state.PutFrontNotificationData} color={"lightGray"} />);
+          imageComponents = listItemsArray.map(function(data,index){
                   return (
                         <div className="col-md-4 col-sm-4">
                           <div className="row">
@@ -118,9 +149,10 @@ var PutFront = React.createClass({
           this._component = (
               <div className="row imageQuantityContainer">
                 <div className="col-md-8 col-sm-8 imageContainer">
-                    <div className="row">
+                    <div className="row imagecomp">
                         {imageComponents}
                     </div>
+                    <div className="overlayImgComp"></div>
                     <div className="row">
                       <div className="confirmShelfButton">
                           <CommonButton disabled={true} text={"Complete Put"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.COMPLETE_PUT} />

@@ -20,9 +20,32 @@ function getStateData(){
            PickFrontRackDetails: mainstore.getRackDetails(),
            PickFrontServerNavData : mainstore.getServerNavData(),
            PickFrontItemUid : mainstore.getItemUid(),
-           ListItems : mainstore.getListItems(),
+           ListItems : mainstore.getListItems()
     };
 };
+var listItemsArray = [
+            {
+             "Item_ID"    : 01,
+             "Image_url"  : "assets/images/image2.png",
+             "Item_Name"  : "ICE LEMON TEA",
+             "Item_Price" : 1.00,
+             "Item_Desc"  : "There's nothing better than an ice cold lemon tea on a hot summer's day. But this lemon tea is not cold. And there's definitely no ice in there. So why is it called Ice Lemon Tea? Take a sip and chill out on a chair. Maybe you'll find out."         
+            },
+            {
+             "Item_ID"    : 02,
+             "Image_url"  : "assets/images/image1.png",
+             "Item_Name"  : "RIBENA",
+             "Item_Price" : 1.20,
+             "Item_Desc"  : "Did you know that Ribena was distributed to children during WW2 as vitamin C supplements when fruits such as oranges were difficult to obtain? But now with the war against obesity, Ribena has been banned from TESCO in the UK for its high sugar content. Not to worry, you can still get it here."         
+            },{
+             "Item_ID"    : 03,
+             "Image_url"  : "assets/images/image3.png",
+             "Item_Name"  : "MILO",
+             "Item_Price" : 0.80,
+             "Item_Desc"  : "Are you a Horlicks or Milo person? You can only pick one side. Horlicks fan? Too bad. There's none for you here. And if you're an Ovaltine fan, it's time to explore the real thing. Tak kiu jit bao!"         
+            }
+                  ];
+
 
 var PickFront = React.createClass({
   _notification:'',
@@ -49,23 +72,16 @@ var PickFront = React.createClass({
   },
  
   getScreenComponent : function(screen_id){
-    console.log(this.state.ListItems);
     switch(screen_id){
      
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
-        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
-        this._component = (<ListItems ListItems={this.state.ListItems} imageClickable={true} />);
-      break;
-
-       case appConstants.PICK_FRONT_PPTL_PRESS:
-        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
-        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
-        this._component = (<LoaderButler />);
+        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} screenId={appConstants.PICK_FRONT_WAITING_FOR_MSU} />);
+        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} screenId={appConstants.PICK_FRONT_WAITING_FOR_MSU} />);
+        this._component = (<ListItems imageClickable={true} listItemsArray={listItemsArray} />);
       break;
 
       case appConstants.PICK_FRONT_LOCATION_SCAN:
-        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
         this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
         this._component = ( 
             <div className="row grid-container">
@@ -80,7 +96,7 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
-       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
         this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
         this._component = ( 
             <div className="row grid-container">
@@ -94,13 +110,20 @@ var PickFront = React.createClass({
           );
       break;
 
-
-       case appConstants.PICK_FRONT_CONTAINER_SCAN:
-       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} />);
+      case appConstants.PICK_FRONT_PPTL_PRESS:
+       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
         this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
-        this._component = (<LoaderButler />);
+        this._component = ( 
+            <div className="row grid-container">
+                <div className="mainRackContainer">
+                  <Rack rackData = {this.state.PickFrontRackDetails} rackSlotColor={true} />
+                </div>
+                <div className="confirmShelfButton">
+                    <CommonButton disabled={true} text={"Confirm"} color={"orange"} />
+                  </div>
+            </div>
+          );
       break;
-
       default:
         return true;
     }

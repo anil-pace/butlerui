@@ -29393,7 +29393,7 @@ var Description = React.createClass({displayName: "Description",
     render: function() {
         return (
         	React.createElement("div", {className: "itemDescription"}, 
-            	 this.props.data.description
+            	 this.props.data["Item_Desc"]
             )
         );
     }
@@ -29405,18 +29405,31 @@ module.exports = Description;
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
+    dropDown:function(){
+        $('.dropDown').toggle(100);
+    },
+
     render: function() {
-        return (
-                React.createElement("div", {className: "row header"}, 
-                    React.createElement("div", {className: ""}, 
-                            React.createElement("div", {className: "col-md-2 col-sm-3 col-xs-5"}, 
-                                React.createElement("div", {className: "gorLogo"}, "GREYORANGE")
-                            ), 
-                            React.createElement("div", {className: "col-md-offset-9 col-md-1 col-sm-offset-7 col-sm-2 col-xs-offset-4 col-xs-2"}, 
-                                "ICON"
-                            )
+        return (React.createElement("div", null, 
+                    React.createElement("div", {className: "row header"}, 
+                                React.createElement("div", {className: "col-md-2 col-sm-3 col-xs-5"}, 
+                                    React.createElement("div", {className: "gorLogo"}, 
+                                        React.createElement("img", {className: "img-responsive", src: "assets/images/gorLogo.png", alt: "GreyOrange_Logo"})
+                                    )
+                                ), 
+                                React.createElement("div", {className: "col-md-offset-9 col-md-1 col-sm-offset-7 col-sm-2 col-xs-offset-4 col-xs-3"}, 
+                                     React.createElement("div", {className: "menuIcon"}, 
+                                        React.createElement("img", {className: "img-responsive", src: "assets/images/menu_Icon.png", alt: "Menu_Icon", onClick: this.dropDown})
+                                     ), 
+                                     React.createElement("div", {className: "dropDown"}, 
+                                            React.createElement("ul", null, 
+                                                React.createElement("li", null, "SWITCH MODE"), 
+                                                React.createElement("li", null, "LOGOUT")
+                                            )
+                                    )
+                                )
                     )
-            )
+                )
         );
     },
 });
@@ -29429,20 +29442,44 @@ var CommonActions = require('../actions/CommonActions');
 
 var ImageComponent = React.createClass({displayName: "ImageComponent",
 
-	selectItem:function(title){
+	selectItem:function(order_Id, orderline_id, productSku){
 		var data = {
-                    "event_name": "item_selected",
-                    "event_data": title
-                };
+                    "orders": [{
+                        "order_id": order_Id,
+                        "orderlines": [{
+                            "orderline_id": orderline_id,
+                            "qty": 1,
+                            "filter_parameters": [
+                               productSku
+                            ],
+                            "preference_params": [{
+                                "param_name": "order by",
+                                "param_value": "product_weight",
+                                "extra_key": "ASC"
+                            }]
+
+                        }]
+                    }]
+            };
                 console.log("data");
                 console.log(data["event_data"]);
 		CommonActions.postDataToInterface(data);
 	},
 
     render: function() {
+        var order_Id,orderline_id,productSku,orderIndex;
+        orderIndex = this.props.orderIndex;
+        order_Id = "ORD-00" + orderIndex ;
+        orderline_id = order_Id + "_" + orderIndex ;
+        
+        existingId = "product_sku = '2001'";
+        productSku = existingId .replace(/(\d+)+/g, function(match, number) {
+               return parseInt(number) + orderIndex ;
+        });
+
         return (
-            React.createElement("div", {className: "itemImage", onClick:  this.props.imageClickable== true ? this.selectItem.bind(this,this.props.data.title) : ""}, 
-           		React.createElement("img", {className: "img-responsive", src: this.props.data.imgURL, alt: "PLACEHOLDER"})
+            React.createElement("div", {className: "itemImage", onClick:  this.props.imageClickable== true ? this.selectItem.bind(this, order_Id, orderline_id, productSku ) : ""}, 
+           		React.createElement("img", {className: "img-responsive", src: this.props.data["Image_url"], alt: "PLACEHOLDER"})
            	)
         );
     }
@@ -29457,23 +29494,24 @@ var PriceComponent = require('./PriceComponent.js');
 var Description = require('./Description.js');
 
 
+
 var ListItems = React.createClass({displayName: "ListItems",
     render: function() {
        var imageClickable = this.props.imageClickable;
-        var tableStructure = this.props.ListItems.map(function(data, index){ 
+        var tableStructure = this.props.listItemsArray.map(function(data, index){ 
               return(
                 React.createElement("div", {className: "row"}, 
                   React.createElement("div", {className: "col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10"}, 
                       React.createElement("div", {className: "listItems"}, 
                          React.createElement("div", {className: "row itemContainer"}, 
-                                  React.createElement("div", {className: "col-md-3 col-sm-4 col-xs-6"}, 
-                                    React.createElement(ImageComponent, {data: data, imageClickable: imageClickable})
+                                  React.createElement("div", {className: "col-md-3 col-sm-4 col-xs-12"}, 
+                                    React.createElement(ImageComponent, {data: data, key: index, orderIndex: index+1, imageClickable: imageClickable})
                                   ), 
-                                  React.createElement("div", {className: "col-md-3 col-sm-2 col-xs-6"}, 
-                                      React.createElement(PriceComponent, {data: data})
+                                  React.createElement("div", {className: "col-md-3 col-sm-3 col-xs-12"}, 
+                                      React.createElement(PriceComponent, {data: data, key: index})
                                   ), 
-                                  React.createElement("div", {className: "col-md-6 col-sm-6 xs-hidden"}, 
-                                    React.createElement(Description, {data: data})
+                                  React.createElement("div", {className: "col-md-6 col-sm-5 col-xs-12"}, 
+                                    React.createElement(Description, {data: data, key: index})
                                   )
                               
                          )
@@ -29497,11 +29535,28 @@ var React = require('react');
 
 var MessageNavigation = React.createClass({displayName: "MessageNavigation",
     render: function() {
+       var colorClass, description;
+      if(this.props.color == "lightBlue"){
+        colorClass = "lightBlue";
+      }
+      else if(this.props.color == "lightGreen"){
+        colorClass = "lightGreen";
+      }else {
+        colorClass = "darkOrange";
+      };
+
+      if(this.props.screenId == "pick_front_waiting_for_msu"){
+        description = "PLACE ORDER";
+      }
+      else{
+        description = this.props.navData.description;
+      }
+
         return (
-            	React.createElement("div", {className: "row messageNavigation"}, 
+            	React.createElement("div", {className: "row messageNavigation " + colorClass}, 
            		   React.createElement("div", {className: ""}, 
            				   React.createElement("div", {className: "col-md-6 col-sm-6 msg"}, 
-                        this.props.navData.description
+                        description
                      )
            		   )
            	)
@@ -29516,12 +29571,26 @@ var React = require('react');
 
 var NotificationBar = React.createClass({displayName: "NotificationBar",
     render: function() {
+      var colorClass,description;
+      if(this.props.color == "lightGray"){
+        colorClass = "lightGray";
+      }
+      else {
+        colorClass = "";
+      };
+
+      if(this.props.screenId == "pick_front_waiting_for_msu"){
+        description = "SELECT ITEM TO ORDER";
+      }
+      else{
+        description = this.props.notificationData.description;
+      };
         return (
             	React.createElement("div", {className: "row"}, 
            		   React.createElement("div", {className: "notificationBar"}, 
-           				   React.createElement("div", {className: "col-md-6 col-sm-6 col-xs-12 notifier"}, 
+           				   React.createElement("div", {className: "col-md-6 col-sm-6 col-xs-12 notifier " + colorClass}, 
                           React.createElement("div", {className: ""}, 
-                              this.props.notificationData.description
+                              description
                           )
                      )
            		   )
@@ -29652,9 +29721,32 @@ function getStateData(){
            PickFrontRackDetails: mainstore.getRackDetails(),
            PickFrontServerNavData : mainstore.getServerNavData(),
            PickFrontItemUid : mainstore.getItemUid(),
-           ListItems : mainstore.getListItems(),
+           ListItems : mainstore.getListItems()
     };
 };
+var listItemsArray = [
+            {
+             "Item_ID"    : 01,
+             "Image_url"  : "assets/images/image2.png",
+             "Item_Name"  : "ICE LEMON TEA",
+             "Item_Price" : 1.00,
+             "Item_Desc"  : "There's nothing better than an ice cold lemon tea on a hot summer's day. But this lemon tea is not cold. And there's definitely no ice in there. So why is it called Ice Lemon Tea? Take a sip and chill out on a chair. Maybe you'll find out."         
+            },
+            {
+             "Item_ID"    : 02,
+             "Image_url"  : "assets/images/image1.png",
+             "Item_Name"  : "RIBENA",
+             "Item_Price" : 1.20,
+             "Item_Desc"  : "Did you know that Ribena was distributed to children during WW2 as vitamin C supplements when fruits such as oranges were difficult to obtain? But now with the war against obesity, Ribena has been banned from TESCO in the UK for its high sugar content. Not to worry, you can still get it here."         
+            },{
+             "Item_ID"    : 03,
+             "Image_url"  : "assets/images/image3.png",
+             "Item_Name"  : "MILO",
+             "Item_Price" : 0.80,
+             "Item_Desc"  : "Are you a Horlicks or Milo person? You can only pick one side. Horlicks fan? Too bad. There's none for you here. And if you're an Ovaltine fan, it's time to explore the real thing. Tak kiu jit bao!"         
+            }
+                  ];
+
 
 var PickFront = React.createClass({displayName: "PickFront",
   _notification:'',
@@ -29681,23 +29773,16 @@ var PickFront = React.createClass({displayName: "PickFront",
   },
  
   getScreenComponent : function(screen_id){
-    console.log(this.state.ListItems);
     switch(screen_id){
      
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
-        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
-        this._component = (React.createElement(ListItems, {ListItems: this.state.ListItems, imageClickable: true}));
-      break;
-
-       case appConstants.PICK_FRONT_PPTL_PRESS:
-        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
-        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
-        this._component = (React.createElement(LoaderButler, null));
+        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, screenId: appConstants.PICK_FRONT_WAITING_FOR_MSU}));
+        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData, screenId: appConstants.PICK_FRONT_WAITING_FOR_MSU}));
+        this._component = (React.createElement(ListItems, {imageClickable: true, listItemsArray: listItemsArray}));
       break;
 
       case appConstants.PICK_FRONT_LOCATION_SCAN:
-        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
         this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
         this._component = ( 
             React.createElement("div", {className: "row grid-container"}, 
@@ -29712,7 +29797,7 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
-       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
         this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
         this._component = ( 
             React.createElement("div", {className: "row grid-container"}, 
@@ -29726,13 +29811,20 @@ var PickFront = React.createClass({displayName: "PickFront",
           );
       break;
 
-
-       case appConstants.PICK_FRONT_CONTAINER_SCAN:
-       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData}));
+      case appConstants.PICK_FRONT_PPTL_PRESS:
+       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
         this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
-        this._component = (React.createElement(LoaderButler, null));
+        this._component = ( 
+            React.createElement("div", {className: "row grid-container"}, 
+                React.createElement("div", {className: "mainRackContainer"}, 
+                  React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, rackSlotColor: true})
+                ), 
+                React.createElement("div", {className: "confirmShelfButton"}, 
+                    React.createElement(CommonButton, {disabled: true, text: "Confirm", color: "orange"})
+                  )
+            )
+          );
       break;
-
       default:
         return true;
     }
@@ -29764,10 +29856,10 @@ var PriceComponent = React.createClass({displayName: "PriceComponent",
 
         	React.createElement("div", {className: ""}, 
 	        	React.createElement("div", {className: "row itemName"}, 
-	        		this.props.data.title
+	        		this.props.data["Item_Name"]
 	        	), 
 	        	React.createElement("div", {className: "row itemPrice"}, 
-	        		"$ ", this.props.data.price
+	        		"$ ", this.props.data["Item_Price"].toFixed(2)
 	        	)
            	)
         )
@@ -29804,6 +29896,29 @@ function getStateData(){
     };
 };
 
+var listItemsArray = [
+            {
+             "Item_ID"    : 01,
+             "Image_url"  : "http://www.garnier.in/~/media/garnier%20local/en-in/prd-haircare/haircare_brands_fructis_triplenutrition/275x360productshot_shampoo.png?h=360&la=en-IN&w=275",
+             "Item_Name"  : "Garnier",
+             "Item_Price" : 20,
+             "Item_Desc"  : "Garnier hair care and skin care products is one of the highest luxury brands used in Asia, China, Japan & India. In the Brand Trust Report 2012, Garnier was ranked 73rd among India's most trusted brands and subsequently, according to the Brand Trust Report 2013, Garnier was ranked 47th among India's most trusted brands."         
+            },
+            {
+             "Item_ID"    : 02,
+             "Image_url"  : "http://images.fonearena.com/blog/wp-content/uploads/2015/07/Motorola-Moto-X-Play2.jpg",
+             "Item_Name"  : "Moto X Play",
+             "Item_Price" : 20,
+             "Item_Desc"  : "Garnier hair care and skin care products is one of the highest luxury brands used in Asia, China, Japan & India. In the Brand Trust Report 2012, Garnier was ranked 73rd among India's most trusted brands and subsequently, according to the Brand Trust Report 2013, Garnier was ranked 47th among India's most trusted brands."         
+            },{
+             "Item_ID"    : 03,
+             "Image_url"  : "http://blogs-images.forbes.com/jasonevangelho/files/2015/01/325753-apple-macbook-air-13-inch-mid-2013.jpg",
+             "Item_Name"  : "Apple MacBook",
+             "Item_Price" : 20,
+             "Item_Desc"  : "Garnier hair care and skin care products is one of the highest luxury brands used in Asia, China, Japan & India. In the Brand Trust Report 2012, Garnier was ranked 73rd among India's most trusted brands and subsequently, according to the Brand Trust Report 2013, Garnier was ranked 47th among India's most trusted brands."         
+            }
+                  ];
+
 var PutFront = React.createClass({displayName: "PutFront",
   _notification:'',
   _component:'',
@@ -29832,11 +29947,18 @@ var PutFront = React.createClass({displayName: "PutFront",
   getScreenComponent : function(screen_id){
     switch(screen_id){
 
+      case appConstants.PUT_BACK_STAGE:
+        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData}));
+        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PutFrontNotificationData}));
+        this._component = (React.createElement(ListItems, {imageClickable: true, listItemsArray: listItemsArray}));
+      break;
+
+
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
           var imageComponents =[];
-          this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData}));
-          this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PutFrontNotificationData}));
-          imageComponents = this.state.ListItems.map(function(data,index){
+          this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData, color: "lightBlue"}));
+          this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PutFrontNotificationData, color: "lightGray"}));
+          imageComponents = listItemsArray.map(function(data,index){
                   return (
                         React.createElement("div", {className: "col-md-4 col-sm-4"}, 
                           React.createElement("div", {className: "row"}, 
@@ -29864,7 +29986,8 @@ var PutFront = React.createClass({displayName: "PutFront",
                 ), 
                 React.createElement("div", {className: "col-md-4 col-sm-4"}, 
                     React.createElement("div", {className: "row"}, 
-                      React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
+                      React.createElement(Rack, {rackData: this.state.PickFrontRackDetails}), 
+                      React.createElement("div", {className: "overlayRack"})
                     ), 
                     React.createElement("div", {className: "row"}, 
                       React.createElement("div", {className: "confirmShelfButton"}, 
@@ -29878,9 +30001,9 @@ var PutFront = React.createClass({displayName: "PutFront",
 
       case appConstants.PUT_FRONT_SCAN:
           var imageComponents =[];
-          this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData}));
-          this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PutFrontNotificationData}));
-          imageComponents = this.state.ListItems.map(function(data,index){
+          this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PutFrontNavData, color: "lightBlue"}));
+          this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PutFrontNotificationData, color: "lightGray"}));
+          imageComponents = listItemsArray.map(function(data,index){
                   return (
                         React.createElement("div", {className: "col-md-4 col-sm-4"}, 
                           React.createElement("div", {className: "row"}, 
@@ -29897,9 +30020,10 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "row imageQuantityContainer"}, 
                 React.createElement("div", {className: "col-md-8 col-sm-8 imageContainer"}, 
-                    React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "row imagecomp"}, 
                         imageComponents
                     ), 
+                    React.createElement("div", {className: "overlayImgComp"}), 
                     React.createElement("div", {className: "row"}, 
                       React.createElement("div", {className: "confirmShelfButton"}, 
                           React.createElement(CommonButton, {disabled: true, text: "Complete Put", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.COMPLETE_PUT})
@@ -30254,6 +30378,7 @@ var appConstants = {
 	AUTH : '/auth',
 	TOKEN : '/token',
 	PPS_SEATS : "/pps_seats/",
+	ORDERS : "/orders",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",
@@ -31069,7 +31194,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         $.ajax({
             type: 'POST',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.ORDERS,
             data: JSON.stringify(data),
             dataType: "json",
             headers: {

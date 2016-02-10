@@ -43,30 +43,56 @@ body {
 	.imageQuantityContainer{
 		padding: 35px 0;
     	.imageContainer{
-    		.itemImage{
-				//border: 1px solid #fff;
-	    		border-radius: 50%;
-	    		height: 147px;
-	    		margin: auto;
-	    		//width: 170px;
-	    		img{
-	    			text-align: center;
-	    		}
-			}
-			.inputBox{
-				text-align: center;
-				input{
-					padding: 10px 8px;
-    				width: 90px;
-    				text-align: center;
-    				font-size: 2rem;
-    				font-weight: 700;
+    		.imagecomp{
+    			position: relative;
+    		}
+	    		.itemImage{
+					//border: 1px solid #fff;
+		    		border-radius: 50%;
+		    		height: 147px;
+		    		margin: auto;
+		    		//width: 170px;
+		    		img{
+		    			//text-align: center;
+		    			height: inherit;
+	    				margin: auto;
+		    		}
 				}
+				.inputBox{
+					text-align: center;
+					input{
+						padding: 10px 8px;
+	    				width: 90px;
+	    				text-align: center;
+	    				font-size: 2rem;
+	    				font-weight: 700;
+	    				margin-top: 30px;
+					}
+				}
+			
+			.overlayImgComp{
+	    		background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+			    height: 95%;
+			    left: 0;
+			    position: absolute;
+			    top: 0;
+			    width: 100%;
+			    z-index: 200;
 			}
+    	}
+    	.overlayRack{
+    		background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+		    height: 79%;
+		    left: 0;
+		    position: absolute;
+		    top: 0;
+		    width: 100%;
+		    z-index: 200;
     	}
     	.confirmShelfButton{
 	 			text-align: center;
 	 			margin-top: 6vh;
+	 			margin-bottom: 9vh;
     				a{
     					font-size: 2rem;
     					font-weight: bold;
@@ -74,7 +100,7 @@ body {
     				}
     		}
     	.drawRack{
-		    border-top: 6px solid #939598;
+		    border-top: 6px solid #59595c;
 		    display: flex;
 		    flex-flow: column nowrap;
 		    height: 300px;
@@ -85,9 +111,9 @@ body {
 		        display: flex;
 		        flex-basis:0;
 		        flex-direction: row;
-		        border-left: 6px solid #939598;
-		        border-right: 6px solid #939598;
-		        border-bottom: 4px solid #939598;
+		        border-left: 6px solid #59595c;
+		        border-right: 6px solid #59595c;
+		        border-bottom: 4px solid #59595c;
 		        border-top: none;
          
 		        .rackSlot{
@@ -97,7 +123,7 @@ body {
 		            &:last-child {
 		                border-right: none;
 		            }
-		            border: 2px solid #939598;
+		            border: 2px solid #59595c;
 		            border-bottom:none;
 		            border-top: none; 
 		            height: auto;
@@ -111,7 +137,7 @@ body {
 		                 justify-content: center;
 		            }
 		                .activeSlot{
-		                background: #6d6d6d;
+		                background: #221f1f;
 		                color: #ffffff;
 		                display: flex;
 		                justify-content: center;
@@ -126,12 +152,12 @@ body {
 		            }
 		        }
 		        &:last-child {
-		               border-bottom: 0.16vw solid #939598;
+		               border-bottom: 0.16vw solid #59595c;
 		            }
     		}
 			    .lastRow{
 			        flex:0 1 8vh;
-			        border: 6px solid #939598;
+			        border: 6px solid #59595c;
 			        border-top: none;
 			        border-bottom: none;
 			    }

@@ -93,7 +93,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         $.ajax({
             type: 'POST',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA,
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.ORDERS,
             data: JSON.stringify(data),
             dataType: "json",
             headers: {

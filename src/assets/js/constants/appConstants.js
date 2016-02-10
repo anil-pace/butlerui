@@ -6,6 +6,7 @@ var appConstants = {
 	AUTH : '/auth',
 	TOKEN : '/token',
 	PPS_SEATS : "/pps_seats/",
+	ORDERS : "/orders",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",

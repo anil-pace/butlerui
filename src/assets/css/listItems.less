@@ -5,25 +5,37 @@
 		.itemContainer{
 			padding: 15px;
 			border-top: 1px solid #ccc;
-			cursor: pointer;
+			color: #000;
 			.itemName{
-			font-size: 2.1rem;
-			text-align: center;
+				padding-left: 15px;
+			font-size: 2.5rem;
+    		font-weight: bold;
+    		text-align: left;
+    		word-wrap: break-word;
 			}
 			.itemImage{
+				cursor: pointer;
 				//border: 1px solid #fff;
 	    		border-radius: 50%;
 	    		height: 147px;
 	    		margin: auto;
 	    		width: 170px;
+	    		img{
+	    			height: inherit;
+	    		}
 			}
 			.itemPrice{
-				text-align: center;
-				font-size: 1.5rem;
+				padding-left: 15px;
+				font-size: 2.1rem;
+    			font-weight: bold;
+    			text-align: left;
 			}
 			.itemDescription{
 				word-wrap: break-word;
 			}
+			 &:last-child {
+                border-bottom: 1px solid #ccc;
+            }
 		}
 		.itemContainer:hover {
 			background:rgba(0, 0, 0, 0.04) none repeat scroll 0 0;

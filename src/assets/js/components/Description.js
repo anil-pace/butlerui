@@ -3,7 +3,7 @@ var Description = React.createClass({
     render: function() {
         return (
         	<div className="itemDescription">
-            	 {this.props.data.description}
+            	 {this.props.data["Item_Desc"]}
             </div>
         );
     }

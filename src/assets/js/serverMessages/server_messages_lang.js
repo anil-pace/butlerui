@@ -168,11 +168,12 @@ function server_messages_list() {
     _("Scan pptl barcode after scannning tote barcode");
     _("Entity scanned is not from bin. Replace and scan from bin");
     _("Wrong entity scanned");
-    _("Waiting for MSU. Please scan entities later.");
+    _("Waiting for MSU scan. Please scan entity later.");
     _("Expected quantity exceeded.");
     _("Wrong scan! Entity scan expected but slot barcode scanned.");
     _("Actual put quantity not equal to the sum of Good and Expection quantity.");
     _("Actual put quantity less than than revised quantity.");
+    _("Wrong slot scanned");
     _("Entity scan successful");
     _("Slot scan successful");
     _("Slot scan successful");

@@ -235,6 +235,21 @@ var commonActions = {
       data:data,
       type : type
     });
+   },
+   convertTextBox : function(data, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CONVERT_TEXTBOX,
+      data : data,
+      index : index
+    })
+   },
+   updateData : function(data, method, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.UPDATE_PERIPHERAL,
+      data : data,
+      method : method,
+      index : index
+    })
    }
 
 };

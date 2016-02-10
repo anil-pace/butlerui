@@ -118,6 +118,8 @@ var serverMessages = {
     "CLIENTCODE_001" : "Bin {0} selected",
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
+    "CLIENTCODE_004" : "PPTL Management",
+    "CLIENTCODE_005" : "Scanner Management",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.W.003" : "Cannot cancel scan. No Scanned box found",

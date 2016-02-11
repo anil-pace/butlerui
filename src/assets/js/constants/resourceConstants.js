@@ -11,7 +11,10 @@ var resourceConstants = {
 	USERNAME :'User Name',
 	PASSWORD : 'Password',
 	CLIENTCODE_001 : 'CLIENTCODE_001',
-	CLIENTCODE_002 : 'CLIENTCODE_002'
+	CLIENTCODE_002 : 'CLIENTCODE_002',
+	CLIENTCODE_004 : 'CLIENTCODE_004',
+	CLIENTCODE_005 : 'CLIENTCODE_005'
+
 };
 module.exports = resourceConstants;
 

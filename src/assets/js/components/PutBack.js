@@ -254,11 +254,17 @@ var PutBack = React.createClass({
             );
         break;
       case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
-     
+          var _button;
+          if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {"Add Scanner"} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} /></div>)
+          }
           this._component = (
               <div className='grid-container audit-reconcilation'>
                   <TabularData data = {this.state.utility}/>
+                  {_button}
+                  <Modal /> 
               </div>
             );
         break;      

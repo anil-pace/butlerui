@@ -9,6 +9,7 @@ var TableHeader = React.createClass({
     	data.map(function(value,index){
             var classes = "table-col ";
             var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
+            classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";

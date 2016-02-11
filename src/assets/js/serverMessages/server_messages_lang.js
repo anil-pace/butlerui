@@ -184,6 +184,8 @@ function server_messages_list() {
     _("Cancelled excess entity in tote");
     _("Cancelled invalid entity in tote");
     _("Invalid entity in tote recorded");
-    _("Wrong enitity scanned. Expecting scan from bin {0}")
+    _("Wrong enitity scanned. Expecting scan from bin {0}");
+    _("PPTL Management");
+    _("Scanner Management")
 
 }

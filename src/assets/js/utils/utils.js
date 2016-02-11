@@ -134,21 +134,87 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).done(function(response) {
 
         }).fail(function(jqXhr) {
+            if(type == 'pptl'){
+            var data =  [
+                    {
+                      "barcode": "B1",
+                      "peripheral_id": "P10_1",
+                      "peripheral_type": "pptl",
+                      "pps_bin_id": "1"
+                    },
+                    {
+                      "barcode": "B2",
+                      "peripheral_id": "P10_2",
+                      "peripheral_type": "pptl",
+                      "pps_bin_id": "2"
+                    },
+                    {
+                      "pps_bin_id": "7"
+                    },
+                    {
+                      "pps_bin_id": "8"
+                    },
+                    {
+                      "pps_bin_id": "4"
+                    },
+                    {
+                      "pps_bin_id": "6"
+                    },
+                    {
+                      "pps_bin_id": "5"
+                    },
+                    {
+                      "pps_bin_id": "3"
+                    }
+
+                    
+                 ];
+             }else{
+                var data = [
+                    {
+                     "peripheral_id": "P1",
+                     "peripheral_type": "barcode_scanner"
+                    },
+                    {
+                     "peripheral_id": "P2",
+                     "peripheral_type": "barcode_scanner"
+                    }
+
+                ]
+             }
+             CommonActions.updateSeatData(data, type);        
+        });
+    },
+    updatePeripherals : function(data, method, seat_name){
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+        var url;
+        if(method == 'POST'){
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+appConstants.ADD;
+        }else{
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
+        }
+         $.ajax({
+            type: method,
+            url: url,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
+            }
+        }).done(function(response) {
+
+        }).fail(function(jqXhr) {
             var data =  [
                     {
                      "barcode": "3",
-                     "peripheral_id": "C",
+                     "peripheral_id": "AC",
                      "peripheral_type": "pptl",
                      "pps_bin_id": "4"
-                    },
-                    {
-                     "barcode": "123",
-                     "peripheral_id": "PQR",
-                     "peripheral_type": "pptl",
-                     "pps_bin_id": "5"
                     }
                  ];
-             CommonActions.updateSeatData(data, type);        
+             CommonActions.updateSeatData(data, data.peripheral_type);        
         });
     },
     createLogData: function(message, type) {

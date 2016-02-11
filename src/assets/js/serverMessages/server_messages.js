@@ -119,6 +119,8 @@ var serverMessages = {
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
     "Audit.A.012":"No Items to Reconcile",
+    "CLIENTCODE_004" : "PPTL Management",
+    "CLIENTCODE_005" : "Scanner Management",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",

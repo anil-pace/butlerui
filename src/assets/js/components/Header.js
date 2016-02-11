@@ -52,6 +52,7 @@ var Header = React.createClass({
         $('#barcode').data('keyboard').reveal();
     },
     enableException:function(){
+        alert("hello");
         CommonActions.enableException(true);
         $("#actionMenu").hide();
     },
@@ -75,6 +76,7 @@ var Header = React.createClass({
     },
     showMenu: function(){
         $("#actionMenu").toggle();
+        $(".subMenu").hide();
     },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
@@ -91,11 +93,14 @@ var Header = React.createClass({
                                     </div>);
         else
             this.exceptionMenu = '';
-    },
+    },    
     peripheralData : function(type){
         CommonActions.getPeriPheralData(type);
+        $("#actionMenu").hide();
     },
-    utility : function(){
+    utilityMenu : function(){
+        $(".subMenu").toggle();
+        //$("#actionMenu").hide();
         //CommonActions.displayperipheralMenu();
     },
     render: function() {    
@@ -128,12 +133,12 @@ var Header = React.createClass({
             </div>
             <div className="actionMenu" id="actionMenu" >
                 {this.exceptionMenu}  
-                <div onClick = {this.utility} >
+                <div className="actionItem" onClick = {this.utilityMenu} >
                     Utility
-                    <div onClick={this.peripheralData.bind(this, 'pptl')}>
+                    <div className="subMenu" onClick={this.peripheralData.bind(this, 'pptl')}>
                         PPTL Management
                     </div>
-                    <div onClick={this.peripheralData.bind(this, 'barcode_scanner')}>
+                    <div className="subMenu" onClick={this.peripheralData.bind(this, 'barcode_scanner')}>
                         Scanner Management
                     </div>
                 </div>  

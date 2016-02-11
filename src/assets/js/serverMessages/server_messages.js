@@ -67,7 +67,7 @@ var serverMessages = {
     "PtB.W.005" : "PpsBin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
-    "PkF.E.011" : "Press PPTL for Bin {0} to confirm",
+    "PkF.E.011" : "Data capture failed at item",
     "PkF.E.013" : "Scan items and place in Bin {0}",
     "PkF.E.014" : "Press PPTL for Bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",

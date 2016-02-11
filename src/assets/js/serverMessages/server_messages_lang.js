@@ -100,7 +100,7 @@ function server_messages_list() {
     _("Item Scan successful");
     _("Waiting for MSU to arrive");
     _('Item Scan successful');
-    _('Press PPTL for Bin {0} to confirm');
+    _('Data capture failed at item');
     _('Bin {0} selected');
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');

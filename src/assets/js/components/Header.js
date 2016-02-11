@@ -51,12 +51,7 @@ var Header = React.createClass({
             }
         })
         $('#barcode').data('keyboard').reveal();
-    },
-    enableException:function(){
-        alert("hello");
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
+    },    
     logoutSession:function(){
         $("#actionMenu").hide();        
         if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
@@ -72,9 +67,7 @@ var Header = React.createClass({
     enableException:function(){
         CommonActions.enableException(true);
         $("#actionMenu").hide();
-    },
-    componentDidMount: function() {
-    },
+    },    
     showMenu: function(){
         $("#actionMenu").toggle();
         $(".subMenu").hide();
@@ -100,8 +93,7 @@ var Header = React.createClass({
         $("#actionMenu").hide();
     },
     utilityMenu : function(){
-        $(".subMenu").toggle();
-        //$("#actionMenu").hide();
+        $(".subMenu").toggle();       
         //CommonActions.displayperipheralMenu();
     },
     render: function() {    

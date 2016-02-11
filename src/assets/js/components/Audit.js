@@ -183,12 +183,22 @@ var Audit = React.createClass({
           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);  
           var subComponent='';
           var messageType = 'large';
+          var BoxSerialData = '';
+          var ItemInBoxData = '';
+          var LooseItemsData = '';
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
+              BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);
+          if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
+              ItemInBoxData = (<TabularData data = {this.state.AuditReconcileItemInBoxData}/>);
+          if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
+              LooseItemsData = (<TabularData data = {this.state.AuditReconcileLooseItemsData}/>);
           if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
             subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
-                    <TabularData data = {this.state.AuditReconcileBoxSerialData}/>
-                    <TabularData data = {this.state.AuditReconcileLooseItemsData} />
+                    {BoxSerialData}
+                    {ItemInBoxData}
+                    {LooseItemsData}
                   </div>
                 </div>
               );

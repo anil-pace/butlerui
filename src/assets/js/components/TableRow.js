@@ -18,6 +18,7 @@ var TableRow = React.createClass({
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
+            var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
             if((value.type != undefined && value.type=="button"))
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus}/></div>));
             else

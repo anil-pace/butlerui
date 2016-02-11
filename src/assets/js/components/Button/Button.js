@@ -129,14 +129,20 @@ var Button1 = React.createClass({
                                 if (checklist_index != "all") {
                                     checkList.checklist_data[checklist_index - 1].map(function(value, index) {
                                         var keyvalue = Object.keys(value);
-                                        checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                        if(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format !="Integer")
+                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                        else
+                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value);
                                     });
                                 } else {
                                     checkList.checklist_data.map(function(value, index) {
                                         if(index < mainstore.scanDetails()["current_qty"])
                                         value.map(function(value1, index1) {
                                             var keyvalue = Object.keys(value1);
-                                            checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                            if(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format !="Integer")
+                                                checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                            else
+                                                checkList.checklist_data[index][index1][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index1 + "-" + index ).value);
                                         })
                                     });
                                 }

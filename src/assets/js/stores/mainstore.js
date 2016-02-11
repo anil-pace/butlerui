@@ -132,7 +132,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.utility[0];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
                     _NavData = navConfig.utility[0];
-                else 
+                else
                     _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
@@ -326,7 +326,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }else
+        } else
             return null;
     },
 
@@ -340,7 +340,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }else
+        } else
             return null;
     },
 
@@ -408,7 +408,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return binData;
     },
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus , borderBottom) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -421,25 +421,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.type = type;
         this.buttonType = buttonType;
         this.buttonStatus = buttonStatus;
+        this.borderBottom = borderBottom;
     },
-    getPptlData : function(){
-        if(_seatData.hasOwnProperty('utility')){
+    getPptlData: function() {
+        if (_seatData.hasOwnProperty('utility')) {
             var data = {};
             data["header"] = [];
             data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol("Barcode", "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Actions", "header", false, "small", false, true, true, false)); 
+            data["header"].push(new this.tableCol("Actions", "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
             _seatData.utility.map(function(value, index) {
                 data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, true, false, false),
-                new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false, true), 
-                new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true)]);
+                    new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true)
+                ]);
 
             });
-            return data;   
+            return data;
         }
     },
     getReconcileData: function() {
@@ -471,45 +473,66 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var noScanMissing = 0;
+        var missingDamagedBoxSerials = '';
+        var extraBoxSerials = '';
+        var countMissingDamagedBoxSerials = 0;
         _seatData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "no_scan"){
-                var totalMissing = '';
-                    if(_seatData.item_in_box_barcode_damage.length > 0){
-                    _seatData.item_in_box_barcode_damage.map(function(data, index){
-                        if(data.Box_serial == value.Box_serial){
-                            totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
-                        }
-                    });
-                }
-                var missingBoxSerials = Math.max(parseInt(value.Expected_qty) - parseInt(value.Actual_qty),0);
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(missingBoxSerials + totalMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
-                ]);
+            if (value.Scan_status == "no_scan") {
+                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " ";
+                countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
             }
-            else{
-                noScanMissing  = noScanMissing + 1;
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
-                ]);
-            }
-
         });
-        var barcodeDamaged = " ("+_seatData.box_barcode_damage+' Barcode Damaged )';
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(noScanMissing + barcodeDamaged, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
-        ]);
         _seatData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
-            ]);
+            extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
         });
+        if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0) {
+            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+        }
+        if (missingDamagedBoxSerials != 0)
+            data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(countMissingDamagedBoxSerials - _seatData["box_barcode_damage"], 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+            ]);
+        if (_seatData.Extra_box_list.length != 0)
+            data["tableRows"].push([new self.tableCol(extraBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+            ]);
+        return data;
+    },
 
+    getItemInBoxReconcileData: function() {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        _seatData.Box_qty_list.map(function(value, index) {
+            if (value.Scan_status == "close") {
+                var barcodeDamagedQty = 0;
+                _seatData.item_in_box_barcode_damage.map(function(val, ind) {
+                    if (value.Box_serial = val.Box_serial)
+                        barcodeDamagedQty = val.Damage_qty;
+                });
+                if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || barcodeDamagedQty != 0)
+                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
+                    ]);
+            }
+        });
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol("Item in Box Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+        }
         return data;
     },
 
@@ -553,29 +576,33 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["header"] = [];
         data["tableRows"] = [];
-        data["header"].push(new this.tableCol("Loose Items SKU", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var self = this;
         var totalLooseItemsMissing = 0;
         var extraLooseItemsMissing = 0;
+        var c = 0 ;
+         _seatData.Loose_sku_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+                c=c+1;
+        })
         _seatData.Loose_sku_list.map(function(value, index) {
-            if(value.Expected_qty >= value.Actual_qty){
-                totalLooseItemsMissing = totalLooseItemsMissing +  parseInt(value.Expected_qty - value.Actual_qty);
-            }
-            if(value.Expected_qty <= value.Actual_qty){
-              extraLooseItemsMissing = extraLooseItemsMissing + Math.abs(parseInt(value.Expected_qty - value.Actual_qty)); 
-            }
-            if (value.Scan_status != "no_scan")
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
-            else
-                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','',false)
+            ]);
 
         });
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(totalLooseItemsMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(extraLooseItemsMissing, "enabled", false, "large", true, false, false, false, true)
-        ]);
+         /*if (data["tableRows"].length > 0)
+         data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
+                new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
+            ]);*/
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol("Loose Items Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+        }
         return data;
     },
 
@@ -635,10 +662,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
-    kQstatus: function(){
-        if(_seatData.hasOwnProperty('enable_kq')){
+    kQstatus: function() {
+        if (_seatData.hasOwnProperty('enable_kq')) {
             return _seatData.enable_kq;
-        }else{
+        } else {
             return true;
         }
     },
@@ -704,7 +731,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
-        if(_seatData.hasOwnProperty('utility')){
+        if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
         }
         if (_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
@@ -778,7 +805,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _.setTranslation(english);
                 break;
             default:
-                return true;    
+                return true;
         }
     },
     postDataToInterface: function(data) {
@@ -819,12 +846,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _damagedQuantity = data;
     },
     getkQQuanity: function() {
-        if(_seatData.hasOwnProperty('Current_box_details')){
-            if(_seatData.Current_box_details.length > 0){
+        if (_seatData.hasOwnProperty('Current_box_details')) {
+            if (_seatData.Current_box_details.length > 0) {
                 _KQQty = _seatData.Current_box_details[0].Actual_qty;
             }
             return _KQQty;
-        }else{
+        } else {
             return _KQQty;
         }
     },
@@ -950,24 +977,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    getPeripheralData : function(data){
+    getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData : function(data, type){
-        if(type === 'pptl'){
+    updateSeatData: function(data, type) {
+        if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
-        }else if(type === 'barcode_scanner'){
+        } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);
-        console.log(_seatData);  
+        console.log(_seatData);
     },
-    getUtility : function(){
+    getUtility: function() {
         return _utility;
     },
     getScreenData: function() {
-        var data = {};console.log(_screenId);
+        var data = {};
+        console.log(_screenId);
         switch (_screenId) {
             case appConstants.PUT_BACK_STAGE:
             case appConstants.PUT_BACK_SCAN_TOTE:
@@ -1244,6 +1272,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditReconcileBoxSerialData"] = this.getReconcileBoxSerialData();
                 data["AuditReconcileLooseItemsData"] = this.getReconcileLooseItemsData();
+                data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
@@ -1295,7 +1324,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
 
-                break;    
+                break;
             default:
         }
         return data;
@@ -1408,7 +1437,7 @@ AppDispatcher.register(function(payload) {
             mainstore.showSpinner();
             mainstore.updateSeatData(action.data, action.type);
             mainstore.emitChange();
-            break;         
+            break;
         default:
             return true;
     }

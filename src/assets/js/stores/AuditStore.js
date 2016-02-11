@@ -86,7 +86,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     getModalStatus:function(){
         var data = {};
         data["showModal"] = "";
-        data["message"] = "";
+        //data["message"] = "";
         if(_AuditData.Current_box_details.length >0 && _AuditData.Current_box_details[0].Box_serial == null && (_AuditData.Current_box_details[0].Actual_qty > _AuditData.Current_box_details[0].Expected_qty)){
             return {
                 "showModal":true,

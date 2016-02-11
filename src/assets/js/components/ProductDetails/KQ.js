@@ -66,6 +66,7 @@ var KQ = React.createClass({
                     }
                 };
             }
+            mainstore.setShowModal(false);
             CommonActions.postDataToInterface(data);
         }
     },

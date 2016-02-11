@@ -36774,20 +36774,28 @@ var Audit = React.createClass({displayName: "Audit",
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+      if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
-          setTimeout((function(){ActionCreators.showModal({
+          this.state.AuditShowModal["showModal"] = false;
+          $('.modal-backdrop fade in').remove();
+          console.log("ppppp");
+          console.log(self.state.AuditShowModal.message);
+          var r = self.state.AuditShowModal.message;
+          setTimeout((function(){
+            console.log("qqq");
+            console.log(r);
+            ActionCreators.showModal({
               data:{
-              "message":self.state.AuditShowModal.message
+              "message":r
             },
             type:"message"
           });
         $('.modal').modal();
       return false;
       }),0)
-
-       }else if(this.state.AuditShowModal["showModal"] == '' && $('.modal').hasClass('in')){
+          console.log("aa");
+       }else if(this.state.AuditShowModal["showModal"] == false && $('.modal').hasClass('in')){
         $('.modal').modal('hide');
         $('.modal-backdrop fade in').remove();
        }
@@ -37697,10 +37705,6 @@ var IconButton = React.createClass({displayName: "IconButton",
                     case appConstants.FINISH_BOX:
                          console.log("gggg");
                          console.log(AuditStore.getCurrentBoxSerialData());
-                         if(AuditStore.getCurrentBoxSerialData()[0].Actual_qty > AuditStore.getCurrentBoxSerialData()[0].Expected_qty )
-                        this.showModal({
-                            "message":"Place extra " + (AuditStore.getCurrentBoxSerialData()[0].Actual_qty - AuditStore.getCurrentBoxSerialData()[0].Expected_qty) + " items in Exception area"
-                        },"message");
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "finish_box";
                         ActionCreators.postDataToInterface(data);
@@ -39442,6 +39446,7 @@ var KQ = React.createClass({displayName: "KQ",
                     }
                 };
             }
+            mainstore.setShowModal(false);
             CommonActions.postDataToInterface(data);
         }
     },
@@ -41456,7 +41461,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     getModalStatus:function(){
         var data = {};
         data["showModal"] = "";
-        data["message"] = "";
+        //data["message"] = "";
         if(_AuditData.Current_box_details.length >0 && _AuditData.Current_box_details[0].Box_serial == null && (_AuditData.Current_box_details[0].Actual_qty > _AuditData.Current_box_details[0].Expected_qty)){
             return {
                 "showModal":true,
@@ -42519,6 +42524,7 @@ var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _cancelEvent, _mes
     _putFrontExceptionScreen = "good",
     _pickFrontExceptionScreen = "good",
     _missingQuantity = 0,
+    showModal = false,
     _finishAuditFlag = true;
 var modalContent = {
     data: "",
@@ -42606,6 +42612,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
+    setShowModal:function(data){
+        showModal = false;
+    },
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
@@ -42676,13 +42685,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+            console.log("ashu");
+            console.log(showModal);
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+            console.log("jindal");
+            console.log(showModal);
+            showModal = false;
+            console.log(_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])
             return {
                 "showModal": true,
                 "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
             }
-        } else
+        } else{
             return data;
+        }
     },
 
     getBoxSerialData: function() {
@@ -43243,6 +43259,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+        if(_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0)
+            showModal = true;
+        else
+            showModal=false;
+        //alert("ashish");
+        //showModal = true;
 
     },
     getModalContent: function() {
@@ -43310,6 +43332,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     postDataToInterface: function(data) {
+        showModal = false;
         utils.postDataToInterface(data, _seatName);
     },
     logError: function(data) {

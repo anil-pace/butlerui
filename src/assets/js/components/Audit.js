@@ -57,20 +57,28 @@ var Audit = React.createClass({
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+      if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
-          setTimeout((function(){ActionCreators.showModal({
+          this.state.AuditShowModal["showModal"] = false;
+          $('.modal-backdrop fade in').remove();
+          console.log("ppppp");
+          console.log(self.state.AuditShowModal.message);
+          var r = self.state.AuditShowModal.message;
+          setTimeout((function(){
+            console.log("qqq");
+            console.log(r);
+            ActionCreators.showModal({
               data:{
-              "message":self.state.AuditShowModal.message
+              "message":r
             },
             type:"message"
           });
         $('.modal').modal();
       return false;
       }),0)
-
-       }else if(this.state.AuditShowModal["showModal"] == '' && $('.modal').hasClass('in')){
+          console.log("aa");
+       }else if(this.state.AuditShowModal["showModal"] == false && $('.modal').hasClass('in')){
         $('.modal').modal('hide');
         $('.modal-backdrop fade in').remove();
        }

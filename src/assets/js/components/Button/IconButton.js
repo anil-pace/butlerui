@@ -25,10 +25,6 @@ var IconButton = React.createClass({
                     case appConstants.FINISH_BOX:
                          console.log("gggg");
                          console.log(AuditStore.getCurrentBoxSerialData());
-                         if(AuditStore.getCurrentBoxSerialData()[0].Actual_qty > AuditStore.getCurrentBoxSerialData()[0].Expected_qty )
-                        this.showModal({
-                            "message":"Place extra " + (AuditStore.getCurrentBoxSerialData()[0].Actual_qty - AuditStore.getCurrentBoxSerialData()[0].Expected_qty) + " items in Exception area"
-                        },"message");
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "finish_box";
                         ActionCreators.postDataToInterface(data);

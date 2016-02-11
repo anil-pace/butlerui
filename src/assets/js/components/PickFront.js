@@ -11,18 +11,8 @@ var NotificationBar = require("./NotificationBar");
 var Spinner = require('./Spinner/Overlay');
 var LoaderButler = require('./Spinner/LoaderButler');
 var CommonButton = require("./CommonButton");
+var Bins = require("./Bins/Bins.react");
 
-function getStateData(){
-  return {
-           PickFrontNavData : mainstore.getNavData(),
-           PickFrontNotificationData : mainstore.getNotificationData(),
-           PickFrontScreenId: mainstore.getScreenId(),
-           PickFrontRackDetails: mainstore.getRackDetails(),
-           PickFrontServerNavData : mainstore.getServerNavData(),
-           PickFrontItemUid : mainstore.getItemUid(),
-           ListItems : mainstore.getListItems()
-    };
-};
 var listItemsArray = [
             {
              "Item_ID"    : 01,
@@ -46,6 +36,20 @@ var listItemsArray = [
             }
                   ];
 
+
+function getStateData(){
+  return {
+           PickFrontNavData : mainstore.getNavData(),
+           PickFrontNotificationData : mainstore.getNotificationData(),
+           PickFrontScreenId: mainstore.getScreenId(),
+           PickFrontRackDetails: mainstore.getRackDetails(),
+           PickFrontServerNavData : mainstore.getServerNavData(),
+           PickFrontItemUid : mainstore.getItemUid(),
+           ListItems : mainstore.getListItems(),
+           PickFrontSlotDetails : mainstore.getCurrentSlot(),
+           PickFrontBinData: mainstore.getBinData()
+    };
+};
 
 var PickFront = React.createClass({
   _notification:'',
@@ -111,19 +115,19 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
-       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
-        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
-        this._component = ( 
-            <div className="row grid-container">
-                <div className="mainRackContainer">
-                  <Rack rackData = {this.state.PickFrontRackDetails} rackSlotColor={true} />
+        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
+         this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+        this._component = (
+              <div className='grid-container'>
+               
+                <div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>
-                <div className="confirmShelfButton">
-                    <CommonButton disabled={true} text={"Confirm"} color={"orange"} />
-                  </div>
-            </div>
-          );
+                
+              </div>
+            );
       break;
+
       default:
         return true;
     }

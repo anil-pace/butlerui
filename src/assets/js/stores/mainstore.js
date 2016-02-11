@@ -81,7 +81,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
         return _NavData;
     },
-
+     getBinData: function() {
+        var binData = {};
+        binData["structure"] = _seatData.structure;
+        binData["ppsbin_list"] = _seatData.ppsbin_list;
+        return binData;
+    },
+    getCurrentSlot: function() {
+        if (_seatData.hasOwnProperty('rack_details')) {
+            return _seatData.rack_details.slot_barcodes;
+        } else {
+            return null;
+        }
+    },
 
     getServerNavData: function() {
         if (_seatData.header_msge_list.length > 0) {

@@ -29049,7 +29049,351 @@ var commonActions = {
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":185,"../dispatchers/AppDispatcher":189}],165:[function(require,module,exports){
+},{"../constants/appConstants":187,"../dispatchers/AppDispatcher":191}],165:[function(require,module,exports){
+var React = require('react');
+var ActionCreators = require('../../actions/CommonActions');
+//var Modal = require('../Modal/Modal');
+var appConstants = require('../../constants/appConstants');
+var MainStore = require('../../stores/mainstore');
+
+var Bin = React.createClass({displayName: "Bin",
+
+    _toggleBinSelection:function(bin_id,e){
+        ActionCreators.toggleBinSelection(bin_id);
+        e.stopPropagation();
+        return false;
+    },
+    pressPptl : function(bin_id, binState){
+        var data = {
+            "event_name":"",
+            "event_data":{}
+        };
+        data["event_name"] = "process_ppsbin_event";
+        data["event_data"]["ppsbin_id"] = bin_id;
+        data["event_data"]["ppsbin_state"] = binState;
+        data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
+        ActionCreators.postDataToInterface(data);
+    },
+    showModal: function(data,type,e) {
+         ActionCreators.showModal({
+            data:data,
+            type:type
+         });
+         $('.modal').modal();
+         e.stopPropagation();
+         return false;
+     },
+   
+    render: function() {
+        var compData = this.props.binData;
+        if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                ));
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
+                   return (React.createElement("div", {className: "bin excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                ));
+                }else{
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                ));
+            }
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")){
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                ));
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+        else if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+            return (
+                React.createElement("div", {className: "bin no-excess-item"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 )
+            return (
+                React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_state == "staged" )
+            return (
+                React.createElement("div", {className: "bin staged"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_state == "completed" )
+            return (
+                React.createElement("div", {className: "bin completed"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl completed"}, compData.ppsbin_id)
+                )
+            );
+
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+            return (
+                React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+
+
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )){
+            var tote = '';
+            var binClass = 'bin ';
+            if((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (
+                React.createElement("div", {className: "bin  selected blink1"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+
+        }
+        
+
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
+            var tote = '';
+            if((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) ){
+            var tote = '';
+            if((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (
+                React.createElement("div", {className: "bin"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        }
+         
+        
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )){
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+            return (
+                React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+            return (
+                React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING )
+            return (
+                React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
+            return (
+                React.createElement("div", {className: "bin use"}, 
+                   React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty")
+            return (
+                React.createElement("div", {className: "bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else 
+            return (
+                React.createElement("div", {className: "bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+                );
+        
+    }
+});
+
+module.exports = Bin;
+
+},{"../../actions/CommonActions":164,"../../constants/appConstants":187,"../../stores/mainstore":193,"react":163}],166:[function(require,module,exports){
+var React = require('react');
+var Bin = require('./Bin.react');
+
+var Bins = React.createClass({displayName: "Bins",
+	componentDidMount: function() {
+        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+  	},
+    _findCoordinatesIndex:function(x,y){
+        var i = 0;
+        this.props.binsData.ppsbin_list.map(function(value,index){
+            if(value.coordinate[0]==x && value.coordinate[1]==y){
+                i=index;
+                return ;
+            }
+        });
+        return i;
+    },
+    render: function() {
+        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+        var compData = this.props.binsData; 
+        var scrnId = this.props.screenId;
+        var self = this;
+        return (
+            	 React.createElement("div", {className: "bins"}, 
+            	 	
+            	 		(function(){
+            	 			var l =[]; 
+            	 			for(var j = 0 ;j<compData.structure[0] ;j++){
+            	 			var list = [];
+            	 			var i = 0;
+            	 			for( i = i ; i<compData.structure[1] ; i++){
+            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
+            	 			}
+            	 			l.push((
+            	 				React.createElement("div", {className: "bin-row"}, 
+            	 					list
+            	 				)
+            	 				));
+            	 		}
+            	 		return l;
+            	 		})()
+            	 	
+            	 )
+        );
+    },
+
+    _calculateAndSetBinDimensions: function(dimension){
+        var myElements = document.querySelectorAll(".bin");
+        for (var i = 0; i < myElements.length; i++) {
+            myElements[i].style.height = 0 + "px";
+            myElements[i].style.width = 0 + "px";
+        }
+        var clientHeight = $('.bins').height();
+        var clientWidth = $('.bins').width();
+        var boxSize = Math.min(clientHeight/dimension[0] - 50,clientWidth/dimension[1] - 50);
+        for (var i = 0; i < myElements.length; i++) {
+            myElements[i].style.height = boxSize + "px";
+            myElements[i].style.width = boxSize + "px";
+        }
+    }
+});
+
+module.exports = Bins;
+
+},{"./Bin.react":165,"react":163}],167:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -29324,7 +29668,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":164,"../../constants/appConstants":185,"../../stores/mainstore":191,"react":163}],166:[function(require,module,exports){
+},{"../../actions/CommonActions":164,"../../constants/appConstants":187,"../../stores/mainstore":193,"react":163}],168:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../actions/CommonActions');
 var appConstants = require('../constants/appConstants');
@@ -29387,7 +29731,7 @@ var CommonButton = React.createClass({displayName: "CommonButton",
 
 module.exports = CommonButton;
 
-},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"react":163}],167:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":187,"../stores/mainstore":193,"react":163}],169:[function(require,module,exports){
 var React = require('react');
 var Description = React.createClass({displayName: "Description",
     render: function() {
@@ -29401,7 +29745,7 @@ var Description = React.createClass({displayName: "Description",
 
 module.exports = Description;  
 
-},{"react":163}],168:[function(require,module,exports){
+},{"react":163}],170:[function(require,module,exports){
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
@@ -29436,7 +29780,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"react":163}],169:[function(require,module,exports){
+},{"react":163}],171:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../actions/CommonActions');
 
@@ -29487,7 +29831,7 @@ var ImageComponent = React.createClass({displayName: "ImageComponent",
 
 module.exports = ImageComponent;
 
-},{"../actions/CommonActions":164,"react":163}],170:[function(require,module,exports){
+},{"../actions/CommonActions":164,"react":163}],172:[function(require,module,exports){
 var React = require('react');
 var ImageComponent = require('./ImageComponent.js');
 var PriceComponent = require('./PriceComponent.js');
@@ -29530,7 +29874,7 @@ var ListItems = React.createClass({displayName: "ListItems",
 
 module.exports = ListItems;
 
-},{"./Description.js":167,"./ImageComponent.js":169,"./PriceComponent.js":175,"react":163}],171:[function(require,module,exports){
+},{"./Description.js":169,"./ImageComponent.js":171,"./PriceComponent.js":177,"react":163}],173:[function(require,module,exports){
 var React = require('react');
 
 var MessageNavigation = React.createClass({displayName: "MessageNavigation",
@@ -29566,7 +29910,7 @@ var MessageNavigation = React.createClass({displayName: "MessageNavigation",
 
 module.exports = MessageNavigation;
 
-},{"react":163}],172:[function(require,module,exports){
+},{"react":163}],174:[function(require,module,exports){
 var React = require('react');
 
 var NotificationBar = React.createClass({displayName: "NotificationBar",
@@ -29601,7 +29945,7 @@ var NotificationBar = React.createClass({displayName: "NotificationBar",
 
 module.exports = NotificationBar;
 
-},{"react":163}],173:[function(require,module,exports){
+},{"react":163}],175:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutFront = require('./PutFront');
@@ -29698,7 +30042,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./PickFront":174,"./PutFront":176,"./Spinner/Overlay":182,"./SystemIdle":184,"react":163}],174:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":187,"../stores/mainstore":193,"./PickFront":176,"./PutFront":178,"./Spinner/Overlay":184,"./SystemIdle":186,"react":163}],176:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
@@ -29712,18 +30056,8 @@ var NotificationBar = require("./NotificationBar");
 var Spinner = require('./Spinner/Overlay');
 var LoaderButler = require('./Spinner/LoaderButler');
 var CommonButton = require("./CommonButton");
+var Bins = require("./Bins/Bins.react");
 
-function getStateData(){
-  return {
-           PickFrontNavData : mainstore.getNavData(),
-           PickFrontNotificationData : mainstore.getNotificationData(),
-           PickFrontScreenId: mainstore.getScreenId(),
-           PickFrontRackDetails: mainstore.getRackDetails(),
-           PickFrontServerNavData : mainstore.getServerNavData(),
-           PickFrontItemUid : mainstore.getItemUid(),
-           ListItems : mainstore.getListItems()
-    };
-};
 var listItemsArray = [
             {
              "Item_ID"    : 01,
@@ -29747,6 +30081,20 @@ var listItemsArray = [
             }
                   ];
 
+
+function getStateData(){
+  return {
+           PickFrontNavData : mainstore.getNavData(),
+           PickFrontNotificationData : mainstore.getNotificationData(),
+           PickFrontScreenId: mainstore.getScreenId(),
+           PickFrontRackDetails: mainstore.getRackDetails(),
+           PickFrontServerNavData : mainstore.getServerNavData(),
+           PickFrontItemUid : mainstore.getItemUid(),
+           ListItems : mainstore.getListItems(),
+           PickFrontSlotDetails : mainstore.getCurrentSlot(),
+           PickFrontBinData: mainstore.getBinData()
+    };
+};
 
 var PickFront = React.createClass({displayName: "PickFront",
   _notification:'',
@@ -29812,19 +30160,19 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
-       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
-        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
-        this._component = ( 
-            React.createElement("div", {className: "row grid-container"}, 
-                React.createElement("div", {className: "mainRackContainer"}, 
-                  React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, rackSlotColor: true})
-                ), 
-                React.createElement("div", {className: "confirmShelfButton"}, 
-                    React.createElement(CommonButton, {disabled: true, text: "Confirm", color: "orange"})
-                  )
-            )
-          );
+        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
+         this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+        this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+               
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                )
+                
+              )
+            );
       break;
+
       default:
         return true;
     }
@@ -29847,7 +30195,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./Button/Button":165,"./CommonButton":166,"./Header":168,"./ListItems":170,"./MessageNavigation":171,"./NotificationBar":172,"./Rack/MsuRack.js":177,"./Spinner/LoaderButler":181,"./Spinner/Overlay":182,"react":163}],175:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":187,"../stores/mainstore":193,"./Bins/Bins.react":166,"./Button/Button":167,"./CommonButton":168,"./Header":170,"./ListItems":172,"./MessageNavigation":173,"./NotificationBar":174,"./Rack/MsuRack.js":179,"./Spinner/LoaderButler":183,"./Spinner/Overlay":184,"react":163}],177:[function(require,module,exports){
 var React = require('react');
 var PriceComponent = React.createClass({displayName: "PriceComponent",
     render: function() {
@@ -29868,7 +30216,7 @@ var PriceComponent = React.createClass({displayName: "PriceComponent",
 
 module.exports = PriceComponent;  
 
-},{"react":163}],176:[function(require,module,exports){
+},{"react":163}],178:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var Spinner = require("./Spinner/LoaderButler");
@@ -30068,7 +30416,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../actions/CommonActions":164,"../constants/appConstants":185,"../stores/mainstore":191,"./Button/Button":165,"./CommonButton":166,"./Header":168,"./ImageComponent.js":169,"./ListItems":170,"./MessageNavigation":171,"./NotificationBar":172,"./Rack/MsuRack.js":177,"./Spinner/LoaderButler":181,"react":163}],177:[function(require,module,exports){
+},{"../actions/CommonActions":164,"../constants/appConstants":187,"../stores/mainstore":193,"./Button/Button":167,"./CommonButton":168,"./Header":170,"./ImageComponent.js":171,"./ListItems":172,"./MessageNavigation":173,"./NotificationBar":174,"./Rack/MsuRack.js":179,"./Spinner/LoaderButler":183,"react":163}],179:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -30163,7 +30511,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":178,"react":163}],178:[function(require,module,exports){
+},{"./RackRow":180,"react":163}],180:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -30212,7 +30560,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":179,"react":163}],179:[function(require,module,exports){
+},{"./RackSlot":181,"react":163}],181:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -30255,7 +30603,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":180,"react":163}],180:[function(require,module,exports){
+},{"./SingleSlot":182,"react":163}],182:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -30284,7 +30632,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":163}],181:[function(require,module,exports){
+},{"react":163}],183:[function(require,module,exports){
 var React = require('react');
 
 var LoaderButler = React.createClass({displayName: "LoaderButler",
@@ -30304,7 +30652,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"react":163}],182:[function(require,module,exports){
+},{"react":163}],184:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -30322,7 +30670,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":181,"./SpinnerButler":183,"react":163}],183:[function(require,module,exports){
+},{"./LoaderButler":183,"./SpinnerButler":185,"react":163}],185:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
@@ -30349,7 +30697,7 @@ var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 
 module.exports = SpinnerButler;
 
-},{"react":163}],184:[function(require,module,exports){
+},{"react":163}],186:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -30369,7 +30717,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":187,"./Header":168,"react":163}],185:[function(require,module,exports){
+},{"../constants/resourceConstants":189,"./Header":170,"react":163}],187:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
@@ -30500,7 +30848,7 @@ var appConstants = {
 
 module.exports = appConstants;
 
-},{}],186:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var configConstants = {
 	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
 	INTERFACE_IP : "https://192.168.3.93:5000"
@@ -30508,7 +30856,7 @@ var configConstants = {
 
 module.exports = configConstants;
 
-},{}],187:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 var resourceConstants = {
 	FRIEND_NAME :'Friend Name',
 	TOTALBILL : 'Total bill',
@@ -30517,7 +30865,7 @@ var resourceConstants = {
 };
 module.exports = resourceConstants;
 
-},{}],188:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -30539,7 +30887,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],189:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -30553,7 +30901,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":30}],190:[function(require,module,exports){
+},{"flux":30}],192:[function(require,module,exports){
 (function (global){
 global.jQuery = global.$ = require("jquery");
 var React = require('react');
@@ -30580,7 +30928,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/Operator":173,"jquery":33,"react":163,"react-dom":34}],191:[function(require,module,exports){
+},{"./components/Operator":175,"jquery":33,"react":163,"react-dom":34}],193:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -30664,7 +31012,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
         return _NavData;
     },
-
+     getBinData: function() {
+        var binData = {};
+        binData["structure"] = _seatData.structure;
+        binData["ppsbin_list"] = _seatData.ppsbin_list;
+        return binData;
+    },
+    getCurrentSlot: function() {
+        if (_seatData.hasOwnProperty('rack_details')) {
+            return _seatData.rack_details.slot_barcodes;
+        } else {
+            return null;
+        }
+    },
 
     getServerNavData: function() {
         if (_seatData.header_msge_list.length > 0) {
@@ -31098,7 +31458,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../constants/appConstants":185,"../constants/resourceConstants":187,"../constants/svgConstants":188,"../dispatchers/AppDispatcher":189,"../utils/utils":192,"events":1,"react/lib/Object.assign":56}],192:[function(require,module,exports){
+},{"../constants/appConstants":187,"../constants/resourceConstants":189,"../constants/svgConstants":190,"../dispatchers/AppDispatcher":191,"../utils/utils":194,"events":1,"react/lib/Object.assign":56}],194:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -31261,4 +31621,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":164,"../constants/appConstants":185,"../constants/configConstants":186,"events":1,"react/lib/Object.assign":56}]},{},[190]);
+},{"../actions/CommonActions":164,"../constants/appConstants":187,"../constants/configConstants":188,"events":1,"react/lib/Object.assign":56}]

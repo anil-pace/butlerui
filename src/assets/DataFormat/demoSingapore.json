@@ -1,9 +1,12 @@
     
 
+    
+
 {
     "state_data": {
         "seat_name": "front_10",
-        "screen_id": "pick_front_location_scan",
+        "screen_id": "pick_front_pptl_press",
+        "structure": [1, 2],
         "screen_version": "1",
         "notification_list": [{
             "details": [],
@@ -31,6 +34,73 @@
                 "price" : "13"
             }
         ],
+         "ppsbin_list": [{
+            "bin_info": [],
+            "ppsbin_id": "5",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 4]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "6",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 3]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "7",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 2]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "8",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 1]
+        }, {
+            "bin_info": [{
+                "type": "container",
+                "name": null,
+                "quantity": 5
+            }],
+            "ppsbin_id": "1",
+            "selected_state": true,
+            "ppsbin_state": "IN USE",
+            "ppsbin_count": "0",
+            "coordinate": [1, 4]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "2",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 3]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "3",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 2]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "4",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 1]
+        }],
+        "header_msge_list": [{
+            "details": ["1"],
+            "code": "PkF.E.011",
+            "description": "Press PPTL for Bin1to confirm",
+            "level": "info"
+        }],
         "logout_allowed": "false",
 
         "rack_details":  {

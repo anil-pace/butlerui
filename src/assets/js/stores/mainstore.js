@@ -482,10 +482,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var countMissingDamagedBoxSerials = 0;
         _seatData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status == "no_scan") {
-                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " ";
+                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
                 countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
             }
         });
+        missingDamagedBoxSerials = missingDamagedBoxSerials.replace(/,([^,]*)$/,'$1');
         _seatData.Extra_box_list.map(function(value, index) {
             extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
         });
@@ -519,12 +520,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (value.Scan_status == "close") {
                 var barcodeDamagedQty = 0;
                 _seatData.item_in_box_barcode_damage.map(function(val, ind) {
-                    if (value.Box_serial = val.Box_serial)
+                    if (value.Box_serial == val.Box_serial)
                         barcodeDamagedQty = val.Damage_qty;
                 });
                 if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || barcodeDamagedQty != 0)
                     data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty - barcodeDamagedQty, 0), "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
                     ]);

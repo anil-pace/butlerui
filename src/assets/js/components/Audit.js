@@ -186,16 +186,25 @@ var Audit = React.createClass({
           var BoxSerialData = '';
           var ItemInBoxData = '';
           var LooseItemsData = '';
+          var AuditMessage = '';
+          var m = {
+            "details": [],
+            "code": "Audit.A.012",
+            "description": "No Items To Reconcile",
+            "level": "info"
+          };
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
+            AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={m} />);
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
               BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);
           if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
               ItemInBoxData = (<TabularData data = {this.state.AuditReconcileItemInBoxData}/>);
           if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
               LooseItemsData = (<TabularData data = {this.state.AuditReconcileLooseItemsData}/>);
-          if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
             subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
+                    {AuditMessage}
                     {BoxSerialData}
                     {ItemInBoxData}
                     {LooseItemsData}
@@ -203,7 +212,6 @@ var Audit = React.createClass({
                 </div>
               );
             messageType = "small";
-          }
           this._component = (
               <div className='grid-container audit-reconcilation'>
                  <CurrentSlot slotDetails={this.state.AuditSlotDetails} />

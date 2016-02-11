@@ -36903,16 +36903,25 @@ var Audit = React.createClass({displayName: "Audit",
           var BoxSerialData = '';
           var ItemInBoxData = '';
           var LooseItemsData = '';
+          var AuditMessage = '';
+          var m = {
+            "details": [],
+            "code": "Audit.A.012",
+            "description": "No Items To Reconcile",
+            "level": "info"
+          };
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
+            AuditMessage=(React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: m}));
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
               BoxSerialData = (React.createElement(TabularData, {data: this.state.AuditReconcileBoxSerialData}));
           if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
               ItemInBoxData = (React.createElement(TabularData, {data: this.state.AuditReconcileItemInBoxData}));
           if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
               LooseItemsData = (React.createElement(TabularData, {data: this.state.AuditReconcileLooseItemsData}));
-          if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
             subComponent=(
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-reconcile-left"}, 
+                    AuditMessage, 
                     BoxSerialData, 
                     ItemInBoxData, 
                     LooseItemsData
@@ -36920,7 +36929,6 @@ var Audit = React.createClass({displayName: "Audit",
                 )
               );
             messageType = "small";
-          }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                  React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
@@ -41065,8 +41073,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.1.163:8888/ws",
-	INTERFACE_IP : "https://192.168.1.163:5000"
+	WEBSOCKET_IP : "ws://192.168.2.211:8888/ws",
+	INTERFACE_IP : "https://192.168.2.211:5000"
 };
 
 module.exports = configConstants;
@@ -41293,6 +41301,7 @@ var serverMessages = {
     "CLIENTCODE_001" : "Bin {0} selected",
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
+    "Audit.A.012":"No Items to Reconcile",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
@@ -42970,10 +42979,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var countMissingDamagedBoxSerials = 0;
         _seatData.Box_qty_list.map(function(value, index) {
             if (value.Scan_status == "no_scan") {
-                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " ";
+                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
                 countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
             }
         });
+        missingDamagedBoxSerials = missingDamagedBoxSerials.replace(/,([^,]*)$/,'$1');
         _seatData.Extra_box_list.map(function(value, index) {
             extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
         });
@@ -43007,12 +43017,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (value.Scan_status == "close") {
                 var barcodeDamagedQty = 0;
                 _seatData.item_in_box_barcode_damage.map(function(val, ind) {
-                    if (value.Box_serial = val.Box_serial)
+                    if (value.Box_serial == val.Box_serial)
                         barcodeDamagedQty = val.Damage_qty;
                 });
                 if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || barcodeDamagedQty != 0)
                     data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty - barcodeDamagedQty, 0), "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
                     ]);
@@ -43959,6 +43969,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 putSeatData(data);
+                console.log("ashish");
+                console.log(JSON.parse(evt.data));
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
             };

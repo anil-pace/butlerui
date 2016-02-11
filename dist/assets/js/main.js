@@ -29752,27 +29752,12 @@ module.exports = Description;
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
-    dropDown:function(){
-        $('.dropDown').toggle(100);
-    },
-
     render: function() {
         return (React.createElement("div", null, 
                     React.createElement("div", {className: "row header"}, 
-                                React.createElement("div", {className: "col-md-2 col-sm-3 col-xs-5"}, 
+                                React.createElement("div", {className: "col-md-3 col-sm-4 col-xs-8"}, 
                                     React.createElement("div", {className: "gorLogo"}, 
                                         React.createElement("img", {className: "img-responsive", src: "assets/images/gorLogo.png", alt: "GreyOrange_Logo"})
-                                    )
-                                ), 
-                                React.createElement("div", {className: "col-md-offset-9 col-md-1 col-sm-offset-7 col-sm-2 col-xs-offset-4 col-xs-3"}, 
-                                     React.createElement("div", {className: "menuIcon"}, 
-                                        React.createElement("img", {className: "img-responsive", src: "assets/images/menu_Icon.png", alt: "Menu_Icon", onClick: this.dropDown})
-                                     ), 
-                                     React.createElement("div", {className: "dropDown"}, 
-                                            React.createElement("ul", null, 
-                                                React.createElement("li", null, "SWITCH MODE"), 
-                                                React.createElement("li", null, "LOGOUT")
-                                            )
                                     )
                                 )
                     )
@@ -29905,7 +29890,7 @@ console.log(description);
         return (
             	React.createElement("div", {className: "row messageNavigation " + colorClass}, 
            		   React.createElement("div", {className: ""}, 
-           				   React.createElement("div", {className: "col-md-6 col-sm-6 msg"}, 
+           				   React.createElement("div", {className: "col-md-8 col-sm-10 msg"}, 
                         description
                      )
            		   )

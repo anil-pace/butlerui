@@ -38103,12 +38103,16 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     this.setState(getState());
 
   },
+  disableLoginButton:function(){
+      $('#loginBtn').prop('disabled', true);
+  },
   changeLanguage : function(){
     CommonActions.changeLanguage(this.refs.language.value);
+    this.disableLoginButton();    
   },
   removeNotify:function(){
        $('.errorNotify').css('display','none');
-      },
+  },
   render: function(){
     var d = new Date();
     var n = d.getFullYear();   
@@ -38140,7 +38144,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       }
       if(this.state.flag === false){
         if(this.state.showError != null){
-            errorClass = 'ErrorMsg showErr'
+            errorClass = 'ErrorMsg showErr';
+            this.disableLoginButton();
         } else{
             errorClass = 'ErrorMsg'
         }
@@ -39436,6 +39441,9 @@ var KQ = React.createClass({displayName: "KQ",
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
                 var data = {};
+                if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
+                    return false;
+                }
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                     CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
                      return true;
@@ -39864,7 +39872,7 @@ var PutBack = React.createClass({displayName: "PutBack",
               )
             );
   },
-  getScreenComponent : function(screen_id){console.log(screen_id);
+  getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
@@ -40659,7 +40667,8 @@ var TableHeader = React.createClass({displayName: "TableHeader",
     getComponent:function(data){
     	var comp = [];
     	data.map(function(value,index){
-    		var classes = "table-col ";
+            var classes = "table-col ";
+            var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";
@@ -40700,6 +40709,8 @@ var TableRow = React.createClass({displayName: "TableRow",
     	var comp = [];
     	this.props.data.map(function(value,index){
     		var classes = "table-col ";
+            var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
+            var action = value.actionButton == true ? classes = classes+ "table-col-peripheral-min-width ": "";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";
@@ -40711,6 +40722,8 @@ var TableRow = React.createClass({displayName: "TableRow",
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
             var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
+            var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
+            var color = value.color == "blue" ? classes = classes + value.color + " ": "";
             if((value.type != undefined && value.type=="button"))
                 comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX, status: value.buttonStatus}))));
             else
@@ -41215,8 +41228,8 @@ var serverMessages = {
     "PtB.I.007" : "Pptl button press successful",
     "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
     "PtB.I.009" : "Invalid item in tote recorded.",
-    "PtB.I.010" : "damaged entity recorder.WMS Notified.",
-    "PtB.I.011" : "extra entity recorder in bin.WMS Notified.",
+    "PtB.I.010" : "damaged entity recorded.WMS Notified.",
+    "PtB.I.011" : "extra entity recorded in bin.WMS Notified.",
     "PtB.I.012" : "Oversized entity recorded.WMS notified.",
     "PtB.I.013" : "Exception cancelled successfully",
     "PtB.I.014" : "Cancelled excess entity in tote",
@@ -41284,6 +41297,7 @@ var serverMessages = {
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
     "PkF.I.007" : "Data capture valid so far",
+    "PkF.I.007" : "Data capture valid so far",    
     "PkF.I.002" : "Location Scan successful",
     "PkF.I.003" : "Box Scan successful",
     "PkF.I.004" : "Item Scan successful",
@@ -41292,6 +41306,7 @@ var serverMessages = {
     "PkF.I.007" : "Data capture valid so far",
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
+    "PkF.W.003" : "Data capture failed at item",
     "PkF.E.001" : "Wrong location scan.Scan correct location",
     "PkF.E.002" : "Wrong box scanned. Please try again",
     "PkF.E.003" : "Scan a box first",
@@ -41326,11 +41341,12 @@ var serverMessages = {
     "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
     "PtF.E.001" : "Entity scanned is not from bin. Replace and scan from bin",
     "PtF.E.002" : "Wrong entity scanned",
-    "PtF.E.003" : "Waiting for MSU. Please scan entities later.",
+    "PtF.E.003" : "Waiting for MSU scan. Please scan entity later.",
     "PtF.E.004" : "Expected quantity exceeded.",
     "PtF.E.005" : "Wrong scan! Entity scan expected but slot barcode scanned.",
     "PtF.E.006" : "Actual put quantity not equal to sum of Good and Expection quantity.",
     "PtF.E.007" : "Actual put quantity less than than revised quantity.", 
+    "PtF.E.008" : "Wrong slot scanned", 
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
@@ -42880,7 +42896,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return binData;
     },
 
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus , borderBottom) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton , borderBottom) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -42894,24 +42910,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.buttonType = buttonType;
         this.buttonStatus = buttonStatus;
         this.borderBottom = borderBottom;
+        this.mode = mode,
+        this.text_decoration = text_decoration,
+        this.color = color,
+        this.actionButton = actionButton
     },
     getPptlData: function() {
         if (_seatData.hasOwnProperty('utility')) {
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Barcode", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Actions", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+            data["header"].push(new this.tableCol("Barcode", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+            data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+            data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
             data["tableRows"] = [];
             var self = this;
             _seatData.utility.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true)
-                ]);
-
+                data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
+                new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false,  false, true, true, false, "peripheral"), 
+                new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, false, true, true, false, "peripheral"),
+                new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true),
+                new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true)]); 
             });
             return data;
         }
@@ -43061,7 +43080,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','',false)
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
             ]);
 
         });

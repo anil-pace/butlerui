@@ -79,8 +79,8 @@ function server_messages_list() {
     _("Data capture valid so far");
     _("Excess item in tote recorded.Now press Pptl");
     _("Invalid item in tote recorded.");
-    _("damaged entity recorder.WMS Notified.");
-    _("extra entity recorder in bin.WMS Notified.");
+    _("damaged entity recorded.WMS Notified.");
+    _("extra entity recorded in bin.WMS Notified.");
     _("Oversized entity recorded.WMS notified.");
     _("Exception cancelled successfully");
     _("Container already stored in the warehouse");
@@ -133,7 +133,7 @@ function server_messages_list() {
     _("Cancel Scan successful");
     _("PPTL button press successful");
     _("Expecting MSU release confirmation from GUI, got invalid event.");
-    _("Cannot cancel scan. No Scanned box found");
+    _("Data capture failed at item");
     _("Wrong location scan.Scan correct location");
     _("Wrong box scanned. Please try again");
     _("Scan a box first");
@@ -168,11 +168,12 @@ function server_messages_list() {
     _("Scan pptl barcode after scannning tote barcode");
     _("Entity scanned is not from bin. Replace and scan from bin");
     _("Wrong entity scanned");
-    _("Waiting for MSU. Please scan entities later.");
+    _("Waiting for MSU scan. Please scan entity later.");
     _("Expected quantity exceeded.");
     _("Wrong scan! Entity scan expected but slot barcode scanned.");
     _("Actual put quantity not equal to the sum of Good and Expection quantity.");
     _("Actual put quantity less than than revised quantity.");
+    _("Wrong slot scanned");
     _("Entity scan successful");
     _("Slot scan successful");
     _("Slot scan successful");

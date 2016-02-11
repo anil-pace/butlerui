@@ -80,12 +80,16 @@ var LoginPage = React.createClass({
     this.setState(getState());
 
   },
+  disableLoginButton:function(){
+      $('#loginBtn').prop('disabled', true);
+  },
   changeLanguage : function(){
     CommonActions.changeLanguage(this.refs.language.value);
+    this.disableLoginButton();    
   },
   removeNotify:function(){
        $('.errorNotify').css('display','none');
-      },
+  },
   render: function(){
     var d = new Date();
     var n = d.getFullYear();   
@@ -117,7 +121,8 @@ var LoginPage = React.createClass({
       }
       if(this.state.flag === false){
         if(this.state.showError != null){
-            errorClass = 'ErrorMsg showErr'
+            errorClass = 'ErrorMsg showErr';
+            this.disableLoginButton();
         } else{
             errorClass = 'ErrorMsg'
         }

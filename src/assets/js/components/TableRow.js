@@ -8,6 +8,8 @@ var TableRow = React.createClass({
     	var comp = [];
     	this.props.data.map(function(value,index){
     		var classes = "table-col ";
+            var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
+            var action = value.actionButton == true ? classes = classes+ "table-col-peripheral-min-width ": "";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";
@@ -19,6 +21,8 @@ var TableRow = React.createClass({
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
             var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
+            var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
+            var color = value.color == "blue" ? classes = classes + value.color + " ": "";
             if((value.type != undefined && value.type=="button"))
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus}/></div>));
             else

@@ -24,7 +24,7 @@ console.log(description);
         return (
             	<div className={"row messageNavigation " + colorClass}>
            		   <div className="">
-           				   <div className="col-md-6 col-sm-6 msg">
+           				   <div className="col-md-8 col-sm-10 msg">
                         {description}
                      </div>
            		   </div>

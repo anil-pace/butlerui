@@ -28875,10 +28875,11 @@ var commonActions = {
     })
   },
 
-  postDataToInterface:function(data){
+  postDataToInterface:function(data, type){
      AppDispatcher.handleAction({
       actionType: appConstants.POST_DATA_TO_INTERFACE,
-      data:data
+      data:data,
+      type : type
     })
    },
 
@@ -29686,7 +29687,9 @@ var CommonButton = React.createClass({displayName: "CommonButton",
 			case appConstants.PICK_FRONT :
 				switch (action) {
 					case appConstants.CONFIRM_TO_CONTINUE:
-					CommonActions.postDataToInterface(data);
+					data["event_name"] = "process_barcode";
+                    data["event_data"]["barcode"] = mainstore.productDetails().product_barcode;
+					CommonActions.postDataToInterface(data, "scan-item");
 					break;
 					default:
                     return true;
@@ -29807,16 +29810,17 @@ var ImageComponent = React.createClass({displayName: "ImageComponent",
             };
                 console.log("data");
                 console.log(data["event_data"]);
-		CommonActions.postDataToInterface(data);
+		CommonActions.postDataToInterface(data, 'order-place');
 	},
 
     render: function() {
         var order_Id,orderline_id,productSku,orderIndex;
         orderIndex = this.props.orderIndex;
-        order_Id = "ORD-00" + orderIndex ;
+        var timestamp = new Date().getUTCMilliseconds();
+        order_Id = "ORD-00" + timestamp ;
         orderline_id = order_Id + "_" + orderIndex ;
         
-        existingId = "product_sku = '2001'";
+        existingId = "product_sku = '2009'";
         productSku = existingId .replace(/(\d+)+/g, function(match, number) {
                return parseInt(number) + orderIndex ;
         });
@@ -29892,10 +29896,12 @@ var MessageNavigation = React.createClass({displayName: "MessageNavigation",
       if(this.props.screenId == "pick_front_waiting_for_msu"){
         description = "PLACE ORDER";
       }
-      else{
-        description = this.props.navData.description;
-      }
-
+      else if(this.props.screenId == "pick_front_item_scan"){
+        description = "PICK ITEM FROM SHELF";
+      }else if(this.props.screenId == "pick_front_pptl_press"){
+        description = "PLACE ITEM IN LIGHTED BIN";
+      };
+console.log(description);
         return (
             	React.createElement("div", {className: "row messageNavigation " + colorClass}, 
            		   React.createElement("div", {className: ""}, 
@@ -29926,8 +29932,10 @@ var NotificationBar = React.createClass({displayName: "NotificationBar",
       if(this.props.screenId == "pick_front_waiting_for_msu"){
         description = "SELECT ITEM TO ORDER";
       }
-      else{
-        description = this.props.notificationData.description;
+      else if(this.props.screenId =='pick_front_item_scan'){
+        description = "PRESS CONFIRM TO CONTINUE";
+      }else if(this.props.screenId =='pick_front_pptl_press'){
+        description = "PRESS PPTL TO FINISH";
       };
         return (
             	React.createElement("div", {className: "row"}, 
@@ -30129,39 +30137,24 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (React.createElement(ListItems, {imageClickable: true, listItemsArray: listItemsArray}));
       break;
 
-      case appConstants.PICK_FRONT_LOCATION_SCAN:
-        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
-        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
-        this._component = ( 
-            React.createElement("div", {className: "row grid-container"}, 
-                React.createElement("div", {className: "mainRackContainer"}, 
-                  React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
-                ), 
-                React.createElement("div", {className: "confirmShelfButton"}, 
-                    React.createElement(CommonButton, {disabled: false, text: "Confirm", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_TO_CONTINUE, color: "orange"})
-                  )
-            )
-          );
-      break;
-
       case appConstants.PICK_FRONT_ITEM_SCAN:
-       this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
-        this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+       this._navigation = (React.createElement(MessageNavigation, {screenId: appConstants.PICK_FRONT_ITEM_SCAN, navData: this.state.PickFrontNavData, color: "lightGreen"}));
+        this._notification = (React.createElement(NotificationBar, {screenId: appConstants.PICK_FRONT_ITEM_SCAN, notificationData: this.state.PickFrontNotificationData}));
         this._component = ( 
             React.createElement("div", {className: "row grid-container"}, 
                 React.createElement("div", {className: "mainRackContainer"}, 
                   React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, rackSlotColor: true})
                 ), 
                 React.createElement("div", {className: "confirmShelfButton"}, 
-                    React.createElement(CommonButton, {disabled: true, text: "Confirm", color: "orange"})
+                    React.createElement(CommonButton, {disabled: false, module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_TO_CONTINUE, text: "Confirm", color: "orange"})
                   )
             )
           );
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
-        this._navigation = (React.createElement(MessageNavigation, {navData: this.state.PickFrontNavData, color: "lightGreen"}));
-         this._notification = (React.createElement(NotificationBar, {notificationData: this.state.PickFrontNotificationData}));
+        this._navigation = (React.createElement(MessageNavigation, {screenId: appConstants.PICK_FRONT_PPTL_PRESS, navData: this.state.PickFrontNavData, color: "lightGreen"}));
+         this._notification = (React.createElement(NotificationBar, {screenId: appConstants.PICK_FRONT_PPTL_PRESS, notificationData: this.state.PickFrontNotificationData}));
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                
@@ -30998,6 +30991,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
+    productDetails: function() {
+        _prodDetails = _seatData.product_info;
+        return _prodDetails;
+    },
+    getPPTLEvent: function() {
+        switch (_currentSeat) {
+            case appConstants.PUT_BACK:
+                _pptlEvent = 'secondary_button_press';
+                break;
+            case appConstants.PUT_FRONT:
+                _pptlEvent = 'primary_button_press';
+                break;
+            case appConstants.PICK_BACK:
+                _pptlEvent = 'secondary_button_press';
+                break;
+            case appConstants.PICK_FRONT:
+                _pptlEvent = 'primary_button_press';
+                break;
+            default:
+                //return true; 
+        }
+        return _pptlEvent;
+    },
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PICK_FRONT:
@@ -31036,7 +31052,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getNotificationData: function() {
-        return _seatData.notification_list[0];
+        if(_seatData.notification_list.length > 0){
+            return _seatData.notification_list[0];
+        }
     },
 
     getCurrentState: function() {
@@ -31106,8 +31124,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getServerMessages: function() {
         return _messageJson;
     },
-    postDataToInterface: function(data) {
-        utils.postDataToInterface(data, _seatName);
+    postDataToInterface: function(data, type) {
+        utils.postDataToInterface(data, type, _seatName);
     },
     logError: function(data) {
         utils.logError(data);
@@ -31445,7 +31463,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.POST_DATA_TO_INTERFACE:
             mainstore.showSpinner();
-            mainstore.postDataToInterface(action.data);
+            mainstore.postDataToInterface(action.data, action.type);
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.LOG_ERROR:
@@ -31549,12 +31567,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         sessionStorage.setItem('sessionData', null);
         location.reload();
     },
-    postDataToInterface: function(data, seat_name) {
+    postDataToInterface: function(data, type, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+        var url;
+        if(type == 'order-place'){
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.ORDERS;
+        }else{
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA;
+        }
         $.ajax({
             type: 'POST',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.ORDERS,
+            url: url,
             data: JSON.stringify(data),
             dataType: "json",
             headers: {
@@ -31621,4 +31645,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":164,"../constants/appConstants":187,"../constants/configConstants":188,"events":1,"react/lib/Object.assign":56}]
+},{"../actions/CommonActions":164,"../constants/appConstants":187,"../constants/configConstants":188,"events":1,"react/lib/Object.assign":56}]},{},[192]);

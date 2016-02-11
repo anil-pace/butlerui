@@ -57,20 +57,28 @@ var Audit = React.createClass({
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+      if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
           var self = this;
-          setTimeout((function(){ActionCreators.showModal({
+          this.state.AuditShowModal["showModal"] = false;
+          $('.modal-backdrop fade in').remove();
+          console.log("ppppp");
+          console.log(self.state.AuditShowModal.message);
+          var r = self.state.AuditShowModal.message;
+          setTimeout((function(){
+            console.log("qqq");
+            console.log(r);
+            ActionCreators.showModal({
               data:{
-              "message":self.state.AuditShowModal.message
+              "message":r
             },
             type:"message"
           });
         $('.modal').modal();
       return false;
       }),0)
-
-       }else if(this.state.AuditShowModal["showModal"] == '' && $('.modal').hasClass('in')){
+          console.log("aa");
+       }else if(this.state.AuditShowModal["showModal"] == false && $('.modal').hasClass('in')){
         $('.modal').modal('hide');
         $('.modal-backdrop fade in').remove();
        }
@@ -183,17 +191,35 @@ var Audit = React.createClass({
           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);  
           var subComponent='';
           var messageType = 'large';
-          if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
+          var BoxSerialData = '';
+          var ItemInBoxData = '';
+          var LooseItemsData = '';
+          var AuditMessage = '';
+          var m = {
+            "details": [],
+            "code": "Audit.A.012",
+            "description": "No Items To Reconcile",
+            "level": "info"
+          };
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
+            AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={m} />);
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
+              BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);
+          if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
+              ItemInBoxData = (<TabularData data = {this.state.AuditReconcileItemInBoxData}/>);
+          if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
+              LooseItemsData = (<TabularData data = {this.state.AuditReconcileLooseItemsData}/>);
             subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
-                    <TabularData data = {this.state.AuditReconcileBoxSerialData}/>
-                    <TabularData data = {this.state.AuditReconcileLooseItemsData} />
+                    {AuditMessage}
+                    {BoxSerialData}
+                    {ItemInBoxData}
+                    {LooseItemsData}
                   </div>
                 </div>
               );
             messageType = "small";
-          }
           this._component = (
               <div className='grid-container audit-reconcilation'>
                  <CurrentSlot slotDetails={this.state.AuditSlotDetails} />

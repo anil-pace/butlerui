@@ -3,7 +3,6 @@
     display: flex;
     flex-flow: row;
     color: @btn-default-bck;
-    border-bottom: 1px solid #bcbcbc;
     .table-col {
         padding: 0.3em;
         padding-left: 0.6em;
@@ -14,6 +13,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+         border-bottom: 1px solid #bcbcbc;
         &.border-left {
             border-left: 1px solid @bin-staged-bck;
         }
@@ -36,6 +36,9 @@
         }
         &.disabled {
             color: #979c9f;
+        }
+        &.remove-border{
+            border-bottom: none;
         }
         &.heading {
             color: @passive-nav-bck;

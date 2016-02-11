@@ -31,8 +31,8 @@ function server_messages_list() {
     _("Tote already associated with ppsbin");
     _("Barcode didn't match current tote barcode");
     _("Please press PPTL button which does not have any totes associated");
-    _("Tote assigned successfuly to ppsbin {0}");
-    _("Bin {0} items removed successfuly");
+    _("Tote assigned successfully to ppsbin {0}");
+    _("Bin {0} items removed successfully");
     _("Totes are not required");
     _("Wrong Barcode scanned");
     _("Tote could not be reserved as already reserved");
@@ -79,8 +79,8 @@ function server_messages_list() {
     _("Data capture valid so far");
     _("Excess item in tote recorded.Now press Pptl");
     _("Invalid item in tote recorded.");
-    _("damaged entity recorder.WMS Notified.");
-    _("extra entity recorder in bin.WMS Notified.");
+    _("damaged entity recorded.WMS Notified.");
+    _("extra entity recorded in bin.WMS Notified.");
     _("Oversized entity recorded.WMS notified.");
     _("Exception cancelled successfully");
     _("Container already stored in the warehouse");
@@ -100,7 +100,7 @@ function server_messages_list() {
     _("Item Scan successful");
     _("Waiting for MSU to arrive");
     _('Item Scan successful');
-    _('Press PPTL for Bin {0} to confirm');
+    _('Data capture failed at item');
     _('Bin {0} selected');
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
@@ -152,7 +152,7 @@ function server_messages_list() {
     _("Tote didn't get associated");
     _("Exception cancelled");
     _("Tote scan cancelled");
-    _("Documents printed successfuly");
+    _("Documents printed successfully");
     _("Bin entities removed successfully");
     _("Tote assigned successfully to ppsbin");
     _("Please scan pptl");
@@ -168,11 +168,12 @@ function server_messages_list() {
     _("Scan pptl barcode after scannning tote barcode");
     _("Entity scanned is not from bin. Replace and scan from bin");
     _("Wrong entity scanned");
-    _("Waiting for MSU. Please scan entities later.");
+    _("Waiting for MSU scan. Please scan entity later.");
     _("Expected quantity exceeded.");
     _("Wrong scan! Entity scan expected but slot barcode scanned.");
     _("Actual put quantity not equal to the sum of Good and Expection quantity.");
     _("Actual put quantity less than than revised quantity.");
+    _("Wrong slot scanned");
     _("Entity scan successful");
     _("Slot scan successful");
     _("Slot scan successful");

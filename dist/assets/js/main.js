@@ -37900,6 +37900,7 @@ var Header = React.createClass({displayName: "Header",
         }
     },
     openKeyboard: function() {
+        $("#actionMenu").hide();
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
@@ -37934,11 +37935,7 @@ var Header = React.createClass({displayName: "Header",
             }
         })
         $('#barcode').data('keyboard').reveal();
-    },
-    enableException:function(){
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
+    },    
     logoutSession:function(){
         $("#actionMenu").hide();        
         if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
@@ -37954,11 +37951,10 @@ var Header = React.createClass({displayName: "Header",
     enableException:function(){
         CommonActions.enableException(true);
         $("#actionMenu").hide();
-    },
-    componentDidMount: function() {
-    },
+    },    
     showMenu: function(){
         $("#actionMenu").toggle();
+        $(".subMenu").hide();
     },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
@@ -37975,11 +37971,13 @@ var Header = React.createClass({displayName: "Header",
                                     ));
         else
             this.exceptionMenu = '';
-    },
+    },    
     peripheralData : function(type){
         CommonActions.getPeriPheralData(type);
+        $("#actionMenu").hide();
     },
-    utility : function(){
+    utilityMenu : function(){
+        $(".subMenu").toggle();       
         //CommonActions.displayperipheralMenu();
     },
     render: function() {    
@@ -38012,12 +38010,12 @@ var Header = React.createClass({displayName: "Header",
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
                 this.exceptionMenu, 
-                React.createElement("div", {onClick: this.utility}, 
+                React.createElement("div", {className: "actionItem", onClick: this.utilityMenu}, 
                     "Utility", 
-                    React.createElement("div", {onClick: this.peripheralData.bind(this, 'pptl')}, 
+                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'pptl')}, 
                         "PPTL Management"
                     ), 
-                    React.createElement("div", {onClick: this.peripheralData.bind(this, 'barcode_scanner')}, 
+                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'barcode_scanner')}, 
                         "Scanner Management"
                     )
                 ), 
@@ -41255,7 +41253,7 @@ var serverMessages = {
     "PtB.W.005" : "PpsBin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
-    "PkF.E.011" : "Press PPTL for Bin {0} to confirm",
+    "PkF.E.011" : "Data capture failed at item",
     "PkF.E.013" : "Scan items and place in Bin {0}",
     "PkF.E.014" : "Press PPTL for Bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
@@ -41278,8 +41276,8 @@ var serverMessages = {
     "PkB.B.014": "Tote cancelled",
     "PkB.B.015" : "Tote already associated with ppsbin",
     "PkB.B.016" : "Please press ppsbin button which does not have any totes associated",
-    "PkB.B.017" :"Tote assigned successfuly to ppsbin {0}",
-    "PkB.B.019":"Bin {0} items removed successfuly",
+    "PkB.B.017" :"Tote assigned successfully to ppsbin {0}",
+    "PkB.B.019":"Bin {0} items removed successfully",
     "PkB.B.020" : "Totes are not required",
     "PkB.B.021" : "Wrong Barcode scanned",
     "PkB.B.022" : "Tote could not be reserved as already reserved",
@@ -41339,7 +41337,7 @@ var serverMessages = {
     "PkB.E.006" : "Tote didn't get associated",   
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
-    "PkB.I.003" : "Documents printed successfuly",
+    "PkB.I.003" : "Documents printed successfully",
     "PkB.I.004" : "Bin entities removed successfully",
     "PkB.I.005" : "Tote assigned successfully to ppsbin",
     "PkB.I.006" : "Please scan pptl",
@@ -42687,7 +42685,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["message"] = "";
             console.log("ashu");
             console.log(showModal);
-        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
             console.log("jindal");
             console.log(showModal);
             showModal = false;
@@ -42696,7 +42694,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 "showModal": true,
                 "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
             }
-        } else{
+        } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
+            console.log("jindal");
+            console.log(showModal);
+            showModal = false;
+            console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
+            return {
+                "showModal": true,
+                "message": "Place extra " + (_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"]) + " items in Exception area ."
+            }
+        } 
+        else{
             return data;
         }
     },
@@ -43259,7 +43267,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
-        if(_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0)
+        if((_seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
             showModal=false;

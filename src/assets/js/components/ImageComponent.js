@@ -24,16 +24,17 @@ var ImageComponent = React.createClass({
             };
                 console.log("data");
                 console.log(data["event_data"]);
-		CommonActions.postDataToInterface(data);
+		CommonActions.postDataToInterface(data, 'order-place');
 	},
 
     render: function() {
         var order_Id,orderline_id,productSku,orderIndex;
         orderIndex = this.props.orderIndex;
-        order_Id = "ORD-00" + orderIndex ;
+        var timestamp = new Date().getUTCMilliseconds();
+        order_Id = "ORD-00" + timestamp ;
         orderline_id = order_Id + "_" + orderIndex ;
         
-        existingId = "product_sku = '2001'";
+        existingId = "product_sku = '2009'";
         productSku = existingId .replace(/(\d+)+/g, function(match, number) {
                return parseInt(number) + orderIndex ;
         });

@@ -84,39 +84,24 @@ var PickFront = React.createClass({
         this._component = (<ListItems imageClickable={true} listItemsArray={listItemsArray} />);
       break;
 
-      case appConstants.PICK_FRONT_LOCATION_SCAN:
-        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
-        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
-        this._component = ( 
-            <div className="row grid-container">
-                <div className="mainRackContainer">
-                  <Rack rackData = {this.state.PickFrontRackDetails}/>
-                </div>
-                <div className="confirmShelfButton">
-                    <CommonButton disabled={false} text={"Confirm"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_TO_CONTINUE} color={"orange"} />
-                  </div>
-            </div>
-          );
-      break;
-
       case appConstants.PICK_FRONT_ITEM_SCAN:
-       this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
-        this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+       this._navigation = (<MessageNavigation  screenId={appConstants.PICK_FRONT_ITEM_SCAN} navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
+        this._notification = (<NotificationBar screenId={appConstants.PICK_FRONT_ITEM_SCAN} notificationData = {this.state.PickFrontNotificationData} />);
         this._component = ( 
             <div className="row grid-container">
                 <div className="mainRackContainer">
                   <Rack rackData = {this.state.PickFrontRackDetails} rackSlotColor={true} />
                 </div>
                 <div className="confirmShelfButton">
-                    <CommonButton disabled={true} text={"Confirm"} color={"orange"} />
+                    <CommonButton disabled={false}  module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_TO_CONTINUE} text={"Confirm"} color={"orange"} />
                   </div>
             </div>
           );
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
-        this._navigation = (<MessageNavigation navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
-         this._notification = (<NotificationBar notificationData = {this.state.PickFrontNotificationData} />);
+        this._navigation = (<MessageNavigation screenId={appConstants.PICK_FRONT_PPTL_PRESS} navData ={this.state.PickFrontNavData} color={"lightGreen"}  />);
+         this._notification = (<NotificationBar screenId={appConstants.PICK_FRONT_PPTL_PRESS} notificationData = {this.state.PickFrontNotificationData} />);
         this._component = (
               <div className='grid-container'>
                

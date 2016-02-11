@@ -67,6 +67,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
+    productDetails: function() {
+        _prodDetails = _seatData.product_info;
+        return _prodDetails;
+    },
+    getPPTLEvent: function() {
+        switch (_currentSeat) {
+            case appConstants.PUT_BACK:
+                _pptlEvent = 'secondary_button_press';
+                break;
+            case appConstants.PUT_FRONT:
+                _pptlEvent = 'primary_button_press';
+                break;
+            case appConstants.PICK_BACK:
+                _pptlEvent = 'secondary_button_press';
+                break;
+            case appConstants.PICK_FRONT:
+                _pptlEvent = 'primary_button_press';
+                break;
+            default:
+                //return true; 
+        }
+        return _pptlEvent;
+    },
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PICK_FRONT:
@@ -105,7 +128,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getNotificationData: function() {
-        return _seatData.notification_list[0];
+        if(_seatData.notification_list.length > 0){
+            return _seatData.notification_list[0];
+        }
     },
 
     getCurrentState: function() {
@@ -175,8 +200,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getServerMessages: function() {
         return _messageJson;
     },
-    postDataToInterface: function(data) {
-        utils.postDataToInterface(data, _seatName);
+    postDataToInterface: function(data, type) {
+        utils.postDataToInterface(data, type, _seatName);
     },
     logError: function(data) {
         utils.logError(data);
@@ -514,7 +539,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.POST_DATA_TO_INTERFACE:
             mainstore.showSpinner();
-            mainstore.postDataToInterface(action.data);
+            mainstore.postDataToInterface(action.data, action.type);
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.LOG_ERROR:

@@ -15,7 +15,9 @@ var CommonButton = React.createClass({
 			case appConstants.PICK_FRONT :
 				switch (action) {
 					case appConstants.CONFIRM_TO_CONTINUE:
-					CommonActions.postDataToInterface(data);
+					data["event_name"] = "process_barcode";
+                    data["event_data"]["barcode"] = mainstore.productDetails().product_barcode;
+					CommonActions.postDataToInterface(data, "scan-item");
 					break;
 					default:
                     return true;

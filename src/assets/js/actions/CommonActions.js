@@ -46,10 +46,11 @@ var commonActions = {
     })
   },
 
-  postDataToInterface:function(data){
+  postDataToInterface:function(data, type){
      AppDispatcher.handleAction({
       actionType: appConstants.POST_DATA_TO_INTERFACE,
-      data:data
+      data:data,
+      type : type
     })
    },
 

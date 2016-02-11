@@ -88,12 +88,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         sessionStorage.setItem('sessionData', null);
         location.reload();
     },
-    postDataToInterface: function(data, seat_name) {
+    postDataToInterface: function(data, type, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+        var url;
+        if(type == 'order-place'){
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.ORDERS;
+        }else{
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.SEND_DATA;
+        }
         $.ajax({
             type: 'POST',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.ORDERS,
+            url: url,
             data: JSON.stringify(data),
             dataType: "json",
             headers: {

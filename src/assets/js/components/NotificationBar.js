@@ -13,8 +13,10 @@ var NotificationBar = React.createClass({
       if(this.props.screenId == "pick_front_waiting_for_msu"){
         description = "SELECT ITEM TO ORDER";
       }
-      else{
-        description = this.props.notificationData.description;
+      else if(this.props.screenId =='pick_front_item_scan'){
+        description = "PRESS CONFIRM TO CONTINUE";
+      }else if(this.props.screenId =='pick_front_pptl_press'){
+        description = "PRESS PPTL TO FINISH";
       };
         return (
             	<div className="row">

@@ -15,10 +15,12 @@ var MessageNavigation = React.createClass({
       if(this.props.screenId == "pick_front_waiting_for_msu"){
         description = "PLACE ORDER";
       }
-      else{
-        description = this.props.navData.description;
-      }
-
+      else if(this.props.screenId == "pick_front_item_scan"){
+        description = "PICK ITEM FROM SHELF";
+      }else if(this.props.screenId == "pick_front_pptl_press"){
+        description = "PLACE ITEM IN LIGHTED BIN";
+      };
+console.log(description);
         return (
             	<div className={"row messageNavigation " + colorClass}>
            		   <div className="">

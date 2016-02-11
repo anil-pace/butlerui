@@ -255,12 +255,24 @@ var Button1 = React.createClass({
                                 return true;
                         }
                         break;
+                    case appConstants.PERIPHERAL_MANAGEMENT:
+                        switch(action) {
+                            case appConstants.ADD_SCANNER:
+                                this.showModal(null, "enter_barcode");
+                            break;
+                        }   
 
                     default:
                         return true;
                 }
             },
-
+            showModal: function(data,type) {
+                 ActionCreators.showModal({
+                    data:data,
+                    type:type
+                 });
+                 $('.modal').modal();
+            },
             render: function() {
                 
                 if (this.props.disabled == false)

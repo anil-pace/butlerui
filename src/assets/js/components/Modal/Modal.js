@@ -204,7 +204,32 @@ function loadComponent(modalType,modalData){
                );  
      
       
-      break;    
+      break;
+    case "enter_barcode":
+        component = [];
+        component.push((
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="title-textbox">Enter Barcode</div>
+                <div className="textBox-div">
+                  <input className="width95" type="text" id='add_scanner' onClick={attachKeyboard.bind(this, 'add_scanner')}/>
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer removeBorder">
+              <div className="buttonContainer center-block chklstButtonContainer">
+                <div className="row removeBorder">
+                  <div className="col-md-6"><Button1 disabled = {false} text ={"Cancel"} color={"black"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.CANCEL_ADD_SCANNER}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={"Submit"} color={"orange"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.ADD_SCANNER_DETAILS}/></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          ));
+         
+      title = "Add Scanner";
+      break;
     default:
       component = null;
       title = null;

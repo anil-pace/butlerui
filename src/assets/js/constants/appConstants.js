@@ -126,7 +126,9 @@ var appConstants = {
 	SCANNER_MANAGEMENT : 'scanner_management',
 	CONVERT_TEXTBOX : 'convert_textbox',
 	UPDATE_PERIPHERAL : 'UPDATE_PERIPHERAL',
-	ADD: '/add'
+	ADD: '/add',
+	ADD_SCANNER : 'ADD_SCANNER',
+	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT'
 
 };
 

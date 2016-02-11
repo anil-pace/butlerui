@@ -132,7 +132,43 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).done(function(response) {
 
         }).fail(function(jqXhr) {
+            if(type == 'pptl'){
             var data =  [
+                    {
+                      "barcode": "B1",
+                      "peripheral_id": "P10_1",
+                      "peripheral_type": "pptl",
+                      "pps_bin_id": "1"
+                    },
+                    {
+                      "barcode": "B2",
+                      "peripheral_id": "P10_2",
+                      "peripheral_type": "pptl",
+                      "pps_bin_id": "2"
+                    },
+                    {
+                      "pps_bin_id": "7"
+                    },
+                    {
+                      "pps_bin_id": "8"
+                    },
+                    {
+                      "pps_bin_id": "4"
+                    },
+                    {
+                      "pps_bin_id": "6"
+                    },
+                    {
+                      "pps_bin_id": "5"
+                    },
+                    {
+                      "pps_bin_id": "3"
+                    }
+
+                    
+                 ];
+             }else{
+                var data = [
                     {
                      "peripheral_id": "P1",
                      "peripheral_type": "barcode_scanner"
@@ -142,8 +178,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                      "peripheral_type": "barcode_scanner"
                     }
 
-                    
-                 ];
+                ]
+             }
              CommonActions.updateSeatData(data, type);        
         });
     },

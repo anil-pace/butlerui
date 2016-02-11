@@ -31,8 +31,8 @@ function server_messages_list() {
     _("Tote already associated with ppsbin");
     _("Barcode didn't match current tote barcode");
     _("Please press PPTL button which does not have any totes associated");
-    _("Tote assigned successfuly to ppsbin {0}");
-    _("Bin {0} items removed successfuly");
+    _("Tote assigned successfully to ppsbin {0}");
+    _("Bin {0} items removed successfully");
     _("Totes are not required");
     _("Wrong Barcode scanned");
     _("Tote could not be reserved as already reserved");
@@ -100,7 +100,7 @@ function server_messages_list() {
     _("Item Scan successful");
     _("Waiting for MSU to arrive");
     _('Item Scan successful');
-    _('Press PPTL for Bin {0} to confirm');
+    _('Data capture failed at item');
     _('Bin {0} selected');
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
@@ -152,7 +152,7 @@ function server_messages_list() {
     _("Tote didn't get associated");
     _("Exception cancelled");
     _("Tote scan cancelled");
-    _("Documents printed successfuly");
+    _("Documents printed successfully");
     _("Bin entities removed successfully");
     _("Tote assigned successfully to ppsbin");
     _("Please scan pptl");

@@ -90,8 +90,24 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     sessionLogout:function(data){
-        sessionStorage.setItem('sessionData', null);
-        location.reload();
+        //alert("ashish");
+        console.log(configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT);
+        $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                "Authentication-Token" : JSON.parse(sessionStorage.getItem('sessionData'))["data"]["auth-token"]
+            }
+        }).done(function(response) {
+            sessionStorage.setItem('sessionData', null);
+            location.reload();
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            alert("Logout Failed");
+        });
+        
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');

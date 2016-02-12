@@ -41042,6 +41042,7 @@ var appConstants = {
 	API : '/api',
 	AUTH : '/auth',
 	TOKEN : '/token',
+	LOGOUT : '/logout',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
@@ -41173,8 +41174,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.211:8888/ws",
-	INTERFACE_IP : "https://192.168.2.211:5000"
+	WEBSOCKET_IP : "ws://192.168.1.120:8888/ws",
+	INTERFACE_IP : "https://192.168.1.120:5000"
 };
 
 module.exports = configConstants;
@@ -44253,8 +44254,24 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     sessionLogout:function(data){
-        sessionStorage.setItem('sessionData', null);
-        location.reload();
+        //alert("ashish");
+        console.log(configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT);
+        $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                "Authentication-Token" : JSON.parse(sessionStorage.getItem('sessionData'))["data"]["auth-token"]
+            }
+        }).done(function(response) {
+            sessionStorage.setItem('sessionData', null);
+            location.reload();
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            alert("Logout Failed");
+        });
+        
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');

@@ -36790,10 +36790,9 @@ var Audit = React.createClass({displayName: "Audit",
   _navigation:'',
   showModal: function() {
       if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
+        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
           this.state.AuditShowModal["showModal"] = false;
-          $('.modal-backdrop fade in').remove();
           console.log("ppppp");
           console.log(self.state.AuditShowModal.message);
           var r = self.state.AuditShowModal.message;
@@ -36806,18 +36805,11 @@ var Audit = React.createClass({displayName: "Audit",
             },
             type:"message"
           });
-        $('.modal').modal();
-      return false;
-      }),0)
+        $('.modal').modal("show");
+      //return false;
+      }),0);
           console.log("aa");
-       }else if(this.state.AuditShowModal["showModal"] == false && $('.modal').hasClass('in')){
-        $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
        }
-     }else{
-
-      $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
      }
   },
   getInitialState: function(){
@@ -41399,6 +41391,7 @@ var serverMessages = {
     "Common.001": "Processing. Please wait and scan later",
     "Common.002": "Waiting for rack",
     "Common.003": "Current PPS mode does not support back seat. Please logout.",
+    "AdF.I.006" : "Extra Box",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
@@ -43411,6 +43404,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
+        //showModal = false;
         _action = undefined;
         _binId= undefined;
         _enableException = false;
@@ -43443,8 +43437,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             showModal = true;
         else
             showModal=false;
-        //alert("ashish");
-        //showModal = true;
+
+         /* $('.modal').hide();
+          $('.modal-backdrop').remove();*/
 
     },
     getModalContent: function() {

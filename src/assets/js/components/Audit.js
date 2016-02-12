@@ -58,10 +58,9 @@ var Audit = React.createClass({
   _navigation:'',
   showModal: function() {
       if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
+        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
           this.state.AuditShowModal["showModal"] = false;
-          $('.modal-backdrop fade in').remove();
           console.log("ppppp");
           console.log(self.state.AuditShowModal.message);
           var r = self.state.AuditShowModal.message;
@@ -74,18 +73,11 @@ var Audit = React.createClass({
             },
             type:"message"
           });
-        $('.modal').modal();
-      return false;
-      }),0)
+        $('.modal').modal("show");
+      //return false;
+      }),0);
           console.log("aa");
-       }else if(this.state.AuditShowModal["showModal"] == false && $('.modal').hasClass('in')){
-        $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
        }
-     }else{
-
-      $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
      }
   },
   getInitialState: function(){

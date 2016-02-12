@@ -36708,6 +36708,21 @@ var commonActions = {
       data:data,
       type : type
     });
+   },
+   convertTextBox : function(data, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CONVERT_TEXTBOX,
+      data : data,
+      index : index
+    })
+   },
+   updateData : function(data, method, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.UPDATE_PERIPHERAL,
+      data : data,
+      method : method,
+      index : index
+    })
    }
 
 };
@@ -37648,12 +37663,24 @@ var Button1 = React.createClass({displayName: "Button1",
                                 return true;
                         }
                         break;
+                    case appConstants.PERIPHERAL_MANAGEMENT:
+                        switch(action) {
+                            case appConstants.ADD_SCANNER:
+                                this.showModal(null, "enter_barcode");
+                            break;
+                        }   
 
                     default:
                         return true;
                 }
             },
-
+            showModal: function(data,type) {
+                 ActionCreators.showModal({
+                    data:data,
+                    type:type
+                 });
+                 $('.modal').modal();
+            },
             render: function() {
                 
                 if (this.props.disabled == false)
@@ -38426,7 +38453,32 @@ function loadComponent(modalType,modalData){
                );  
      
       
-      break;    
+      break;
+    case "enter_barcode":
+        component = [];
+        component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, "Enter Barcode"), 
+                React.createElement("div", {className: "textBox-div"}, 
+                  React.createElement("input", {className: "width95", type: "text", id: "add_scanner", onClick: attachKeyboard.bind(this, 'add_scanner')})
+                )
+              )
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Cancel", color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_ADD_SCANNER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.ADD_SCANNER_DETAILS}))
+                )
+              )
+            )
+          )
+          ));
+         
+      title = "Add Scanner";
+      break;
     default:
       component = null;
       title = null;
@@ -40061,11 +40113,17 @@ var PutBack = React.createClass({displayName: "PutBack",
             );
         break;
       case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
-     
+          var _button;
+          if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+          }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
-                  React.createElement(TabularData, {data: this.state.utility})
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
               )
             );
         break;      
@@ -40680,6 +40738,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
     	data.map(function(value,index){
             var classes = "table-col ";
             var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
+            classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";
@@ -40713,15 +40772,47 @@ module.exports = TableHeader;
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
+var CommonActions = require('../actions/CommonActions');
+var mainstore = require('../stores/mainstore');
 
 var TableRow = React.createClass({displayName: "TableRow", 
 	_component:[],
+    peripheralAction : function(action, inc){
+        if(action == 'Update' || action == 'Add'){
+            CommonActions.convertTextBox(action, inc)     
+        }else if(action == 'Finish'){
+            var data = {
+                "peripheral_id": document.getElementById("peripheralId").value,
+                "peripheral_type" : "pptl",
+                "barcode" : document.getElementById("barcodePptl").value,
+                "bin_id" : inc
+            }
+            CommonActions.updateData(data, 'POST' , inc)
+        }else if(action == 'Delete'){
+            if(appConstants.SCANNER_MANAGEMENT == mainstore.getScreenId()){
+                var data = {
+                    "peripheral_id": inc,
+                    "peripheral_type" : "barcode_scanner",
+                }
+            }else{
+                var data = {
+                    "peripheral_id": inc,
+                    "peripheral_type" : "pptl",
+                }
+            }
+            console.log(data);
+            CommonActions.updateData(data, 'DELETE' , inc)
+        }
+        
+    },
     getComponent:function(){
+        var peripheralAction = this.peripheralAction;
     	var comp = [];
     	this.props.data.map(function(value,index){
     		var classes = "table-col ";
             var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
             var action = value.actionButton == true ? classes = classes+ "table-col-peripheral-min-width ": "";
+            classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";
@@ -40735,10 +40826,19 @@ var TableRow = React.createClass({displayName: "TableRow",
             var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
             var color = value.color == "blue" ? classes = classes + value.color + " ": "";
+
             if((value.type != undefined && value.type=="button"))
                 comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX, status: value.buttonStatus}))));
-            else
-    		  comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
+            else{
+                if(value.actionButton == true){
+                  comp.push((React.createElement("div", {className: classes, title: value.text, onClick: peripheralAction.bind(null,value.text, value.id)}, value.text)));
+                }
+                else if(value.textbox == true){
+                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text}));
+                }else{
+    		      comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
+                }
+            }
     	});
     	this._component = comp;
     },
@@ -40754,7 +40854,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../constants/appConstants":280,"./Button/IconButton":239,"react":230}],278:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/mainstore":295,"./Button/IconButton":239,"react":230}],278:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -40793,7 +40893,7 @@ var navData = {
     "utility": [
         [{
             "screen_id": "pptl_management",
-            "code": "Common.000",
+            "code": "CLIENTCODE_004",
             "image": svgConstants.exception,
             "message": "Unexpected Item",
             "showImage": true,
@@ -40802,7 +40902,7 @@ var navData = {
         }],
         [{
             "screen_id": "scanner_management",
-            "code": "Common.000",
+            "code": "CLIENTCODE_005",
             "image": svgConstants.exception,
             "message": "Unexpected Item",
             "showImage": true,
@@ -41068,7 +41168,12 @@ var appConstants = {
 	PERIPHERALS : '/peripherals',
 	UPDATE_SEAT_DATA : 'UPDATE_SEAT_DATA',
 	PPTL_MANAGEMENT : 'pptl_management',
-	SCANNER_MANAGEMENT : 'scanner_management'
+	SCANNER_MANAGEMENT : 'scanner_management',
+	CONVERT_TEXTBOX : 'convert_textbox',
+	UPDATE_PERIPHERAL : 'UPDATE_PERIPHERAL',
+	ADD: '/add',
+	ADD_SCANNER : 'ADD_SCANNER',
+	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT'
 
 };
 
@@ -41096,7 +41201,10 @@ var resourceConstants = {
 	USERNAME :'User Name',
 	PASSWORD : 'Password',
 	CLIENTCODE_001 : 'CLIENTCODE_001',
-	CLIENTCODE_002 : 'CLIENTCODE_002'
+	CLIENTCODE_002 : 'CLIENTCODE_002',
+	CLIENTCODE_004 : 'CLIENTCODE_004',
+	CLIENTCODE_005 : 'CLIENTCODE_005'
+
 };
 module.exports = resourceConstants;
 
@@ -41305,6 +41413,8 @@ var serverMessages = {
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
     "Audit.A.012":"No Items to Reconcile",
+    "CLIENTCODE_004" : "PPTL Management",
+    "CLIENTCODE_005" : "Scanner Management",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
@@ -42511,7 +42621,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -42618,40 +42728,68 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK:
                 if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
                     _NavData = navConfig.putBack[0];
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.putBack[1];
                 break;
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.putFront[0];
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+               else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.putFront[1];
                 break;
             case appConstants.PICK_BACK:
-                if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
                     _NavData = navConfig.utility[0];
-                else
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
+                else 
                     _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
                 if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT)
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.audit[1];
                 break;
@@ -42675,7 +42813,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData[index].type = 'passive';
             }
         });
-
         return _NavData;
     },
 
@@ -42928,8 +43065,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return binData;
     },
-
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton , borderBottom) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, id, management) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -42946,25 +43082,60 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.mode = mode,
         this.text_decoration = text_decoration,
         this.color = color,
-        this.actionButton = actionButton
+        this.actionButton = actionButton,
+        this.textbox = textbox,
+        this.id = id,
+        this.management = management
     },
     getPptlData: function() {
         if (_seatData.hasOwnProperty('utility')) {
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
-            data["header"].push(new this.tableCol("Barcode", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-            data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-            data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
-            data["tableRows"] = [];
-            var self = this;
-            _seatData.utility.map(function(value, index) {
-                data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
-                new self.tableCol(value.barcode, "enabled", false, "large", true, false, false, false,  false, true, true, false, "peripheral"), 
-                new self.tableCol(value.peripheral_id, "enabled", false, "large", true, false, false, false, false, true, true, false, "peripheral"),
-                new self.tableCol("Update", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true),
-                new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true)]); 
-            });
+            if(appConstants.PPTL_MANAGEMENT == _seatData.screen_id){
+                data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol("Barcode", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
+                data["tableRows"] = [];
+                var self = this;
+                _seatData.utility.map(function(value, index) {
+                    var barcode = '';
+                    var peripheralId = '';
+                    if(value.hasOwnProperty('barcode')){
+                        barcode = value.barcode;
+                    }
+                    if(value.hasOwnProperty('peripheral_id')){
+                        peripheralId = value.peripheral_id;
+                    }
+                    var buttonText = 'Update';
+                    var deletButton = 'Delete';
+                    if(barcode == '' && peripheralId  == ''){
+                        buttonText = 'Add';
+                        deletButton = '';
+                    }
+                    var textBox = false;
+                    if((_action == 'Update' || _action == 'Add') && _binId == value.pps_bin_id){
+                        textBox = true;
+                        buttonText = 'Finish';
+                    }
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
+                    new self.tableCol(barcode, "enabled", false, "large", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "large", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
+
+                });
+            }else{
+                data["header"].push(new this.tableCol("Scanner ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
+                data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["tableRows"] = [];
+                var self = this;
+                _seatData.utility.map(function(value, index) {
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, false, null, "scanner-id"),
+                    new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+
+                }); 
+            }
             return data;
         }
     },
@@ -43240,7 +43411,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
-        console.log(data);
+        _action = undefined;
+        _binId= undefined;
         _enableException = false;
         _KQQty = 0;
         _putFrontExceptionScreen = "good";
@@ -43525,9 +43697,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getUtility: function() {
         return _utility;
     },
+    convert_textbox : function(action, index){
+        _action = action;
+        _binId = index;
+    },
+    update_peripheral : function(data, method, index){
+       utils.updatePeripherals(data, method, _seatName); 
+    },
     getScreenData: function() {
         var data = {};
-        console.log(_screenId);
         switch (_screenId) {
             case appConstants.PUT_BACK_STAGE:
             case appConstants.PUT_BACK_SCAN_TOTE:
@@ -43820,6 +43998,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditKQDetails"] = this.getScanDetails();
                 break;
             case appConstants.PPTL_MANAGEMENT:
+            case appConstants.SCANNER_MANAGEMENT:
                 data["utility"] = this.getPptlData();
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -43970,6 +44149,15 @@ AppDispatcher.register(function(payload) {
             mainstore.updateSeatData(action.data, action.type);
             mainstore.emitChange();
             break;
+        case appConstants.CONVERT_TEXTBOX:
+            mainstore.convert_textbox(action.data, action.index);
+            mainstore.emitChange();
+            break;
+        case appConstants.UPDATE_PERIPHERAL:
+            mainstore.showSpinner();
+            mainstore.update_peripheral(action.data, action.method, action.index);
+            mainstore.emitChange();
+            break;
         default:
             return true;
     }
@@ -44114,21 +44302,87 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).done(function(response) {
 
         }).fail(function(jqXhr) {
+            if(type == 'pptl'){
+            var data =  [
+                    {
+                      "barcode": "B1",
+                      "peripheral_id": "P10_1",
+                      "peripheral_type": "pptl",
+                      "pps_bin_id": "1"
+                    },
+                    {
+                      "barcode": "B2",
+                      "peripheral_id": "P10_2",
+                      "peripheral_type": "pptl",
+                      "pps_bin_id": "2"
+                    },
+                    {
+                      "pps_bin_id": "7"
+                    },
+                    {
+                      "pps_bin_id": "8"
+                    },
+                    {
+                      "pps_bin_id": "4"
+                    },
+                    {
+                      "pps_bin_id": "6"
+                    },
+                    {
+                      "pps_bin_id": "5"
+                    },
+                    {
+                      "pps_bin_id": "3"
+                    }
+
+                    
+                 ];
+             }else{
+                var data = [
+                    {
+                     "peripheral_id": "P1",
+                     "peripheral_type": "barcode_scanner"
+                    },
+                    {
+                     "peripheral_id": "P2",
+                     "peripheral_type": "barcode_scanner"
+                    }
+
+                ]
+             }
+             CommonActions.updateSeatData(data, type);        
+        });
+    },
+    updatePeripherals : function(data, method, seat_name){
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+        var url;
+        if(method == 'POST'){
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+appConstants.ADD;
+        }else{
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
+        }
+         $.ajax({
+            type: method,
+            url: url,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
+            }
+        }).done(function(response) {
+
+        }).fail(function(jqXhr) {
             var data =  [
                     {
                      "barcode": "3",
-                     "peripheral_id": "C",
+                     "peripheral_id": "AC",
                      "peripheral_type": "pptl",
                      "pps_bin_id": "4"
-                    },
-                    {
-                     "barcode": "123",
-                     "peripheral_id": "PQR",
-                     "peripheral_type": "pptl",
-                     "pps_bin_id": "5"
                     }
                  ];
-             CommonActions.updateSeatData(data, type);        
+             CommonActions.updateSeatData(data, data.peripheral_type);        
         });
     },
     createLogData: function(message, type) {

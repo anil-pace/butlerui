@@ -48,9 +48,14 @@ var ProductInfo = React.createClass({
     
   },
   displayLocale : function(data){
+    product_info_locale = {};
     var language_locale = sessionStorage.getItem('localeData');
-    console.log(language_locale);
-    var locale = JSON.parse(language_locale)["data"]["locale"];  
+    var locale;
+    if(language_locale == 'null' || language_locale == null){
+      locale = 'en-US';
+    }else{
+      locale = JSON.parse(language_locale)["data"]["locale"]; 
+    } 
     data.map(function(value, index){
       var keyValue;
       for (var key in value[0]) {
@@ -76,7 +81,7 @@ var ProductInfo = React.createClass({
     return (       
             <div className="product-details-wrapper">
               <div className="img-container">
-                  <img src={"test"}  />
+                  <img src={product_info_locale.product_local_image_url}  />
               </div>
               <div className="view-more-link" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,product_info_locale,"product-detail")}>
                 <span> {allresourceConstants.VIEW_MORE} </span>                

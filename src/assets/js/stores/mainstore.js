@@ -710,9 +710,36 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
-            for (var key in _seatData.product_info) {
-                if (_seatData.product_info.hasOwnProperty(key)) {
-                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_seatData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+
+            var product_info_locale = {};
+            var language_locale = sessionStorage.getItem('localeData');
+            var locale;
+            if(language_locale == 'null' || language_locale == null){
+              locale = 'en-US';
+            }else{
+              locale = JSON.parse(language_locale)["data"]["locale"]; 
+            } 
+            data.map(function(value, index){
+              var keyValue;
+              for (var key in value[0]) {
+                if(key != 'display_data'){
+                  keyValue = value[0][key];
+                }
+              }
+              value[0].display_data.map(
+                function(data_locale, index1){
+                 if(data_locale.locale == locale){
+                    product_info_locale[data_locale.display_name] = keyValue;
+                  }
+                  
+                }
+
+              )
+              
+            });
+            for (var key in product_info_locale) {
+                if (product_info_locale.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
                 }
             }
         } else {

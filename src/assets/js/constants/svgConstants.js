@@ -14,7 +14,9 @@ var allSvgConstants = {
 	scanHeader :'assets/images/scan_header.png',
 	iconBar :'assets/images/Icon.png',
 	tote:'assets/images/tote.png',
-	exception:'assets/images/exceptionIcon.png'
+	exception:'assets/images/exceptionIcon.png',
+	scanner:'assets/images/scanner.png',
+	pptl:'assets/images/pptl.png'
 }
 
 module.exports = allSvgConstants;

@@ -5,7 +5,7 @@ var navData = {
         [{
             "screen_id": "pptl_management",
             "code": "CLIENTCODE_004",
-            "image": svgConstants.exception,
+            "image": svgConstants.pptl,
             "message": "Unexpected Item",
             "showImage": true,
             "level": null,
@@ -14,7 +14,7 @@ var navData = {
         [{
             "screen_id": "scanner_management",
             "code": "CLIENTCODE_005",
-            "image": svgConstants.exception,
+            "image": svgConstants.scanner,
             "message": "Unexpected Item",
             "showImage": true,
             "level": null,

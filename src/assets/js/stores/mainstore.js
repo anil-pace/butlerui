@@ -829,7 +829,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
-        if((_seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
+        if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
             showModal=false;

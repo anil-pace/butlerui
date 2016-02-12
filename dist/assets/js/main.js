@@ -29778,6 +29778,9 @@ var ImageComponent = React.createClass({displayName: "ImageComponent",
 		var data = {
                     "orders": [{
                         "order_id": order_Id,
+                        "order_options": {
+                            "pps": "10"                        
+                        },
                         "orderlines": [{
                             "orderline_id": orderline_id,
                             "qty": 1,

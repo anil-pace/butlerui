@@ -801,6 +801,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
+        //showModal = false;
         _action = undefined;
         _binId= undefined;
         _enableException = false;
@@ -835,8 +836,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             showModal = true;
         else
             showModal=false;
-        //alert("ashish");
-        //showModal = true;
+
+         /* $('.modal').hide();
+          $('.modal-backdrop').remove();*/
 
     },
     getModalContent: function() {

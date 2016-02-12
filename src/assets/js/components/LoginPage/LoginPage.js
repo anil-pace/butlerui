@@ -157,8 +157,8 @@ var LoginPage = React.createClass({
                   <input type="password" className="form-control" id="password" placeholder="Enter Password" ref='password' valueLink={this.linkState('password')} />
               </div>
               <select className="selectLang" ref='language' onChange={this.changeLanguage}>
-                  <option value="english">English</option>
-                  <option value="chinese">Chinese</option>
+                  <option value="en-US">English</option>
+                  <option value="ch">Chinese</option>
               </select>
               <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value="Login" />
           </form>

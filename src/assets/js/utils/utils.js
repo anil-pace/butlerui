@@ -61,7 +61,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     getAuthToken : function(data){
         sessionStorage.setItem('sessionData', null);
-        sessionStorage.setItem('localeData', null);
         var loginData ={
           "username" : data.data.username,
           "password" : data.data.password
@@ -92,6 +91,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     sessionLogout:function(data){
         sessionStorage.setItem('sessionData', null);
+        sessionStorage.setItem('localeData', null);
         location.reload();
     },
     postDataToInterface: function(data, seat_name) {

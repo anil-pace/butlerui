@@ -410,12 +410,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": true,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
             else
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": false,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
         })

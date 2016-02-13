@@ -181,7 +181,14 @@ var serverMessages = {
     "PtF.I.003" : "Slot scan successful",
     "PtF.I.004" : "Damaged and missing entity reported.",
     "PtF.I.005" : "Space unavailable reported.",
-    "PtF.I.006" : "Unknown Barcode Scanned"
+    "PtF.I.006" : "Unknown Barcode Scanned",
+    "PtB002" : "Entity Oversized",
+    "PtB003" : "Entity Unscannable",
+    "PtB004" : "Extra Entities in Bin",
+    "PtF001" : "Entity Mising / Unscannable",
+    "PtF002" : "Space Not Available"
+
+
 };
 
 

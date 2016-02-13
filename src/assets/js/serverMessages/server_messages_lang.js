@@ -186,6 +186,17 @@ function server_messages_list() {
     _("Invalid entity in tote recorded");
     _("Wrong enitity scanned. Expecting scan from bin {0}");
     _("PPTL Management");
-    _("Scanner Management")
+    _("Scanner Management");
+    _("Entity Oversized");
+    _("Entity Unscannable");
+    _("Extra Entities in Bin");
+    _("Entity Mising / Unscannable");
+    _("Space Not Available");
+    _("Entity Mising / Unscannable");
+    _("Mising Box");
+    _("Disassociate Tote");
+    _("Overide Tote Required");
+    _("Reprint");
+    _("Skip Print");
 
 }

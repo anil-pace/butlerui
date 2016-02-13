@@ -6,10 +6,10 @@ var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 
-            function closeModalBox(){
-                $(".modal").modal("hide");
-                //$(".modal-backdrop").remove();
-            };
+function closeModalBox(){
+    $(".modal").modal("hide");
+    //$(".modal-backdrop").remove();
+};
 
 var Button1 = React.createClass({
             _checklistClass: '',
@@ -25,9 +25,9 @@ var Button1 = React.createClass({
                     "event_data": {}
                 };
                 var peripheralData ={
-                                 "peripheral_id": "",
-                                 "peripheral_type": "barcode_scanner"
-                                };
+                    "peripheral_id": "",
+                    "peripheral_type": ""
+                };
 
                 switch (module) {
                     case appConstants.PUT_BACK:
@@ -281,10 +281,13 @@ var Button1 = React.createClass({
                                 this.showModal(null, "enter_barcode");
                             break;
 
-                            case appConstants.ADD_SCANNER_DETAILS: console.log("submitButton");
+                            case appConstants.ADD_SCANNER_DETAILS: 
                                 peripheralId = document.getElementById("add_scanner").value;
                                 peripheralData["peripheral_id"] = peripheralId;
-                                ActionCreators.postDataToInterface(peripheralData);
+                                peripheralData["peripheral_type"]= "barcode_scanner";
+                                ActionCreators.updateData(peripheralData, 'POST');
+                                closeModalBox();
+                                document.getElementById("add_scanner").value = '';
                                 break;
 
                             case appConstants.CANCEL_ADD_SCANNER:

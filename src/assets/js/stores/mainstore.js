@@ -6,11 +6,12 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
+var english = require('../serverMessages/english');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -21,6 +22,7 @@ var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, 
     _putFrontExceptionScreen = "good",
     _pickFrontExceptionScreen = "good",
     _missingQuantity = 0,
+    showModal = false,
     _finishAuditFlag = true;
 var modalContent = {
     data: "",
@@ -108,32 +110,76 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
+    setShowModal:function(data){
+        showModal = false;
+    },
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
                 if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
                     _NavData = navConfig.putBack[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.putBack[1];
                 break;
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.putFront[0];
+               else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.putFront[1];
                 break;
             case appConstants.PICK_BACK:
-                _NavData = navConfig.pickBack;
+                if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
+                else 
+                    _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
                 if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.audit[1];
                 break;
@@ -157,7 +203,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData[index].type = 'passive';
             }
         });
-
         return _NavData;
     },
 
@@ -165,13 +210,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+            console.log("ashu");
+            console.log(showModal);
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+            console.log("jindal");
+            console.log(showModal);
+            showModal = false;
+            console.log(_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])
             return {
                 "showModal": true,
                 "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
             }
-        } else
+        } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
+            console.log("jindal");
+            console.log(showModal);
+            showModal = false;
+            console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
+            return {
+                "showModal": true,
+                "message": "Place extra " + (_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"]) + " items in Exception area ."
+            }
+        } 
+        else{
             return data;
+        }
     },
 
     getBoxSerialData: function() {
@@ -312,7 +374,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }else
+        } else
             return null;
     },
 
@@ -326,7 +388,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }else
+        } else
             return null;
     },
 
@@ -393,8 +455,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return binData;
     },
-
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, id, management) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -407,8 +468,67 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.type = type;
         this.buttonType = buttonType;
         this.buttonStatus = buttonStatus;
+        this.borderBottom = borderBottom;
+        this.mode = mode,
+        this.text_decoration = text_decoration,
+        this.color = color,
+        this.actionButton = actionButton,
+        this.textbox = textbox,
+        this.id = id,
+        this.management = management
     },
+    getPptlData: function() {
+        if (_seatData.hasOwnProperty('utility')) {
+            var data = {};
+            data["header"] = [];
+            if(appConstants.PPTL_MANAGEMENT == _seatData.screen_id){
+                data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol("Barcode", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
+                data["tableRows"] = [];
+                var self = this;
+                _seatData.utility.map(function(value, index) {
+                    var barcode = '';
+                    var peripheralId = '';
+                    if(value.hasOwnProperty('barcode')){
+                        barcode = value.barcode;
+                    }
+                    if(value.hasOwnProperty('peripheral_id')){
+                        peripheralId = value.peripheral_id;
+                    }
+                    var buttonText = 'Update';
+                    var deletButton = 'Delete';
+                    if(barcode == '' && peripheralId  == ''){
+                        buttonText = 'Add';
+                        deletButton = '';
+                    }
+                    var textBox = false;
+                    if((_action == 'Update' || _action == 'Add') && _binId == value.pps_bin_id){
+                        textBox = true;
+                        buttonText = 'Finish';
+                    }
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
+                    new self.tableCol(barcode, "enabled", false, "large", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "large", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
 
+                });
+            }else{
+                data["header"].push(new this.tableCol("Scanner ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
+                data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["tableRows"] = [];
+                var self = this;
+                _seatData.utility.map(function(value, index) {
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
+                    new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+
+                }); 
+            }
+            return data;
+        }
+    },
     getReconcileData: function() {
         if (_seatData.hasOwnProperty('reconciliation')) {
             var data = {};
@@ -438,45 +558,67 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var noScanMissing = 0;
+        var missingDamagedBoxSerials = '';
+        var extraBoxSerials = '';
+        var countMissingDamagedBoxSerials = 0;
         _seatData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "no_scan"){
-                var totalMissing = '';
-                    if(_seatData.item_in_box_barcode_damage.length > 0){
-                    _seatData.item_in_box_barcode_damage.map(function(data, index){
-                        if(data.Box_serial == value.Box_serial){
-                            totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
-                        }
-                    });
-                }
-                var missingBoxSerials = Math.max(parseInt(value.Expected_qty) - parseInt(value.Actual_qty),0);
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(missingBoxSerials + totalMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
-                ]);
+            if (value.Scan_status == "no_scan") {
+                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
+                countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
             }
-            else{
-                noScanMissing  = noScanMissing + 1;
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
-                ]);
-            }
-
         });
-        var barcodeDamaged = " ("+_seatData.box_barcode_damage+' Barcode Damaged )';
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(noScanMissing + barcodeDamaged, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
-        ]);
+        missingDamagedBoxSerials = missingDamagedBoxSerials.replace(/,([^,]*)$/,'$1');
         _seatData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
-            ]);
+            extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
         });
+        if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0) {
+            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+        }
+        if (missingDamagedBoxSerials != 0)
+            data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(countMissingDamagedBoxSerials - _seatData["box_barcode_damage"], 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+            ]);
+        if (_seatData.Extra_box_list.length != 0)
+            data["tableRows"].push([new self.tableCol(extraBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+            ]);
+        return data;
+    },
 
+    getItemInBoxReconcileData: function() {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        _seatData.Box_qty_list.map(function(value, index) {
+            if (value.Scan_status == "close") {
+                var barcodeDamagedQty = 0;
+                _seatData.item_in_box_barcode_damage.map(function(val, ind) {
+                    if (value.Box_serial == val.Box_serial)
+                        barcodeDamagedQty = val.Damage_qty;
+                });
+                if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || barcodeDamagedQty != 0)
+                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty - barcodeDamagedQty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
+                    ]);
+            }
+        });
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol("Item in Box Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+        }
         return data;
     },
 
@@ -520,29 +662,33 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["header"] = [];
         data["tableRows"] = [];
-        data["header"].push(new this.tableCol("Loose Items SKU", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var self = this;
         var totalLooseItemsMissing = 0;
         var extraLooseItemsMissing = 0;
+        var c = 0 ;
+         _seatData.Loose_sku_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+                c=c+1;
+        })
         _seatData.Loose_sku_list.map(function(value, index) {
-            if(value.Expected_qty >= value.Actual_qty){
-                totalLooseItemsMissing = totalLooseItemsMissing +  parseInt(value.Expected_qty - value.Actual_qty);
-            }
-            if(value.Expected_qty <= value.Actual_qty){
-              extraLooseItemsMissing = extraLooseItemsMissing + Math.abs(parseInt(value.Expected_qty - value.Actual_qty)); 
-            }
-            if (value.Scan_status != "no_scan")
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
-            else
-                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
 
         });
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(totalLooseItemsMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(extraLooseItemsMissing, "enabled", false, "large", true, false, false, false, true)
-        ]);
+         /*if (data["tableRows"].length > 0)
+         data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
+                new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
+            ]);*/
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol("Loose Items Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+        }
         return data;
     },
 
@@ -564,9 +710,36 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
-            for (var key in _seatData.product_info) {
-                if (_seatData.product_info.hasOwnProperty(key)) {
-                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_seatData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+
+            var product_info_locale = {};
+            var language_locale = sessionStorage.getItem('localeData');
+            var locale;
+            if(language_locale == 'null' || language_locale == null){
+              locale = 'en-US';
+            }else{
+              locale = JSON.parse(language_locale)["data"]["locale"]; 
+            } 
+            data.map(function(value, index){
+              var keyValue;
+              for (var key in value[0]) {
+                if(key != 'display_data'){
+                  keyValue = value[0][key];
+                }
+              }
+              value[0].display_data.map(
+                function(data_locale, index1){
+                 if(data_locale.locale == locale){
+                    product_info_locale[data_locale.display_name] = keyValue;
+                  }
+                  
+                }
+
+              )
+              
+            });
+            for (var key in product_info_locale) {
+                if (product_info_locale.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
                 }
             }
         } else {
@@ -602,10 +775,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
-    kQstatus: function(){
-        if(_seatData.hasOwnProperty('enable_kq')){
+    kQstatus: function() {
+        if (_seatData.hasOwnProperty('enable_kq')) {
             return _seatData.enable_kq;
-        }else{
+        } else {
             return true;
         }
     },
@@ -655,6 +828,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
+        //showModal = false;
+        _action = undefined;
+        _binId= undefined;
         _enableException = false;
         _KQQty = 0;
         _putFrontExceptionScreen = "good";
@@ -666,10 +842,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _enableException = false;
         _seatData = data;
         _seatName = data.seat_name;
+        _seatMode = data.mode;
+        _seatType = data.seat_type;
         _currentSeat = data.mode + "_" + data.seat_type;
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        if (_seatData.hasOwnProperty('utility')) {
+            _utility = _seatData.utility;
+        }
         if (_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
             _putFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
@@ -678,6 +859,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+        if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
+            showModal = true;
+        else
+            showModal=false;
+
+         /* $('.modal').hide();
+          $('.modal-backdrop').remove();*/
+
     },
     getModalContent: function() {
         return modalContent.data;
@@ -732,19 +921,41 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _messageJson;
     },
     changeLanguage: function(data) {
+
+        var locale_data ={
+            "data" :{
+                "locale" : data
+            }
+        };
         switch (data) {
-            case "chinese":
+            case "ch":
                 _.setTranslation(chinese);
+                break;
+            case "en-US":
+                _.setTranslation(english);
+                break;
+            default:
+                return true;
         }
+
+        sessionStorage.setItem('localeData', JSON.stringify(locale_data));
     },
     postDataToInterface: function(data) {
+        showModal = false;
         utils.postDataToInterface(data, _seatName);
     },
     logError: function(data) {
         utils.logError(data);
     },
     getScreenId: function() {
+        console.log(_screenId);
         return _screenId;
+    },
+    getPpsMode: function(){
+        return _seatMode;
+    },
+    getSeatType: function(){
+        return _seatType;
     },
     enableException: function(data) {
         _KQQty = 0;
@@ -774,12 +985,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _damagedQuantity = data;
     },
     getkQQuanity: function() {
-        if(_seatData.hasOwnProperty('Current_box_details')){
-            if(_seatData.Current_box_details.length > 0){
+        if (_seatData.hasOwnProperty('Current_box_details')) {
+            if (_seatData.Current_box_details.length > 0) {
                 _KQQty = _seatData.Current_box_details[0].Actual_qty;
             }
             return _KQQty;
-        }else{
+        } else {
             return _KQQty;
         }
     },
@@ -904,6 +1115,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         } else {
             return null;
         }
+    },
+    getPeripheralData: function(data) {
+        utils.getPeripheralData(data, _seatData.seat_name);
+    },
+    updateSeatData: function(data, type) {
+        if (type === 'pptl') {
+            _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
+        } else if (type === 'barcode_scanner') {
+            _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        }
+        _seatData["utility"] = data;
+        this.setCurrentSeat(_seatData);
+        console.log(_seatData);
+    },
+    getUtility: function() {
+        return _utility;
+    },
+    convert_textbox : function(action, index){
+        _action = action;
+        _binId = index;
+    },
+    update_peripheral : function(data, method, index){
+       utils.updatePeripherals(data, method, _seatName); 
     },
     getScreenData: function() {
         var data = {};
@@ -1183,6 +1417,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditReconcileBoxSerialData"] = this.getReconcileBoxSerialData();
                 data["AuditReconcileLooseItemsData"] = this.getReconcileLooseItemsData();
+                data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
@@ -1196,6 +1431,54 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                break;
+            case appConstants.PPTL_MANAGEMENT:
+            case appConstants.SCANNER_MANAGEMENT:
+                data["utility"] = this.getPptlData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["AuditScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackPpsMode"] = this.getPpsMode();
+                data["PutBackSeatType"] = this.getSeatType();
+                data["PutFrontPpsMode"] = this.getPpsMode();
+                data["PutFrontSeatType"] = this.getSeatType();
+
+                data["PickBackPpsMode"] = this.getPpsMode();
+                data["PickBackSeatType"] = this.getSeatType();
+                data["PickFrontPpsMode"] = this.getPpsMode();
+                data["PickFrontSeatType"] = this.getSeatType();
+
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+
                 break;
             default:
         }
@@ -1300,7 +1583,25 @@ AppDispatcher.register(function(payload) {
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
             mainstore.validateAndSendSpaceUnavailableDataToServer();
             mainstore.emitChange();
-
+            break;
+        case appConstants.PERIPHERAL_DATA:
+            mainstore.getPeripheralData(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.UPDATE_SEAT_DATA:
+            mainstore.showSpinner();
+            mainstore.updateSeatData(action.data, action.type);
+            mainstore.emitChange();
+            break;
+        case appConstants.CONVERT_TEXTBOX:
+            mainstore.convert_textbox(action.data, action.index);
+            mainstore.emitChange();
+            break;
+        case appConstants.UPDATE_PERIPHERAL:
+            mainstore.showSpinner();
+            mainstore.update_peripheral(action.data, action.method, action.index);
+            mainstore.emitChange();
+            break;
         default:
             return true;
     }

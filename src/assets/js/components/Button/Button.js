@@ -5,17 +5,30 @@ var PickFrontStore = require('../../stores/PickFrontStore');
 var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
+
+            function closeModalBox(){
+                $(".modal").modal("hide");
+                //$(".modal-backdrop").remove();
+            };
+
 var Button1 = React.createClass({
             _checklistClass: '',
             removeTextField: function(){
                   $('.modal-body').find('input:text').val('');
                 },
 
+
             performAction: function(module, action) {
+                var peripheralId;
                 var data = {
                     "event_name": "",
                     "event_data": {}
                 };
+                var peripheralData ={
+                                 "peripheral_id": "",
+                                 "peripheral_type": "barcode_scanner"
+                                };
+
                 switch (module) {
                     case appConstants.PUT_BACK:
                         switch (action) {
@@ -129,14 +142,20 @@ var Button1 = React.createClass({
                                 if (checklist_index != "all") {
                                     checkList.checklist_data[checklist_index - 1].map(function(value, index) {
                                         var keyvalue = Object.keys(value);
-                                        checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                        if(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format !="Integer")
+                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                        else
+                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value);
                                     });
                                 } else {
                                     checkList.checklist_data.map(function(value, index) {
                                         if(index < mainstore.scanDetails()["current_qty"])
                                         value.map(function(value1, index1) {
                                             var keyvalue = Object.keys(value1);
-                                            checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                            if(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format !="Integer")
+                                                checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                            else
+                                                checkList.checklist_data[index][index1][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index1 + "-" + index ).value);
                                         })
                                     });
                                 }
@@ -256,11 +275,34 @@ var Button1 = React.createClass({
                         }
                         break;
 
+                    case appConstants.PERIPHERAL_MANAGEMENT:
+                        switch(action) {
+                            case appConstants.ADD_SCANNER:
+                                this.showModal(null, "enter_barcode");
+                            break;
+
+                            case appConstants.ADD_SCANNER_DETAILS: console.log("submitButton");
+                                peripheralId = document.getElementById("add_scanner").value;
+                                peripheralData["peripheral_id"] = peripheralId;
+                                ActionCreators.postDataToInterface(peripheralData);
+                                break;
+
+                            case appConstants.CANCEL_ADD_SCANNER:
+                                closeModalBox();
+                                break;
+                        }   
+                        break;
                     default:
                         return true;
                 }
             },
-
+            showModal: function(data,type) {
+                 ActionCreators.showModal({
+                    data:data,
+                    type:type
+                 });
+                 $('.modal').modal();
+            },
             render: function() {
                 
                 if (this.props.disabled == false)

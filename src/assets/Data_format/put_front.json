@@ -117,14 +117,51 @@
 		"is_idle": false,
 		"seat_type": "front",
 		"item_uid" : "123",
-		"product_info": {
-			"product_description": null,
-			"product_local_image_url": null,
-			"product_dimension": null,
-			"product_sku": null,
-			"product_name": null,
-			"product_weight": null
-		},
+		"product_info": [
+			[{
+				"display_data":
+				[
+					{
+					"display_name":"product_sku-display",
+					"locale":"ch"
+					},
+					{"display_name":"product_sku-display-2",
+					"locale":"en-US"
+					}
+				],
+				"product_sku":"266ed6a3c9e4413fbf55108af99832d0"
+			}],
+
+			[{
+				"display_data":
+			 	[
+			 		{
+			 		"display_name":"product_height-display",
+					 "locale":"en-US"
+					},
+			 		{
+			 		"display_name":"product_height-display-2",
+			 		"locale":"ch"
+			 		}
+			 	],
+			 	"product_height":4.66
+			 }],
+			 
+			[{
+			 	"display_data":
+			 	[
+			 		{
+			 		"display_name":"product_weight-display",
+			 		"locale":"en-US"
+			 		},
+			 		{
+			 		"display_name":"product_weight-2",
+			 		"locale":"ch"
+			 		}
+			 	],
+			 	"product_weight":4.54
+			}]
+		],
 		"time_stamp": "1450174144",
 		"ppsbin_list": [{
 			"bin_info": [],

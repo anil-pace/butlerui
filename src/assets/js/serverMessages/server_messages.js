@@ -122,6 +122,8 @@ var serverMessages = {
     "Audit.A.012":"No Items to Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
+    "CLIENTCODE_006" : "Scanner added successfully",
+    "CLIENTCODE_007" : "Scanner not added",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",

@@ -198,5 +198,7 @@ function server_messages_list() {
     _("Overide Tote Required");
     _("Reprint");
     _("Skip Print");
+    _("Scanner added successfully");
+    _("Scanner not added");
 
 }

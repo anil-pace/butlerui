@@ -73,7 +73,7 @@ var KQ = React.createClass({
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
                 var data = {};
-                if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
+                if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
                     return false;
                 }
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){

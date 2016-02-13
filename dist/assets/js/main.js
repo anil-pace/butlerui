@@ -37400,10 +37400,10 @@ var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 
-            function closeModalBox(){
-                $(".modal").modal("hide");
-                //$(".modal-backdrop").remove();
-            };
+function closeModalBox(){
+    $(".modal").modal("hide");
+    //$(".modal-backdrop").remove();
+};
 
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
@@ -37419,9 +37419,9 @@ var Button1 = React.createClass({displayName: "Button1",
                     "event_data": {}
                 };
                 var peripheralData ={
-                                 "peripheral_id": "",
-                                 "peripheral_type": "barcode_scanner"
-                                };
+                    "peripheral_id": "",
+                    "peripheral_type": ""
+                };
 
                 switch (module) {
                     case appConstants.PUT_BACK:
@@ -37675,10 +37675,13 @@ var Button1 = React.createClass({displayName: "Button1",
                                 this.showModal(null, "enter_barcode");
                             break;
 
-                            case appConstants.ADD_SCANNER_DETAILS: console.log("submitButton");
+                            case appConstants.ADD_SCANNER_DETAILS: 
                                 peripheralId = document.getElementById("add_scanner").value;
                                 peripheralData["peripheral_id"] = peripheralId;
-                                ActionCreators.postDataToInterface(peripheralData);
+                                peripheralData["peripheral_type"]= "barcode_scanner";
+                                ActionCreators.updateData(peripheralData, 'POST');
+                                closeModalBox();
+                                document.getElementById("add_scanner").value = '';
                                 break;
 
                             case appConstants.CANCEL_ADD_SCANNER:
@@ -37878,9 +37881,19 @@ module.exports = ExceptionList;
 },{"./ExceptionListItem":244,"react":230}],244:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+
+function getState(){
+  return {
+      navMessages : mainstore.getServerMessages()
+  }
+}
 
 var ExceptionListItem = React.createClass({displayName: "ExceptionListItem", 
 	_component:[],
+  getInitialState: function(){
+    return getState();
+  },
 	setCurrentException:function(data){
      var data1 = {
         "event_name": "",
@@ -37892,24 +37905,57 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 		CommonActions.setActiveException(data.text);
 	},
     render: function() {
-        if(this.props.action!=undefined && this.props.action == true)
-        return (
-            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
-               this.props.data.text
-      		)
-        );
-      else
+      var server_message = this.props.data.text;
+      var navMessagesJson = this.state.navMessages;
+      var errorCode = this.props.data.exception_id;
+      var message_args  = this.props.data.details.slice(0);
+
+        if(this.props.action!=undefined && this.props.action == true){
+          console.log(this.props.data);
+
+          return (
+              React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
+                   (function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
+        		)
+          );
+        }
+      else{
         return (
             React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item"}, 
-               this.props.data.text
+                 (function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
             )
         );
+      }
     },
 });
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"react":230}],245:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":295,"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
 	_component:[],
@@ -40950,7 +40996,7 @@ var TableRow = React.createClass({displayName: "TableRow",
                 "peripheral_id": document.getElementById("peripheralId").value,
                 "peripheral_type" : "pptl",
                 "barcode" : document.getElementById("barcodePptl").value,
-                "bin_id" : inc
+                "pps_bin_id" : inc
             }
             CommonActions.updateData(data, 'POST' , inc)
         }else if(action == 'Delete'){
@@ -40970,8 +41016,31 @@ var TableRow = React.createClass({displayName: "TableRow",
         }
         
     },
+    openKeyboard_peripheral: function(id){
+        $('#'+id).keyboard({
+          layout: 'custom',
+          customLayout: {
+            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+            'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+          },
+          css: {
+            container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+          },
+          reposition: true,
+          alwaysOpen: false,
+          initialFocus: true,     
+          visible : function(e, keypressed, el){
+            el.value = '';
+            //$(".authNotify").css("display","none"); 
+          },
+          
+          accepted: function(e, keypressed, el) {
+          }
+        }); 
+    },
     getComponent:function(){
         var peripheralAction = this.peripheralAction;
+        var openKeyboard_peripheral = this.openKeyboard_peripheral;
     	var comp = [];
     	this.props.data.map(function(value,index){
     		var classes = "table-col ";
@@ -40999,7 +41068,7 @@ var TableRow = React.createClass({displayName: "TableRow",
                   comp.push((React.createElement("div", {className: classes, title: value.text, onClick: peripheralAction.bind(null,value.text, value.id)}, value.text)));
                 }
                 else if(value.textbox == true){
-                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text}));
+                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text, onClick: openKeyboard_peripheral.bind(null, value.type)}));
                 }else{
     		      comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
                 }
@@ -41331,7 +41400,7 @@ var appConstants = {
 	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION',
 	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION',
 	PERIPHERAL_DATA : 'PERIPHERAL_DATA',
-	PERIPHERALS : '/peripherals',
+	PERIPHERALS : 'peripherals',
 	UPDATE_SEAT_DATA : 'UPDATE_SEAT_DATA',
 	PPTL_MANAGEMENT : 'pptl_management',
 	SCANNER_MANAGEMENT : 'scanner_management',
@@ -41645,7 +41714,14 @@ var serverMessages = {
     "PtF.I.003" : "Slot scan successful",
     "PtF.I.004" : "Damaged and missing entity reported.",
     "PtF.I.005" : "Space unavailable reported.",
-    "PtF.I.006" : "Unknown Barcode Scanned"
+    "PtF.I.006" : "Unknown Barcode Scanned",
+    "PtB002" : "Entity Oversized",
+    "PtB003" : "Entity Unscannable",
+    "PtB004" : "Extra Entities in Bin",
+    "PtF001" : "Entity Mising / Unscannable",
+    "PtF002" : "Space Not Available"
+
+
 };
 
 
@@ -43191,12 +43267,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": true,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
             else
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": false,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
         })
@@ -44413,8 +44493,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 putSeatData(data);
-                console.log("ashish");
-                console.log(JSON.parse(evt.data));
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
             };
@@ -44533,7 +44611,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
          $.ajax({
             type: 'GET',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+'?type='+type,
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type='+type,
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
@@ -44541,57 +44619,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-
-        }).fail(function(jqXhr) {
-            if(type == 'pptl'){
-            var data =  [
-                    {
-                      "barcode": "B1",
-                      "peripheral_id": "P10_1",
-                      "peripheral_type": "pptl",
-                      "pps_bin_id": "1"
-                    },
-                    {
-                      "barcode": "B2",
-                      "peripheral_id": "P10_2",
-                      "peripheral_type": "pptl",
-                      "pps_bin_id": "2"
-                    },
-                    {
-                      "pps_bin_id": "7"
-                    },
-                    {
-                      "pps_bin_id": "8"
-                    },
-                    {
-                      "pps_bin_id": "4"
-                    },
-                    {
-                      "pps_bin_id": "6"
-                    },
-                    {
-                      "pps_bin_id": "5"
-                    },
-                    {
-                      "pps_bin_id": "3"
-                    }
-
-                    
-                 ];
-             }else{
-                var data = [
-                    {
-                     "peripheral_id": "P1",
-                     "peripheral_type": "barcode_scanner"
-                    },
-                    {
-                     "peripheral_id": "P2",
-                     "peripheral_type": "barcode_scanner"
-                    }
-
-                ]
-             }
-             CommonActions.updateSeatData(data, type);        
+            CommonActions.updateSeatData(response.data, type);  
+        }).fail(function(jqXhr) {    
         });
     },
     updatePeripherals : function(data, method, seat_name){
@@ -44599,13 +44628,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         var url;
         if(method == 'POST'){
-            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+appConstants.ADD;
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
         }else{
             url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
         }
          $.ajax({
             type: method,
             url: url,
+            data: JSON.stringify(data),
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
@@ -44613,17 +44643,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-
+            utils.getPeripheralData(data.peripheral_type, seat_name)
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            var data =  [
-                    {
-                     "barcode": "3",
-                     "peripheral_id": "AC",
-                     "peripheral_type": "pptl",
-                     "pps_bin_id": "4"
-                    }
-                 ];
-             CommonActions.updateSeatData(data, data.peripheral_type);        
+           alert('Failed');
+                    
         });
     },
     createLogData: function(message, type) {

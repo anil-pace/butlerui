@@ -93,6 +93,21 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         sessionStorage.setItem('sessionData', null);
         sessionStorage.setItem('localeData', null);
         location.reload();
+        $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                "Authentication-Token" : JSON.parse(sessionStorage.getItem('sessionData'))["data"]["auth-token"]
+            }
+        }).done(function(response) {
+            sessionStorage.setItem('sessionData', null);
+            location.reload();
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            alert("Logout Failed");
+        });
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');

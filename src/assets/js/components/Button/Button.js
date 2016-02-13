@@ -5,17 +5,30 @@ var PickFrontStore = require('../../stores/PickFrontStore');
 var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
+
+            function closeModalBox(){
+                $(".modal").modal("hide");
+                //$(".modal-backdrop").remove();
+            };
+
 var Button1 = React.createClass({
             _checklistClass: '',
             removeTextField: function(){
                   $('.modal-body').find('input:text').val('');
                 },
 
+
             performAction: function(module, action) {
+                var peripheralId;
                 var data = {
                     "event_name": "",
                     "event_data": {}
                 };
+                var peripheralData ={
+                                 "peripheral_id": "",
+                                 "peripheral_type": "barcode_scanner"
+                                };
+
                 switch (module) {
                     case appConstants.PUT_BACK:
                         switch (action) {
@@ -261,13 +274,24 @@ var Button1 = React.createClass({
                                 return true;
                         }
                         break;
+
                     case appConstants.PERIPHERAL_MANAGEMENT:
                         switch(action) {
                             case appConstants.ADD_SCANNER:
                                 this.showModal(null, "enter_barcode");
                             break;
-                        }   
 
+                            case appConstants.ADD_SCANNER_DETAILS: console.log("submitButton");
+                                peripheralId = document.getElementById("add_scanner").value;
+                                peripheralData["peripheral_id"] = peripheralId;
+                                ActionCreators.postDataToInterface(peripheralData);
+                                break;
+
+                            case appConstants.CANCEL_ADD_SCANNER:
+                                closeModalBox();
+                                break;
+                        }   
+                        break;
                     default:
                         return true;
                 }

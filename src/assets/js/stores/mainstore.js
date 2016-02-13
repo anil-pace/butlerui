@@ -11,7 +11,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -521,7 +521,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, false, null, "scanner-id"),
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
                     new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
@@ -828,6 +828,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
+        //showModal = false;
         _action = undefined;
         _binId= undefined;
         _enableException = false;
@@ -841,6 +842,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _enableException = false;
         _seatData = data;
         _seatName = data.seat_name;
+        _seatMode = data.mode;
+        _seatType = data.seat_type;
         _currentSeat = data.mode + "_" + data.seat_type;
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
@@ -860,8 +863,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             showModal = true;
         else
             showModal=false;
-        //alert("ashish");
-        //showModal = true;
+
+         /* $('.modal').hide();
+          $('.modal-backdrop').remove();*/
 
     },
     getModalContent: function() {
@@ -946,6 +950,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenId: function() {
         console.log(_screenId);
         return _screenId;
+    },
+    getPpsMode: function(){
+        return _seatMode;
+    },
+    getSeatType: function(){
+        return _seatType;
     },
     enableException: function(data) {
         _KQQty = 0;
@@ -1435,6 +1445,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackPpsMode"] = this.getPpsMode();
+                data["PutBackSeatType"] = this.getSeatType();
+                data["PutFrontPpsMode"] = this.getPpsMode();
+                data["PutFrontSeatType"] = this.getSeatType();
+
+                data["PickBackPpsMode"] = this.getPpsMode();
+                data["PickBackSeatType"] = this.getSeatType();
+                data["PickFrontPpsMode"] = this.getPpsMode();
+                data["PickFrontSeatType"] = this.getSeatType();
 
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();

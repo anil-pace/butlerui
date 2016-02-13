@@ -36790,10 +36790,9 @@ var Audit = React.createClass({displayName: "Audit",
   _navigation:'',
   showModal: function() {
       if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
+        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
           this.state.AuditShowModal["showModal"] = false;
-          $('.modal-backdrop fade in').remove();
           console.log("ppppp");
           console.log(self.state.AuditShowModal.message);
           var r = self.state.AuditShowModal.message;
@@ -36806,18 +36805,11 @@ var Audit = React.createClass({displayName: "Audit",
             },
             type:"message"
           });
-        $('.modal').modal();
-      return false;
-      }),0)
+        $('.modal').modal("show");
+      //return false;
+      }),0);
           console.log("aa");
-       }else if(this.state.AuditShowModal["showModal"] == false && $('.modal').hasClass('in')){
-        $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
        }
-     }else{
-
-      $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
      }
   },
   getInitialState: function(){
@@ -37407,17 +37399,30 @@ var PickFrontStore = require('../../stores/PickFrontStore');
 var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
+
+            function closeModalBox(){
+                $(".modal").modal("hide");
+                //$(".modal-backdrop").remove();
+            };
+
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
             removeTextField: function(){
                   $('.modal-body').find('input:text').val('');
                 },
 
+
             performAction: function(module, action) {
+                var peripheralId;
                 var data = {
                     "event_name": "",
                     "event_data": {}
                 };
+                var peripheralData ={
+                                 "peripheral_id": "",
+                                 "peripheral_type": "barcode_scanner"
+                                };
+
                 switch (module) {
                     case appConstants.PUT_BACK:
                         switch (action) {
@@ -37663,13 +37668,24 @@ var Button1 = React.createClass({displayName: "Button1",
                                 return true;
                         }
                         break;
+
                     case appConstants.PERIPHERAL_MANAGEMENT:
                         switch(action) {
                             case appConstants.ADD_SCANNER:
                                 this.showModal(null, "enter_barcode");
                             break;
-                        }   
 
+                            case appConstants.ADD_SCANNER_DETAILS: console.log("submitButton");
+                                peripheralId = document.getElementById("add_scanner").value;
+                                peripheralData["peripheral_id"] = peripheralId;
+                                ActionCreators.postDataToInterface(peripheralData);
+                                break;
+
+                            case appConstants.CANCEL_ADD_SCANNER:
+                                closeModalBox();
+                                break;
+                        }   
+                        break;
                     default:
                         return true;
                 }
@@ -40121,6 +40137,14 @@ var PutBack = React.createClass({displayName: "PutBack",
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
+                    )
+                  ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
                   _button, 
                   React.createElement(Modal, null)
@@ -41050,6 +41074,7 @@ var appConstants = {
 	API : '/api',
 	AUTH : '/auth',
 	TOKEN : '/token',
+	LOGOUT : '/logout',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
@@ -41173,7 +41198,9 @@ var appConstants = {
 	UPDATE_PERIPHERAL : 'UPDATE_PERIPHERAL',
 	ADD: '/add',
 	ADD_SCANNER : 'ADD_SCANNER',
-	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT'
+	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT',
+	ADD_SCANNER_DETAILS : "ADD_SCANNER_DETAILS",
+	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER"
 
 };
 
@@ -41181,8 +41208,8 @@ module.exports = appConstants;
 
 },{}],281:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.2.211:8888/ws",
-	INTERFACE_IP : "https://192.168.2.211:5000"
+	WEBSOCKET_IP : "ws://192.168.1.120:8888/ws",
+	INTERFACE_IP : "https://192.168.1.120:5000"
 };
 
 module.exports = configConstants;
@@ -41399,6 +41426,7 @@ var serverMessages = {
     "Common.001": "Processing. Please wait and scan later",
     "Common.002": "Waiting for rack",
     "Common.003": "Current PPS mode does not support back seat. Please logout.",
+    "AdF.I.006" : "Extra Box",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
@@ -42621,7 +42649,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -43131,7 +43159,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, false, null, "scanner-id"),
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
                     new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
@@ -43411,6 +43439,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
+        //showModal = false;
         _action = undefined;
         _binId= undefined;
         _enableException = false;
@@ -43424,6 +43453,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _enableException = false;
         _seatData = data;
         _seatName = data.seat_name;
+        _seatMode = data.mode;
+        _seatType = data.seat_type;
         _currentSeat = data.mode + "_" + data.seat_type;
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
@@ -43443,8 +43474,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             showModal = true;
         else
             showModal=false;
-        //alert("ashish");
-        //showModal = true;
+
+         /* $('.modal').hide();
+          $('.modal-backdrop').remove();*/
 
     },
     getModalContent: function() {
@@ -43521,6 +43553,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenId: function() {
         console.log(_screenId);
         return _screenId;
+    },
+    getPpsMode: function(){
+        return _seatMode;
+    },
+    getSeatType: function(){
+        return _seatType;
     },
     enableException: function(data) {
         _KQQty = 0;
@@ -44010,6 +44048,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackPpsMode"] = this.getPpsMode();
+                data["PutBackSeatType"] = this.getSeatType();
+                data["PutFrontPpsMode"] = this.getPpsMode();
+                data["PutFrontSeatType"] = this.getSeatType();
+
+                data["PickBackPpsMode"] = this.getPpsMode();
+                data["PickBackSeatType"] = this.getSeatType();
+                data["PickFrontPpsMode"] = this.getPpsMode();
+                data["PickFrontSeatType"] = this.getSeatType();
 
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -44258,8 +44305,24 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     sessionLogout:function(data){
-        sessionStorage.setItem('sessionData', null);
-        location.reload();
+        //alert("ashish");
+        console.log(configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT);
+        $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                "Authentication-Token" : JSON.parse(sessionStorage.getItem('sessionData'))["data"]["auth-token"]
+            }
+        }).done(function(response) {
+            sessionStorage.setItem('sessionData', null);
+            location.reload();
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            alert("Logout Failed");
+        });
+        
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');

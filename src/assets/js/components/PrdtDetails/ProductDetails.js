@@ -9,14 +9,12 @@ var ProductDetails = React.createClass({
     displayLocale : function(data){
         product_info_locale = {};
         var language_locale = sessionStorage.getItem('localeData');
-        console.log(language_locale);
         var locale;
         if(language_locale == 'null' || language_locale == null){
           locale = 'en-US';
         }else{
           locale = JSON.parse(language_locale)["data"]["locale"]; 
-        } 
-               console.log(locale);
+        }
         data.map(function(value, index){
           var keyValue;
           for (var key in value[0]) {

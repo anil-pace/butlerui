@@ -16,48 +16,42 @@ var KQ = React.createClass({
     _myVarUp:null,
     counter:null,  
     incrementValue: function(event){
-        this.props.scanDetails.current_qty = parseInt(this.props.scanDetails.current_qty);
-        var self = this;
-        _myVarUp = setInterval(function(){
-            console.log(self.props.scanDetails.current_qty); 
-            if( (parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty)) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN) ){
-               // console.log("if");
-            }           
-            else if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) )
+        if (this.props.scanDetails.kq_allowed === true) { 
+            var self = this;
+            _myVarUp = setInterval(function(){
+              
+            if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) && (parseInt(self.props.scanDetails.total_qty) != 0 || self.props.scanDetails.total_qty != "0") )
             {
-                if(mainstore.getScreenId() == appConstants.AUDIT_SCAN){
-                    self.props.scanDetails.current_qty++;
-                    $("#keyboard").val(self.props.scanDetails.current_qty);
+                    return false;
 
-                }
-                //console.log("else");
-                return false;
+            }
+              
 
-            }    
-
-            self.props.scanDetails.current_qty++;             
-            $("#keyboard").val(self.props.scanDetails.current_qty);
-        },300);                           
+                self.props.scanDetails.current_qty++;             
+                $("#keyboard").val(self.props.scanDetails.current_qty);
+            },300); 
+        }                          
     },        
 
     decrementValue: function(event){
-        this.props.scanDetails.current_qty = parseInt(this.props.scanDetails.current_qty);
-        var self = this;
-        _myVarDown = setInterval(function(){
-            console.log(self.props.scanDetails.current_qty);            
-            if(self.props.scanDetails.current_qty <= 1){
-                return false;
-            }
-            self.props.scanDetails.current_qty--;            
-            $("#keyboard").val(self.props.scanDetails.current_qty);
-        },300);                       
+        if (this.props.scanDetails.kq_allowed === true) { 
+            var self = this;
+            _myVarDown = setInterval(function(){
+                if(mainstore.getCurrentSeat() == 'audit_front' && self.props.scanDetails.current_qty > 0){
+
+                }           
+                else if(self.props.scanDetails.current_qty <= 1){
+                    return false;
+                }
+                self.props.scanDetails.current_qty--;            
+                $("#keyboard").val(self.props.scanDetails.current_qty);
+            },300);
+        }                       
     },
     handleIncrement: function(event) {          
-        //alert(mainstore.getScreenId());  
        clearInterval(_myVarUp);        
         if (this.props.scanDetails.kq_allowed === true) {           
           if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0")){
-
           }          
                       
             var data = {};
@@ -82,7 +76,9 @@ var KQ = React.createClass({
                 }
                 return true;
             }
+
             if (mainstore.getCurrentSeat() == "audit_front") {
+
                 data = {
                     "event_name": "audit_actions",
                     "event_data": {
@@ -116,13 +112,19 @@ var KQ = React.createClass({
     },
     handleDecrement: function(event) {
         clearInterval(_myVarDown);
-        console.log("current " + this.props.scanDetails.current_qty);
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
                 var data = {};
                 if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
-                    //CommonActions.postDataToInterface(data);
-                    //return false;
+                    data = {
+                        "event_name": "quantity_update_from_gui",
+                        "event_data": {
+                            "item_uid": this.props.itemUid,
+                            "quantity_updated": parseInt(this.props.scanDetails.current_qty)
+                        }
+                    };
+                    CommonActions.postDataToInterface(data);
+                    return false;
 
                 }
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
@@ -270,8 +272,7 @@ var KQ = React.createClass({
   checkKqAllowed : function(){    
     if(this.props.scanDetails.kq_allowed === true){        
       if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") ){          
-          console.log("current " + parseInt(this.props.scanDetails.current_qty));
-          console.log("total " + parseInt(this.props.scanDetails.total_qty));
+          
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
       }
@@ -319,9 +320,9 @@ var KQ = React.createClass({
         this.checkKqAllowed();
         this.handleTotalQty();
         return ( < div className = "kq-wrapper" >
-            < a href = "#" className = {this._appendClassUp} onMouseDown = {this.incrementValue} onMouseUp = {this.handleIncrement} >
+            < a href = "#" className = {this._appendClassUp} onMouseDown = {this.incrementValue} onMouseUp = {this.handleIncrement} onMouseMove = {this.handleIncrement}>
             < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent} 
-            < a href = "#" className = {this._appendClassDown} onMouseDown = {this.decrementValue} onMouseUp = {this.handleDecrement} >
+            < a href = "#" className = {this._appendClassDown} onMouseDown = {this.decrementValue} onMouseUp = {this.handleDecrement} onMouseMove = {this.handleDecrement}>
             < span className = "glyphicon glyphicon-menu-down" > < /span> < /a> 
             < /div>
         )

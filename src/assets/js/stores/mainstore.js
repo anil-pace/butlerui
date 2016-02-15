@@ -512,11 +512,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         textBox = true;
                         buttonText = 'Finish';
                     }
-                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "large", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "large", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
 
                 });
             }else{
@@ -525,8 +525,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
-                    new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
+                    new self.tableCol("Delete", "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }
@@ -1123,11 +1123,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type) {
+    updateSeatData: function(data, type, status) {
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        } 
+        if(status == "success"){
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
+            _seatData.notification_list[0]["level"] = "info";
+        }
+        else if(status == "fail"){console.log(_seatData.notification_list);
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
+            _seatData.notification_list[0]["level"] = "error";
+        }else{
+            _seatData.notification_list[0]["code"] = null;
+           _seatData.notification_list[0].description = "";
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);
@@ -1594,7 +1605,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.UPDATE_SEAT_DATA:
             mainstore.showSpinner();
-            mainstore.updateSeatData(action.data, action.type);
+            mainstore.updateSeatData(action.data, action.type, action.status);
             mainstore.emitChange();
             break;
         case appConstants.CONVERT_TEXTBOX:

@@ -36702,11 +36702,12 @@ var commonActions = {
       data:data
     });
    },
-   updateSeatData : function(data, type){
+   updateSeatData : function(data, type, status){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_SEAT_DATA,
       data:data,
-      type : type
+      type : type,
+      status: status
     });
    },
    convertTextBox : function(data, index){
@@ -37039,8 +37040,7 @@ var Bin = React.createClass({displayName: "Bin",
          $('.modal').modal();
          e.stopPropagation();
          return false;
-     },
-   
+    },   
     render: function() {
         var compData = this.props.binData;
         if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
@@ -37057,6 +37057,14 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
                 ));
         }
+        else if((this.props.screenId == appConstants.PUT_BACK_STAGE  || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error'){
+            return (
+                React.createElement("div", {className: "bin selected binError"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected binError", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
@@ -37065,7 +37073,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37087,7 +37095,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
                    return (React.createElement("div", {className: "bin excess-item"}, 
                     tote, 
@@ -37117,7 +37125,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")){
+            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37138,7 +37146,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 )
+        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error' )
             return (
                 React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37160,7 +37168,7 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37240,7 +37248,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -37249,7 +37257,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING )
+        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error' )
             return (
                 React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -38740,7 +38748,9 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';
         }
+        if(errorCode !== null){
         return (
+
             React.createElement("div", {className: appendClass, role: "alert"}, 
             	React.createElement("div", {className: appendClass1}, 
             		React.createElement("div", {className: "border-glyp"}, 
@@ -38762,6 +38772,9 @@ var Notification = React.createClass({displayName: "Notification",
                 )()
             )
         );  
+        }else{
+            return null;
+        }
         
 
     }
@@ -41440,7 +41453,9 @@ var resourceConstants = {
 	CLIENTCODE_001 : 'CLIENTCODE_001',
 	CLIENTCODE_002 : 'CLIENTCODE_002',
 	CLIENTCODE_004 : 'CLIENTCODE_004',
-	CLIENTCODE_005 : 'CLIENTCODE_005'
+	CLIENTCODE_005 : 'CLIENTCODE_005',
+	CLIENTCODE_006 : 'CLIENTCODE_006',
+	CLIENTCODE_007 : 'CLIENTCODE_007'
 
 };
 module.exports = resourceConstants;
@@ -41577,6 +41592,11 @@ var serverMessages = {
     "PkB.H.001" : "Scan tote to associate with bin",
     "PkB.H.002" : "Press bin PPTL or scan a tote",
     "PkB.H.003" : "Press PpsBin to remove items",
+    "PkB.H.004" : "Press bin PPTL",
+    "PkB.H.005" : "Press print button to proceed",
+    "PkB.H.006" : "Select Bin to skip print",
+    "PkB.H.007" : "Select Bin which does not require tote",
+    "PkB.H.008" : "Select Bin to disassociate tote",
     "PtB.I.001" : "Tote scan successful",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
     "PtB.I.003" : "Cancel scan successful.",
@@ -41655,6 +41675,8 @@ var serverMessages = {
     "Audit.A.012":"No Items to Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
+    "CLIENTCODE_006" : "Scanner added successfully",
+    "CLIENTCODE_007" : "Scanner not added",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
@@ -41683,8 +41705,9 @@ var serverMessages = {
     "PkB.E.002" : "Totes are not required",
     "PkB.E.003" : "Exception invalid",
     "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
-    "PkB.E.005" : "Wrong ppsbin button pressed",
-    "PkB.E.006" : "Tote didn't get associated",   
+    "PkB.E.005" : "Wrong pptl pressed",
+    "PkB.E.006" : "Tote didn't get associated", 
+    "PkB.E.007" : "Totes are anyway not required.Please proceed further",  
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
@@ -41697,7 +41720,7 @@ var serverMessages = {
     "PkB.W.003" : "Wrong barcode scanned",
     "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
     "PkB.W.005" : "No tote scanned",
-    "PkB.W.006" : "Please press ppsbin button which does not have any totes associated",
+    "PkB.W.006" : "Please press pptl for bin which does not have any totes associated",
     "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
     "PkB.W.008" : "Pptl scan not allowed",
     "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
@@ -43369,11 +43392,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         textBox = true;
                         buttonText = 'Finish';
                     }
-                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "large", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "large", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
 
                 });
             }else{
@@ -43382,8 +43405,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
-                    new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
+                    new self.tableCol("Delete", "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }
@@ -43580,7 +43603,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }else{
               locale = JSON.parse(language_locale)["data"]["locale"]; 
             } 
-            data.map(function(value, index){
+            _seatData.product_info.map(function(value, index){
               var keyValue;
               for (var key in value[0]) {
                 if(key != 'display_data'){
@@ -43709,6 +43732,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
         }
@@ -43980,11 +44004,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type) {
+    updateSeatData: function(data, type, status) {
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        } 
+        if(status == "success"){
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
+            _seatData.notification_list[0]["level"] = "info";
+        }
+        else if(status == "fail"){console.log(_seatData.notification_list);
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
+            _seatData.notification_list[0]["level"] = "error";
+        }else{
+            _seatData.notification_list[0]["code"] = null;
+           _seatData.notification_list[0].description = "";
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);
@@ -44451,7 +44486,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.UPDATE_SEAT_DATA:
             mainstore.showSpinner();
-            mainstore.updateSeatData(action.data, action.type);
+            mainstore.updateSeatData(action.data, action.type, action.status);
             mainstore.emitChange();
             break;
         case appConstants.CONVERT_TEXTBOX:
@@ -44606,7 +44641,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
     },
-    getPeripheralData : function(type, seat_name){
+    getPeripheralData : function(type, seat_name, status){
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
          $.ajax({
@@ -44619,8 +44654,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            CommonActions.updateSeatData(response.data, type);  
+            CommonActions.updateSeatData(response.data, type, status);  
         }).fail(function(jqXhr) {    
+           
         });
     },
     updatePeripherals : function(data, method, seat_name){
@@ -44643,10 +44679,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            utils.getPeripheralData(data.peripheral_type, seat_name)
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success')
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-           alert('Failed');
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail');
                     
         });
     },

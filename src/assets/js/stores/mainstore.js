@@ -723,7 +723,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }else{
               locale = JSON.parse(language_locale)["data"]["locale"]; 
             } 
-            data.map(function(value, index){
+            _seatData.product_info.map(function(value, index){
               var keyValue;
               for (var key in value[0]) {
                 if(key != 'display_data'){
@@ -852,6 +852,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
         }

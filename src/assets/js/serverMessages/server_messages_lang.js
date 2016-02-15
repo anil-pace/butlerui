@@ -126,6 +126,11 @@ function server_messages_list() {
     _("Scan tote to associate with bin");
     _("Press bin PPTL or scan a tote");
     _("Press PpsBin to remove items");
+    _("Press bin PPTL");
+    _("Press print button to proceed");
+    _("Select Bin to skip print");
+    _("Select Bin which does not require tote");
+    _("Select Bin to disassociate tote");
     _("Pick Complete. Waiting for next rack.");
     _("Location Scan successful");
     _("Box Scan successful");
@@ -148,8 +153,9 @@ function server_messages_list() {
     _("Totes are not required");
     _("Exception invalid");
     _("No totes associated. Please keep totes in bin and then scan");
-    _("Wrong ppsbin button pressed");
+    _("Wrong pptl pressed");
     _("Tote didn't get associated");
+    _("Totes are anyway not required.Please proceed further");
     _("Exception cancelled");
     _("Tote scan cancelled");
     _("Documents printed successfully");
@@ -162,7 +168,7 @@ function server_messages_list() {
     _("Wrong barcode scanned");
     _("Please scan the tote first and then scan pptl barcode");
     _("No tote scanned");
-    _("Please press ppsbin button which does not have any totes associated");
+    _("Please press pptl for bin which does not have any totes associated");
     _("Pptl scan not allowed. Totes are not required");
     _("Pptl scan not allowed");
     _("Scan pptl barcode after scannning tote barcode");

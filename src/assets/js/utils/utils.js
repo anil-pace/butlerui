@@ -133,7 +133,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
     },
-    getPeripheralData : function(type, seat_name){
+    getPeripheralData : function(type, seat_name, status){
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
          $.ajax({
@@ -146,8 +146,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            CommonActions.updateSeatData(response.data, type);  
+            CommonActions.updateSeatData(response.data, type, status);  
         }).fail(function(jqXhr) {    
+           
         });
     },
     updatePeripherals : function(data, method, seat_name){
@@ -170,10 +171,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            utils.getPeripheralData(data.peripheral_type, seat_name)
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success')
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-           alert('Failed');
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail');
                     
         });
     },

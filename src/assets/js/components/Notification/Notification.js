@@ -16,7 +16,9 @@ var Notification = React.createClass({
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';
         }
+        if(errorCode !== null){
         return (
+
             <div className={appendClass} role="alert">
             	<div className={appendClass1}>
             		<div className="border-glyp">
@@ -38,6 +40,9 @@ var Notification = React.createClass({
                 )()}
             </div>
         );  
+        }else{
+            return null;
+        }
         
 
     }

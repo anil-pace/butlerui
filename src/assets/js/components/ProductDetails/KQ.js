@@ -21,17 +21,24 @@ var KQ = React.createClass({
         _myVarUp = setInterval(function(){
             console.log(self.props.scanDetails.current_qty); 
             if( (parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty)) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN) ){
-                console.log("if");
+               // console.log("if");
             }           
             else if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) )
             {
-                console.log("else");
+                if(mainstore.getScreenId() == appConstants.AUDIT_SCAN){
+                    self.props.scanDetails.current_qty++;
+                    $("#keyboard").val(self.props.scanDetails.current_qty);
+
+                }
+                //console.log("else");
                 return false;
-            }
+
+            }    
+
             self.props.scanDetails.current_qty++;             
             $("#keyboard").val(self.props.scanDetails.current_qty);
         },300);                           
-    },    
+    },        
 
     decrementValue: function(event){
         this.props.scanDetails.current_qty = parseInt(this.props.scanDetails.current_qty);
@@ -46,7 +53,7 @@ var KQ = React.createClass({
         },300);                       
     },
     handleIncrement: function(event) {          
-        alert(mainstore.getScreenId());  
+        //alert(mainstore.getScreenId());  
        clearInterval(_myVarUp);        
         if (this.props.scanDetails.kq_allowed === true) {           
           if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0")){

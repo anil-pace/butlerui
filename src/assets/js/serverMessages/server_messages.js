@@ -3,7 +3,7 @@ var serverMessages = {
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
-    "PtB.H.004": "Scan Tote / Stage PpsBin",
+    "PtB.H.004": "Scan Tote or Stage Bin",
     "PtB.H.005" : "Item Not Found in Tote",
     "PtB.H.007" : "Enter Damaged Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",

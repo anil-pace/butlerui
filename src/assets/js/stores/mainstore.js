@@ -11,7 +11,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -410,12 +410,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": true,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
             else
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": false,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
         })
@@ -508,11 +512,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         textBox = true;
                         buttonText = 'Finish';
                     }
-                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "large", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "large", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
 
                 });
             }else{
@@ -521,8 +525,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, false, null, "scanner-id"),
-                    new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
+                    new self.tableCol("Delete", "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }
@@ -710,9 +714,36 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
-            for (var key in _seatData.product_info) {
-                if (_seatData.product_info.hasOwnProperty(key)) {
-                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_seatData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+
+            var product_info_locale = {};
+            var language_locale = sessionStorage.getItem('localeData');
+            var locale;
+            if(language_locale == 'null' || language_locale == null){
+              locale = 'en-US';
+            }else{
+              locale = JSON.parse(language_locale)["data"]["locale"]; 
+            } 
+            _seatData.product_info.map(function(value, index){
+              var keyValue;
+              for (var key in value[0]) {
+                if(key != 'display_data'){
+                  keyValue = value[0][key];
+                }
+              }
+              value[0].display_data.map(
+                function(data_locale, index1){
+                 if(data_locale.locale == locale){
+                    product_info_locale[data_locale.display_name] = keyValue;
+                  }
+                  
+                }
+
+              )
+              
+            });
+            for (var key in product_info_locale) {
+                if (product_info_locale.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
                 }
             }
         } else {
@@ -815,10 +846,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _enableException = false;
         _seatData = data;
         _seatName = data.seat_name;
+        _seatMode = data.mode;
+        _seatType = data.seat_type;
         _currentSeat = data.mode + "_" + data.seat_type;
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
         }
@@ -892,16 +926,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _messageJson;
     },
     changeLanguage: function(data) {
+
+        var locale_data ={
+            "data" :{
+                "locale" : data
+            }
+        };
         switch (data) {
-            case "chinese":
+            case "ch":
                 _.setTranslation(chinese);
                 break;
-            case "english":
+            case "en-US":
                 _.setTranslation(english);
                 break;
             default:
                 return true;
         }
+
+        sessionStorage.setItem('localeData', JSON.stringify(locale_data));
     },
     postDataToInterface: function(data) {
         showModal = false;
@@ -913,6 +955,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenId: function() {
         console.log(_screenId);
         return _screenId;
+    },
+    getPpsMode: function(){
+        return _seatMode;
+    },
+    getSeatType: function(){
+        return _seatType;
     },
     enableException: function(data) {
         _KQQty = 0;
@@ -1076,11 +1124,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type) {
+    updateSeatData: function(data, type, status) {
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        } 
+        if(status == "success"){
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
+            _seatData.notification_list[0]["level"] = "info";
+        }
+        else if(status == "fail"){console.log(_seatData.notification_list);
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
+            _seatData.notification_list[0]["level"] = "error";
+        }else{
+            _seatData.notification_list[0]["code"] = null;
+           _seatData.notification_list[0].description = "";
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);
@@ -1402,6 +1461,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackPpsMode"] = this.getPpsMode();
+                data["PutBackSeatType"] = this.getSeatType();
+                data["PutFrontPpsMode"] = this.getPpsMode();
+                data["PutFrontSeatType"] = this.getSeatType();
+
+                data["PickBackPpsMode"] = this.getPpsMode();
+                data["PickBackSeatType"] = this.getSeatType();
+                data["PickFrontPpsMode"] = this.getPpsMode();
+                data["PickFrontSeatType"] = this.getSeatType();
 
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -1538,7 +1606,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.UPDATE_SEAT_DATA:
             mainstore.showSpinner();
-            mainstore.updateSeatData(action.data, action.type);
+            mainstore.updateSeatData(action.data, action.type, action.status);
             mainstore.emitChange();
             break;
         case appConstants.CONVERT_TEXTBOX:

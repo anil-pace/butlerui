@@ -3,7 +3,7 @@ var serverMessages = {
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
-    "PtB.H.004": "Scan Tote / Stage PpsBin",
+    "PtB.H.004": "Scan Tote or Stage Bin",
     "PtB.H.005" : "Item Not Found in Tote",
     "PtB.H.007" : "Enter Damaged Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
@@ -44,6 +44,11 @@ var serverMessages = {
     "PkB.H.001" : "Scan tote to associate with bin",
     "PkB.H.002" : "Press bin PPTL or scan a tote",
     "PkB.H.003" : "Press PpsBin to remove items",
+    "PkB.H.004" : "Press bin PPTL",
+    "PkB.H.005" : "Press print button to proceed",
+    "PkB.H.006" : "Select Bin to skip print",
+    "PkB.H.007" : "Select Bin which does not require tote",
+    "PkB.H.008" : "Select Bin to disassociate tote",
     "PtB.I.001" : "Tote scan successful",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
     "PtB.I.003" : "Cancel scan successful.",
@@ -122,6 +127,8 @@ var serverMessages = {
     "Audit.A.012":"No Items to Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
+    "CLIENTCODE_006" : "Scanner added successfully",
+    "CLIENTCODE_007" : "Scanner not added",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
@@ -150,8 +157,9 @@ var serverMessages = {
     "PkB.E.002" : "Totes are not required",
     "PkB.E.003" : "Exception invalid",
     "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
-    "PkB.E.005" : "Wrong ppsbin button pressed",
-    "PkB.E.006" : "Tote didn't get associated",   
+    "PkB.E.005" : "Wrong pptl pressed",
+    "PkB.E.006" : "Tote didn't get associated", 
+    "PkB.E.007" : "Totes are anyway not required.Please proceed further",  
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
@@ -164,7 +172,7 @@ var serverMessages = {
     "PkB.W.003" : "Wrong barcode scanned",
     "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
     "PkB.W.005" : "No tote scanned",
-    "PkB.W.006" : "Please press ppsbin button which does not have any totes associated",
+    "PkB.W.006" : "Please press pptl for bin which does not have any totes associated",
     "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
     "PkB.W.008" : "Pptl scan not allowed",
     "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
@@ -181,7 +189,14 @@ var serverMessages = {
     "PtF.I.003" : "Slot scan successful",
     "PtF.I.004" : "Damaged and missing entity reported.",
     "PtF.I.005" : "Space unavailable reported.",
-    "PtF.I.006" : "Unknown Barcode Scanned"
+    "PtF.I.006" : "Unknown Barcode Scanned",
+    "PtB002" : "Entity Oversized",
+    "PtB003" : "Entity Unscannable",
+    "PtB004" : "Extra Entities in Bin",
+    "PtF001" : "Entity Mising / Unscannable",
+    "PtF002" : "Space Not Available"
+
+
 };
 
 

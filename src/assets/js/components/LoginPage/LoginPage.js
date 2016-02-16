@@ -9,7 +9,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var utils = require('../../utils/utils.js');
 
-var virtualKeyBoard_login;
+var virtualKeyBoard_login, _seat_name = null;
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -24,17 +24,20 @@ var LoginPage = React.createClass({
  mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
-  }, 
+  },
   handleLogin: function(e){   
-  
+  if(_seat_name == null){
+    _seat_name = this.refs.seat_name.value;
+  }
     var data = {
         'data_type': 'auth',
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              'seat_name': this.refs.seat_name.value
+              'seat_name': _seat_name
           }
       }
+      console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);  
   }, 
@@ -103,9 +106,10 @@ var LoginPage = React.createClass({
                 )
             }else{
               var parseSeatID = data.split('_');
-              seatName = parseSeatID[0] +' '+parseSeatID[1];
+              _seat_name = data;
+              seat_name = parseSeatID[0] +' '+parseSeatID[1];
               return (
-                <header className="ppsSeat" key={'pps' + index} >PPS {seatName}</header>
+                <header className="ppsSeat" key={'pps' + index}  >PPS {seat_name}</header>
               )
             }
           });
@@ -157,8 +161,8 @@ var LoginPage = React.createClass({
                   <input type="password" className="form-control" id="password" placeholder="Enter Password" ref='password' valueLink={this.linkState('password')} />
               </div>
               <select className="selectLang" ref='language' onChange={this.changeLanguage}>
-                  <option value="english">English</option>
-                  <option value="chinese">Chinese</option>
+                  <option value="en-US">English</option>
+                  <option value="ch">Chinese</option>
               </select>
               <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value="Login" />
           </form>

@@ -37399,17 +37399,30 @@ var PickFrontStore = require('../../stores/PickFrontStore');
 var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
+
+            function closeModalBox(){
+                $(".modal").modal("hide");
+                //$(".modal-backdrop").remove();
+            };
+
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
             removeTextField: function(){
                   $('.modal-body').find('input:text').val('');
                 },
 
+
             performAction: function(module, action) {
+                var peripheralId;
                 var data = {
                     "event_name": "",
                     "event_data": {}
                 };
+                var peripheralData ={
+                                 "peripheral_id": "",
+                                 "peripheral_type": "barcode_scanner"
+                                };
+
                 switch (module) {
                     case appConstants.PUT_BACK:
                         switch (action) {
@@ -37655,13 +37668,24 @@ var Button1 = React.createClass({displayName: "Button1",
                                 return true;
                         }
                         break;
+
                     case appConstants.PERIPHERAL_MANAGEMENT:
                         switch(action) {
                             case appConstants.ADD_SCANNER:
                                 this.showModal(null, "enter_barcode");
                             break;
-                        }   
 
+                            case appConstants.ADD_SCANNER_DETAILS: console.log("submitButton");
+                                peripheralId = document.getElementById("add_scanner").value;
+                                peripheralData["peripheral_id"] = peripheralId;
+                                ActionCreators.postDataToInterface(peripheralData);
+                                break;
+
+                            case appConstants.CANCEL_ADD_SCANNER:
+                                closeModalBox();
+                                break;
+                        }   
+                        break;
                     default:
                         return true;
                 }
@@ -40113,6 +40137,14 @@ var PutBack = React.createClass({displayName: "PutBack",
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
+                    )
+                  ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
                   _button, 
                   React.createElement(Modal, null)
@@ -41166,7 +41198,9 @@ var appConstants = {
 	UPDATE_PERIPHERAL : 'UPDATE_PERIPHERAL',
 	ADD: '/add',
 	ADD_SCANNER : 'ADD_SCANNER',
-	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT'
+	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT',
+	ADD_SCANNER_DETAILS : "ADD_SCANNER_DETAILS",
+	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER"
 
 };
 
@@ -42615,7 +42649,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -43125,7 +43159,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, false, null, "scanner-id"),
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
                     new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
@@ -43419,6 +43453,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _enableException = false;
         _seatData = data;
         _seatName = data.seat_name;
+        _seatMode = data.mode;
+        _seatType = data.seat_type;
         _currentSeat = data.mode + "_" + data.seat_type;
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
@@ -43517,6 +43553,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenId: function() {
         console.log(_screenId);
         return _screenId;
+    },
+    getPpsMode: function(){
+        return _seatMode;
+    },
+    getSeatType: function(){
+        return _seatType;
     },
     enableException: function(data) {
         _KQQty = 0;
@@ -44006,6 +44048,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackPpsMode"] = this.getPpsMode();
+                data["PutBackSeatType"] = this.getSeatType();
+                data["PutFrontPpsMode"] = this.getPpsMode();
+                data["PutFrontSeatType"] = this.getSeatType();
+
+                data["PickBackPpsMode"] = this.getPpsMode();
+                data["PickBackSeatType"] = this.getSeatType();
+                data["PickFrontPpsMode"] = this.getPpsMode();
+                data["PickFrontSeatType"] = this.getSeatType();
 
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();

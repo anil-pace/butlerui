@@ -14,6 +14,7 @@ var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
 var KQ = require('./ProductDetails/KQ');
+var TabularData = require('./TabularData');
 
 
 function getStateData(){
@@ -221,6 +222,31 @@ var PutFront = React.createClass({
            }
           
         break;
+
+         case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+          var _button;
+          if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {"Add Scanner"} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} /></div>)
+          }
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                  <div className="row scannerHeader">
+                    <div className="col-md-6">
+                      <div className="ppsMode"> PPS Mode : {this.state.PutFrontPpsMode.toUpperCase()} </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
+                    </div>
+                  </div>
+                  <TabularData data = {this.state.utility}/>
+                  {_button}
+                  <Modal /> 
+              </div>
+            );
+        break;  
+
       default:
         return true; 
     }

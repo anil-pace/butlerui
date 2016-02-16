@@ -20,8 +20,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 putSeatData(data);
-                console.log("ashish");
-                console.log(JSON.parse(evt.data));
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
             };
@@ -90,8 +88,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     sessionLogout:function(data){
-        //alert("ashish");
-        console.log(configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT);
+        sessionStorage.setItem('sessionData', null);
+        sessionStorage.setItem('localeData', null);
+        location.reload();
         $.ajax({
             type: 'GET',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
@@ -107,7 +106,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(data,jqXHR, textStatus, errorThrown) {
             alert("Logout Failed");
         });
-        
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
@@ -135,12 +133,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
     },
-    getPeripheralData : function(type, seat_name){
+    getPeripheralData : function(type, seat_name, status){
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
          $.ajax({
             type: 'GET',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+'?type='+type,
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type='+type,
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
@@ -148,57 +146,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-
-        }).fail(function(jqXhr) {
-            if(type == 'pptl'){
-            var data =  [
-                    {
-                      "barcode": "B1",
-                      "peripheral_id": "P10_1",
-                      "peripheral_type": "pptl",
-                      "pps_bin_id": "1"
-                    },
-                    {
-                      "barcode": "B2",
-                      "peripheral_id": "P10_2",
-                      "peripheral_type": "pptl",
-                      "pps_bin_id": "2"
-                    },
-                    {
-                      "pps_bin_id": "7"
-                    },
-                    {
-                      "pps_bin_id": "8"
-                    },
-                    {
-                      "pps_bin_id": "4"
-                    },
-                    {
-                      "pps_bin_id": "6"
-                    },
-                    {
-                      "pps_bin_id": "5"
-                    },
-                    {
-                      "pps_bin_id": "3"
-                    }
-
-                    
-                 ];
-             }else{
-                var data = [
-                    {
-                     "peripheral_id": "P1",
-                     "peripheral_type": "barcode_scanner"
-                    },
-                    {
-                     "peripheral_id": "P2",
-                     "peripheral_type": "barcode_scanner"
-                    }
-
-                ]
-             }
-             CommonActions.updateSeatData(data, type);        
+            CommonActions.updateSeatData(response.data, type, status);  
+        }).fail(function(jqXhr) {    
+           
         });
     },
     updatePeripherals : function(data, method, seat_name){
@@ -206,13 +156,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         var url;
         if(method == 'POST'){
-            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+appConstants.ADD;
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
         }else{
             url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
         }
          $.ajax({
             type: method,
             url: url,
+            data: JSON.stringify(data),
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
@@ -220,17 +171,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success')
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            var data =  [
-                    {
-                     "barcode": "3",
-                     "peripheral_id": "AC",
-                     "peripheral_type": "pptl",
-                     "pps_bin_id": "4"
-                    }
-                 ];
-             CommonActions.updateSeatData(data, data.peripheral_type);        
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail');
+                    
         });
     },
     createLogData: function(message, type) {

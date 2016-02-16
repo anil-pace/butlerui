@@ -11,6 +11,7 @@ function getPopUpState(){
         popupVisible : mainstore.getPopUpVisible()
   };
 }
+var product_info_locale = {};
 var ProductInfo = React.createClass({
   getInitialState: function(){
     return getPopUpState();
@@ -46,13 +47,43 @@ var ProductInfo = React.createClass({
       CommonActions.updatePopupVisible(false);
     
   },
+  displayLocale : function(data){
+    product_info_locale = {};
+    var language_locale = sessionStorage.getItem('localeData');
+    var locale;
+    if(language_locale == 'null' || language_locale == null){
+      locale = 'en-US';
+    }else{
+      locale = JSON.parse(language_locale)["data"]["locale"]; 
+    } 
+    data.map(function(value, index){
+      var keyValue;
+      for (var key in value[0]) {
+        if(key != 'display_data'){
+          keyValue = value[0][key];
+        }
+      }
+      value[0].display_data.map(
+        function(data_locale, index1){
+         if(data_locale.locale == locale){
+            product_info_locale[data_locale.display_name] = keyValue;
+          }
+        
+        }
+
+      )
+      
+    });
+      console.log(product_info_locale);
+  },
   render: function(data){ 
+    this.displayLocale(this.props.productDetails);
     return (       
             <div className="product-details-wrapper">
               <div className="img-container">
-                  <img src={this.props.productDetails.product_local_image_url}  />
+                  <img src={product_info_locale.product_local_image_url}  />
               </div>
-              <div className="view-more-link" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,this.props.productDetails,"product-detail")}>
+              <div className="view-more-link" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,product_info_locale,"product-detail")}>
                 <span> {allresourceConstants.VIEW_MORE} </span>                
                 <i className="glyphicon glyphicon-info-sign"></i>
               </div>              

@@ -128,6 +128,20 @@ var Audit = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.AUDIT_LOCATION_SCAN:
+         if(this.state.AuditExceptionStatus == false){
+        this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                    <Rack rackData = {this.state.AuditRackDetails}/>
+                 </div>
+              </div>
+            );
+      }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.AUDIT_SCAN:
        if(this.state.AuditExceptionStatus == false){
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);

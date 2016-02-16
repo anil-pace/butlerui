@@ -19,6 +19,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",

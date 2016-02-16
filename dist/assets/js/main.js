@@ -36702,11 +36702,12 @@ var commonActions = {
       data:data
     });
    },
-   updateSeatData : function(data, type){
+   updateSeatData : function(data, type, status){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_SEAT_DATA,
       data:data,
-      type : type
+      type : type,
+      status: status
     });
    },
    convertTextBox : function(data, index){
@@ -36860,6 +36861,20 @@ var Audit = React.createClass({displayName: "Audit",
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.AUDIT_LOCATION_SCAN:
+         if(this.state.AuditExceptionStatus == false){
+        this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                 React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Rack, {rackData: this.state.AuditRackDetails})
+                 )
+              )
+            );
+      }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.AUDIT_SCAN:
        if(this.state.AuditExceptionStatus == false){
            this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
@@ -37039,8 +37054,7 @@ var Bin = React.createClass({displayName: "Bin",
          $('.modal').modal();
          e.stopPropagation();
          return false;
-     },
-   
+    },   
     render: function() {
         var compData = this.props.binData;
         if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
@@ -37057,6 +37071,14 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
                 ));
         }
+        else if((this.props.screenId == appConstants.PUT_BACK_STAGE  || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error'){
+            return (
+                React.createElement("div", {className: "bin selected binError"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected binError", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
@@ -37065,7 +37087,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37087,7 +37109,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
                    return (React.createElement("div", {className: "bin excess-item"}, 
                     tote, 
@@ -37117,7 +37139,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")){
+            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37138,7 +37160,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 )
+        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error' )
             return (
                 React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37160,7 +37182,7 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37240,7 +37262,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -37249,7 +37271,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING )
+        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error' )
             return (
                 React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37400,10 +37422,10 @@ var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 
-            function closeModalBox(){
-                $(".modal").modal("hide");
-                //$(".modal-backdrop").remove();
-            };
+function closeModalBox(){
+    $(".modal").modal("hide");
+    //$(".modal-backdrop").remove();
+};
 
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
@@ -37419,9 +37441,9 @@ var Button1 = React.createClass({displayName: "Button1",
                     "event_data": {}
                 };
                 var peripheralData ={
-                                 "peripheral_id": "",
-                                 "peripheral_type": "barcode_scanner"
-                                };
+                    "peripheral_id": "",
+                    "peripheral_type": ""
+                };
 
                 switch (module) {
                     case appConstants.PUT_BACK:
@@ -37675,10 +37697,13 @@ var Button1 = React.createClass({displayName: "Button1",
                                 this.showModal(null, "enter_barcode");
                             break;
 
-                            case appConstants.ADD_SCANNER_DETAILS: console.log("submitButton");
+                            case appConstants.ADD_SCANNER_DETAILS: 
                                 peripheralId = document.getElementById("add_scanner").value;
                                 peripheralData["peripheral_id"] = peripheralId;
-                                ActionCreators.postDataToInterface(peripheralData);
+                                peripheralData["peripheral_type"]= "barcode_scanner";
+                                ActionCreators.updateData(peripheralData, 'POST');
+                                closeModalBox();
+                                document.getElementById("add_scanner").value = '';
                                 break;
 
                             case appConstants.CANCEL_ADD_SCANNER:
@@ -37878,9 +37903,19 @@ module.exports = ExceptionList;
 },{"./ExceptionListItem":244,"react":230}],244:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+
+function getState(){
+  return {
+      navMessages : mainstore.getServerMessages()
+  }
+}
 
 var ExceptionListItem = React.createClass({displayName: "ExceptionListItem", 
 	_component:[],
+  getInitialState: function(){
+    return getState();
+  },
 	setCurrentException:function(data){
      var data1 = {
         "event_name": "",
@@ -37892,24 +37927,57 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 		CommonActions.setActiveException(data.text);
 	},
     render: function() {
-        if(this.props.action!=undefined && this.props.action == true)
-        return (
-            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
-               this.props.data.text
-      		)
-        );
-      else
+      var server_message = this.props.data.text;
+      var navMessagesJson = this.state.navMessages;
+      var errorCode = this.props.data.exception_id;
+      var message_args  = this.props.data.details.slice(0);
+
+        if(this.props.action!=undefined && this.props.action == true){
+          console.log(this.props.data);
+
+          return (
+              React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
+                   (function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
+        		)
+          );
+        }
+      else{
         return (
             React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item"}, 
-               this.props.data.text
+                 (function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
             )
         );
+      }
     },
 });
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"react":230}],245:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":295,"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
 	_component:[],
@@ -38085,7 +38153,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var utils = require('../../utils/utils.js');
 
-var virtualKeyBoard_login;
+var virtualKeyBoard_login, _seat_name = null;
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -38100,17 +38168,20 @@ var LoginPage = React.createClass({displayName: "LoginPage",
  mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
-  }, 
+  },
   handleLogin: function(e){   
-  
+  if(_seat_name == null){
+    _seat_name = this.refs.seat_name.value;
+  }
     var data = {
         'data_type': 'auth',
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              'seat_name': this.refs.seat_name.value
+              'seat_name': _seat_name
           }
       }
+      console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);  
   }, 
@@ -38179,9 +38250,10 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                 )
             }else{
               var parseSeatID = data.split('_');
-              seatName = parseSeatID[0] +' '+parseSeatID[1];
+              _seat_name = data;
+              seat_name = parseSeatID[0] +' '+parseSeatID[1];
               return (
-                React.createElement("header", {className: "ppsSeat", key: 'pps' + index}, "PPS ", seatName)
+                React.createElement("header", {className: "ppsSeat", key: 'pps' + index}, "PPS ", seat_name)
               )
             }
           });
@@ -38233,8 +38305,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", ref: "password", valueLink: this.linkState('password')})
               ), 
               React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
-                  React.createElement("option", {value: "english"}, "English"), 
-                  React.createElement("option", {value: "chinese"}, "Chinese")
+                  React.createElement("option", {value: "en-US"}, "English"), 
+                  React.createElement("option", {value: "ch"}, "Chinese")
               ), 
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
           )
@@ -38694,7 +38766,9 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';
         }
+        if(errorCode !== null){
         return (
+
             React.createElement("div", {className: appendClass, role: "alert"}, 
             	React.createElement("div", {className: appendClass1}, 
             		React.createElement("div", {className: "border-glyp"}, 
@@ -38716,6 +38790,9 @@ var Notification = React.createClass({displayName: "Notification",
                 )()
             )
         );  
+        }else{
+            return null;
+        }
         
 
     }
@@ -38831,6 +38908,7 @@ var SystemIdle = require('./SystemIdle');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
+var TabularData = require('./TabularData');
 
 
 function getStateData(){
@@ -38960,6 +39038,31 @@ var PickBack = React.createClass({displayName: "PickBack",
               )
             );
         break; 
+
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PickBackScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickBackPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickBackSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;  
+
       default:
         return true; 
     }
@@ -39001,7 +39104,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickBackStore":290,"../stores/mainstore":295,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":264,"./SystemIdle":275,"react":230}],257:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickBackStore":290,"../stores/mainstore":295,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":264,"./SystemIdle":275,"./TabularData":278,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
@@ -39021,6 +39124,7 @@ var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
+var TabularData = require('./TabularData');
 
 function getStateData(){
   /*return {
@@ -39344,6 +39448,31 @@ var PickFront = React.createClass({displayName: "PickFront",
            }
           break;
 
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickFrontSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;  
+
+
       default:
         return true;
     }
@@ -39366,21 +39495,53 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickFrontStore":291,"../stores/mainstore":295,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductDetails.js":258,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"react":230}],258:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickFrontStore":291,"../stores/mainstore":295,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductDetails.js":258,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"./TabularData":278,"react":230}],258:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
 var ProductImage = require('./ProductImage');
 
+var product_info_locale = {};
 var ProductDetails = React.createClass({displayName: "ProductDetails",
+
+    displayLocale : function(data){
+        product_info_locale = {};
+        var language_locale = sessionStorage.getItem('localeData');
+        var locale;
+        if(language_locale == 'null' || language_locale == null){
+          locale = 'en-US';
+        }else{
+          locale = JSON.parse(language_locale)["data"]["locale"]; 
+        }
+        data.map(function(value, index){
+          var keyValue;
+          for (var key in value[0]) {
+            if(key != 'display_data'){
+              keyValue = value[0][key];
+            }
+          }
+          value[0].display_data.map(
+            function(data_locale, index1){
+             if(data_locale.locale == locale){
+                product_info_locale[data_locale.display_name] = keyValue;
+              }
+              
+            }
+
+          )
+          
+        });
+      
+    },
     render: function() {
+        this.displayLocale(this.props.productInfo);
         return (
             React.createElement("div", {className: "productTableInfo"}, 
-				React.createElement(ProductImage, {srcURL: this.props.productInfo.product_local_image_url, details: this.props.productInfo.product_description}), 
+				React.createElement(ProductImage, {srcURL: this.props.productInfo.product_local_image_url}), 
                 React.createElement("div", {className: "productHeader"}, 
                     _("Details")
                 ), 
-                React.createElement(ProductInfo, {infoDetails: this.props.productInfo})
+                React.createElement(ProductInfo, {infoDetails: product_info_locale})
 			)
         );
     }
@@ -39457,39 +39618,79 @@ var KQ = React.createClass({displayName: "KQ",
     _appendClassDown: '',
     _appendClassUp: '',
     _qtyComponent: null,
-    virtualKeyboard: null,
-    handleIncrement: function(event) {
-        if (this.props.scanDetails.kq_allowed === true) {
-          if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0"))     
-            return false;          
+    virtualKeyboard: null,  
+    _myVarDown:null,
+    _myVarUp:null,
+    counter:null,  
+    incrementValue: function(event){
+        if (this.props.scanDetails.kq_allowed === true) { 
+            var self = this;
+            _myVarUp = setInterval(function(){
+              
+            if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) && (parseInt(self.props.scanDetails.total_qty) != 0 || self.props.scanDetails.total_qty != "0") )
+            {
+                    return false;
+
+            }
+              
+
+                self.props.scanDetails.current_qty++;             
+                $("#keyboard").val(self.props.scanDetails.current_qty);
+            },300); 
+        }                          
+    },        
+
+    decrementValue: function(event){
+        if (this.props.scanDetails.kq_allowed === true) { 
+            var self = this;
+            _myVarDown = setInterval(function(){
+                if(mainstore.getCurrentSeat() == 'audit_front' && self.props.scanDetails.current_qty > 0){
+
+                }           
+                else if(self.props.scanDetails.current_qty <= 1){
+                    return false;
+                }
+                self.props.scanDetails.current_qty--;            
+                $("#keyboard").val(self.props.scanDetails.current_qty);
+            },300);
+        }                       
+    },
+    handleIncrement: function(event) {          
+       clearInterval(_myVarUp);        
+        if (this.props.scanDetails.kq_allowed === true) {           
+          if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0")){
+          }          
+                      
             var data = {};
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty));
                 return true;
             }
             if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
-                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty));
                         break;
                         case "MISSING":
-                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty));
                         break;
                         case "DAMAGED":
-                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty));
                         break;
                         default:
                     }
                 }
                 return true;
             }
+
             if (mainstore.getCurrentSeat() == "audit_front") {
+
                 data = {
                     "event_name": "audit_actions",
                     "event_data": {
                         "type": "change_qty",
-                        "quantity": parseInt(this.props.scanDetails.current_qty) + 1
+                        "quantity": parseInt(this.props.scanDetails.current_qty)
                     }
                 };
             } 
@@ -39498,7 +39699,7 @@ var KQ = React.createClass({displayName: "KQ",
                     "event_name": "put_back_exception",
                     "event_data": {
                         "action": "confirm_quantity_update",
-                        "quantity": parseInt(this.props.scanDetails.current_qty) + 1,
+                        "quantity": parseInt(this.props.scanDetails.current_qty),
                         "event":mainstore.getExceptionType()
                     }
                 };
@@ -39508,7 +39709,7 @@ var KQ = React.createClass({displayName: "KQ",
                     "event_name": "quantity_update_from_gui",
                     "event_data": {
                         "item_uid": this.props.itemUid,
-                        "quantity_updated": parseInt(this.props.scanDetails.current_qty) + 1
+                        "quantity_updated": parseInt(this.props.scanDetails.current_qty)
                     }
                 };
             }
@@ -39517,27 +39718,37 @@ var KQ = React.createClass({displayName: "KQ",
         }
     },
     handleDecrement: function(event) {
+        clearInterval(_myVarDown);
         if (this.props.scanDetails.kq_allowed === true) {
             if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
                 var data = {};
-                if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
+                if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
+                    data = {
+                        "event_name": "quantity_update_from_gui",
+                        "event_data": {
+                            "item_uid": this.props.itemUid,
+                            "quantity_updated": parseInt(this.props.scanDetails.current_qty)
+                        }
+                    };
+                    CommonActions.postDataToInterface(data);
                     return false;
+
                 }
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                    CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                    CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) );
                      return true;
                 }
                 if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
-                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty) );
                         break;
                         case "MISSING":
-                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty) );
                         break;
                         case "DAMAGED":
-                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty) );
                         break;
                         default:
                     }
@@ -39549,7 +39760,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "event_name": "audit_actions",
                         "event_data": {
                             "type": "change_qty",
-                            "quantity": parseInt(this.props.scanDetails.current_qty) - 1
+                            "quantity": parseInt(this.props.scanDetails.current_qty)
                         }
                     };
                 }
@@ -39558,7 +39769,7 @@ var KQ = React.createClass({displayName: "KQ",
                     "event_name": "put_back_exception",
                     "event_data": {
                         "action": "confirm_quantity_update",
-                        "quantity": parseInt(this.props.scanDetails.current_qty) - 1,
+                        "quantity": parseInt(this.props.scanDetails.current_qty),
                         "event":mainstore.getExceptionType()
                     }
                 };
@@ -39568,7 +39779,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "event_name": "quantity_update_from_gui",
                         "event_data": {
                             "item_uid": this.props.itemUid,
-                            "quantity_updated": parseInt(this.props.scanDetails.current_qty) - 1
+                            "quantity_updated": parseInt(this.props.scanDetails.current_qty)
                         }
                     };
                 }
@@ -39665,9 +39876,10 @@ var KQ = React.createClass({displayName: "KQ",
   onChange: function(){ 
     this.setState(getState());
   },
-  checkKqAllowed : function(){
-    if(this.props.scanDetails.kq_allowed === true){
+  checkKqAllowed : function(){    
+    if(this.props.scanDetails.kq_allowed === true){        
       if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") ){          
+          
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
       }
@@ -39715,9 +39927,9 @@ var KQ = React.createClass({displayName: "KQ",
         this.checkKqAllowed();
         this.handleTotalQty();
         return ( React.createElement("div", {className: "kq-wrapper"}, 
-            React.createElement("a", {href: "#", className: this._appendClassUp, onClick: this.handleIncrement}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, onMouseDown: this.incrementValue, onMouseUp: this.handleIncrement, onMouseMove: this.handleIncrement}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
-            React.createElement("a", {href: "#", className: this._appendClassDown, onClick: this.handleDecrement}, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, onMouseDown: this.decrementValue, onMouseUp: this.handleDecrement, onMouseMove: this.handleDecrement}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
             )
         )
@@ -39787,6 +39999,7 @@ function getPopUpState(){
         popupVisible : mainstore.getPopUpVisible()
   };
 }
+var product_info_locale = {};
 var ProductInfo = React.createClass({displayName: "ProductInfo",
   getInitialState: function(){
     return getPopUpState();
@@ -39822,13 +40035,43 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
       CommonActions.updatePopupVisible(false);
     
   },
+  displayLocale : function(data){
+    product_info_locale = {};
+    var language_locale = sessionStorage.getItem('localeData');
+    var locale;
+    if(language_locale == 'null' || language_locale == null){
+      locale = 'en-US';
+    }else{
+      locale = JSON.parse(language_locale)["data"]["locale"]; 
+    } 
+    data.map(function(value, index){
+      var keyValue;
+      for (var key in value[0]) {
+        if(key != 'display_data'){
+          keyValue = value[0][key];
+        }
+      }
+      value[0].display_data.map(
+        function(data_locale, index1){
+         if(data_locale.locale == locale){
+            product_info_locale[data_locale.display_name] = keyValue;
+          }
+        
+        }
+
+      )
+      
+    });
+      console.log(product_info_locale);
+  },
   render: function(data){ 
+    this.displayLocale(this.props.productDetails);
     return (       
             React.createElement("div", {className: "product-details-wrapper"}, 
               React.createElement("div", {className: "img-container"}, 
-                  React.createElement("img", {src: this.props.productDetails.product_local_image_url})
+                  React.createElement("img", {src: product_info_locale.product_local_image_url})
               ), 
-              React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,this.props.productDetails,"product-detail")}, 
+              React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,product_info_locale,"product-detail")}, 
                 React.createElement("span", null, " ", allresourceConstants.VIEW_MORE, " "), 
                 React.createElement("i", {className: "glyphicon glyphicon-info-sign"})
               )
@@ -40196,6 +40439,7 @@ var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
 var KQ = require('./ProductDetails/KQ');
+var TabularData = require('./TabularData');
 
 
 function getStateData(){
@@ -40403,6 +40647,31 @@ var PutFront = React.createClass({displayName: "PutFront",
            }
           
         break;
+
+         case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;  
+
       default:
         return true; 
     }
@@ -40426,7 +40695,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":280,"../stores/PutFrontStore":293,"../stores/mainstore":295,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"react":230}],267:[function(require,module,exports){
+},{"../constants/appConstants":280,"../stores/PutFrontStore":293,"../stores/mainstore":295,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"./TabularData":278,"react":230}],267:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -40809,7 +41078,7 @@ var TableRow = React.createClass({displayName: "TableRow",
                 "peripheral_id": document.getElementById("peripheralId").value,
                 "peripheral_type" : "pptl",
                 "barcode" : document.getElementById("barcodePptl").value,
-                "bin_id" : inc
+                "pps_bin_id" : inc
             }
             CommonActions.updateData(data, 'POST' , inc)
         }else if(action == 'Delete'){
@@ -40829,8 +41098,31 @@ var TableRow = React.createClass({displayName: "TableRow",
         }
         
     },
+    openKeyboard_peripheral: function(id){
+        $('#'+id).keyboard({
+          layout: 'custom',
+          customLayout: {
+            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+            'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+          },
+          css: {
+            container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+          },
+          reposition: true,
+          alwaysOpen: false,
+          initialFocus: true,     
+          visible : function(e, keypressed, el){
+            el.value = '';
+            //$(".authNotify").css("display","none"); 
+          },
+          
+          accepted: function(e, keypressed, el) {
+          }
+        }); 
+    },
     getComponent:function(){
         var peripheralAction = this.peripheralAction;
+        var openKeyboard_peripheral = this.openKeyboard_peripheral;
     	var comp = [];
     	this.props.data.map(function(value,index){
     		var classes = "table-col ";
@@ -40858,7 +41150,7 @@ var TableRow = React.createClass({displayName: "TableRow",
                   comp.push((React.createElement("div", {className: classes, title: value.text, onClick: peripheralAction.bind(null,value.text, value.id)}, value.text)));
                 }
                 else if(value.textbox == true){
-                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text}));
+                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text, onClick: openKeyboard_peripheral.bind(null, value.type)}));
                 }else{
     		      comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
                 }
@@ -40918,7 +41210,7 @@ var navData = {
         [{
             "screen_id": "pptl_management",
             "code": "CLIENTCODE_004",
-            "image": svgConstants.exception,
+            "image": svgConstants.pptl,
             "message": "Unexpected Item",
             "showImage": true,
             "level": null,
@@ -40927,7 +41219,7 @@ var navData = {
         [{
             "screen_id": "scanner_management",
             "code": "CLIENTCODE_005",
-            "image": svgConstants.exception,
+            "image": svgConstants.scanner,
             "message": "Unexpected Item",
             "showImage": true,
             "level": null,
@@ -41043,21 +41335,32 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [ {
+        [ 
+        {
+        "screen_id": "audit_front_waiting_for_location_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan Rack Barcode ",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+        },
+        {
         "screen_id": "audit_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan Items ",
         "showImage": true,
-        "level": 1,
+        "level": 2,
         "type": 'passive'
-    },{
+    },
+    ,{
         "screen_id": "audit_reconcile",
         "code": "Common.000",
         "image": svgConstants.place,
         "message": "Status",
         "showImage": true,
-        "level": 2,
+        "level": 3,
         "type": 'passive'
     }]
     ]
@@ -41088,6 +41391,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
@@ -41190,7 +41494,7 @@ var appConstants = {
 	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION',
 	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION',
 	PERIPHERAL_DATA : 'PERIPHERAL_DATA',
-	PERIPHERALS : '/peripherals',
+	PERIPHERALS : 'peripherals',
 	UPDATE_SEAT_DATA : 'UPDATE_SEAT_DATA',
 	PPTL_MANAGEMENT : 'pptl_management',
 	SCANNER_MANAGEMENT : 'scanner_management',
@@ -41230,7 +41534,9 @@ var resourceConstants = {
 	CLIENTCODE_001 : 'CLIENTCODE_001',
 	CLIENTCODE_002 : 'CLIENTCODE_002',
 	CLIENTCODE_004 : 'CLIENTCODE_004',
-	CLIENTCODE_005 : 'CLIENTCODE_005'
+	CLIENTCODE_005 : 'CLIENTCODE_005',
+	CLIENTCODE_006 : 'CLIENTCODE_006',
+	CLIENTCODE_007 : 'CLIENTCODE_007'
 
 };
 module.exports = resourceConstants;
@@ -41252,7 +41558,9 @@ var allSvgConstants = {
 	scanHeader :'assets/images/scan_header.png',
 	iconBar :'assets/images/Icon.png',
 	tote:'assets/images/tote.png',
-	exception:'assets/images/exceptionIcon.png'
+	exception:'assets/images/exceptionIcon.png',
+	scanner:'assets/images/scanner.png',
+	pptl:'assets/images/pptl.png'
 }
 
 module.exports = allSvgConstants;
@@ -41324,7 +41632,7 @@ var serverMessages = {
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
-    "PtB.H.004": "Scan Tote / Stage PpsBin",
+    "PtB.H.004": "Scan Tote or Stage Bin",
     "PtB.H.005" : "Item Not Found in Tote",
     "PtB.H.007" : "Enter Damaged Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
@@ -41365,6 +41673,11 @@ var serverMessages = {
     "PkB.H.001" : "Scan tote to associate with bin",
     "PkB.H.002" : "Press bin PPTL or scan a tote",
     "PkB.H.003" : "Press PpsBin to remove items",
+    "PkB.H.004" : "Press bin PPTL",
+    "PkB.H.005" : "Press print button to proceed",
+    "PkB.H.006" : "Select Bin to skip print",
+    "PkB.H.007" : "Select Bin which does not require tote",
+    "PkB.H.008" : "Select Bin to disassociate tote",
     "PtB.I.001" : "Tote scan successful",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
     "PtB.I.003" : "Cancel scan successful.",
@@ -41443,6 +41756,8 @@ var serverMessages = {
     "Audit.A.012":"No Items to Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
+    "CLIENTCODE_006" : "Scanner added successfully",
+    "CLIENTCODE_007" : "Scanner not added",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
@@ -41471,8 +41786,9 @@ var serverMessages = {
     "PkB.E.002" : "Totes are not required",
     "PkB.E.003" : "Exception invalid",
     "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
-    "PkB.E.005" : "Wrong ppsbin button pressed",
-    "PkB.E.006" : "Tote didn't get associated",   
+    "PkB.E.005" : "Wrong pptl pressed",
+    "PkB.E.006" : "Tote didn't get associated", 
+    "PkB.E.007" : "Totes are anyway not required.Please proceed further",  
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
@@ -41485,7 +41801,7 @@ var serverMessages = {
     "PkB.W.003" : "Wrong barcode scanned",
     "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
     "PkB.W.005" : "No tote scanned",
-    "PkB.W.006" : "Please press ppsbin button which does not have any totes associated",
+    "PkB.W.006" : "Please press pptl for bin which does not have any totes associated",
     "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
     "PkB.W.008" : "Pptl scan not allowed",
     "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
@@ -41502,7 +41818,14 @@ var serverMessages = {
     "PtF.I.003" : "Slot scan successful",
     "PtF.I.004" : "Damaged and missing entity reported.",
     "PtF.I.005" : "Space unavailable reported.",
-    "PtF.I.006" : "Unknown Barcode Scanned"
+    "PtF.I.006" : "Unknown Barcode Scanned",
+    "PtB002" : "Entity Oversized",
+    "PtB003" : "Entity Unscannable",
+    "PtB004" : "Extra Entities in Bin",
+    "PtF001" : "Entity Mising / Unscannable",
+    "PtF002" : "Space Not Available"
+
+
 };
 
 
@@ -43048,12 +43371,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": true,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
             else
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": false,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
         })
@@ -43146,11 +43473,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         textBox = true;
                         buttonText = 'Finish';
                     }
-                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "large", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "large", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
 
                 });
             }else{
@@ -43159,8 +43486,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "large", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
-                    new self.tableCol("Delete", "enabled", false, "large", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
+                    new self.tableCol("Delete", "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }
@@ -43348,9 +43675,36 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
-            for (var key in _seatData.product_info) {
-                if (_seatData.product_info.hasOwnProperty(key)) {
-                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_seatData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+
+            var product_info_locale = {};
+            var language_locale = sessionStorage.getItem('localeData');
+            var locale;
+            if(language_locale == 'null' || language_locale == null){
+              locale = 'en-US';
+            }else{
+              locale = JSON.parse(language_locale)["data"]["locale"]; 
+            } 
+            _seatData.product_info.map(function(value, index){
+              var keyValue;
+              for (var key in value[0]) {
+                if(key != 'display_data'){
+                  keyValue = value[0][key];
+                }
+              }
+              value[0].display_data.map(
+                function(data_locale, index1){
+                 if(data_locale.locale == locale){
+                    product_info_locale[data_locale.display_name] = keyValue;
+                  }
+                  
+                }
+
+              )
+              
+            });
+            for (var key in product_info_locale) {
+                if (product_info_locale.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
                 }
             }
         } else {
@@ -43459,6 +43813,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
         }
@@ -43532,16 +43887,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _messageJson;
     },
     changeLanguage: function(data) {
+
+        var locale_data ={
+            "data" :{
+                "locale" : data
+            }
+        };
         switch (data) {
-            case "chinese":
+            case "ch":
                 _.setTranslation(chinese);
                 break;
-            case "english":
+            case "en-US":
                 _.setTranslation(english);
                 break;
             default:
                 return true;
         }
+
+        sessionStorage.setItem('localeData', JSON.stringify(locale_data));
     },
     postDataToInterface: function(data) {
         showModal = false;
@@ -43722,11 +44085,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type) {
+    updateSeatData: function(data, type, status) {
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        } 
+        if(status == "success"){
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
+            _seatData.notification_list[0]["level"] = "info";
+        }
+        else if(status == "fail"){console.log(_seatData.notification_list);
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
+            _seatData.notification_list[0]["level"] = "error";
+        }else{
+            _seatData.notification_list[0]["code"] = null;
+           _seatData.notification_list[0].description = "";
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);
@@ -44023,6 +44397,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
+            case appConstants.AUDIT_LOCATION_SCAN:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditRackDetails"] = this.getRackDetails();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
@@ -44193,7 +44577,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.UPDATE_SEAT_DATA:
             mainstore.showSpinner();
-            mainstore.updateSeatData(action.data, action.type);
+            mainstore.updateSeatData(action.data, action.type, action.status);
             mainstore.emitChange();
             break;
         case appConstants.CONVERT_TEXTBOX:
@@ -44235,8 +44619,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 putSeatData(data);
-                console.log("ashish");
-                console.log(JSON.parse(evt.data));
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
             };
@@ -44305,8 +44687,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        
     },
     sessionLogout:function(data){
-        //alert("ashish");
-        console.log(configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT);
+        sessionStorage.setItem('sessionData', null);
+        sessionStorage.setItem('localeData', null);
+        location.reload();
         $.ajax({
             type: 'GET',
             url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
@@ -44322,7 +44705,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }).fail(function(data,jqXHR, textStatus, errorThrown) {
             alert("Logout Failed");
         });
-        
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
@@ -44350,12 +44732,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
     },
-    getPeripheralData : function(type, seat_name){
+    getPeripheralData : function(type, seat_name, status){
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
          $.ajax({
             type: 'GET',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+'?type='+type,
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type='+type,
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
@@ -44363,57 +44745,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-
-        }).fail(function(jqXhr) {
-            if(type == 'pptl'){
-            var data =  [
-                    {
-                      "barcode": "B1",
-                      "peripheral_id": "P10_1",
-                      "peripheral_type": "pptl",
-                      "pps_bin_id": "1"
-                    },
-                    {
-                      "barcode": "B2",
-                      "peripheral_id": "P10_2",
-                      "peripheral_type": "pptl",
-                      "pps_bin_id": "2"
-                    },
-                    {
-                      "pps_bin_id": "7"
-                    },
-                    {
-                      "pps_bin_id": "8"
-                    },
-                    {
-                      "pps_bin_id": "4"
-                    },
-                    {
-                      "pps_bin_id": "6"
-                    },
-                    {
-                      "pps_bin_id": "5"
-                    },
-                    {
-                      "pps_bin_id": "3"
-                    }
-
-                    
-                 ];
-             }else{
-                var data = [
-                    {
-                     "peripheral_id": "P1",
-                     "peripheral_type": "barcode_scanner"
-                    },
-                    {
-                     "peripheral_id": "P2",
-                     "peripheral_type": "barcode_scanner"
-                    }
-
-                ]
-             }
-             CommonActions.updateSeatData(data, type);        
+            CommonActions.updateSeatData(response.data, type, status);  
+        }).fail(function(jqXhr) {    
+           
         });
     },
     updatePeripherals : function(data, method, seat_name){
@@ -44421,13 +44755,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         var url;
         if(method == 'POST'){
-            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + appConstants.PERIPHERALS+appConstants.ADD;
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
         }else{
             url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
         }
          $.ajax({
             type: method,
             url: url,
+            data: JSON.stringify(data),
             dataType: "json",
             headers: {
                 'content-type': 'application/json',
@@ -44435,17 +44770,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success')
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            var data =  [
-                    {
-                     "barcode": "3",
-                     "peripheral_id": "AC",
-                     "peripheral_type": "pptl",
-                     "pps_bin_id": "4"
-                    }
-                 ];
-             CommonActions.updateSeatData(data, data.peripheral_type);        
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail');
+                    
         });
     },
     createLogData: function(message, type) {

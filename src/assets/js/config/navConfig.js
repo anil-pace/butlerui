@@ -130,21 +130,32 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [ {
+        [ 
+        {
+        "screen_id": "audit_front_waiting_for_location_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan Rack Barcode ",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+        },
+        {
         "screen_id": "audit_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan Items ",
         "showImage": true,
-        "level": 1,
+        "level": 2,
         "type": 'passive'
-    },{
+    },
+    ,{
         "screen_id": "audit_reconcile",
         "code": "Common.000",
         "image": svgConstants.place,
         "message": "Status",
         "showImage": true,
-        "level": 2,
+        "level": 3,
         "type": 'passive'
     }]
     ]

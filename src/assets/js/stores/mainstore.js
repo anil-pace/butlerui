@@ -1436,6 +1436,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
+            case appConstants.AUDIT_LOCATION_SCAN:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditRackDetails"] = this.getRackDetails();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:

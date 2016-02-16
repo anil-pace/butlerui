@@ -14,41 +14,66 @@ var KQ = React.createClass({
     virtualKeyboard: null,  
     _myVarDown:null,
     _myVarUp:null,
-    counter:null,  
+    counter:null, 
+    mouseMoveToggle:false, 
+
     incrementValue: function(event){
-        if (this.props.scanDetails.kq_allowed === true) { 
-            var self = this;
-            _myVarUp = setInterval(function(){
-              
-            if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) && (parseInt(self.props.scanDetails.total_qty) != 0 || self.props.scanDetails.total_qty != "0") )
-            {
-                    return false;
+       if( (event.type == "mousedown" || event.type == "click")  ){
+            if (this.props.scanDetails.kq_allowed === true) {                
+                this.mouseMoveToggle = true;                
+                var self = this;
+                _myVarUp = setInterval(function(){                  
+                    if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) && (parseInt(self.props.scanDetails.total_qty) != 0 || self.props.scanDetails.total_qty != "0") )
+                    {
+                        return false;
+                    }
+                    self.props.scanDetails.current_qty++;             
+                    $("#keyboard").val(self.props.scanDetails.current_qty);
+                },300);
+            }            
+        }
+        else if( (event.type == "mouseup" || event.type == "mouseleave") && this.mouseMoveToggle == true  ){                  
+           this.handleIncrement(); 
+           this.mouseMoveToggle=false;           
+        }    
+        else{            
+            _myVarUp = null;
+            return false;
+        }
+        
+                                  
+    },     
 
-            }
-              
-
-                self.props.scanDetails.current_qty++;             
-                $("#keyboard").val(self.props.scanDetails.current_qty);
-            },300); 
-        }                          
-    },        
-
-    decrementValue: function(event){
-        if (this.props.scanDetails.kq_allowed === true) { 
-            var self = this;
-            _myVarDown = setInterval(function(){
-                if(mainstore.getCurrentSeat() == 'audit_front' && self.props.scanDetails.current_qty > 0){
-
-                }           
-                else if(self.props.scanDetails.current_qty <= 1){
-                    return false;
-                }
-                self.props.scanDetails.current_qty--;            
-                $("#keyboard").val(self.props.scanDetails.current_qty);
-            },300);
-        }                       
-    },
-    handleIncrement: function(event) {          
+     decrementValue: function(event){
+        if( (event.type == "mousedown" || event.type == "click")  ){
+            if (this.props.scanDetails.kq_allowed === true) { 
+                var self = this;
+                this.mouseMoveToggle = true;
+                _myVarDown = setInterval(function(){
+                    if(mainstore.getCurrentSeat() == 'audit_front' && self.props.scanDetails.current_qty > 0){
+                    
+                    }           
+                    else if(self.props.scanDetails.current_qty <= 1){
+                        return false;
+                    }
+                    self.props.scanDetails.current_qty--;            
+                    $("#keyboard").val(self.props.scanDetails.current_qty);
+                },300);
+            } 
+        }
+        else if( (event.type == "mouseup" || event.type == "mouseleave") && this.mouseMoveToggle == true  ){                  
+           this.handleDecrement(); 
+           this.mouseMoveToggle=false;           
+        }        
+        else{            
+            _myVarUp = null;
+            return false;
+        } 
+                          
+    },                    
+    
+    handleIncrement: function(event) {     
+                
        clearInterval(_myVarUp);        
         if (this.props.scanDetails.kq_allowed === true) {           
           if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0")){
@@ -113,7 +138,7 @@ var KQ = React.createClass({
     handleDecrement: function(event) {
         clearInterval(_myVarDown);
         if (this.props.scanDetails.kq_allowed === true) {
-            if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
+            if (parseInt(this.props.scanDetails.current_qty) >= 1 ||  mainstore.getCurrentSeat() == 'audit_front') {
                 var data = {};
                 if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
                     data = {
@@ -320,9 +345,9 @@ var KQ = React.createClass({
         this.checkKqAllowed();
         this.handleTotalQty();
         return ( < div className = "kq-wrapper" >
-            < a href = "#" className = {this._appendClassUp} onMouseDown = {this.incrementValue} onMouseUp = {this.handleIncrement} onMouseMove = {this.handleIncrement}>
+            < a href = "#" className = {this._appendClassUp} onMouseDown = {this.incrementValue} onMouseUp = {this.incrementValue} onMouseLeave={this.incrementValue}>
             < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent} 
-            < a href = "#" className = {this._appendClassDown} onMouseDown = {this.decrementValue} onMouseUp = {this.handleDecrement} onMouseMove = {this.handleDecrement}>
+            < a href = "#" className = {this._appendClassDown} onMouseDown = {this.decrementValue} onMouseUp = {this.decrementValue} onMouseLeave = {this.decrementValue}>
             < span className = "glyphicon glyphicon-menu-down" > < /span> < /a> 
             < /div>
         )

@@ -29,6 +29,7 @@ var Header = React.createClass({
             reposition: true,
             alwaysOpen: false,
             initialFocus: true,
+            stayOpen:true,
             position: {
                 of: $('.keyboard-actions'),
                 my: 'center top',

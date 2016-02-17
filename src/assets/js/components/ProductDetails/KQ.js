@@ -216,6 +216,7 @@ var KQ = React.createClass({
                 },
                 reposition: true,
                 alwaysOpen: false,
+                stayOpen:true,
                 initialFocus: true,
                 visible: function(e, keypressed, el) {
                     $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);

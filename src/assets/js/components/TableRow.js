@@ -35,7 +35,7 @@ var TableRow = React.createClass({
         
     },
     openKeyboard_peripheral: function(id){
-        $('#'+id).keyboard({
+        setTimeout(function(){ $('#'+id).keyboard({
           layout: 'custom',
           customLayout: {
             'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -54,7 +54,8 @@ var TableRow = React.createClass({
           
           accepted: function(e, keypressed, el) {
           }
-        }); 
+        });  }, 0);
+        
     },
     getComponent:function(){
         var peripheralAction = this.peripheralAction;
@@ -86,7 +87,7 @@ var TableRow = React.createClass({
                   comp.push((<div className={classes} title={value.text} onClick={peripheralAction.bind(null,value.text, value.id)}>{value.text}</div>));
                 }
                 else if(value.textbox == true){
-                  comp.push(<input type='text' id={value.type} className={classes} defaultValue={value.text} onClick={openKeyboard_peripheral.bind(null, value.type )}/>);
+                  comp.push(<input type='text' id={value.type} className={classes} defaultValue={value.text} onClick={openKeyboard_peripheral.call(null, value.type )}/>);
                 }else{
     		      comp.push((<div className={classes} title={value.text}>{value.text}</div>));
                 }

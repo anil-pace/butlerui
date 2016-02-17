@@ -1134,12 +1134,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
             _seatData.notification_list[0]["level"] = "info";
         }
-        else if(status == "fail"){console.log(_seatData.notification_list);
+        else if(status == "fail"){
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
             _seatData.notification_list[0]["level"] = "error";
-        }else{
-            _seatData.notification_list[0]["code"] = null;
-           _seatData.notification_list[0].description = "";
+        }else {console.log(_seatData.notification_list);
+            if(_seatData.notification_list.length > 0){
+                _seatData.notification_list[0]["code"] = null;
+                _seatData.notification_list[0].description = "";
+            }
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);

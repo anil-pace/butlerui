@@ -74,7 +74,6 @@ var ProductInfo = React.createClass({
       )
       
     });
-      console.log(product_info_locale);
   },
   render: function(data){ 
     this.displayLocale(this.props.productDetails);

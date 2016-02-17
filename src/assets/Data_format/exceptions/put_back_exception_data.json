@@ -1,14 +1,12 @@
+..///.....Extra Entities in Bin...................//......................
+
 {
 	"state_data": {
+		"exception_type": "extra_items",
 		"seat_name": "back_10",
-		"screen_id": "put_back_stage",
+		"screen_id": "put_back_extra_item_bin_select",
 		"screen_version": "1",
-		"notification_list": [{
-			"level": "info",
-			"code": "PtB.I.013",
-			"details": [],
-			"description": "Exception cancelled successfully"
-		}],
+		"notification_list": [],
 		"all_peripheral_status": "true",
 		"api_version": "1",
 		"peripheral_data": [{
@@ -268,671 +266,6 @@
 			"peripheral_state": {
 				"light": {
 					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "1"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "2"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "2"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "8"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "8"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "5"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "5"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "15"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "15"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "7"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "7"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "11"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "`"
-			},
-			"id": "11"
-		}],
-		"logout_allowed": true,
-		"exception_allowed": [{
-			"exception_id": "PtB004",
-			"exception_name": "Extra Items In Bin",
-			"event": "extra_items"
-		}, {
-			"exception_id": "PtB003",
-			"exception_name": "Item Damaged",
-			"event": "item_damaged"
-		}, {
-			"exception_id": "PtB002",
-			"exception_name": "Item Over Sized",
-			"event": "item_oversized"
-		}],
-		"mode": "put",
-		"is_idle": false,
-		"seat_type": "back",
-		"time_stamp": "1455628394",
-		"ppsbin_list": [{
-			"bin_info": [],
-			"ppsbin_id": "4",
-			"selected_state": false,
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 4]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "3",
-			"selected_state": false,
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 3]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "2",
-			"selected_state": false,
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 2]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "1",
-			"selected_state": false,
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 1]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "8",
-			"selected_state": false,
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 4]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "7",
-			"selected_state": false,
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 3]
-		}, {
-			"bin_info": [{
-				"product_sku": "2001",
-				"type": "item",
-				"quantity": 5216
-			}, {
-				"product_sku": "2001",
-				"type": "item",
-				"quantity": 5562
-			}],
-			"ppsbin_id": "6",
-			"selected_state": false,
-			"ppsbin_state": "staged",
-			"ppsbin_count": "5216",
-			"coordinate": [2, 2]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "5",
-			"selected_state": false,
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 1]
-		}],
-		"header_msge_list": [{
-			"level": "info",
-			"code": "PtB.H.001",
-			"details": [],
-			"description": "Stage Bin or Scan Entity"
-		}],
-		"structure": [2, 4]
-	}
-}
-
-{
-	"state_data": {
-		"seat_name": "back_10",
-		"screen_id": "put_back_scan_tote",
-		"screen_version": "1",
-		"structure": [2, 4],
-		"notification_list": [{
-			"details": [],
-			"code": "Common.000",
-			"description": "Test",
-			"level": "info"
-		}],
-		"logout_allowed": "false",
-		"exception_allowed": [{
-			"exception_id": "Common000",
-			"exception_name": "Reset Scanner"
-		}],
-		"mode": "put",
-		"is_idle": false,
-		"seat_type": "back",
-		"time_stamp": "1449827300",
-		"ppsbin_list": [{
-			"bin_info": [],
-			"ppsbin_id": "4",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 1]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "3",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 2]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "2",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 3]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "1",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 4]
-		},
-		{
-			"bin_info": [],
-			"ppsbin_id": "4",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 5]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "3",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 6]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "2",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 7]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "1",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [1, 8]
-		},
-		 {
-			"bin_info": [],
-			"ppsbin_id": "8",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 1]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "7",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 2]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "6",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 3]
-		}, {
-			"bin_info": [],
-			"ppsbin_id": "5",
-			"selected_state": "false",
-			"ppsbin_state": "empty",
-			"ppsbin_count": "0",
-			"coordinate": [2, 4]
-		}],
-		"header_msge_list": [{
-			"details": [],
-			"code": "Common.000",
-			"description": "test",
-			"level": "info"
-		}],
-		"api_version": "1"
-	}
-}
-
-
-
-
-{
-	"state_data": {
-		"seat_name": "back_10",
-		"screen_id": "put_back_scan",
-		"screen_version": "1",
-		"notification_list": [{
-			"level": "info",
-			"code": "PtB.I.006",
-			"details": [],
-			"description": "Entity scan successful."
-		}],
-		"scan_details": {
-			"current_qty": "1",
-			"total_qty": "0",
-			"kq_allowed": true
-		},
-		"item_uid": "176f1f8d-f3eb-48bc-a725-e51dd1a9f6c7",
-		"api_version": "1",
-		"peripheral_data": [{
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "13"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "13"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "4"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "4"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "6"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "6"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "9"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "9"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "14"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "14"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "3"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "3"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "10"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "`"
-			},
-			"id": "10"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "16"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "16"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "12"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "off",
-					"pink": "off",
-					"white": "off",
-					"green": "off",
-					"red": "off"
-				},
-				"button": {
-					"down": "enabled",
-					"main": "enabled",
-					"up": "enabled"
-				},
-				"display": "\u0000"
-			},
-			"id": "12"
-		}, {
-			"pp_type": "pptl",
-			"LastPing": "undefined",
-			"controller_namespace": "undefined",
-			"peripheral_status": "disconnected",
-			"controller_id": "undefined",
-			"pp_id": {
-				"pp_type": "pptl",
-				"id": "1"
-			},
-			"mode": "auto_update",
-			"peripheral_state": {
-				"light": {
-					"blue": "on",
 					"pink": "off",
 					"white": "off",
 					"green": "off",
@@ -1110,34 +443,23 @@
 			"id": "11"
 		}],
 		"logout_allowed": false,
-		"exception_allowed": [],
+		"exception_allowed": [{
+			"exception_id": "PtB004",
+			"exception_name": "Extra Items In Bin",
+			"event": "extra_items"
+		}, {
+			"exception_id": "PtB003",
+			"exception_name": "Item Damaged",
+			"event": "item_damaged"
+		}, {
+			"exception_id": "PtB002",
+			"exception_name": "Item Over Sized",
+			"event": "item_oversized"
+		}],
 		"mode": "put",
 		"is_idle": false,
 		"seat_type": "back",
-		"product_info": [
-			[{
-				"product_sku": "2001",
-				"display_data": [{
-					"locale": "en-US",
-					"display_name": "product_sku"
-				}]
-			}],
-			[{
-				"display_data": [{
-					"locale": "en-US",
-					"display_name": "product_local_image_url"
-				}],
-				"product_local_image_url": "https://139.162.56.251/product_images/176f1f8d-f3eb-48bc-a725-e51dd1a9f6c7.png"
-			}],
-			[{
-				"display_data": [{
-					"locale": "en-US",
-					"display_name": "product_barcodes"
-				}],
-				"product_barcodes": ["2001"]
-			}]
-		],
-		"time_stamp": "1455630674",
+		"time_stamp": "1455628652",
 		"ppsbin_list": [{
 			"bin_info": [],
 			"ppsbin_id": "4",
@@ -1162,7 +484,7 @@
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "1",
-			"selected_state": true,
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [1, 1]
@@ -1203,81 +525,953 @@
 			"ppsbin_count": "0",
 			"coordinate": [2, 1]
 		}],
-		"all_peripheral_status": "true",
 		"header_msge_list": [{
 			"level": "info",
-			"code": "PtB.H.002",
+			"code": "PtB.H.009",
 			"details": [],
-			"description": "Place Entity in Bin and Press PPTL"
+			"description": "Please Select The Bin With Excess Entity"
 		}],
 		"structure": [2, 4]
 	}
 }
 
- {
- 	"state_data": {
- 		"reconciliation": [{
- 			"product_sku": "2001",
- 			"actual_quantity": 2,
- 			"expected_quantity": 3
- 		}, {
- 			"product_sku": "2002",
- 			"actual_quantity": 0,
- 			"expected_quantity": 5
- 		}],
- 		"exception_allowed": [],
- 		"notification_list": [],
- 		"seat_name": "back_10",
- 		"screen_id": "put_back_tote_close",
- 		"screen_version ": "1",
- 		"mode": "put",
- 		"is_idle": false,
- 		"logout_allowed": "false",
- 		"seat_type": "back",
- 		"time_stamp": "1452370620",
- 		"header_msge_list": [{
- 			"details": [],
- 			"code": "PtB.H.003",
- 			"description": "Are you sure you want to close Tote",
- 			"level": "info"
- 		}],
- 		"api_version": "1",
- 		"tote_id": "TOTEAB"
- 	}
- }
+///...... ENTITY UNSCANNABLE.../////////.....................................
 
- {
+
+{
 	"state_data": {
+		"exception_type": "item_damaged",
 		"seat_name": "back_10",
-		"screen_id": "put_back_invalid_tote_item",
+		"screen_id": "put_back_item_damaged",
 		"screen_version": "1",
-		"notification_list": [{
-			"details": [],
-			"code": "PtB.E.015",
-			"description": "Please put it in IRT bin and confirm",
-			"level": "error"
-		}],
-		"exception_allowed": [],
+		"notification_list": [],
 		"all_peripheral_status": "true",
-		"item_uid": "973b2132-b682-45f4-aac9-a3d01ec594d8",
+		"peripheral_data": [{
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "13"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "13"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "4"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "4"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "6"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "6"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "9"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "9"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "14"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "14"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "3"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "3"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "10"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "`"
+			},
+			"id": "10"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "16"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "16"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "12"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "12"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "1"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "1"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "2"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "2"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "8"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "8"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "5"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "5"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "15"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "15"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "7"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "7"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "11"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "`"
+			},
+			"id": "11"
+		}],
+		"logout_allowed": false,
+		"exception_allowed": [{
+			"exception_id": "PtB004",
+			"exception_name": "Extra Items In Bin",
+			"event": "extra_items"
+		}, {
+			"exception_id": "PtB003",
+			"exception_name": "Item Damaged",
+			"event": "item_damaged"
+		}, {
+			"exception_id": "PtB002",
+			"exception_name": "Item Over Sized",
+			"event": "item_oversized"
+		}],
 		"mode": "put",
 		"is_idle": false,
-		"logout_allowed": "false",
 		"seat_type": "back",
-		"time_stamp": "1452534790",
+		"time_stamp": "1455628723",
 		"header_msge_list": [{
-			"details": [51],
-			"code": "PtB.H.006",
-			"description": "3 excess quantity of item found in tote",
-			"level": "error"
+			"level": "info",
+			"code": "PtB.H.007",
+			"details": [],
+			"description": "Enter Damaged Entity Quantity"
 		}],
-		"api_version": "1",
-		"exception_msg" :[{
-			"details": [51],
-			"code": "PtB.H.006",
-			"description": "3 excess quantity of item found in tote",
-			"level": "info"
+		"api_version": "1"
+	}
+}
 
-		}]
+{
+	"state_data": {
+		"exception_type": "item_oversized",
+		"seat_name": "back_10",
+		"screen_id": "put_back_item_oversized",
+		"screen_version": "1",
+		"notification_list": [],
+		"all_peripheral_status": "true",
+		"peripheral_data": [{
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "13"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "13"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "4"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "4"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "6"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "6"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "9"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "9"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "14"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "14"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "3"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "3"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "10"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "`"
+			},
+			"id": "10"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "16"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "16"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "12"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "12"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "1"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "1"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "2"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "2"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "8"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "8"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "5"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "5"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "15"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "15"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "7"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"id": "7"
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "11"
+			},
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "`"
+			},
+			"id": "11"
+		}],
+		"logout_allowed": false,
+		"exception_allowed": [{
+			"exception_id": "PtB004",
+			"exception_name": "Extra Items In Bin",
+			"event": "extra_items"
+		}, {
+			"exception_id": "PtB003",
+			"exception_name": "Item Damaged",
+			"event": "item_damaged"
+		}, {
+			"exception_id": "PtB002",
+			"exception_name": "Item Over Sized",
+			"event": "item_oversized"
+		}],
+		"mode": "put",
+		"is_idle": false,
+		"seat_type": "back",
+		"time_stamp": "1455711041",
+		"header_msge_list": [{
+			"level": "info",
+			"code": "PtB.H.008",
+			"details": [],
+			"description": "Scan Oversized Entity Quantity"
+		}],
+		"api_version": "1"
 	}
 }

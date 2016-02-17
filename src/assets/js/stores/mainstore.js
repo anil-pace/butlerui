@@ -219,7 +219,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             console.log(_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
+                "message": "Place extra " /*+ (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])*/ + " items in Exception area ."
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
             console.log("jindal");
@@ -647,13 +647,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
+        });
 
-            /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
-                     if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                         new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true);
-                 })(),
-                 new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
-             ]);*/
+        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+            d = [];
+            d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
+            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+            data["tableRows"].push(d);
         });
         return data;
     },
@@ -1134,12 +1136,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
             _seatData.notification_list[0]["level"] = "info";
         }
-        else if(status == "fail"){console.log(_seatData.notification_list);
+        else if(status == "fail"){
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
             _seatData.notification_list[0]["level"] = "error";
-        }else{
-            _seatData.notification_list[0]["code"] = null;
-           _seatData.notification_list[0].description = "";
+        }else {console.log(_seatData.notification_list);
+            if(_seatData.notification_list.length > 0){
+                _seatData.notification_list[0]["code"] = null;
+                _seatData.notification_list[0].description = "";
+            }
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);
@@ -1435,6 +1439,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditReconcileLooseItemsData"] = this.getReconcileLooseItemsData();
                 data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
+                break;
+            case appConstants.AUDIT_LOCATION_SCAN:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditRackDetails"] = this.getRackDetails();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:

@@ -257,7 +257,10 @@ var KQ = React.createClass({
                         data["level"] = 'error';
                         CommonActions.generateNotification(data);
                         $('.ui-keyboard-preview').val(9999);
-                    }else if(parseInt(keypressed.last.val) == 0){
+                    }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                        mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                         mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                          mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
                         data["code"] = resourceConstants.CLIENTCODE_009;
                         data["level"] = 'error'
                         CommonActions.generateNotification(data);

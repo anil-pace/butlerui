@@ -251,9 +251,17 @@ var KQ = React.createClass({
                     $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 },
                 change : function(e, keypressed, el){
+                    var data ={}
                     if(parseInt(keypressed.last.val) > 9999){
-                        CommonActions.generateNotification(resourceConstants.CLIENTCODE_008);
+                        data["code"] = resourceConstants.CLIENTCODE_008;
+                        data["level"] = 'error';
+                        CommonActions.generateNotification(data);
                         $('.ui-keyboard-preview').val(9999);
+                    }else if(parseInt(keypressed.last.val) == 0){
+                        data["code"] = resourceConstants.CLIENTCODE_009;
+                        data["level"] = 'error'
+                        CommonActions.generateNotification(data);
+                        $('.ui-keyboard-preview').val(_updatedQty);
                     }
                 },
                 accepted: function(e, keypressed, el) {

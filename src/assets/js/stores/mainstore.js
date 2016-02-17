@@ -1161,8 +1161,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     generateNotification : function(data){
         if(_seatData.notification_list.length > 0){
-            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_008;
-            _seatData.notification_list[0].level = 'error';
+            _seatData.notification_list[0]["code"] = data.code;
+            _seatData.notification_list[0].level = data.level;
         }
     },
     getScreenData: function() {

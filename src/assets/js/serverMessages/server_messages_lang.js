@@ -207,4 +207,5 @@ function server_messages_list() {
     _("Scanner added successfully");
     _("Scanner not added");
     _("You cannot enter value more than 9999");
+    _("You cannot enter 0");
 }

@@ -130,6 +130,7 @@ var serverMessages = {
     "CLIENTCODE_006" : "Scanner added successfully",
     "CLIENTCODE_007" : "Scanner not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
+    "CLIENTCODE_009" : "You cannot enter 0",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",

@@ -2,6 +2,7 @@ var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
+var resourceConstants = require('../../constants/resourceConstants');
 var  _updatedQty = 0;
 
 var KQ = React.createClass({
@@ -248,6 +249,12 @@ var KQ = React.createClass({
                 visible: function(e, keypressed, el) {
                     $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                     $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                },
+                change : function(e, keypressed, el){
+                    if(parseInt(keypressed.last.val) > 9999){
+                        CommonActions.generateNotification(resourceConstants.CLIENTCODE_008);
+                        $('.ui-keyboard-preview').val(9999);
+                    }
                 },
                 accepted: function(e, keypressed, el) {
                     if (e.target.value === '' || e.target.value === '0') {

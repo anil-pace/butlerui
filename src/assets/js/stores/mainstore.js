@@ -1139,7 +1139,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         else if(status == "fail"){
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
             _seatData.notification_list[0]["level"] = "error";
-        }else {console.log(_seatData.notification_list);
+        }else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";
@@ -1158,6 +1158,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     update_peripheral : function(data, method, index){
        utils.updatePeripherals(data, method, _seatName); 
+    },
+    generateNotification : function(data){
+        if(_seatData.notification_list.length > 0){
+            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_008;
+            _seatData.notification_list[0].level = 'error';
+        }
     },
     getScreenData: function() {
         var data = {};
@@ -1632,6 +1638,10 @@ AppDispatcher.register(function(payload) {
             mainstore.update_peripheral(action.data, action.method, action.index);
             mainstore.emitChange();
             break;
+        case appConstants.GENERATE_NOTIFICATION:
+            mainstore.generateNotification(action.data);
+            mainstore.emitChange();
+            break;    
         default:
             return true;
     }

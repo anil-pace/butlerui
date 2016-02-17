@@ -251,6 +251,12 @@ var commonActions = {
       method : method,
       index : index
     })
+   },
+   generateNotification : function(data){
+     AppDispatcher.handleAction({
+      actionType : appConstants.GENERATE_NOTIFICATION,
+      data : data
+    })
    }
 
 };

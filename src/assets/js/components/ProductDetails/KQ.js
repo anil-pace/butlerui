@@ -245,10 +245,17 @@ var KQ = React.createClass({
                 },
                 reposition: true,
                 alwaysOpen: false,
+                stayOpen:true,
                 initialFocus: true,
                 visible: function(e, keypressed, el) {
                     $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
-                    $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                    $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");                    
+                    $(".ui-keyboard").css("width","230px");
+                    $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                    $(".ui-keyboard-button").css("width","74px");
+                    $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                    $(".current-quantity").val("");
+                    $(".ui-widget-content").val("");
                 },
                 change : function(e, keypressed, el){
                     var data ={}
@@ -333,9 +340,11 @@ var KQ = React.createClass({
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
+    /*
     if(this.virtualKeyboard != null){
       virtualKeyboard.getkeyboard().close();
     }
+    */
   },
   onChange: function(){ 
     this.setState(getState());

@@ -30,8 +30,6 @@ var ExceptionListItem = React.createClass({
       var message_args  = this.props.data.details.slice(0);
 
         if(this.props.action!=undefined && this.props.action == true){
-          console.log(this.props.data);
-
           return (
               <div className={this.props.data.selected==true?"exception-list-item selected":"exception-list-item"} onClick={this.setCurrentException.bind(this,this.props.data)}>
                    {(function(){

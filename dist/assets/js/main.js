@@ -39621,41 +39621,66 @@ var KQ = React.createClass({displayName: "KQ",
     virtualKeyboard: null,  
     _myVarDown:null,
     _myVarUp:null,
-    counter:null,  
+    counter:null, 
+    mouseMoveToggle:false, 
+
     incrementValue: function(event){
-        if (this.props.scanDetails.kq_allowed === true) { 
-            var self = this;
-            _myVarUp = setInterval(function(){
-              
-            if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) && (parseInt(self.props.scanDetails.total_qty) != 0 || self.props.scanDetails.total_qty != "0") )
-            {
-                    return false;
+       if( (event.type == "mousedown" || event.type == "click")  ){
+            if (this.props.scanDetails.kq_allowed === true) {                
+                this.mouseMoveToggle = true;                
+                var self = this;
+                _myVarUp = setInterval(function(){                  
+                    if( parseInt(self.props.scanDetails.current_qty) >= parseInt(self.props.scanDetails.total_qty) && (parseInt(self.props.scanDetails.total_qty) != 0 || self.props.scanDetails.total_qty != "0") )
+                    {
+                        return false;
+                    }
+                    self.props.scanDetails.current_qty++;             
+                    $("#keyboard").val(self.props.scanDetails.current_qty);
+                },300);
+            }            
+        }
+        else if( (event.type == "mouseup" || event.type == "mouseleave") && this.mouseMoveToggle == true  ){                  
+           this.handleIncrement(); 
+           this.mouseMoveToggle=false;           
+        }    
+        else{            
+            _myVarUp = null;
+            return false;
+        }
+        
+                                  
+    },     
 
-            }
-              
-
-                self.props.scanDetails.current_qty++;             
-                $("#keyboard").val(self.props.scanDetails.current_qty);
-            },300); 
-        }                          
-    },        
-
-    decrementValue: function(event){
-        if (this.props.scanDetails.kq_allowed === true) { 
-            var self = this;
-            _myVarDown = setInterval(function(){
-                if(mainstore.getCurrentSeat() == 'audit_front' && self.props.scanDetails.current_qty > 0){
-
-                }           
-                else if(self.props.scanDetails.current_qty <= 1){
-                    return false;
-                }
-                self.props.scanDetails.current_qty--;            
-                $("#keyboard").val(self.props.scanDetails.current_qty);
-            },300);
-        }                       
-    },
-    handleIncrement: function(event) {          
+     decrementValue: function(event){
+        if( (event.type == "mousedown" || event.type == "click")  ){
+            if (this.props.scanDetails.kq_allowed === true) { 
+                var self = this;
+                this.mouseMoveToggle = true;
+                _myVarDown = setInterval(function(){
+                    if(mainstore.getCurrentSeat() == 'audit_front' && self.props.scanDetails.current_qty > 0){
+                    
+                    }           
+                    else if(self.props.scanDetails.current_qty <= 1){
+                        return false;
+                    }
+                    self.props.scanDetails.current_qty--;            
+                    $("#keyboard").val(self.props.scanDetails.current_qty);
+                },300);
+            } 
+        }
+        else if( (event.type == "mouseup" || event.type == "mouseleave") && this.mouseMoveToggle == true  ){                  
+           this.handleDecrement(); 
+           this.mouseMoveToggle=false;           
+        }        
+        else{            
+            _myVarUp = null;
+            return false;
+        } 
+                          
+    },                    
+    
+    handleIncrement: function(event) {     
+                
        clearInterval(_myVarUp);        
         if (this.props.scanDetails.kq_allowed === true) {           
           if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0")){
@@ -39720,7 +39745,7 @@ var KQ = React.createClass({displayName: "KQ",
     handleDecrement: function(event) {
         clearInterval(_myVarDown);
         if (this.props.scanDetails.kq_allowed === true) {
-            if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
+            if (parseInt(this.props.scanDetails.current_qty) >= 1 ||  mainstore.getCurrentSeat() == 'audit_front') {
                 var data = {};
                 if((mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(this.props.scanDetails.current_qty) == 1 || this.props.scanDetails.current_qty == "1")){
                     data = {
@@ -39927,9 +39952,9 @@ var KQ = React.createClass({displayName: "KQ",
         this.checkKqAllowed();
         this.handleTotalQty();
         return ( React.createElement("div", {className: "kq-wrapper"}, 
-            React.createElement("a", {href: "#", className: this._appendClassUp, onMouseDown: this.incrementValue, onMouseUp: this.handleIncrement, onMouseMove: this.handleIncrement}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, onMouseDown: this.incrementValue, onMouseUp: this.incrementValue, onMouseLeave: this.incrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
-            React.createElement("a", {href: "#", className: this._appendClassDown, onMouseDown: this.decrementValue, onMouseUp: this.handleDecrement, onMouseMove: this.handleDecrement}, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, onMouseDown: this.decrementValue, onMouseUp: this.decrementValue, onMouseLeave: this.decrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
             )
         )
@@ -41099,7 +41124,7 @@ var TableRow = React.createClass({displayName: "TableRow",
         
     },
     openKeyboard_peripheral: function(id){
-        $('#'+id).keyboard({
+        setTimeout(function(){ $('#'+id).keyboard({
           layout: 'custom',
           customLayout: {
             'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
@@ -41118,7 +41143,8 @@ var TableRow = React.createClass({displayName: "TableRow",
           
           accepted: function(e, keypressed, el) {
           }
-        }); 
+        });  }, 0);
+        
     },
     getComponent:function(){
         var peripheralAction = this.peripheralAction;
@@ -41150,7 +41176,7 @@ var TableRow = React.createClass({displayName: "TableRow",
                   comp.push((React.createElement("div", {className: classes, title: value.text, onClick: peripheralAction.bind(null,value.text, value.id)}, value.text)));
                 }
                 else if(value.textbox == true){
-                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text, onClick: openKeyboard_peripheral.bind(null, value.type)}));
+                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text, onClick: openKeyboard_peripheral.call(null, value.type)}));
                 }else{
     		      comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
                 }
@@ -43180,7 +43206,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             console.log(_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
+                "message": "Place extra " /*+ (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])*/ + " items in Exception area ."
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
             console.log("jindal");
@@ -43608,13 +43634,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
+        });
 
-            /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
-                     if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                         new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true);
-                 })(),
-                 new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
-             ]);*/
+        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+            d = [];
+            d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
+            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+            data["tableRows"].push(d);
         });
         return data;
     },
@@ -44095,12 +44123,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
             _seatData.notification_list[0]["level"] = "info";
         }
-        else if(status == "fail"){console.log(_seatData.notification_list);
+        else if(status == "fail"){
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
             _seatData.notification_list[0]["level"] = "error";
-        }else{
-            _seatData.notification_list[0]["code"] = null;
-           _seatData.notification_list[0].description = "";
+        }else {console.log(_seatData.notification_list);
+            if(_seatData.notification_list.length > 0){
+                _seatData.notification_list[0]["code"] = null;
+                _seatData.notification_list[0].description = "";
+            }
         }
         _seatData["utility"] = data;
         this.setCurrentSeat(_seatData);

@@ -234,102 +234,107 @@ var KQ = React.createClass({
             }
         }
     },
-    componentDidMount: function() {
-        if (this.props.scanDetails.kq_allowed === true) {
-            var qty = this.props.scanDetails.current_qty;
-            var itemUid = this.props.itemUid;
-            virtualKeyboard = $('#keyboard').keyboard({
-                layout: 'custom',
-                customLayout: {
-                    'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
-                },
-                reposition: true,
-                alwaysOpen: false,
-                initialFocus: true,
-                visible: function(e, keypressed, el) {
-                    $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
-                    $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
-                },
-                change : function(e, keypressed, el){
-                    var data ={}
-                    if(parseInt(keypressed.last.val) > 9999){
-                        data["code"] = resourceConstants.CLIENTCODE_008;
-                        data["level"] = 'error';
-                        CommonActions.generateNotification(data);
-                        $('.ui-keyboard-preview').val(9999);
-                    }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
-                        mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
-                         mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
-                          mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
-                        data["code"] = resourceConstants.CLIENTCODE_009;
-                        data["level"] = 'error'
-                        CommonActions.generateNotification(data);
-                        $('.ui-keyboard-preview').val(_updatedQty);
-                    }
-                },
-                accepted: function(e, keypressed, el) {
-                    if (e.target.value === '' || e.target.value === '0') {
-                        CommonActions.resetNumpadVal(parseInt(qty));
-                    } else {
-
-                        var data = {};
-                         if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                            CommonActions.updateKQQuantity(parseInt(e.target.value));
-                             return true;
-                        }
-                        if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                            if(this.props.action != undefined){
-                                switch(this.props.action){
-                                    case "GOOD":
-                                        CommonActions.updateGoodQuantity(parseInt(e.target.value));
-                                    break;
-                                    case "MISSING":
-                                        CommonActions.updateMissingQuantity(parseInt(e.target.value));
-                                    break;
-                                    case "DAMAGED":
-                                        CommonActions.updateDamagedQuantity(parseInt(e.target.value));
-                                    break;
-                                    default:
-                                }
-                            }
-                            return true;
-                        }
-                        if (mainstore.getCurrentSeat() == "audit_front") {
-                            data = {
-                                "event_name": "audit_actions",
-                                "event_data": {
-                                    "type": "change_qty",
-                                    "quantity": parseInt(e.target.value)
-                                }
-                            };
-                        }
-                        else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
-                             data = {
-                                "event_name": "put_back_exception",
-                                "event_data": {
-                                    "action": "confirm_quantity_update",
-                                    "quantity": parseInt(e.target.value),
-                                    "event":mainstore.getExceptionType()
-                                }
-                            };
-                         }   
-                        else {
-                            data = {
-                                "event_name": "quantity_update_from_gui",
-                                "event_data": {
-                                    "item_uid": itemUid,
-                                    "quantity_updated": parseInt(e.target.value)
-                                }
-                            };
-                        }
-                        CommonActions.postDataToInterface(data);
-                    }
-                }
-            });
-        }
-    },
+  componentDidMount: function() {
+        
+  },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
+  },
+  openNumpad : function(){
+    if (this.props.scanDetails.kq_allowed === true) {
+
+        var qty = this.props.scanDetails.current_qty;
+        var itemUid = this.props.itemUid;
+
+          setTimeout(function(){ $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: {
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+            },
+            reposition: true,
+            alwaysOpen: false,
+            initialFocus: true,
+            visible: function(e, keypressed, el) {
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+            },
+            change : function(e, keypressed, el){
+                var data ={}
+                if(parseInt(keypressed.last.val) > 9999){
+                    data["code"] = resourceConstants.CLIENTCODE_008;
+                    data["level"] = 'error';
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(9999);
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.audit_scan && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                    data["code"] = resourceConstants.CLIENTCODE_009;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(_updatedQty);
+                }
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' ) {
+                    CommonActions.resetNumpadVal(parseInt(_updatedQty));
+                } else  {  
+                    var data = {};
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                         return true;
+                    }
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                       if(this.props.action != undefined){
+                            switch(this.props.action){
+                                case "GOOD":
+                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                break;
+                                case "MISSING":
+                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                break;
+                                case "DAMAGED":
+                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                break;
+                                default:
+                            }
+                        }
+                        return true;
+                    }
+                    if (mainstore.getCurrentSeat() == "audit_front") {
+                        data = {
+                            "event_name": "audit_actions",
+                            "event_data": {
+                                "type": "change_qty",
+                                "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
+                            }
+                        };
+                    }   
+                    else {
+                        data = {
+                            "event_name": "quantity_update_from_gui",
+                           "event_data": {
+                                "item_uid": itemUid,
+                                "quantity_updated": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    CommonActions.postDataToInterface(data);
+                }
+            }
+        }); }, 0)
+    }
+
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
@@ -380,7 +385,7 @@ var KQ = React.createClass({
     if(this.props.scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard" className="current-quantity"  value={_updatedQty}/>
+            <input id="keyboard" className="current-quantity"  value={_updatedQty} onClick={this.openNumpad.call(null)}/>
             <span className="separator">/</span>
             <span className="total-quantity">{parseInt(this.props.scanDetails.total_qty)}</span> 
           </div>
@@ -388,7 +393,7 @@ var KQ = React.createClass({
     }else{
       this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard"  value={_updatedQty}/> 
+            <input id="keyboard"  value={_updatedQty} onClick={this.openNumpad.call(null)}/> 
           </div>
       );
         }

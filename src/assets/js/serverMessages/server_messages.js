@@ -58,7 +58,7 @@ var serverMessages = {
     "PtB.I.007" : "Pptl button press successful",
     "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
     "PtB.I.009" : "Invalid item in tote recorded.",
-    "PtB.I.010" : "damaged entity recorded.WMS Notified.",
+    "PtB.I.010" : "Damaged entity recorded.WMS Notified.",
     "PtB.I.011" : "extra entity recorded in bin.WMS Notified.",
     "PtB.I.012" : "Oversized entity recorded.WMS notified.",
     "PtB.I.013" : "Exception cancelled successfully",

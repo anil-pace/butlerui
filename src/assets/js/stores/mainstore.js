@@ -1232,20 +1232,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackBinData"] = this.getBinData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();

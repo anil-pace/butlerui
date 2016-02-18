@@ -1,5 +1,5 @@
 var serverMessages = {
-    "PtB.B.001": "Scan item / Stage pps bin",
+    "PtB.B.001": "Scan Entity or Stage Bin",
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
@@ -37,7 +37,7 @@ var serverMessages = {
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
-    "PkF.H.004" : "Scan Items",
+    "PkF.H.004" : "Scan {0} Items",
     "PkF.H.005" : "Scan Box",
     "PkF.H.006" : "Scan Items and Place in Bin",
     "PkF.H.007" : "Press PPTL for Bin to confirm",
@@ -131,6 +131,7 @@ var serverMessages = {
     "CLIENTCODE_007" : "Scanner not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
     "CLIENTCODE_009" : "You cannot enter 0",
+    "CLIENTCODE_010" : "Put quantity should be equal to damaged, missing and good",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",

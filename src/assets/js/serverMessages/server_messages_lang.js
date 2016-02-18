@@ -4,7 +4,7 @@
     cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep -Ev "({|})" | sed 's/$/);/g'
  */
 function server_messages_list() {
-    _("Scan item / Stage pps bin");
+    _("Scan Entity or Stage Bin");
     _("Scan Tote to associate with Bin");
     _("Press PpsBin Button Or Scan a Tote");
     _("User Name");
@@ -119,7 +119,7 @@ function server_messages_list() {
     _("Wait for MSU");
     _("Confirm MSU Release");
     _("Scan Slot");
-    _("Scan Items");
+    _("Scan {0} Items");
     _("Scan Box");
     _("Scan Items and Place in Bin");
     _("Press PPTL for Bin to confirm");
@@ -208,4 +208,5 @@ function server_messages_list() {
     _("Scanner not added");
     _("You cannot enter value more than 9999");
     _("You cannot enter 0");
+    _("Put quantity should be equal to damaged, missing and good")
 }

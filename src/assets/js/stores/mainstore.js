@@ -1108,15 +1108,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if ((_KQQty) > _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_010;
                 data["level"] = "error";
-                data["description"] = "Revised Quantity should be less than or equal to put quantity";
                 data["details"] = [];
-                _seatData.notification_list.push(data);
+                _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
                 _seatData.notification_list[0].level = "error";
             }
+         
         } else {
             var data = {};
             data["event_name"] = "put_front_exception";

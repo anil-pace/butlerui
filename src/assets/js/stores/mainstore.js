@@ -725,6 +725,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             } 
             _seatData.product_info.map(function(value, index){
               var keyValue;
+              /*
               for (var key in value[0]) {
                 if(key != 'display_data'){
                   keyValue = value[0][key];
@@ -738,8 +739,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                   
                 }
 
-              )
-              
+              )*/
+                for (var key in value[0]) { 
+                    if(key != 'display_data' && key != 'product_local_image_url' ){
+                      keyValue = value[0][key] + ' ';
+                     }
+                }
+                value[0].display_data.map(
+                    function(data_locale, index1){
+                     if(data_locale.locale == locale){
+                        if(data_locale.display_name != 'product_local_image_url' ){
+                          product_info_locale[data_locale.display_name] = keyValue;
+                        }
+                      }                    
+                    }
+                )              
             });
             for (var key in product_info_locale) {
                 if (product_info_locale.hasOwnProperty(key)) {
@@ -1232,20 +1246,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackBinData"] = this.getBinData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();

@@ -58,15 +58,17 @@ var ProductInfo = React.createClass({
     } 
     data.map(function(value, index){
       var keyValue;
-      for (var key in value[0]) {
-        if(key != 'display_data'){
-          keyValue = value[0][key];
-        }
+      for (var key in value[0]) { 
+        if(key != 'display_data' && key != 'product_local_image_url' ){
+          keyValue = value[0][key] + ' ';
+         }
       }
       value[0].display_data.map(
         function(data_locale, index1){
          if(data_locale.locale == locale){
-            product_info_locale[data_locale.display_name] = keyValue;
+            if(data_locale.display_name != 'product_local_image_url' ){
+              product_info_locale[data_locale.display_name] = keyValue;
+            }
           }
         
         }

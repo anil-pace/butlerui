@@ -242,7 +242,6 @@ var KQ = React.createClass({
   },
   openNumpad : function(){
     if (this.props.scanDetails.kq_allowed === true) {
-
         var qty = this.props.scanDetails.current_qty;
         var itemUid = this.props.itemUid;
 
@@ -253,10 +252,17 @@ var KQ = React.createClass({
             },
             reposition: true,
             alwaysOpen: false,
+            stayOpen:true,
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                $(".ui-keyboard").css("width","230px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-button").css("width","74px");
+                $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                $(".current-quantity").val("");
+                $(".ui-widget-content").val("");
             },
             change : function(e, keypressed, el){
                 var data ={}
@@ -265,7 +271,7 @@ var KQ = React.createClass({
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.audit_scan && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
                      mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
@@ -338,9 +344,11 @@ var KQ = React.createClass({
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
+    /*
     if(this.virtualKeyboard != null){
       virtualKeyboard.getkeyboard().close();
     }
+    */
   },
   onChange: function(){ 
     this.setState(getState());

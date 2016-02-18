@@ -45,7 +45,6 @@ var KQ = React.createClass({
                 clearInterval(interval);
             });
          
-
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
                 || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
                 || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
@@ -66,7 +65,6 @@ var KQ = React.createClass({
         }else{
             _updatedQty--;
         }
-        console.log(_updatedQty);
         if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
@@ -75,7 +73,6 @@ var KQ = React.createClass({
         $("#keyboard").val(_updatedQty);
     },
     decrementValue: function(event){
-        console.log(event.type);
         var self = this;
         var interval;
         if (this.props.scanDetails.kq_allowed === true) { 
@@ -408,9 +405,11 @@ var KQ = React.createClass({
 
     },
     render: function(data) {
+        _updatedQty = parseInt(this.props.scanDetails.current_qty);
         this.checkKqAllowed();
         this.handleTotalQty();
-        _updatedQty = parseInt(this.props.scanDetails.current_qty);
+        
+        console.log(_updatedQty);
         return ( < div className = "kq-wrapper" >
             < a href = "#" className = {this._appendClassUp} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
             < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent} 

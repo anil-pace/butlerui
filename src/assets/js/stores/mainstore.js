@@ -1066,6 +1066,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     validateAndSendDataToServer: function() {
+        
         var flag = false;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
@@ -1074,14 +1075,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_010;
                 data["level"] = "error";
-                data["description"] = "Quantity should be equal to damaged ,missing and good";
                 data["details"] = [];
-                _seatData.notification_list.push(data);
+                _seatData.notification_list[0] = data;
                 _putFrontExceptionScreen = "good";
             } else {
-                _seatData.notification_list[0].description = "Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
                 _seatData.notification_list[0].level = "error";
             }
         } else {

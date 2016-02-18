@@ -97,143 +97,964 @@
 		"screen_id": "put_front_scan",
 		"screen_version": "1",
 		"structure": [2, 4],
-		"notification_list": [{
-			"details": [],
-			"code": "Common.000",
-			"description": [],
-			"level": "info"
-		}],
+		"notification_list": [],
 		"scan_details": {
-			"current_qty": "1",
-			"total_qty": "1",
+			"current_qty": "0",
+			"total_qty": "0",
 			"kq_allowed": false
 		},
-		"logout_allowed": "false",
+		"item_uid": "e4a6f863-8ae3-49bc-b285-cac71f18c817",
+		"peripheral_data": [{
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "108",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "108"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "101",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "on",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0001"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "101"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "209",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "209"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "211",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "211"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "205",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "205"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "104",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "104"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "212",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "212"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "213",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "213"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "105",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0003"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "105"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "102",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0001"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "102"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "206",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "206"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "110",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "110"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "210",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "210"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "204",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "204"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "116",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "116"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "208",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "208"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "112",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "112"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "214",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "214"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "215",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "215"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "103",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0002"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "103"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "113",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0007"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "113"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "216",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "216"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "114",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "114"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "201",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "201"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "115",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\b"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "115"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "111",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0006"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "111"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "207",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "207"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "109",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0005"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "109"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "202",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "202"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "106",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "106"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "203",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0000"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "203"
+			}
+		}, {
+			"pp_type": "pptl",
+			"LastPing": "undefined",
+			"controller_namespace": "undefined",
+			"peripheral_status": "disconnected",
+			"controller_id": "undefined",
+			"id": "107",
+			"mode": "auto_update",
+			"peripheral_state": {
+				"light": {
+					"blue": "off",
+					"pink": "off",
+					"white": "off",
+					"green": "off",
+					"red": "off"
+				},
+				"button": {
+					"down": "enabled",
+					"main": "enabled",
+					"up": "enabled"
+				},
+				"display": "\u0004"
+			},
+			"pp_id": {
+				"pp_type": "pptl",
+				"id": "107"
+			}
+		}],
+		"logout_allowed": true,
 		"exception_allowed": [{
-			"exception_id": "Common000",
-			"exception_name": "Reset Scanner"
+			"exception_id": "PtF002",
+			"exception_name": "Space Unavailable To Put",
+			"event": "space_unavailable"
+		}, {
+			"exception_id": "PtF001",
+			"exception_name": "Damaged or Missing",
+			"event": "damaged_or_missing"
 		}],
 		"mode": "put",
 		"is_idle": false,
 		"seat_type": "front",
-		"item_uid" : "123",
-		"product_info": [
-			[{
-				"display_data":
-				[
-					{
-					"display_name":"product_sku-display",
-					"locale":"ch"
-					},
-					{"display_name":"product_sku-display-2",
-					"locale":"en-US"
-					}
-				],
-				"product_sku":"266ed6a3c9e4413fbf55108af99832d0"
-			}],
-
-			[{
-				"display_data":
-			 	[
-			 		{
-			 		"display_name":"product_height-display",
-					 "locale":"en-US"
-					},
-			 		{
-			 		"display_name":"product_height-display-2",
-			 		"locale":"ch"
-			 		}
-			 	],
-			 	"product_height":4.66
-			 }],
-			 
-			[{
-			 	"display_data":
-			 	[
-			 		{
-			 		"display_name":"product_weight-display",
-			 		"locale":"en-US"
-			 		},
-			 		{
-			 		"display_name":"product_weight-2",
-			 		"locale":"ch"
-			 		}
-			 	],
-			 	"product_weight":4.54
-			}]
-		],
-		"time_stamp": "1450174144",
+		"product_info": [],
+		"time_stamp": "1455794289",
 		"ppsbin_list": [{
 			"bin_info": [],
 			"ppsbin_id": "4",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [1, 1]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "3",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [1, 2]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "2",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [1, 3]
 		}, {
 			"bin_info": [{
+				"product_sku": "d200164eec5f401b8797081dd6ec928d",
 				"type": "item",
-				"name": null,
 				"quantity": 1
 			}],
 			"ppsbin_id": "1",
-			"selected_state": "true",
-			"ppsbin_state": "staged",
+			"selected_state": true,
+			"ppsbin_state": "IN USE",
 			"ppsbin_count": "1",
 			"coordinate": [1, 4]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "8",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 1]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "7",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 2]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "6",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 3]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "5",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 4]
 		}],
+		"all_peripheral_status": "true",
 		"header_msge_list": [{
-			"details": [],
-			"code": "PtF.B.001",
-			"description": "Scan Item/ Stage PpsBin",
+			"details": ["1"],
+			"code": "PtF.H.004",
+			"description": "Scan entity from bin  1",
 			"level": "info"
 		}],
 		"api_version": "1"
 	}
 }
-
 
 {
 	"state_data": {

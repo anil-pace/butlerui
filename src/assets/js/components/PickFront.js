@@ -94,6 +94,16 @@ var PickFront = React.createClass({
     else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
       $('.modal').modal('hide');
       $('.modal-backdrop fade in').remove();
+      $('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) ;
+    }
+    else {
+      $('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) ;
     }
 
   },

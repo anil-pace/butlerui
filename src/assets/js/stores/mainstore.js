@@ -210,8 +210,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-            console.log("ashu");
-            console.log(showModal);
         if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
             console.log("jindal");
             console.log(showModal);
@@ -1139,7 +1137,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         else if(status == "fail"){
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
             _seatData.notification_list[0]["level"] = "error";
-        }else {console.log(_seatData.notification_list);
+        }else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";
@@ -1158,6 +1156,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     update_peripheral : function(data, method, index){
        utils.updatePeripherals(data, method, _seatName); 
+    },
+    generateNotification : function(data){
+        if(_seatData.notification_list.length > 0){
+            _seatData.notification_list[0]["code"] = data.code;
+            _seatData.notification_list[0].level = data.level;
+        }else{
+            var notification_list = {
+                "code" : data.code,
+                "level" : data.level,
+                "details" :[],
+                "description" : ""
+            }
+            _seatData.notification_list[0] = notification_list;
+        }    
     },
     getScreenData: function() {
         var data = {};
@@ -1632,6 +1644,10 @@ AppDispatcher.register(function(payload) {
             mainstore.update_peripheral(action.data, action.method, action.index);
             mainstore.emitChange();
             break;
+        case appConstants.GENERATE_NOTIFICATION:
+            mainstore.generateNotification(action.data);
+            mainstore.emitChange();
+            break;    
         default:
             return true;
     }

@@ -36724,6 +36724,12 @@ var commonActions = {
       method : method,
       index : index
     })
+   },
+   generateNotification : function(data){
+     AppDispatcher.handleAction({
+      actionType : appConstants.GENERATE_NOTIFICATION,
+      data : data
+    })
    }
 
 };
@@ -38013,8 +38019,8 @@ var Header = React.createClass({displayName: "Header",
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38022,6 +38028,7 @@ var Header = React.createClass({displayName: "Header",
             reposition: true,
             alwaysOpen: false,
             initialFocus: true,
+            stayOpen:true,
             position: {
                 of: $('.keyboard-actions'),
                 my: 'center top',
@@ -38191,15 +38198,16 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,     
+      initialFocus: true, 
+      stayOpen:true,    
       visible : function(e, keypressed, el){
         el.value = '';
         //$(".authNotify").css("display","none"); 
@@ -38361,8 +38369,8 @@ function attachKeyboard(id){
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
-            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
-            'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
               container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38370,6 +38378,7 @@ function attachKeyboard(id){
             reposition: true,
             alwaysOpen: false,
             initialFocus: true,
+            stayOpen:true,
             visible : function(e, keypressed, el){
               el.value = '';              
             },
@@ -38387,6 +38396,7 @@ function attachNumpad(id){
             reposition   : true,
             alwaysOpen   : false,
             initialFocus : true,
+            stayOpen:true,
             accepted: function(e, keypressed, el) {
             },
             visible : function(e, keypressed, el){
@@ -39199,6 +39209,16 @@ var PickFront = React.createClass({displayName: "PickFront",
     else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
       $('.modal').modal('hide');
       $('.modal-backdrop fade in').remove();
+      $('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) ;
+    }
+    else {
+      $('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) ;
     }
 
   },
@@ -39513,17 +39533,19 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
         }
         data.map(function(value, index){
           var keyValue;
-          for (var key in value[0]) {
-            if(key != 'display_data'){
-              keyValue = value[0][key];
-            }
+          for (var key in value[0]) { 
+            if(key != 'display_data' && key != 'product_local_image_url' ){
+              keyValue = value[0][key] + ' ';
+             }
           }
           value[0].display_data.map(
             function(data_locale, index1){
              if(data_locale.locale == locale){
-                product_info_locale[data_locale.display_name] = keyValue;
+                if(data_locale.display_name != 'product_local_image_url' ){
+                  product_info_locale[data_locale.display_name] = keyValue;
+                }
               }
-              
+            
             }
 
           )
@@ -39607,6 +39629,7 @@ var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
+var resourceConstants = require('../../constants/resourceConstants');
 var  _updatedQty = 0;
 
 var KQ = React.createClass({displayName: "KQ",
@@ -39838,91 +39861,121 @@ var KQ = React.createClass({displayName: "KQ",
             }
         }
     },
-    componentDidMount: function() {
-        if (this.props.scanDetails.kq_allowed === true) {
-            var qty = this.props.scanDetails.current_qty;
-            var itemUid = this.props.itemUid;
-            virtualKeyboard = $('#keyboard').keyboard({
-                layout: 'custom',
-                customLayout: {
-                    'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
-                },
-                reposition: true,
-                alwaysOpen: false,
-                initialFocus: true,
-                visible: function(e, keypressed, el) {
-                    $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
-                    $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
-                },
-                accepted: function(e, keypressed, el) {
-                    if (e.target.value === '' || e.target.value === '0') {
-                        CommonActions.resetNumpadVal(parseInt(qty));
-                    } else {
-
-                        var data = {};
-                         if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                            CommonActions.updateKQQuantity(parseInt(e.target.value));
-                             return true;
-                        }
-                        if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                            if(this.props.action != undefined){
-                                switch(this.props.action){
-                                    case "GOOD":
-                                        CommonActions.updateGoodQuantity(parseInt(e.target.value));
-                                    break;
-                                    case "MISSING":
-                                        CommonActions.updateMissingQuantity(parseInt(e.target.value));
-                                    break;
-                                    case "DAMAGED":
-                                        CommonActions.updateDamagedQuantity(parseInt(e.target.value));
-                                    break;
-                                    default:
-                                }
-                            }
-                            return true;
-                        }
-                        if (mainstore.getCurrentSeat() == "audit_front") {
-                            data = {
-                                "event_name": "audit_actions",
-                                "event_data": {
-                                    "type": "change_qty",
-                                    "quantity": parseInt(e.target.value)
-                                }
-                            };
-                        }
-                        else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
-                             data = {
-                                "event_name": "put_back_exception",
-                                "event_data": {
-                                    "action": "confirm_quantity_update",
-                                    "quantity": parseInt(e.target.value),
-                                    "event":mainstore.getExceptionType()
-                                }
-                            };
-                         }   
-                        else {
-                            data = {
-                                "event_name": "quantity_update_from_gui",
-                                "event_data": {
-                                    "item_uid": itemUid,
-                                    "quantity_updated": parseInt(e.target.value)
-                                }
-                            };
-                        }
-                        CommonActions.postDataToInterface(data);
-                    }
-                }
-            });
-        }
-    },
+  componentDidMount: function() {
+        
+  },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
+  openNumpad : function(){
+    if (this.props.scanDetails.kq_allowed === true) {
+        var qty = this.props.scanDetails.current_qty;
+        var itemUid = this.props.itemUid;
+
+          setTimeout(function(){ $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: {
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+            },
+            reposition: true,
+            alwaysOpen: false,
+            stayOpen:true,
+            initialFocus: true,
+            visible: function(e, keypressed, el) {
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                $(".ui-keyboard").css("width","230px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-button").css("width","74px");
+                $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                $(".current-quantity").val("");
+                $(".ui-widget-content").val("");
+            },
+            change : function(e, keypressed, el){
+                var data ={}
+                if(parseInt(keypressed.last.val) > 9999){
+                    data["code"] = resourceConstants.CLIENTCODE_008;
+                    data["level"] = 'error';
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(9999);
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                    data["code"] = resourceConstants.CLIENTCODE_009;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(_updatedQty);
+                }
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' ) {
+                    CommonActions.resetNumpadVal(parseInt(_updatedQty));
+                } else  {  
+                    var data = {};
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                         return true;
+                    }
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                       if(this.props.action != undefined){
+                            switch(this.props.action){
+                                case "GOOD":
+                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                break;
+                                case "MISSING":
+                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                break;
+                                case "DAMAGED":
+                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                break;
+                                default:
+                            }
+                        }
+                        return true;
+                    }
+                    if (mainstore.getCurrentSeat() == "audit_front") {
+                        data = {
+                            "event_name": "audit_actions",
+                            "event_data": {
+                                "type": "change_qty",
+                                "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
+                            }
+                        };
+                    }   
+                    else {
+                        data = {
+                            "event_name": "quantity_update_from_gui",
+                           "event_data": {
+                                "item_uid": itemUid,
+                                "quantity_updated": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    CommonActions.postDataToInterface(data);
+                }
+            }
+        }); }, 0)
+    }
+
+  },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
+    /*
     if(this.virtualKeyboard != null){
       virtualKeyboard.getkeyboard().close();
     }
+    */
   },
   onChange: function(){ 
     this.setState(getState());
@@ -39942,7 +39995,7 @@ var KQ = React.createClass({displayName: "KQ",
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            }else if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                 }else{
@@ -39967,7 +40020,7 @@ var KQ = React.createClass({displayName: "KQ",
     if(this.props.scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQty}), 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQty, onClick: this.openNumpad.call(null)}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(this.props.scanDetails.total_qty))
           )
@@ -39975,7 +40028,7 @@ var KQ = React.createClass({displayName: "KQ",
     }else{
       this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", value: _updatedQty})
+            React.createElement("input", {id: "keyboard", value: _updatedQty, onClick: this.openNumpad.call(null)})
           )
       );
         }
@@ -39998,7 +40051,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/mainstore":295,"react":230}],262:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../constants/resourceConstants":282,"../../stores/mainstore":295,"react":230}],262:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -40105,15 +40158,17 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
     } 
     data.map(function(value, index){
       var keyValue;
-      for (var key in value[0]) {
-        if(key != 'display_data'){
-          keyValue = value[0][key];
-        }
+      for (var key in value[0]) { 
+        if(key != 'display_data' && key != 'product_local_image_url' ){
+          keyValue = value[0][key] + ' ';
+         }
       }
       value[0].display_data.map(
         function(data_locale, index1){
          if(data_locale.locale == locale){
-            product_info_locale[data_locale.display_name] = keyValue;
+            if(data_locale.display_name != 'product_local_image_url' ){
+              product_info_locale[data_locale.display_name] = keyValue;
+            }
           }
         
         }
@@ -41160,15 +41215,16 @@ var TableRow = React.createClass({displayName: "TableRow",
         setTimeout(function(){ $('#'+id).keyboard({
           layout: 'custom',
           customLayout: {
-            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-            'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
           },
           css: {
             container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
           },
           reposition: true,
           alwaysOpen: false,
-          initialFocus: true,     
+          initialFocus: true,
+          stayOpen:true,     
           visible : function(e, keypressed, el){
             el.value = '';
             //$(".authNotify").css("display","none"); 
@@ -41563,7 +41619,8 @@ var appConstants = {
 	ADD_SCANNER : 'ADD_SCANNER',
 	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT',
 	ADD_SCANNER_DETAILS : "ADD_SCANNER_DETAILS",
-	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER"
+	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER",
+	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION'
 
 };
 
@@ -41596,7 +41653,9 @@ var resourceConstants = {
 	CLIENTCODE_004 : 'CLIENTCODE_004',
 	CLIENTCODE_005 : 'CLIENTCODE_005',
 	CLIENTCODE_006 : 'CLIENTCODE_006',
-	CLIENTCODE_007 : 'CLIENTCODE_007'
+	CLIENTCODE_007 : 'CLIENTCODE_007',
+	CLIENTCODE_008 : 'CLIENTCODE_008',
+	CLIENTCODE_009 : 'CLIENTCODE_009'
 
 };
 module.exports = resourceConstants;
@@ -41747,7 +41806,7 @@ var serverMessages = {
     "PtB.I.007" : "Pptl button press successful",
     "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
     "PtB.I.009" : "Invalid item in tote recorded.",
-    "PtB.I.010" : "damaged entity recorded.WMS Notified.",
+    "PtB.I.010" : "Damaged entity recorded.WMS Notified.",
     "PtB.I.011" : "extra entity recorded in bin.WMS Notified.",
     "PtB.I.012" : "Oversized entity recorded.WMS notified.",
     "PtB.I.013" : "Exception cancelled successfully",
@@ -41818,6 +41877,8 @@ var serverMessages = {
     "CLIENTCODE_005" : "Scanner Management",
     "CLIENTCODE_006" : "Scanner added successfully",
     "CLIENTCODE_007" : "Scanner not added",
+    "CLIENTCODE_008" : "You cannot enter value more than 9999",
+    "CLIENTCODE_009" : "You cannot enter 0",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
@@ -43231,8 +43292,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-            console.log("ashu");
-            console.log(showModal);
         if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
             console.log("jindal");
             console.log(showModal);
@@ -43748,6 +43807,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             } 
             _seatData.product_info.map(function(value, index){
               var keyValue;
+              /*
               for (var key in value[0]) {
                 if(key != 'display_data'){
                   keyValue = value[0][key];
@@ -43761,8 +43821,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                   
                 }
 
-              )
-              
+              )*/
+                for (var key in value[0]) { 
+                    if(key != 'display_data' && key != 'product_local_image_url' ){
+                      keyValue = value[0][key] + ' ';
+                     }
+                }
+                value[0].display_data.map(
+                    function(data_locale, index1){
+                     if(data_locale.locale == locale){
+                        if(data_locale.display_name != 'product_local_image_url' ){
+                          product_info_locale[data_locale.display_name] = keyValue;
+                        }
+                      }                    
+                    }
+                )              
             });
             for (var key in product_info_locale) {
                 if (product_info_locale.hasOwnProperty(key)) {
@@ -44160,7 +44233,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         else if(status == "fail"){
             _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
             _seatData.notification_list[0]["level"] = "error";
-        }else {console.log(_seatData.notification_list);
+        }else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";
@@ -44179,6 +44252,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     update_peripheral : function(data, method, index){
        utils.updatePeripherals(data, method, _seatName); 
+    },
+    generateNotification : function(data){
+        if(_seatData.notification_list.length > 0){
+            _seatData.notification_list[0]["code"] = data.code;
+            _seatData.notification_list[0].level = data.level;
+        }else{
+            var notification_list = {
+                "code" : data.code,
+                "level" : data.level,
+                "details" :[],
+                "description" : ""
+            }
+            _seatData.notification_list[0] = notification_list;
+        }    
     },
     getScreenData: function() {
         var data = {};
@@ -44241,20 +44328,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackBinData"] = this.getBinData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -44653,6 +44740,10 @@ AppDispatcher.register(function(payload) {
             mainstore.update_peripheral(action.data, action.method, action.index);
             mainstore.emitChange();
             break;
+        case appConstants.GENERATE_NOTIFICATION:
+            mainstore.generateNotification(action.data);
+            mainstore.emitChange();
+            break;    
         default:
             return true;
     }

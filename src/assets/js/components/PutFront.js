@@ -14,6 +14,8 @@ var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
 
 
@@ -133,6 +135,7 @@ var PutFront = React.createClass({
         break;
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
+          console.log(this.state.PutFrontExceptionScreen);
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               <div className='grid-container exception'>
@@ -141,7 +144,7 @@ var PutFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Good Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontGoodQuantity} action={"GOOD"} />
+                      <KQ scanDetails = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
@@ -161,11 +164,11 @@ var PutFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Missing Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontMissingQuantity} action={"MISSING"} />
+                      <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
                     </div>
                     <div className = "kq-exception">
                       <div className="kq-header">{"Damaged Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontDamagedQuantity} action={"DAMAGED"} />
+                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">

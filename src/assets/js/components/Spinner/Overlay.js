@@ -7,7 +7,7 @@ var Overlay = React.createClass({
 		return (
 
 			<div className="overlay">
-				<SpinnerButler />
+				<LoaderButler />
 			</div>
 			);
 	}

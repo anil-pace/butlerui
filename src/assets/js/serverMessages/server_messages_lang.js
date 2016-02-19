@@ -69,6 +69,7 @@ function server_messages_list() {
     _("Wrong bin chosen.Try selecting another bin");
     _("Please scan same type of entity to finish this exception.");
     _("Entity scan not expected.");
+    _("Tote not present in Database.");
     _("Tote scan successful.");
     _("PPS is in paused mode. Cannot process new box. Take the entity back.");
     _("Cancel scan successful.");
@@ -82,7 +83,7 @@ function server_messages_list() {
     _("Damaged entity recorded.WMS Notified.");
     _("extra entity recorded in bin.WMS Notified.");
     _("Oversized entity recorded.WMS notified.");
-    _("Exception cancelled successfully");
+    _("Exception cancelled");
     _("Container already stored in the warehouse");
     _("Entity already scanned.Waiting for Pptl button press");
     _("No PpsBins available to stage");

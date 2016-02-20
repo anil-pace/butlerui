@@ -129,15 +129,12 @@ var KQ = React.createClass({
                     switch(this.props.action){
                         case "GOOD":
                             CommonActions.updateGoodQuantity(parseInt(_updatedQty));
-                            _updatedQty = 0;
                         break;
                         case "MISSING":
                             CommonActions.updateMissingQuantity(parseInt(_updatedQty));
-                            _updatedQty = 0;
                         break;
                         case "DAMAGED":
                             CommonActions.updateDamagedQuantity(parseInt(_updatedQty));
-                            _updatedQty = 0;
                         break;
                         default:
                     }
@@ -184,7 +181,6 @@ var KQ = React.createClass({
                 var data = {};
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                     CommonActions.updateKQQuantity(parseInt(_updatedQty) );
-                    _updatedQty = 0;
                      return true;
                 }
                 if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
@@ -192,15 +188,12 @@ var KQ = React.createClass({
                     switch(this.props.action){
                         case "GOOD":
                             CommonActions.updateGoodQuantity(parseInt(_updatedQty) );
-                            _updatedQty = 0;
                         break;
                         case "MISSING":
                             CommonActions.updateMissingQuantity(parseInt(_updatedQty) );
-                            _updatedQty = 0;
                         break;
                         case "DAMAGED":
                             CommonActions.updateDamagedQuantity(parseInt(_updatedQty) );
-                            _updatedQty = 0;
                         break;
                         default:
                     }
@@ -235,7 +228,6 @@ var KQ = React.createClass({
                         }
                     };
                 }
-                _updatedQty = 0;
                 CommonActions.postDataToInterface(data);
             }
         }
@@ -428,12 +420,19 @@ var KQ = React.createClass({
 
     },
     render: function(data) {
-        if(this.props.scanDetailsMissing == undefined && this.props.scanDetailsDamaged == undefined && _updatedQty == 0  ){
+        if(this.props.scanDetailsMissing == undefined && this.props.scanDetailsDamaged == undefined && this.props.scanDetailsGood == undefined  ){
+             this.checkKqAllowed();
+            this.handleTotalQty();
             _updatedQty = parseInt(this.props.scanDetails.current_qty);
             _scanDetails = this.props.scanDetails;
+           
         }
-        this.checkKqAllowed();
-        this.handleTotalQty();
+        else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
+            _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
+            _scanDetails = this.props.scanDetailsGood;
+            this.checkKqAllowed();
+            this.handleTotalQty();
+        }
         
         
         return ( < div className = "kq-wrapper" >

@@ -1025,10 +1025,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011
                     _seatData.notification_list[0].level = "error";
                 }
-                  _pickFrontExceptionScreen = "good";
-                  _goodQuantity = 0;
-                  _damagedQuantity = 0;
-                  _missingQuantity = 0;
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+                  
             } else {
                 _pickFrontExceptionScreen = data;
             }
@@ -1104,14 +1106,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if ((_KQQty) > _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = resourceConstants.CLIENTCODE_010;
+                data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
-                data["details"] = [_seatData.put_quantity];
+                data["details"] = [];
                 _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
                 _seatData.notification_list[0].level = "error";
             }
+            _goodQuantity = 0;
          
         } else {
             var data = {};

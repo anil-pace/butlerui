@@ -144,7 +144,7 @@ var PutFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Good Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
+                      <KQ scanDetailsGood = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
@@ -210,7 +210,7 @@ var PutFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Revised Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontKQQuantity}  />
+                      <KQ scanDetailsGood = {this.state.PutFrontKQQuantity}  />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">

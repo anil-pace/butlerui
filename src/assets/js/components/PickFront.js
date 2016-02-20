@@ -3,6 +3,8 @@ var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -250,7 +252,7 @@ var PickFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Good Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontGoodQuantity} action={"GOOD"} />
+                      <KQ scanDetailsGood = {this.state.PickFrontGoodQuantity} action={"GOOD"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
@@ -270,11 +272,11 @@ var PickFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Missing Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
+                      <KQExceptionMissing scanDetailsMissing = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
                     </div>
                     <div className = "kq-exception">
                       <div className="kq-header">{"Damaged Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
+                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
@@ -293,7 +295,7 @@ var PickFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Please Put Back Damaged Item Quantity into Exception Area . "}</div>
+                      <div className="kq-header">{_("Please Put Back Damaged Item Quantity into Exception Area.")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 

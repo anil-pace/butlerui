@@ -725,21 +725,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             } 
             _seatData.product_info.map(function(value, index){
               var keyValue;
-              /*
-              for (var key in value[0]) {
-                if(key != 'display_data'){
-                  keyValue = value[0][key];
-                }
-              }
-              value[0].display_data.map(
-                function(data_locale, index1){
-                 if(data_locale.locale == locale){
-                    product_info_locale[data_locale.display_name] = keyValue;
-                  }
-                  
-                }
-
-              )*/
+              
                 for (var key in value[0]) { 
                     if(key != 'display_data' && key != 'product_local_image_url' ){
                       keyValue = value[0][key] + ' ';
@@ -784,7 +770,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": this.getkQQuanity(),
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": this.kQstatus()
                 }
             };
@@ -805,7 +791,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _goodQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -820,7 +806,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _missingQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -835,7 +821,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _damagedQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -967,7 +953,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         utils.logError(data);
     },
     getScreenId: function() {
-        console.log(_screenId);
         return _screenId;
     },
     getPpsMode: function(){
@@ -1031,16 +1016,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
-                    data["code"] = "1234";
+                    data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
-                    data["description"] = "Pick Quantity should be equal to damaged ,missing and good";
                     data["details"] = [];
-                    _seatData.notification_list.push(data);
-                    _pickFrontExceptionScreen = "good";
+                    _seatData.notification_list[0] = data;
+                   
                 } else {
-                    _seatData.notification_list[0].description = "Pick Quantity should be equal to damaged ,missing and good";
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011
                     _seatData.notification_list[0].level = "error";
                 }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+                  
             } else {
                 _pickFrontExceptionScreen = data;
             }
@@ -1067,23 +1057,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     validateAndSendDataToServer: function() {
         var flag = false;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+        var details;
+        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
-        else
+            details = _seatData.pick_quantity;
+        }
+        else{
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_010;
                 data["level"] = "error";
-                data["description"] = "Quantity should be equal to damaged ,missing and good";
                 data["details"] = [];
-                _seatData.notification_list.push(data);
-                _putFrontExceptionScreen = "good";
+                _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].description = "Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
                 _seatData.notification_list[0].level = "error";
             }
+            _putFrontExceptionScreen = "good";
+            _goodQuantity = 0;
+            _damagedQuantity = 0;
+            _missingQuantity = 0;
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
@@ -1100,6 +1097,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
+
     },
 
 
@@ -1108,15 +1106,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if ((_KQQty) > _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
-                data["description"] = "Revised Quantity should be less than or equal to put quantity";
                 data["details"] = [];
-                _seatData.notification_list.push(data);
+                _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
                 _seatData.notification_list[0].level = "error";
             }
+            _goodQuantity = 0;
+         
         } else {
             var data = {};
             data["event_name"] = "put_front_exception";

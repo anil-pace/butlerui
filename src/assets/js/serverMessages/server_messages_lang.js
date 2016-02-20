@@ -4,7 +4,7 @@
     cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep -Ev "({|})" | sed 's/$/);/g'
  */
 function server_messages_list() {
-    _("Scan item / Stage pps bin");
+    _("Scan Entity or Stage Bin");
     _("Scan Tote to associate with Bin");
     _("Press PpsBin Button Or Scan a Tote");
     _("User Name");
@@ -69,6 +69,7 @@ function server_messages_list() {
     _("Wrong bin chosen.Try selecting another bin");
     _("Please scan same type of entity to finish this exception.");
     _("Entity scan not expected.");
+    _("Tote not present in Database.");
     _("Tote scan successful.");
     _("PPS is in paused mode. Cannot process new box. Take the entity back.");
     _("Cancel scan successful.");
@@ -82,7 +83,7 @@ function server_messages_list() {
     _("Damaged entity recorded.WMS Notified.");
     _("extra entity recorded in bin.WMS Notified.");
     _("Oversized entity recorded.WMS notified.");
-    _("Exception cancelled successfully");
+    _("Exception cancelled");
     _("Container already stored in the warehouse");
     _("Entity already scanned.Waiting for Pptl button press");
     _("No PpsBins available to stage");
@@ -119,7 +120,7 @@ function server_messages_list() {
     _("Wait for MSU");
     _("Confirm MSU Release");
     _("Scan Slot");
-    _("Scan Items");
+    _("Scan {0} Items");
     _("Scan Box");
     _("Scan Items and Place in Bin");
     _("Press PPTL for Bin to confirm");
@@ -208,4 +209,7 @@ function server_messages_list() {
     _("Scanner not added");
     _("You cannot enter value more than 9999");
     _("You cannot enter 0");
+    _("Pick quantity should be equal to the sum of damaged, missing and good");
+    _("Put quantity should be equal to the sum of damaged, missing and good");
+    _("Quantity should be less than or equal to put quantity");
 }

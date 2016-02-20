@@ -229,6 +229,7 @@ var KQ = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
+    var action = this.props.action;
     if (_scanDetails.kq_allowed === true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
@@ -279,8 +280,8 @@ var KQ = React.createClass({
                          return true;
                     }
                     if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                       if(this.props.action != undefined){
-                            switch(this.props.action){
+                       if(action != undefined){
+                            switch(action){
                                 case "GOOD":
                                     CommonActions.updateGoodQuantity(parseInt(e.target.value));
                                 break;

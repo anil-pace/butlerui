@@ -209,6 +209,7 @@ function server_messages_list() {
     _("Scanner not added");
     _("You cannot enter value more than 9999");
     _("You cannot enter 0");
-    _("Pick quantity should be equal to sum of damaged, missing and good");
-    _("Put quantity should be equal to sum of damaged, missing and good");
+    _("Pick quantity should be equal to the sum of damaged, missing and good");
+    _("Put quantity should be equal to the sum of damaged, missing and good");
+    _("Quantity should be less than or equal to put quantity");
 }

@@ -39869,6 +39869,7 @@ var KQ = React.createClass({displayName: "KQ",
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
+    var action = this.props.action;
     if (_scanDetails.kq_allowed === true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
@@ -39919,8 +39920,8 @@ var KQ = React.createClass({displayName: "KQ",
                          return true;
                     }
                     if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                       if(this.props.action != undefined){
-                            switch(this.props.action){
+                       if(action != undefined){
+                            switch(action){
                                 case "GOOD":
                                     CommonActions.updateGoodQuantity(parseInt(e.target.value));
                                 break;
@@ -40309,11 +40310,12 @@ var KQ = React.createClass({displayName: "KQ",
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
+    var action = this.props.action;
     if (_scanDetails.kq_allowed === true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
 
-          setTimeout(function(){ $('#keyboard').keyboard({
+          setTimeout(function(){ $('#damaged_keyboard').keyboard({
             layout: 'custom',
             customLayout: {
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
@@ -40359,8 +40361,8 @@ var KQ = React.createClass({displayName: "KQ",
                          return true;
                     }
                     if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                       if(this.props.action != undefined){
-                            switch(this.props.action){
+                       if(action != undefined){
+                            switch(action){
                                 case "GOOD":
                                     CommonActions.updateGoodQuantity(parseInt(e.target.value));
                                 break;
@@ -40461,7 +40463,7 @@ var KQ = React.createClass({displayName: "KQ",
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)}), 
+            React.createElement("input", {id: "damaged_keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
@@ -40469,7 +40471,7 @@ var KQ = React.createClass({displayName: "KQ",
     }else{
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)})
+            React.createElement("input", {id: "damaged_keyboard", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)})
           )
         );
     }
@@ -40478,7 +40480,7 @@ var KQ = React.createClass({displayName: "KQ",
     render: function(data) {
          _updatedQtyDamaged  = parseInt(this.props.scanDetailsDamaged.current_qty);
         _scanDetails = this.props.scanDetailsDamaged;
-        
+        console.log(_updatedQtyDamaged);
         this.checkKqAllowed();
         this.handleTotalQty();
      
@@ -40728,6 +40730,7 @@ var KQ = React.createClass({displayName: "KQ",
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
+    var action = this.props.action;
     if (_scanDetails.kq_allowed === true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
@@ -40778,8 +40781,8 @@ var KQ = React.createClass({displayName: "KQ",
                          return true;
                     }
                     if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                       if(this.props.action != undefined){
-                            switch(this.props.action){
+                       if(action != undefined){
+                            switch(action){
                                 case "GOOD":
                                     CommonActions.updateGoodQuantity(parseInt(e.target.value));
                                 break;

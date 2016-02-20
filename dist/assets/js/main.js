@@ -36736,7 +36736,7 @@ var commonActions = {
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":280,"../dispatchers/AppDispatcher":284}],234:[function(require,module,exports){
+},{"../constants/appConstants":282,"../dispatchers/AppDispatcher":286}],234:[function(require,module,exports){
 
 var React = require('react');
 var AuditStore = require('../stores/AuditStore');
@@ -37027,7 +37027,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/AuditStore":289,"../stores/mainstore":295,"../utils/utils.js":296,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ.js":261,"./Rack/MsuRack.js":267,"./Reconcile":271,"./Spinner/LoaderButler":272,"./SystemIdle":275,"./TabularData":278,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/AuditStore":291,"../stores/mainstore":297,"../utils/utils.js":298,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ.js":261,"./Rack/MsuRack.js":269,"./Reconcile":273,"./Spinner/LoaderButler":274,"./SystemIdle":277,"./TabularData":280,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37313,7 +37313,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/mainstore":295,"../Modal/Modal":248,"react":230}],236:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../stores/mainstore":297,"../Modal/Modal":248,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37379,7 +37379,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":292,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
+},{"../../stores/PutBackStore":294,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -37419,7 +37419,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":282,"react":230}],238:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"react":230}],238:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37751,7 +37751,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/PickFrontStore":291,"../../stores/PutBackStore":292,"../../stores/mainstore":295,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../stores/PickFrontStore":293,"../../stores/PutBackStore":294,"../../stores/mainstore":297,"react":230}],239:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37821,7 +37821,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/AuditStore":289,"react":230}],240:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../stores/AuditStore":291,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -37846,7 +37846,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":282,"./Header":246,"react":230}],241:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"./Header":246,"react":230}],241:[function(require,module,exports){
 var React = require('react');[]
 var ExceptionHeader = require('./ExceptionHeader');
 var ExceptionList = require('./ExceptionList');
@@ -37981,7 +37981,7 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":295,"react":230}],245:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":297,"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
 	_component:[],
@@ -38146,7 +38146,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/svgConstants":283,"../stores/mainstore":295,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/svgConstants":285,"../stores/mainstore":297,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -38340,7 +38340,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":282,"../../constants/svgConstants":283,"../../stores/loginstore":294,"../../stores/mainstore":295,"../../utils/utils.js":296,"../Operator":255,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],248:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":284,"../../constants/svgConstants":285,"../../stores/loginstore":296,"../../stores/mainstore":297,"../../utils/utils.js":298,"../Operator":255,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],248:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -38617,7 +38617,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":280,"../../constants/svgConstants":283,"../../stores/PickFrontStore":291,"../../stores/mainstore":295,"../Button/Button":238,"./ModalFooter":249,"./ModalHeader":250,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
+},{"../../constants/appConstants":282,"../../constants/svgConstants":285,"../../stores/PickFrontStore":293,"../../stores/mainstore":297,"../Button/Button":238,"./ModalFooter":249,"./ModalHeader":250,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -38707,7 +38707,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"../../constants/appConstants":280,"react":230}],252:[function(require,module,exports){
+},{"../../constants/appConstants":282,"react":230}],252:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -38899,7 +38899,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":280,"../stores/mainstore":295,"./Audit":234,"./PickBack":256,"./PickFront":257,"./PutBack":265,"./PutFront":266,"./Spinner/Overlay":273,"./SystemIdle":275,"react":230}],256:[function(require,module,exports){
+},{"../constants/appConstants":282,"../stores/mainstore":297,"./Audit":234,"./PickBack":256,"./PickFront":257,"./PutBack":267,"./PutFront":268,"./Spinner/Overlay":275,"./SystemIdle":277,"react":230}],256:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -39112,12 +39112,14 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickBackStore":290,"../stores/mainstore":295,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":264,"./SystemIdle":275,"./TabularData":278,"react":230}],257:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/PickBackStore":292,"../stores/mainstore":297,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":266,"./SystemIdle":277,"./TabularData":280,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -39365,7 +39367,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontGoodQuantity, action: "GOOD"})
+                      React.createElement(KQ, {scanDetailsGood: this.state.PickFrontGoodQuantity, action: "GOOD"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -39385,11 +39387,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontMissingQuantity, action: "MISSING"})
+                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PickFrontMissingQuantity, action: "MISSING"})
                     ), 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -39408,7 +39410,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Please Put Back Damaged Item Quantity into Exception Area . ")
+                      React.createElement("div", {className: "kq-header"}, _("Please Put Back Damaged Item Quantity into Exception Area."))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -39513,7 +39515,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickFrontStore":291,"../stores/mainstore":295,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductDetails.js":258,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"./TabularData":278,"react":230}],258:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/PickFrontStore":293,"../stores/mainstore":297,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductDetails.js":258,"./ProductDetails/KQ":261,"./ProductDetails/KQExceptionDamaged":262,"./ProductDetails/KQExceptionMissing":263,"./ProductDetails/Wrapper":266,"./Rack/MsuRack.js":269,"./Spinner/LoaderButler":274,"./TabularData":280,"react":230}],258:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -39630,34 +39632,32 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
 var resourceConstants = require('../../constants/resourceConstants');
-var  _updatedQty = 0;
+var  _updatedQty = 0, _scanDetails = {},_keypress = false;
 
 var KQ = React.createClass({displayName: "KQ",
-  _appendClassDown : '',
-  _appendClassUp : '',
-  _qtyComponent : null,
-  virtualKeyboard : null,
+    _appendClassDown : '',
+    _appendClassUp : '',
+    _qtyComponent : null,
     _appendClassDown: '',
     _appendClassUp: '',
-    _qtyComponent: null,
-    virtualKeyboard: null,  
-    _myVarDown:null,
-    _myVarUp:null,
-    counter:null, 
-    mouseMoveToggle:false,
+    virtualKeyboard: null, 
+    _id : 'keyboard',
+    _enableIncrement : true,
+    _enableDecrement : true,
     changeValueIncrement : function(){
-
-        if( parseInt(_updatedQty) >= parseInt(this.props.scanDetails.total_qty) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") )
+        if( parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
         {
             return false;
         }
-        _updatedQty++;               
+        
+        _updatedQty++;
         $("#keyboard").val(_updatedQty);
     },
     incrementValue: function(event){
        var self = this;
        var interval;
-        if (this.props.scanDetails.kq_allowed === true) {  
+        if (this._enableIncrement === true) {  
+            _keypress = true;
            if( event.type == "mousedown"){
                 interval = setInterval(this.changeValueIncrement, 300);           
             }
@@ -39667,21 +39667,25 @@ var KQ = React.createClass({displayName: "KQ",
             
             $('.topArrow').mouseup(function() {
                 clearInterval(interval);
+                
             });
             $('.topArrow').mouseout(function(event) {
-                clearInterval(interval);
+                clearInterval(interval);              
             });
          
-
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
                 || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
                 || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-                  console.log(_updatedQty); 
+           
                
             }
-            else if(parseInt(_updatedQty) > parseInt(this.props.scanDetails.total_qty) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0" )) {
+            else if(parseInt(_updatedQty) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
                _updatedQty = _updatedQty - 1; 
             }
+            if(interval == undefined){
+               _keypress = false;
+            }
+            console.log(interval);
             self.handleIncrement();
         }
                                   
@@ -39693,20 +39697,19 @@ var KQ = React.createClass({displayName: "KQ",
         }else{
             _updatedQty--;
         }
-        console.log(_updatedQty);
         if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
             _updatedQty = 1;
-        }       
+        }
+        
         $("#keyboard").val(_updatedQty);
     },
     decrementValue: function(event){
-        console.log(event.type);
         var self = this;
         var interval;
-        if (this.props.scanDetails.kq_allowed === true) { 
-    
+        if (this._enableDecrement === true) { 
+            _keypress = true;
             if( event.type == "mousedown" ){     
                 interval = setInterval(this.changeValueDecrement, 300);                
             
@@ -39718,11 +39721,8 @@ var KQ = React.createClass({displayName: "KQ",
                 }
     
             }
-
-            $('.downArrow').mouseup(function() {
+            $('.downArrow').mouseup(function(){
                 clearInterval(interval);
-                
-
             });
 
             $('.downArrow').mouseout(function(event) {
@@ -39734,21 +39734,23 @@ var KQ = React.createClass({displayName: "KQ",
                 _updatedQty = 1;
             }
 
-          
+            if(interval == undefined){
+                _keypress = false
+            }
             self.handleDecrement();
         }
                           
     },                    
     
-    handleIncrement: function(event, qty) {     
-        console.log(_updatedQty);  
-        if (this.props.scanDetails.kq_allowed === true && (parseInt(_updatedQty) != this.props.scanDetails.current_qty)) {           
-          if((parseInt(_updatedQty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0")){
+    handleIncrement: function(event, qty) { console.log(_keypress);
+        if (this._enableIncrement === true && _keypress == false) {           
+          if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
           }          
                       
             var data = {};
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 CommonActions.updateKQQuantity(parseInt(_updatedQty));
+                _updatedQty = 0;
                 return true;
             }
             if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
@@ -39803,9 +39805,7 @@ var KQ = React.createClass({displayName: "KQ",
         }
     },
     handleDecrement: function(event) {
-        
-        console.log(_updatedQty);
-        if (this.props.scanDetails.kq_allowed === true && (parseInt(_updatedQty) != this.props.scanDetails.current_qty)) {
+        if (this._enableDecrement === true && _keypress == false ) {
             if (parseInt(_updatedQty) >= 0 ) {
                 var data = {};
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
@@ -39862,14 +39862,15 @@ var KQ = React.createClass({displayName: "KQ",
         }
     },
   componentDidMount: function() {
-        
+    mainstore.removeChangeListener(this.onChange);    
+
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  openNumpad : function(){
-    if (this.props.scanDetails.kq_allowed === true) {
-        var qty = this.props.scanDetails.current_qty;
+  openNumpad : function(id){
+    if (_scanDetails.kq_allowed === true) {
+        var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
 
           setTimeout(function(){ $('#keyboard').keyboard({
@@ -39898,7 +39899,7 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
                      mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
@@ -39978,11 +39979,450 @@ var KQ = React.createClass({displayName: "KQ",
     */
   },
   onChange: function(){ 
-    this.setState(getState());
   },
   checkKqAllowed : function(){    
-    if(this.props.scanDetails.kq_allowed === true){        
-      if((parseInt(_updatedQty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") ){          
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
+          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable'; 
+          this._enableDecrement = true;
+          this._enableIncrement = false;         
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+          this._enableIncrement = true;  
+          if (mainstore.getCurrentSeat() == "audit_front"){
+               if(_updatedQty== 0){
+                  this._appendClassDown = 'downArrow disable';
+                    this._enableDecrement = false;
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                  this._enableDecrement = true;
+                } 
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                if(_updatedQty == 0){
+                  this._appendClassDown = 'downArrow disable';
+                  this._enableDecrement = false;
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                  this._enableDecrement = true;
+                }   
+            }
+            else{
+                if(_updatedQty == 1){
+                  this._appendClassDown = 'downArrow disable';
+                  this._enableDecrement = false;
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                  this._enableDecrement = true;
+                }
+            }
+      }
+    }
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+
+        this._enableDecrement = false;
+        this._enableIncrement = false; 
+    }    
+  },
+  handleTotalQty : function(){
+ 
+  
+    if(_scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQty, onClick: this.openNumpad.call(null)}), 
+            React.createElement("span", {className: "separator"}, "/"), 
+            React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
+          )
+        );
+    }else{
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", value: _updatedQty, onClick: this.openNumpad.call(null)})
+          )
+        );
+    }
+
+    },
+    render: function(data) {
+        if(this.props.scanDetailsMissing == undefined && this.props.scanDetailsDamaged == undefined && this.props.scanDetailsGood == undefined  ){
+             this.checkKqAllowed();
+            this.handleTotalQty();
+            _updatedQty = parseInt(this.props.scanDetails.current_qty);
+            _scanDetails = this.props.scanDetails;
+           
+        }
+        else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
+            _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
+            _scanDetails = this.props.scanDetailsGood;
+            this.checkKqAllowed();
+            this.handleTotalQty();
+        }
+        
+        
+        return ( React.createElement("div", {className: "kq-wrapper"}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
+            )
+        )
+
+    }
+});
+
+module.exports = KQ;
+
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"react":230}],262:[function(require,module,exports){
+var React = require('react');
+var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+var appConstants = require('../../constants/appConstants');
+var resourceConstants = require('../../constants/resourceConstants');
+var  _updatedQtyDamaged = 0, _scanDetails = {};
+
+var KQ = React.createClass({displayName: "KQ",
+    _appendClassDown : '',
+    _appendClassUp : '',
+    _qtyComponent : null,
+    _appendClassDown: '',
+    _appendClassUp: '',
+    virtualKeyboard: null, 
+    _id : 'keyboard',
+    changeValueIncrement : function(){
+        if( parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
+        {
+            return false;
+        }
+        _updatedQtyDamaged ++;
+        this.handleIncrement();             
+       // $("#"+this._id).val(_updatedQty);
+    },
+    incrementValue: function(event){
+       var self = this;
+       var interval;
+        if (_scanDetails.kq_allowed === true) {  
+           if( event.type == "mousedown"){
+                interval = setInterval(this.changeValueIncrement, 300);           
+            }
+            else if(event.type == 'click'){
+                _updatedQtyDamaged ++;
+            }
+            
+            $('.topArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+            $('.topArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+         
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
+                || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
+                || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+          
+               
+            }
+            else if(parseInt(_updatedQtyDamaged ) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
+               _updatedQtyDamaged  = _updatedQtyDamaged  - 1; 
+            }
+            self.handleIncrement();
+        }
+                                  
+    },  
+    changeValueDecrement : function(){
+
+        if(_updatedQtyDamaged  <= 0 ){
+            _updatedQtyDamaged  = 0;
+        }else{
+            _updatedQtyDamaged --;
+        }
+        if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+            _updatedQtyDamaged  = 1;
+        }
+        this.handleDecrement();        
+       // $("#"+this._id).val(_updatedQty);
+    },
+    decrementValue: function(event){
+        var self = this;
+        var interval;
+        if (_scanDetails.kq_allowed === true) { 
+    
+            if( event.type == "mousedown" ){     
+                interval = setInterval(this.changeValueDecrement, 300);                
+            
+            }else if(event.type == 'click') {
+               if(_updatedQtyDamaged  <= 0){
+                _updatedQtyDamaged  = 0;
+                }else{
+                _updatedQtyDamaged --;
+                }
+    
+            }
+            $('.downArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+
+            $('.downArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+             if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+                _updatedQtyDamaged  = 1;
+            }
+
+          
+            self.handleDecrement();
+        }
+                          
+    },                    
+    
+    handleIncrement: function(event, qty) { 
+        if (_scanDetails.kq_allowed === true ) {           
+          if((parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
+          }          
+                      
+            var data = {};
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ));
+                return true;
+            }
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyDamaged ));
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyDamaged ));
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged ));
+                        break;
+                        default:
+                    }
+                }
+                return true;
+            }
+
+            if (mainstore.getCurrentSeat() == "audit_front") {
+
+                data = {
+                    "event_name": "audit_actions",
+                    "event_data": {
+                        "type": "change_qty",
+                        "quantity": parseInt(_updatedQtyDamaged )
+                    }
+                };
+            } 
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyDamaged ),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+            }  
+            else {
+                data = {
+                    "event_name": "quantity_update_from_gui",
+                    "event_data": {
+                        "item_uid": this.props.itemUid,
+                        "quantity_updated": parseInt(_updatedQtyDamaged )
+                    }
+                };
+            }
+            mainstore.setShowModal(false);
+            CommonActions.postDataToInterface(data);
+        }
+    },
+    handleDecrement: function(event) {
+        if (_scanDetails.kq_allowed === true ) {
+            if (parseInt(_updatedQtyDamaged ) >= 0 ) {
+                var data = {};
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                    CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ) );
+                     return true;
+                }
+                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyDamaged ) );
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyDamaged ) );
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged ) );
+                        break;
+                        default:
+                    }
+                }
+                return true;
+                }
+                if (mainstore.getCurrentSeat() == "audit_front") {
+                    data = {
+                        "event_name": "audit_actions",
+                        "event_data": {
+                            "type": "change_qty",
+                            "quantity": parseInt(_updatedQtyDamaged )
+                        }
+                    };
+                }
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyDamaged ),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+                }   
+                else {
+                    data = {
+                        "event_name": "quantity_update_from_gui",
+                        "event_data": {
+                            "item_uid": this.props.itemUid,
+                            "quantity_updated": parseInt(_updatedQtyDamaged )
+                        }
+                    };
+                }
+                CommonActions.postDataToInterface(data);
+            }
+        }
+    },
+  componentDidMount: function() {
+    mainstore.removeChangeListener(this.onChange);    
+
+  },
+  componentWillMount: function(){
+    mainstore.removeChangeListener(this.onChange);
+  },
+  openNumpad : function(id){
+    if (_scanDetails.kq_allowed === true) {
+        var qty = _scanDetails.current_qty;
+        var itemUid = this.props.itemUid;
+
+          setTimeout(function(){ $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: {
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+            },
+            reposition: true,
+            alwaysOpen: false,
+            stayOpen:true,
+            initialFocus: true,
+            visible: function(e, keypressed, el) {
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                $(".ui-keyboard").css("width","230px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-button").css("width","74px");
+                $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                $(".current-quantity").val("");
+                $(".ui-widget-content").val("");
+            },
+            change : function(e, keypressed, el){
+                var data ={}
+                if(parseInt(keypressed.last.val) > 9999){
+                    data["code"] = resourceConstants.CLIENTCODE_008;
+                    data["level"] = 'error';
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(9999);
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                    data["code"] = resourceConstants.CLIENTCODE_009;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(_updatedQtyDamaged );
+                }
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' ) {
+                    CommonActions.resetNumpadVal(parseInt(_updatedQtyDamaged ));
+                } else  {  
+                    var data = {};
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                         return true;
+                    }
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                       if(this.props.action != undefined){
+                            switch(this.props.action){
+                                case "GOOD":
+                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                break;
+                                case "MISSING":
+                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                break;
+                                case "DAMAGED":
+                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                break;
+                                default:
+                            }
+                        }
+                        return true;
+                    }
+                    if (mainstore.getCurrentSeat() == "audit_front") {
+                        data = {
+                            "event_name": "audit_actions",
+                            "event_data": {
+                                "type": "change_qty",
+                                "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
+                            }
+                        };
+                    }   
+                    else {
+                        data = {
+                            "event_name": "quantity_update_from_gui",
+                           "event_data": {
+                                "item_uid": itemUid,
+                                "quantity_updated": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    CommonActions.postDataToInterface(data);
+                }
+            }
+        }); }, 0)
+    }
+
+  },
+  componentWillUnmount: function(){    
+    mainstore.removeChangeListener(this.onChange);
+    /*
+    if(this.virtualKeyboard != null){
+      virtualKeyboard.getkeyboard().close();
+    }
+    */
+  },
+  onChange: function(){ 
+  },
+  checkKqAllowed : function(){    
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
           
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
@@ -39990,20 +40430,20 @@ var KQ = React.createClass({displayName: "KQ",
       else{
           this._appendClassUp = 'topArrow enable';
           if (mainstore.getCurrentSeat() == "audit_front"){
-               if(_updatedQty== 0){
+               if(_updatedQtyDamaged == 0){
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                if(_updatedQty == 0){
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                if(_updatedQtyDamaged  == 0){
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 }   
             }
             else{
-                if(_updatedQty == 1){
+                if(_updatedQtyDamaged  == 1){
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
@@ -40017,31 +40457,36 @@ var KQ = React.createClass({displayName: "KQ",
     }    
   },
   handleTotalQty : function(){
-    if(this.props.scanDetails.total_qty != 0 ){
+ 
+    if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQty, onClick: this.openNumpad.call(null)}), 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)}), 
             React.createElement("span", {className: "separator"}, "/"), 
-            React.createElement("span", {className: "total-quantity"}, parseInt(this.props.scanDetails.total_qty))
+            React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
         );
     }else{
-      this._qtyComponent = (
+        this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", value: _updatedQty, onClick: this.openNumpad.call(null)})
+            React.createElement("input", {id: "keyboard", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)})
           )
-      );
-        }
+        );
+    }
 
     },
     render: function(data) {
+         _updatedQtyDamaged  = parseInt(this.props.scanDetailsDamaged.current_qty);
+        _scanDetails = this.props.scanDetailsDamaged;
+        
         this.checkKqAllowed();
         this.handleTotalQty();
-        _updatedQty = parseInt(this.props.scanDetails.current_qty);
+     
+        
         return ( React.createElement("div", {className: "kq-wrapper"}, 
-            React.createElement("a", {href: "#", className: this._appendClassUp, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
-            React.createElement("a", {href: "#", className: this._appendClassDown, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
             )
         )
@@ -40051,7 +40496,427 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../constants/resourceConstants":282,"../../stores/mainstore":295,"react":230}],262:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"react":230}],263:[function(require,module,exports){
+var React = require('react');
+var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+var appConstants = require('../../constants/appConstants');
+var resourceConstants = require('../../constants/resourceConstants');
+var  _updatedQtyMissing = 0, _scanDetails = {};
+
+var KQ = React.createClass({displayName: "KQ",
+    _appendClassDown : '',
+    _appendClassUp : '',
+    _qtyComponent : null,
+    _appendClassDown: '',
+    _appendClassUp: '',
+    virtualKeyboard: null, 
+    _id : 'keyboard',
+    changeValueIncrement : function(){
+        if( parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
+        {
+            return false;
+        }
+        _updatedQtyMissing++;
+        this.handleIncrement();             
+       // $("#"+this._id).val(_updatedQty);
+    },
+    incrementValue: function(event){
+       var self = this;
+       var interval;
+        if (_scanDetails.kq_allowed === true) {  
+           if( event.type == "mousedown"){
+                interval = setInterval(this.changeValueIncrement, 300);           
+            }
+            else if(event.type == 'click'){
+                _updatedQtyMissing++;
+            }
+            
+            $('.topArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+            $('.topArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+         
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
+                || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
+                || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+          
+               
+            }
+            else if(parseInt(_updatedQtyMissing) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
+               _updatedQtyMissing = _updatedQtyMissing - 1; 
+            }
+            self.handleIncrement();
+        }
+                                  
+    },  
+    changeValueDecrement : function(){
+
+        if(_updatedQtyMissing <= 0 ){
+            _updatedQtyMissing = 0;
+        }else{
+            _updatedQtyMissing--;
+        }
+        if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+            _updatedQtyMissing = 1;
+        }
+        this.handleDecrement();        
+       // $("#"+this._id).val(_updatedQtyMissing);
+    },
+    decrementValue: function(event){
+        var self = this;
+        var interval;
+        if (_scanDetails.kq_allowed === true) { 
+    
+            if( event.type == "mousedown" ){     
+                interval = setInterval(this.changeValueDecrement, 300);                
+            
+            }else if(event.type == 'click') {
+               if(_updatedQtyMissing <= 0){
+                _updatedQtyMissing = 0;
+                }else{
+                _updatedQtyMissing--;
+                }
+    
+            }
+            $('.downArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+
+            $('.downArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+             if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+                _updatedQtyMissing = 1;
+            }
+
+          
+            self.handleDecrement();
+        }
+                          
+    },                    
+    
+    handleIncrement: function(event, qty) { 
+        if (_scanDetails.kq_allowed === true ) {           
+          if((parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
+          }          
+                      
+            var data = {};
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                CommonActions.updateKQQuantity(parseInt(_updatedQtyMissing));
+                return true;
+            }
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyMissing));
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyMissing));
+                        break;
+                        default:
+                    }
+                }
+                return true;
+            }
+
+            if (mainstore.getCurrentSeat() == "audit_front") {
+
+                data = {
+                    "event_name": "audit_actions",
+                    "event_data": {
+                        "type": "change_qty",
+                        "quantity": parseInt(_updatedQtyMissing)
+                    }
+                };
+            } 
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyMissing),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+            }  
+            else {
+                data = {
+                    "event_name": "quantity_update_from_gui",
+                    "event_data": {
+                        "item_uid": this.props.itemUid,
+                        "quantity_updated": parseInt(_updatedQtyMissing)
+                    }
+                };
+            }
+            mainstore.setShowModal(false);
+            CommonActions.postDataToInterface(data);
+        }
+    },
+    handleDecrement: function(event) {
+        if (_scanDetails.kq_allowed === true ) {
+            if (parseInt(_updatedQtyMissing) >= 0 ) {
+                var data = {};
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                    CommonActions.updateKQQuantity(parseInt(_updatedQtyMissing) );
+                     return true;
+                }
+                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyMissing) );
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing) );
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyMissing) );
+                        break;
+                        default:
+                    }
+                }
+                return true;
+                }
+                if (mainstore.getCurrentSeat() == "audit_front") {
+                    data = {
+                        "event_name": "audit_actions",
+                        "event_data": {
+                            "type": "change_qty",
+                            "quantity": parseInt(_updatedQtyMissing)
+                        }
+                    };
+                }
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyMissing),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+                }   
+                else {
+                    data = {
+                        "event_name": "quantity_update_from_gui",
+                        "event_data": {
+                            "item_uid": this.props.itemUid,
+                            "quantity_updated": parseInt(_updatedQtyMissing)
+                        }
+                    };
+                }
+                CommonActions.postDataToInterface(data);
+            }
+        }
+    },
+  componentDidMount: function() {
+    mainstore.removeChangeListener(this.onChange);    
+
+  },
+  componentWillMount: function(){
+    mainstore.removeChangeListener(this.onChange);
+  },
+  openNumpad : function(id){
+    if (_scanDetails.kq_allowed === true) {
+        var qty = _scanDetails.current_qty;
+        var itemUid = this.props.itemUid;
+
+          setTimeout(function(){ $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: {
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+            },
+            reposition: true,
+            alwaysOpen: false,
+            stayOpen:true,
+            initialFocus: true,
+            visible: function(e, keypressed, el) {
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                $(".ui-keyboard").css("width","230px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-button").css("width","74px");
+                $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                $(".current-quantity").val("");
+                $(".ui-widget-content").val("");
+            },
+            change : function(e, keypressed, el){
+                var data ={}
+                if(parseInt(keypressed.last.val) > 9999){
+                    data["code"] = resourceConstants.CLIENTCODE_008;
+                    data["level"] = 'error';
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(9999);
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                    data["code"] = resourceConstants.CLIENTCODE_009;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(_updatedQtyMissing);
+                }
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' ) {
+                    CommonActions.resetNumpadVal(parseInt(_updatedQtyMissing));
+                } else  {  
+                    var data = {};
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                         return true;
+                    }
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                       if(this.props.action != undefined){
+                            switch(this.props.action){
+                                case "GOOD":
+                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                break;
+                                case "MISSING":
+                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                break;
+                                case "DAMAGED":
+                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                break;
+                                default:
+                            }
+                        }
+                        return true;
+                    }
+                    if (mainstore.getCurrentSeat() == "audit_front") {
+                        data = {
+                            "event_name": "audit_actions",
+                            "event_data": {
+                                "type": "change_qty",
+                                "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
+                            }
+                        };
+                    }   
+                    else {
+                        data = {
+                            "event_name": "quantity_update_from_gui",
+                           "event_data": {
+                                "item_uid": itemUid,
+                                "quantity_updated": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    CommonActions.postDataToInterface(data);
+                }
+            }
+        }); }, 0)
+    }
+
+  },
+  componentWillUnmount: function(){    
+    mainstore.removeChangeListener(this.onChange);
+    /*
+    if(this.virtualKeyboard != null){
+      virtualKeyboard.getkeyboard().close();
+    }
+    */
+  },
+  onChange: function(){ 
+  },
+  checkKqAllowed : function(){    
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
+          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable';          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+          if (mainstore.getCurrentSeat() == "audit_front"){
+               if(_updatedQtyMissing == 0){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                } 
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                if(_updatedQtyMissing == 0){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                }   
+            }
+            else{
+                if(_updatedQtyMissing == 1){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                }
+            }
+      }
+    }
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+    }    
+  },
+  handleTotalQty : function(){
+ 
+    if(_scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null)}), 
+            React.createElement("span", {className: "separator"}, "/"), 
+            React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
+          )
+        );
+    }else{
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", value: _updatedQtyMissing, onClick: this.openNumpad.call(null)})
+          )
+        );
+    }
+
+    },
+    render: function(data) {
+         _updatedQtyMissing = parseInt(this.props.scanDetailsMissing.current_qty);
+        _scanDetails = this.props.scanDetailsMissing;
+
+        this.checkKqAllowed();
+        this.handleTotalQty();
+       
+     
+        
+        return ( React.createElement("div", {className: "kq-wrapper"}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
+            )
+        )
+
+    }
+});
+
+module.exports = KQ;
+
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"react":230}],264:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -40097,7 +40962,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],263:[function(require,module,exports){
+},{"react":230}],265:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -40195,7 +41060,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":282,"../../stores/mainstore":295,"../Modal/Modal":248,"./PopUp":262,"react":230}],264:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"../Modal/Modal":248,"./PopUp":264,"react":230}],266:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -40228,7 +41093,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":295,"./KQ":261,"./PopUp":262,"./ProductInfo":263,"react":230}],265:[function(require,module,exports){
+},{"../../stores/mainstore":297,"./KQ":261,"./PopUp":264,"./ProductInfo":265,"react":230}],267:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -40535,7 +41400,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":280,"../stores/PutBackStore":292,"../stores/mainstore":295,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Reconcile":271,"./SystemIdle":275,"./TabularData":278,"react":230}],266:[function(require,module,exports){
+},{"../constants/appConstants":282,"../stores/PutBackStore":294,"../stores/mainstore":297,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":266,"./Reconcile":273,"./SystemIdle":277,"./TabularData":280,"react":230}],268:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -40552,6 +41417,8 @@ var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
 
 
@@ -40671,6 +41538,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
+          console.log(this.state.PutFrontExceptionScreen);
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -40679,7 +41547,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontGoodQuantity, action: "GOOD"})
+                      React.createElement(KQ, {scanDetailsGood: this.state.PutFrontGoodQuantity, id: 'good_keyboard', action: "GOOD"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -40699,11 +41567,11 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontMissingQuantity, action: "MISSING"})
+                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
                     ), 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontDamagedQuantity, action: "DAMAGED"})
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -40745,7 +41613,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Revised Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontKQQuantity})
+                      React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -40808,7 +41676,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":280,"../stores/PutFrontStore":293,"../stores/mainstore":295,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"./TabularData":278,"react":230}],267:[function(require,module,exports){
+},{"../constants/appConstants":282,"../stores/PutFrontStore":295,"../stores/mainstore":297,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/KQ":261,"./ProductDetails/KQExceptionDamaged":262,"./ProductDetails/KQExceptionMissing":263,"./ProductDetails/Wrapper":266,"./Rack/MsuRack.js":269,"./Spinner/LoaderButler":274,"./TabularData":280,"react":230}],269:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -40902,7 +41770,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":268,"react":230}],268:[function(require,module,exports){
+},{"./RackRow":270,"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -40950,7 +41818,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":269,"react":230}],269:[function(require,module,exports){
+},{"./RackSlot":271,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -40992,7 +41860,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":270,"react":230}],270:[function(require,module,exports){
+},{"./SingleSlot":272,"react":230}],272:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -41012,7 +41880,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],271:[function(require,module,exports){
+},{"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -41050,7 +41918,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 
 module.exports = ReconcileStatus;
 
-},{"../constants/resourceConstants":282,"./Header":246,"react":230}],272:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"./Header":246,"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var SpinnerButler = require('./SpinnerButler');
 
@@ -41067,7 +41935,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"./SpinnerButler":274,"react":230}],273:[function(require,module,exports){
+},{"./SpinnerButler":276,"react":230}],275:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -41077,7 +41945,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 		return (
 
 			React.createElement("div", {className: "overlay"}, 
-				React.createElement(SpinnerButler, null)
+				React.createElement(LoaderButler, null)
 			)
 			);
 	}
@@ -41085,34 +41953,22 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":272,"./SpinnerButler":274,"react":230}],274:[function(require,module,exports){
+},{"./LoaderButler":274,"./SpinnerButler":276,"react":230}],276:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 	render:function(){
 		return (
-				React.createElement("div", {className: "sk-fading-circle"}, 
-					  React.createElement("div", {className: "sk-circle1 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle2 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle3 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle4 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle5 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle6 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle7 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle8 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle9 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle10 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle11 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle12 sk-circle"})
+				React.createElement("div", {className: "hexdots-loader"}
+
 				)
-			
 			);
 	}
 });
 
 module.exports = SpinnerButler;
 
-},{"react":230}],275:[function(require,module,exports){
+},{"react":230}],277:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -41132,7 +41988,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":282,"./Header":246,"react":230}],276:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"./Header":246,"react":230}],278:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -41174,7 +42030,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"../constants/appConstants":280,"./Button/IconButton":239,"react":230}],277:[function(require,module,exports){
+},{"../constants/appConstants":282,"./Button/IconButton":239,"react":230}],279:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -41285,7 +42141,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/mainstore":295,"./Button/IconButton":239,"react":230}],278:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/mainstore":297,"./Button/IconButton":239,"react":230}],280:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -41317,7 +42173,7 @@ var TabularData = React.createClass({displayName: "TabularData",
 
 module.exports = TabularData;
 
-},{"./TableHeader":276,"./TableRow":277,"react":230}],279:[function(require,module,exports){
+},{"./TableHeader":278,"./TableRow":279,"react":230}],281:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
@@ -41484,7 +42340,7 @@ var navData = {
 
 module.exports = navData;
 
-},{"../constants/svgConstants":283}],280:[function(require,module,exports){
+},{"../constants/svgConstants":285}],282:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
@@ -41626,7 +42482,7 @@ var appConstants = {
 
 module.exports = appConstants;
 
-},{}],281:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 var configConstants = {
 	WEBSOCKET_IP : "wss://localhost:8888/wss",
 	INTERFACE_IP : "https://localhost:5000"
@@ -41635,7 +42491,7 @@ var configConstants = {
 
 module.exports = configConstants;
 
-},{}],282:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',
@@ -41655,12 +42511,15 @@ var resourceConstants = {
 	CLIENTCODE_006 : 'CLIENTCODE_006',
 	CLIENTCODE_007 : 'CLIENTCODE_007',
 	CLIENTCODE_008 : 'CLIENTCODE_008',
-	CLIENTCODE_009 : 'CLIENTCODE_009'
+	CLIENTCODE_009 : 'CLIENTCODE_009',
+	CLIENTCODE_010 : 'CLIENTCODE_010',
+	CLIENTCODE_011 :'CLIENTCODE_011',
+	CLIENTCODE_012 :'CLIENTCODE_012'
 
 };
 module.exports = resourceConstants;
 
-},{}],283:[function(require,module,exports){
+},{}],285:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -41684,7 +42543,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],284:[function(require,module,exports){
+},{}],286:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -41698,7 +42557,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":46}],285:[function(require,module,exports){
+},{"flux":46}],287:[function(require,module,exports){
 (function (global){
 global.jQuery = global.$ = require("jquery");
 var React = require('react');
@@ -41727,7 +42586,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":247,"./components/Operator":255,"jquery":67,"react":230,"react-dom":74}],286:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":247,"./components/Operator":255,"jquery":67,"react":230,"react-dom":74}],288:[function(require,module,exports){
 var chinese = {
     "Password": "\u5bc6\u7801",
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
@@ -41738,16 +42597,16 @@ var chinese = {
 
 module.exports = chinese;
 
-},{}],287:[function(require,module,exports){
+},{}],289:[function(require,module,exports){
 var english = {
 
 };
 
 module.exports = english;
 
-},{}],288:[function(require,module,exports){
+},{}],290:[function(require,module,exports){
 var serverMessages = {
-    "PtB.B.001": "Scan item / Stage pps bin",
+    "PtB.B.001": "Scan Entity or Stage Bin",
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are you sure you want to close Tote",
@@ -41776,6 +42635,7 @@ var serverMessages = {
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same type of entity to finish this exception.",
     "PtB.E.018" : "Entity scan not expected.",  
+    "PtB.E.019" : "Tote not present in Database.",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
@@ -41785,7 +42645,7 @@ var serverMessages = {
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
-    "PkF.H.004" : "Scan Items",
+    "PkF.H.004" : "Scan {0} Items",
     "PkF.H.005" : "Scan Box",
     "PkF.H.006" : "Scan Items and Place in Bin",
     "PkF.H.007" : "Press PPTL for Bin to confirm",
@@ -41809,7 +42669,7 @@ var serverMessages = {
     "PtB.I.010" : "Damaged entity recorded.WMS Notified.",
     "PtB.I.011" : "extra entity recorded in bin.WMS Notified.",
     "PtB.I.012" : "Oversized entity recorded.WMS notified.",
-    "PtB.I.013" : "Exception cancelled successfully",
+    "PtB.I.013" : "Exception cancelled",
     "PtB.I.014" : "Cancelled excess entity in tote",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
@@ -41879,6 +42739,9 @@ var serverMessages = {
     "CLIENTCODE_007" : "Scanner not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
     "CLIENTCODE_009" : "You cannot enter 0",
+    "CLIENTCODE_010" : "Put quantity should be equal to the sum of damaged, missing and good",
+    "CLIENTCODE_011" : "Pick quantity should be equal to the sum of damaged, missing and good ",
+    "CLIENTCODE_012"  : "Quantity should be less than or equal to put quantity",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",
@@ -41952,7 +42815,7 @@ var serverMessages = {
 
 module.exports = serverMessages;
 
-},{}],289:[function(require,module,exports){
+},{}],291:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -42285,7 +43148,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../dispatchers/AppDispatcher":284,"../utils/utils":296,"events":14,"object-assign":68}],290:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],292:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -42391,7 +43254,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../dispatchers/AppDispatcher":284,"../utils/utils":296,"events":14,"object-assign":68}],291:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],293:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -42572,7 +43435,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../dispatchers/AppDispatcher":284,"../utils/utils":296,"events":14,"object-assign":68}],292:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],294:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var SVGConstants = require('../constants/svgConstants');
@@ -42841,7 +43704,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../constants/svgConstants":283,"../dispatchers/AppDispatcher":284,"../utils/utils":296,"events":14,"object-assign":68}],293:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../constants/svgConstants":285,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],295:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -42959,7 +43822,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../dispatchers/AppDispatcher":284,"../utils/utils":296,"events":14,"object-assign":68}],294:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],296:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -43079,7 +43942,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../constants/configConstants":281,"../dispatchers/AppDispatcher":284,"../utils/utils.js":296,"events":14,"react/lib/Object.assign":121}],295:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../constants/configConstants":283,"../dispatchers/AppDispatcher":286,"../utils/utils.js":298,"events":14,"react/lib/Object.assign":121}],297:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -43807,21 +44670,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             } 
             _seatData.product_info.map(function(value, index){
               var keyValue;
-              /*
-              for (var key in value[0]) {
-                if(key != 'display_data'){
-                  keyValue = value[0][key];
-                }
-              }
-              value[0].display_data.map(
-                function(data_locale, index1){
-                 if(data_locale.locale == locale){
-                    product_info_locale[data_locale.display_name] = keyValue;
-                  }
-                  
-                }
-
-              )*/
+              
                 for (var key in value[0]) { 
                     if(key != 'display_data' && key != 'product_local_image_url' ){
                       keyValue = value[0][key] + ' ';
@@ -43866,7 +44715,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": this.getkQQuanity(),
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": this.kQstatus()
                 }
             };
@@ -43887,7 +44736,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _goodQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -43902,7 +44751,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _missingQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -43917,7 +44766,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _damagedQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -44049,7 +44898,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         utils.logError(data);
     },
     getScreenId: function() {
-        console.log(_screenId);
         return _screenId;
     },
     getPpsMode: function(){
@@ -44113,16 +44961,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
-                    data["code"] = "1234";
+                    data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
-                    data["description"] = "Pick Quantity should be equal to damaged ,missing and good";
                     data["details"] = [];
-                    _seatData.notification_list.push(data);
-                    _pickFrontExceptionScreen = "good";
+                    _seatData.notification_list[0] = data;
+                   
                 } else {
-                    _seatData.notification_list[0].description = "Pick Quantity should be equal to damaged ,missing and good";
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011
                     _seatData.notification_list[0].level = "error";
                 }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+                  
             } else {
                 _pickFrontExceptionScreen = data;
             }
@@ -44149,23 +45002,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     validateAndSendDataToServer: function() {
         var flag = false;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+        var details;
+        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
-        else
+            details = _seatData.pick_quantity;
+        }
+        else{
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_010;
                 data["level"] = "error";
-                data["description"] = "Quantity should be equal to damaged ,missing and good";
                 data["details"] = [];
-                _seatData.notification_list.push(data);
-                _putFrontExceptionScreen = "good";
+                _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].description = "Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
                 _seatData.notification_list[0].level = "error";
             }
+            _putFrontExceptionScreen = "good";
+            _goodQuantity = 0;
+            _damagedQuantity = 0;
+            _missingQuantity = 0;
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
@@ -44182,6 +45042,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
+
     },
 
 
@@ -44190,15 +45051,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if ((_KQQty) > _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
-                data["description"] = "Revised Quantity should be less than or equal to put quantity";
                 data["details"] = [];
-                _seatData.notification_list.push(data);
+                _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
                 _seatData.notification_list[0].level = "error";
             }
+            _goodQuantity = 0;
+         
         } else {
             var data = {};
             data["event_name"] = "put_front_exception";
@@ -44751,7 +45613,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../constants/svgConstants":283,"../dispatchers/AppDispatcher":284,"../serverMessages/chinese":286,"../serverMessages/english":287,"../serverMessages/server_messages":288,"../utils/utils":296,"events":14,"react/lib/Object.assign":121}],296:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../constants/svgConstants":285,"../dispatchers/AppDispatcher":286,"../serverMessages/chinese":288,"../serverMessages/english":289,"../serverMessages/server_messages":290,"../utils/utils":298,"events":14,"react/lib/Object.assign":121}],298:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -44978,4 +45840,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../constants/configConstants":281,"../serverMessages/server_messages":288,"events":14,"react/lib/Object.assign":121}]},{},[285]);
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../constants/configConstants":283,"../serverMessages/server_messages":290,"events":14,"react/lib/Object.assign":121}]},{},[287]);

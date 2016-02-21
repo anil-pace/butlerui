@@ -36,7 +36,29 @@ describe("KQMod", function(){
 		var result = kQMod.handleIncrement(true, false , -1, _scanDetails, "put_back_scan",  appConstants);
 
 		expect(result).toBe("Fail with negative number");
-	})
+	});
+
+	it("check with updated qty == negative number and total quantity != 0", function(){
+		_scanDetails = {
+			"current_qty" :  0,
+			"total_qty" : 2,
+			"kq_allowed" : true
+		}
+		var result = kQMod.handleIncrement(true, false , -1, _scanDetails, "put_back_scan",  appConstants);
+
+		expect(result).toBe("Fail with negative number and total qty != 0");
+	});
+
+	it("check with updated qty == 0 and total quantity == 0", function(){
+		_scanDetails = {
+			"current_qty" :  0,
+			"total_qty" :0,
+			"kq_allowed" : true
+		}
+		var result = kQMod.handleIncrement(true, false , 0, _scanDetails, "put_back_scan",  appConstants);
+
+		expect(result).toBe("should update depending upon states");
+	});
 
 	/*it("check with wrong username and password" , function(){
 		var credentails = loginMod.clickLoginButton("test" , "1234444");

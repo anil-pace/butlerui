@@ -3,11 +3,19 @@ function KQMod() {
 }
 
 KQMod.prototype.handleIncrement = function(_enableIncrement, _keypress, _updatedQty, _scanDetails, screenId,  appConstants) {
-	
-	if (_enableIncrement === true && _keypress == false) {           
+    
+    if (_enableIncrement === true && _keypress == false) {           
           if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
           }else{
-          	return "Fail with negative number";
+            if(_updatedQty < 0 && _scanDetails.total_qty == 0){ 
+                return "Fail with negative number";
+            }
+            else if(_updatedQty < 0 && _scanDetails.total_qty != 0){
+                return "Fail with negative number and total qty != 0";
+            }
+            else if(_updatedQty == 0 && _scanDetails.total_qty == 0){
+                return "should update depending upon states";
+            }
           }          
                       
             var data = {};
@@ -68,11 +76,11 @@ KQMod.prototype.handleIncrement = function(_enableIncrement, _keypress, _updated
             CommonActions.postDataToInterface(data);*/
             return "Update";
         }else{
-        	return "Fail";
+            return "Fail";
         }
 }
 KQMod.prototype.clickLoginButton = function(username, password) {
-	console.log(username, password);
-	// body...
+    console.log(username, password);
+    // body...
 }
 

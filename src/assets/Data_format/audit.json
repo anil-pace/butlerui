@@ -112,6 +112,7 @@
 	"state_data": {
 		"seat_name": "front_10",
 		"notification_list": [],
+		"extra_loose_sku_item_list" :[],
 		"rack_details": {
 			"rack_type_rec": [
 				["A", [

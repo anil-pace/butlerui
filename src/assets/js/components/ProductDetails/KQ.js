@@ -230,17 +230,17 @@ var KQ = React.createClass({
                 CommonActions.postDataToInterface(data);
             }
         }
-    },
+  },
   componentDidMount: function() {
-    mainstore.removeChangeListener(this.onChange);    
-
+    mainstore.removeChangeListener(this.onChange);
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
+
     var action = this.props.action;
-    if (_scanDetails.kq_allowed === true) {
+    if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
 
@@ -265,7 +265,13 @@ var KQ = React.createClass({
             },
             change : function(e, keypressed, el){
                 var data ={}
-                if(parseInt(keypressed.last.val) > 9999){
+               if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
                     data["code"] = resourceConstants.CLIENTCODE_008;
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
@@ -336,10 +342,11 @@ var KQ = React.createClass({
                     }
                     CommonActions.postDataToInterface(data);
                 }
+
             }
         }); }, 0)
     }
-
+    
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
@@ -396,16 +403,16 @@ var KQ = React.createClass({
         this._appendClassDown = 'downArrow disable';
 
         this._enableDecrement = false;
-        this._enableIncrement = false; 
+        this._enableIncrement = false;      
     }    
   },
+ 
   handleTotalQty : function(){
  
-  
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard" className="current-quantity"  value={_updatedQty} onClick={this.openNumpad.call(null)}/>
+            <input id="keyboard" className="current-quantity" key="text_1" value={_updatedQty} onClick={this.openNumpad.call(null)}/>
             <span className="separator">/</span>
             <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span> 
           </div>
@@ -413,7 +420,7 @@ var KQ = React.createClass({
     }else{
         this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard"  value={_updatedQty} onClick={this.openNumpad.call(null)}/> 
+            <input id="keyboard"  key="text_1"  value={_updatedQty} onClick={this.openNumpad.call(null)}/> 
           </div>
         );
     }

@@ -135,6 +135,7 @@ var serverMessages = {
     "CLIENTCODE_010" : "Put quantity should be equal to the sum of damaged, missing and good",
     "CLIENTCODE_011" : "Pick quantity should be equal to the sum of damaged, missing and good ",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to put quantity",
+    "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",

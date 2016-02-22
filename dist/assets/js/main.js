@@ -39859,17 +39859,17 @@ var KQ = React.createClass({displayName: "KQ",
                 CommonActions.postDataToInterface(data);
             }
         }
-    },
+  },
   componentDidMount: function() {
-    mainstore.removeChangeListener(this.onChange);    
-
+    mainstore.removeChangeListener(this.onChange);
   },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
+
     var action = this.props.action;
-    if (_scanDetails.kq_allowed === true) {
+    if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
 
@@ -39894,7 +39894,13 @@ var KQ = React.createClass({displayName: "KQ",
             },
             change : function(e, keypressed, el){
                 var data ={}
-                if(parseInt(keypressed.last.val) > 9999){
+               if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
                     data["code"] = resourceConstants.CLIENTCODE_008;
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
@@ -39965,10 +39971,11 @@ var KQ = React.createClass({displayName: "KQ",
                     }
                     CommonActions.postDataToInterface(data);
                 }
+
             }
         }); }, 0)
     }
-
+    
   },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
@@ -40025,16 +40032,16 @@ var KQ = React.createClass({displayName: "KQ",
         this._appendClassDown = 'downArrow disable';
 
         this._enableDecrement = false;
-        this._enableIncrement = false; 
+        this._enableIncrement = false;      
     }    
   },
+ 
   handleTotalQty : function(){
  
-  
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQty, onClick: this.openNumpad.call(null)}), 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null)}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
@@ -40042,7 +40049,7 @@ var KQ = React.createClass({displayName: "KQ",
     }else{
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", value: _updatedQty, onClick: this.openNumpad.call(null)})
+            React.createElement("input", {id: "keyboard", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null)})
           )
         );
     }
@@ -40334,8 +40341,14 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-widget-content").val("");
             },
             change : function(e, keypressed, el){
-                var data ={}
-                if(parseInt(keypressed.last.val) > 9999){
+                var data ={};
+               if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
                     data["code"] = resourceConstants.CLIENTCODE_008;
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
@@ -40755,7 +40768,13 @@ var KQ = React.createClass({displayName: "KQ",
             },
             change : function(e, keypressed, el){
                 var data ={}
-                if(parseInt(keypressed.last.val) > 9999){
+                if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
                     data["code"] = resourceConstants.CLIENTCODE_008;
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
@@ -42516,7 +42535,8 @@ var resourceConstants = {
 	CLIENTCODE_009 : 'CLIENTCODE_009',
 	CLIENTCODE_010 : 'CLIENTCODE_010',
 	CLIENTCODE_011 :'CLIENTCODE_011',
-	CLIENTCODE_012 :'CLIENTCODE_012'
+	CLIENTCODE_012 :'CLIENTCODE_012',
+	CLIENTCODE_013 :'CLIENTCODE_013'
 
 };
 module.exports = resourceConstants;
@@ -42744,6 +42764,7 @@ var serverMessages = {
     "CLIENTCODE_010" : "Put quantity should be equal to the sum of damaged, missing and good",
     "CLIENTCODE_011" : "Pick quantity should be equal to the sum of damaged, missing and good ",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to put quantity",
+    "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
     "PkF.I.001" : "Pick Complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.E.012" : "Data capture failed at item {0}",

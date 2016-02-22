@@ -212,4 +212,5 @@ function server_messages_list() {
     _("Pick quantity should be equal to the sum of damaged, missing and good");
     _("Put quantity should be equal to the sum of damaged, missing and good");
     _("Quantity should be less than or equal to put quantity");
+    _("You are not allowed to kick in the quantity from the numpad. Force Scan is required.");
 }

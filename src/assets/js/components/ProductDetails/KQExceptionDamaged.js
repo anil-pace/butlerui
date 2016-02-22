@@ -254,8 +254,14 @@ var KQ = React.createClass({
                 $(".ui-widget-content").val("");
             },
             change : function(e, keypressed, el){
-                var data ={}
-                if(parseInt(keypressed.last.val) > 9999){
+                var data ={};
+               if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
                     data["code"] = resourceConstants.CLIENTCODE_008;
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);

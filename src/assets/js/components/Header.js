@@ -17,6 +17,7 @@ var Header = React.createClass({
     },
     openKeyboard: function() {
         $("#actionMenu").hide();
+        $(".form-control").blur();
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {

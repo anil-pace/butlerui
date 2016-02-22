@@ -66,7 +66,7 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
         border:2px solid @keyboard-bcolor;
         input{
             text-align: center;
-        }       
+        }              
         .ui-widget-content, .ui-corner-all, .ui-keyboard-preview{
             width:100% ;
             margin:0 ;
@@ -74,7 +74,7 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
             height:6vh;
             background:#fff;
             font-size:1.6rem;
-            color:@kq-number;
+            //color:@kq-number;
         }
     }
     .ui-keyboard-keyset, .ui-keyboard-keyset-normal{
@@ -112,6 +112,9 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
     .ui-keyboard-preview-wrapper {
         input{
             color:@kq-number;
+        }
+        input:focus{
+            outline:none;
         }
     }   
     .ui-keyboard-keyset{

@@ -38031,15 +38031,20 @@ var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
+
+function getState(){
+     return {
+            spinner: mainstore.getSpinnerState(),
+            systemIsIdle: mainstore.getSystemIdleState(),
+            logoutState: mainstore.getLogoutState(),
+            scanAllowed : mainstore.getScanAllowedStatus()
+        }
+}
 var Header = React.createClass({displayName: "Header",
     virtualKeyBoard: '',
     exceptionMenu:'',
     getInitialState: function() {
-        return {
-            spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState(),
-            logoutState: mainstore.getLogoutState()
-        }
+        return getState();
     },
     openKeyboard: function() {
         $("#actionMenu").hide();
@@ -38111,6 +38116,7 @@ var Header = React.createClass({displayName: "Header",
         if(virtualKeyBoard_header != null){
             virtualKeyBoard_header.getkeyboard().close();
         }
+        this.setState(getState());
     },
     getExceptionMenu:function(){
          if(mainstore.getExceptionAllowed().length > 0 )
@@ -38130,7 +38136,8 @@ var Header = React.createClass({displayName: "Header",
     },
     render: function() {    
         var logoutClass;
-        var cssClass;      
+        var cssClass;  
+        var disableScanClass;    
         this.getExceptionMenu();
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
@@ -38142,13 +38149,19 @@ var Header = React.createClass({displayName: "Header",
         } else{
             logoutClass = 'actionItem'
         }
+        console.log(this.state.scanAllowed);
+        if(this.state.scanAllowed == true){
+            disableScanClass = '';
+        }else{
+            disableScanClass = 'disableScanClass'
+        }
         return (React.createElement("div", null, 
             React.createElement("div", {className: "head"}, 
               React.createElement("div", {className: "logo"}, 
               React.createElement("img", {src: allSvgConstants.logo})
               ), 
                 React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
-                  React.createElement("img", {src: allSvgConstants.scanHeader}), 
+                  React.createElement("img", {src: allSvgConstants.scanHeader, className: disableScanClass}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
               React.createElement("div", {className: "header-actions", onClick: this.showMenu}, 
@@ -44044,6 +44057,7 @@ var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEve
     _pickFrontExceptionScreen = "good",
     _missingQuantity = 0,
     showModal = false,
+    _scanAllowed = true,
     _finishAuditFlag = true;
 var modalContent = {
     data: "",
@@ -44080,6 +44094,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getLogoutState: function() {
         if (_seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
+    },
+    getScanAllowedStatus : function(){
+        if(_seatData.hasOwnProperty("scan_allowed")){
+            _scanAllowed = _seatData.scan_allowed;
+            console.log(_scanAllowed);
+            return _scanAllowed;
+        }else{
+            _scanAllowed = true;
+            return _scanAllowed;
+        }
     },
 
     toggleBinSelection: function(bin_id) {

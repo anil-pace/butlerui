@@ -58,7 +58,7 @@ function server_messages_list() {
     _("Wrong entity scanned. Please scan tote");
     _("No entities added yet. Scan entities and then press PPTL");
     _("Wrong entity scanned. Please scan Container/Item.");
-    _("Cannot cancel scan. No scanned entity found");
+    _("Cannot cancel scan. No scanned box found");
     _("Entity scan not expected. Waiting for PPTL press");
     _("Bin selected for put. Cannot be staged");
     _("SKU not present in database. WMS Notified. ");
@@ -77,7 +77,7 @@ function server_messages_list() {
     _("Tote not closed.");
     _("Entity scan successful.");
     _("PPTL press successful");
-    _("Data capture valid so far");
+    _("Data capture valid");
     _("Excess item in tote recorded. Now press PPTL");
     _("Invalid item in tote recorded.");
     _("{0} unscannable entities recorded. WMS notified");
@@ -114,7 +114,7 @@ function server_messages_list() {
     _("Place Entity in Slot and Scan More");
     _("Scan Slot to Confirm");
     _("Wait for MSU");
-    _("Scan Entity From Bin");
+    _("Scan Entity From Bin {0}");
     _("Enter Good Quantity to be Put into Slot");
     _("Put Back Entities in the PPS Bin");
     _("Wait for MSU");
@@ -134,10 +134,10 @@ function server_messages_list() {
     _("Select Bin which does not require tote");
     _("Select Bin to disassociate tote");
     _("Pick complete. Waiting for next rack.");
-    _("Location Scan successful");
-    _("Box Scan successful");
-    _("Item Scan successful");
-    _("Cancel Scan successful");
+    _("Location scan successful");
+    _("Box scan successful");
+    _("Item scan successful");
+    _("Cancel scan successful");
     _("PPTL press successful");
     _("Expecting MSU release confirmation from GUI, got invalid event.");
     _("Data capture failed at item");
@@ -164,6 +164,8 @@ function server_messages_list() {
     _("Documents printed successfully");
     _("Order removed successfully from bin {0}");
     _("Tote assigned successfully to bin");
+    _("Tote association failed. Repeat scan operation");
+    _("Tote associated with another bin");
     _("Please scan PPTL barcode");
     _("Tote disassociated from Bin");    
     _("Please complete process for pending bin and then proceed");

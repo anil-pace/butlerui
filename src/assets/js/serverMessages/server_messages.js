@@ -10,7 +10,6 @@ var serverMessages = {
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
     "PtB.H.010" : "Enter Quantity of Excess Entities",
     "PtB.H.011" : "Please put entities in exception area and confirm",
-
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",
     "PtB.E.003" : "No matching tote found",
@@ -30,14 +29,12 @@ var serverMessages = {
     "PtB.E.017" : "Please scan same SKU to complete this exception",
     "PtB.E.018" : "Entity scan not expected.",  
     "PtB.E.019" : "Tote not present in database.",
-
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
     "PtF.H.004" : "Scan Entity From Bin {0}",
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
-
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -45,8 +42,6 @@ var serverMessages = {
     "PkF.H.005" : "Scan Box",
     "PkF.H.006" : "Scan {0} Items and Place in Bin",
     "PkF.H.007" : "Press PPTL to confirm",
-
-
     "PkB.H.001" : "Scan Tote to Associate with Bin",
     "PkB.H.002" : "Press PPTL or Scan a Tote",
     "PkB.H.003" : "Press PPTL to Remove Entities",
@@ -55,8 +50,6 @@ var serverMessages = {
     "PkB.H.006" : "Select Bin to skip print",
     "PkB.H.007" : "Select Bin which does not require tote",
     "PkB.H.008" : "Select Bin to disassociate tote",
-
-
     "PtB.I.001" : "Tote scan successful",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new entity. Try after some time",
     "PtB.I.003" : "Cancel scan successful.",
@@ -73,21 +66,17 @@ var serverMessages = {
     "PtB.I.014" : "Cancelled excess entity in tote",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
-
-
     "PtB.W.001" : "Box with same serial number already exists in the warehouse",
     "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
     "PtB.W.003" : "No bins available to stage",
     "PtB.W.004" : "Bin already staged. Ignoring event",
     "PtB.W.005" : "Bin empty. Cannot be staged",
-
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
     "PkF.E.011" : "Data capture failed at item {0}",
     "PkF.E.013" : "Scan items and place in bin {0}",
     "PkF.E.014" : "Press PPTL for bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
-
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
     "PkB.A.003" : "Press PpsBin {0} to remove items",
@@ -147,21 +136,18 @@ var serverMessages = {
     "CLIENTCODE_011" : "Pick quantity should be equal to the sum of damaged, missing and good ",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to put quantity",
     "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
-
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
     "PkF.E.012" : "Data capture failed at item {0}",       
-    "PkF.I.002" : "Location Scan successful",
-    "PkF.I.003" : "Box Scan successful",
-    "PkF.I.004" : "Item Scan successful",
-    "PkF.I.005" : "Cancel Scan successful",
+    "PkF.I.002" : "Location scan successful",
+    "PkF.I.003" : "Box scan successful",
+    "PkF.I.004" : "Item scan successful",
+    "PkF.I.005" : "Cancel scan successful",
     "PkF.I.006" : "PPTL press successful",
     "PkF.I.007" : "Data capture valid so far",
-
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
     "PkF.W.003" : "Data capture failed at item",
-
     "PkF.E.001" : "Wrong slot location scanned. Please try again",
     "PkF.E.002" : "Wrong box scanned. Please try again",
     "PkF.E.003" : "Scan a box first",
@@ -172,15 +158,13 @@ var serverMessages = {
     "PkF.E.008" : "Waiting for MSU. Please wait and scan later",
     "PkF.E.009" : "System Error. Scanned entity details not available at this time",
     "PkF.E.010" : "No PPS bins empty. Please empty them from Pickback",
-
     "PkB.E.001" : "Incorrect tote barcode scanned. Please try again",
     "PkB.E.002" : "System not configured for totes",
     "PkB.E.003" : "Invalid Exception for this configuration",
     "PkB.E.004" : "No tote associated. Please keep a tote in bin and scan",
     "PkB.E.005" : "Wrong PPTL pressed",
     "PkB.E.006" : "Tote association failed. Repeat scan operation",
-    "PkB.E.007" : "Totes are anyway not required.Please proceed further",  
-
+    "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
@@ -188,8 +172,6 @@ var serverMessages = {
     "PkB.I.005" : "Tote assigned successfully to bin",
     "PkB.I.006" : "Please scan PPTL barcode",
     "PkB.I.007" : "Tote disassociated from Bin",
-
-
     "PkB.W.001" : "Please complete pickback for pending bin and then proceed",
     "PkB.W.002" : "Tote associated with another bin",
     "PkB.W.003" : "Wrong barcode scanned",
@@ -199,8 +181,6 @@ var serverMessages = {
     "PkB.W.007" : "PPTL scan not allowed. System not configured for tote",
     "PkB.W.008" : "PPTL scan not allowed",
     "PkB.W.009" : "Tote scan expected",
-
-
     "PtF.E.001" : "Entity scanned is not from bin {0}. Replace and scan from bin {1}",
     "PtF.E.002" : "Wrong entity scanned",
     "PtF.E.003" : "Waiting for MSU scan. Please scan entity later.",
@@ -209,8 +189,6 @@ var serverMessages = {
     "PtF.E.006" : "Total Quantity Expected {0}. Quantity entered {1}",
     "PtF.E.007" : "Actual put quantity less than than revised quantity.", 
     "PtF.E.008" : "Wrong slot scanned", 
-
-
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",

@@ -84,7 +84,7 @@ var ProductInfo = React.createClass({
       
     });
   },
-  render: function(data){ console.log(this.props.productDetails);
+  render: function(data){ 
     this.displayLocale(this.props.productDetails);
     return (       
             <div className="product-details-wrapper">

@@ -143,7 +143,7 @@ var Audit = React.createClass({
         }
       break;
       case appConstants.AUDIT_SCAN:
-       if(this.state.AuditExceptionStatus == false){ console.log(this.state.AuditItemDetailsData);
+       if(this.state.AuditExceptionStatus == false){
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (

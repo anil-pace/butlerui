@@ -274,6 +274,10 @@ var KQ = React.createClass({
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(_updatedQtyDamaged );
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
                 }
             },
             accepted: function(e, keypressed, el) {

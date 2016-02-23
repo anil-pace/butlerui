@@ -247,7 +247,7 @@ var KQ = React.createClass({
           setTimeout(function(){ $('#keyboard').keyboard({
             layout: 'custom',
             customLayout: {
-                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{c} {a}']
             },
             reposition: true,
             alwaysOpen: false,
@@ -284,6 +284,10 @@ var KQ = React.createClass({
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(_updatedQty);
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
                 }
             },
             accepted: function(e, keypressed, el) {
@@ -378,7 +382,7 @@ var KQ = React.createClass({
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                   this._enableDecrement = false;

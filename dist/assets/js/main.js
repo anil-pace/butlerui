@@ -29687,8 +29687,23 @@ var CommonButton = React.createClass({displayName: "CommonButton",
 			case appConstants.PICK_FRONT :
 				switch (action) {
 					case appConstants.CONFIRM_TO_CONTINUE:
+					product_info_locale = {};
+				    var locale = 'en-US';
+				    var keyValue;
+				    mainstore.productDetails().map(function(value, index){
+				      
+				      for (var key in value[0]) { 
+				         if(key != 'display_data' && key == 'product_barcode' ){
+				            keyValue = value[0][key];
+				         }
+				      }
+				      
+				      
+				    });
+
+
 					data["event_name"] = "process_barcode";
-                    data["event_data"]["barcode"] = mainstore.productDetails().product_barcode;
+                    data["event_data"]["barcode"] = keyValue;
 					CommonActions.postDataToInterface(data, "scan-item");
 					break;
 					default:
@@ -29975,7 +29990,7 @@ var Operator = React.createClass({displayName: "Operator",
         'data': {
               'username': 'kerry',
               'password': 'gorapj',
-              'seat_name': 'front_10'
+              'seat_name': 'front_20'
           }
     }
     CommonActions.webSocketConnection();
@@ -30834,11 +30849,12 @@ module.exports = appConstants;
 
 },{}],188:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
-	INTERFACE_IP : "https://192.168.3.93:5000"
+	WEBSOCKET_IP : "ws://192.168.1.35:8888/ws",
+	INTERFACE_IP : "https://192.168.1.35:5000"
 };
 
 module.exports = configConstants;
+
 },{}],189:[function(require,module,exports){
 var resourceConstants = {
 	FRIEND_NAME :'Friend Name',
@@ -30847,6 +30863,7 @@ var resourceConstants = {
 	BILL_NO : 'Bill Number'
 };
 module.exports = resourceConstants;
+
 },{}],190:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
@@ -30908,6 +30925,7 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./components/Operator":175,"jquery":33,"react":163,"react-dom":34}],193:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');

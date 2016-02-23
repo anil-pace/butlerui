@@ -116,7 +116,7 @@ function loadComponent(modalType,modalData){
         </div>    
             <div className="modal-footer removeBorder">
              <div className="buttonContainer center-block">
-                <Button1 disabled = {false} text = {"Cancel"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN} barcode={modalData.tote_barcode} color={"black"}/></div>
+                <Button1 disabled = {false} text = {_("Cancel")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN} barcode={modalData.tote_barcode} color={"black"}/></div>
              </div>
        </div>
        ));      
@@ -196,8 +196,8 @@ function loadComponent(modalType,modalData){
                       <div className="modal-footer removeBorder">
                           <div className="buttonContainer center-block chklstButtonContainer">
                                 <div className="row removeBorder">
-                                    <div className="col-md-6"><Button1 disabled = {false} text ={"Clear All"} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CHECKLIST_CLEARALL}/></div>
-                                    <div className="col-md-6"><Button1 disabled = {false} text ={"Submit"} color={"orange"} buttonChecklist={"checklist"} checkListData={modalData} module ={appConstants.PICK_FRONT} action={appConstants.CHECKLIST_SUBMIT}/></div>
+                                    <div className="col-md-6"><Button1 disabled = {false} text ={_("Clear All")} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CHECKLIST_CLEARALL}/></div>
+                                    <div className="col-md-6"><Button1 disabled = {false} text ={_("Submit")} color={"orange"} buttonChecklist={"checklist"} checkListData={modalData} module ={appConstants.PICK_FRONT} action={appConstants.CHECKLIST_SUBMIT}/></div>
                                 </div>
                           </div>
                      </div>
@@ -222,8 +222,8 @@ function loadComponent(modalType,modalData){
             <div className="modal-footer removeBorder">
               <div className="buttonContainer center-block chklstButtonContainer">
                 <div className="row removeBorder">
-                  <div className="col-md-6"><Button1 disabled = {false} text ={"Cancel"} color={"black"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.CANCEL_ADD_SCANNER}/></div>
-                  <div className="col-md-6"><Button1 disabled = {false} text ={"Submit"} color={"orange"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.ADD_SCANNER_DETAILS}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.CANCEL_ADD_SCANNER}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Submit")} color={"orange"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.ADD_SCANNER_DETAILS}/></div>
                 </div>
               </div>
             </div>

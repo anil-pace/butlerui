@@ -217,4 +217,30 @@ function server_messages_list() {
     _("Put quantity should be equal to the sum of damaged, missing and good");
     _("Quantity should be less than or equal to put quantity");
     _("You are not allowed to kick in the quantity from the numpad. Force Scan is required.");
+
+    _("Cancel Exception");
+    _("Cancel Scan");
+    _("Finish");
+    _("Back");
+    _("OK");
+    _("FINISH");
+    _("Print");
+    _("Skip Printing");
+    _("Dis-associate Tote");
+    _("Override");
+    _("Add Scanner");
+    _("Edit Details");
+    _("NEXT");
+    _("CONFIRM");
+    _("Stage");
+    _("Stage All");
+    _("BACK");
+    _("CLOSE");
+    _("Cancel");
+    _("Confirm");
+    _("TOTE");
+    _("Clear All");
+    _("Submit");
+    _("Exceptions");
+    
 }

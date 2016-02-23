@@ -29384,7 +29384,7 @@ var Bins = React.createClass({displayName: "Bins",
         }
         var clientHeight = $('.bins').height();
         var clientWidth = $('.bins').width();
-        var boxSize = Math.min(clientHeight/dimension[0] - 50,clientWidth/dimension[1] - 50);
+        var boxSize = Math.min(clientHeight/dimension[0] - 200,clientWidth/dimension[1] - 200);
         for (var i = 0; i < myElements.length; i++) {
             myElements[i].style.height = boxSize + "px";
             myElements[i].style.width = boxSize + "px";
@@ -29871,7 +29871,7 @@ var React = require('react');
 
 var MessageNavigation = React.createClass({displayName: "MessageNavigation",
     render: function() {
-       var colorClass, description;
+       var colorClass, description, headerClass;
       if(this.props.color == "lightBlue"){
         colorClass = "lightBlue";
       }
@@ -29883,17 +29883,20 @@ var MessageNavigation = React.createClass({displayName: "MessageNavigation",
 
       if(this.props.screenId == "pick_front_waiting_for_msu"){
         description = "PLACE ORDER";
+        headerClass = "col-md-6 col-sm-10 msg";
       }
       else if(this.props.screenId == "pick_front_item_scan"){
         description = "PICK ITEM FROM SHELF";
+        headerClass = "col-md-8 col-sm-10 msg";
       }else if(this.props.screenId == "pick_front_pptl_press"){
         description = "PLACE ITEM IN LIGHTED BIN";
+        headerClass = "col-md-9 col-sm-10 msg";
       };
 console.log(description);
         return (
             	React.createElement("div", {className: "row messageNavigation " + colorClass}, 
            		   React.createElement("div", {className: ""}, 
-           				   React.createElement("div", {className: "col-md-8 col-sm-10 msg"}, 
+           				   React.createElement("div", {className: headerClass}, 
                         description
                      )
            		   )
@@ -30831,12 +30834,11 @@ module.exports = appConstants;
 
 },{}],188:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://localhost:8888/ws",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "ws://192.168.3.93:8888/ws",
+	INTERFACE_IP : "https://192.168.3.93:5000"
 };
 
 module.exports = configConstants;
-
 },{}],189:[function(require,module,exports){
 var resourceConstants = {
 	FRIEND_NAME :'Friend Name',
@@ -30845,7 +30847,6 @@ var resourceConstants = {
 	BILL_NO : 'Bill Number'
 };
 module.exports = resourceConstants;
-
 },{}],190:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
@@ -30907,7 +30908,6 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
-
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./components/Operator":175,"jquery":33,"react":163,"react-dom":34}],193:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');

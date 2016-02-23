@@ -143,7 +143,7 @@ var Audit = React.createClass({
         }
       break;
       case appConstants.AUDIT_SCAN:
-       if(this.state.AuditExceptionStatus == false){ console.log(this.state.AuditItemDetailsData);
+       if(this.state.AuditExceptionStatus == false){
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
@@ -248,7 +248,7 @@ var Audit = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.AuditExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.AuditServerNavData["description"]} />
+                  <ExceptionHeader text={this.state.AuditServerNavData} />
                   <KQ scanDetailsGood = {this.state.AuditKQDetails} />
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  

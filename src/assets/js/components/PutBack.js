@@ -150,8 +150,8 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
-                  <KQ scanDetails = {this.state.PutBackKQDetails} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
                   </div>
@@ -168,7 +168,7 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <div className="main-container exception1">
                     <Img />
                     <TabularData data = {this.state.PutBackExceptionProductDetails}/>
@@ -186,12 +186,11 @@ var PutBack = React.createClass({
         break; 
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
-          console.log(this.state.PutBackServerNavData);
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                   <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                     <div className="main-container exception1">
                       <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                    </div>
@@ -211,7 +210,7 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <KQ scanDetails = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
@@ -229,7 +228,7 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_ITEM_PLACE_IN_IRT} />  
                   </div>

@@ -68,6 +68,10 @@ var Header = React.createClass({
     },
     enableException:function(){
         CommonActions.enableException(true);
+        var data = {};
+        data["code"] = null;
+        data["level"] = 'error'
+        CommonActions.generateNotification(data);
         $("#actionMenu").hide();
     },    
     showMenu: function(){

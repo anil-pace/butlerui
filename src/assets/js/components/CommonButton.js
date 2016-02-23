@@ -15,8 +15,23 @@ var CommonButton = React.createClass({
 			case appConstants.PICK_FRONT :
 				switch (action) {
 					case appConstants.CONFIRM_TO_CONTINUE:
+					product_info_locale = {};
+				    var locale = 'en-US';
+				    var keyValue;
+				    mainstore.productDetails().map(function(value, index){
+				      
+				      for (var key in value[0]) { 
+				         if(key != 'display_data' && key == 'product_barcode' ){
+				            keyValue = value[0][key];
+				         }
+				      }
+				      
+				      
+				    });
+
+
 					data["event_name"] = "process_barcode";
-                    data["event_data"]["barcode"] = mainstore.productDetails().product_barcode;
+                    data["event_data"]["barcode"] = keyValue;
 					CommonActions.postDataToInterface(data, "scan-item");
 					break;
 					default:

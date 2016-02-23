@@ -107,7 +107,7 @@ var Audit = React.createClass({
                 <Exception data={this.state.AuditExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -148,7 +148,7 @@ var Audit = React.createClass({
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               <div className = 'cancel-scan'>
-                <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+                <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
               </div>
             );
           }else{
@@ -180,7 +180,7 @@ var Audit = React.createClass({
                   <div className="audit-scan-right">
                     <KQ scanDetails = {this.state.AuditScanDetails}/>
                    <div className = 'finish-scan'>
-                    <Button1 disabled = {!this.state.AuditFinishFlag} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
+                    <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
                   </div>
                   </div>
                 </div>
@@ -231,8 +231,8 @@ var Audit = React.createClass({
                  <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 {subComponent}
                  <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>
-                  <Button1 disabled = {false} text = {"OK"} module ={appConstants.AUDIT} action={appConstants.FINISH_CURRENT_AUDIT} color={"orange"} />  
+                  <Button1 disabled = {false} text = {_("Back")} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>
+                  <Button1 disabled = {false} text = {_("OK")} module ={appConstants.AUDIT} action={appConstants.FINISH_CURRENT_AUDIT} color={"orange"} />  
                 </div>
               </div>
             );
@@ -251,11 +251,11 @@ var Audit = React.createClass({
                   <ExceptionHeader text={this.state.AuditServerNavData} />
                   <KQ scanDetailsGood = {this.state.AuditKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.AUDIT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.AUDIT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );

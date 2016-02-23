@@ -118,7 +118,7 @@ var PickFront = React.createClass({
                 <Exception data={this.state.PickFrontExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -193,7 +193,7 @@ var PickFront = React.createClass({
         if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+          var editButton = ( <Button1 disabled = {false} text = {_("Edit Details")} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';
         }
@@ -206,7 +206,7 @@ var PickFront = React.createClass({
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                 </div>
                 <div className = 'actions'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
                 </div>
               </div>
@@ -220,7 +220,7 @@ var PickFront = React.createClass({
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+          var editButton = ( <Button1 disabled = {false} text = {_("Edit Details")} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';
         }
@@ -232,7 +232,7 @@ var PickFront = React.createClass({
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
                     {editButton}
                 </div>
               </div>
@@ -256,11 +256,11 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
+                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -280,11 +280,11 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                     <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} /> 
+                     <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} /> 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -299,11 +299,11 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> 
+                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -323,11 +323,11 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  
+                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -342,11 +342,11 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
+                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -358,7 +358,7 @@ var PickFront = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
           var _button;
           if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {"Add Scanner"} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} /></div>)
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} /></div>)
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>

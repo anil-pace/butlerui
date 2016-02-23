@@ -36882,7 +36882,7 @@ var Audit = React.createClass({displayName: "Audit",
         }
       break;
       case appConstants.AUDIT_SCAN:
-       if(this.state.AuditExceptionStatus == false){ console.log(this.state.AuditItemDetailsData);
+       if(this.state.AuditExceptionStatus == false){
            this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
@@ -36987,7 +36987,7 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.AuditServerNavData["description"]}), 
+                  React.createElement(ExceptionHeader, {text: this.state.AuditServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
@@ -37855,7 +37855,7 @@ var Exception = React.createClass({displayName: "Exception",
     render: function() {
         return (
             React.createElement("div", {className: "exception"}, 
-                React.createElement(ExceptionHeader, {data: this.props.data.header}), 
+                React.createElement(ExceptionHeader, {data: _("Exceptions")}), 
                 React.createElement(ExceptionList, {data: this.props.data.list, action: this.props.action})
             )
         );
@@ -37983,12 +37983,39 @@ module.exports = ExceptionListItem;
 
 },{"../../actions/CommonActions":233,"../../stores/mainstore":297,"react":230}],245:[function(require,module,exports){
 var React = require('react');
+var mainstore = require('../stores/mainstore');
+
+function getState(){
+  return {
+      navMessages : mainstore.getServerMessages()
+  }
+}
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
 	_component:[],
+	getInitialState: function(){
+    	return getState();
+  	},
     render: function() {
+
+    	  var server_message = this.props.data.description;
+      	var navMessagesJson = this.state.navMessages;
+      	var errorCode = this.props.data.code;
+      	var message_args  = this.props.data.details.slice(0);
         return (
             React.createElement("div", {className: "exception-head"}, 
-               this.props.text
+              		(function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
       		)
         );
     },
@@ -37996,7 +38023,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"react":230}],246:[function(require,module,exports){
+},{"../stores/mainstore":297,"react":230}],246:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -38975,7 +39002,6 @@ var PickBack = React.createClass({displayName: "PickBack",
             );
   },
   getExceptionAction:function(screen_id){
-    console.log(this.state.PickBackSelectedBin);
      switch(screen_id){
         case appConstants.PICK_BACK_EXCEPTION_REPRINT:
           this._exceptionAction = (React.createElement(Button1, {disabled: false, text: "Print", color: "orange", module: appConstants.PICK_BACK, action: appConstants.REPRINT_INVOICE}));
@@ -39032,12 +39058,11 @@ var PickBack = React.createClass({displayName: "PickBack",
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
-          console.log(this.state.PickBackServerNavData);
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                   React.createElement(ExceptionHeader, {text: this.state.PickBackServerNavData["description"]}), 
+                   React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}), 
                     React.createElement("div", {className: "main-container exception1"}, 
                       React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
                    ), 
@@ -41094,7 +41119,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
       
     });
   },
-  render: function(data){ console.log(this.props.productDetails);
+  render: function(data){ 
     this.displayLocale(this.props.productDetails);
     return (       
             React.createElement("div", {className: "product-details-wrapper"}, 
@@ -41298,8 +41323,8 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
-                  React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
@@ -41316,7 +41341,7 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement("div", {className: "main-container exception1"}, 
                     React.createElement(Img, null), 
                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
@@ -41334,12 +41359,11 @@ var PutBack = React.createClass({displayName: "PutBack",
         break; 
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
-          console.log(this.state.PutBackServerNavData);
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                   React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                     React.createElement("div", {className: "main-container exception1"}, 
                       React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                    ), 
@@ -41359,7 +41383,7 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
@@ -41377,7 +41401,7 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
                   )
@@ -42659,83 +42683,83 @@ module.exports = english;
 
 },{}],290:[function(require,module,exports){
 var serverMessages = {
-    "PtB.B.001": "Scan Entity or Stage Bin",
+    "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
-    "PtB.H.003": "Are you sure you want to close Tote",
-    "PtB.H.004": "Scan Tote or Stage Bin",
+    "PtB.H.003": "Are You Sure You Want to Close Tote?",
+    "PtB.H.004": "Scan Tote or Stage PPS Bin",
     "PtB.H.005" : "Item Not Found in Tote",
-    "PtB.H.007" : "Enter Damaged Entity Quantity",
+    "PtB.H.007" : "Enter Unscannable Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
-    "PtB.H.010" : "Enter Excess Entity Quantity",
-    "PtB.H.011" : "Please put it in IRT bin and confirm",
-    "PtB.E.001" : "Tote already opened.Scan some other tote",
-    "PtB.E.002" : "Tote already closed.Scan some other tote",
+    "PtB.H.010" : "Enter Quantity of Excess Entities",
+    "PtB.H.011" : "Please put entities in exception area and confirm",
+    "PtB.E.001" : "Tote already opened. Scan some other tote",
+    "PtB.E.002" : "Tote already closed. Scan some other tote",
     "PtB.E.003" : "No matching tote found",
     "PtB.E.004" : "Wrong entity scanned. Please scan tote",
-    "PtB.E.005" : "No entities added yet. Scan entities and then PPS bin",
+    "PtB.E.005" : "No entities added yet. Scan entities and then press PPTL",
     "PtB.E.006" : "Wrong entity scanned. Please scan Container/Item.",
-    "PtB.E.007" : "Cannot cancel scan. No scanned box found",
-    "PtB.E.008" : "Entity scan not expected.Waiting for button press",
-    "PtB.E.009" : "PpsBin selected for put. Cannot be staged",
+    "PtB.E.007" : "Cannot cancel scan. No scanned entity found",
+    "PtB.E.008" : "Entity scan not expected. Waiting for PPTL press",
+    "PtB.E.009" : "Bin selected for put. Cannot be staged",
     "PtB.E.010" : "SKU not present in database. WMS Notified.",
-    "PtB.E.011" : "Warehouse Full! Remove all entities from bin number and press PPTL.",
-    "PtB.E.012" : "No free Pps bins. Please scan later",
-    "PtB.E.013" : "Wrong button pressed. Please try another",
-    "PtB.E.014" : "{0} excess quantity of item found in tote",   
-    "PtB.E.015" : "Please put it in IRT bin and confirm",
+    "PtB.E.011" : "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL",
+    "PtB.E.012" : "No free bins. Please scan later",
+    "PtB.E.013" : "Wrong PPTL pressed. Please try another",
+    "PtB.E.014" : "{0} excess entities found in tote", 
+    "PtB.E.015" : "Please put entities in exception area and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
-    "PtB.E.017" : "Please scan same type of entity to finish this exception.",
+    "PtB.E.017" : "Please scan same SKU to complete this exception",
     "PtB.E.018" : "Entity scan not expected.",  
-    "PtB.E.019" : "Tote not present in Database.",
+    "PtB.E.019" : "Tote not present in database.",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
     "PtF.H.004" : "Scan Entity From Bin {0}",
-    "PtF.H.005" : "Enter Good Quantity to be put in slot",
-    "PtF.H.006" : "Put Back Entity in PPS Bin",
+    "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
+    "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
     "PkF.H.004" : "Scan {0} Items",
     "PkF.H.005" : "Scan Box",
-    "PkF.H.006" : "Scan Items and Place in Bin",
-    "PkF.H.007" : "Press PPTL for Bin to confirm",
-    "PkB.H.001" : "Scan tote to associate with bin",
-    "PkB.H.002" : "Press bin PPTL or scan a tote",
-    "PkB.H.003" : "Press PpsBin to remove items",
+    "PkF.H.006" : "Scan {0} Items and Place in Bin",
+    "PkF.H.007" : "Press PPTL to confirm",
+    "PkB.H.001" : "Scan Tote to Associate with Bin",
+    "PkB.H.002" : "Press PPTL or Scan a Tote",
+    "PkB.H.003" : "Press PPTL to Remove Entities",
     "PkB.H.004" : "Press bin PPTL",
     "PkB.H.005" : "Press print button to proceed",
     "PkB.H.006" : "Select Bin to skip print",
     "PkB.H.007" : "Select Bin which does not require tote",
     "PkB.H.008" : "Select Bin to disassociate tote",
     "PtB.I.001" : "Tote scan successful",
-    "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
+    "PtB.I.002" : "PPS is in paused mode. Cannot process new entity. Try after some time",
     "PtB.I.003" : "Cancel scan successful.",
     "PtB.I.004" : "Tote close successful.",
     "PtB.I.005" : "Tote not closed.",
     "PtB.I.006" : "Entity scan successful.",
-    "PtB.I.007" : "Pptl button press successful",
-    "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
+    "PtB.I.007" : "PPTL press successful",
+    "PtB.I.008" : "Excess item in tote recorded. Now press PPTL",
     "PtB.I.009" : "Invalid item in tote recorded.",
-    "PtB.I.010" : "Damaged entity recorded.WMS Notified.",
-    "PtB.I.011" : "extra entity recorded in bin.WMS Notified.",
-    "PtB.I.012" : "Oversized entity recorded.WMS notified.",
+    "PtB.I.010" : "{0} unscannable entities recorded. WMS notified",
+    "PtB.I.011" : "{0} extra entities recorded in bin. WMS notified",
+    "PtB.I.012" : "{0} oversized entities recorded.WMS notified",
     "PtB.I.013" : "Exception cancelled",
     "PtB.I.014" : "Cancelled excess entity in tote",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
-    "PtB.W.001" : "Container already stored in the warehouse",
-    "PtB.W.002" : "Entity already scanned.Waiting for Pptl button press",
-    "PtB.W.003" : "No PpsBins available to stage",
-    "PtB.W.004" : "PpsBin already staged. Ignoring event",
-    "PtB.W.005" : "PpsBin empty. Cannot be staged",
+    "PtB.W.001" : "Box with same serial number already exists in the warehouse",
+    "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
+    "PtB.W.003" : "No bins available to stage",
+    "PtB.W.004" : "Bin already staged. Ignoring event",
+    "PtB.W.005" : "Bin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
-    "PkF.E.011" : "Data capture failed at item",
-    "PkF.E.013" : "Scan items and place in Bin {0}",
-    "PkF.E.014" : "Press PPTL for Bin {0} to confirm",
+    "PkF.E.011" : "Data capture failed at item {0}",
+    "PkF.E.013" : "Scan items and place in bin {0}",
+    "PkF.E.014" : "Press PPTL for bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
@@ -42796,67 +42820,65 @@ var serverMessages = {
     "CLIENTCODE_011" : "Pick quantity should be equal to the sum of damaged, missing and good ",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to put quantity",
     "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
-    "PkF.I.001" : "Pick Complete. Waiting for next rack.",
-    "PkF.I.007" : "Data capture valid so far",
-    "PkF.E.012" : "Data capture failed at item {0}",
-    "PkF.I.007" : "Data capture valid so far",
-    "PkF.I.007" : "Data capture valid so far",    
-    "PkF.I.002" : "Location Scan successful",
-    "PkF.I.003" : "Box Scan successful",
-    "PkF.I.004" : "Item Scan successful",
-    "PkF.I.005" : "Cancel Scan successful",
-    "PkF.I.006" : "PPTL button press successful",
+    "PkF.I.001" : "Pick complete. Waiting for next rack.",
+    "PkF.I.007" : "Data capture valid",
+    "PkF.E.012" : "Data capture failed at item {0}",       
+    "PkF.I.002" : "Location scan successful",
+    "PkF.I.003" : "Box scan successful",
+    "PkF.I.004" : "Item scan successful",
+    "PkF.I.005" : "Cancel scan successful",
+    "PkF.I.006" : "PPTL press successful",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
     "PkF.W.003" : "Data capture failed at item",
-    "PkF.E.001" : "Wrong location scan.Scan correct location",
+    "PkF.E.001" : "Wrong slot location scanned. Please try again",
     "PkF.E.002" : "Wrong box scanned. Please try again",
     "PkF.E.003" : "Scan a box first",
-    "PkF.E.004" : "Wrong ppsbin button pressed. Please press correct button",
-    "PkF.E.005" : "Picked quantity more than expected. Not Allowed",
+    "PkF.E.004" : "Wrong PPTL pressed. Please press correct PPTL",
+    "PkF.E.005" : "Picked quantity more than expected. Put extra items back in MSU",
     "PkF.E.006" : "Wrong item quantity update",
     "PkF.E.007" : "Wrong item scanned. Please scan correct item",
-    "PkF.E.008" : "Waiting for rack. Please wait and scan later",
-    "PkF.E.009" : "Scanned item details not found",
-    "PkF.E.010" : "No PPS bins empty. Please empty them",
-    "PkB.E.001" : "Barcode didn't match current tote barcode",
-    "PkB.E.002" : "Totes are not required",
-    "PkB.E.003" : "Exception invalid",
-    "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
-    "PkB.E.005" : "Wrong pptl pressed",
-    "PkB.E.006" : "Tote didn't get associated", 
-    "PkB.E.007" : "Totes are anyway not required.Please proceed further",  
+    "PkF.E.008" : "Waiting for MSU. Please wait and scan later",
+    "PkF.E.009" : "System Error. Scanned entity details not available at this time",
+    "PkF.E.010" : "No PPS bins empty. Please empty them from Pickback",
+    "PkB.E.001" : "Incorrect tote barcode scanned. Please try again",
+    "PkB.E.002" : "System not configured for totes",
+    "PkB.E.003" : "Invalid Exception for this configuration",
+    "PkB.E.004" : "No tote associated. Please keep a tote in bin and scan",
+    "PkB.E.005" : "Wrong PPTL pressed",
+    "PkB.E.006" : "Tote association failed. Repeat scan operation",
+    "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
-    "PkB.I.004" : "Bin entities removed successfully",
-    "PkB.I.005" : "Tote assigned successfully to ppsbin",
-    "PkB.I.006" : "Please scan pptl",
-    "PkB.I.007" : "All totes deassociated from PpsBin ",
-    "PkB.W.001" : "Please complete process for pending ppsbin and then proceed",
-    "PkB.W.002" : "Tote already reserved",
+    "PkB.I.004" : "Order removed successfully from bin {0}",
+    "PkB.I.005" : "Tote assigned successfully to bin",
+    "PkB.I.006" : "Please scan PPTL barcode",
+    "PkB.I.007" : "Tote disassociated from Bin",
+    "PkB.W.001" : "Please complete pickback for pending bin and then proceed",
+    "PkB.W.002" : "Tote associated with another bin",
     "PkB.W.003" : "Wrong barcode scanned",
-    "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
+    "PkB.W.004" : "Please scan the tote first and then scan PPTL barcode",
     "PkB.W.005" : "No tote scanned",
-    "PkB.W.006" : "Please press pptl for bin which does not have any totes associated",
-    "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
-    "PkB.W.008" : "Pptl scan not allowed",
-    "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
-    "PtF.E.001" : "Entity scanned is not from bin. Replace and scan from bin",
+    "PkB.W.006" : "'Override Tote Exception' cannot be raised for bins with totes associated",
+    "PkB.W.007" : "PPTL scan not allowed. System not configured for tote",
+    "PkB.W.008" : "PPTL scan not allowed",
+    "PkB.W.009" : "Tote scan expected",
+    "PtF.E.001" : "Entity scanned is not from bin {0}. Replace and scan from bin {1}",
     "PtF.E.002" : "Wrong entity scanned",
     "PtF.E.003" : "Waiting for MSU scan. Please scan entity later.",
     "PtF.E.004" : "Expected quantity exceeded.",
     "PtF.E.005" : "Wrong scan! Entity scan expected but slot barcode scanned.",
-    "PtF.E.006" : "Actual put quantity not equal to sum of Good and Expection quantity.",
+    "PtF.E.006" : "Total Quantity Expected {0}. Quantity entered {1}",
     "PtF.E.007" : "Actual put quantity less than than revised quantity.", 
     "PtF.E.008" : "Wrong slot scanned", 
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
-    "PtF.I.004" : "Damaged and missing entity reported.",
-    "PtF.I.005" : "Space unavailable reported.",
-    "PtF.I.006" : "Unknown Barcode Scanned",
+    "PtF.I.004" : "Damaged and missing entity recorded.",
+    "PtF.I.005" : "Space unavailable recorded.",
+    "PtF.I.006" : "Cancel scan successful",
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",

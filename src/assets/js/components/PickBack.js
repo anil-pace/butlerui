@@ -68,7 +68,6 @@ var PickBack = React.createClass({
             );
   },
   getExceptionAction:function(screen_id){
-    console.log(this.state.PickBackSelectedBin);
      switch(screen_id){
         case appConstants.PICK_BACK_EXCEPTION_REPRINT:
           this._exceptionAction = (<Button1 disabled = {false} text = {"Print"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.REPRINT_INVOICE}  />);
@@ -125,12 +124,11 @@ var PickBack = React.createClass({
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
-          console.log(this.state.PickBackServerNavData);
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickBackExceptionData}/>
                 <div className="exception-right">
-                   <ExceptionHeader text={this.state.PickBackServerNavData["description"]} />
+                   <ExceptionHeader data={this.state.PickBackServerNavData} />
                     <div className="main-container exception1">
                       <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>
                    </div>

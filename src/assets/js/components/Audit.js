@@ -143,7 +143,7 @@ var Audit = React.createClass({
         }
       break;
       case appConstants.AUDIT_SCAN:
-       if(this.state.AuditExceptionStatus == false){
+       if(this.state.AuditExceptionStatus == false){ console.log(this.state.AuditItemDetailsData);
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
@@ -174,7 +174,7 @@ var Audit = React.createClass({
                       {this._looseItems}
                   </div>
                   <div className="audit-scan-middle">
-                   <Img />
+                   <Img srcURL= {this.state.AuditItemDetailsData.image_url}/>
                    <TabularData data = {this.state.AuditItemDetailsData}/>
                   </div>
                   <div className="audit-scan-right">

@@ -712,6 +712,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
+        data["image_url"] = null;
         var self = this;
         if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
 
@@ -725,11 +726,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             } 
             _seatData.product_info.map(function(value, index){
               var keyValue;
-              
+             
                 for (var key in value[0]) { 
                     if(key != 'display_data' && key != 'product_local_image_url' ){
                       keyValue = value[0][key] + ' ';
-                     }
+                    }else if(key != 'display_data' && key == 'product_local_image_url' ){
+                        data["image_url"] = value[0][key];
+                    }
+
                 }
                 value[0].display_data.map(
                     function(data_locale, index1){

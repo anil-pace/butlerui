@@ -23,6 +23,7 @@ var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEve
     _pickFrontExceptionScreen = "good",
     _missingQuantity = 0,
     showModal = false,
+    _scanAllowed = true,
     _finishAuditFlag = true;
 var modalContent = {
     data: "",
@@ -59,6 +60,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getLogoutState: function() {
         if (_seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
+    },
+    getScanAllowedStatus : function(){
+        if(_seatData.hasOwnProperty("scan_allowed")){
+            _scanAllowed = _seatData.scan_allowed;
+            console.log(_scanAllowed);
+            return _scanAllowed;
+        }else{
+            _scanAllowed = true;
+            return _scanAllowed;
+        }
     },
 
     toggleBinSelection: function(bin_id) {

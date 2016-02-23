@@ -642,14 +642,51 @@ after container scan
         "is_idle": false,
         "seat_type": "front",
         "item_uid" : "123",
-        "product_info": {
-            "product_description": null,
-            "product_local_image_url": null,
-            "product_dimension": null,
-            "product_sku": null,
-            "product_name": null,
-            "product_weight": null
-        },
+        "product_info":[
+            [{
+                "display_data":
+                [
+                    {
+                    "display_name":"product_sku-display",
+                    "locale":"zn"
+                    },
+                    {"display_name":"product_sku-display-2",
+                    "locale":"en-US"
+                    }
+                ],
+                "product_sku":"266ed6a3c9e4413fbf55108af99832d0"
+            }],
+
+            [{
+                "display_data":
+                [
+                    {
+                    "display_name":"product_barcode_4",
+                     "locale":"zn"
+                    },
+                    {
+                    "display_name":"product_barcode",
+                    "locale":"en-US"
+                    }
+                ],
+                "product_barcode":"88888"
+             }],
+             
+            [{
+                "display_data":
+                [
+                    {
+                    "display_name":"product_local_image_url",
+                    "locale":"zn"
+                    },
+                    {
+                    "display_name":"product_local_image_url",
+                    "locale":"en-US"
+                    }
+                ],
+                "product_local_image_url":"https://192.168.3.17/product_images/d39fbbe8-dc80-40b4-94bb-64d1c17f4d10.png"
+            }]
+        ],
         "time_stamp": "1450294487",
         "header_msge_list": [{
             "details": [2],

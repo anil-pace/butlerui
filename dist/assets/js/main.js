@@ -36882,7 +36882,7 @@ var Audit = React.createClass({displayName: "Audit",
         }
       break;
       case appConstants.AUDIT_SCAN:
-       if(this.state.AuditExceptionStatus == false){
+       if(this.state.AuditExceptionStatus == false){ console.log(this.state.AuditItemDetailsData);
            this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
@@ -36913,7 +36913,7 @@ var Audit = React.createClass({displayName: "Audit",
                       this._looseItems
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
-                   React.createElement(Img, null), 
+                   React.createElement(Img, {srcURL: this.state.AuditItemDetailsData.image_url}), 
                    React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
@@ -39527,10 +39527,12 @@ var ProductInfo = require('./ProductInfo');
 var ProductImage = require('./ProductImage');
 
 var product_info_locale = {};
+var image_url = {};
 var ProductDetails = React.createClass({displayName: "ProductDetails",
 
     displayLocale : function(data){
         product_info_locale = {};
+        image_url = {};
         var language_locale = sessionStorage.getItem('localeData');
         var locale;
         if(language_locale == 'null' || language_locale == null){
@@ -39540,9 +39542,12 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
         }
         data.map(function(value, index){
           var keyValue;
+          var imageKey;
           for (var key in value[0]) { 
             if(key != 'display_data' && key != 'product_local_image_url' ){
               keyValue = value[0][key] + ' ';
+             }else if(key != 'display_data' && key == 'product_local_image_url' ){
+              imageKey = value[0][key];
              }
           }
           value[0].display_data.map(
@@ -39550,6 +39555,8 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
              if(data_locale.locale == locale){
                 if(data_locale.display_name != 'product_local_image_url' ){
                   product_info_locale[data_locale.display_name] = keyValue;
+                }else if(data_locale.display_name == 'product_local_image_url' ){
+                  image_url[data_locale.display_name] = imageKey;
                 }
               }
             
@@ -39564,7 +39571,7 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
         this.displayLocale(this.props.productInfo);
         return (
             React.createElement("div", {className: "productTableInfo"}, 
-				React.createElement(ProductImage, {srcURL: this.props.productInfo.product_local_image_url}), 
+				React.createElement(ProductImage, {srcURL: image_url.product_local_image_url}), 
                 React.createElement("div", {className: "productHeader"}, 
                     _("Details")
                 ), 
@@ -41015,6 +41022,7 @@ function getPopUpState(){
   };
 }
 var product_info_locale = {};
+var image_url = {};
 var ProductInfo = React.createClass({displayName: "ProductInfo",
   getInitialState: function(){
     return getPopUpState();
@@ -41052,6 +41060,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
   },
   displayLocale : function(data){
     product_info_locale = {};
+    image_url = {};
     var language_locale = sessionStorage.getItem('localeData');
     var locale;
     if(language_locale == 'null' || language_locale == null){
@@ -41061,9 +41070,12 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
     } 
     data.map(function(value, index){
       var keyValue;
+      var imageKey
       for (var key in value[0]) { 
         if(key != 'display_data' && key != 'product_local_image_url' ){
           keyValue = value[0][key] + ' ';
+         }else if(key != 'display_data' && key == 'product_local_image_url' ){
+            imageKey = value[0][key];
          }
       }
       value[0].display_data.map(
@@ -41071,6 +41083,8 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
          if(data_locale.locale == locale){
             if(data_locale.display_name != 'product_local_image_url' ){
               product_info_locale[data_locale.display_name] = keyValue;
+            }else if(data_locale.display_name == 'product_local_image_url' ){
+              image_url[data_locale.display_name] = imageKey;
             }
           }
         
@@ -41080,12 +41094,12 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
       
     });
   },
-  render: function(data){ 
+  render: function(data){ console.log(this.props.productDetails);
     this.displayLocale(this.props.productDetails);
     return (       
             React.createElement("div", {className: "product-details-wrapper"}, 
               React.createElement("div", {className: "img-container"}, 
-                  React.createElement("img", {src: product_info_locale.product_local_image_url})
+                  React.createElement("img", {src: image_url.product_local_image_url})
               ), 
               React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,product_info_locale,"product-detail")}, 
                 React.createElement("span", null, " ", allresourceConstants.VIEW_MORE, " "), 
@@ -44697,6 +44711,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
+        data["image_url"] = null;
         var self = this;
         if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
 
@@ -44710,11 +44725,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             } 
             _seatData.product_info.map(function(value, index){
               var keyValue;
-              
+             
                 for (var key in value[0]) { 
                     if(key != 'display_data' && key != 'product_local_image_url' ){
                       keyValue = value[0][key] + ' ';
-                     }
+                    }else if(key != 'display_data' && key == 'product_local_image_url' ){
+                        data["image_url"] = value[0][key];
+                    }
+
                 }
                 value[0].display_data.map(
                     function(data_locale, index1){

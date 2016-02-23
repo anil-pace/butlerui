@@ -5,15 +5,20 @@ var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
+
+function getState(){
+     return {
+            spinner: mainstore.getSpinnerState(),
+            systemIsIdle: mainstore.getSystemIdleState(),
+            logoutState: mainstore.getLogoutState(),
+            scanAllowed : mainstore.getScanAllowedStatus()
+        }
+}
 var Header = React.createClass({
     virtualKeyBoard: '',
     exceptionMenu:'',
     getInitialState: function() {
-        return {
-            spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState(),
-            logoutState: mainstore.getLogoutState()
-        }
+        return getState();
     },
     openKeyboard: function() {
         $("#actionMenu").hide();
@@ -85,6 +90,7 @@ var Header = React.createClass({
         if(virtualKeyBoard_header != null){
             virtualKeyBoard_header.getkeyboard().close();
         }
+        this.setState(getState());
     },
     getExceptionMenu:function(){
          if(mainstore.getExceptionAllowed().length > 0 )
@@ -104,7 +110,8 @@ var Header = React.createClass({
     },
     render: function() {    
         var logoutClass;
-        var cssClass;      
+        var cssClass;  
+        var disableScanClass;    
         this.getExceptionMenu();
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
@@ -116,13 +123,19 @@ var Header = React.createClass({
         } else{
             logoutClass = 'actionItem'
         }
+        console.log(this.state.scanAllowed);
+        if(this.state.scanAllowed == true){
+            disableScanClass = '';
+        }else{
+            disableScanClass = 'disableScanClass'
+        }
         return (<div>
             <div className="head">
               <div className="logo">
               <img src={allSvgConstants.logo} />
               </div>
                 <div className={cssClass} onClick={this.openKeyboard}>
-                  <img src={allSvgConstants.scanHeader} />
+                  <img src={allSvgConstants.scanHeader} className={disableScanClass} />
                   <input id="barcode" type="text" value='' />
                 </div>
               <div className="header-actions" onClick={this.showMenu} >

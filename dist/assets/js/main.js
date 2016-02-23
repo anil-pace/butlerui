@@ -38016,11 +38016,12 @@ var Header = React.createClass({displayName: "Header",
     },
     openKeyboard: function() {
         $("#actionMenu").hide();
+        $(".form-control").blur();
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38066,6 +38067,10 @@ var Header = React.createClass({displayName: "Header",
     },
     enableException:function(){
         CommonActions.enableException(true);
+        var data = {};
+        data["code"] = null;
+        data["level"] = 'error'
+        CommonActions.generateNotification(data);
         $("#actionMenu").hide();
     },    
     showMenu: function(){
@@ -38198,8 +38203,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
+        'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38369,8 +38374,8 @@ function attachKeyboard(id){
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
             },
             css: {
               container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38392,7 +38397,7 @@ function attachKeyboard(id){
 function attachNumpad(id){
      virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
-            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
+            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{c} {a}'] },
             reposition   : true,
             alwaysOpen   : false,
             initialFocus : true,
@@ -39605,7 +39610,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
         $.each(infoDetails, function(key, value) {
             return arr1.push(
                 React.createElement("tr", null, 
-	  				React.createElement("td", {className: "key"}, " ", key.toUpperCase(), " "), 
+	  				React.createElement("td", {className: "key"}, " ", key, " "), 
 	  				React.createElement("td", {className: "value"}, value, " ")
   				)
 
@@ -39876,7 +39881,7 @@ var KQ = React.createClass({displayName: "KQ",
           setTimeout(function(){ $('#keyboard').keyboard({
             layout: 'custom',
             customLayout: {
-                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{c} {a}']
             },
             reposition: true,
             alwaysOpen: false,
@@ -39913,6 +39918,10 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(_updatedQty);
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
                 }
             },
             accepted: function(e, keypressed, el) {
@@ -40007,7 +40016,7 @@ var KQ = React.createClass({displayName: "KQ",
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                   this._enableDecrement = false;
@@ -40361,6 +40370,10 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(_updatedQtyDamaged );
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
                 }
             },
             accepted: function(e, keypressed, el) {
@@ -40787,6 +40800,10 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(_updatedQtyMissing);
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
                 }
             },
             accepted: function(e, keypressed, el) {
@@ -42092,8 +42109,8 @@ var TableRow = React.createClass({displayName: "TableRow",
         setTimeout(function(){ $('#'+id).keyboard({
           layout: 'custom',
           customLayout: {
-              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
           },
           css: {
             container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"

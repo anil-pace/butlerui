@@ -12,6 +12,7 @@ function getPopUpState(){
   };
 }
 var product_info_locale = {};
+var image_url = {};
 var ProductInfo = React.createClass({
   getInitialState: function(){
     return getPopUpState();
@@ -49,6 +50,7 @@ var ProductInfo = React.createClass({
   },
   displayLocale : function(data){
     product_info_locale = {};
+    image_url = {};
     var language_locale = sessionStorage.getItem('localeData');
     var locale;
     if(language_locale == 'null' || language_locale == null){
@@ -58,9 +60,12 @@ var ProductInfo = React.createClass({
     } 
     data.map(function(value, index){
       var keyValue;
+      var imageKey
       for (var key in value[0]) { 
         if(key != 'display_data' && key != 'product_local_image_url' ){
           keyValue = value[0][key] + ' ';
+         }else if(key != 'display_data' && key == 'product_local_image_url' ){
+            imageKey = value[0][key];
          }
       }
       value[0].display_data.map(
@@ -68,6 +73,8 @@ var ProductInfo = React.createClass({
          if(data_locale.locale == locale){
             if(data_locale.display_name != 'product_local_image_url' ){
               product_info_locale[data_locale.display_name] = keyValue;
+            }else if(data_locale.display_name == 'product_local_image_url' ){
+              image_url[data_locale.display_name] = imageKey;
             }
           }
         
@@ -77,12 +84,12 @@ var ProductInfo = React.createClass({
       
     });
   },
-  render: function(data){ 
+  render: function(data){ console.log(this.props.productDetails);
     this.displayLocale(this.props.productDetails);
     return (       
             <div className="product-details-wrapper">
               <div className="img-container">
-                  <img src={product_info_locale.product_local_image_url}  />
+                  <img src={image_url.product_local_image_url}  />
               </div>
               <div className="view-more-link" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,product_info_locale,"product-detail")}>
                 <span> {allresourceConstants.VIEW_MORE} </span>                

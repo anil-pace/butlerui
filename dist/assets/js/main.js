@@ -36846,7 +36846,7 @@ var Audit = React.createClass({displayName: "Audit",
                 React.createElement(Exception, {data: this.state.AuditExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -36887,7 +36887,7 @@ var Audit = React.createClass({displayName: "Audit",
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               React.createElement("div", {className: "cancel-scan"}, 
-                React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+                React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
               )
             );
           }else{
@@ -36919,7 +36919,7 @@ var Audit = React.createClass({displayName: "Audit",
                   React.createElement("div", {className: "audit-scan-right"}, 
                     React.createElement(KQ, {scanDetails: this.state.AuditScanDetails}), 
                    React.createElement("div", {className: "finish-scan"}, 
-                    React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: "Finish", module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
+                    React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: _("Finish"), module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
                   )
                   )
                 ), 
@@ -36970,8 +36970,8 @@ var Audit = React.createClass({displayName: "Audit",
                  React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "Back", module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "OK", module: appConstants.AUDIT, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: _("Back"), module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: _("OK"), module: appConstants.AUDIT, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
                 )
               )
             );
@@ -36990,11 +36990,11 @@ var Audit = React.createClass({displayName: "Audit",
                   React.createElement(ExceptionHeader, {text: this.state.AuditServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -38504,7 +38504,7 @@ function loadComponent(modalType,modalData){
         ), 
             React.createElement("div", {className: "modal-footer removeBorder"}, 
              React.createElement("div", {className: "buttonContainer center-block"}, 
-                React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
+                React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
              )
        )
        ));      
@@ -38584,8 +38584,8 @@ function loadComponent(modalType,modalData){
                       React.createElement("div", {className: "modal-footer removeBorder"}, 
                           React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                                 React.createElement("div", {className: "row removeBorder"}, 
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Clear All", color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})), 
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Clear All"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})), 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
                                 )
                           )
                      )
@@ -38610,8 +38610,8 @@ function loadComponent(modalType,modalData){
             React.createElement("div", {className: "modal-footer removeBorder"}, 
               React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                 React.createElement("div", {className: "row removeBorder"}, 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Cancel", color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_ADD_SCANNER})), 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.ADD_SCANNER_DETAILS}))
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_ADD_SCANNER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.ADD_SCANNER_DETAILS}))
                 )
               )
             )
@@ -39009,7 +39009,7 @@ var PickBack = React.createClass({displayName: "PickBack",
                 React.createElement(Exception, {data: this.state.PickBackExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -39017,16 +39017,16 @@ var PickBack = React.createClass({displayName: "PickBack",
   getExceptionAction:function(screen_id){
      switch(screen_id){
         case appConstants.PICK_BACK_EXCEPTION_REPRINT:
-          this._exceptionAction = (React.createElement(Button1, {disabled: false, text: "Print", color: "orange", module: appConstants.PICK_BACK, action: appConstants.REPRINT_INVOICE}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: false, text: _("Print"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.REPRINT_INVOICE}));
           break;
         case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
-          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Skip Printing", color: "orange", module: appConstants.PICK_BACK, action: appConstants.SKIP_PRINTING}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: _("Skip Printing"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.SKIP_PRINTING}));
           break;
         case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
-          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Dis-associate Tote", color: "orange", module: appConstants.PICK_BACK, action: appConstants.DIS_ASSOCIATE_TOTE}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: _("Dis-associate Tote"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.DIS_ASSOCIATE_TOTE}));
           break;
         case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
-          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Override", color: "orange", module: appConstants.PICK_BACK, action: appConstants.OVERRIDE_TOTE}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: _("Override"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.OVERRIDE_TOTE}));
           break;
         default:
           return true;
@@ -39084,7 +39084,7 @@ var PickBack = React.createClass({displayName: "PickBack",
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39095,7 +39095,7 @@ var PickBack = React.createClass({displayName: "PickBack",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PickBackScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -39276,7 +39276,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -39351,7 +39351,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';
         }
@@ -39364,7 +39364,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                 ), 
                 React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton
                 )
               )
@@ -39378,7 +39378,7 @@ var PickFront = React.createClass({displayName: "PickFront",
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';
         }
@@ -39390,7 +39390,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                     editButton
                 )
               )
@@ -39414,11 +39414,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39438,11 +39438,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                     React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})
+                     React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39457,11 +39457,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39481,11 +39481,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39500,11 +39500,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.SEND_MISSING_BOX_EXCEPTION})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.SEND_MISSING_BOX_EXCEPTION})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39516,7 +39516,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -41257,7 +41257,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                 React.createElement(Exception, {data: this.state.PutBackExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -41275,8 +41275,8 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                 ), 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage", module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
-                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All", module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
+                  React.createElement(Button1, {disabled: !this.state.StageActive, text: _("Stage"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
+                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: _("Stage All"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
                 )
               )
             );
@@ -41296,7 +41296,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
                 )
               )
             );
@@ -41321,8 +41321,8 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "BACK", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "CLOSE", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: true, action: appConstants.CLOSE_TOTE, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: _("CLOSE"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: true, action: appConstants.CLOSE_TOTE, color: "orange"})
                 )
               )
             );
@@ -41339,11 +41339,11 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41361,11 +41361,11 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41381,11 +41381,11 @@ var PutBack = React.createClass({displayName: "PutBack",
                       React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                    ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXCESS_ITEMS_BIN})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXCESS_ITEMS_BIN})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41399,11 +41399,11 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41416,11 +41416,11 @@ var PutBack = React.createClass({displayName: "PutBack",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41432,8 +41432,8 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                  React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "Confirm", module: appConstants.PUT_BACK, status: true, action: appConstants.CONFIRM_TOTE_EXCEPTION, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: _("Confirm"), module: appConstants.PUT_BACK, status: true, action: appConstants.CONFIRM_TOTE_EXCEPTION, color: "orange"})
                 )
               )
             );
@@ -41443,7 +41443,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -41562,7 +41562,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -41616,7 +41616,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
                 )
 
               )
@@ -41640,11 +41640,11 @@ var PutFront = React.createClass({displayName: "PutFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41664,11 +41664,11 @@ var PutFront = React.createClass({displayName: "PutFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41686,11 +41686,11 @@ var PutFront = React.createClass({displayName: "PutFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41706,11 +41706,11 @@ var PutFront = React.createClass({displayName: "PutFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41723,7 +41723,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: "Add Scanner", module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 

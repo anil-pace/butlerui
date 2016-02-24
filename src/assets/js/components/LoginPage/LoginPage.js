@@ -39,7 +39,8 @@ var LoginPage = React.createClass({
       }
       console.log(data);
     utils.generateSessionId();
-    CommonActions.login(data);  
+    CommonActions.login(data);
+     CommonActions.clearNotification();  
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);

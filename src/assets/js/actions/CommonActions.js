@@ -257,6 +257,11 @@ var commonActions = {
       actionType : appConstants.GENERATE_NOTIFICATION,
       data : data
     })
+   },
+   clearNotification : function(){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CLEAR_NOTIFICATIONS,
+    })
    }
 
 };

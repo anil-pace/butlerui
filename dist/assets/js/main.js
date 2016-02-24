@@ -30839,6 +30839,7 @@ var configConstants = {
 };
 
 module.exports = configConstants;
+
 },{}],189:[function(require,module,exports){
 var resourceConstants = {
 	FRIEND_NAME :'Friend Name',
@@ -30847,6 +30848,7 @@ var resourceConstants = {
 	BILL_NO : 'Bill Number'
 };
 module.exports = resourceConstants;
+
 },{}],190:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
@@ -30908,6 +30910,7 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./components/Operator":175,"jquery":33,"react":163,"react-dom":34}],193:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');

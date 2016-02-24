@@ -62,7 +62,7 @@ var PickBack = React.createClass({
                 <Exception data={this.state.PickBackExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -70,16 +70,16 @@ var PickBack = React.createClass({
   getExceptionAction:function(screen_id){
      switch(screen_id){
         case appConstants.PICK_BACK_EXCEPTION_REPRINT:
-          this._exceptionAction = (<Button1 disabled = {false} text = {"Print"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.REPRINT_INVOICE}  />);
+          this._exceptionAction = (<Button1 disabled = {false} text = {_("Print")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.REPRINT_INVOICE}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
-          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Skip Printing"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.SKIP_PRINTING}  />);
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Skip Printing")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.SKIP_PRINTING}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
-          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Dis-associate Tote"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Dis-associate Tote")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
-          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Override"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.OVERRIDE_TOTE}  />);
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Override")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.OVERRIDE_TOTE}  />);
           break;
         default:
           return true;
@@ -137,7 +137,7 @@ var PickBack = React.createClass({
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -148,7 +148,7 @@ var PickBack = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
           var _button;
           if(this.state.PickBackScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {"Add Scanner"} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} /></div>)
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} /></div>)
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>

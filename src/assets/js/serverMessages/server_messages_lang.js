@@ -242,5 +242,17 @@ function server_messages_list() {
     _("Clear All");
     _("Submit");
     _("Exceptions");
+
+    _("Bin");
+    _("Selected");
+    _("Unselected");
+    _("System is Idle");
+    _("CURRENT SLOT");
+    _("Box Serial Numbers");
+    _("No Items To Reconcile");
+    _("List Of Items To Reconcile");
+    _("User Name");
+    _("Password");
+    _("View More");
     
 }

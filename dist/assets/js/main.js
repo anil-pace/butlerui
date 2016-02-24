@@ -40049,8 +40049,8 @@ var KQ = React.createClass({displayName: "KQ",
   checkKqAllowed : function(){    
     if(_scanDetails.kq_allowed === true){        
       if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
-          
-          if(mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ){
+        
+          if((mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(_updatedQty) == 1) ){
 
               this._appendClassDown = 'downArrow disable'; 
               this._enableDecrement = false;

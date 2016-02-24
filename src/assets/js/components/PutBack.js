@@ -195,7 +195,7 @@ var PutBack = React.createClass({
                       <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                    </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_EXCESS_ITEMS_BIN}  />  
+                    <Button1 disabled = {this.state.PutBackNextButtonState} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_EXCESS_ITEMS_BIN}  />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

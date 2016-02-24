@@ -25,6 +25,7 @@ var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEve
     showModal = false,
     _scanAllowed = true,
     _clearNotification = false,
+    _enableButton = true,
     _finishAuditFlag = true;
 
 var modalContent = {
@@ -81,12 +82,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (value["selected_for_staging"] != undefined) {
                     flag = !value["selected_for_staging"];
                     value["selected_for_staging"] = !value["selected_for_staging"];
+                     _enableButton = !_enableButton;
                 } else {
                     value["selected_for_staging"] = true;
                     flag = true;
+                    _enableButton = false;
                 }
             } else if (value["selected_for_staging"] != undefined) {
                 value["selected_for_staging"] = false;
+
             }
         });
         if (_seatData.notification_list.length != 0) {
@@ -94,9 +98,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.notification_list[0].details[0] = bin_id;
             _seatData.notification_list[0].level = "info";
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
+        }else{
+              var notification_list = {
+                "code" :  (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002,
+                "level" : "info",
+                "details" :[bin_id],
+                "description" : ""
+            }
+            _seatData.notification_list[0] = notification_list;
         }
     },
+    enableButton : function(){
 
+        return _enableButton;
+    },
     getStageActiveStatus: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -351,7 +366,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getNotificationData: function() {
         if(_clearNotification == true){
-            _seatData.notification_list[0].code = null;
+            if(_seatData.notification_list > 0){
+             _seatData.notification_list[0].code = null;
+            }
             _clearNotification = false;
         }
         return _seatData.notification_list[0];
@@ -1273,6 +1290,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackBinData"] = this.getBinData();
+                data["PutBackNextButtonState"] = this.enableButton();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();

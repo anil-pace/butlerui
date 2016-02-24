@@ -36730,6 +36730,11 @@ var commonActions = {
       actionType : appConstants.GENERATE_NOTIFICATION,
       data : data
     })
+   },
+   clearNotification : function(){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CLEAR_NOTIFICATIONS,
+    })
    }
 
 };
@@ -38232,7 +38237,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       }
       console.log(data);
     utils.generateSessionId();
-    CommonActions.login(data);  
+    CommonActions.login(data);
+     CommonActions.clearNotification();  
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
@@ -44065,7 +44071,9 @@ var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEve
     _missingQuantity = 0,
     showModal = false,
     _scanAllowed = true,
+    _clearNotification = false,
     _finishAuditFlag = true;
+
 var modalContent = {
     data: "",
     type: ""
@@ -44389,9 +44397,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getNotificationData: function() {
+        if(_clearNotification == true){
+            _seatData.notification_list[0].code = null;
+            _clearNotification = false;
+        }
         return _seatData.notification_list[0];
     },
-
+    clearNotifications : function(){
+        _clearNotification = true;
+    },
     getBinData: function() {
         var binData = {};
         binData["structure"] = _seatData.structure;
@@ -45716,7 +45730,10 @@ AppDispatcher.register(function(payload) {
         case appConstants.GENERATE_NOTIFICATION:
             mainstore.generateNotification(action.data);
             mainstore.emitChange();
-            break;    
+            break;
+        case appConstants.CLEAR_NOTIFICATIONS:
+            mainstore.clearNotifications();
+            mainstore.emitChange();        
         default:
             return true;
     }

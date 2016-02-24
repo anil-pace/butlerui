@@ -123,7 +123,6 @@ var Header = React.createClass({
         } else{
             logoutClass = 'actionItem'
         }
-        console.log(this.state.scanAllowed);
         if(this.state.scanAllowed == true){
             disableScanClass = '';
         }else{

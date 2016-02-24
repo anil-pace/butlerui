@@ -38149,7 +38149,6 @@ var Header = React.createClass({displayName: "Header",
         } else{
             logoutClass = 'actionItem'
         }
-        console.log(this.state.scanAllowed);
         if(this.state.scanAllowed == true){
             disableScanClass = '';
         }else{
@@ -40045,10 +40044,18 @@ var KQ = React.createClass({displayName: "KQ",
     if(_scanDetails.kq_allowed === true){        
       if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
           
-          this._appendClassUp = 'topArrow disable';
-          this._appendClassDown = 'downArrow enable'; 
-          this._enableDecrement = true;
-          this._enableIncrement = false;         
+          if(mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ){
+
+              this._appendClassDown = 'downArrow disable'; 
+              this._enableDecrement = false;
+              _scanDetails.kq_allowed = false;
+              
+          }else{
+              this._appendClassDown = 'downArrow enable'; 
+              this._enableDecrement = true;
+            }
+           this._appendClassUp = 'topArrow disable'; 
+           this._enableIncrement = false;          
       }
       else{
           this._appendClassUp = 'topArrow enable';

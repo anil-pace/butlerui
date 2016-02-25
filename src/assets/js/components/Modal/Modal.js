@@ -87,22 +87,45 @@ function loadComponent(modalType,modalData){
       }
       title = "Product Information";
       break;
-    case "bin-info":
+    case "bin-info":    
       component = [];
+      var headerArray = [];
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
-           component.push((<div className="col-md-4 heading">{key} </div>));
+           //component.push((<div className="col-md-4 heading">{key} </div>));
+           headerArray.push(              
+              <th>{key}</th>              
+          );
         }
-      }
+      } 
+      var tr = [];    
       modalData.map(function(value,index){
-       for (var key in value) {
-        if (value.hasOwnProperty(key)) {
-           component.push((<div className="col-md-4 value">{value[key]} </div>));
-        }
-      }
+        var rowData = [];
+           for (var key in value) {        
+            if (value.hasOwnProperty(key)) {
+              rowData.push(
+                <td>{value[key]}</td>
+              )
+            }                    
+          }
+          tr.push(<tr> {rowData} </tr>);
+          
       })
+       component.push(
+              <div className="value">
+                  <table className="table">  
+                    <thead>
+                    <tr> {headerArray} </tr>
+                    </thead>               
+                    <tbody>
+                     {tr}
+                    </tbody>
+                 </table>
+              </div>
+          );
       title = "Bin Info";
       break;
+      
     case "scan_bin_barcode":
       component = [];
       footer = [];

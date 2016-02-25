@@ -26,8 +26,8 @@ function attachKeyboard(id){
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
-              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
               container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -49,7 +49,7 @@ function attachKeyboard(id){
 function attachNumpad(id){
      virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
-            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{c} {a}'] },
+            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
             initialFocus : true,
@@ -87,22 +87,45 @@ function loadComponent(modalType,modalData){
       }
       title = "Product Information";
       break;
-    case "bin-info":
+    case "bin-info":    
       component = [];
+      var headerArray = [];
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
-           component.push((<div className="col-md-4 heading">{key} </div>));
+           //component.push((<div className="col-md-4 heading">{key} </div>));
+           headerArray.push(              
+              <th>{key}</th>              
+          );
         }
-      }
+      } 
+      var tr = [];    
       modalData.map(function(value,index){
-       for (var key in value) {
-        if (value.hasOwnProperty(key)) {
-           component.push((<div className="col-md-4 value">{value[key]} </div>));
-        }
-      }
+        var rowData = [];
+           for (var key in value) {        
+            if (value.hasOwnProperty(key)) {
+              rowData.push(
+                <td>{value[key]}</td>
+              )
+            }                    
+          }
+          tr.push(<tr> {rowData} </tr>);
+          
       })
+       component.push(
+              <div className="value">
+                  <table className="table">  
+                    <thead>
+                    <tr> {headerArray} </tr>
+                    </thead>               
+                    <tbody>
+                     {tr}
+                    </tbody>
+                 </table>
+              </div>
+          );
       title = "Bin Info";
       break;
+      
     case "scan_bin_barcode":
       component = [];
       footer = [];

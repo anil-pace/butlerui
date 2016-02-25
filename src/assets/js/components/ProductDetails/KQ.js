@@ -247,7 +247,7 @@ var KQ = React.createClass({
           setTimeout(function(){ $('#keyboard').keyboard({
             layout: 'custom',
             customLayout: {
-                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{c} {a}']
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
             alwaysOpen: false,

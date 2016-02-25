@@ -38057,8 +38057,8 @@ var Header = React.createClass({displayName: "Header",
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
-              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38248,8 +38248,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
-        'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
+        'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38419,8 +38419,8 @@ function attachKeyboard(id){
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
-              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
               container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -38442,7 +38442,7 @@ function attachKeyboard(id){
 function attachNumpad(id){
      virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
-            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{c} {a}'] },
+            customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
             initialFocus : true,
@@ -38480,22 +38480,45 @@ function loadComponent(modalType,modalData){
       }
       title = "Product Information";
       break;
-    case "bin-info":
+    case "bin-info":    
       component = [];
+      var headerArray = [];
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
-           component.push((React.createElement("div", {className: "col-md-4 heading"}, key, " ")));
+           //component.push((<div className="col-md-4 heading">{key} </div>));
+           headerArray.push(              
+              React.createElement("th", null, key)              
+          );
         }
-      }
+      } 
+      var tr = [];    
       modalData.map(function(value,index){
-       for (var key in value) {
-        if (value.hasOwnProperty(key)) {
-           component.push((React.createElement("div", {className: "col-md-4 value"}, value[key], " ")));
-        }
-      }
+        var rowData = [];
+           for (var key in value) {        
+            if (value.hasOwnProperty(key)) {
+              rowData.push(
+                React.createElement("td", null, value[key])
+              )
+            }                    
+          }
+          tr.push(React.createElement("tr", null, " ", rowData, " "));
+          
       })
+       component.push(
+              React.createElement("div", {className: "value"}, 
+                  React.createElement("table", {className: "table"}, 
+                    React.createElement("thead", null, 
+                    React.createElement("tr", null, " ", headerArray, " ")
+                    ), 
+                    React.createElement("tbody", null, 
+                     tr
+                    )
+                 )
+              )
+          );
       title = "Bin Info";
       break;
+      
     case "scan_bin_barcode":
       component = [];
       footer = [];
@@ -39931,7 +39954,7 @@ var KQ = React.createClass({displayName: "KQ",
           setTimeout(function(){ $('#keyboard').keyboard({
             layout: 'custom',
             customLayout: {
-                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{c} {a}']
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
             alwaysOpen: false,
@@ -42173,8 +42196,8 @@ var TableRow = React.createClass({displayName: "TableRow",
         setTimeout(function(){ $('#'+id).keyboard({
           layout: 'custom',
           customLayout: {
-              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{c} {a}'],
-              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{c} {a}']
+              'default': ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['! @ # $ % ^ & * ( )', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
           },
           css: {
             container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -42842,9 +42865,9 @@ var serverMessages = {
     "CLIENTCODE_007" : "Scanner not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
     "CLIENTCODE_009" : "You cannot enter 0",
-    "CLIENTCODE_010" : "Put quantity should be equal to the sum of damaged, missing and good",
-    "CLIENTCODE_011" : "Pick quantity should be equal to the sum of damaged, missing and good ",
-    "CLIENTCODE_012"  : "Quantity should be less than or equal to put quantity",
+    "CLIENTCODE_010" : "Put quantity should be equal to {0}",
+    "CLIENTCODE_011" : "Pick quantity should be equal to {0}",
+    "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
     "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
@@ -45108,11 +45131,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
-                    data["details"] = [];
+                    data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
                    
                 } else {
-                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
                 }
                 _goodQuantity = 0;
@@ -45161,10 +45185,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_010;
                 data["level"] = "error";
-                data["details"] = [];
+                data["details"] = [details];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+                _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
             }
             _putFrontExceptionScreen = "good";
@@ -45198,10 +45223,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
-                data["details"] = [];
+                data["details"] = [_seatData.put_quantity];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_seatData.put_quantity];
                 _seatData.notification_list[0].level = "error";
             }
             _goodQuantity = 0;

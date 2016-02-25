@@ -322,7 +322,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getChecklistDetails: function() {
         if (_seatData.hasOwnProperty('checklist_details')) {
-            console.log(_seatData.checklist_details.pick_checklist.length + "jindal");
             if (_seatData.checklist_details.pick_checklist.length > 0) {
                 return _seatData.checklist_details.pick_checklist;
             } else {
@@ -365,10 +364,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getNotificationData: function() {
-        if(_clearNotification == true){
-            if(_seatData.notification_list > 0){
-             _seatData.notification_list[0].code = null;
-            }
+        if(_clearNotification == true && _seatData.hasOwnProperty('notification_list')){
+            var notification_list = [{
+                "details" : [],
+                "code" : null,
+                "description" : '',
+                "level" : "info"
+            }]
+            _seatData.notification_list = notification_list;
             _clearNotification = false;
         }
         return _seatData.notification_list[0];

@@ -8,11 +8,22 @@ var App = React.createClass({
     return null;
   },
   render: function(){
-    return (
-      <div className="body-container container">
-        <Operator />
-      </div>
-    );
+    var w = window.innerWidth;    
+    if(w < 1025){
+      return (
+        <div className="body-container container-fluid">
+          <Operator />
+        </div>
+      );
+    }
+    else{
+        return (
+        <div className="body-container container">
+          <Operator />
+        </div>
+      );
+    }
+    
   }
 });
 

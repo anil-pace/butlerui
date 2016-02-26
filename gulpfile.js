@@ -40,7 +40,7 @@ gulp.task('copy', function(){
     .pipe(gulp.dest('dist/assets/fonts'));
   gulp.src('src/assets/js/utils/vendor/**/*.*')
     .pipe(gulp.dest('dist/assets/js/vendor/'));
-  gulp.src('src/assets/package.sh')
+  gulp.src('package.sh')
     .pipe(gulp.dest('dist/'));      		
 });
 gulp.task('json', function() {

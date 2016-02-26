@@ -36805,12 +36805,8 @@ var Audit = React.createClass({displayName: "Audit",
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
           this.state.AuditShowModal["showModal"] = false;
-          console.log("ppppp");
-          console.log(self.state.AuditShowModal.message);
           var r = self.state.AuditShowModal.message;
           setTimeout((function(){
-            console.log("qqq");
-            console.log(r);
             ActionCreators.showModal({
               data:{
               "message":r
@@ -36820,7 +36816,6 @@ var Audit = React.createClass({displayName: "Audit",
         $('.modal').modal("show");
       //return false;
       }),0);
-          console.log("aa");
        }
      }
   },
@@ -38542,7 +38537,7 @@ function loadComponent(modalType,modalData){
     case "message":
       component = [];
       component.push((React.createElement("div", {className: "col-md-12 value"}, modalData["message"], " ")));
-      title = "Perform Action";
+      title = _("Extra Entity Found");
     break;
     case "pick_checklist":
       component = [];
@@ -42436,7 +42431,7 @@ var navData = {
         "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Rack Barcode ",
+        "message": "Scan MSU Barcode ",
         "showImage": true,
         "level": 1,
         "type": 'passive'
@@ -42640,8 +42635,9 @@ var resourceConstants = {
 	CLIENTCODE_010 : 'CLIENTCODE_010',
 	CLIENTCODE_011 :'CLIENTCODE_011',
 	CLIENTCODE_012 :'CLIENTCODE_012',
-	CLIENTCODE_013 :'CLIENTCODE_013'
-
+	CLIENTCODE_013 :'CLIENTCODE_013',
+	CLIENTCODE_014 :"CLIENTCODE_014"
+ 
 };
 module.exports = resourceConstants;
 
@@ -42851,7 +42847,10 @@ var serverMessages = {
     "AdF.A.006" :"Status To Reconcile",
     "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
-    "AdF.A.009" :"Waiting for MSU to arrive",
+    "AdF.H.001" : "Scan Box or Items",
+    "AdF.H.006" :"Check Count",
+    "AdF.H.007" :"Waiting for MSU",
+    "AdF.H.008" : "Scan Slot",
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successful",
     "AdF.B.003" :"Item Scan successful",
@@ -42869,6 +42868,7 @@ var serverMessages = {
     "CLIENTCODE_011" : "Sum of missing, good and damaged should be equal to {0}",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
     "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
+    "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
     "PkF.E.012" : "Data capture failed at item {0}",       
@@ -44309,13 +44309,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["showModal"] = "";
         data["message"] = "";
         if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
-            console.log("jindal");
-            console.log(showModal);
             showModal = false;
-            console.log(_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": "Place extra " /*+ (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])*/ + " items in Exception area ."
+                "message": _("Place extra entity in Exception area .")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
             console.log("jindal");
@@ -44324,7 +44321,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": "Place extra " + (_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"]) + " items in Exception area ."
+                "message": _("Place extra entity in Exception area .")
             }
         } 
         else{
@@ -44800,7 +44797,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["header"].push(new this.tableCol("Loose Items Serial Numbers", "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Unscannable", "header", false, "small", false, false, true, false, true));
         }
         return data;
     },

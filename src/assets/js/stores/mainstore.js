@@ -1061,11 +1061,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
-                    data["details"] = [];
+                    data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
                    
                 } else {
-                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
                 }
                 _goodQuantity = 0;
@@ -1114,10 +1115,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_010;
                 data["level"] = "error";
-                data["details"] = [];
+                data["details"] = [details];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+                _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
             }
             _putFrontExceptionScreen = "good";
@@ -1151,10 +1153,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
-                data["details"] = [];
+                data["details"] = [_seatData.put_quantity];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_seatData.put_quantity];
                 _seatData.notification_list[0].level = "error";
             }
             _goodQuantity = 0;

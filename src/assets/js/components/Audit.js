@@ -61,12 +61,8 @@ var Audit = React.createClass({
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
           this.state.AuditShowModal["showModal"] = false;
-          console.log("ppppp");
-          console.log(self.state.AuditShowModal.message);
           var r = self.state.AuditShowModal.message;
           setTimeout((function(){
-            console.log("qqq");
-            console.log(r);
             ActionCreators.showModal({
               data:{
               "message":r
@@ -76,7 +72,6 @@ var Audit = React.createClass({
         $('.modal').modal("show");
       //return false;
       }),0);
-          console.log("aa");
        }
      }
   },

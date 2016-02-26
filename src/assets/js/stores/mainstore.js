@@ -239,13 +239,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["showModal"] = "";
         data["message"] = "";
         if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
-            console.log("jindal");
-            console.log(showModal);
             showModal = false;
-            console.log(_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": "Place extra " /*+ (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"])*/ + " items in Exception area ."
+                "message": _("Place extra entity in Exception area .")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
             console.log("jindal");
@@ -254,7 +251,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": "Place extra " + (_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"]) + " items in Exception area ."
+                "message": _("Place extra entity in Exception area .")
             }
         } 
         else{
@@ -730,7 +727,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["header"].push(new this.tableCol("Loose Items Serial Numbers", "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol("Unscannable", "header", false, "small", false, false, true, false, true));
         }
         return data;
     },

@@ -135,7 +135,7 @@ var navData = {
         "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Rack Barcode ",
+        "message": "Scan MSU Barcode ",
         "showImage": true,
         "level": 1,
         "type": 'passive'

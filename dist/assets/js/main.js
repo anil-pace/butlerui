@@ -38475,7 +38475,8 @@ function loadComponent(modalType,modalData){
       }
       title = "Product Information";
       break;
-    case "bin-info":    
+
+    case "bin-info":
       component = [];
       var headerArray = [];
       for (var key in modalData[0]) {
@@ -38502,7 +38503,7 @@ function loadComponent(modalType,modalData){
        component.push(
               React.createElement("div", {className: "value"}, 
                   React.createElement("table", {className: "table"}, 
-                    React.createElement("thead", null, 
+                    React.createElement("thead", {className: "heading"}, 
                     React.createElement("tr", null, " ", headerArray, " ")
                     ), 
                     React.createElement("tbody", null, 
@@ -38512,6 +38513,7 @@ function loadComponent(modalType,modalData){
               )
           );
       title = "Bin Info";
+      
       break;
       
     case "scan_bin_barcode":

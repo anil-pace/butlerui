@@ -103,6 +103,45 @@
 	}
 }
 
+//... EXTRA ENTITY IN BIN ... After selection of bin
+
+
+{
+	"state_data": {
+		"exception_type": "extra_items",
+		"seat_name": "back_10",
+		"screen_id": "put_back_extra_item_quantity_update",
+		"screen_version": "1",
+		"notification_list": [],
+		"all_peripheral_status": "true",
+		"peripheral_data": [],
+		"logout_allowed": false,
+		"exception_allowed": [{
+			"exception_id": "PtB004",
+			"exception_name": "Extra Items In Bin",
+			"event": "extra_items"
+		}, {
+			"exception_id": "PtB003",
+			"exception_name": "Item Damaged",
+			"event": "item_damaged"
+		}, {
+			"exception_id": "PtB002",
+			"exception_name": "Item Over Sized",
+			"event": "item_oversized"
+		}],
+		"mode": "put",
+		"is_idle": false,
+		"seat_type": "back",
+		"time_stamp": "1456483001",
+		"header_msge_list": [{
+			"level": "info",
+			"code": "PtB.H.010",
+			"details": [],
+			"description": "Enter Excess Entity Quantity"
+		}],
+		"api_version": "1"
+	}
+}
 ///...... ENTITY UNSCANNABLE.../////////.....................................
 
 

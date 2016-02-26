@@ -115,7 +115,7 @@ function loadComponent(modalType,modalData){
        component.push(
               <div className="value">
                   <table className="table">  
-                    <thead>
+                    <thead className="heading">
                     <tr> {headerArray} </tr>
                     </thead>               
                     <tbody>

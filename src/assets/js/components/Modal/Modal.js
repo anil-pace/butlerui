@@ -87,7 +87,8 @@ function loadComponent(modalType,modalData){
       }
       title = "Product Information";
       break;
-    case "bin-info":    
+
+    case "bin-info":
       component = [];
       var headerArray = [];
       for (var key in modalData[0]) {
@@ -114,7 +115,7 @@ function loadComponent(modalType,modalData){
        component.push(
               <div className="value">
                   <table className="table">  
-                    <thead>
+                    <thead className="heading">
                     <tr> {headerArray} </tr>
                     </thead>               
                     <tbody>
@@ -124,6 +125,7 @@ function loadComponent(modalType,modalData){
               </div>
           );
       title = "Bin Info";
+      
       break;
       
     case "scan_bin_barcode":

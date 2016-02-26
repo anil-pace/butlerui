@@ -248,7 +248,7 @@ var Audit = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.AuditExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.AuditServerNavData} />
+                  <ExceptionHeader data={this.state.AuditServerNavData} />
                   <KQ scanDetailsGood = {this.state.AuditKQDetails} />
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  

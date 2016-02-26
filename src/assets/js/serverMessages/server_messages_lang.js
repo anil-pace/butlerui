@@ -95,11 +95,9 @@ function server_messages_list() {
     _("Status To Reconcile");
     _("This box belongs to some other SKU in the slot.Put it back.Scan next box.");
     _("This box does not belong to this slot. Remove the box and put in exception area.");
-    _("Waiting for MSU to arrive");
+    _("Waiting for MSU");
     _("Wrong Barcode.");
     _("Box Scan successful");
-    _("Item Scan successful");
-    _("Waiting for MSU to arrive");
     _('Item Scan successful');
     _('Data capture failed at item {0}');
     _('Bin {0} selected');
@@ -211,8 +209,11 @@ function server_messages_list() {
     _("Skip Print");
     _("Scanner added successfully");
     _("Scanner not added");
+    _("Scan Box or Items");
+    _("Check Count");
     _("You cannot enter value more than 9999");
     _("You cannot enter 0");
+    _("Place extra entity in Exception area.");
     _("Sum of missing, good and damaged should be equal to {0}");
     _("Sum of missing, good and damaged should be equal to {0}");
     _("Quantity should be less than or equal to {0}");

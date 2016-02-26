@@ -213,8 +213,8 @@ function server_messages_list() {
     _("Scanner not added");
     _("You cannot enter value more than 9999");
     _("You cannot enter 0");
-    _("Pick quantity should be equal to {0}");
-    _("Put quantity should be equal to {0}");
+    _("Sum of missing, good and damaged should be equal to {0}");
+    _("Sum of missing, good and damaged should be equal to {0}");
     _("Quantity should be less than or equal to {0}");
     _("You are not allowed to kick in the quantity from the numpad. Force Scan is required.");
 

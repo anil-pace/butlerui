@@ -149,7 +149,7 @@ function loadComponent(modalType,modalData){
     case "message":
       component = [];
       component.push((<div className="col-md-12 value">{modalData["message"]} </div>));
-      title = "Perform Action";
+      title = _("Extra Entity Found");
     break;
     case "pick_checklist":
       component = [];

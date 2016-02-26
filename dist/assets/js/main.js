@@ -30839,7 +30839,6 @@ var configConstants = {
 };
 
 module.exports = configConstants;
-
 },{}],189:[function(require,module,exports){
 var resourceConstants = {
 	FRIEND_NAME :'Friend Name',
@@ -30848,7 +30847,6 @@ var resourceConstants = {
 	BILL_NO : 'Bill Number'
 };
 module.exports = resourceConstants;
-
 },{}],190:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
@@ -30897,11 +30895,22 @@ var App = React.createClass({displayName: "App",
     return null;
   },
   render: function(){
-    return (
-      React.createElement("div", {className: "body-container container"}, 
-        React.createElement(Operator, null)
-      )
-    );
+    var w = window.innerWidth;    
+    if(w < 1025){
+      return (
+        React.createElement("div", {className: "body-container container-fluid"}, 
+          React.createElement(Operator, null)
+        )
+      );
+    }
+    else{
+        return (
+        React.createElement("div", {className: "body-container container"}, 
+          React.createElement(Operator, null)
+        )
+      );
+    }
+    
   }
 });
 
@@ -30910,7 +30919,6 @@ ReactDOM.render(
     React.createElement(App, null),
     document.getElementById('app')
 )
-
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./components/Operator":175,"jquery":33,"react":163,"react-dom":34}],193:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');

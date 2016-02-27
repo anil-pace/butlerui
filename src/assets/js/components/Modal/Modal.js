@@ -34,8 +34,7 @@ function attachKeyboard(id){
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
-            stayOpen:true,
+            initialFocus: true,          
             visible : function(e, keypressed, el){
               el.value = '';              
             },
@@ -52,8 +51,7 @@ function attachNumpad(id){
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
-            stayOpen:true,
+            initialFocus : true,          
             accepted: function(e, keypressed, el) {
             },
             visible : function(e, keypressed, el){

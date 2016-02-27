@@ -58,8 +58,7 @@ var LoginPage = React.createClass({
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true, 
-      stayOpen:true,    
+      initialFocus: true,      
       visible : function(e, keypressed, el){
         el.value = '';
         //$(".authNotify").css("display","none"); 

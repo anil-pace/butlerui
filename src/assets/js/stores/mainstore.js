@@ -67,7 +67,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScanAllowedStatus : function(){
         if(_seatData.hasOwnProperty("scan_allowed")){
             _scanAllowed = _seatData.scan_allowed;
-            console.log(_scanAllowed);
             return _scanAllowed;
         }else{
             _scanAllowed = true;

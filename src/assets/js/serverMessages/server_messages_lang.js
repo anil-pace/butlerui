@@ -99,6 +99,7 @@ function server_messages_list() {
     _("Wrong Barcode.");
     _("Box Scan successful");
     _('Item Scan successful');
+    _("Item scan successful");
     _('Data capture failed at item {0}');
     _('Bin {0} selected');
     _('Bin {0} unselected');

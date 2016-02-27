@@ -38060,8 +38060,7 @@ var Header = React.createClass({displayName: "Header",
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
-            stayOpen:true,
+            initialFocus: true,           
             position: {
                 of: $('.keyboard-actions'),
                 my: 'center top',
@@ -38251,8 +38250,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true, 
-      stayOpen:true,    
+      initialFocus: true,      
       visible : function(e, keypressed, el){
         el.value = '';
         //$(".authNotify").css("display","none"); 
@@ -38422,8 +38420,7 @@ function attachKeyboard(id){
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
-            stayOpen:true,
+            initialFocus: true,          
             visible : function(e, keypressed, el){
               el.value = '';              
             },
@@ -38440,8 +38437,7 @@ function attachNumpad(id){
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
-            stayOpen:true,
+            initialFocus : true,          
             accepted: function(e, keypressed, el) {
             },
             visible : function(e, keypressed, el){
@@ -38473,7 +38469,7 @@ function loadComponent(modalType,modalData){
            component.push((React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6 key"}, key, " "), "  ", React.createElement("div", {className: "col-md-6 value"}, modalData[key]))));
         }
       }
-      title = "Product Information";
+      title = _("Product Information");
       break;
 
     case "bin-info":
@@ -38512,7 +38508,7 @@ function loadComponent(modalType,modalData){
                  )
               )
           );
-      title = "Bin Info";
+      title = _("Bin Info");
       
       break;
       
@@ -38534,7 +38530,7 @@ function loadComponent(modalType,modalData){
        )
        ));      
       
-      title = "Associate tote with bin";
+      title = _("Associate tote with bin");
       break;
     case "message":
       component = [];
@@ -38545,7 +38541,7 @@ function loadComponent(modalType,modalData){
       component = [];
       footer = [];
       rowData =[];
-      title = "Input Extra Details";
+      title = _("Input Extra Details");
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
             serial = index;
@@ -38643,7 +38639,7 @@ function loadComponent(modalType,modalData){
           )
           ));
          
-      title = "Add Scanner";
+      title = _("Add Scanner");
       break;
     default:
       component = null;
@@ -39954,8 +39950,7 @@ var KQ = React.createClass({displayName: "KQ",
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
-            alwaysOpen: false,
-            stayOpen:true,
+            alwaysOpen: false,          
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
@@ -40414,8 +40409,7 @@ var KQ = React.createClass({displayName: "KQ",
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
-            alwaysOpen: false,
-            stayOpen:true,
+            alwaysOpen: false,          
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
@@ -40844,8 +40838,7 @@ var KQ = React.createClass({displayName: "KQ",
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
-            alwaysOpen: false,
-            stayOpen:true,
+            alwaysOpen: false,         
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
@@ -42201,8 +42194,7 @@ var TableRow = React.createClass({displayName: "TableRow",
           },
           reposition: true,
           alwaysOpen: false,
-          initialFocus: true,
-          stayOpen:true,     
+          initialFocus: true,             
           visible : function(e, keypressed, el){
             el.value = '';
             //$(".authNotify").css("display","none"); 
@@ -42842,6 +42834,7 @@ var serverMessages = {
     "Common.001": "Processing. Please wait and scan later",
     "Common.002": "Waiting for rack",
     "Common.003": "Current PPS mode does not support back seat. Please logout.",
+    "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
@@ -44139,7 +44132,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScanAllowedStatus : function(){
         if(_seatData.hasOwnProperty("scan_allowed")){
             _scanAllowed = _seatData.scan_allowed;
-            console.log(_scanAllowed);
             return _scanAllowed;
         }else{
             _scanAllowed = true;
@@ -44336,11 +44328,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Finish"), "header", false, "small", false, false, true, false, true));
         _finishAuditFlag = true;
         var d = [];
         _seatData.Box_qty_list.map(function(value, index) {
@@ -44592,10 +44584,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {};
             data["header"] = [];
             if(appConstants.PPTL_MANAGEMENT == _seatData.screen_id){
-                data["header"].push(new this.tableCol("Bin ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol("Barcode", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol("Peripheral ID", "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
+                data["header"].push(new this.tableCol(_("Bin ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
@@ -44626,13 +44618,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
                 });
             }else{
-                data["header"].push(new this.tableCol("Scanner ID", "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
-                data["header"].push(new this.tableCol("Actions", "header", false, "small", true, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", true, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
                     data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
-                    new self.tableCol("Delete", "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }
@@ -44643,10 +44635,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('reconciliation')) {
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
-            data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
+            data["tableRows"].push([new this.tableCol(_("Product SKU"), "enabled", false, "small", false, true, true, false), new this.tableCol(_("Expected Quantity"), "enabled", false, "small", true, false, true, false, true), new this.tableCol(_("Actual Quantity"), "enabled", false, "small", true, false, true, false, true)]);
             _seatData.reconciliation.map(function(value, index) {
                 data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
 
@@ -44683,10 +44675,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
         });
         if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0) {
-            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Barcode Damage"), "header", false, "small", false, false, true, false, true));
         }
         if (missingDamagedBoxSerials != 0)
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
@@ -44724,10 +44716,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         });
         if (data["tableRows"].length > 0) {
-            data["header"].push(new this.tableCol("Item in Box Serial Numbers", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Barcode Damage", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Item in Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Barcode Damage"), "header", false, "small", false, false, true, false, true));
         }
         return data;
     },
@@ -44739,10 +44731,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         disabledStatus = false;
         //}
         data["header"] = [];
-        data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Loose Items"), "header", false, "small", false, true, true, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
         data["tableRows"] = [];
         var self = this;
         var d = [];
@@ -44796,10 +44788,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
             ]);*/
         if (data["tableRows"].length > 0) {
-            data["header"].push(new this.tableCol("Loose Items Serial Numbers", "header", false, "small", false, true, true, false));
-            data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol("Unscannable", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
         }
         return data;
     },
@@ -44818,7 +44810,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getItemDetailsData: function() {
         var data = {};
         data["header"] = [];
-        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Product Details"), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
         var self = this;
@@ -44859,16 +44851,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 }
             }
         } else {
-            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product Name"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
-            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product Desc"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
-            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product SKU"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
-            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product Type"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
         }

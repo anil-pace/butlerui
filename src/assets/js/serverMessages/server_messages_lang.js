@@ -99,6 +99,7 @@ function server_messages_list() {
     _("Wrong Barcode.");
     _("Box Scan successful");
     _('Item Scan successful');
+    _("Item scan successful");
     _('Data capture failed at item {0}');
     _('Bin {0} selected');
     _('Bin {0} unselected');
@@ -255,5 +256,39 @@ function server_messages_list() {
     _("User Name");
     _("Password");
     _("View More");
+
+    _("Product Information");
+    _("Bin Info");
+    _("Associate tote with bin");
+    _("Extra Entity Found");
+    _("Perform Action");
+    _("Input Extra Details");
+    _("Add Scanner");
+    _("Box Serial Numbers");
+    _("Expected");
+    _("Actual");
+    _("Finish");
+    _("Bin ID");
+    _("Barcode");
+    _("Peripheral ID");
+    _("Actions");
+    _("Scanner ID");
+    _("Actions");
+    _("Delete");
+    _("Box Serial Numbers");
+    _("Product SKU");
+    _("Expected Quantity");
+    _("Actual Quantity");
+    _("Missing");
+    _("Extra");
+    _("Barcode Damage");
+    _("Item in Box Serial Numbers");
+    _("Loose Items");
+    _("Loose Items Serial Numbers");
+    _("Product Details");
+    _("Product Name");
+    _("Product Desc");
+    _("Product SKU");
+    _("Product Type");
     
 }

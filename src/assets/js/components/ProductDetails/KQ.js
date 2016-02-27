@@ -250,8 +250,7 @@ var KQ = React.createClass({
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
-            alwaysOpen: false,
-            stayOpen:true,
+            alwaysOpen: false,          
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);

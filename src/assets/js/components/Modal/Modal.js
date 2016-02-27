@@ -83,7 +83,7 @@ function loadComponent(modalType,modalData){
            component.push((<div className="row"><div className="col-md-6 key">{key} </div>  <div className="col-md-6 value">{modalData[key]}</div></div>));
         }
       }
-      title = "Product Information";
+      title = _("Product Information");
       break;
 
     case "bin-info":
@@ -122,7 +122,7 @@ function loadComponent(modalType,modalData){
                  </table>
               </div>
           );
-      title = "Bin Info";
+      title = _("Bin Info");
       
       break;
       
@@ -144,7 +144,7 @@ function loadComponent(modalType,modalData){
        </div>
        ));      
       
-      title = "Associate tote with bin";
+      title = _("Associate tote with bin");
       break;
     case "message":
       component = [];
@@ -155,7 +155,7 @@ function loadComponent(modalType,modalData){
       component = [];
       footer = [];
       rowData =[];
-      title = "Input Extra Details";
+      title = _("Input Extra Details");
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
             serial = index;
@@ -253,7 +253,7 @@ function loadComponent(modalType,modalData){
           </div>
           ));
          
-      title = "Add Scanner";
+      title = _("Add Scanner");
       break;
     default:
       component = null;

@@ -121,7 +121,7 @@ function server_messages_list() {
     _("Scan Slot");
     _("Scan {0} Items");
     _("Scan Box");
-    _("Scan {0} Items and Place in Bin");
+    _("Scan {0} Items and Place in Bin {0}");
     _("Press PPTL to confirm");
     _("Scan Tote to Associate with Bin");
     _("Press PPTL or Scan a Tote");

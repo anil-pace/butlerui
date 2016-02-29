@@ -37261,7 +37261,7 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
             return (
                 React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -42751,7 +42751,7 @@ var serverMessages = {
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same SKU to complete this exception",
     "PtB.E.018" : "Entity scan not expected.",  
-    "PtB.E.019" : "Tote not present in database.",
+    "PtB.E.019" : "Tote not present in database.",  
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
@@ -42763,7 +42763,7 @@ var serverMessages = {
     "PkF.H.003" : "Scan Slot",
     "PkF.H.004" : "Scan {0} Items",
     "PkF.H.005" : "Scan Box",
-    "PkF.H.006" : "Scan {0} Items and Place in Bin",
+    "PkF.H.006" : "Scan {0} Items and Place in Bin {1}",
     "PkF.H.007" : "Press PPTL to confirm",
     "PkB.H.001" : "Scan Tote to Associate with Bin",
     "PkB.H.002" : "Press PPTL or Scan a Tote",

@@ -231,7 +231,7 @@ var Bin = React.createClass({
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
             return (
                 <div className = {compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}>
                     <div className ="item-count">{compData.ppsbin_count}</div>

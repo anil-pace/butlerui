@@ -170,7 +170,7 @@ var PutBack = React.createClass({
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <div className="main-container exception1">
-                    <Img />
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
                     <TabularData data = {this.state.PutBackExceptionProductDetails}/>
                     <KQ scanDetails = {this.state.PutBackKQDetails} />
                   </div>

@@ -44674,7 +44674,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData.Extra_box_list.map(function(value, index) {
             extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
         });
-        if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0) {
+        if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0 || _seatData["box_barcode_damage"] > 0) {
             data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
@@ -44686,6 +44686,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
             ]);
+        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) && _seatData.Box_qty_list.length == 0 ){
+            data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+            ]);
+        }
         if (_seatData.Extra_box_list.length != 0)
             data["tableRows"].push([new self.tableCol(extraBoxSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -44774,6 +44781,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c=c+1;
         })
+        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+                c=c+1;
+        })
         _seatData.Loose_sku_list.map(function(value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
@@ -44787,6 +44798,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
          data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
                 new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
             ]);*/
+        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+
+        });
+        
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));

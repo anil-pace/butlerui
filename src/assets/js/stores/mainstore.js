@@ -1200,19 +1200,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type, status) {
+    updateSeatData: function(data, type, status, method) {console.log(method);
+        var dataNotification = {};
+
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
         } 
         if(status == "success"){
-            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
-            _seatData.notification_list[0]["level"] = "info";
+            if(method == "POST")
+                dataNotification["code"]= resourceConstants.CLIENTCODE_006;
+            else
+                dataNotification["code"]= resourceConstants.CLIENTCODE_015;
+            dataNotification["level"] = "info";
+            this.generateNotification(dataNotification);
         }
         else if(status == "fail"){
-            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
-            _seatData.notification_list[0]["level"] = "error";
+            if(method == "POST")
+                dataNotification["code"]= resourceConstants.CLIENTCODE_007;
+            else
+                dataNotification["code"]= resourceConstants.CLIENTCODE_016;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
         }else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
@@ -1709,7 +1719,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.UPDATE_SEAT_DATA:
             mainstore.showSpinner();
-            mainstore.updateSeatData(action.data, action.type, action.status);
+            mainstore.updateSeatData(action.data, action.type, action.status, action.method);
             mainstore.emitChange();
             break;
         case appConstants.CONVERT_TEXTBOX:

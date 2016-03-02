@@ -208,8 +208,8 @@ function server_messages_list() {
     _("Overide Tote Required");
     _("Reprint");
     _("Skip Print");
-    _("Scanner added successfully");
-    _("Scanner not added");
+    _("Peripheral added successfully");
+    _("Peripheral not added");
     _("Scan Box or Items");
     _("Check Count");
     _("You cannot enter value more than 9999");
@@ -219,7 +219,8 @@ function server_messages_list() {
     _("Sum of missing, good and damaged should be equal to {0}");
     _("Quantity should be less than or equal to {0}");
     _("You are not allowed to kick in the quantity from the numpad. Force Scan is required.");
-
+    _("Peripheral deleted successfully");
+    _("Peripheral not deleted successfully");
     _("Cancel Exception");
     _("Cancel Scan");
     _("Finish");

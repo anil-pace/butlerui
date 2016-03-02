@@ -133,7 +133,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
     },
-    getPeripheralData : function(type, seat_name, status){
+    getPeripheralData : function(type, seat_name, status, method){
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
          $.ajax({
@@ -146,7 +146,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            CommonActions.updateSeatData(response.data, type, status);  
+            CommonActions.updateSeatData(response.data, type, status, method);  
         }).fail(function(jqXhr) {    
            
         });
@@ -155,6 +155,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         var url;
+        var method = method;
         if(method == 'POST'){
             url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
         }else{
@@ -171,10 +172,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            utils.getPeripheralData(data.peripheral_type, seat_name , 'success')
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail');
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
                     
         });
     },

@@ -76,7 +76,8 @@ var TableRow = React.createClass({
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
-            var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
+            //var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
+            var borderBottom = value.borderBottom == false ? classes = classes + "":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
             var color = value.color == "blue" ? classes = classes + value.color + " ": "";
 
@@ -87,7 +88,7 @@ var TableRow = React.createClass({
                   comp.push((<div className={classes} title={value.text} onClick={peripheralAction.bind(null,value.text, value.id)}>{value.text}</div>));
                 }
                 else if(value.textbox == true){
-                  comp.push(<input type='text' id={value.type} className={classes} defaultValue={value.text} onClick={openKeyboard_peripheral.call(null, value.type )}/>);
+                  comp.push(<input type='text' id={value.type} className={classes} defaultValue={value.text} onClick={openKeyboard_peripheral.call(null, value.type )} />);
                 }else{
     		      comp.push((<div className={classes} title={value.text}>{value.text}</div>));
                 }

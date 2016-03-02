@@ -82,6 +82,10 @@ var Header = React.createClass({
         $("#actionMenu").toggle();
         $(".subMenu").hide();
     },
+    refresh: function(){
+           location.reload();
+        
+    },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
     },
@@ -142,6 +146,9 @@ var Header = React.createClass({
               </div>
             </div>
             <div className="actionMenu" id="actionMenu" >
+                <div className="actionItem" onClick = {this.refresh} >
+                    Home
+                </div>
                 {this.exceptionMenu}  
                 <div className="actionItem" onClick = {this.utilityMenu} >
                     Utility

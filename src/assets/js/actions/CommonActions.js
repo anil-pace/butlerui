@@ -229,12 +229,13 @@ var commonActions = {
       data:data
     });
    },
-   updateSeatData : function(data, type, status){
+   updateSeatData : function(data, type, status, method){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_SEAT_DATA,
       data:data,
       type : type,
-      status: status
+      status: status,
+      method : method
     });
    },
    convertTextBox : function(data, index){

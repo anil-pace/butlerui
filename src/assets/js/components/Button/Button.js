@@ -162,6 +162,7 @@ var Button1 = React.createClass({
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;
                             case appConstants.GET_MISSING_AND_DAMAGED_QTY:
                                 ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");

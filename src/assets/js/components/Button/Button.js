@@ -6,7 +6,7 @@ var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 
-function closeModalBox(){
+function closeModalBox(){ 
     $(".modal").modal("hide");
     //$(".modal-backdrop").remove();
 };
@@ -162,7 +162,7 @@ var Button1 = React.createClass({
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
-                                closeModalBox();
+                                
                                 break;
                             case appConstants.GET_MISSING_AND_DAMAGED_QTY:
                                 ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");

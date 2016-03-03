@@ -36702,12 +36702,13 @@ var commonActions = {
       data:data
     });
    },
-   updateSeatData : function(data, type, status){
+   updateSeatData : function(data, type, status, method){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_SEAT_DATA,
       data:data,
       type : type,
-      status: status
+      status: status,
+      method : method
     });
    },
    convertTextBox : function(data, index){
@@ -37428,7 +37429,7 @@ var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 
-function closeModalBox(){
+function closeModalBox(){ 
     $(".modal").modal("hide");
     //$(".modal-backdrop").remove();
 };
@@ -37574,7 +37575,7 @@ var Button1 = React.createClass({displayName: "Button1",
                                         if(index < mainstore.scanDetails()["current_qty"])
                                         value.map(function(value1, index1) {
                                             var keyvalue = Object.keys(value1);
-                                            if(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format !="Integer")
+                                            if(checkList.checklist_data[index][index1][keyvalue[0]].Format !="Integer")
                                                 checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
                                             else
                                                 checkList.checklist_data[index][index1][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index1 + "-" + index ).value);
@@ -37584,6 +37585,7 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
+                                
                                 break;
                             case appConstants.GET_MISSING_AND_DAMAGED_QTY:
                                 ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");
@@ -38108,6 +38110,10 @@ var Header = React.createClass({displayName: "Header",
         $("#actionMenu").toggle();
         $(".subMenu").hide();
     },
+    refresh: function(){
+           location.reload();
+        
+    },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
     },
@@ -38168,6 +38174,9 @@ var Header = React.createClass({displayName: "Header",
               )
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
+                React.createElement("div", {className: "actionItem", onClick: this.refresh}, 
+                    "Home"
+                ), 
                 this.exceptionMenu, 
                 React.createElement("div", {className: "actionItem", onClick: this.utilityMenu}, 
                     "Utility", 
@@ -39200,6 +39209,8 @@ var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
 
+var checkListOpen = false;
+
 function getStateData(){
   /*return {
            PickFrontNavData : PickFrontStore.getNavData(),
@@ -39225,11 +39236,10 @@ var PickFront = React.createClass({displayName: "PickFront",
   _notification:'',
   _component:'',
   _navigation:'',
-  _showModal:false,
   getInitialState: function(){
     return getStateData();
   },
-  componentWillMount: function(){
+  componentWillMount: function(){   
     if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }
@@ -39243,8 +39253,8 @@ var PickFront = React.createClass({displayName: "PickFront",
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }else{
-      $('.modal').modal('hide');
-      $('.modal-backdrop').remove();
+     /* $('.modal').modal('hide');
+      $('.modal-backdrop').remove();*/
     }
   },
   getNotificationComponent:function(){
@@ -39253,17 +39263,17 @@ var PickFront = React.createClass({displayName: "PickFront",
     else
       this._notification = "";
   },
-  getModalStatus:function(){
-    return _showModal;
-  },
   showModal:function(data,index){
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
       "product_details" : this.state.PickFrontProductDetails
     };
-    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
-    setTimeout((function(){CommonActions.showModal({
+    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
+    if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
+      console.log('this.state.PickFrontChecklistOverlayStatus');
+      checkListOpen = true;
+      setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
       });
@@ -39271,20 +39281,29 @@ var PickFront = React.createClass({displayName: "PickFront",
       return false;
       }),0)
 
+      
+
     }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
-      $('.modal').modal('hide');
-      $('.modal-backdrop fade in').remove();
-      $('.modal').on('hidden.bs.modal', function(e)
+    else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
+      console.log(this.state.PickFrontChecklistOverlayStatus);
+     
+      setTimeout((function (){
+          $( ".modal" ).modal('hide');
+          //$('.modal-backdrop').remove();
+      }), 0)
+      checkListOpen = false;
+     /* $('.modal').css('display', 'none');
+      $('.modal-backdrop').css('display', 'none');*/
+     /* $('.modal').on('hidden.bs.modal', function(e)
         { 
             $(this).removeData();
-        }) ;
+        }) */
     }
     else {
-      $('.modal').on('hidden.bs.modal', function(e)
+      /*$('.modal').on('hidden.bs.modal', function(e)
         { 
             $(this).removeData();
-        }) ;
+        }) ;*/
     }
 
   },
@@ -41382,7 +41401,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement("div", {className: "main-container exception1"}, 
-                    React.createElement(Img, null), 
+                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
@@ -42225,6 +42244,7 @@ var TableRow = React.createClass({displayName: "TableRow",
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
             var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
+            //var borderBottom = value.borderBottom == false ? classes = classes + "":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
             var color = value.color == "blue" ? classes = classes + value.color + " ": "";
 
@@ -42630,7 +42650,9 @@ var resourceConstants = {
 	CLIENTCODE_011 :'CLIENTCODE_011',
 	CLIENTCODE_012 :'CLIENTCODE_012',
 	CLIENTCODE_013 :'CLIENTCODE_013',
-	CLIENTCODE_014 :"CLIENTCODE_014"
+	CLIENTCODE_014 :"CLIENTCODE_014",
+	CLIENTCODE_015 : "CLIENTCODE_015",
+	CLIENTCODE_016 : 'CLIENTCODE_016'
  
 };
 module.exports = resourceConstants;
@@ -42855,8 +42877,8 @@ var serverMessages = {
     "Audit.A.012":"No Items to Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
-    "CLIENTCODE_006" : "Scanner added successfully",
-    "CLIENTCODE_007" : "Scanner not added",
+    "CLIENTCODE_006" : "Peripheral added successfully",
+    "CLIENTCODE_007" : "Peripheral not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
     "CLIENTCODE_009" : "You cannot enter 0",
     "CLIENTCODE_010" : "Sum of missing, good and damaged should be equal to {0}",
@@ -42864,6 +42886,8 @@ var serverMessages = {
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
     "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
+    "CLIENTCODE_015" : "Peripheral deleted successfully",
+    "CLIENTCODE_016" : "Peripheral not deleted successfully",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
     "PkF.E.012" : "Data capture failed at item {0}",       
@@ -44585,9 +44609,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["header"] = [];
             if(appConstants.PPTL_MANAGEMENT == _seatData.screen_id){
                 data["header"].push(new this.tableCol(_("Bin ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
+                data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral" )); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
@@ -44611,20 +44635,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         buttonText = 'Finish';
                     }
                     data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id)]); 
 
                 });
             }else{
                 data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
-                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", true, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
-                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, "scanner-id"),
+                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }
@@ -45265,19 +45289,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type, status) {
+    updateSeatData: function(data, type, status, method) {console.log(method);
+        var dataNotification = {};
+
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
         } 
         if(status == "success"){
-            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_006;
-            _seatData.notification_list[0]["level"] = "info";
+            if(method == "POST")
+                dataNotification["code"]= resourceConstants.CLIENTCODE_006;
+            else
+                dataNotification["code"]= resourceConstants.CLIENTCODE_015;
+            dataNotification["level"] = "info";
+            this.generateNotification(dataNotification);
         }
         else if(status == "fail"){
-            _seatData.notification_list[0]["code"] = resourceConstants.CLIENTCODE_007;
-            _seatData.notification_list[0]["level"] = "error";
+            if(method == "POST")
+                dataNotification["code"]= resourceConstants.CLIENTCODE_007;
+            else
+                dataNotification["code"]= resourceConstants.CLIENTCODE_016;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
         }else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
@@ -45774,7 +45808,7 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.UPDATE_SEAT_DATA:
             mainstore.showSpinner();
-            mainstore.updateSeatData(action.data, action.type, action.status);
+            mainstore.updateSeatData(action.data, action.type, action.status, action.method);
             mainstore.emitChange();
             break;
         case appConstants.CONVERT_TEXTBOX:
@@ -45936,7 +45970,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
     },
-    getPeripheralData : function(type, seat_name, status){
+    getPeripheralData : function(type, seat_name, status, method){
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
          $.ajax({
@@ -45949,7 +45983,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            CommonActions.updateSeatData(response.data, type, status);  
+            CommonActions.updateSeatData(response.data, type, status, method);  
         }).fail(function(jqXhr) {    
            
         });
@@ -45958,6 +45992,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         var retrieved_token = sessionStorage.getItem('sessionData');
         var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
         var url;
+        var method = method;
         if(method == 'POST'){
             url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
         }else{
@@ -45974,10 +46009,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-            utils.getPeripheralData(data.peripheral_type, seat_name , 'success')
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail');
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
                     
         });
     },

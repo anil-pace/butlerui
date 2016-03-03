@@ -520,9 +520,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["header"] = [];
             if(appConstants.PPTL_MANAGEMENT == _seatData.screen_id){
                 data["header"].push(new this.tableCol(_("Bin ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", true, true, true, false, false, true, true, false, "peripheral"));
-                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", true, true, true, false, true, true, true, false, "peripheral" )); 
+                data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral" )); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
@@ -546,20 +546,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         buttonText = 'Finish';
                     }
                     data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, '',  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,'',  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '',  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id)]); 
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id)]); 
 
                 });
             }else{
                 data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
-                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", true, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, '' ,false, null, "scanner-id"),
-                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, '', false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, "scanner-id"),
+                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }

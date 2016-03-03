@@ -76,8 +76,8 @@ var TableRow = React.createClass({
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
-            //var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
-            var borderBottom = value.borderBottom == false ? classes = classes + "":"";
+            var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
+            //var borderBottom = value.borderBottom == false ? classes = classes + "":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
             var color = value.color == "blue" ? classes = classes + value.color + " ": "";
 

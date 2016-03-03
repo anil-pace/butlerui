@@ -21,6 +21,8 @@ var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
 
+var checkListOpen = false;
+
 function getStateData(){
   /*return {
            PickFrontNavData : PickFrontStore.getNavData(),
@@ -46,11 +48,10 @@ var PickFront = React.createClass({
   _notification:'',
   _component:'',
   _navigation:'',
-  _showModal:false,
   getInitialState: function(){
     return getStateData();
   },
-  componentWillMount: function(){
+  componentWillMount: function(){   
     if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }
@@ -64,8 +65,8 @@ var PickFront = React.createClass({
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }else{
-      $('.modal').modal('hide');
-      $('.modal-backdrop').remove();
+     /* $('.modal').modal('hide');
+      $('.modal-backdrop').remove();*/
     }
   },
   getNotificationComponent:function(){
@@ -74,17 +75,17 @@ var PickFront = React.createClass({
     else
       this._notification = "";
   },
-  getModalStatus:function(){
-    return _showModal;
-  },
   showModal:function(data,index){
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
       "product_details" : this.state.PickFrontProductDetails
     };
-    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
-    setTimeout((function(){CommonActions.showModal({
+    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
+    if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
+      console.log('this.state.PickFrontChecklistOverlayStatus');
+      checkListOpen = true;
+      setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
       });
@@ -92,20 +93,29 @@ var PickFront = React.createClass({
       return false;
       }),0)
 
+      
+
     }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
-      $('.modal').modal('hide');
-      $('.modal-backdrop fade in').remove();
-      $('.modal').on('hidden.bs.modal', function(e)
+    else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
+      console.log(this.state.PickFrontChecklistOverlayStatus);
+     
+      setTimeout((function (){
+          $( ".modal" ).modal('hide');
+          //$('.modal-backdrop').remove();
+      }), 0)
+      checkListOpen = false;
+     /* $('.modal').css('display', 'none');
+      $('.modal-backdrop').css('display', 'none');*/
+     /* $('.modal').on('hidden.bs.modal', function(e)
         { 
             $(this).removeData();
-        }) ;
+        }) */
     }
     else {
-      $('.modal').on('hidden.bs.modal', function(e)
+      /*$('.modal').on('hidden.bs.modal', function(e)
         { 
             $(this).removeData();
-        }) ;
+        }) ;*/
     }
 
   },

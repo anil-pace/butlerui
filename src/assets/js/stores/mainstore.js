@@ -94,6 +94,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         });
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
+            if(flag == true){
+                _enableButton = false;
+            }
+            else{
+                _enableButton = true;
+            }
             _seatData.notification_list[0].details[0] = bin_id;
             _seatData.notification_list[0].level = "info";
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;

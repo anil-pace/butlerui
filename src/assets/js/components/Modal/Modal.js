@@ -111,7 +111,7 @@ function loadComponent(modalType,modalData){
           
       })
        component.push(
-              <div className="value">
+              <div className="binInfoValue">
                   <table className="table">  
                     <thead className="heading">
                     <tr> {headerArray} </tr>

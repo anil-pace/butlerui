@@ -113,6 +113,7 @@ var serverMessages = {
     "Common.003": "Current PPS mode does not support back seat. Please logout.",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
+    "AdF.I.008" : "Cancel audit successful.Audit Restarted",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",

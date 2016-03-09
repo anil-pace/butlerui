@@ -191,6 +191,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PICK_FRONT:
                 if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
+                    _NavData = navConfig.pickFront[2];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -1030,6 +1032,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     enableException: function(data) {
         _KQQty = 0;
         _activeException = "";
+        _seatData["scan_allowed"] = false;
         _enableException = data;
     },
     getExceptionStatus: function() {
@@ -1464,6 +1467,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 break;
+            case appConstants.PICK_FRONT_NO_FREE_BIN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                break;    
             case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();

@@ -37251,9 +37251,28 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
-         
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && compData.ppsbin_state == 'pick_processed') ){
+
+            return (
+                React.createElement("div", {className: "bin pick_processed"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl pick_processed"}, compData.ppsbin_id)
+                )
+            );
+        }
         
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )){
+        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN ){
 
             return (
                 React.createElement("div", {className: "bin selected"}, 
@@ -39439,7 +39458,21 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._component = this.getExceptionComponent();
         }
       break;
-      
+      case appConstants.PICK_FRONT_NO_FREE_BIN:
+         if(this.state.PickFrontExceptionStatus == false){
+         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+ 
+        this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                )
+              )
+            );
+         }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "good"){
@@ -42412,7 +42445,15 @@ var navData = {
             "level": 2,
             "type": 'passive'
         }],
-
+        [{
+            "screen_id": "pick_front_no_free_bin",
+            "code": "Common.000",
+            "image": svgConstants.exception,
+            "message": "Wait For MSU",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }]
     ],
     "pickBack": [ {
         "screen_id": "pick_back_scan",
@@ -42549,6 +42590,7 @@ var appConstants = {
 	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
+	PICK_FRONT_NO_FREE_BIN : 'pick_front_no_free_bin',
 	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
@@ -42787,6 +42829,7 @@ var serverMessages = {
     "PkF.H.005" : "Scan Box",
     "PkF.H.006" : "Scan {0} Items and Place in Bin {1}",
     "PkF.H.007" : "Press PPTL to confirm",
+    "PkF.H.008" : "Waiting for Bins to be Cleared at Pick Back",
     "PkB.H.001" : "Scan Tote to Associate with Bin",
     "PkB.H.002" : "Press PPTL or Scan a Tote",
     "PkB.H.003" : "Press PPTL to Remove Entities",
@@ -42858,6 +42901,7 @@ var serverMessages = {
     "Common.003": "Current PPS mode does not support back seat. Please logout.",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
+    "AdF.I.008" : "Cancel audit successful.Audit Restarted",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
@@ -44280,6 +44324,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PICK_FRONT:
                 if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
+                    _NavData = navConfig.pickFront[2];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -45119,6 +45165,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     enableException: function(data) {
         _KQQty = 0;
         _activeException = "";
+        _seatData["scan_allowed"] = false;
         _enableException = data;
     },
     getExceptionStatus: function() {
@@ -45553,6 +45600,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 break;
+            case appConstants.PICK_FRONT_NO_FREE_BIN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                break;    
             case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();

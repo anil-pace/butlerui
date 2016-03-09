@@ -38450,7 +38450,8 @@ function attachKeyboard(id){
             alwaysOpen: false,
             initialFocus: true,          
             visible : function(e, keypressed, el){
-              el.value = '';              
+              el.value = '';          
+                           
             },
             accepted: function(e, keypressed, el) {
 
@@ -38493,8 +38494,8 @@ function loadComponent(modalType,modalData){
     case "product-detail":
       component = [];
       for (var key in modalData) {
-        if (modalData.hasOwnProperty(key)) {
-           component.push((React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6 key"}, key, " "), "  ", React.createElement("div", {className: "col-md-6 value"}, modalData[key]))));
+        if (modalData.hasOwnProperty(key)) {          
+           component.push((React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6 key"}, key), React.createElement("div", {className: "col-md-6 value"}, modalData[key]))));
         }
       }
       title = _("Product Information");
@@ -38521,18 +38522,16 @@ function loadComponent(modalType,modalData){
               )
             }                    
           }
-          tr.push(React.createElement("tr", null, " ", rowData, " "));
+          tr.push(React.createElement("tr", null, rowData));
           
       })
        component.push(
               React.createElement("div", {className: "binInfoValue"}, 
                   React.createElement("table", {className: "table"}, 
                     React.createElement("thead", {className: "heading"}, 
-                    React.createElement("tr", null, " ", headerArray, " ")
+                    React.createElement("tr", null, headerArray)
                     ), 
-                    React.createElement("tbody", null, 
-                     tr
-                    )
+                    React.createElement("tbody", null, tr)
                  )
               )
           );
@@ -38579,7 +38578,7 @@ function loadComponent(modalType,modalData){
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer" || modalData.checklist_data[index][index1][keyvalue[0]].Format == "Float")
                     {                              
-                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
                       
                     }
                     else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String")
@@ -38694,7 +38693,7 @@ var Modal = React.createClass({displayName: "Modal",
   onChange: function(){
     this.setState(getStateData());
   },
-  render: function () {
+  render: function () {      
     return (React.createElement("div", {className: "modal fade"}, 
         React.createElement("div", {className: "modal-dialog"}, 
           React.createElement("div", {className: "modal-content"}, 
@@ -42928,7 +42927,7 @@ var serverMessages = {
     "CLIENTCODE_010" : "Sum of missing, good and damaged should be equal to {0}",
     "CLIENTCODE_011" : "Sum of missing, good and damaged should be equal to {0}",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
-    "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
+    "CLIENTCODE_013" : "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.",
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",

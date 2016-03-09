@@ -141,7 +141,7 @@ var serverMessages = {
     "CLIENTCODE_010" : "Sum of missing, good and damaged should be equal to {0}",
     "CLIENTCODE_011" : "Sum of missing, good and damaged should be equal to {0}",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
-    "CLIENTCODE_013" : "You are not allowed to kick in the quantity from the numpad. Force Scan is required.",
+    "CLIENTCODE_013" : "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.",
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",

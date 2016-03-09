@@ -36,7 +36,8 @@ function attachKeyboard(id){
             alwaysOpen: false,
             initialFocus: true,          
             visible : function(e, keypressed, el){
-              el.value = '';              
+              el.value = '';          
+                           
             },
             accepted: function(e, keypressed, el) {
 
@@ -79,8 +80,8 @@ function loadComponent(modalType,modalData){
     case "product-detail":
       component = [];
       for (var key in modalData) {
-        if (modalData.hasOwnProperty(key)) {
-           component.push((<div className="row"><div className="col-md-6 key">{key} </div>  <div className="col-md-6 value">{modalData[key]}</div></div>));
+        if (modalData.hasOwnProperty(key)) {          
+           component.push((<div className="row"><div className="col-md-6 key">{key}</div><div className="col-md-6 value">{modalData[key]}</div></div>));
         }
       }
       title = _("Product Information");
@@ -107,18 +108,16 @@ function loadComponent(modalType,modalData){
               )
             }                    
           }
-          tr.push(<tr> {rowData} </tr>);
+          tr.push(<tr>{rowData}</tr>);
           
       })
        component.push(
               <div className="binInfoValue">
                   <table className="table">  
                     <thead className="heading">
-                    <tr> {headerArray} </tr>
+                    <tr>{headerArray}</tr>
                     </thead>               
-                    <tbody>
-                     {tr}
-                    </tbody>
+                    <tbody>{tr}</tbody>
                  </table>
               </div>
           );
@@ -165,7 +164,7 @@ function loadComponent(modalType,modalData){
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer" || modalData.checklist_data[index][index1][keyvalue[0]].Format == "Float")
                     {                              
-                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)} />)
+                      var inputBox = (<input className="center-block" type="text" id={"checklist_field"+index1+ "-" + index} value={inputBoxValue} onClick={attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)} />)
                       
                     }
                     else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String")
@@ -280,7 +279,7 @@ var Modal = React.createClass({
   onChange: function(){
     this.setState(getStateData());
   },
-  render: function () {
+  render: function () {      
     return (<div className="modal fade">
         <div className="modal-dialog">
           <div className="modal-content">

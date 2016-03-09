@@ -120,6 +120,7 @@ function server_messages_list() {
     _("Confirm MSU Release");
     _("Scan Slot");
     _("Scan {0} Items");
+    _("Cancel audit successful.Audit Restarted");
     _("Scan Box");
     _("Scan {0} Items and Place in Bin {0}");
     _("Press PPTL to confirm");
@@ -219,6 +220,7 @@ function server_messages_list() {
     _("Sum of missing, good and damaged should be equal to {0}");
     _("Quantity should be less than or equal to {0}");
     _("You are not allowed to kick in the quantity from the numpad. Force Scan is required.");
+    _("Waiting for Bins to be Cleared at Pick Back");
     _("Peripheral deleted successfully");
     _("Peripheral not deleted successfully");
     _("Cancel Exception");

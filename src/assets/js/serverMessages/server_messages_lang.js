@@ -120,6 +120,7 @@ function server_messages_list() {
     _("Confirm MSU Release");
     _("Scan Slot");
     _("Scan {0} Items");
+    _("Cancel audit successful.Audit Restarted");
     _("Scan Box");
     _("Scan {0} Items and Place in Bin {0}");
     _("Press PPTL to confirm");

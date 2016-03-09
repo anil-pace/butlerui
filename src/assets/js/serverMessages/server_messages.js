@@ -42,6 +42,7 @@ var serverMessages = {
     "PkF.H.005" : "Scan Box",
     "PkF.H.006" : "Scan {0} Items and Place in Bin {1}",
     "PkF.H.007" : "Press PPTL to confirm",
+    "PkF.H.008" : "Waiting for Bins to be Cleared at Pick Back",
     "PkB.H.001" : "Scan Tote to Associate with Bin",
     "PkB.H.002" : "Press PPTL or Scan a Tote",
     "PkB.H.003" : "Press PPTL to Remove Entities",

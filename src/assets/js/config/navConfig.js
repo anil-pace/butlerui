@@ -102,7 +102,15 @@ var navData = {
             "level": 2,
             "type": 'passive'
         }],
-
+        [{
+            "screen_id": "pick_front_no_free_bin",
+            "code": "Common.000",
+            "image": svgConstants.exception,
+            "message": "Wait For MSU",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }]
     ],
     "pickBack": [ {
         "screen_id": "pick_back_scan",

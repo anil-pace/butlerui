@@ -220,6 +220,7 @@ function server_messages_list() {
     _("Sum of missing, good and damaged should be equal to {0}");
     _("Quantity should be less than or equal to {0}");
     _("You are not allowed to kick in the quantity from the numpad. Force Scan is required.");
+    _("Waiting for Bins to be Cleared at Pick Back");
     _("Peripheral deleted successfully");
     _("Peripheral not deleted successfully");
     _("Cancel Exception");

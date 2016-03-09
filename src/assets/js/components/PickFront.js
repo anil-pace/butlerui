@@ -251,7 +251,21 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
       break;
-      
+      case appConstants.PICK_FRONT_NO_FREE_BIN:
+         if(this.state.PickFrontExceptionStatus == false){
+         this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+ 
+        this._component = (
+              <div className='grid-container'>
+                <div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
+                </div>
+              </div>
+            );
+         }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "good"){

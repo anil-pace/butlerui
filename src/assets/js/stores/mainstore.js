@@ -11,7 +11,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -955,9 +955,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return modalContent.data;
     },
     getSystemIdleState: function() {
-        if (_seatData != undefined) {
+        if (_seatData != undefined && _peripheralScreen == false) {
             return _seatData.is_idle;
-        } else {
+        } else if(_seatData != undefined && _peripheralScreen == true){
+            return false;
+        }else {
             return null;
         }
     },
@@ -1219,7 +1221,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type, status, method) {console.log(method);
+    updateSeatData: function(data, type, status, method) {
+        _peripheralScreen = true;
         var dataNotification = {};
 
         if (type === 'pptl') {

@@ -11,7 +11,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -621,7 +621,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Barcode Damage"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
         }
         if (missingDamagedBoxSerials != 0)
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
@@ -629,7 +629,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
             ]);
-        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) && _seatData.Box_qty_list.length == 0 ){
+        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -728,7 +728,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c=c+1;
         })
-        _seatData.Loose_sku_list.map(function(value, index) {
+        /*_seatData.Loose_sku_list.map(function(value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
@@ -736,12 +736,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
             ]);
 
-        });
+        });*/
          /*if (data["tableRows"].length > 0)
          data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
                 new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
             ]);*/
-        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+        /*_seatData.extra_loose_sku_item_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+
+        });*/
+
+        _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function(value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
@@ -945,9 +955,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return modalContent.data;
     },
     getSystemIdleState: function() {
-        if (_seatData != undefined) {
+        if (_seatData != undefined && _peripheralScreen == false) {
             return _seatData.is_idle;
-        } else {
+        } else if(_seatData != undefined && _peripheralScreen == true){
+            return false;
+        }else {
             return null;
         }
     },
@@ -1209,7 +1221,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type, status, method) {console.log(method);
+    updateSeatData: function(data, type, status, method) {
+        _peripheralScreen = true;
         var dataNotification = {};
 
         if (type === 'pptl') {

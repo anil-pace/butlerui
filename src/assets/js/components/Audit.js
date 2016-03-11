@@ -143,7 +143,7 @@ var Audit = React.createClass({
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               <div className = 'cancel-scan'>
-                <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+                <Button1 disabled = {false} text = {_("Cancel Audit")} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
               </div>
             );
           }else{

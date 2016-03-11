@@ -36888,7 +36888,7 @@ var Audit = React.createClass({displayName: "Audit",
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               React.createElement("div", {className: "cancel-scan"}, 
-                React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+                React.createElement(Button1, {disabled: false, text: _("Cancel Audit"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
               )
             );
           }else{
@@ -41214,7 +41214,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
     return (       
             React.createElement("div", {className: "product-details-wrapper"}, 
               React.createElement("div", {className: "img-container"}, 
-                  React.createElement("img", {src: image_url.product_local_image_url})
+                  React.createElement("img", {className: "img-responsive", src: image_url.product_local_image_url})
               ), 
               React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,product_info_locale,"product-detail")}, 
                 React.createElement("span", null, " ", allresourceConstants.VIEW_MORE, " "), 
@@ -42661,7 +42661,6 @@ module.exports = appConstants;
 var configConstants = {
 	WEBSOCKET_IP : "wss://localhost:8888/wss",
 	INTERFACE_IP : "https://localhost:5000"
-
 };
 
 module.exports = configConstants;
@@ -44143,7 +44142,7 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -44753,7 +44752,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Barcode Damage"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
         }
         if (missingDamagedBoxSerials != 0)
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
@@ -44761,7 +44760,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
             ]);
-        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) && _seatData.Box_qty_list.length == 0 ){
+        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -44860,7 +44859,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c=c+1;
         })
-        _seatData.Loose_sku_list.map(function(value, index) {
+        /*_seatData.Loose_sku_list.map(function(value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
@@ -44868,12 +44867,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
             ]);
 
-        });
+        });*/
          /*if (data["tableRows"].length > 0)
          data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
                 new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
             ]);*/
-        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+        /*_seatData.extra_loose_sku_item_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+
+        });*/
+
+        _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function(value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
             data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
@@ -45077,9 +45086,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return modalContent.data;
     },
     getSystemIdleState: function() {
-        if (_seatData != undefined) {
+        if (_seatData != undefined && _peripheralScreen == false) {
             return _seatData.is_idle;
-        } else {
+        } else if(_seatData != undefined && _peripheralScreen == true){
+            return false;
+        }else {
             return null;
         }
     },
@@ -45341,7 +45352,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPeripheralData: function(data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
-    updateSeatData: function(data, type, status, method) {console.log(method);
+    updateSeatData: function(data, type, status, method) {
+        _peripheralScreen = true;
         var dataNotification = {};
 
         if (type === 'pptl') {

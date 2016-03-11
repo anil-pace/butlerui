@@ -89,7 +89,7 @@ var ProductInfo = React.createClass({
     return (       
             <div className="product-details-wrapper">
               <div className="img-container">
-                  <img src={image_url.product_local_image_url}  />
+                  <img className="img-responsive" src={image_url.product_local_image_url}  />
               </div>
               <div className="view-more-link" data-toggle="modal" data-target="#myModal" onClick={this.showModal.bind(this,product_info_locale,"product-detail")}>
                 <span> {allresourceConstants.VIEW_MORE} </span>                

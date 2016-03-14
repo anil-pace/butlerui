@@ -45175,7 +45175,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     enableException: function(data) {
         _KQQty = 0;
         _activeException = "";
-        _seatData["scan_allowed"] = false;
+        if(data == true){
+            _seatData["scan_allowed"] = false;    
+        }else{
+            _seatData["scan_allowed"] = true;
+        }
+        
         _enableException = data;
     },
     getExceptionStatus: function() {

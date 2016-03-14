@@ -70,7 +70,7 @@ function server_messages_list() {
     _("Please scan same SKU to complete this exception");
     _("Entity scan not expected.");
     _("Tote not present in database.");
-    _("Tote scan successful.");
+    _("Tote has been opened.Scan all items in tote and then scan tote again to close it");
     _("PPS is in paused mode. Cannot process new entity. Try after some time");
     _("Cancel scan successful.");
     _("Tote close successful.");

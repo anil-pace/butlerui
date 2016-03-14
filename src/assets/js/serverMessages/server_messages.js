@@ -51,7 +51,7 @@ var serverMessages = {
     "PkB.H.006" : "Select Bin to skip print",
     "PkB.H.007" : "Select Bin which does not require tote",
     "PkB.H.008" : "Select Bin to disassociate tote",
-    "PtB.I.001" : "Tote scan successful",
+    "PtB.I.001" : "Tote has been opened.Scan all items in tote and then scan tote again to close it",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new entity. Try after some time",
     "PtB.I.003" : "Cancel scan successful.",
     "PtB.I.004" : "Tote close successful.",

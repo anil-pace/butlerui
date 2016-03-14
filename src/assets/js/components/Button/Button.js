@@ -291,8 +291,12 @@ var Button1 = React.createClass({
                                 document.getElementById("add_scanner").value = '';
                                 break;
 
-                            case appConstants.CANCEL_ADD_SCANNER:
+                            case appConstants.CANCEL_ADD_SCANNER:                            
                                 closeModalBox();
+                                location.reload();
+                                break;
+                            case appConstants.CANCEL_PPTL:                           
+                                location.reload();
                                 break;
                         }   
                         break;

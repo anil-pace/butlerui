@@ -201,9 +201,9 @@ function server_messages_list() {
     _("Entity Oversized");
     _("Entity Unscannable");
     _("Extra Entities in Bin");
-    _("Entity Mising / Unscannable");
+    _("Entity Missing / Unscannable");
     _("Space Not Available");
-    _("Entity Mising / Unscannable");
+    _("Entity Missing / Unscannable");
     _("Mising Box");
     _("Disassociate Tote");
     _("Overide Tote Required");

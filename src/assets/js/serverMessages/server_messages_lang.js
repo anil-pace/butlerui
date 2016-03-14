@@ -70,7 +70,7 @@ function server_messages_list() {
     _("Please scan same SKU to complete this exception");
     _("Entity scan not expected.");
     _("Tote not present in database.");
-    _("Tote scan successful.");
+    _("Tote has been opened.Scan all items in tote and then scan tote again to close it");
     _("PPS is in paused mode. Cannot process new entity. Try after some time");
     _("Cancel scan successful.");
     _("Tote close successful.");
@@ -201,9 +201,9 @@ function server_messages_list() {
     _("Entity Oversized");
     _("Entity Unscannable");
     _("Extra Entities in Bin");
-    _("Entity Mising / Unscannable");
+    _("Entity Missing / Unscannable");
     _("Space Not Available");
-    _("Entity Mising / Unscannable");
+    _("Entity Missing / Unscannable");
     _("Mising Box");
     _("Disassociate Tote");
     _("Overide Tote Required");

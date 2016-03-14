@@ -37733,8 +37733,12 @@ var Button1 = React.createClass({displayName: "Button1",
                                 document.getElementById("add_scanner").value = '';
                                 break;
 
-                            case appConstants.CANCEL_ADD_SCANNER:
+                            case appConstants.CANCEL_ADD_SCANNER:                            
                                 closeModalBox();
+                                location.reload();
+                                break;
+                            case appConstants.CANCEL_PPTL:                           
+                                location.reload();
                                 break;
                         }   
                         break;
@@ -39143,7 +39147,13 @@ var PickBack = React.createClass({displayName: "PickBack",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PickBackScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+            _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -39340,6 +39350,7 @@ var PickFront = React.createClass({displayName: "PickFront",
             );
   },
   getScreenComponent : function(screen_id){
+    alert(screen_id);
     switch(screen_id){
      
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
@@ -39588,7 +39599,13 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -41520,7 +41537,13 @@ var PutBack = React.createClass({displayName: "PutBack",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -41644,7 +41667,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
   },
-
+  
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
@@ -41795,12 +41818,18 @@ var PutFront = React.createClass({displayName: "PutFront",
           
         break;
 
-         case appConstants.PPTL_MANAGEMENT:
+      case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})))
+            _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -42651,7 +42680,8 @@ var appConstants = {
 	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT',
 	ADD_SCANNER_DETAILS : "ADD_SCANNER_DETAILS",
 	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER",
-	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION'
+	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
+	CANCEL_PPTL : 'CANCEL_PPTL'
 
 };
 
@@ -42836,7 +42866,7 @@ var serverMessages = {
     "PkB.H.006" : "Select Bin to skip print",
     "PkB.H.007" : "Select Bin which does not require tote",
     "PkB.H.008" : "Select Bin to disassociate tote",
-    "PtB.I.001" : "Tote scan successful",
+    "PtB.I.001" : "Tote has been opened.Scan all items in tote and then scan tote again to close it",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new entity. Try after some time",
     "PtB.I.003" : "Cancel scan successful.",
     "PtB.I.004" : "Tote close successful.",
@@ -42992,7 +43022,7 @@ var serverMessages = {
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
-    "PtF001" : "Entity Mising / Unscannable",
+    "PtF001" : "Entity Missing / Unscannable",
     "PtF002" : "Space Not Available"
 
 

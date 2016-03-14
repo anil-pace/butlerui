@@ -75,7 +75,7 @@ var PutFront = React.createClass({
               </div>
             );
   },
-
+  
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
@@ -226,12 +226,18 @@ var PutFront = React.createClass({
           
         break;
 
-         case appConstants.PPTL_MANAGEMENT:
+      case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
           var _button;
           if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} /></div>)
+            _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+                      </div>)
+          }
+          else{
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>
@@ -243,8 +249,8 @@ var PutFront = React.createClass({
                       <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
                     </div>
                   </div>
-                  <TabularData data = {this.state.utility}/>
-                  {_button}
+                  <TabularData data = {this.state.utility}/>                  
+                  {_button}                  
                   <Modal /> 
               </div>
             );

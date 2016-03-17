@@ -51,7 +51,7 @@ function server_messages_list() {
     _("Place Entity in Bin and Press PPTL");
     _("Are You Sure You Want to Close Tote?");
     _("Scan Tote or Stage PPS Bin");
-    _("Item Not Found in Tote");    
+    _("Item Not Expected in Tote");    
     _("Tote already opened. Scan some other tote");
     _("Tote already closed. Scan some other tote");
     _("No matching tote found");
@@ -61,7 +61,7 @@ function server_messages_list() {
     _("Cannot cancel scan. No scanned box found");
     _("Entity scan not expected. Waiting for PPTL press");
     _("Bin selected for put. Cannot be staged");
-    _("SKU not present in database. WMS Notified. ");
+    _("SKU not present in database. Put into IRT bin ");
     _("Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL");
     _("No free bins. Please scan later");
     _("Wrong PPTL pressed. Please try another");    
@@ -191,7 +191,9 @@ function server_messages_list() {
     _("Damaged and missing entity recorded.");
     _("Space unavailable recorded.");
     _("Cancel scan successful");
-    _("{0} excess entities found in tote");
+    _("Please put entity in exception area and confirm");
+    _("Entity not expected in tote. Please put entity in exception area and confirm");
+    _("{0} excess entities found in tote. Please put entities in exception area and confirm");
     _("Cancelled excess entity in tote");
     _("Cancelled invalid entity in tote");
     _("Invalid entity in tote recorded");

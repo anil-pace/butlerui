@@ -134,7 +134,6 @@ var PickFront = React.createClass({
             );
   },
   getScreenComponent : function(screen_id){
-    alert(screen_id);
     switch(screen_id){
      
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:

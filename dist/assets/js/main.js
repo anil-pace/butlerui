@@ -45960,9 +45960,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 utils.checkSessionStorage();
                 clearTimeout(utils.connectToWebSocket)
             };
-            ws.onmessage = function(evt) {
+            ws.onmessage = function(evt) { 
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
+                if(data.hasOwnProperty('data')){
+                    if(data.data == 'disconnect'){
+                        utils.sessionLogout();
+                        return false;
+                    }
+                }
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();

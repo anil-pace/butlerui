@@ -1,6 +1,6 @@
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost:8888/wss",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 
 module.exports = configConstants;

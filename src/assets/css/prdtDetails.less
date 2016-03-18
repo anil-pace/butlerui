@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     margin-left: 3%;
-
+     width: 28%;
     .table-wrapper {
         flex: 1 0 0;
         width: 100%;
@@ -33,7 +33,7 @@
             align-items: center;
             width: 100%;
             padding-left: 1em;
-            padding-top: 0.3em;
+            padding-top: 0.3em; 
             padding-bottom: 0.3em;
             font-size: 2.5rem;
             font-weight: bold;
@@ -44,14 +44,20 @@
         border: 1px solid @kq-border-color;
         flex: 1 0 0;
         width: 100%;
-        display: flex;
+        //display: flex;
         justify-content: center;
         align-items: center;
         flex-flow: column;
         flex-grow:1;
         flex-basis:0;
+        span{
+            display:block;
+            text-align:center;
+            line-height:170%;
+        }
         img {
             flex: 9 0 auto;
+            width:100%;
         }
         &.holder{
             background: #E6D8D8;

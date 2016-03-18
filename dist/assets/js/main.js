@@ -36695,13 +36695,54 @@ var commonActions = {
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
     });
+   },
+   getPeriPheralData : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.PERIPHERAL_DATA,
+      data:data
+    });
+   },
+   updateSeatData : function(data, type, status, method){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_SEAT_DATA,
+      data:data,
+      type : type,
+      status: status,
+      method : method
+    });
+   },
+   convertTextBox : function(data, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CONVERT_TEXTBOX,
+      data : data,
+      index : index
+    })
+   },
+   updateData : function(data, method, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.UPDATE_PERIPHERAL,
+      data : data,
+      method : method,
+      index : index
+    })
+   },
+   generateNotification : function(data){
+     AppDispatcher.handleAction({
+      actionType : appConstants.GENERATE_NOTIFICATION,
+      data : data
+    })
+   },
+   clearNotification : function(){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CLEAR_NOTIFICATIONS,
+    })
    }
 
 };
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":280,"../dispatchers/AppDispatcher":284}],234:[function(require,module,exports){
+},{"../constants/appConstants":282,"../dispatchers/AppDispatcher":286}],234:[function(require,module,exports){
 
 var React = require('react');
 var AuditStore = require('../stores/AuditStore');
@@ -36761,27 +36802,22 @@ var Audit = React.createClass({displayName: "Audit",
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
+      if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
-          setTimeout((function(){ActionCreators.showModal({
+          this.state.AuditShowModal["showModal"] = false;
+          var r = self.state.AuditShowModal.message;
+          setTimeout((function(){
+            ActionCreators.showModal({
               data:{
-              "message":self.state.AuditShowModal.message
+              "message":r
             },
             type:"message"
           });
-        $('.modal').modal();
-      return false;
-      }),0)
-
-       }else if(this.state.AuditShowModal["showModal"] == '' && $('.modal').hasClass('in')){
-        $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
+        $('.modal').modal("show");
+      //return false;
+      }),0);
        }
-     }else{
-
-      $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
      }
   },
   getInitialState: function(){
@@ -36811,7 +36847,7 @@ var Audit = React.createClass({displayName: "Audit",
                 React.createElement(Exception, {data: this.state.AuditExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -36832,13 +36868,27 @@ var Audit = React.createClass({displayName: "Audit",
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.AUDIT_LOCATION_SCAN:
+         if(this.state.AuditExceptionStatus == false){
+        this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                 React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Rack, {rackData: this.state.AuditRackDetails})
+                 )
+              )
+            );
+      }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.AUDIT_SCAN:
        if(this.state.AuditExceptionStatus == false){
            this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               React.createElement("div", {className: "cancel-scan"}, 
-                React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+                React.createElement(Button1, {disabled: false, text: _("Cancel Audit"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
               )
             );
           }else{
@@ -36864,13 +36914,13 @@ var Audit = React.createClass({displayName: "Audit",
                       this._looseItems
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
-                   React.createElement(Img, null), 
+                   React.createElement(Img, {srcURL: this.state.AuditItemDetailsData.image_url}), 
                    React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
                     React.createElement(KQ, {scanDetails: this.state.AuditScanDetails}), 
                    React.createElement("div", {className: "finish-scan"}, 
-                    React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: "Finish", module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
+                    React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: _("Finish"), module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
                   )
                   )
                 ), 
@@ -36887,24 +36937,42 @@ var Audit = React.createClass({displayName: "Audit",
           this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));  
           var subComponent='';
           var messageType = 'large';
-          if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
+          var BoxSerialData = '';
+          var ItemInBoxData = '';
+          var LooseItemsData = '';
+          var AuditMessage = '';
+          var m = {
+            "details": [],
+            "code": "Audit.A.012",
+            "description": "No Items To Reconcile",
+            "level": "info"
+          };
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
+            AuditMessage=(React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: m}));
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
+              BoxSerialData = (React.createElement(TabularData, {data: this.state.AuditReconcileBoxSerialData}));
+          if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
+              ItemInBoxData = (React.createElement(TabularData, {data: this.state.AuditReconcileItemInBoxData}));
+          if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
+              LooseItemsData = (React.createElement(TabularData, {data: this.state.AuditReconcileLooseItemsData}));
             subComponent=(
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-reconcile-left"}, 
-                    React.createElement(TabularData, {data: this.state.AuditReconcileBoxSerialData}), 
-                    React.createElement(TabularData, {data: this.state.AuditReconcileLooseItemsData})
+                    AuditMessage, 
+                    BoxSerialData, 
+                    ItemInBoxData, 
+                    LooseItemsData
                   )
                 )
               );
             messageType = "small";
-          }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                  React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "Back", module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "OK", module: appConstants.AUDIT, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: _("Back"), module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: _("OK"), module: appConstants.AUDIT, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
                 )
               )
             );
@@ -36920,14 +36988,14 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.AuditServerNavData["description"]}), 
-                  React.createElement(KQ, {scanDetails: this.state.AuditKQDetails}), 
+                  React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
+                  React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -36960,7 +37028,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/AuditStore":288,"../stores/mainstore":294,"../utils/utils.js":295,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ.js":261,"./Rack/MsuRack.js":267,"./Reconcile":271,"./Spinner/LoaderButler":272,"./SystemIdle":275,"./TabularData":278,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/AuditStore":291,"../stores/mainstore":297,"../utils/utils.js":298,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ.js":261,"./Rack/MsuRack.js":269,"./Reconcile":273,"./Spinner/LoaderButler":274,"./SystemIdle":277,"./TabularData":280,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -36993,8 +37061,7 @@ var Bin = React.createClass({displayName: "Bin",
          $('.modal').modal();
          e.stopPropagation();
          return false;
-     },
-   
+    },   
     render: function() {
         var compData = this.props.binData;
         if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
@@ -37011,6 +37078,14 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
                 ));
         }
+        else if((this.props.screenId == appConstants.PUT_BACK_STAGE  || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error'){
+            return (
+                React.createElement("div", {className: "bin selected binError"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected binError", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
@@ -37019,7 +37094,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37041,7 +37116,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true")){
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
                    return (React.createElement("div", {className: "bin excess-item"}, 
                     tote, 
@@ -37071,7 +37146,7 @@ var Bin = React.createClass({displayName: "Bin",
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
-            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true")){
+            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37092,7 +37167,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 )
+        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error' )
             return (
                 React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37114,7 +37189,7 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
 
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37176,9 +37251,28 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
-         
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && compData.ppsbin_state == 'pick_processed') ){
+
+            return (
+                React.createElement("div", {className: "bin pick_processed"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl pick_processed"}, compData.ppsbin_id)
+                )
+            );
+        }
         
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )){
+        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN ){
 
             return (
                 React.createElement("div", {className: "bin selected"}, 
@@ -37187,14 +37281,14 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN  || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
             return (
                 React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE))
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
@@ -37203,7 +37297,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING )
+        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error' )
             return (
                 React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37239,7 +37333,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/mainstore":294,"../Modal/Modal":248,"react":230}],236:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../stores/mainstore":297,"../Modal/Modal":248,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37305,7 +37399,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":291,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
+},{"../../stores/PutBackStore":294,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -37345,7 +37439,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":282,"react":230}],238:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"react":230}],238:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37353,17 +37447,30 @@ var PickFrontStore = require('../../stores/PickFrontStore');
 var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
+
+function closeModalBox(){ 
+    $(".modal").modal("hide");
+    //$(".modal-backdrop").remove();
+};
+
 var Button1 = React.createClass({displayName: "Button1",
             _checklistClass: '',
             removeTextField: function(){
                   $('.modal-body').find('input:text').val('');
                 },
 
+
             performAction: function(module, action) {
+                var peripheralId;
                 var data = {
                     "event_name": "",
                     "event_data": {}
                 };
+                var peripheralData ={
+                    "peripheral_id": "",
+                    "peripheral_type": ""
+                };
+
                 switch (module) {
                     case appConstants.PUT_BACK:
                         switch (action) {
@@ -37477,20 +37584,27 @@ var Button1 = React.createClass({displayName: "Button1",
                                 if (checklist_index != "all") {
                                     checkList.checklist_data[checklist_index - 1].map(function(value, index) {
                                         var keyvalue = Object.keys(value);
-                                        checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                        if(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format !="Integer")
+                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
+                                        else
+                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value);
                                     });
                                 } else {
                                     checkList.checklist_data.map(function(value, index) {
                                         if(index < mainstore.scanDetails()["current_qty"])
                                         value.map(function(value1, index1) {
                                             var keyvalue = Object.keys(value1);
-                                            checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                            if(checkList.checklist_data[index][index1][keyvalue[0]].Format !="Integer")
+                                                checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
+                                            else
+                                                checkList.checklist_data[index][index1][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index1 + "-" + index ).value);
                                         })
                                     });
                                 }
                                 data["event_name"] = "pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
+                                
                                 break;
                             case appConstants.GET_MISSING_AND_DAMAGED_QTY:
                                 ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");
@@ -37604,11 +37718,41 @@ var Button1 = React.createClass({displayName: "Button1",
                         }
                         break;
 
+                    case appConstants.PERIPHERAL_MANAGEMENT:
+                        switch(action) {
+                            case appConstants.ADD_SCANNER:
+                                this.showModal(null, "enter_barcode");
+                            break;
+
+                            case appConstants.ADD_SCANNER_DETAILS: 
+                                peripheralId = document.getElementById("add_scanner").value;
+                                peripheralData["peripheral_id"] = peripheralId;
+                                peripheralData["peripheral_type"]= "barcode_scanner";
+                                ActionCreators.updateData(peripheralData, 'POST');
+                                closeModalBox();
+                                document.getElementById("add_scanner").value = '';
+                                break;
+
+                            case appConstants.CANCEL_ADD_SCANNER:                            
+                                closeModalBox();
+                                location.reload();
+                                break;
+                            case appConstants.CANCEL_PPTL:                           
+                                location.reload();
+                                break;
+                        }   
+                        break;
                     default:
                         return true;
                 }
             },
-
+            showModal: function(data,type) {
+                 ActionCreators.showModal({
+                    data:data,
+                    type:type
+                 });
+                 $('.modal').modal();
+            },
             render: function() {
                 
                 if (this.props.disabled == false)
@@ -37632,7 +37776,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/PickFrontStore":290,"../../stores/PutBackStore":291,"../../stores/mainstore":294,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../stores/PickFrontStore":293,"../../stores/PutBackStore":294,"../../stores/mainstore":297,"react":230}],239:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37660,10 +37804,6 @@ var IconButton = React.createClass({displayName: "IconButton",
                     case appConstants.FINISH_BOX:
                          console.log("gggg");
                          console.log(AuditStore.getCurrentBoxSerialData());
-                         if(AuditStore.getCurrentBoxSerialData()[0].Actual_qty > AuditStore.getCurrentBoxSerialData()[0].Expected_qty )
-                        this.showModal({
-                            "message":"Place extra " + (AuditStore.getCurrentBoxSerialData()[0].Actual_qty - AuditStore.getCurrentBoxSerialData()[0].Expected_qty) + " items in Exception area"
-                        },"message");
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "finish_box";
                         ActionCreators.postDataToInterface(data);
@@ -37706,7 +37846,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/AuditStore":288,"react":230}],240:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../stores/AuditStore":291,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -37731,7 +37871,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":282,"./Header":246,"react":230}],241:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"./Header":246,"react":230}],241:[function(require,module,exports){
 var React = require('react');[]
 var ExceptionHeader = require('./ExceptionHeader');
 var ExceptionList = require('./ExceptionList');
@@ -37740,7 +37880,7 @@ var Exception = React.createClass({displayName: "Exception",
     render: function() {
         return (
             React.createElement("div", {className: "exception"}, 
-                React.createElement(ExceptionHeader, {data: this.props.data.header}), 
+                React.createElement(ExceptionHeader, {data: _("Exceptions")}), 
                 React.createElement(ExceptionList, {data: this.props.data.list, action: this.props.action})
             )
         );
@@ -37794,9 +37934,19 @@ module.exports = ExceptionList;
 },{"./ExceptionListItem":244,"react":230}],244:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+
+function getState(){
+  return {
+      navMessages : mainstore.getServerMessages()
+  }
+}
 
 var ExceptionListItem = React.createClass({displayName: "ExceptionListItem", 
 	_component:[],
+  getInitialState: function(){
+    return getState();
+  },
 	setCurrentException:function(data){
      var data1 = {
         "event_name": "",
@@ -37808,31 +37958,89 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 		CommonActions.setActiveException(data.text);
 	},
     render: function() {
-        if(this.props.action!=undefined && this.props.action == true)
-        return (
-            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
-               this.props.data.text
-      		)
-        );
-      else
+      var server_message = this.props.data.text;
+      var navMessagesJson = this.state.navMessages;
+      var errorCode = this.props.data.exception_id;
+      var message_args  = this.props.data.details.slice(0);
+
+        if(this.props.action!=undefined && this.props.action == true){
+          return (
+              React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
+                   (function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
+        		)
+          );
+        }
+      else{
         return (
             React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item"}, 
-               this.props.data.text
+                 (function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
             )
         );
+      }
     },
 });
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"react":230}],245:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":297,"react":230}],245:[function(require,module,exports){
 var React = require('react');
+var mainstore = require('../stores/mainstore');
+
+function getState(){
+  return {
+      navMessages : mainstore.getServerMessages()
+  }
+}
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
 	_component:[],
+	getInitialState: function(){
+    	return getState();
+  	},
     render: function() {
+
+    	  var server_message = this.props.data.description;
+      	var navMessagesJson = this.state.navMessages;
+      	var errorCode = this.props.data.code;
+      	var message_args  = this.props.data.details.slice(0);
         return (
             React.createElement("div", {className: "exception-head"}, 
-               this.props.text
+              		(function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                              return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+                       
+                        }
+                    )()
       		)
         );
     },
@@ -37840,7 +38048,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"react":230}],246:[function(require,module,exports){
+},{"../stores/mainstore":297,"react":230}],246:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -37848,29 +38056,36 @@ var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
+
+function getState(){
+     return {
+            spinner: mainstore.getSpinnerState(),
+            systemIsIdle: mainstore.getSystemIdleState(),
+            logoutState: mainstore.getLogoutState(),
+            scanAllowed : mainstore.getScanAllowedStatus()
+        }
+}
 var Header = React.createClass({displayName: "Header",
     virtualKeyBoard: '',
     exceptionMenu:'',
     getInitialState: function() {
-        return {
-            spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState(),
-            logoutState: mainstore.getLogoutState()
-        }
+        return getState();
     },
     openKeyboard: function() {
+        $("#actionMenu").hide();
+        $(".form-control").blur();
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
+            initialFocus: true,           
             position: {
                 of: $('.keyboard-actions'),
                 my: 'center top',
@@ -37893,11 +38108,7 @@ var Header = React.createClass({displayName: "Header",
             }
         })
         $('#barcode').data('keyboard').reveal();
-    },
-    enableException:function(){
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
+    },    
     logoutSession:function(){
         $("#actionMenu").hide();        
         if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
@@ -37912,12 +38123,19 @@ var Header = React.createClass({displayName: "Header",
     },
     enableException:function(){
         CommonActions.enableException(true);
+        var data = {};
+        data["code"] = null;
+        data["level"] = 'error'
+        CommonActions.generateNotification(data);
         $("#actionMenu").hide();
-    },
-    componentDidMount: function() {
-    },
+    },    
     showMenu: function(){
         $("#actionMenu").toggle();
+        $(".subMenu").hide();
+    },
+    refresh: function(){
+           location.reload();
+        
     },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
@@ -37926,6 +38144,7 @@ var Header = React.createClass({displayName: "Header",
         if(virtualKeyBoard_header != null){
             virtualKeyBoard_header.getkeyboard().close();
         }
+        this.setState(getState());
     },
     getExceptionMenu:function(){
          if(mainstore.getExceptionAllowed().length > 0 )
@@ -37934,11 +38153,19 @@ var Header = React.createClass({displayName: "Header",
                                     ));
         else
             this.exceptionMenu = '';
+    },    
+    peripheralData : function(type){
+        CommonActions.getPeriPheralData(type);
+        $("#actionMenu").hide();
     },
-
+    utilityMenu : function(){
+        $(".subMenu").toggle();       
+        //CommonActions.displayperipheralMenu();
+    },
     render: function() {    
         var logoutClass;
-        var cssClass;      
+        var cssClass;  
+        var disableScanClass;    
         this.getExceptionMenu();
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
@@ -37950,13 +38177,18 @@ var Header = React.createClass({displayName: "Header",
         } else{
             logoutClass = 'actionItem'
         }
+        if(this.state.scanAllowed == true){
+            disableScanClass = '';
+        }else{
+            disableScanClass = 'disableScanClass'
+        }
         return (React.createElement("div", null, 
             React.createElement("div", {className: "head"}, 
               React.createElement("div", {className: "logo"}, 
               React.createElement("img", {src: allSvgConstants.logo})
               ), 
                 React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
-                  React.createElement("img", {src: allSvgConstants.scanHeader}), 
+                  React.createElement("img", {src: allSvgConstants.scanHeader, className: disableScanClass}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
               React.createElement("div", {className: "header-actions", onClick: this.showMenu}, 
@@ -37965,7 +38197,19 @@ var Header = React.createClass({displayName: "Header",
               )
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
+                React.createElement("div", {className: "actionItem", onClick: this.refresh}, 
+                    "Home"
+                ), 
                 this.exceptionMenu, 
+                React.createElement("div", {className: "actionItem", onClick: this.utilityMenu}, 
+                    "Utility", 
+                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'pptl')}, 
+                        "PPTL Management"
+                    ), 
+                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'barcode_scanner')}, 
+                        "Scanner Management"
+                    )
+                ), 
                 React.createElement("div", {className: logoutClass, onClick: this.logoutSession}, 
                     "Logout"
                 )
@@ -37977,7 +38221,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/svgConstants":283,"../stores/mainstore":294,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/svgConstants":285,"../stores/mainstore":297,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -37989,7 +38233,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var utils = require('../../utils/utils.js');
 
-var virtualKeyBoard_login;
+var virtualKeyBoard_login, _seat_name = null;
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -38004,19 +38248,23 @@ var LoginPage = React.createClass({displayName: "LoginPage",
  mixins:[LinkedStateMixin],
   getInitialState: function(){
     return getState();
-  }, 
+  },
   handleLogin: function(e){   
-  
+  if(_seat_name == null){
+    _seat_name = this.refs.seat_name.value;
+  }
     var data = {
         'data_type': 'auth',
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              'seat_name': this.refs.seat_name.value
+              'seat_name': _seat_name
           }
       }
+      console.log(data);
     utils.generateSessionId();
-    CommonActions.login(data);  
+    CommonActions.login(data);
+     CommonActions.clearNotification();  
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
@@ -38026,15 +38274,15 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,     
+      initialFocus: true,      
       visible : function(e, keypressed, el){
         el.value = '';
         //$(".authNotify").css("display","none"); 
@@ -38060,12 +38308,16 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     this.setState(getState());
 
   },
+  disableLoginButton:function(){
+      $('#loginBtn').prop('disabled', true);
+  },
   changeLanguage : function(){
     CommonActions.changeLanguage(this.refs.language.value);
+    this.disableLoginButton();    
   },
   removeNotify:function(){
        $('.errorNotify').css('display','none');
-      },
+  },
   render: function(){
     var d = new Date();
     var n = d.getFullYear();   
@@ -38079,9 +38331,10 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                 )
             }else{
               var parseSeatID = data.split('_');
-              seatName = parseSeatID[0] +' '+parseSeatID[1];
+              _seat_name = data;
+              seat_name = parseSeatID[0] +' '+parseSeatID[1];
               return (
-                React.createElement("header", {className: "ppsSeat", key: 'pps' + index}, "PPS ", seatName)
+                React.createElement("header", {className: "ppsSeat", key: 'pps' + index}, "PPS ", seat_name)
               )
             }
           });
@@ -38097,7 +38350,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       }
       if(this.state.flag === false){
         if(this.state.showError != null){
-            errorClass = 'ErrorMsg showErr'
+            errorClass = 'ErrorMsg showErr';
+            this.disableLoginButton();
         } else{
             errorClass = 'ErrorMsg'
         }
@@ -38132,8 +38386,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", ref: "password", valueLink: this.linkState('password')})
               ), 
               React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
-                  React.createElement("option", {value: "english"}, "English"), 
-                  React.createElement("option", {value: "chinese"}, "Chinese")
+                  React.createElement("option", {value: "en-US"}, "English"), 
+                  React.createElement("option", {value: "ch"}, "Chinese")
               ), 
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
           )
@@ -38161,7 +38415,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":282,"../../constants/svgConstants":283,"../../stores/loginstore":293,"../../stores/mainstore":294,"../../utils/utils.js":295,"../Operator":255,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],248:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":284,"../../constants/svgConstants":285,"../../stores/loginstore":296,"../../stores/mainstore":297,"../../utils/utils.js":298,"../Operator":255,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],248:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -38190,17 +38444,18 @@ function attachKeyboard(id){
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
-            'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m {shift}', '{a} {c}'],
-            'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
               container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
+            initialFocus: true,          
             visible : function(e, keypressed, el){
-              el.value = '';              
+              el.value = '';          
+                           
             },
             accepted: function(e, keypressed, el) {
 
@@ -38215,7 +38470,7 @@ function attachNumpad(id){
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
+            initialFocus : true,          
             accepted: function(e, keypressed, el) {
             },
             visible : function(e, keypressed, el){
@@ -38243,28 +38498,51 @@ function loadComponent(modalType,modalData){
     case "product-detail":
       component = [];
       for (var key in modalData) {
-        if (modalData.hasOwnProperty(key)) {
-           component.push((React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6 key"}, key, " "), "  ", React.createElement("div", {className: "col-md-6 value"}, modalData[key]))));
+        if (modalData.hasOwnProperty(key)) {          
+           component.push((React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6 key"}, key), React.createElement("div", {className: "col-md-6 value"}, modalData[key]))));
         }
       }
-      title = "Product Information";
+      title = _("Product Information");
       break;
+
     case "bin-info":
       component = [];
+      var headerArray = [];
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
-           component.push((React.createElement("div", {className: "col-md-4 heading"}, key, " ")));
+           //component.push((<div className="col-md-4 heading">{key} </div>));
+           headerArray.push(              
+              React.createElement("th", null, key)              
+          );
         }
-      }
+      } 
+      var tr = [];    
       modalData.map(function(value,index){
-       for (var key in value) {
-        if (value.hasOwnProperty(key)) {
-           component.push((React.createElement("div", {className: "col-md-4 value"}, value[key], " ")));
-        }
-      }
+        var rowData = [];
+           for (var key in value) {        
+            if (value.hasOwnProperty(key)) {
+              rowData.push(
+                React.createElement("td", null, value[key])
+              )
+            }                    
+          }
+          tr.push(React.createElement("tr", null, rowData));
+          
       })
-      title = "Bin Info";
+       component.push(
+              React.createElement("div", {className: "binInfoValue"}, 
+                  React.createElement("table", {className: "table"}, 
+                    React.createElement("thead", {className: "heading"}, 
+                    React.createElement("tr", null, headerArray)
+                    ), 
+                    React.createElement("tbody", null, tr)
+                 )
+              )
+          );
+      title = _("Bin Info");
+      
       break;
+      
     case "scan_bin_barcode":
       component = [];
       footer = [];
@@ -38278,23 +38556,23 @@ function loadComponent(modalType,modalData){
         ), 
             React.createElement("div", {className: "modal-footer removeBorder"}, 
              React.createElement("div", {className: "buttonContainer center-block"}, 
-                React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
+                React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
              )
        )
        ));      
       
-      title = "Associate tote with bin";
+      title = _("Associate tote with bin");
       break;
     case "message":
       component = [];
       component.push((React.createElement("div", {className: "col-md-12 value"}, modalData["message"], " ")));
-      title = "Perform Action";
+      title = _("Extra Entity Found");
     break;
     case "pick_checklist":
       component = [];
       footer = [];
       rowData =[];
-      title = "Input Extra Details";
+      title = _("Input Extra Details");
         var modalData = modalData;
         var rowData = modalData.checklist_data.map(function(data,index){
             serial = index;
@@ -38304,7 +38582,7 @@ function loadComponent(modalType,modalData){
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer" || modalData.checklist_data[index][index1][keyvalue[0]].Format == "Float")
                     {                              
-                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachNumpad.bind(this, 'checklist_field'+index1+ "-" + index)}))
+                      var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
                       
                     }
                     else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String")
@@ -38358,8 +38636,8 @@ function loadComponent(modalType,modalData){
                       React.createElement("div", {className: "modal-footer removeBorder"}, 
                           React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                                 React.createElement("div", {className: "row removeBorder"}, 
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Clear All", color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})), 
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: "Submit", color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Clear All"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})), 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
                                 )
                           )
                      )
@@ -38368,7 +38646,32 @@ function loadComponent(modalType,modalData){
                );  
      
       
-      break;    
+      break;
+    case "enter_barcode":
+        component = [];
+        component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, "Enter Barcode"), 
+                React.createElement("div", {className: "textBox-div"}, 
+                  React.createElement("input", {className: "width95", type: "text", id: "add_scanner", onClick: attachKeyboard.bind(this, 'add_scanner')})
+                )
+              )
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_ADD_SCANNER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.ADD_SCANNER_DETAILS}))
+                )
+              )
+            )
+          )
+          ));
+         
+      title = _("Add Scanner");
+      break;
     default:
       component = null;
       title = null;
@@ -38394,7 +38697,7 @@ var Modal = React.createClass({displayName: "Modal",
   onChange: function(){
     this.setState(getStateData());
   },
-  render: function () {
+  render: function () {      
     return (React.createElement("div", {className: "modal fade"}, 
         React.createElement("div", {className: "modal-dialog"}, 
           React.createElement("div", {className: "modal-content"}, 
@@ -38411,7 +38714,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":280,"../../constants/svgConstants":283,"../../stores/PickFrontStore":290,"../../stores/mainstore":294,"../Button/Button":238,"./ModalFooter":249,"./ModalHeader":250,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
+},{"../../constants/appConstants":282,"../../constants/svgConstants":285,"../../stores/PickFrontStore":293,"../../stores/mainstore":297,"../Button/Button":238,"./ModalFooter":249,"./ModalHeader":250,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -38442,7 +38745,7 @@ module.exports = ModalHeader;
 
 },{"react":230}],251:[function(require,module,exports){
 var React = require('react');
-
+var appConstants = require('../../constants/appConstants');
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
     render: function() {
         var server_message = this.props.serverNavData.description;
@@ -38468,7 +38771,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                                     React.createElement("div", {className: "nav-detail"}, 
                                     level, 
                                     (function(){
-                                        if(navId !== "put_back_invalid_tote_item")
+                                        if(navId !== appConstants.PUT_BACK_INVALID_TOTE_ITEM &&  navId !== appConstants.PPTL_MANAGEMENT && navId !== appConstants.SCANNER_MANAGEMENT)
                                             return exceptionImg;
                                     })()
                                     )
@@ -38477,7 +38780,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                     
             		React.createElement("div", {className: "action"}, 
                     (function(){
-                        if(navId == "put_back_invalid_tote_item")
+                        if(navId == appConstants.PUT_BACK_INVALID_TOTE_ITEM || navId == appConstants.PPTL_MANAGEMENT || navId == appConstants.SCANNER_MANAGEMENT)
                             return (React.createElement("img", {className: "exceptionImg", src: compData.image}));
                         })(), 
             		(function(){
@@ -38501,7 +38804,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"react":230}],252:[function(require,module,exports){
+},{"../../constants/appConstants":282,"react":230}],252:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -38568,7 +38871,9 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';
         }
+        if(errorCode !== null){
         return (
+
             React.createElement("div", {className: appendClass, role: "alert"}, 
             	React.createElement("div", {className: appendClass1}, 
             		React.createElement("div", {className: "border-glyp"}, 
@@ -38590,6 +38895,9 @@ var Notification = React.createClass({displayName: "Notification",
                 )()
             )
         );  
+        }else{
+            return null;
+        }
         
 
     }
@@ -38688,7 +38996,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":280,"../stores/mainstore":294,"./Audit":234,"./PickBack":256,"./PickFront":257,"./PutBack":265,"./PutFront":266,"./Spinner/Overlay":273,"./SystemIdle":275,"react":230}],256:[function(require,module,exports){
+},{"../constants/appConstants":282,"../stores/mainstore":297,"./Audit":234,"./PickBack":256,"./PickFront":257,"./PutBack":267,"./PutFront":268,"./Spinner/Overlay":275,"./SystemIdle":277,"react":230}],256:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -38705,6 +39013,7 @@ var SystemIdle = require('./SystemIdle');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
+var TabularData = require('./TabularData');
 
 
 function getStateData(){
@@ -38752,25 +39061,24 @@ var PickBack = React.createClass({displayName: "PickBack",
                 React.createElement(Exception, {data: this.state.PickBackExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
   },
   getExceptionAction:function(screen_id){
-    console.log(this.state.PickBackSelectedBin);
      switch(screen_id){
         case appConstants.PICK_BACK_EXCEPTION_REPRINT:
-          this._exceptionAction = (React.createElement(Button1, {disabled: false, text: "Print", color: "orange", module: appConstants.PICK_BACK, action: appConstants.REPRINT_INVOICE}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: false, text: _("Print"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.REPRINT_INVOICE}));
           break;
         case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
-          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Skip Printing", color: "orange", module: appConstants.PICK_BACK, action: appConstants.SKIP_PRINTING}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: _("Skip Printing"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.SKIP_PRINTING}));
           break;
         case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
-          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Dis-associate Tote", color: "orange", module: appConstants.PICK_BACK, action: appConstants.DIS_ASSOCIATE_TOTE}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: _("Dis-associate Tote"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.DIS_ASSOCIATE_TOTE}));
           break;
         case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
-          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: "Override", color: "orange", module: appConstants.PICK_BACK, action: appConstants.OVERRIDE_TOTE}));
+          this._exceptionAction = (React.createElement(Button1, {disabled: this.state.PickBackSelectedBin == null, text: _("Override"), color: "orange", module: appConstants.PICK_BACK, action: appConstants.OVERRIDE_TOTE}));
           break;
         default:
           return true;
@@ -38815,12 +39123,11 @@ var PickBack = React.createClass({displayName: "PickBack",
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
-          console.log(this.state.PickBackServerNavData);
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                   React.createElement(ExceptionHeader, {text: this.state.PickBackServerNavData["description"]}), 
+                   React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}), 
                     React.createElement("div", {className: "main-container exception1"}, 
                       React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
                    ), 
@@ -38829,11 +39136,42 @@ var PickBack = React.createClass({displayName: "PickBack",
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
         break; 
+
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PickBackScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickBackPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickBackSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;  
+
       default:
         return true; 
     }
@@ -38875,12 +39213,14 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickBackStore":289,"../stores/mainstore":294,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":264,"./SystemIdle":275,"react":230}],257:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/PickBackStore":292,"../stores/mainstore":297,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/Wrapper":266,"./SystemIdle":277,"./TabularData":280,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -38895,6 +39235,9 @@ var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
+var TabularData = require('./TabularData');
+
+var checkListOpen = false;
 
 function getStateData(){
   /*return {
@@ -38921,11 +39264,10 @@ var PickFront = React.createClass({displayName: "PickFront",
   _notification:'',
   _component:'',
   _navigation:'',
-  _showModal:false,
   getInitialState: function(){
     return getStateData();
   },
-  componentWillMount: function(){
+  componentWillMount: function(){   
     if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }
@@ -38939,8 +39281,8 @@ var PickFront = React.createClass({displayName: "PickFront",
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }else{
-      $('.modal').modal('hide');
-      $('.modal-backdrop').remove();
+     /* $('.modal').modal('hide');
+      $('.modal-backdrop').remove();*/
     }
   },
   getNotificationComponent:function(){
@@ -38949,17 +39291,17 @@ var PickFront = React.createClass({displayName: "PickFront",
     else
       this._notification = "";
   },
-  getModalStatus:function(){
-    return _showModal;
-  },
   showModal:function(data,index){
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
       "product_details" : this.state.PickFrontProductDetails
     };
-    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
-    setTimeout((function(){CommonActions.showModal({
+    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
+    if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
+      console.log('this.state.PickFrontChecklistOverlayStatus');
+      checkListOpen = true;
+      setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
       });
@@ -38967,10 +39309,29 @@ var PickFront = React.createClass({displayName: "PickFront",
       return false;
       }),0)
 
+      
+
     }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
-      $('.modal').modal('hide');
-      $('.modal-backdrop fade in').remove();
+    else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
+      console.log(this.state.PickFrontChecklistOverlayStatus);
+     
+      setTimeout((function (){
+          $( ".modal" ).modal('hide');
+          //$('.modal-backdrop').remove();
+      }), 0)
+      checkListOpen = false;
+     /* $('.modal').css('display', 'none');
+      $('.modal-backdrop').css('display', 'none');*/
+     /* $('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) */
+    }
+    else {
+      /*$('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) ;*/
     }
 
   },
@@ -38983,7 +39344,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -39058,7 +39419,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';
         }
@@ -39071,7 +39432,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                 ), 
                 React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton
                 )
               )
@@ -39085,7 +39446,7 @@ var PickFront = React.createClass({displayName: "PickFront",
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: "Edit Details", module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
+          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
         }else{
           var editButton ='';
         }
@@ -39097,7 +39458,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                     editButton
                 )
               )
@@ -39106,7 +39467,21 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._component = this.getExceptionComponent();
         }
       break;
-      
+      case appConstants.PICK_FRONT_NO_FREE_BIN:
+         if(this.state.PickFrontExceptionStatus == false){
+         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+ 
+        this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                )
+              )
+            );
+         }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "good"){
@@ -39117,15 +39492,15 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontGoodQuantity, action: "GOOD"})
+                      React.createElement(KQ, {scanDetailsGood: this.state.PickFrontGoodQuantity, action: "GOOD"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39137,19 +39512,19 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontMissingQuantity, action: "MISSING"})
+                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PickFrontMissingQuantity, action: "MISSING"})
                     ), 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                     React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})
+                     React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39160,15 +39535,15 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Please Put Back Damaged Item Quantity into Exception Area . ")
+                      React.createElement("div", {className: "kq-header"}, _("Please Put Back Damaged Item Quantity into Exception Area."))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39188,11 +39563,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39207,16 +39582,47 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PICK_FRONT, action: appConstants.SEND_MISSING_BOX_EXCEPTION})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.SEND_MISSING_BOX_EXCEPTION})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
            }
           break;
+
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickFrontSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;  
+
 
       default:
         return true;
@@ -39240,21 +39646,62 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../stores/PickFrontStore":290,"../stores/mainstore":294,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductDetails.js":258,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"react":230}],258:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/PickFrontStore":293,"../stores/mainstore":297,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductDetails.js":258,"./ProductDetails/KQ":261,"./ProductDetails/KQExceptionDamaged":262,"./ProductDetails/KQExceptionMissing":263,"./ProductDetails/Wrapper":266,"./Rack/MsuRack.js":269,"./Spinner/LoaderButler":274,"./TabularData":280,"react":230}],258:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
 var ProductImage = require('./ProductImage');
 
+var product_info_locale = {};
+var image_url = {};
 var ProductDetails = React.createClass({displayName: "ProductDetails",
+
+    displayLocale : function(data){
+        product_info_locale = {};
+        image_url = {};
+        var language_locale = sessionStorage.getItem('localeData');
+        var locale;
+        if(language_locale == 'null' || language_locale == null){
+          locale = 'en-US';
+        }else{
+          locale = JSON.parse(language_locale)["data"]["locale"]; 
+        }
+        data.map(function(value, index){
+          var keyValue;
+          var imageKey;
+          for (var key in value[0]) { 
+            if(key != 'display_data' && key != 'product_local_image_url' ){
+              keyValue = value[0][key] + ' ';
+             }else if(key != 'display_data' && key == 'product_local_image_url' ){
+              imageKey = value[0][key];
+             }
+          }
+          value[0].display_data.map(
+            function(data_locale, index1){
+             if(data_locale.locale == locale){
+                if(data_locale.display_name != 'product_local_image_url' ){
+                  product_info_locale[data_locale.display_name] = keyValue;
+                }else if(data_locale.display_name == 'product_local_image_url' ){
+                  image_url[data_locale.display_name] = imageKey;
+                }
+              }
+            
+            }
+
+          )
+          
+        });
+      
+    },
     render: function() {
+        this.displayLocale(this.props.productInfo);
         return (
             React.createElement("div", {className: "productTableInfo"}, 
-				React.createElement(ProductImage, {srcURL: this.props.productInfo.product_local_image_url, details: this.props.productInfo.product_description}), 
+				React.createElement(ProductImage, {srcURL: image_url.product_local_image_url}), 
                 React.createElement("div", {className: "productHeader"}, 
                     _("Details")
                 ), 
-                React.createElement(ProductInfo, {infoDetails: this.props.productInfo})
+                React.createElement(ProductInfo, {infoDetails: product_info_locale})
 			)
         );
     }
@@ -39296,7 +39743,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
         $.each(infoDetails, function(key, value) {
             return arr1.push(
                 React.createElement("tr", null, 
-	  				React.createElement("td", {className: "key"}, " ", key.toUpperCase(), " "), 
+	  				React.createElement("td", {className: "key"}, " ", key, " "), 
 	  				React.createElement("td", {className: "value"}, value, " ")
   				)
 
@@ -39322,48 +39769,152 @@ var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
+var resourceConstants = require('../../constants/resourceConstants');
+var  _updatedQty = 0, _scanDetails = {},_keypress = false;
 
 var KQ = React.createClass({displayName: "KQ",
-  _appendClassDown : '',
-  _appendClassUp : '',
-  _qtyComponent : null,
-  virtualKeyboard : null,
+    _appendClassDown : '',
+    _appendClassUp : '',
+    _qtyComponent : null,
     _appendClassDown: '',
     _appendClassUp: '',
-    _qtyComponent: null,
-    virtualKeyboard: null,
-    handleIncrement: function(event) {
-        if (this.props.scanDetails.kq_allowed === true) {
-          if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0"))     
-            return false;          
+    virtualKeyboard: null, 
+    _id : 'keyboard',
+    _enableIncrement : true,
+    _enableDecrement : true,
+    changeValueIncrement : function(){
+        if( parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
+        {
+            return false;
+        }
+        
+        _updatedQty++;
+        $("#keyboard").val(_updatedQty);
+    },
+    incrementValue: function(event){
+       var self = this;
+       var interval;
+        if (this._enableIncrement === true) {  
+            _keypress = true;
+           if( event.type == "mousedown"){
+                interval = setInterval(this.changeValueIncrement, 300);           
+            }
+            else if(event.type == 'click'){
+                _updatedQty++;
+            }
+            
+            $('.topArrow').mouseup(function() {
+                clearInterval(interval);
+                
+            });
+            $('.topArrow').mouseout(function(event) {
+                clearInterval(interval);              
+            });
+         
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
+                || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
+                || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+           
+               
+            }
+            else if(parseInt(_updatedQty) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
+               _updatedQty = _updatedQty - 1; 
+            }
+            if(interval == undefined){
+               _keypress = false;
+            }
+            console.log(interval);
+            self.handleIncrement();
+        }
+                                  
+    },  
+    changeValueDecrement : function(){
+
+        if(_updatedQty <= 0 ){
+            _updatedQty = 0;
+        }else{
+            _updatedQty--;
+        }
+        if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+            _updatedQty = 1;
+        }
+        
+        $("#keyboard").val(_updatedQty);
+    },
+    decrementValue: function(event){
+        var self = this;
+        var interval;
+        if (this._enableDecrement === true) { 
+            _keypress = true;
+            if( event.type == "mousedown" ){     
+                interval = setInterval(this.changeValueDecrement, 300);                
+            
+            }else if(event.type == 'click') {
+               if(_updatedQty <= 0){
+                _updatedQty = 0;
+                }else{
+                _updatedQty--;
+                }
+    
+            }
+            $('.downArrow').mouseup(function(){
+                clearInterval(interval);
+            });
+
+            $('.downArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+             if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+                _updatedQty = 1;
+            }
+
+            if(interval == undefined){
+                _keypress = false
+            }
+            self.handleDecrement();
+        }
+                          
+    },                    
+    
+    handleIncrement: function(event, qty) { console.log(_keypress);
+        if (this._enableIncrement === true && _keypress == false) {           
+          if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
+          }          
+                      
             var data = {};
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                CommonActions.updateKQQuantity(parseInt(_updatedQty));
                 return true;
             }
             if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
-                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQty));
                         break;
                         case "MISSING":
-                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQty));
                         break;
                         case "DAMAGED":
-                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty) + 1);
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQty));
                         break;
                         default:
                     }
                 }
                 return true;
             }
+
             if (mainstore.getCurrentSeat() == "audit_front") {
+
                 data = {
                     "event_name": "audit_actions",
                     "event_data": {
                         "type": "change_qty",
-                        "quantity": parseInt(this.props.scanDetails.current_qty) + 1
+                        "quantity": parseInt(_updatedQty)
                     }
                 };
             } 
@@ -39372,7 +39923,7 @@ var KQ = React.createClass({displayName: "KQ",
                     "event_name": "put_back_exception",
                     "event_data": {
                         "action": "confirm_quantity_update",
-                        "quantity": parseInt(this.props.scanDetails.current_qty) + 1,
+                        "quantity": parseInt(_updatedQty),
                         "event":mainstore.getExceptionType()
                     }
                 };
@@ -39382,32 +39933,33 @@ var KQ = React.createClass({displayName: "KQ",
                     "event_name": "quantity_update_from_gui",
                     "event_data": {
                         "item_uid": this.props.itemUid,
-                        "quantity_updated": parseInt(this.props.scanDetails.current_qty) + 1
+                        "quantity_updated": parseInt(_updatedQty)
                     }
                 };
             }
+            mainstore.setShowModal(false);
             CommonActions.postDataToInterface(data);
         }
     },
     handleDecrement: function(event) {
-        if (this.props.scanDetails.kq_allowed === true) {
-            if (parseInt(this.props.scanDetails.current_qty) >= 1 ) {
+        if (this._enableDecrement === true && _keypress == false ) {
+            if (parseInt(_updatedQty) >= 0 ) {
                 var data = {};
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                    CommonActions.updateKQQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                    CommonActions.updateKQQuantity(parseInt(_updatedQty) );
                      return true;
                 }
                 if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
-                            CommonActions.updateGoodQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQty) );
                         break;
                         case "MISSING":
-                            CommonActions.updateMissingQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQty) );
                         break;
                         case "DAMAGED":
-                            CommonActions.updateDamagedQuantity(parseInt(this.props.scanDetails.current_qty) - 1);
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQty) );
                         break;
                         default:
                     }
@@ -39419,7 +39971,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "event_name": "audit_actions",
                         "event_data": {
                             "type": "change_qty",
-                            "quantity": parseInt(this.props.scanDetails.current_qty) - 1
+                            "quantity": parseInt(_updatedQty)
                         }
                     };
                 }
@@ -39428,7 +39980,7 @@ var KQ = React.createClass({displayName: "KQ",
                     "event_name": "put_back_exception",
                     "event_data": {
                         "action": "confirm_quantity_update",
-                        "quantity": parseInt(this.props.scanDetails.current_qty) - 1,
+                        "quantity": parseInt(_updatedQty),
                         "event":mainstore.getExceptionType()
                     }
                 };
@@ -39438,7 +39990,466 @@ var KQ = React.createClass({displayName: "KQ",
                         "event_name": "quantity_update_from_gui",
                         "event_data": {
                             "item_uid": this.props.itemUid,
-                            "quantity_updated": parseInt(this.props.scanDetails.current_qty) - 1
+                            "quantity_updated": parseInt(_updatedQty)
+                        }
+                    };
+                }
+                CommonActions.postDataToInterface(data);
+            }
+        }
+  },
+  componentDidMount: function() {
+    mainstore.removeChangeListener(this.onChange);
+  },
+  componentWillMount: function(){
+    mainstore.removeChangeListener(this.onChange);
+  },
+  openNumpad : function(id){
+
+    var action = this.props.action;
+    if (_scanDetails.kq_allowed == true) {
+        var qty = _scanDetails.current_qty;
+        var itemUid = this.props.itemUid;
+
+          setTimeout(function(){ $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: {
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+            },
+            reposition: true,
+            alwaysOpen: false,          
+            initialFocus: true,
+            visible: function(e, keypressed, el) {
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                $(".ui-keyboard").css("width","230px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-button").css("width","74px");
+                $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                $(".current-quantity").val("");
+                $(".ui-widget-content").val("");
+            },
+            change : function(e, keypressed, el){
+                var data ={}
+               if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
+                    data["code"] = resourceConstants.CLIENTCODE_008;
+                    data["level"] = 'error';
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(9999);
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                    data["code"] = resourceConstants.CLIENTCODE_009;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(_updatedQty);
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' ) {
+                    CommonActions.resetNumpadVal(parseInt(_updatedQty));
+                } else  {  
+                    var data = {};
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                         return true;
+                    }
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                       if(action != undefined){
+                            switch(action){
+                                case "GOOD":
+                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                break;
+                                case "MISSING":
+                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                break;
+                                case "DAMAGED":
+                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                break;
+                                default:
+                            }
+                        }
+                        return true;
+                    }
+                    if (mainstore.getCurrentSeat() == "audit_front") {
+                        data = {
+                            "event_name": "audit_actions",
+                            "event_data": {
+                                "type": "change_qty",
+                                "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
+                            }
+                        };
+                    }   
+                    else {
+                        data = {
+                            "event_name": "quantity_update_from_gui",
+                           "event_data": {
+                                "item_uid": itemUid,
+                                "quantity_updated": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    CommonActions.postDataToInterface(data);
+                }
+
+            }
+        }); }, 0)
+    }
+    
+  },
+  componentWillUnmount: function(){    
+    mainstore.removeChangeListener(this.onChange);
+    /*
+    if(this.virtualKeyboard != null){
+      virtualKeyboard.getkeyboard().close();
+    }
+    */
+  },
+  onChange: function(){ 
+  },
+  checkKqAllowed : function(){    
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
+        
+          if((mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(_updatedQty) == 1) ){
+
+              this._appendClassDown = 'downArrow disable'; 
+              this._enableDecrement = false;
+              _scanDetails.kq_allowed = false;
+              
+          }else{
+              this._appendClassDown = 'downArrow enable'; 
+              this._enableDecrement = true;
+            }
+           this._appendClassUp = 'topArrow disable'; 
+           this._enableIncrement = false;          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+          this._enableIncrement = true;  
+          if (mainstore.getCurrentSeat() == "audit_front"){
+               if(_updatedQty== 0){
+                  this._appendClassDown = 'downArrow disable';
+                    this._enableDecrement = false;
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                  this._enableDecrement = true;
+                } 
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                if(_updatedQty == 0){
+                  this._appendClassDown = 'downArrow disable';
+                  this._enableDecrement = false;
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                  this._enableDecrement = true;
+                }   
+            }
+            else{
+                if(_updatedQty == 1){
+                  this._appendClassDown = 'downArrow disable';
+                  this._enableDecrement = false;
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                  this._enableDecrement = true;
+                }
+            }
+      }
+    }
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+
+        this._enableDecrement = false;
+        this._enableIncrement = false;      
+    }    
+  },
+ 
+  handleTotalQty : function(){
+ 
+    if(_scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null)}), 
+            React.createElement("span", {className: "separator"}, "/"), 
+            React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
+          )
+        );
+    }else{
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null)})
+          )
+        );
+    }
+
+    },
+    render: function(data) {
+        if(this.props.scanDetailsMissing == undefined && this.props.scanDetailsDamaged == undefined && this.props.scanDetailsGood == undefined  ){
+             this.checkKqAllowed();
+            this.handleTotalQty();
+            _updatedQty = parseInt(this.props.scanDetails.current_qty);
+            _scanDetails = this.props.scanDetails;
+           
+        }
+        else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
+            _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
+            _scanDetails = this.props.scanDetailsGood;
+            this.checkKqAllowed();
+            this.handleTotalQty();
+        }
+        
+        
+        return ( React.createElement("div", {className: "kq-wrapper"}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
+            )
+        )
+
+    }
+});
+
+module.exports = KQ;
+
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"react":230}],262:[function(require,module,exports){
+var React = require('react');
+var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+var appConstants = require('../../constants/appConstants');
+var resourceConstants = require('../../constants/resourceConstants');
+var  _updatedQtyDamaged = 0, _scanDetails = {};
+
+var KQ = React.createClass({displayName: "KQ",
+    _appendClassDown : '',
+    _appendClassUp : '',
+    _qtyComponent : null,
+    _appendClassDown: '',
+    _appendClassUp: '',
+    virtualKeyboard: null, 
+    _id : 'keyboard',
+    changeValueIncrement : function(){
+        if( parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
+        {
+            return false;
+        }
+        _updatedQtyDamaged ++;
+        this.handleIncrement();             
+       // $("#"+this._id).val(_updatedQty);
+    },
+    incrementValue: function(event){
+       var self = this;
+       var interval;
+        if (_scanDetails.kq_allowed === true) {  
+           if( event.type == "mousedown"){
+                interval = setInterval(this.changeValueIncrement, 300);           
+            }
+            else if(event.type == 'click'){
+                _updatedQtyDamaged ++;
+            }
+            
+            $('.topArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+            $('.topArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+         
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
+                || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
+                || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+          
+               
+            }
+            else if(parseInt(_updatedQtyDamaged ) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
+               _updatedQtyDamaged  = _updatedQtyDamaged  - 1; 
+            }
+            self.handleIncrement();
+        }
+                                  
+    },  
+    changeValueDecrement : function(){
+
+        if(_updatedQtyDamaged  <= 0 ){
+            _updatedQtyDamaged  = 0;
+        }else{
+            _updatedQtyDamaged --;
+        }
+        if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+            _updatedQtyDamaged  = 1;
+        }
+        this.handleDecrement();        
+       // $("#"+this._id).val(_updatedQty);
+    },
+    decrementValue: function(event){
+        var self = this;
+        var interval;
+        if (_scanDetails.kq_allowed === true) { 
+    
+            if( event.type == "mousedown" ){     
+                interval = setInterval(this.changeValueDecrement, 300);                
+            
+            }else if(event.type == 'click') {
+               if(_updatedQtyDamaged  <= 0){
+                _updatedQtyDamaged  = 0;
+                }else{
+                _updatedQtyDamaged --;
+                }
+    
+            }
+            $('.downArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+
+            $('.downArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+             if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+                _updatedQtyDamaged  = 1;
+            }
+
+          
+            self.handleDecrement();
+        }
+                          
+    },                    
+    
+    handleIncrement: function(event, qty) { 
+        if (_scanDetails.kq_allowed === true ) {           
+          if((parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
+          }          
+                      
+            var data = {};
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ));
+                return true;
+            }
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyDamaged ));
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyDamaged ));
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged ));
+                        break;
+                        default:
+                    }
+                }
+                return true;
+            }
+
+            if (mainstore.getCurrentSeat() == "audit_front") {
+
+                data = {
+                    "event_name": "audit_actions",
+                    "event_data": {
+                        "type": "change_qty",
+                        "quantity": parseInt(_updatedQtyDamaged )
+                    }
+                };
+            } 
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyDamaged ),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+            }  
+            else {
+                data = {
+                    "event_name": "quantity_update_from_gui",
+                    "event_data": {
+                        "item_uid": this.props.itemUid,
+                        "quantity_updated": parseInt(_updatedQtyDamaged )
+                    }
+                };
+            }
+            mainstore.setShowModal(false);
+            CommonActions.postDataToInterface(data);
+        }
+    },
+    handleDecrement: function(event) {
+        if (_scanDetails.kq_allowed === true ) {
+            if (parseInt(_updatedQtyDamaged ) >= 0 ) {
+                var data = {};
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                    CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ) );
+                     return true;
+                }
+                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyDamaged ) );
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyDamaged ) );
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged ) );
+                        break;
+                        default:
+                    }
+                }
+                return true;
+                }
+                if (mainstore.getCurrentSeat() == "audit_front") {
+                    data = {
+                        "event_name": "audit_actions",
+                        "event_data": {
+                            "type": "change_qty",
+                            "quantity": parseInt(_updatedQtyDamaged )
+                        }
+                    };
+                }
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyDamaged ),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+                }   
+                else {
+                    data = {
+                        "event_name": "quantity_update_from_gui",
+                        "event_data": {
+                            "item_uid": this.props.itemUid,
+                            "quantity_updated": parseInt(_updatedQtyDamaged )
                         }
                     };
                 }
@@ -39446,111 +40457,159 @@ var KQ = React.createClass({displayName: "KQ",
             }
         }
     },
-    componentDidMount: function() {
-        if (this.props.scanDetails.kq_allowed === true) {
-            var qty = this.props.scanDetails.current_qty;
-            var itemUid = this.props.itemUid;
-            virtualKeyboard = $('#keyboard').keyboard({
-                layout: 'custom',
-                customLayout: {
-                    'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
-                },
-                reposition: true,
-                alwaysOpen: false,
-                initialFocus: true,
-                visible: function(e, keypressed, el) {
-                    $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
-                    $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
-                },
-                accepted: function(e, keypressed, el) {
-                    if (e.target.value === '' || e.target.value === '0') {
-                        CommonActions.resetNumpadVal(parseInt(qty));
-                    } else {
+  componentDidMount: function() {
+    mainstore.removeChangeListener(this.onChange);    
 
-                        var data = {};
-                         if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                            CommonActions.updateKQQuantity(parseInt(e.target.value));
-                             return true;
-                        }
-                        if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                            if(this.props.action != undefined){
-                                switch(this.props.action){
-                                    case "GOOD":
-                                        CommonActions.updateGoodQuantity(parseInt(e.target.value));
-                                    break;
-                                    case "MISSING":
-                                        CommonActions.updateMissingQuantity(parseInt(e.target.value));
-                                    break;
-                                    case "DAMAGED":
-                                        CommonActions.updateDamagedQuantity(parseInt(e.target.value));
-                                    break;
-                                    default:
-                                }
-                            }
-                            return true;
-                        }
-                        if (mainstore.getCurrentSeat() == "audit_front") {
-                            data = {
-                                "event_name": "audit_actions",
-                                "event_data": {
-                                    "type": "change_qty",
-                                    "quantity": parseInt(e.target.value)
-                                }
-                            };
-                        }
-                        else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
-                             data = {
-                                "event_name": "put_back_exception",
-                                "event_data": {
-                                    "action": "confirm_quantity_update",
-                                    "quantity": parseInt(e.target.value),
-                                    "event":mainstore.getExceptionType()
-                                }
-                            };
-                         }   
-                        else {
-                            data = {
-                                "event_name": "quantity_update_from_gui",
-                                "event_data": {
-                                    "item_uid": itemUid,
-                                    "quantity_updated": parseInt(e.target.value)
-                                }
-                            };
-                        }
-                        CommonActions.postDataToInterface(data);
-                    }
-                }
-            });
-        }
-    },
+  },
   componentWillMount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
+  openNumpad : function(id){
+    var action = this.props.action;
+    if (_scanDetails.kq_allowed === true) {
+        var qty = _scanDetails.current_qty;
+        var itemUid = this.props.itemUid;
+
+          setTimeout(function(){ $('#damaged_keyboard').keyboard({
+            layout: 'custom',
+            customLayout: {
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+            },
+            reposition: true,
+            alwaysOpen: false,          
+            initialFocus: true,
+            visible: function(e, keypressed, el) {
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                $(".ui-keyboard").css("width","230px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-button").css("width","74px");
+                $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                $(".current-quantity").val("");
+                $(".ui-widget-content").val("");
+            },
+            change : function(e, keypressed, el){
+                var data ={};
+               if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
+                    data["code"] = resourceConstants.CLIENTCODE_008;
+                    data["level"] = 'error';
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(9999);
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                    data["code"] = resourceConstants.CLIENTCODE_009;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(_updatedQtyDamaged );
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' ) {
+                    CommonActions.resetNumpadVal(parseInt(_updatedQtyDamaged ));
+                } else  {  
+                    var data = {};
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                         return true;
+                    }
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                       if(action != undefined){
+                            switch(action){
+                                case "GOOD":
+                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                break;
+                                case "MISSING":
+                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                break;
+                                case "DAMAGED":
+                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                break;
+                                default:
+                            }
+                        }
+                        return true;
+                    }
+                    if (mainstore.getCurrentSeat() == "audit_front") {
+                        data = {
+                            "event_name": "audit_actions",
+                            "event_data": {
+                                "type": "change_qty",
+                                "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
+                            }
+                        };
+                    }   
+                    else {
+                        data = {
+                            "event_name": "quantity_update_from_gui",
+                           "event_data": {
+                                "item_uid": itemUid,
+                                "quantity_updated": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    CommonActions.postDataToInterface(data);
+                }
+            }
+        }); }, 0)
+    }
+
+  },
   componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
+    /*
     if(this.virtualKeyboard != null){
       virtualKeyboard.getkeyboard().close();
     }
+    */
   },
   onChange: function(){ 
-    this.setState(getState());
   },
-  checkKqAllowed : function(){
-    if(this.props.scanDetails.kq_allowed === true){
-      if((parseInt(this.props.scanDetails.current_qty) >= parseInt(this.props.scanDetails.total_qty)) && (parseInt(this.props.scanDetails.total_qty) != 0 || this.props.scanDetails.total_qty != "0") ){          
+  checkKqAllowed : function(){    
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
+          
           this._appendClassUp = 'topArrow disable';
           this._appendClassDown = 'downArrow enable';          
       }
       else{
           this._appendClassUp = 'topArrow enable';
           if (mainstore.getCurrentSeat() == "audit_front"){
-               if(this.props.scanDetails.current_qty == 0){
+               if(_updatedQtyDamaged == 0){
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 } 
-            }else{
-                if(this.props.scanDetails.current_qty == 1 || this.props.scanDetails.current_qty == 0){
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                if(_updatedQtyDamaged  == 0){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                }   
+            }
+            else{
+                if(_updatedQtyDamaged  == 1){
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
@@ -39564,30 +40623,36 @@ var KQ = React.createClass({displayName: "KQ",
     }    
   },
   handleTotalQty : function(){
-    if(this.props.scanDetails.total_qty != 0 ){
+ 
+    if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", value: parseInt(this.props.scanDetails.current_qty)}), 
+            React.createElement("input", {id: "damaged_keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)}), 
             React.createElement("span", {className: "separator"}, "/"), 
-            React.createElement("span", {className: "total-quantity"}, parseInt(this.props.scanDetails.total_qty))
+            React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
         );
     }else{
-      this._qtyComponent = (
+        this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", value: parseInt(this.props.scanDetails.current_qty)})
+            React.createElement("input", {id: "damaged_keyboard", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)})
           )
-      );
-        }
+        );
+    }
 
     },
     render: function(data) {
+         _updatedQtyDamaged  = parseInt(this.props.scanDetailsDamaged.current_qty);
+        _scanDetails = this.props.scanDetailsDamaged;
+        console.log(_updatedQtyDamaged);
         this.checkKqAllowed();
         this.handleTotalQty();
+     
+        
         return ( React.createElement("div", {className: "kq-wrapper"}, 
-            React.createElement("a", {href: "#", className: this._appendClassUp, onClick: this.handleIncrement}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
-            React.createElement("a", {href: "#", className: this._appendClassDown, onClick: this.handleDecrement}, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
             )
         )
@@ -39597,7 +40662,437 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":280,"../../stores/mainstore":294,"react":230}],262:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"react":230}],263:[function(require,module,exports){
+var React = require('react');
+var CommonActions = require('../../actions/CommonActions');
+var mainstore = require('../../stores/mainstore');
+var appConstants = require('../../constants/appConstants');
+var resourceConstants = require('../../constants/resourceConstants');
+var  _updatedQtyMissing = 0, _scanDetails = {};
+
+var KQ = React.createClass({displayName: "KQ",
+    _appendClassDown : '',
+    _appendClassUp : '',
+    _qtyComponent : null,
+    _appendClassDown: '',
+    _appendClassUp: '',
+    virtualKeyboard: null, 
+    _id : 'keyboard',
+    changeValueIncrement : function(){
+        if( parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
+        {
+            return false;
+        }
+        _updatedQtyMissing++;
+        this.handleIncrement();             
+       // $("#"+this._id).val(_updatedQty);
+    },
+    incrementValue: function(event){
+       var self = this;
+       var interval;
+        if (_scanDetails.kq_allowed === true) {  
+           if( event.type == "mousedown"){
+                interval = setInterval(this.changeValueIncrement, 300);           
+            }
+            else if(event.type == 'click'){
+                _updatedQtyMissing++;
+            }
+            
+            $('.topArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+            $('.topArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+         
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
+                || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
+                || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+          
+               
+            }
+            else if(parseInt(_updatedQtyMissing) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
+               _updatedQtyMissing = _updatedQtyMissing - 1; 
+            }
+            self.handleIncrement();
+        }
+                                  
+    },  
+    changeValueDecrement : function(){
+
+        if(_updatedQtyMissing <= 0 ){
+            _updatedQtyMissing = 0;
+        }else{
+            _updatedQtyMissing--;
+        }
+        if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+            _updatedQtyMissing = 1;
+        }
+        this.handleDecrement();        
+       // $("#"+this._id).val(_updatedQtyMissing);
+    },
+    decrementValue: function(event){
+        var self = this;
+        var interval;
+        if (_scanDetails.kq_allowed === true) { 
+    
+            if( event.type == "mousedown" ){     
+                interval = setInterval(this.changeValueDecrement, 300);                
+            
+            }else if(event.type == 'click') {
+               if(_updatedQtyMissing <= 0){
+                _updatedQtyMissing = 0;
+                }else{
+                _updatedQtyMissing--;
+                }
+    
+            }
+            $('.downArrow').mouseup(function() {
+                clearInterval(interval);
+            });
+
+            $('.downArrow').mouseout(function(event) {
+                clearInterval(interval);
+            });
+             if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+                mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+                _updatedQtyMissing = 1;
+            }
+
+          
+            self.handleDecrement();
+        }
+                          
+    },                    
+    
+    handleIncrement: function(event, qty) { 
+        if (_scanDetails.kq_allowed === true ) {           
+          if((parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
+          }          
+                      
+            var data = {};
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                CommonActions.updateKQQuantity(parseInt(_updatedQtyMissing));
+                return true;
+            }
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyMissing));
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyMissing));
+                        break;
+                        default:
+                    }
+                }
+                return true;
+            }
+
+            if (mainstore.getCurrentSeat() == "audit_front") {
+
+                data = {
+                    "event_name": "audit_actions",
+                    "event_data": {
+                        "type": "change_qty",
+                        "quantity": parseInt(_updatedQtyMissing)
+                    }
+                };
+            } 
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyMissing),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+            }  
+            else {
+                data = {
+                    "event_name": "quantity_update_from_gui",
+                    "event_data": {
+                        "item_uid": this.props.itemUid,
+                        "quantity_updated": parseInt(_updatedQtyMissing)
+                    }
+                };
+            }
+            mainstore.setShowModal(false);
+            CommonActions.postDataToInterface(data);
+        }
+    },
+    handleDecrement: function(event) {
+        if (_scanDetails.kq_allowed === true ) {
+            if (parseInt(_updatedQtyMissing) >= 0 ) {
+                var data = {};
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                    CommonActions.updateKQQuantity(parseInt(_updatedQtyMissing) );
+                     return true;
+                }
+                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(this.props.action != undefined){
+                    switch(this.props.action){
+                        case "GOOD":
+                            CommonActions.updateGoodQuantity(parseInt(_updatedQtyMissing) );
+                        break;
+                        case "MISSING":
+                            CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing) );
+                        break;
+                        case "DAMAGED":
+                            CommonActions.updateDamagedQuantity(parseInt(_updatedQtyMissing) );
+                        break;
+                        default:
+                    }
+                }
+                return true;
+                }
+                if (mainstore.getCurrentSeat() == "audit_front") {
+                    data = {
+                        "event_name": "audit_actions",
+                        "event_data": {
+                            "type": "change_qty",
+                            "quantity": parseInt(_updatedQtyMissing)
+                        }
+                    };
+                }
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQtyMissing),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+                }   
+                else {
+                    data = {
+                        "event_name": "quantity_update_from_gui",
+                        "event_data": {
+                            "item_uid": this.props.itemUid,
+                            "quantity_updated": parseInt(_updatedQtyMissing)
+                        }
+                    };
+                }
+                CommonActions.postDataToInterface(data);
+            }
+        }
+    },
+  componentDidMount: function() {
+    mainstore.removeChangeListener(this.onChange);    
+
+  },
+  componentWillMount: function(){
+    mainstore.removeChangeListener(this.onChange);
+  },
+  openNumpad : function(id){
+    var action = this.props.action;
+    if (_scanDetails.kq_allowed === true) {
+        var qty = _scanDetails.current_qty;
+        var itemUid = this.props.itemUid;
+
+          setTimeout(function(){ $('#keyboard').keyboard({
+            layout: 'custom',
+            customLayout: {
+                'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
+            },
+            reposition: true,
+            alwaysOpen: false,         
+            initialFocus: true,
+            visible: function(e, keypressed, el) {
+                $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
+                $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
+                $(".ui-keyboard").css("width","230px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-button").css("width","74px");
+                $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
+                $(".current-quantity").val("");
+                $(".ui-widget-content").val("");
+            },
+            change : function(e, keypressed, el){
+                var data ={}
+                if(_scanDetails.kq_allowed == false){
+                    $('.ui-keyboard-preview').val("");
+                    data["code"] = resourceConstants.CLIENTCODE_013;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+                else if(parseInt(keypressed.last.val) > 9999){
+                    data["code"] = resourceConstants.CLIENTCODE_008;
+                    data["level"] = 'error';
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(9999);
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                    data["code"] = resourceConstants.CLIENTCODE_009;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(_updatedQtyMissing);
+                }else{
+                    data["code"] = null;
+                    data["level"] = 'error'
+                    CommonActions.generateNotification(data);
+                }
+            },
+            accepted: function(e, keypressed, el) {
+                if (e.target.value === '' ) {
+                    CommonActions.resetNumpadVal(parseInt(_updatedQtyMissing));
+                } else  {  
+                    var data = {};
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                         return true;
+                    }
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                       if(action != undefined){
+                            switch(action){
+                                case "GOOD":
+                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
+                                break;
+                                case "MISSING":
+                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
+                                break;
+                                case "DAMAGED":
+                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
+                                break;
+                                default:
+                            }
+                        }
+                        return true;
+                    }
+                    if (mainstore.getCurrentSeat() == "audit_front") {
+                        data = {
+                            "event_name": "audit_actions",
+                            "event_data": {
+                                "type": "change_qty",
+                                "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
+                            }
+                        };
+                    }   
+                    else {
+                        data = {
+                            "event_name": "quantity_update_from_gui",
+                           "event_data": {
+                                "item_uid": itemUid,
+                                "quantity_updated": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    CommonActions.postDataToInterface(data);
+                }
+            }
+        }); }, 0)
+    }
+
+  },
+  componentWillUnmount: function(){    
+    mainstore.removeChangeListener(this.onChange);
+    /*
+    if(this.virtualKeyboard != null){
+      virtualKeyboard.getkeyboard().close();
+    }
+    */
+  },
+  onChange: function(){ 
+  },
+  checkKqAllowed : function(){    
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
+          
+          this._appendClassUp = 'topArrow disable';
+          this._appendClassDown = 'downArrow enable';          
+      }
+      else{
+          this._appendClassUp = 'topArrow enable';
+          if (mainstore.getCurrentSeat() == "audit_front"){
+               if(_updatedQtyMissing == 0){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                } 
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                if(_updatedQtyMissing == 0){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                }   
+            }
+            else{
+                if(_updatedQtyMissing == 1){
+                  this._appendClassDown = 'downArrow disable';
+                }else{
+                  this._appendClassDown = 'downArrow enable';
+                }
+            }
+      }
+    }
+    else{
+        this._appendClassUp = 'topArrow disable';
+        this._appendClassDown = 'downArrow disable';
+    }    
+  },
+  handleTotalQty : function(){
+ 
+    if(_scanDetails.total_qty != 0 ){
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null)}), 
+            React.createElement("span", {className: "separator"}, "/"), 
+            React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
+          )
+        );
+    }else{
+        this._qtyComponent = (
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "keyboard", value: _updatedQtyMissing, onClick: this.openNumpad.call(null)})
+          )
+        );
+    }
+
+    },
+    render: function(data) {
+         _updatedQtyMissing = parseInt(this.props.scanDetailsMissing.current_qty);
+        _scanDetails = this.props.scanDetailsMissing;
+
+        this.checkKqAllowed();
+        this.handleTotalQty();
+       
+     
+        
+        return ( React.createElement("div", {className: "kq-wrapper"}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
+            )
+        )
+
+    }
+});
+
+module.exports = KQ;
+
+},{"../../actions/CommonActions":233,"../../constants/appConstants":282,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"react":230}],264:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -39643,7 +41138,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],263:[function(require,module,exports){
+},{"react":230}],265:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -39657,6 +41152,8 @@ function getPopUpState(){
         popupVisible : mainstore.getPopUpVisible()
   };
 }
+var product_info_locale = {};
+var image_url = {};
 var ProductInfo = React.createClass({displayName: "ProductInfo",
   getInitialState: function(){
     return getPopUpState();
@@ -39692,13 +41189,50 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
       CommonActions.updatePopupVisible(false);
     
   },
+  displayLocale : function(data){
+    product_info_locale = {};
+    image_url = {};
+    var language_locale = sessionStorage.getItem('localeData');
+    var locale;
+    if(language_locale == 'null' || language_locale == null){
+      locale = 'en-US';
+    }else{
+      locale = JSON.parse(language_locale)["data"]["locale"]; 
+    } 
+    data.map(function(value, index){
+      var keyValue;
+      var imageKey
+      for (var key in value[0]) { 
+        if(key != 'display_data' && key != 'product_local_image_url' ){
+          keyValue = value[0][key] + ' ';
+         }else if(key != 'display_data' && key == 'product_local_image_url' ){
+            imageKey = value[0][key];
+         }
+      }
+      value[0].display_data.map(
+        function(data_locale, index1){
+         if(data_locale.locale == locale){
+            if(data_locale.display_name != 'product_local_image_url' ){
+              product_info_locale[data_locale.display_name] = keyValue;
+            }else if(data_locale.display_name == 'product_local_image_url' ){
+              image_url[data_locale.display_name] = imageKey;
+            }
+          }
+        
+        }
+
+      )
+      
+    });
+  },
   render: function(data){ 
+    this.displayLocale(this.props.productDetails);
     return (       
             React.createElement("div", {className: "product-details-wrapper"}, 
               React.createElement("div", {className: "img-container"}, 
-                  React.createElement("img", {src: this.props.productDetails.product_local_image_url})
+                  React.createElement("img", {className: "img-responsive", src: image_url.product_local_image_url})
               ), 
-              React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,this.props.productDetails,"product-detail")}, 
+              React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,product_info_locale,"product-detail")}, 
                 React.createElement("span", null, " ", allresourceConstants.VIEW_MORE, " "), 
                 React.createElement("i", {className: "glyphicon glyphicon-info-sign"})
               )
@@ -39709,7 +41243,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":282,"../../stores/mainstore":294,"../Modal/Modal":248,"./PopUp":262,"react":230}],264:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":284,"../../stores/mainstore":297,"../Modal/Modal":248,"./PopUp":264,"react":230}],266:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -39742,7 +41276,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":294,"./KQ":261,"./PopUp":262,"./ProductInfo":263,"react":230}],265:[function(require,module,exports){
+},{"../../stores/mainstore":297,"./KQ":261,"./PopUp":264,"./ProductInfo":265,"react":230}],267:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -39816,7 +41350,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                 React.createElement(Exception, {data: this.state.PutBackExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -39834,8 +41368,8 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                 ), 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: !this.state.StageActive, text: "Stage", module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
-                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: "Stage All", module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
+                  React.createElement(Button1, {disabled: !this.state.StageActive, text: _("Stage"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
+                  React.createElement(Button1, {disabled: !this.state.StageAllActive, text: _("Stage All"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
                 )
               )
             );
@@ -39855,7 +41389,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
                 )
               )
             );
@@ -39880,8 +41414,8 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "BACK", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "CLOSE", module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: true, action: appConstants.CLOSE_TOTE, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: _("CLOSE"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: true, action: appConstants.CLOSE_TOTE, color: "orange"})
                 )
               )
             );
@@ -39895,14 +41429,14 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
-                  React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39913,39 +41447,38 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement("div", {className: "main-container exception1"}, 
-                    React.createElement(Img, null), 
+                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
         break; 
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
-          console.log(this.state.PutBackServerNavData);
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                   React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                     React.createElement("div", {className: "main-container exception1"}, 
                       React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                    ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXCESS_ITEMS_BIN})
+                    React.createElement(Button1, {disabled: this.state.PutBackNextButtonState, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXCESS_ITEMS_BIN})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39956,14 +41489,14 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
-                  React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39974,13 +41507,13 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {text: this.state.PutBackServerNavData["description"]}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "FINISH", color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -39992,12 +41525,41 @@ var PutBack = React.createClass({displayName: "PutBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                  React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
                  React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: "Cancel", module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
-                  React.createElement(Button1, {disabled: false, text: "Confirm", module: appConstants.PUT_BACK, status: true, action: appConstants.CONFIRM_TOTE_EXCEPTION, color: "orange"})
+                  React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
+                  React.createElement(Button1, {disabled: false, text: _("Confirm"), module: appConstants.PUT_BACK, status: true, action: appConstants.CONFIRM_TOTE_EXCEPTION, color: "orange"})
                 )
               )
             );
-        break;   
+        break;
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;      
       default:
         return true; 
     }
@@ -40026,7 +41588,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":280,"../stores/PutBackStore":291,"../stores/mainstore":294,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Reconcile":271,"./SystemIdle":275,"./TabularData":278,"react":230}],266:[function(require,module,exports){
+},{"../constants/appConstants":282,"../stores/PutBackStore":294,"../stores/mainstore":297,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./PrdtDetails/ProductImage.js":259,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":266,"./Reconcile":273,"./SystemIdle":277,"./TabularData":280,"react":230}],268:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -40043,6 +41605,9 @@ var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
+var TabularData = require('./TabularData');
 
 
 function getStateData(){
@@ -40096,12 +41661,12 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
   },
-
+  
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
@@ -40150,7 +41715,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Scan", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
                 )
 
               )
@@ -40161,6 +41726,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
+          console.log(this.state.PutFrontExceptionScreen);
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -40169,15 +41735,15 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontGoodQuantity, action: "GOOD"})
+                      React.createElement(KQ, {scanDetailsGood: this.state.PutFrontGoodQuantity, id: 'good_keyboard', action: "GOOD"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -40189,19 +41755,19 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontMissingQuantity, action: "MISSING"})
+                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
                     ), 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontDamagedQuantity, action: "DAMAGED"})
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -40219,11 +41785,11 @@ var PutFront = React.createClass({displayName: "PutFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "NEXT", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -40235,21 +41801,52 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Revised Quantity"), 
-                      React.createElement(KQ, {scanDetails: this.state.PutFrontKQQuantity})
+                      React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: "CONFIRM", color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: "Cancel Exception", module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
            }
           
         break;
+
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;  
+
       default:
         return true; 
     }
@@ -40273,7 +41870,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":280,"../stores/PutFrontStore":292,"../stores/mainstore":294,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/KQ":261,"./ProductDetails/Wrapper":264,"./Rack/MsuRack.js":267,"./Spinner/LoaderButler":272,"react":230}],267:[function(require,module,exports){
+},{"../constants/appConstants":282,"../stores/PutFrontStore":295,"../stores/mainstore":297,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":252,"./Notification/Notification":254,"./ProductDetails/KQ":261,"./ProductDetails/KQExceptionDamaged":262,"./ProductDetails/KQExceptionMissing":263,"./ProductDetails/Wrapper":266,"./Rack/MsuRack.js":269,"./Spinner/LoaderButler":274,"./TabularData":280,"react":230}],269:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -40367,7 +41964,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":268,"react":230}],268:[function(require,module,exports){
+},{"./RackRow":270,"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -40415,7 +42012,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":269,"react":230}],269:[function(require,module,exports){
+},{"./RackSlot":271,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -40457,7 +42054,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":270,"react":230}],270:[function(require,module,exports){
+},{"./SingleSlot":272,"react":230}],272:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -40477,7 +42074,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],271:[function(require,module,exports){
+},{"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -40515,7 +42112,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 
 module.exports = ReconcileStatus;
 
-},{"../constants/resourceConstants":282,"./Header":246,"react":230}],272:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"./Header":246,"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var SpinnerButler = require('./SpinnerButler');
 
@@ -40532,7 +42129,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"./SpinnerButler":274,"react":230}],273:[function(require,module,exports){
+},{"./SpinnerButler":276,"react":230}],275:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -40542,7 +42139,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 		return (
 
 			React.createElement("div", {className: "overlay"}, 
-				React.createElement(SpinnerButler, null)
+				React.createElement(LoaderButler, null)
 			)
 			);
 	}
@@ -40550,34 +42147,22 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":272,"./SpinnerButler":274,"react":230}],274:[function(require,module,exports){
+},{"./LoaderButler":274,"./SpinnerButler":276,"react":230}],276:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 	render:function(){
 		return (
-				React.createElement("div", {className: "sk-fading-circle"}, 
-					  React.createElement("div", {className: "sk-circle1 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle2 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle3 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle4 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle5 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle6 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle7 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle8 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle9 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle10 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle11 sk-circle"}), 
-					  React.createElement("div", {className: "sk-circle12 sk-circle"})
+				React.createElement("div", {className: "hexdots-loader"}
+
 				)
-			
 			);
 	}
 });
 
 module.exports = SpinnerButler;
 
-},{"react":230}],275:[function(require,module,exports){
+},{"react":230}],277:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -40597,7 +42182,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":282,"./Header":246,"react":230}],276:[function(require,module,exports){
+},{"../constants/resourceConstants":284,"./Header":246,"react":230}],278:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -40607,7 +42192,9 @@ var TableHeader = React.createClass({displayName: "TableHeader",
     getComponent:function(data){
     	var comp = [];
     	data.map(function(value,index){
-    		var classes = "table-col ";
+            var classes = "table-col ";
+            var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
+            classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";
@@ -40637,17 +42224,75 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"../constants/appConstants":280,"./Button/IconButton":239,"react":230}],277:[function(require,module,exports){
+},{"../constants/appConstants":282,"./Button/IconButton":239,"react":230}],279:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
+var CommonActions = require('../actions/CommonActions');
+var mainstore = require('../stores/mainstore');
 
 var TableRow = React.createClass({displayName: "TableRow", 
 	_component:[],
+    peripheralAction : function(action, inc){
+        if(action == 'Update' || action == 'Add'){
+            CommonActions.convertTextBox(action, inc)     
+        }else if(action == 'Finish'){
+            var data = {
+                "peripheral_id": document.getElementById("peripheralId").value,
+                "peripheral_type" : "pptl",
+                "barcode" : document.getElementById("barcodePptl").value,
+                "pps_bin_id" : inc
+            }
+            CommonActions.updateData(data, 'POST' , inc)
+        }else if(action == 'Delete'){
+            if(appConstants.SCANNER_MANAGEMENT == mainstore.getScreenId()){
+                var data = {
+                    "peripheral_id": inc,
+                    "peripheral_type" : "barcode_scanner",
+                }
+            }else{
+                var data = {
+                    "peripheral_id": inc,
+                    "peripheral_type" : "pptl",
+                }
+            }
+            console.log(data);
+            CommonActions.updateData(data, 'DELETE' , inc)
+        }
+        
+    },
+    openKeyboard_peripheral: function(id){
+        setTimeout(function(){ $('#'+id).keyboard({
+          layout: 'custom',
+          customLayout: {
+              'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+          },
+          css: {
+            container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+          },
+          reposition: true,
+          alwaysOpen: false,
+          initialFocus: true,             
+          visible : function(e, keypressed, el){
+            el.value = '';
+            //$(".authNotify").css("display","none"); 
+          },
+          
+          accepted: function(e, keypressed, el) {
+          }
+        });  }, 0);
+        
+    },
     getComponent:function(){
+        var peripheralAction = this.peripheralAction;
+        var openKeyboard_peripheral = this.openKeyboard_peripheral;
     	var comp = [];
     	this.props.data.map(function(value,index){
     		var classes = "table-col ";
+            var mode = value.mode == 'peripheral' ? classes = classes+ "table-col-peripheral ": "";
+            var action = value.actionButton == true ? classes = classes+ "table-col-peripheral-min-width ": "";
+            classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
     		var selected = value.selected == true ? classes = classes + "selected ":"";
@@ -40658,10 +42303,23 @@ var TableRow = React.createClass({displayName: "TableRow",
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
+            var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
+            //var borderBottom = value.borderBottom == false ? classes = classes + "":"";
+            var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
+            var color = value.color == "blue" ? classes = classes + value.color + " ": "";
+
             if((value.type != undefined && value.type=="button"))
                 comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX, status: value.buttonStatus}))));
-            else
-    		  comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
+            else{
+                if(value.actionButton == true){
+                  comp.push((React.createElement("div", {className: classes, title: value.text, onClick: peripheralAction.bind(null,value.text, value.id)}, value.text)));
+                }
+                else if(value.textbox == true){
+                  comp.push(React.createElement("input", {type: "text", id: value.type, className: classes, defaultValue: value.text, onClick: openKeyboard_peripheral.call(null, value.type)}));
+                }else{
+    		      comp.push((React.createElement("div", {className: classes, title: value.text}, value.text)));
+                }
+            }
     	});
     	this._component = comp;
     },
@@ -40677,7 +42335,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../constants/appConstants":280,"./Button/IconButton":239,"react":230}],278:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../stores/mainstore":297,"./Button/IconButton":239,"react":230}],280:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -40709,10 +42367,30 @@ var TabularData = React.createClass({displayName: "TabularData",
 
 module.exports = TabularData;
 
-},{"./TableHeader":276,"./TableRow":277,"react":230}],279:[function(require,module,exports){
+},{"./TableHeader":278,"./TableRow":279,"react":230}],281:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
+    "utility": [
+        [{
+            "screen_id": "pptl_management",
+            "code": "CLIENTCODE_004",
+            "image": svgConstants.pptl,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "scanner_management",
+            "code": "CLIENTCODE_005",
+            "image": svgConstants.scanner,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }]
+    ],
     "putBack": [
         [{
             "screen_id": "put_back_invalid_tote_item",
@@ -40794,7 +42472,15 @@ var navData = {
             "level": 2,
             "type": 'passive'
         }],
-
+        [{
+            "screen_id": "pick_front_no_free_bin",
+            "code": "Common.000",
+            "image": svgConstants.exception,
+            "message": "Wait For MSU",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }]
     ],
     "pickBack": [ {
         "screen_id": "pick_back_scan",
@@ -40822,21 +42508,32 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [ {
+        [ 
+        {
+        "screen_id": "audit_front_waiting_for_location_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan MSU Barcode ",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+        },
+        {
         "screen_id": "audit_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan Items ",
         "showImage": true,
-        "level": 1,
+        "level": 2,
         "type": 'passive'
-    },{
+    },
+    ,{
         "screen_id": "audit_reconcile",
         "code": "Common.000",
         "image": svgConstants.place,
         "message": "Status",
         "showImage": true,
-        "level": 2,
+        "level": 3,
         "type": 'passive'
     }]
     ]
@@ -40845,7 +42542,7 @@ var navData = {
 
 module.exports = navData;
 
-},{"../constants/svgConstants":283}],280:[function(require,module,exports){
+},{"../constants/svgConstants":285}],282:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
@@ -40853,6 +42550,7 @@ var appConstants = {
 	API : '/api',
 	AUTH : '/auth',
 	TOKEN : '/token',
+	LOGOUT : '/logout',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
@@ -40866,6 +42564,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
@@ -40918,6 +42617,7 @@ var appConstants = {
 	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
+	PICK_FRONT_NO_FREE_BIN : 'pick_front_no_free_bin',
 	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
@@ -40966,13 +42666,27 @@ var appConstants = {
 	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
 	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE",
 	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION',
-	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION'
+	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION',
+	PERIPHERAL_DATA : 'PERIPHERAL_DATA',
+	PERIPHERALS : 'peripherals',
+	UPDATE_SEAT_DATA : 'UPDATE_SEAT_DATA',
+	PPTL_MANAGEMENT : 'pptl_management',
+	SCANNER_MANAGEMENT : 'scanner_management',
+	CONVERT_TEXTBOX : 'convert_textbox',
+	UPDATE_PERIPHERAL : 'UPDATE_PERIPHERAL',
+	ADD: '/add',
+	ADD_SCANNER : 'ADD_SCANNER',
+	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT',
+	ADD_SCANNER_DETAILS : "ADD_SCANNER_DETAILS",
+	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER",
+	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
+	CANCEL_PPTL : 'CANCEL_PPTL'
 
 };
 
 module.exports = appConstants;
 
-},{}],281:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 var configConstants = {
 	WEBSOCKET_IP : "ws://localhost:8888/ws",
 	INTERFACE_IP : "https://localhost:5000"
@@ -40980,7 +42694,7 @@ var configConstants = {
 
 module.exports = configConstants;
 
-},{}],282:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',
@@ -40994,11 +42708,25 @@ var resourceConstants = {
 	USERNAME :'User Name',
 	PASSWORD : 'Password',
 	CLIENTCODE_001 : 'CLIENTCODE_001',
-	CLIENTCODE_002 : 'CLIENTCODE_002'
+	CLIENTCODE_002 : 'CLIENTCODE_002',
+	CLIENTCODE_004 : 'CLIENTCODE_004',
+	CLIENTCODE_005 : 'CLIENTCODE_005',
+	CLIENTCODE_006 : 'CLIENTCODE_006',
+	CLIENTCODE_007 : 'CLIENTCODE_007',
+	CLIENTCODE_008 : 'CLIENTCODE_008',
+	CLIENTCODE_009 : 'CLIENTCODE_009',
+	CLIENTCODE_010 : 'CLIENTCODE_010',
+	CLIENTCODE_011 :'CLIENTCODE_011',
+	CLIENTCODE_012 :'CLIENTCODE_012',
+	CLIENTCODE_013 :'CLIENTCODE_013',
+	CLIENTCODE_014 :"CLIENTCODE_014",
+	CLIENTCODE_015 : "CLIENTCODE_015",
+	CLIENTCODE_016 : 'CLIENTCODE_016'
+ 
 };
 module.exports = resourceConstants;
 
-},{}],283:[function(require,module,exports){
+},{}],285:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -41015,12 +42743,14 @@ var allSvgConstants = {
 	scanHeader :'assets/images/scan_header.png',
 	iconBar :'assets/images/Icon.png',
 	tote:'assets/images/tote.png',
-	exception:'assets/images/exceptionIcon.png'
+	exception:'assets/images/exceptionIcon.png',
+	scanner:'assets/images/scanner.png',
+	pptl:'assets/images/pptl.png'
 }
 
 module.exports = allSvgConstants;
 
-},{}],284:[function(require,module,exports){
+},{}],286:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -41034,7 +42764,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":46}],285:[function(require,module,exports){
+},{"flux":46}],287:[function(require,module,exports){
 (function (global){
 global.jQuery = global.$ = require("jquery");
 var React = require('react');
@@ -41063,7 +42793,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":247,"./components/Operator":255,"jquery":67,"react":230,"react-dom":74}],286:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":247,"./components/Operator":255,"jquery":67,"react":230,"react-dom":74}],288:[function(require,module,exports){
 var chinese = {
     "Password": "\u5bc6\u7801",
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
@@ -41074,79 +42804,95 @@ var chinese = {
 
 module.exports = chinese;
 
-},{}],287:[function(require,module,exports){
+},{}],289:[function(require,module,exports){
+var english = {
+
+};
+
+module.exports = english;
+
+},{}],290:[function(require,module,exports){
 var serverMessages = {
-    "PtB.B.001": "Scan item / Stage pps bin",
+    "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
-    "PtB.H.003": "Are you sure you want to close Tote",
-    "PtB.H.004": "Scan Tote / Stage PpsBin",
-    "PtB.H.005" : "Item Not Found in Tote",
-    "PtB.H.007" : "Enter Damaged Entity Quantity",
+    "PtB.H.003": "Are You Sure You Want to Close Tote?",
+    "PtB.H.004": "Scan Tote or Stage PPS Bin",
+    "PtB.H.005" : "Item Not Expected in Tote",
+    "PtB.H.007" : "Enter Unscannable Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
-    "PtB.H.010" : "Enter Excess Entity Quantity",
-    "PtB.H.011" : "Please put it in IRT bin and confirm",
-    "PtB.E.001" : "Tote already opened.Scan some other tote",
-    "PtB.E.002" : "Tote already closed.Scan some other tote",
+    "PtB.H.010" : "Enter Quantity of Excess Entities",
+    "PtB.H.011" : "Please put entity in exception area and confirm",
+    "PtB.E.001" : "Tote already opened. Scan some other tote",
+    "PtB.E.002" : "Tote already closed. Scan some other tote",
     "PtB.E.003" : "No matching tote found",
     "PtB.E.004" : "Wrong entity scanned. Please scan tote",
-    "PtB.E.005" : "No entities added yet. Scan entities and then PPS bin",
+    "PtB.E.005" : "No entities added yet. Scan entities and then press PPTL",
     "PtB.E.006" : "Wrong entity scanned. Please scan Container/Item.",
-    "PtB.E.007" : "Cannot cancel scan. No scanned box found",
-    "PtB.E.008" : "Entity scan not expected.Waiting for button press",
-    "PtB.E.009" : "PpsBin selected for put. Cannot be staged",
-    "PtB.E.010" : "SKU not present in database. WMS Notified.",
-    "PtB.E.011" : "Warehouse Full! Remove all entities from bin number and press PPTL.",
-    "PtB.E.012" : "No free Pps bins. Please scan later",
-    "PtB.E.013" : "Wrong button pressed. Please try another",
-    "PtB.E.014" : "{0} excess quantity of item found in tote",   
-    "PtB.E.015" : "Please put it in IRT bin and confirm",
+    "PtB.E.007" : "Cannot cancel scan. No scanned entity found",
+    "PtB.E.008" : "Entity scan not expected. Waiting for PPTL press",
+    "PtB.E.009" : "Bin selected for put. Cannot be staged",
+    "PtB.E.010" : "SKU not present in database. Put into IRT bin.",
+    "PtB.E.011" : "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL",
+    "PtB.E.012" : "No free bins. Please scan later",
+    "PtB.E.013" : "Wrong PPTL pressed. Please try another",
+    "PtB.E.014" : "{0} excess entities found in tote. Please put entities in exception area and confirm", 
+    "PtB.E.015" : "Entity not expected in tote. Please put entities in exception area and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
-    "PtB.E.017" : "Please scan same type of entity to finish this exception.",
+    "PtB.E.017" : "Please scan same SKU to complete this exception",
     "PtB.E.018" : "Entity scan not expected.",  
+    "PtB.E.019" : "Tote not present in database.",  
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
-    "PtF.H.004" : "Scan Entity From Bin",
-    "PtF.H.005" : "Enter Good Quantity to be put in slot",
-    "PtF.H.006" : "Put Back Entity in PPS Bin",
+    "PtF.H.004" : "Scan Entity From Bin {0}",
+    "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
+    "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
-    "PkF.H.004" : "Scan Items",
+    "PkF.H.004" : "Scan {0} Items",
     "PkF.H.005" : "Scan Box",
-    "PkF.H.006" : "Scan Items and Place in Bin",
-    "PkF.H.007" : "Press PPTL for Bin to confirm",
-    "PkB.H.001" : "Scan tote to associate with bin",
-    "PkB.H.002" : "Press bin PPTL or scan a tote",
-    "PkB.H.003" : "Press PpsBin to remove items",
-    "PtB.I.001" : "Tote scan successful",
-    "PtB.I.002" : "PPS is in paused mode. Cannot process new box. Take the entity back.",
+    "PkF.H.006" : "Scan {0} Items and Place in Bin {1}",
+    "PkF.H.007" : "Press PPTL to confirm",
+    "PkF.H.008" : "Waiting for Bins to be Cleared at Pick Back",
+    "PkB.H.001" : "Scan Tote to Associate with Bin",
+    "PkB.H.002" : "Press PPTL or Scan a Tote",
+    "PkB.H.003" : "Press PPTL to Remove Entities",
+    "PkB.H.004" : "Press bin PPTL",
+    "PkB.H.005" : "Press print button to proceed",
+    "PkB.H.006" : "Select Bin to skip print",
+    "PkB.H.007" : "Select Bin which does not require tote",
+    "PkB.H.008" : "Select Bin to disassociate tote",
+    "PtB.I.001" : "Tote has been opened.Scan all items in tote and then scan tote again to close it",
+    "PtB.I.002" : "PPS is in paused mode. Cannot process new entity. Try after some time",
     "PtB.I.003" : "Cancel scan successful.",
     "PtB.I.004" : "Tote close successful.",
     "PtB.I.005" : "Tote not closed.",
     "PtB.I.006" : "Entity scan successful.",
-    "PtB.I.007" : "Pptl button press successful",
-    "PtB.I.008" : "Excess item in tote recorded.Now press Pptl",
+    "PtB.I.007" : "PPTL press successful",
+    "PtB.I.008" : "Excess item in tote recorded. Now press PPTL",
     "PtB.I.009" : "Invalid item in tote recorded.",
-    "PtB.I.010" : "damaged entity recorder.WMS Notified.",
-    "PtB.I.011" : "extra entity recorder in bin.WMS Notified.",
-    "PtB.I.012" : "Oversized entity recorded.WMS notified.",
-    "PtB.I.013" : "Exception cancelled successfully",
+    "PtB.I.010" : "{0} unscannable entities recorded. WMS notified",
+    "PtB.I.011" : "{0} extra entities recorded in bin. WMS notified",
+    "PtB.I.012" : "{0} oversized entities recorded.WMS notified",
+    "PtB.I.013" : "Exception cancelled",
     "PtB.I.014" : "Cancelled excess entity in tote",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
-    "PtB.W.001" : "Container already stored in the warehouse",
-    "PtB.W.002" : "Entity already scanned.Waiting for Pptl button press",
-    "PtB.W.003" : "No PpsBins available to stage",
-    "PtB.W.004" : "PpsBin already staged. Ignoring event",
-    "PtB.W.005" : "PpsBin empty. Cannot be staged",
+    "PtB.I.017" : "PPS mode change requested:scan not allowed",
+    "PtB.I.018" : "PPS mode change requested:auto staging all bins",
+    "PtB.W.001" : "Box with same serial number already exists in the warehouse",
+    "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
+    "PtB.W.003" : "No bins available to stage",
+    "PtB.W.004" : "Bin already staged. Ignoring event",
+    "PtB.W.005" : "Bin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
-    "PkF.E.011" : "Press PPTL for Bin {0} to confirm",
-    "PkF.E.013" : "Scan items and place in Bin {0}",
-    "PkF.E.014" : "Press PPTL for Bin {0} to confirm",
+    "PkF.E.011" : "Data capture failed at item {0}",
+    "PkF.E.013" : "Scan items and place in bin {0}",
+    "PkF.E.014" : "Press PPTL for bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
@@ -41167,8 +42913,8 @@ var serverMessages = {
     "PkB.B.014": "Tote cancelled",
     "PkB.B.015" : "Tote already associated with ppsbin",
     "PkB.B.016" : "Please press ppsbin button which does not have any totes associated",
-    "PkB.B.017" :"Tote assigned successfuly to ppsbin {0}",
-    "PkB.B.019":"Bin {0} items removed successfuly",
+    "PkB.B.017" :"Tote assigned successfully to ppsbin {0}",
+    "PkB.B.019":"Bin {0} items removed successfully",
     "PkB.B.020" : "Totes are not required",
     "PkB.B.021" : "Wrong Barcode scanned",
     "PkB.B.022" : "Tote could not be reserved as already reserved",
@@ -41182,82 +42928,111 @@ var serverMessages = {
     "Common.001": "Processing. Please wait and scan later",
     "Common.002": "Waiting for rack",
     "Common.003": "Current PPS mode does not support back seat. Please logout.",
+    "AdF.I.003" : "Item scan successful",
+    "AdF.I.006" : "Extra Box",
+    "AdF.I.008" : "Cancel audit successful.Audit Restarted",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
     "AdF.A.006" :"Status To Reconcile",
     "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
-    "AdF.A.009" :"Waiting for MSU to arrive",
+    "AdF.H.001" : "Scan Box or Items",
+    "AdF.H.006" :"Check Count",
+    "AdF.H.007" :"Waiting for MSU",
+    "AdF.H.008" : "Scan Slot",
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successful",
     "AdF.B.003" :"Item Scan successful",
     "CLIENTCODE_001" : "Bin {0} selected",
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
-    "PkF.I.001" : "Pick Complete. Waiting for next rack.",
-    "PkF.I.007" : "Data capture valid so far",
-    "PkF.W.003" : "Cannot cancel scan. No Scanned box found",
-    "PkF.I.002" : "Location Scan successful",
-    "PkF.I.003" : "Box Scan successful",
-    "PkF.I.004" : "Item Scan successful",
-    "PkF.I.005" : "Cancel Scan successful",
-    "PkF.I.006" : "PPTL button press successful",
+    "Audit.A.012":"No Items to Reconcile",
+    "CLIENTCODE_004" : "PPTL Management",
+    "CLIENTCODE_005" : "Scanner Management",
+    "CLIENTCODE_006" : "Peripheral added successfully",
+    "CLIENTCODE_007" : "Peripheral not added",
+    "CLIENTCODE_008" : "You cannot enter value more than 9999",
+    "CLIENTCODE_009" : "You cannot enter 0",
+    "CLIENTCODE_010" : "Sum of missing, good and damaged should be equal to {0}",
+    "CLIENTCODE_011" : "Sum of missing, good and damaged should be equal to {0}",
+    "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
+    "CLIENTCODE_013" : "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.",
+    "CLIENTCODE_014" : "Place extra entity in Exception area.",
+    "CLIENTCODE_015" : "Peripheral deleted successfully",
+    "CLIENTCODE_016" : "Peripheral not deleted successfully",
+    "PkF.I.001" : "Pick complete. Waiting for next rack.",
+    "PkF.I.007" : "Data capture valid",
+    "PkF.E.012" : "Data capture failed at item {0}",       
+    "PkF.I.002" : "Location scan successful",
+    "PkF.I.003" : "Box scan successful",
+    "PkF.I.004" : "Item scan successful",
+    "PkF.I.005" : "Cancel scan successful",
+    "PkF.I.006" : "PPTL press successful",
     "PkF.I.007" : "Data capture valid so far",
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
-    "PkF.W.003" : "Cannot cancel scan. No Scanned box found",
-    "PkF.E.001" : "Wrong location scan.Scan correct location",
+    "PkF.W.003" : "Data capture failed at item",
+    "PkF.E.001" : "Wrong slot location scanned. Please try again",
     "PkF.E.002" : "Wrong box scanned. Please try again",
     "PkF.E.003" : "Scan a box first",
-    "PkF.E.004" : "Wrong ppsbin button pressed. Please press correct button",
-    "PkF.E.005" : "Picked quantity more than expected. Not Allowed",
+    "PkF.E.004" : "Wrong PPTL pressed. Please press correct PPTL",
+    "PkF.E.005" : "Picked quantity more than expected. Put extra items back in MSU",
     "PkF.E.006" : "Wrong item quantity update",
     "PkF.E.007" : "Wrong item scanned. Please scan correct item",
-    "PkF.E.008" : "Waiting for rack. Please wait and scan later",
-    "PkF.E.009" : "Scanned item details not found",
-    "PkF.E.010" : "No PPS bins empty. Please empty them",
-    "PkB.E.001" : "Barcode didn't match current tote barcode",
-    "PkB.E.002" : "Totes are not required",
-    "PkB.E.003" : "Exception invalid",
-    "PkB.E.004" : "No totes associated. Please keep totes in bin and then scan",
-    "PkB.E.005" : "Wrong ppsbin button pressed",
-    "PkB.E.006" : "Tote didn't get associated",   
+    "PkF.E.008" : "Waiting for MSU. Please wait and scan later",
+    "PkF.E.009" : "System Error. Scanned entity details not available at this time",
+    "PkF.E.010" : "No PPS bins empty. Please empty them from Pickback",
+    "PkB.E.001" : "Incorrect tote barcode scanned. Please try again",
+    "PkB.E.002" : "System not configured for totes",
+    "PkB.E.003" : "Invalid Exception for this configuration",
+    "PkB.E.004" : "No tote associated. Please keep a tote in bin and scan",
+    "PkB.E.005" : "Wrong PPTL pressed",
+    "PkB.E.006" : "Tote association failed. Repeat scan operation",
+    "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
-    "PkB.I.003" : "Documents printed successfuly",
-    "PkB.I.004" : "Bin entities removed successfully",
-    "PkB.I.005" : "Tote assigned successfully to ppsbin",
-    "PkB.I.006" : "Please scan pptl",
-    "PkB.I.007" : "All totes deassociated from PpsBin ",
-    "PkB.W.001" : "Please complete process for pending ppsbin and then proceed",
-    "PkB.W.002" : "Tote already reserved",
+    "PkB.I.003" : "Documents printed successfully",
+    "PkB.I.004" : "Order removed successfully from bin {0}",
+    "PkB.I.005" : "Tote assigned successfully to bin",
+    "PkB.I.006" : "Please scan PPTL barcode",
+    "PkB.I.007" : "Tote disassociated from Bin",
+    "PkB.W.001" : "Please complete pickback for pending bin and then proceed",
+    "PkB.W.002" : "Tote associated with another bin",
     "PkB.W.003" : "Wrong barcode scanned",
-    "PkB.W.004" : "Please scan the tote first and then scan pptl barcode",
+    "PkB.W.004" : "Please scan the tote first and then scan PPTL barcode",
     "PkB.W.005" : "No tote scanned",
-    "PkB.W.006" : "Please press ppsbin button which does not have any totes associated",
-    "PkB.W.007" : "Pptl scan not allowed. Totes are not required",
-    "PkB.W.008" : "Pptl scan not allowed",
-    "PkB.W.009" : "Scan pptl barcode after scannning tote barcode",    
-    "PtF.E.001" : "Entity scanned is not from bin. Replace and scan from bin",
+    "PkB.W.006" : "'Override Tote Exception' cannot be raised for bins with totes associated",
+    "PkB.W.007" : "PPTL scan not allowed. System not configured for tote",
+    "PkB.W.008" : "PPTL scan not allowed",
+    "PkB.W.009" : "Tote scan expected",
+    "PtF.E.001" : "Entity scanned is not from bin {0}. Replace and scan from bin {1}",
     "PtF.E.002" : "Wrong entity scanned",
-    "PtF.E.003" : "Waiting for MSU. Please scan entities later.",
+    "PtF.E.003" : "Waiting for MSU scan. Please scan entity later.",
     "PtF.E.004" : "Expected quantity exceeded.",
     "PtF.E.005" : "Wrong scan! Entity scan expected but slot barcode scanned.",
-    "PtF.E.006" : "Actual put quantity not equal to sum of Good and Expection quantity.",
+    "PtF.E.006" : "Total Quantity Expected {0}. Quantity entered {1}",
     "PtF.E.007" : "Actual put quantity less than than revised quantity.", 
+    "PtF.E.008" : "Wrong slot scanned", 
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
-    "PtF.I.004" : "Damaged and missing entity reported.",
-    "PtF.I.005" : "Space unavailable reported.",
-    "PtF.I.006" : "Unknown Barcode Scanned"
+    "PtF.I.004" : "Damaged and missing entity recorded.",
+    "PtF.I.005" : "Space unavailable recorded.",
+    "PtF.I.006" : "Cancel scan successful",
+    "PtB002" : "Entity Oversized",
+    "PtB003" : "Entity Unscannable",
+    "PtB004" : "Extra Entities in Bin",
+    "PtF001" : "Entity Missing / Unscannable",
+    "PtF002" : "Space Not Available"
+
+
 };
 
 
 module.exports = serverMessages;
 
-},{}],288:[function(require,module,exports){
+},{}],291:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -41346,7 +43121,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
     getModalStatus:function(){
         var data = {};
         data["showModal"] = "";
-        data["message"] = "";
+        //data["message"] = "";
         if(_AuditData.Current_box_details.length >0 && _AuditData.Current_box_details[0].Box_serial == null && (_AuditData.Current_box_details[0].Actual_qty > _AuditData.Current_box_details[0].Expected_qty)){
             return {
                 "showModal":true,
@@ -41590,7 +43365,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],289:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],292:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -41696,7 +43471,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],290:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],293:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -41877,7 +43652,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],291:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],294:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var SVGConstants = require('../constants/svgConstants');
@@ -42146,7 +43921,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../constants/svgConstants":283,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],292:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../constants/svgConstants":285,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],295:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -42264,7 +44039,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../dispatchers/AppDispatcher":284,"../utils/utils":295,"events":14,"object-assign":68}],293:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../dispatchers/AppDispatcher":286,"../utils/utils":298,"events":14,"object-assign":68}],296:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -42384,7 +44159,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../constants/configConstants":281,"../dispatchers/AppDispatcher":284,"../utils/utils.js":295,"events":14,"react/lib/Object.assign":121}],294:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../constants/configConstants":283,"../dispatchers/AppDispatcher":286,"../utils/utils.js":298,"events":14,"react/lib/Object.assign":121}],297:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -42393,11 +44168,12 @@ var EventEmitter = require('events').EventEmitter;
 var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
+var english = require('../serverMessages/english');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _KQQty = 0,
+var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
     _activeException = "",
     _enableException = false,
@@ -42408,7 +44184,12 @@ var _seatData, _currentSeat, _seatName, _pptlEvent, _cancelEvent, _messageJson, 
     _putFrontExceptionScreen = "good",
     _pickFrontExceptionScreen = "good",
     _missingQuantity = 0,
+    showModal = false,
+    _scanAllowed = true,
+    _clearNotification = false,
+    _enableButton = true,
     _finishAuditFlag = true;
+
 var modalContent = {
     data: "",
     type: ""
@@ -42445,6 +44226,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
+    getScanAllowedStatus : function(){
+        if(_seatData.hasOwnProperty("scan_allowed")){
+            _scanAllowed = _seatData.scan_allowed;
+            return _scanAllowed;
+        }else{
+            _scanAllowed = true;
+            return _scanAllowed;
+        }
+    },
 
     toggleBinSelection: function(bin_id) {
         var flag = false;
@@ -42453,22 +44243,42 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (value["selected_for_staging"] != undefined) {
                     flag = !value["selected_for_staging"];
                     value["selected_for_staging"] = !value["selected_for_staging"];
+                     _enableButton = !_enableButton;
                 } else {
                     value["selected_for_staging"] = true;
                     flag = true;
+                    _enableButton = false;
                 }
             } else if (value["selected_for_staging"] != undefined) {
                 value["selected_for_staging"] = false;
+
             }
         });
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
+            if(flag == true){
+                _enableButton = false;
+            }
+            else{
+                _enableButton = true;
+            }
             _seatData.notification_list[0].details[0] = bin_id;
             _seatData.notification_list[0].level = "info";
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
+        }else{
+              var notification_list = {
+                "code" :  (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002,
+                "level" : "info",
+                "details" :[bin_id],
+                "description" : ""
+            }
+            _seatData.notification_list[0] = notification_list;
         }
     },
+    enableButton : function(){
 
+        return _enableButton;
+    },
     getStageActiveStatus: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -42495,32 +44305,78 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
+    setShowModal:function(data){
+        showModal = false;
+    },
     getNavData: function() {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
                 if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
                     _NavData = navConfig.putBack[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.putBack[1];
                 break;
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.putFront[0];
+               else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.putFront[1];
                 break;
             case appConstants.PICK_BACK:
-                _NavData = navConfig.pickBack;
+                if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
+                else 
+                    _NavData = navConfig.pickBack;
                 break;
             case appConstants.PICK_FRONT:
                 if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                     _NavData = navConfig.pickFront[0];
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
+                    _NavData = navConfig.pickFront[2];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
                 else
                     _NavData = navConfig.audit[1];
                 break;
@@ -42544,7 +44400,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData[index].type = 'passive';
             }
         });
-
         return _NavData;
     },
 
@@ -42552,13 +44407,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+            showModal = false;
             return {
                 "showModal": true,
-                "message": "Place extra " + (_seatData.Current_box_details[0]["Actual_qty"] - _seatData.Current_box_details[0]["Expected_qty"]) + " items in Exception area ."
+                "message": _("Place extra entity in Exception area .")
             }
-        } else
+        } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
+            console.log("jindal");
+            console.log(showModal);
+            showModal = false;
+            console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
+            return {
+                "showModal": true,
+                "message": _("Place extra entity in Exception area .")
+            }
+        } 
+        else{
             return data;
+        }
     },
 
     getBoxSerialData: function() {
@@ -42566,11 +44433,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Finish"), "header", false, "small", false, false, true, false, true));
         _finishAuditFlag = true;
         var d = [];
         _seatData.Box_qty_list.map(function(value, index) {
@@ -42621,7 +44488,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getChecklistDetails: function() {
         if (_seatData.hasOwnProperty('checklist_details')) {
-            console.log(_seatData.checklist_details.pick_checklist.length + "jindal");
             if (_seatData.checklist_details.pick_checklist.length > 0) {
                 return _seatData.checklist_details.pick_checklist;
             } else {
@@ -42664,9 +44530,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getNotificationData: function() {
+        if(_clearNotification == true && _seatData.hasOwnProperty('notification_list')){
+            var notification_list = [{
+                "details" : [],
+                "code" : null,
+                "description" : '',
+                "level" : "info"
+            }]
+            _seatData.notification_list = notification_list;
+            _clearNotification = false;
+        }
         return _seatData.notification_list[0];
     },
-
+    clearNotifications : function(){
+        _clearNotification = true;
+    },
     getBinData: function() {
         var binData = {};
         binData["structure"] = _seatData.structure;
@@ -42699,7 +44577,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }else
+        } else
             return null;
     },
 
@@ -42713,7 +44591,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             });
 
             return data;
-        }else
+        } else
             return null;
     },
 
@@ -42735,12 +44613,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": true,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
             else
                 data["list"].push({
                     "text": value.exception_name,
                     "selected": false,
+                    "exception_id" : value.exception_id,
+                    "details" : [],
                     "event": value["event"] != undefined ? value["event"] : ""
                 });
         })
@@ -42780,8 +44662,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return binData;
     },
-
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, id, management) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -42794,16 +44675,75 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.type = type;
         this.buttonType = buttonType;
         this.buttonStatus = buttonStatus;
+        this.borderBottom = borderBottom;
+        this.mode = mode,
+        this.text_decoration = text_decoration,
+        this.color = color,
+        this.actionButton = actionButton,
+        this.textbox = textbox,
+        this.id = id,
+        this.management = management
     },
+    getPptlData: function() {
+        if (_seatData.hasOwnProperty('utility')) {
+            var data = {};
+            data["header"] = [];
+            if(appConstants.PPTL_MANAGEMENT == _seatData.screen_id){
+                data["header"].push(new this.tableCol(_("Bin ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral" )); 
+                data["tableRows"] = [];
+                var self = this;
+                _seatData.utility.map(function(value, index) {
+                    var barcode = '';
+                    var peripheralId = '';
+                    if(value.hasOwnProperty('barcode')){
+                        barcode = value.barcode;
+                    }
+                    if(value.hasOwnProperty('peripheral_id')){
+                        peripheralId = value.peripheral_id;
+                    }
+                    var buttonText = 'Update';
+                    var deletButton = 'Delete';
+                    if(barcode == '' && peripheralId  == ''){
+                        buttonText = 'Add';
+                        deletButton = '';
+                    }
+                    var textBox = false;
+                    if((_action == 'Update' || _action == 'Add') && _binId == value.pps_bin_id){
+                        textBox = true;
+                        buttonText = 'Finish';
+                    }
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, value.pps_bin_id),
+                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id)]); 
 
+                });
+            }else{
+                data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["tableRows"] = [];
+                var self = this;
+                _seatData.utility.map(function(value, index) {
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, "scanner-id"),
+                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id, "scanner-action")]); 
+
+                }); 
+            }
+            return data;
+        }
+    },
     getReconcileData: function() {
         if (_seatData.hasOwnProperty('reconciliation')) {
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
-            data["tableRows"].push([new this.tableCol("Product SKU", "enabled", false, "small", false, true, true, false), new this.tableCol("Expected Quantity", "enabled", false, "small", true, false, true, false, true), new this.tableCol("Actual Quantity", "enabled", false, "small", true, false, true, false, true)]);
+            data["tableRows"].push([new this.tableCol(_("Product SKU"), "enabled", false, "small", false, true, true, false), new this.tableCol(_("Expected Quantity"), "enabled", false, "small", true, false, true, false, true), new this.tableCol(_("Actual Quantity"), "enabled", false, "small", true, false, true, false, true)]);
             _seatData.reconciliation.map(function(value, index) {
                 data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
 
@@ -42825,45 +44765,74 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
-        data["header"].push(new this.tableCol("Box Serial Numbers", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var noScanMissing = 0;
+        var missingDamagedBoxSerials = '';
+        var extraBoxSerials = '';
+        var countMissingDamagedBoxSerials = 0;
         _seatData.Box_qty_list.map(function(value, index) {
-            if (value.Scan_status != "no_scan"){
-                var totalMissing = '';
-                    if(_seatData.item_in_box_barcode_damage.length > 0){
-                    _seatData.item_in_box_barcode_damage.map(function(data, index){
-                        if(data.Box_serial == value.Box_serial){
-                            totalMissing = ' ('+data.Damage_qty+' Item Damaged)';
-                        }
-                    });
-                }
-                var missingBoxSerials = Math.max(parseInt(value.Expected_qty) - parseInt(value.Actual_qty),0);
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(missingBoxSerials + totalMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
-                ]);
+            if (value.Scan_status == "no_scan") {
+                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
+                countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
             }
-            else{
-                noScanMissing  = noScanMissing + 1;
-                data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                    new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
-                ]);
-            }
-
         });
-        var barcodeDamaged = " ("+_seatData.box_barcode_damage+' Barcode Damaged )';
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(noScanMissing + barcodeDamaged, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
-        ]);
+        missingDamagedBoxSerials = missingDamagedBoxSerials.replace(/,([^,]*)$/,'$1');
         _seatData.Extra_box_list.map(function(value, index) {
-            data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
-            ]);
+            extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
         });
+        if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0 || _seatData["box_barcode_damage"] > 0) {
+            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
+        }
+        if (missingDamagedBoxSerials != 0)
+            data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(countMissingDamagedBoxSerials - _seatData["box_barcode_damage"], 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+            ]);
+        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
+            data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+            ]);
+        }
+        if (_seatData.Extra_box_list.length != 0)
+            data["tableRows"].push([new self.tableCol(extraBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+            ]);
+        return data;
+    },
 
+    getItemInBoxReconcileData: function() {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        _seatData.Box_qty_list.map(function(value, index) {
+            if (value.Scan_status == "close") {
+                var barcodeDamagedQty = 0;
+                _seatData.item_in_box_barcode_damage.map(function(val, ind) {
+                    if (value.Box_serial == val.Box_serial)
+                        barcodeDamagedQty = val.Damage_qty;
+                });
+                if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || barcodeDamagedQty != 0)
+                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty - barcodeDamagedQty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
+                    ]);
+            }
+        });
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol(_("Item in Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Barcode Damage"), "header", false, "small", false, false, true, false, true));
+        }
         return data;
     },
 
@@ -42874,10 +44843,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         disabledStatus = false;
         //}
         data["header"] = [];
-        data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Loose Items"), "header", false, "small", false, true, true, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
         data["tableRows"] = [];
         var self = this;
         var d = [];
@@ -42888,13 +44857,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
+        });
 
-            /* data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus), (function() {
-                     if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                         new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true);
-                 })(),
-                 new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
-             ]);*/
+        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+            d = [];
+            d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
+            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+            data["tableRows"].push(d);
         });
         return data;
     },
@@ -42907,29 +44878,57 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["header"] = [];
         data["tableRows"] = [];
-        data["header"].push(new this.tableCol("Loose Items SKU", "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol("Missing", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Extra", "header", false, "small", false, false, true, false, true));
         var self = this;
         var totalLooseItemsMissing = 0;
         var extraLooseItemsMissing = 0;
-        _seatData.Loose_sku_list.map(function(value, index) {
-            if(value.Expected_qty >= value.Actual_qty){
-                totalLooseItemsMissing = totalLooseItemsMissing +  parseInt(value.Expected_qty - value.Actual_qty);
-            }
-            if(value.Expected_qty <= value.Actual_qty){
-              extraLooseItemsMissing = extraLooseItemsMissing + Math.abs(parseInt(value.Expected_qty - value.Actual_qty)); 
-            }
-            if (value.Scan_status != "no_scan")
-                data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false), new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true), new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)]);
-            else
-                data["tableRows"].push([new self.tableCol(value.Sku, "missing", false, "large", false, true, false, false), new self.tableCol("Missing", "missing", false, "large", false, false, false, false, true)]);
+        var c = 0 ;
+         _seatData.Loose_sku_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+                c=c+1;
+        })
+        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+                c=c+1;
+        })
+        /*_seatData.Loose_sku_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+
+        });*/
+         /*if (data["tableRows"].length > 0)
+         data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
+                new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
+            ]);*/
+        /*_seatData.extra_loose_sku_item_list.map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+
+        });*/
+
+        _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function(value, index) {
+            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
 
         });
-        data["tableRows"].push([new self.tableCol("Total", "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(totalLooseItemsMissing, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(extraLooseItemsMissing, "enabled", false, "large", true, false, false, false, true)
-        ]);
+        
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
+        }
         return data;
     },
 
@@ -42947,26 +44946,57 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getItemDetailsData: function() {
         var data = {};
         data["header"] = [];
-        data["header"].push(new this.tableCol("Product Details", "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Product Details"), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
+        data["image_url"] = null;
         var self = this;
         if (_seatData.product_info != undefined && Object.keys(_seatData.product_info).length > 0) {
-            for (var key in _seatData.product_info) {
-                if (_seatData.product_info.hasOwnProperty(key)) {
-                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(_seatData.product_info[key], "enabled", false, "small", false, true, false, false)]);
+
+            var product_info_locale = {};
+            var language_locale = sessionStorage.getItem('localeData');
+            var locale;
+            if(language_locale == 'null' || language_locale == null){
+              locale = 'en-US';
+            }else{
+              locale = JSON.parse(language_locale)["data"]["locale"]; 
+            } 
+            _seatData.product_info.map(function(value, index){
+              var keyValue;
+             
+                for (var key in value[0]) { 
+                    if(key != 'display_data' && key != 'product_local_image_url' ){
+                      keyValue = value[0][key] + ' ';
+                    }else if(key != 'display_data' && key == 'product_local_image_url' ){
+                        data["image_url"] = value[0][key];
+                    }
+
+                }
+                value[0].display_data.map(
+                    function(data_locale, index1){
+                     if(data_locale.locale == locale){
+                        if(data_locale.display_name != 'product_local_image_url' ){
+                          product_info_locale[data_locale.display_name] = keyValue;
+                        }
+                      }                    
+                    }
+                )              
+            });
+            for (var key in product_info_locale) {
+                if (product_info_locale.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
                 }
             }
         } else {
-            data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product Name"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
-            data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product Desc"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
-            data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product SKU"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
-            data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("Product Type"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
             ]);
         }
@@ -42980,7 +45010,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": this.getkQQuanity(),
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": this.kQstatus()
                 }
             };
@@ -42989,10 +45019,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
-    kQstatus: function(){
-        if(_seatData.hasOwnProperty('enable_kq')){
+    kQstatus: function() {
+        if (_seatData.hasOwnProperty('enable_kq')) {
             return _seatData.enable_kq;
-        }else{
+        } else {
             return true;
         }
     },
@@ -43001,7 +45031,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _goodQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -43016,7 +45046,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _missingQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -43031,7 +45061,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var data = {
                 "scan_details": {
                     "current_qty": _damagedQuantity,
-                    "total_qty": "0",
+                    "total_qty": 0,
                     "kq_allowed": true
                 }
             };
@@ -43042,6 +45072,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setCurrentSeat: function(data) {
+        //showModal = false;
+        _action = undefined;
+        _binId= undefined;
         _enableException = false;
         _KQQty = 0;
         _putFrontExceptionScreen = "good";
@@ -43053,10 +45086,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _enableException = false;
         _seatData = data;
         _seatName = data.seat_name;
+        _seatMode = data.mode;
+        _seatType = data.seat_type;
         _currentSeat = data.mode + "_" + data.seat_type;
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        this.setServerMessages();
+        if (_seatData.hasOwnProperty('utility')) {
+            _utility = _seatData.utility;
+        }
         if (_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
             _putFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
@@ -43065,14 +45104,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+        if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
+            showModal = true;
+        else
+            showModal=false;
+
+         /* $('.modal').hide();
+          $('.modal-backdrop').remove();*/
+
     },
     getModalContent: function() {
         return modalContent.data;
     },
     getSystemIdleState: function() {
-        if (_seatData != undefined) {
+        if (_seatData != undefined && _peripheralScreen == false) {
             return _seatData.is_idle;
-        } else {
+        } else if(_seatData != undefined && _peripheralScreen == true){
+            return false;
+        }else {
             return null;
         }
     },
@@ -43119,12 +45168,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _messageJson;
     },
     changeLanguage: function(data) {
+
+        var locale_data ={
+            "data" :{
+                "locale" : data
+            }
+        };
         switch (data) {
-            case "chinese":
+            case "ch":
                 _.setTranslation(chinese);
+                break;
+            case "en-US":
+                _.setTranslation(english);
+                break;
+            default:
+                return true;
         }
+
+        sessionStorage.setItem('localeData', JSON.stringify(locale_data));
     },
     postDataToInterface: function(data) {
+        showModal = false;
         utils.postDataToInterface(data, _seatName);
     },
     logError: function(data) {
@@ -43133,9 +45197,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenId: function() {
         return _screenId;
     },
+    getPpsMode: function(){
+        return _seatMode;
+    },
+    getSeatType: function(){
+        return _seatType;
+    },
     enableException: function(data) {
         _KQQty = 0;
         _activeException = "";
+        if(data == true){
+            _seatData["scan_allowed"] = false;    
+        }else{
+            _seatData["scan_allowed"] = true;
+        }
+        
         _enableException = data;
     },
     getExceptionStatus: function() {
@@ -43161,12 +45237,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _damagedQuantity = data;
     },
     getkQQuanity: function() {
-        if(_seatData.hasOwnProperty('Current_box_details')){
-            if(_seatData.Current_box_details.length > 0){
+        if (_seatData.hasOwnProperty('Current_box_details')) {
+            if (_seatData.Current_box_details.length > 0) {
                 _KQQty = _seatData.Current_box_details[0].Actual_qty;
             }
             return _KQQty;
-        }else{
+        } else {
             return _KQQty;
         }
     },
@@ -43188,16 +45264,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
-                    data["code"] = "1234";
+                    data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
-                    data["description"] = "Pick Quantity should be equal to damaged ,missing and good";
-                    data["details"] = [];
-                    _seatData.notification_list.push(data);
-                    _pickFrontExceptionScreen = "good";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
+                   
                 } else {
-                    _seatData.notification_list[0].description = "Pick Quantity should be equal to damaged ,missing and good";
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
                 }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+                  
             } else {
                 _pickFrontExceptionScreen = data;
             }
@@ -43224,23 +45306,31 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     validateAndSendDataToServer: function() {
         var flag = false;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+        var details;
+        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
-        else
+            details = _seatData.pick_quantity;
+        }
+        else{
             flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_010;
                 data["level"] = "error";
-                data["description"] = "Quantity should be equal to damaged ,missing and good";
-                data["details"] = [];
-                _seatData.notification_list.push(data);
-                _putFrontExceptionScreen = "good";
+                data["details"] = [details];
+                _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].description = "Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+                _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
             }
+            _putFrontExceptionScreen = "good";
+            _goodQuantity = 0;
+            _damagedQuantity = 0;
+            _missingQuantity = 0;
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
@@ -43257,6 +45347,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
+
     },
 
 
@@ -43265,15 +45356,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if ((_KQQty) > _seatData.put_quantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
-                data["code"] = "1234";
+                data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
-                data["description"] = "Revised Quantity should be less than or equal to put quantity";
-                data["details"] = [];
-                _seatData.notification_list.push(data);
+                data["details"] = [_seatData.put_quantity];
+                _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].description = "Put Quantity should be equal to damaged ,missing and good";
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_seatData.put_quantity];
                 _seatData.notification_list[0].level = "error";
             }
+            _goodQuantity = 0;
+         
         } else {
             var data = {};
             data["event_name"] = "put_front_exception";
@@ -43291,6 +45384,67 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         } else {
             return null;
         }
+    },
+    getPeripheralData: function(data) {
+        utils.getPeripheralData(data, _seatData.seat_name);
+    },
+    updateSeatData: function(data, type, status, method) {
+        _peripheralScreen = true;
+        var dataNotification = {};
+
+        if (type === 'pptl') {
+            _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
+        } else if (type === 'barcode_scanner') {
+            _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        } 
+        if(status == "success"){
+            if(method == "POST")
+                dataNotification["code"]= resourceConstants.CLIENTCODE_006;
+            else
+                dataNotification["code"]= resourceConstants.CLIENTCODE_015;
+            dataNotification["level"] = "info";
+            this.generateNotification(dataNotification);
+        }
+        else if(status == "fail"){
+            if(method == "POST")
+                dataNotification["code"]= resourceConstants.CLIENTCODE_007;
+            else
+                dataNotification["code"]= resourceConstants.CLIENTCODE_016;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }else {
+            if(_seatData.notification_list.length > 0){
+                _seatData.notification_list[0]["code"] = null;
+                _seatData.notification_list[0].description = "";
+            }
+        }
+        _seatData["utility"] = data;
+        this.setCurrentSeat(_seatData);
+        console.log(_seatData);
+    },
+    getUtility: function() {
+        return _utility;
+    },
+    convert_textbox : function(action, index){
+        _action = action;
+        _binId = index;
+    },
+    update_peripheral : function(data, method, index){
+       utils.updatePeripherals(data, method, _seatName); 
+    },
+    generateNotification : function(data){
+        if(_seatData.notification_list.length > 0){
+            _seatData.notification_list[0]["code"] = data.code;
+            _seatData.notification_list[0].level = data.level;
+        }else{
+            var notification_list = {
+                "code" : data.code,
+                "level" : data.level,
+                "details" :[],
+                "description" : ""
+            }
+            _seatData.notification_list[0] = notification_list;
+        }    
     },
     getScreenData: function() {
         var data = {};
@@ -43353,20 +45507,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackBinData"] = this.getBinData();
+                data["PutBackNextButtonState"] = this.enableButton();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = mainstore.getNotificationData();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -43492,6 +45647,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 break;
+            case appConstants.PICK_FRONT_NO_FREE_BIN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                break;    
             case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -43570,7 +45734,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditReconcileBoxSerialData"] = this.getReconcileBoxSerialData();
                 data["AuditReconcileLooseItemsData"] = this.getReconcileLooseItemsData();
+                data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
+                break;
+            case appConstants.AUDIT_LOCATION_SCAN:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditRackDetails"] = this.getRackDetails();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
@@ -43583,6 +45758,54 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                break;
+            case appConstants.PPTL_MANAGEMENT:
+            case appConstants.SCANNER_MANAGEMENT:
+                data["utility"] = this.getPptlData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["AuditScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackPpsMode"] = this.getPpsMode();
+                data["PutBackSeatType"] = this.getSeatType();
+                data["PutFrontPpsMode"] = this.getPpsMode();
+                data["PutFrontSeatType"] = this.getSeatType();
+
+                data["PickBackPpsMode"] = this.getPpsMode();
+                data["PickBackSeatType"] = this.getSeatType();
+                data["PickFrontPpsMode"] = this.getPpsMode();
+                data["PickFrontSeatType"] = this.getSeatType();
+
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+
                 break;
             default:
         }
@@ -43687,7 +45910,32 @@ AppDispatcher.register(function(payload) {
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
             mainstore.validateAndSendSpaceUnavailableDataToServer();
             mainstore.emitChange();
-
+            break;
+        case appConstants.PERIPHERAL_DATA:
+            mainstore.getPeripheralData(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.UPDATE_SEAT_DATA:
+            mainstore.showSpinner();
+            mainstore.updateSeatData(action.data, action.type, action.status, action.method);
+            mainstore.emitChange();
+            break;
+        case appConstants.CONVERT_TEXTBOX:
+            mainstore.convert_textbox(action.data, action.index);
+            mainstore.emitChange();
+            break;
+        case appConstants.UPDATE_PERIPHERAL:
+            mainstore.showSpinner();
+            mainstore.update_peripheral(action.data, action.method, action.index);
+            mainstore.emitChange();
+            break;
+        case appConstants.GENERATE_NOTIFICATION:
+            mainstore.generateNotification(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CLEAR_NOTIFICATIONS:
+            mainstore.clearNotifications();
+            mainstore.emitChange();        
         default:
             return true;
     }
@@ -43695,7 +45943,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../config/navConfig":279,"../constants/appConstants":280,"../constants/resourceConstants":282,"../constants/svgConstants":283,"../dispatchers/AppDispatcher":284,"../serverMessages/chinese":286,"../serverMessages/server_messages":287,"../utils/utils":295,"events":14,"react/lib/Object.assign":121}],295:[function(require,module,exports){
+},{"../config/navConfig":281,"../constants/appConstants":282,"../constants/resourceConstants":284,"../constants/svgConstants":285,"../dispatchers/AppDispatcher":286,"../serverMessages/chinese":288,"../serverMessages/english":289,"../serverMessages/server_messages":290,"../utils/utils":298,"events":14,"react/lib/Object.assign":121}],298:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -43714,9 +45962,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 utils.checkSessionStorage();
                 clearTimeout(utils.connectToWebSocket)
             };
-            ws.onmessage = function(evt) {
+            ws.onmessage = function(evt) { 
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
+                if(data.hasOwnProperty('data')){
+                    if(data.data == 'disconnect'){
+                        utils.sessionLogout();
+                        return false;
+                    }
+                }
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
@@ -43787,7 +46041,23 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     sessionLogout:function(data){
         sessionStorage.setItem('sessionData', null);
+        sessionStorage.setItem('localeData', null);
         location.reload();
+        $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                "Authentication-Token" : JSON.parse(sessionStorage.getItem('sessionData'))["data"]["auth-token"]
+            }
+        }).done(function(response) {
+            sessionStorage.setItem('sessionData', null);
+            location.reload();
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            alert("Logout Failed");
+        });
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
@@ -43814,6 +46084,52 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         for (var i = 0; i < 50; i++)
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
+    },
+    getPeripheralData : function(type, seat_name, status, method){
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+         $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type='+type,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
+            }
+        }).done(function(response) {
+            CommonActions.updateSeatData(response.data, type, status, method);  
+        }).fail(function(jqXhr) {    
+           
+        });
+    },
+    updatePeripherals : function(data, method, seat_name){
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+        var url;
+        var method = method;
+        if(method == 'POST'){
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
+        }else{
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
+        }
+         $.ajax({
+            type: method,
+            url: url,
+            data: JSON.stringify(data),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
+            }
+        }).done(function(response) {
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
+        }).fail(function(jqXhr) {
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
+                    
+        });
     },
     createLogData: function(message, type) {
         var data = {};
@@ -43861,4 +46177,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":280,"../constants/configConstants":281,"../serverMessages/server_messages":287,"events":14,"react/lib/Object.assign":121}]},{},[285]);
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../constants/configConstants":283,"../serverMessages/server_messages":290,"events":14,"react/lib/Object.assign":121}]},{},[287]);

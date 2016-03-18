@@ -5,29 +5,36 @@ var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
+
+function getState(){
+     return {
+            spinner: mainstore.getSpinnerState(),
+            systemIsIdle: mainstore.getSystemIdleState(),
+            logoutState: mainstore.getLogoutState(),
+            scanAllowed : mainstore.getScanAllowedStatus()
+        }
+}
 var Header = React.createClass({
     virtualKeyBoard: '',
     exceptionMenu:'',
     getInitialState: function() {
-        return {
-            spinner: mainstore.getSpinnerState(),
-            systemIsIdle: mainstore.getSystemIdleState(),
-            logoutState: mainstore.getLogoutState()
-        }
+        return getState();
     },
     openKeyboard: function() {
+        $("#actionMenu").hide();
+        $(".form-control").blur();
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
             customLayout: {
-              'default': ['1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift': ['! @ # $ % ^ & * ( ) {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+              'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
             },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
+            initialFocus: true,           
             position: {
                 of: $('.keyboard-actions'),
                 my: 'center top',
@@ -50,11 +57,7 @@ var Header = React.createClass({
             }
         })
         $('#barcode').data('keyboard').reveal();
-    },
-    enableException:function(){
-        CommonActions.enableException(true);
-        $("#actionMenu").hide();
-    },
+    },    
     logoutSession:function(){
         $("#actionMenu").hide();        
         if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
@@ -69,12 +72,19 @@ var Header = React.createClass({
     },
     enableException:function(){
         CommonActions.enableException(true);
+        var data = {};
+        data["code"] = null;
+        data["level"] = 'error'
+        CommonActions.generateNotification(data);
         $("#actionMenu").hide();
-    },
-    componentDidMount: function() {
-    },
+    },    
     showMenu: function(){
         $("#actionMenu").toggle();
+        $(".subMenu").hide();
+    },
+    refresh: function(){
+           location.reload();
+        
     },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
@@ -83,6 +93,7 @@ var Header = React.createClass({
         if(virtualKeyBoard_header != null){
             virtualKeyBoard_header.getkeyboard().close();
         }
+        this.setState(getState());
     },
     getExceptionMenu:function(){
          if(mainstore.getExceptionAllowed().length > 0 )
@@ -91,11 +102,19 @@ var Header = React.createClass({
                                     </div>);
         else
             this.exceptionMenu = '';
+    },    
+    peripheralData : function(type){
+        CommonActions.getPeriPheralData(type);
+        $("#actionMenu").hide();
     },
-
+    utilityMenu : function(){
+        $(".subMenu").toggle();       
+        //CommonActions.displayperipheralMenu();
+    },
     render: function() {    
         var logoutClass;
-        var cssClass;      
+        var cssClass;  
+        var disableScanClass;    
         this.getExceptionMenu();
         if(this.state.spinner || this.state.systemIsIdle){
             cssClass = 'keyboard-actions hide-manual-barcode'
@@ -107,13 +126,18 @@ var Header = React.createClass({
         } else{
             logoutClass = 'actionItem'
         }
+        if(this.state.scanAllowed == true){
+            disableScanClass = '';
+        }else{
+            disableScanClass = 'disableScanClass'
+        }
         return (<div>
             <div className="head">
               <div className="logo">
               <img src={allSvgConstants.logo} />
               </div>
                 <div className={cssClass} onClick={this.openKeyboard}>
-                  <img src={allSvgConstants.scanHeader} />
+                  <img src={allSvgConstants.scanHeader} className={disableScanClass} />
                   <input id="barcode" type="text" value='' />
                 </div>
               <div className="header-actions" onClick={this.showMenu} >
@@ -122,7 +146,19 @@ var Header = React.createClass({
               </div>
             </div>
             <div className="actionMenu" id="actionMenu" >
-                {this.exceptionMenu}    
+                <div className="actionItem" onClick = {this.refresh} >
+                    Home
+                </div>
+                {this.exceptionMenu}  
+                <div className="actionItem" onClick = {this.utilityMenu} >
+                    Utility
+                    <div className="subMenu" onClick={this.peripheralData.bind(this, 'pptl')}>
+                        PPTL Management
+                    </div>
+                    <div className="subMenu" onClick={this.peripheralData.bind(this, 'barcode_scanner')}>
+                        Scanner Management
+                    </div>
+                </div>  
                 <div className={logoutClass} onClick = {this.logoutSession} >
                     Logout
                 </div>

@@ -14,6 +14,7 @@ var SystemIdle = require('./SystemIdle');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
+var TabularData = require('./TabularData');
 
 
 function getStateData(){
@@ -61,25 +62,24 @@ var PickBack = React.createClass({
                 <Exception data={this.state.PickBackExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
   },
   getExceptionAction:function(screen_id){
-    console.log(this.state.PickBackSelectedBin);
      switch(screen_id){
         case appConstants.PICK_BACK_EXCEPTION_REPRINT:
-          this._exceptionAction = (<Button1 disabled = {false} text = {"Print"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.REPRINT_INVOICE}  />);
+          this._exceptionAction = (<Button1 disabled = {false} text = {_("Print")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.REPRINT_INVOICE}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
-          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Skip Printing"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.SKIP_PRINTING}  />);
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Skip Printing")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.SKIP_PRINTING}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
-          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Dis-associate Tote"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Dis-associate Tote")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
-          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {"Override"} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.OVERRIDE_TOTE}  />);
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Override")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.OVERRIDE_TOTE}  />);
           break;
         default:
           return true;
@@ -124,12 +124,11 @@ var PickBack = React.createClass({
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
-          console.log(this.state.PickBackServerNavData);
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickBackExceptionData}/>
                 <div className="exception-right">
-                   <ExceptionHeader text={this.state.PickBackServerNavData["description"]} />
+                   <ExceptionHeader data={this.state.PickBackServerNavData} />
                     <div className="main-container exception1">
                       <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>
                    </div>
@@ -138,11 +137,42 @@ var PickBack = React.createClass({
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
         break; 
+
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+          var _button;
+          if(this.state.PickBackScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+                      </div>)
+          }
+          else{
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
+          }
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                  <div className="row scannerHeader">
+                    <div className="col-md-6">
+                      <div className="ppsMode"> PPS Mode : {this.state.PickBackPpsMode.toUpperCase()} </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="seatType"> Seat Type : {this.state.PickBackSeatType.toUpperCase()}</div>
+                    </div>
+                  </div>
+                  <TabularData data = {this.state.utility}/>
+                  {_button}
+                  <Modal /> 
+              </div>
+            );
+        break;  
+
       default:
         return true; 
     }

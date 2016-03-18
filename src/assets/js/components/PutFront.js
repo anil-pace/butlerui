@@ -14,6 +14,9 @@ var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
+var TabularData = require('./TabularData');
 
 
 function getStateData(){
@@ -67,12 +70,12 @@ var PutFront = React.createClass({
                 <Exception data={this.state.PutFrontExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
   },
-
+  
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
@@ -121,7 +124,7 @@ var PutFront = React.createClass({
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
                 </div>
 
               </div>
@@ -132,6 +135,7 @@ var PutFront = React.createClass({
         break;
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
+          console.log(this.state.PutFrontExceptionScreen);
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               <div className='grid-container exception'>
@@ -140,15 +144,15 @@ var PutFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Good Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontGoodQuantity} action={"GOOD"} />
+                      <KQ scanDetailsGood = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
+                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -160,19 +164,19 @@ var PutFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Missing Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontMissingQuantity} action={"MISSING"} />
+                      <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
                     </div>
                     <div className = "kq-exception">
                       <div className="kq-header">{"Damaged Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontDamagedQuantity} action={"DAMAGED"} />
+                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />  
+                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -190,11 +194,11 @@ var PutFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_REVISED_QUANTITY} />  
+                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_REVISED_QUANTITY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -206,21 +210,52 @@ var PutFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Revised Quantity"}</div>
-                      <KQ scanDetails = {this.state.PutFrontKQQuantity}  />
+                      <KQ scanDetailsGood = {this.state.PutFrontKQQuantity}  />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER} />  
+                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
            }
           
         break;
+
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+          var _button;
+          if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+            _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+                      </div>)
+          }
+          else{
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
+          }
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                  <div className="row scannerHeader">
+                    <div className="col-md-6">
+                      <div className="ppsMode"> PPS Mode : {this.state.PutFrontPpsMode.toUpperCase()} </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
+                    </div>
+                  </div>
+                  <TabularData data = {this.state.utility}/>                  
+                  {_button}                  
+                  <Modal /> 
+              </div>
+            );
+        break;  
+
       default:
         return true; 
     }

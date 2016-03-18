@@ -6,7 +6,7 @@ var Exception = React.createClass({
     render: function() {
         return (
             <div className="exception">
-                <ExceptionHeader data = {this.props.data.header} />
+                <ExceptionHeader data = {_("Exceptions")} />
                 <ExceptionList data = {this.props.data.list} action = {this.props.action} />
             </div>
         );

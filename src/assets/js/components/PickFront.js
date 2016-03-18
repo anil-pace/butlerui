@@ -3,6 +3,8 @@ var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -17,6 +19,9 @@ var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
+var TabularData = require('./TabularData');
+
+var checkListOpen = false;
 
 function getStateData(){
   /*return {
@@ -43,11 +48,10 @@ var PickFront = React.createClass({
   _notification:'',
   _component:'',
   _navigation:'',
-  _showModal:false,
   getInitialState: function(){
     return getStateData();
   },
-  componentWillMount: function(){
+  componentWillMount: function(){   
     if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }
@@ -61,8 +65,8 @@ var PickFront = React.createClass({
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
     }else{
-      $('.modal').modal('hide');
-      $('.modal-backdrop').remove();
+     /* $('.modal').modal('hide');
+      $('.modal-backdrop').remove();*/
     }
   },
   getNotificationComponent:function(){
@@ -71,17 +75,17 @@ var PickFront = React.createClass({
     else
       this._notification = "";
   },
-  getModalStatus:function(){
-    return _showModal;
-  },
   showModal:function(data,index){
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
       "product_details" : this.state.PickFrontProductDetails
     };
-    if(this.state.PickFrontChecklistOverlayStatus === true && !$('.modal').hasClass('in')){
-    setTimeout((function(){CommonActions.showModal({
+    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
+    if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
+      console.log('this.state.PickFrontChecklistOverlayStatus');
+      checkListOpen = true;
+      setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
       });
@@ -89,10 +93,29 @@ var PickFront = React.createClass({
       return false;
       }),0)
 
+      
+
     }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && $('.modal').hasClass('in')) { 
-      $('.modal').modal('hide');
-      $('.modal-backdrop fade in').remove();
+    else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
+      console.log(this.state.PickFrontChecklistOverlayStatus);
+     
+      setTimeout((function (){
+          $( ".modal" ).modal('hide');
+          //$('.modal-backdrop').remove();
+      }), 0)
+      checkListOpen = false;
+     /* $('.modal').css('display', 'none');
+      $('.modal-backdrop').css('display', 'none');*/
+     /* $('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) */
+    }
+    else {
+      /*$('.modal').on('hidden.bs.modal', function(e)
+        { 
+            $(this).removeData();
+        }) ;*/
     }
 
   },
@@ -105,7 +128,7 @@ var PickFront = React.createClass({
                 <Exception data={this.state.PickFrontExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -180,7 +203,7 @@ var PickFront = React.createClass({
         if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+          var editButton = ( <Button1 disabled = {false} text = {_("Edit Details")} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';
         }
@@ -193,7 +216,7 @@ var PickFront = React.createClass({
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                 </div>
                 <div className = 'actions'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
                 </div>
               </div>
@@ -207,7 +230,7 @@ var PickFront = React.createClass({
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( <Button1 disabled = {false} text = {"Edit Details"} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
+          var editButton = ( <Button1 disabled = {false} text = {_("Edit Details")} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';
         }
@@ -219,7 +242,7 @@ var PickFront = React.createClass({
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
                     {editButton}
                 </div>
               </div>
@@ -228,7 +251,21 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
       break;
-      
+      case appConstants.PICK_FRONT_NO_FREE_BIN:
+         if(this.state.PickFrontExceptionStatus == false){
+         this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+ 
+        this._component = (
+              <div className='grid-container'>
+                <div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
+                </div>
+              </div>
+            );
+         }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "good"){
@@ -239,15 +276,15 @@ var PickFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Good Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontGoodQuantity} action={"GOOD"} />
+                      <KQ scanDetailsGood = {this.state.PickFrontGoodQuantity} action={"GOOD"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
+                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -259,19 +296,19 @@ var PickFront = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{"Missing Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
+                      <KQExceptionMissing scanDetailsMissing = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
                     </div>
                     <div className = "kq-exception">
                       <div className="kq-header">{"Damaged Quantity"}</div>
-                      <KQ scanDetails = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
+                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                     <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} /> 
+                     <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} /> 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -282,15 +319,15 @@ var PickFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Please Put Back Damaged Item Quantity into Exception Area . "}</div>
+                      <div className="kq-header">{_("Please Put Back Damaged Item Quantity into Exception Area.")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> 
+                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -310,11 +347,11 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  
+                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -329,16 +366,47 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 
-                    <Button1 disabled = {false} text = {"CONFIRM"} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
+                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
            }
           break;
+
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+          var _button;
+          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+          _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+                      </div>)
+          }
+          else{
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
+          }
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                  <div className="row scannerHeader">
+                    <div className="col-md-6">
+                      <div className="ppsMode"> PPS Mode : {this.state.PickFrontPpsMode.toUpperCase()} </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="seatType"> Seat Type : {this.state.PickFrontSeatType.toUpperCase()}</div>
+                    </div>
+                  </div>
+                  <TabularData data = {this.state.utility}/>
+                  {_button}
+                  <Modal /> 
+              </div>
+            );
+        break;  
+
 
       default:
         return true;

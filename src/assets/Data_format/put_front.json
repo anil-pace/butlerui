@@ -97,105 +97,102 @@
 		"screen_id": "put_front_scan",
 		"screen_version": "1",
 		"structure": [2, 4],
-		"notification_list": [{
-			"details": [],
-			"code": "Common.000",
-			"description": [],
-			"level": "info"
-		}],
+		"notification_list": [],
 		"scan_details": {
-			"current_qty": "1",
-			"total_qty": "1",
+			"current_qty": "0",
+			"total_qty": "0",
 			"kq_allowed": false
 		},
-		"logout_allowed": "false",
+		"item_uid": "e4a6f863-8ae3-49bc-b285-cac71f18c817",
+		"peripheral_data": [],
+		"logout_allowed": true,
 		"exception_allowed": [{
-			"exception_id": "Common000",
-			"exception_name": "Reset Scanner"
+			"exception_id": "PtF002",
+			"exception_name": "Space Unavailable To Put",
+			"event": "space_unavailable"
+		}, {
+			"exception_id": "PtF001",
+			"exception_name": "Damaged or Missing",
+			"event": "damaged_or_missing"
 		}],
 		"mode": "put",
 		"is_idle": false,
 		"seat_type": "front",
-		"item_uid" : "123",
-		"product_info": {
-			"product_description": null,
-			"product_local_image_url": null,
-			"product_dimension": null,
-			"product_sku": null,
-			"product_name": null,
-			"product_weight": null
-		},
-		"time_stamp": "1450174144",
+		"product_info": [],
+		"time_stamp": "1455794289",
 		"ppsbin_list": [{
 			"bin_info": [],
 			"ppsbin_id": "4",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [1, 1]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "3",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [1, 2]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "2",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [1, 3]
 		}, {
 			"bin_info": [{
+				"product_sku": "d200164eec5f401b8797081dd6ec928d",
 				"type": "item",
-				"name": null,
 				"quantity": 1
 			}],
 			"ppsbin_id": "1",
-			"selected_state": "true",
-			"ppsbin_state": "staged",
+			"selected_state": true,
+			"ppsbin_state": "IN USE",
 			"ppsbin_count": "1",
 			"coordinate": [1, 4]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "8",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 1]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "7",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 2]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "6",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 3]
 		}, {
 			"bin_info": [],
 			"ppsbin_id": "5",
-			"selected_state": "false",
+			"selected_state": false,
 			"ppsbin_state": "empty",
 			"ppsbin_count": "0",
 			"coordinate": [2, 4]
 		}],
+		"all_peripheral_status": "true",
 		"header_msge_list": [{
-			"details": [],
-			"code": "PtF.B.001",
-			"description": "Scan Item/ Stage PpsBin",
+			"details": ["1"],
+			"code": "PtF.H.004",
+			"description": "Scan entity from bin  1",
 			"level": "info"
 		}],
 		"api_version": "1"
 	}
 }
+
+
 
 
 {
@@ -292,14 +289,51 @@
 		"is_idle": false,
 		"seat_type": "front",
 		"item_uid" : "123",
-		"product_info": {
-			"product_description": null,
-			"product_local_image_url": null,
-			"product_dimension": null,
-			"product_sku": null,
-			"product_name": null,
-			"product_weight": null
-		},
+		"product_info": [
+			[{
+				"display_data":
+				[
+					{
+					"display_name":"product_sku-display",
+					"locale":"zn"
+					},
+					{"display_name":"product_sku-display-2",
+					"locale":"en-US"
+					}
+				],
+				"product_sku":"266ed6a3c9e4413fbf55108af99832d0"
+			}],
+
+			[{
+				"display_data":
+			 	[
+			 		{
+			 		"display_name":"product_height-display",
+					 "locale":"zn"
+					},
+			 		{
+			 		"display_name":"product_height-display-2",
+			 		"locale":"en-US"
+			 		}
+			 	],
+			 	"product_height":4.66
+			 }],
+			 
+			[{
+			 	"display_data":
+			 	[
+			 		{
+			 		"display_name":"product_weight-display",
+			 		"locale":"zn"
+			 		},
+			 		{
+			 		"display_name":"product_weight-2",
+			 		"locale":"en-US"
+			 		}
+			 	],
+			 	"product_weight":4.54
+			}]
+		],
 		"time_stamp": "1450175485",
 		"ppsbin_list": [{
 			"bin_info": [],

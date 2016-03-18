@@ -71,7 +71,7 @@ var PutBack = React.createClass({
                 <Exception data={this.state.PutBackExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -89,8 +89,8 @@ var PutBack = React.createClass({
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
                 </div>
                 <div className = 'staging-action' >
-                  <Button1 disabled = {!this.state.StageActive} text = {"Stage"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
-                  <Button1 disabled = {!this.state.StageAllActive} text = {"Stage All"} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
+                  <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
+                  <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
                 </div>
               </div>
             );
@@ -110,7 +110,7 @@ var PutBack = React.createClass({
                     <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} barcode={this.state.PutBackItemUid} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} barcode={this.state.PutBackItemUid} color={"black"}/>
                 </div>
               </div>
             );
@@ -135,8 +135,8 @@ var PutBack = React.createClass({
               <div className='grid-container audit-reconcilation'>
                 {subComponent}
                  <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"BACK"} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={false} action={appConstants.CANCEL_TOTE} color={"black"}/>
-                  <Button1 disabled = {false} text = {"CLOSE"} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={true} action={appConstants.CLOSE_TOTE} color={"orange"} />  
+                  <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={false} action={appConstants.CANCEL_TOTE} color={"black"}/>
+                  <Button1 disabled = {false} text = {_("CLOSE")} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={true} action={appConstants.CLOSE_TOTE} color={"orange"} />  
                 </div>
               </div>
             );
@@ -150,14 +150,14 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
-                  <KQ scanDetails = {this.state.PutBackKQDetails} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -168,39 +168,38 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <div className="main-container exception1">
-                    <Img />
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
                     <TabularData data = {this.state.PutBackExceptionProductDetails}/>
                     <KQ scanDetails = {this.state.PutBackKQDetails} />
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />  
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
         break; 
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
-          console.log(this.state.PutBackServerNavData);
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                   <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                     <div className="main-container exception1">
                       <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                    </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"NEXT"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_EXCESS_ITEMS_BIN}  />  
+                    <Button1 disabled = {this.state.PutBackNextButtonState} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_EXCESS_ITEMS_BIN}  />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -211,14 +210,14 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
-                  <KQ scanDetails = {this.state.PutBackKQDetails} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -229,13 +228,13 @@ var PutBack = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.PutBackServerNavData["description"]} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_ITEM_PLACE_IN_IRT} />  
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_ITEM_PLACE_IN_IRT} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );
@@ -247,12 +246,41 @@ var PutBack = React.createClass({
               <div className='grid-container audit-reconcilation'>
                  <Reconcile navMessagesJson={this.props.navMessagesJson} message={this.state.PutBackToteException} />
                  <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"Cancel"} module ={appConstants.PUT_BACK} status={true} action={appConstants.CANCEL_TOTE_EXCEPTION} color={"black"} /> 
-                  <Button1 disabled = {false} text = {"Confirm"} module ={appConstants.PUT_BACK} status={true} action={appConstants.CONFIRM_TOTE_EXCEPTION} color={"orange"} />  
+                  <Button1 disabled = {false} text = {_("Cancel")} module ={appConstants.PUT_BACK} status={true} action={appConstants.CANCEL_TOTE_EXCEPTION} color={"black"} /> 
+                  <Button1 disabled = {false} text = {_("Confirm")} module ={appConstants.PUT_BACK} status={true} action={appConstants.CONFIRM_TOTE_EXCEPTION} color={"orange"} />  
                 </div>
               </div>
             );
-        break;   
+        break;
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+          var _button;
+          if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
+          _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+                      </div>)
+          }
+          else{
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
+          }
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                  <div className="row scannerHeader">
+                    <div className="col-md-6">
+                      <div className="ppsMode"> PPS Mode : {this.state.PutBackPpsMode.toUpperCase()} </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="seatType"> Seat Type : {this.state.PutBackSeatType.toUpperCase()}</div>
+                    </div>
+                  </div>
+                  <TabularData data = {this.state.utility}/>
+                  {_button}
+                  <Modal /> 
+              </div>
+            );
+        break;      
       default:
         return true; 
     }

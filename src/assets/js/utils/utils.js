@@ -16,9 +16,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 utils.checkSessionStorage();
                 clearTimeout(utils.connectToWebSocket)
             };
-            ws.onmessage = function(evt) {
+            ws.onmessage = function(evt) { 
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
+                if(data.hasOwnProperty('data')){
+                    if(data.data == 'disconnect'){
+                        utils.sessionLogout();
+                        return false;
+                    }
+                }
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
@@ -89,7 +95,23 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     sessionLogout:function(data){
         sessionStorage.setItem('sessionData', null);
+        sessionStorage.setItem('localeData', null);
         location.reload();
+        $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.LOGOUT,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                "Authentication-Token" : JSON.parse(sessionStorage.getItem('sessionData'))["data"]["auth-token"]
+            }
+        }).done(function(response) {
+            sessionStorage.setItem('sessionData', null);
+            location.reload();
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            alert("Logout Failed");
+        });
     },
     postDataToInterface: function(data, seat_name) {
         var retrieved_token = sessionStorage.getItem('sessionData');
@@ -116,6 +138,52 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         for (var i = 0; i < 50; i++)
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         localStorage.setItem("session",text);
+    },
+    getPeripheralData : function(type, seat_name, status, method){
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+         $.ajax({
+            type: 'GET',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type='+type,
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
+            }
+        }).done(function(response) {
+            CommonActions.updateSeatData(response.data, type, status, method);  
+        }).fail(function(jqXhr) {    
+           
+        });
+    },
+    updatePeripherals : function(data, method, seat_name){
+        var retrieved_token = sessionStorage.getItem('sessionData');
+        var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+        var url;
+        var method = method;
+        if(method == 'POST'){
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
+        }else{
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
+        }
+         $.ajax({
+            type: method,
+            url: url,
+            data: JSON.stringify(data),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'Authentication-Token' : authentication_token
+            }
+        }).done(function(response) {
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
+        }).fail(function(jqXhr) {
+            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
+                    
+        });
     },
     createLogData: function(message, type) {
         var data = {};

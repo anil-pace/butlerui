@@ -5,6 +5,7 @@ var appConstants = {
 	API : '/api',
 	AUTH : '/auth',
 	TOKEN : '/token',
+	LOGOUT : '/logout',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
@@ -18,6 +19,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
@@ -70,6 +72,7 @@ var appConstants = {
 	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
+	PICK_FRONT_NO_FREE_BIN : 'pick_front_no_free_bin',
 	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
@@ -118,7 +121,21 @@ var appConstants = {
 	EXCESS_ITEMS_IN_PPS_BINS:"Excess Items in PPS Bins",
 	SHOW_ERROR_MESSAGE :"SHOW_ERROR_MESSAGE",
 	CONFIRM_TOTE_EXCEPTION : 'CONFIRM_TOTE_EXCEPTION',
-	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION'
+	CANCEL_TOTE_EXCEPTION : 'CANCEL_TOTE_EXCEPTION',
+	PERIPHERAL_DATA : 'PERIPHERAL_DATA',
+	PERIPHERALS : 'peripherals',
+	UPDATE_SEAT_DATA : 'UPDATE_SEAT_DATA',
+	PPTL_MANAGEMENT : 'pptl_management',
+	SCANNER_MANAGEMENT : 'scanner_management',
+	CONVERT_TEXTBOX : 'convert_textbox',
+	UPDATE_PERIPHERAL : 'UPDATE_PERIPHERAL',
+	ADD: '/add',
+	ADD_SCANNER : 'ADD_SCANNER',
+	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT',
+	ADD_SCANNER_DETAILS : "ADD_SCANNER_DETAILS",
+	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER",
+	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
+	CANCEL_PPTL : 'CANCEL_PPTL'
 
 };
 

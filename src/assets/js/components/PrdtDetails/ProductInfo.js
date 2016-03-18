@@ -7,7 +7,7 @@ var ProductInfo = React.createClass({
         $.each(infoDetails, function(key, value) {
             return arr1.push(
                 <tr>
-	  				<td className="key"> {key.toUpperCase()} </td>
+	  				<td className="key"> {key} </td>
 	  				<td className="value">{value} </td>
   				</tr>
 

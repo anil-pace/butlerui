@@ -112,6 +112,7 @@
 	"state_data": {
 		"seat_name": "front_10",
 		"notification_list": [],
+		"extra_loose_sku_item_list" :[],
 		"rack_details": {
 			"rack_type_rec": [
 				["A", [
@@ -677,4 +678,132 @@
 		}]
 	}
 
+}
+
+
+{
+	"state_data": {
+		"seat_name": "front_30",
+		"notification_list": [{
+			"level": "info",
+			"code": "AdF.I.006",
+			"details": [],
+			"description": "Extra Box"
+		}],
+		"rack_details": {
+			"rack_type_rec": [
+				["A", [
+					[
+						["01", "02"], 33, 48
+					],
+					[
+						["03", "04"], 33, 48
+					],
+					[
+						["05", "06"], 33, 48
+					]
+				]],
+				["B", [
+					[
+						["01", "02"], 33, 48
+					],
+					[
+						["03", "04"], 33, 48
+					],
+					[
+						["05", "06"], 33, 48
+					]
+				]],
+				["C", [
+					[
+						["01", "02"], 33, 48
+					],
+					[
+						["03", "04"], 33, 48
+					],
+					[
+						["05", "06"], 33, 48
+					]
+				]],
+				["D", [
+					[
+						["01", "02"], 33, 48
+					],
+					[
+						["03", "04"], 33, 48
+					],
+					[
+						["05", "06"], 33, 48
+					]
+				]],
+				["E", [
+					[
+						["01", "02"], 33, 48
+					],
+					[
+						["03", "04"], 33, 48
+					],
+					[
+						["05", "06"], 33, 48
+					]
+				]]
+			],
+			"slot_barcodes": ["093.0.A.01", "093.0.A.02"]
+		},
+		"exception_allowed": [{
+			"exception_id": "AdF003",
+			"exception_name": "Loose Item unscannable",
+			"event": "loose_item_damage"
+		}, {
+			"exception_id": "AdF002",
+			"exception_name": "Box unscannable",
+			"event": "box_damage"
+		}],
+		"show_expected_qty": true,
+		"screen_id": "audit_scan",
+		"last_finished_box": [],
+		"Cancel_scan": true,
+		"all_peripheral_status": "true",
+		"logout_allowed": true,
+		"seat_type": "front",
+		"product_info": [],
+		"time_stamp": "1456490510",
+		"api_version": "1",
+		"mode": "audit",
+		"Box_qty_list": [],
+		"Extra_box_list": [],
+		"Current_box_details": [{
+			"Box_serial": null,
+			"Sku": "2003",
+			"Actual_qty": 1,
+			"Expected_qty": 0
+		}],
+		"item_in_box_barcode_damage": [],
+		"peripheral_data": [],
+		"extra_loose_sku_item_list": [{
+			"Sku": "2003",
+			"Actual_qty": 0,
+			"Expected_qty": 0
+		}],
+		"screen_version": "1",
+		"enable_kq": true,
+		"loose_item_barcode_damage": 0,
+		"Loose_sku_list": [{
+			"Sku": "2001",
+			"Actual_qty": 0,
+			"Expected_qty": 53
+		}, {
+			"Sku": "2002",
+			"Actual_qty": 0,
+			"Expected_qty": 1
+		}],
+		"is_idle": false,
+		"box_barcode_damage": 0,
+		"header_msge_list": [{
+			"level": "info",
+			"code": "AdF.H.002",
+			"details": [],
+			"description": "Scan Remaining Items in Box"
+		}]
+	}
 }

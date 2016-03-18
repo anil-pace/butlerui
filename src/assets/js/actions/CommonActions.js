@@ -222,6 +222,47 @@ var commonActions = {
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
     });
+   },
+   getPeriPheralData : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.PERIPHERAL_DATA,
+      data:data
+    });
+   },
+   updateSeatData : function(data, type, status, method){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_SEAT_DATA,
+      data:data,
+      type : type,
+      status: status,
+      method : method
+    });
+   },
+   convertTextBox : function(data, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CONVERT_TEXTBOX,
+      data : data,
+      index : index
+    })
+   },
+   updateData : function(data, method, index){
+    AppDispatcher.handleAction({
+      actionType : appConstants.UPDATE_PERIPHERAL,
+      data : data,
+      method : method,
+      index : index
+    })
+   },
+   generateNotification : function(data){
+     AppDispatcher.handleAction({
+      actionType : appConstants.GENERATE_NOTIFICATION,
+      data : data
+    })
+   },
+   clearNotification : function(){
+    AppDispatcher.handleAction({
+      actionType : appConstants.CLEAR_NOTIFICATIONS,
+    })
    }
 
 };

@@ -57,27 +57,22 @@ var Audit = React.createClass({
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true && !$('.modal').hasClass('in')){
+      if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+        if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
-          setTimeout((function(){ActionCreators.showModal({
+          this.state.AuditShowModal["showModal"] = false;
+          var r = self.state.AuditShowModal.message;
+          setTimeout((function(){
+            ActionCreators.showModal({
               data:{
-              "message":self.state.AuditShowModal.message
+              "message":r
             },
             type:"message"
           });
-        $('.modal').modal();
-      return false;
-      }),0)
-
-       }else if(this.state.AuditShowModal["showModal"] == '' && $('.modal').hasClass('in')){
-        $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
+        $('.modal').modal("show");
+      //return false;
+      }),0);
        }
-     }else{
-
-      $('.modal').modal('hide');
-        $('.modal-backdrop fade in').remove();
      }
   },
   getInitialState: function(){
@@ -107,7 +102,7 @@ var Audit = React.createClass({
                 <Exception data={this.state.AuditExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -128,13 +123,27 @@ var Audit = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.AUDIT_LOCATION_SCAN:
+         if(this.state.AuditExceptionStatus == false){
+        this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                    <Rack rackData = {this.state.AuditRackDetails}/>
+                 </div>
+              </div>
+            );
+      }else{
+          this._component = this.getExceptionComponent();
+        }
+      break;
       case appConstants.AUDIT_SCAN:
        if(this.state.AuditExceptionStatus == false){
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               <div className = 'cancel-scan'>
-                <Button1 disabled = {false} text = {"Cancel Scan"} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+                <Button1 disabled = {false} text = {_("Cancel Audit")} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
               </div>
             );
           }else{
@@ -160,13 +169,13 @@ var Audit = React.createClass({
                       {this._looseItems}
                   </div>
                   <div className="audit-scan-middle">
-                   <Img />
+                   <Img srcURL= {this.state.AuditItemDetailsData.image_url}/>
                    <TabularData data = {this.state.AuditItemDetailsData}/>
                   </div>
                   <div className="audit-scan-right">
                     <KQ scanDetails = {this.state.AuditScanDetails}/>
                    <div className = 'finish-scan'>
-                    <Button1 disabled = {!this.state.AuditFinishFlag} text = {"Finish"} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
+                    <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
                   </div>
                   </div>
                 </div>
@@ -183,24 +192,42 @@ var Audit = React.createClass({
           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);  
           var subComponent='';
           var messageType = 'large';
-          if(this.state.AuditReconcileBoxSerialData.tableRows.length>1 || this.state.AuditReconcileLooseItemsData.tableRows.length>1 ){
+          var BoxSerialData = '';
+          var ItemInBoxData = '';
+          var LooseItemsData = '';
+          var AuditMessage = '';
+          var m = {
+            "details": [],
+            "code": "Audit.A.012",
+            "description": "No Items To Reconcile",
+            "level": "info"
+          };
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
+            AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={m} />);
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
+              BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);
+          if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
+              ItemInBoxData = (<TabularData data = {this.state.AuditReconcileItemInBoxData}/>);
+          if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
+              LooseItemsData = (<TabularData data = {this.state.AuditReconcileLooseItemsData}/>);
             subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
-                    <TabularData data = {this.state.AuditReconcileBoxSerialData}/>
-                    <TabularData data = {this.state.AuditReconcileLooseItemsData} />
+                    {AuditMessage}
+                    {BoxSerialData}
+                    {ItemInBoxData}
+                    {LooseItemsData}
                   </div>
                 </div>
               );
             messageType = "small";
-          }
           this._component = (
               <div className='grid-container audit-reconcilation'>
                  <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 {subComponent}
                  <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {"Back"} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>
-                  <Button1 disabled = {false} text = {"OK"} module ={appConstants.AUDIT} action={appConstants.FINISH_CURRENT_AUDIT} color={"orange"} />  
+                  <Button1 disabled = {false} text = {_("Back")} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>
+                  <Button1 disabled = {false} text = {_("OK")} module ={appConstants.AUDIT} action={appConstants.FINISH_CURRENT_AUDIT} color={"orange"} />  
                 </div>
               </div>
             );
@@ -216,14 +243,14 @@ var Audit = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.AuditExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader text={this.state.AuditServerNavData["description"]} />
-                  <KQ scanDetails = {this.state.AuditKQDetails} />
+                  <ExceptionHeader data={this.state.AuditServerNavData} />
+                  <KQ scanDetailsGood = {this.state.AuditKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {"FINISH"} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {"Cancel Exception"} module ={appConstants.AUDIT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.AUDIT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>
             );

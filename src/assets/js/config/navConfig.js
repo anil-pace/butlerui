@@ -1,6 +1,26 @@
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
+    "utility": [
+        [{
+            "screen_id": "pptl_management",
+            "code": "CLIENTCODE_004",
+            "image": svgConstants.pptl,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "scanner_management",
+            "code": "CLIENTCODE_005",
+            "image": svgConstants.scanner,
+            "message": "Unexpected Item",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }]
+    ],
     "putBack": [
         [{
             "screen_id": "put_back_invalid_tote_item",
@@ -82,7 +102,15 @@ var navData = {
             "level": 2,
             "type": 'passive'
         }],
-
+        [{
+            "screen_id": "pick_front_no_free_bin",
+            "code": "Common.000",
+            "image": svgConstants.exception,
+            "message": "Wait For MSU",
+            "showImage": true,
+            "level": null,
+            "type": 'active'
+        }]
     ],
     "pickBack": [ {
         "screen_id": "pick_back_scan",
@@ -110,21 +138,32 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [ {
+        [ 
+        {
+        "screen_id": "audit_front_waiting_for_location_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan MSU Barcode ",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+        },
+        {
         "screen_id": "audit_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan Items ",
         "showImage": true,
-        "level": 1,
+        "level": 2,
         "type": 'passive'
-    },{
+    },
+    ,{
         "screen_id": "audit_reconcile",
         "code": "Common.000",
         "image": svgConstants.place,
         "message": "Status",
         "showImage": true,
-        "level": 2,
+        "level": 3,
         "type": 'passive'
     }]
     ]

@@ -41919,13 +41919,17 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         var slotIndexList = [];
         var eachRow =[];
         if(compartment_details.length === 1){
-            slotStart = (compartment_details[0].split(".")[3])%10;
-            slotEnd = (compartment_details[0].split(".")[3])%10;
+            //slotStart = (compartment_details[0].split(".")[3])%10;
+            //slotEnd = (compartment_details[0].split(".")[3])%10;
+            slotStart = parseInt((compartment_details[0].split(".")[3]).replace(/^0+/, ''));
+            slotEnd = parseInt((compartment_details[0].split(".")[3]).replace(/^0+/, ''));
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else if(compartment_details.length === 2){
-            slotStart = (compartment_details[0].split(".")[3])%10;
-            slotEnd = (compartment_details[compartment_details.length - 1].split(".")[3])%10;
+            //slotStart = (compartment_details[0].split(".")[3])%10;
+            //slotEnd = (compartment_details[compartment_details.length - 1].split(".")[3])%10;
+            slotStart = parseInt((compartment_details[0].split(".")[3]).replace(/^0+/, ''));
+            slotEnd = parseInt((compartment_details[compartment_details.length - 1].split(".")[3]).replace(/^0+/, ''));
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else {
@@ -42033,9 +42037,10 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		
 		
 		var singleSlot = this.props.slotWidthData.map(function(singSlot,index){
-			if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
+			//if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
+				if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(parseInt(singSlot.replace(/^0+/, ''))) >= 0)
 				return(
-						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot%10, type: type})
+						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot.replace(/^0+/, ''), type: type})
 					);
 				else
 				return(
@@ -42688,8 +42693,8 @@ module.exports = appConstants;
 
 },{}],283:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost:8888/wss",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 
 module.exports = configConstants;

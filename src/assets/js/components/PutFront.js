@@ -167,7 +167,7 @@ var PutFront = React.createClass({
                       <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
                     </div>
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Damaged Quantity"}</div>
+                      <div className="kq-header">{"Unscannable Quantity"}</div>
                       <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
                     </div>
                   </div>
@@ -209,7 +209,7 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Revised Quantity"}</div>
+                      <div className="kq-header">{"Space Available For"}</div>
                       <KQ scanDetailsGood = {this.state.PutFrontKQQuantity}  />
                     </div>
                   </div>

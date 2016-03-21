@@ -65,6 +65,7 @@ var serverMessages = {
     "PtB.I.012" : "{0} oversized entities recorded.WMS notified",
     "PtB.I.013" : "Exception cancelled",
     "PtB.I.014" : "Cancelled excess entity in tote",
+    "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
     "PtB.I.017" : "PPS mode change requested:scan not allowed",

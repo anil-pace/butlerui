@@ -39551,7 +39551,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                       React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PickFrontMissingQuantity, action: "MISSING"})
                     ), 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
+                      React.createElement("div", {className: "kq-header"}, "Unscannable Quantity"), 
                       React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
                     )
                   ), 
@@ -41794,7 +41794,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                       React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
                     ), 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Damaged Quantity"), 
+                      React.createElement("div", {className: "kq-header"}, "Unscannable Quantity"), 
                       React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
                     )
                   ), 
@@ -41836,7 +41836,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Revised Quantity"), 
+                      React.createElement("div", {className: "kq-header"}, "Space Available For"), 
                       React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
                     )
                   ), 
@@ -42730,8 +42730,8 @@ module.exports = appConstants;
 
 },{}],283:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.1.59:8888/ws",
-	INTERFACE_IP : "https://192.168.1.59:5000"
+	WEBSOCKET_IP : "ws://192.168.1.164:8888/ws",
+	INTERFACE_IP : "https://192.168.1.164:5000"
 };
 
 module.exports = configConstants;
@@ -42921,6 +42921,7 @@ var serverMessages = {
     "PtB.I.012" : "{0} oversized entities recorded.WMS notified",
     "PtB.I.013" : "Exception cancelled",
     "PtB.I.014" : "Cancelled excess entity in tote",
+    "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
     "PtB.I.017" : "PPS mode change requested:scan not allowed",

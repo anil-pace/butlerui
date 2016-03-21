@@ -9,6 +9,7 @@ var appConstants = {
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
+	LOGIN_SEAT:"LOGIN_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",

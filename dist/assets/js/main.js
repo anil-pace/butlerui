@@ -36499,6 +36499,12 @@ var commonActions = {
       data: data
     });
   },
+  loginSeat: function(data){ 
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOGIN_SEAT, 
+      data: data
+    });
+  },
   toggleBinSelection:function(bin_id){
      AppDispatcher.handleAction({
       actionType: appConstants.TOGGLE_BIN_SELECTION,
@@ -38258,7 +38264,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              'seat_name': _seat_name
+              //'seat_name': _seat_name
+              'seat_name':this.refs.seat_name.value
           }
       }
       console.log(data);
@@ -38304,6 +38311,35 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     mainstore.removeChangeListener(this.onChange);
     loginstore.removeChangeListener(this.onChange);
   },
+   componentWillMount:function(){
+    virtualKeyBoard_login = $('#username, #password').keyboard({
+      layout: 'custom',
+      customLayout: {
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+      },
+      css: {
+        container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+      },
+      reposition: true,
+      alwaysOpen: false,
+      initialFocus: true,      
+      visible : function(e, keypressed, el){
+        el.value = '';
+        //$(".authNotify").css("display","none"); 
+      },
+      
+      accepted: function(e, keypressed, el) {
+        var usernameValue = document.getElementById('username').value;
+        var passwordValue = document.getElementById('password').value;
+        if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
+          $('#loginBtn').prop('disabled', false);
+        }else{
+          $('#loginBtn').prop('disabled', true); 
+        }    
+      }
+    }); 
+   },
   onChange: function(){    
     this.setState(getState());
 
@@ -42559,6 +42595,7 @@ var appConstants = {
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
 	OPERATOR_SEAT: "OPERATOR_SEAT",
+	LOGIN_SEAT:"LOGIN_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",
 	PLACE_ITEMS: "Place",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
@@ -42693,8 +42730,8 @@ module.exports = appConstants;
 
 },{}],283:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.1.59:8888/ws",
+	INTERFACE_IP : "https://192.168.1.59:5000"
 };
 
 module.exports = configConstants;
@@ -42952,6 +42989,9 @@ var serverMessages = {
     "CLIENTCODE_001" : "Bin {0} selected",
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
+    "CLIENTCODE_409" : "Back seat not supported for this mode",
+    "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
+    "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012":"No Items to Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
@@ -44118,6 +44158,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   getFlag : function(){ 
     return flag;
   },
+  setFlag:function(val){
+    flag = val;
+  },
   seatList : function(){ 
     return currentSeat;
   },
@@ -44152,6 +44195,10 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.OPERATOR_SEAT: 
       showBox(action.data);
+      loginstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.LOGIN_SEAT: 
+      loginstore.setFlag(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SHOW_ERROR_MESSAGE:
@@ -45955,10 +46002,40 @@ var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
-var ws;
+var ws,self;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
+    enableKeyboard:function(){
+        virtualKeyBoard_login = $('#username, #password').keyboard({
+      layout: 'custom',
+      customLayout: {
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+      },
+      css: {
+        container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+      },
+      reposition: true,
+      alwaysOpen: false,
+      initialFocus: true,      
+      visible : function(e, keypressed, el){
+        el.value = '';
+        //$(".authNotify").css("display","none"); 
+      },
+      
+      accepted: function(e, keypressed, el) {
+        var usernameValue = document.getElementById('username').value;
+        var passwordValue = document.getElementById('password').value;
+        if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
+          $('#loginBtn').prop('disabled', false);
+        }else{
+          $('#loginBtn').prop('disabled', true); 
+        }    
+      }
+    }); 
+    },
     connectToWebSocket: function(data) { 
+        self= this;
         ws = new WebSocket(configConstants.WEBSOCKET_IP);
         if ("WebSocket" in window) {
             ws.onopen = function() {
@@ -45968,6 +46045,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
+               console.log(evt.data);
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
+                    var msgCode = evt.data;
+                    console.log(serverMessages[msgCode]);
+                    CommonActions.showErrorMessage(serverMessages[msgCode]);
+                    sessionStorage.setItem('sessionData', null);
+                    CommonActions.loginSeat(false);
+                    utils.enableKeyboard();
+                }else{
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 if(data.hasOwnProperty('data')){
@@ -45979,11 +46065,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
+            }
             };
             ws.onclose = function() {
                 //serverMessages.CLIENTCODE_003;
-                console.log(serverMessages.CLIENTCODE_003);
-                CommonActions.showErrorMessage(serverMessages.CLIENTCODE_003);
+               /* alert(JSON.stringify(evt));
+                if(evt == "CLIENTCODE_409" || evt == "CLIENTCODE_503"){
+                    var msgCode = evt;
+                    console.log(serverMessages[msgCode]);
+                    CommonActions.showErrorMessage(serverMessages[msgCode]);
+                    CommonActions.logoutSession(true);
+                }*/
                 //$("#username, #password").prop('disabled', true);
                 //alert("Connection is closed...");
                 setTimeout(utils.connectToWebSocket, 100);
@@ -46007,6 +46099,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }
     },
     postDataToWebsockets: function(data) { 
+        console.log(JSON.stringify(data));
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },

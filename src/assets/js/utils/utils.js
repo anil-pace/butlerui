@@ -4,10 +4,40 @@ var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
-var ws;
+var ws,self;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
+    enableKeyboard:function(){
+        virtualKeyBoard_login = $('#username, #password').keyboard({
+      layout: 'custom',
+      customLayout: {
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+      },
+      css: {
+        container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+      },
+      reposition: true,
+      alwaysOpen: false,
+      initialFocus: true,      
+      visible : function(e, keypressed, el){
+        el.value = '';
+        //$(".authNotify").css("display","none"); 
+      },
+      
+      accepted: function(e, keypressed, el) {
+        var usernameValue = document.getElementById('username').value;
+        var passwordValue = document.getElementById('password').value;
+        if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
+          $('#loginBtn').prop('disabled', false);
+        }else{
+          $('#loginBtn').prop('disabled', true); 
+        }    
+      }
+    }); 
+    },
     connectToWebSocket: function(data) { 
+        self= this;
         ws = new WebSocket(configConstants.WEBSOCKET_IP);
         if ("WebSocket" in window) {
             ws.onopen = function() {
@@ -17,6 +47,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
+               console.log(evt.data);
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
+                    var msgCode = evt.data;
+                    console.log(serverMessages[msgCode]);
+                    CommonActions.showErrorMessage(serverMessages[msgCode]);
+                    sessionStorage.setItem('sessionData', null);
+                    CommonActions.loginSeat(false);
+                    utils.enableKeyboard();
+                }else{
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 if(data.hasOwnProperty('data')){
@@ -28,11 +67,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();
+            }
             };
             ws.onclose = function() {
                 //serverMessages.CLIENTCODE_003;
-                console.log(serverMessages.CLIENTCODE_003);
-                CommonActions.showErrorMessage(serverMessages.CLIENTCODE_003);
+               /* alert(JSON.stringify(evt));
+                if(evt == "CLIENTCODE_409" || evt == "CLIENTCODE_503"){
+                    var msgCode = evt;
+                    console.log(serverMessages[msgCode]);
+                    CommonActions.showErrorMessage(serverMessages[msgCode]);
+                    CommonActions.logoutSession(true);
+                }*/
                 //$("#username, #password").prop('disabled', true);
                 //alert("Connection is closed...");
                 setTimeout(utils.connectToWebSocket, 100);
@@ -56,6 +101,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }
     },
     postDataToWebsockets: function(data) { 
+        console.log(JSON.stringify(data));
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
     },

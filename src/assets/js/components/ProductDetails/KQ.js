@@ -34,6 +34,7 @@ var KQ = React.createClass({
             }
             else if(event.type == 'click'){
                 _updatedQty++;
+                console.log(_updatedQty);
             }
             
             $('.topArrow').mouseup(function() {

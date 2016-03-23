@@ -76,6 +76,12 @@ var Button1 = React.createClass({
                                  data["event_data"]["event"] = mainstore.getExceptionType();
                                  ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen("damaged_confirm");
+                                break;
+                            case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen("oversized_confirm");
+                                break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
                                 data["event_name"] = "confirm_close_tote";
@@ -115,6 +121,9 @@ var Button1 = React.createClass({
                                 break;
                             case appConstants.GET_REVISED_QUANTITY:
                                  ActionCreators.changePutFrontExceptionScreen("revised_quantity");
+                                break;
+                            case appConstants.MOVE_TO_DAMAGED_CONFIRM:
+                                ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
                                 break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";

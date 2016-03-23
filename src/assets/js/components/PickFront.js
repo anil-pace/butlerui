@@ -289,6 +289,13 @@ var PickFront = React.createClass({
               </div>
             );
           }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
+             var btnComp;
+            console.log("ashish  " + JSON.stringify(this.state.PutFrontDamagedQuantity));
+            if(this.state.PickFrontDamagedQuantity.current_qty > 0 ){
+               btnComp = ( <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} />  );
+            }else{
+              btnComp = ( <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );
+            }
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
@@ -304,7 +311,7 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                     <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} /> 
+                    {btnComp} 
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
@@ -319,7 +326,7 @@ var PickFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please Put Back Damaged Item Quantity into Exception Area.")}</div>
+                      <div className="kq-header">{_("Please put unscannable entities in exception area.")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 

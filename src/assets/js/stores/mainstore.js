@@ -26,6 +26,7 @@ var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _s
     _scanAllowed = true,
     _clearNotification = false,
     _enableButton = true,
+    _putBackExceptionScreen,
     _finishAuditFlag = true;
 
 var modalContent = {
@@ -942,6 +943,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)
+            _putBackExceptionScreen = "damaged";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS)
+            _putBackExceptionScreen = "oversized";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -1095,6 +1100,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
+    },
+
+    setPutBackExceptionScreen: function(data){
+        _putBackExceptionScreen = data;
+    },
+
+    getPutBackExceptionScreen: function(data){
+        return _putBackExceptionScreen;
     },
 
     setPickFrontExceptionScreen: function(data) {
@@ -1338,6 +1351,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -1346,6 +1360,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -1735,6 +1750,10 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.setPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+         case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
+            mainstore.setPutBackExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:

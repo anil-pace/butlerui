@@ -151,6 +151,8 @@ function server_messages_list() {
     _("Waiting for MSU. Please wait and scan later");
     _("System Error. Scanned entity details not available at this time");
     _("No PPS bins empty. Please empty them from Pickback");
+    _("PPS mode change requested:scan not allowed");
+    _("PPS mode change requested:auto staging all bins");
 
     _("Barcode didn't match the current tote barcode");
     _("System not configured for totes");

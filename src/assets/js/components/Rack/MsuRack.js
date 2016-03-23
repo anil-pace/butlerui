@@ -46,13 +46,17 @@ var MsuRack = React.createClass({
         var slotIndexList = [];
         var eachRow =[];
         if(compartment_details.length === 1){
-            slotStart = (compartment_details[0].split(".")[3])%10;
-            slotEnd = (compartment_details[0].split(".")[3])%10;
+            //slotStart = (compartment_details[0].split(".")[3])%10;
+            //slotEnd = (compartment_details[0].split(".")[3])%10;
+            slotStart = parseInt((compartment_details[0].split(".")[3]).replace(/^0+/, ''));
+            slotEnd = parseInt((compartment_details[0].split(".")[3]).replace(/^0+/, ''));
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else if(compartment_details.length === 2){
-            slotStart = (compartment_details[0].split(".")[3])%10;
-            slotEnd = (compartment_details[compartment_details.length - 1].split(".")[3])%10;
+            //slotStart = (compartment_details[0].split(".")[3])%10;
+            //slotEnd = (compartment_details[compartment_details.length - 1].split(".")[3])%10;
+            slotStart = parseInt((compartment_details[0].split(".")[3]).replace(/^0+/, ''));
+            slotEnd = parseInt((compartment_details[compartment_details.length - 1].split(".")[3]).replace(/^0+/, ''));
             selectedRackRow =compartment_details[0].split(".")[2]; 
         }
         else {

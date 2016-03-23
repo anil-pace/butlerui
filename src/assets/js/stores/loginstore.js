@@ -71,6 +71,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   getFlag : function(){ 
     return flag;
   },
+  setFlag:function(val){
+    flag = val;
+  },
   seatList : function(){ 
     return currentSeat;
   },
@@ -105,6 +108,10 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.OPERATOR_SEAT: 
       showBox(action.data);
+      loginstore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.LOGIN_SEAT: 
+      loginstore.setFlag(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SHOW_ERROR_MESSAGE:

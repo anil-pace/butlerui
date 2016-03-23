@@ -34,7 +34,8 @@ var LoginPage = React.createClass({
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              'seat_name': _seat_name
+              //'seat_name': _seat_name
+              'seat_name':this.refs.seat_name.value
           }
       }
       console.log(data);
@@ -50,8 +51,8 @@ var LoginPage = React.createClass({
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['! @ # $ % ^ & * ( ) _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift':   ['! @ # $ % ^ & * ( ) -', '1 2 3 4 5 6 7 8 9 0 {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -80,6 +81,35 @@ var LoginPage = React.createClass({
     mainstore.removeChangeListener(this.onChange);
     loginstore.removeChangeListener(this.onChange);
   },
+   componentWillMount:function(){
+    virtualKeyBoard_login = $('#username, #password').keyboard({
+      layout: 'custom',
+      customLayout: {
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+      },
+      css: {
+        container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+      },
+      reposition: true,
+      alwaysOpen: false,
+      initialFocus: true,      
+      visible : function(e, keypressed, el){
+        el.value = '';
+        //$(".authNotify").css("display","none"); 
+      },
+      
+      accepted: function(e, keypressed, el) {
+        var usernameValue = document.getElementById('username').value;
+        var passwordValue = document.getElementById('password').value;
+        if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
+          $('#loginBtn').prop('disabled', false);
+        }else{
+          $('#loginBtn').prop('disabled', true); 
+        }    
+      }
+    }); 
+   },
   onChange: function(){    
     this.setState(getState());
 

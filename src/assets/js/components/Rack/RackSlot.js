@@ -18,9 +18,10 @@ var RackSlot = React.createClass({
 		
 		
 		var singleSlot = this.props.slotWidthData.map(function(singSlot,index){
-			if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
+			//if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
+				if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(parseInt(singSlot.replace(/^0+/, ''))) >= 0)
 				return(
-						<SingleSlot selected={true} key={singSlot} rackRange={rackRange} index={singSlot%10} type={type} />
+						<SingleSlot selected={true} key={singSlot} rackRange={rackRange} index={singSlot.replace(/^0+/, '')} type={type} />
 					);
 				else
 				return(

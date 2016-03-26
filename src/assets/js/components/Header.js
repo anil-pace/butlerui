@@ -5,6 +5,7 @@ var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
+var appConstants = require('../constants/appConstants');
 
 function getState(){
      return {
@@ -96,7 +97,17 @@ var Header = React.createClass({
         this.setState(getState());
     },
     getExceptionMenu:function(){
-         if(mainstore.getExceptionAllowed().length > 0 )
+        var x = "";
+        for( var prop in appConstants ) {
+        if( appConstants.hasOwnProperty( prop ) ) {
+             if( appConstants[ prop ] == mainstore.getScreenId() )
+                 x = prop;
+        }
+     }
+        console.log("jindal" + x);
+        if(x.search("EXCEPTION") != -1 )
+            this.exceptionMenu = '';
+        else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (<div className="actionItem" onClick = {this.enableException} >
                                         Exception
                                     </div>);

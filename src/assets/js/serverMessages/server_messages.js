@@ -214,7 +214,16 @@ var serverMessages = {
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
-    "PtF002" : "Space Not Available"
+    "PtF002" : "Space Not Available",
+    "PkF001" : "Item Missing/Unscannable",
+    "PkF005" : "Missing Box",
+    "PkB007" : "Disassociate Tote",
+    "PkB008" : "Overwrite Tote Required",
+    "PkB009" : "Reprint",
+    "PkB010" : "Skip Print",
+    "AdF001" : "Items In Box Unscannable",
+    "AdF002" : "Box Unscannable",
+    "AdF003" : "Loose Items Unscannable",
 
 
 };

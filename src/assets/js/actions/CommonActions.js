@@ -218,6 +218,13 @@ var commonActions = {
     });
   },
 
+  changePutBackExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   validateAndSendDataToServer:function(){
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER

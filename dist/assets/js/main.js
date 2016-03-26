@@ -38177,7 +38177,6 @@ var Header = React.createClass({displayName: "Header",
                  x = prop;
         }
      }
-        console.log("jindal" + x);
         if(x.search("EXCEPTION") != -1 )
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
@@ -38230,9 +38229,7 @@ var Header = React.createClass({displayName: "Header",
               )
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
-                React.createElement("div", {className: "actionItem", onClick: this.refresh}, 
-                    "Home"
-                ), 
+             
                 this.exceptionMenu, 
                 React.createElement("div", {className: "actionItem", onClick: this.utilityMenu}, 
                     "Utility", 
@@ -38282,7 +38279,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(e){   
+  handleLogin: function(e){ 
   if(_seat_name == null){
     _seat_name = this.refs.seat_name.value;
   }
@@ -38291,8 +38288,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              //'seat_name': _seat_name
-              'seat_name':this.refs.seat_name.value
+              'seat_name': _seat_name
+              
           }
       }
       console.log(data);
@@ -38405,6 +38402,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
             var ppsOption = seatData;
           }
           else{
+            _seat_name = null;
             var ppsOption =  React.createElement("select", {className: "selectPPS", ref: "seat_name"}, seatData) ;
           }
 
@@ -39362,13 +39360,12 @@ var PickFront = React.createClass({displayName: "PickFront",
     };
     console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
     if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
-      console.log('this.state.PickFrontChecklistOverlayStatus');
       checkListOpen = true;
       setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
       });
-      $('.modal').modal({backdrop: 'static', keyboard: false});
+      $('.modal').modal({backdrop: false, keyboard: false});
       return false;
       }),0)
 
@@ -39376,8 +39373,6 @@ var PickFront = React.createClass({displayName: "PickFront",
 
     }
     else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
-      console.log(this.state.PickFrontChecklistOverlayStatus);
-     
       setTimeout((function (){
           $( ".modal" ).modal('hide');
           //$('.modal-backdrop').remove();
@@ -44583,8 +44578,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 "message": _("Place extra entity in Exception area .")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
-            console.log("jindal");
-            console.log(showModal);
             showModal = false;
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
@@ -46180,7 +46173,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-               console.log(evt.data);
                  if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
                     console.log(serverMessages[msgCode]);

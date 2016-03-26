@@ -25,7 +25,7 @@ var LoginPage = React.createClass({
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(e){   
+  handleLogin: function(e){ 
   if(_seat_name == null){
     _seat_name = this.refs.seat_name.value;
   }
@@ -34,8 +34,8 @@ var LoginPage = React.createClass({
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              //'seat_name': _seat_name
-              'seat_name':this.refs.seat_name.value
+              'seat_name': _seat_name
+              
           }
       }
       console.log(data);
@@ -148,7 +148,8 @@ var LoginPage = React.createClass({
             var ppsOption = seatData;
           }
           else{
-            var ppsOption =  <select className="selectPPS" ref='seat_name'>{seatData}</select> ;
+            _seat_name = null;
+            var ppsOption =  <select className="selectPPS"  ref='seat_name'>{seatData}</select> ;
           }
 
       }else{

@@ -104,7 +104,6 @@ var Header = React.createClass({
                  x = prop;
         }
      }
-        console.log("jindal" + x);
         if(x.search("EXCEPTION") != -1 )
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
@@ -157,9 +156,7 @@ var Header = React.createClass({
               </div>
             </div>
             <div className="actionMenu" id="actionMenu" >
-                <div className="actionItem" onClick = {this.refresh} >
-                    Home
-                </div>
+             
                 {this.exceptionMenu}  
                 <div className="actionItem" onClick = {this.utilityMenu} >
                     Utility

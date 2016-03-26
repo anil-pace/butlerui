@@ -253,8 +253,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 "message": _("Place extra entity in Exception area .")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
-            console.log("jindal");
-            console.log(showModal);
             showModal = false;
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {

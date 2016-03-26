@@ -36691,6 +36691,13 @@ var commonActions = {
     });
   },
 
+  changePutBackExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   validateAndSendDataToServer:function(){
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER
@@ -37524,6 +37531,12 @@ var Button1 = React.createClass({displayName: "Button1",
                                  data["event_data"]["event"] = mainstore.getExceptionType();
                                  ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen("damaged_confirm");
+                                break;
+                            case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen("oversized_confirm");
+                                break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
                                 data["event_name"] = "confirm_close_tote";
@@ -37563,6 +37576,9 @@ var Button1 = React.createClass({displayName: "Button1",
                                 break;
                             case appConstants.GET_REVISED_QUANTITY:
                                  ActionCreators.changePutFrontExceptionScreen("revised_quantity");
+                                break;
+                            case appConstants.MOVE_TO_DAMAGED_CONFIRM:
+                                ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
                                 break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
@@ -38062,6 +38078,7 @@ var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
+var appConstants = require('../constants/appConstants');
 
 function getState(){
      return {
@@ -38153,7 +38170,17 @@ var Header = React.createClass({displayName: "Header",
         this.setState(getState());
     },
     getExceptionMenu:function(){
-         if(mainstore.getExceptionAllowed().length > 0 )
+        var x = "";
+        for( var prop in appConstants ) {
+        if( appConstants.hasOwnProperty( prop ) ) {
+             if( appConstants[ prop ] == mainstore.getScreenId() )
+                 x = prop;
+        }
+     }
+        console.log("jindal" + x);
+        if(x.search("EXCEPTION") != -1 )
+            this.exceptionMenu = '';
+        else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
                                         "Exception"
                                     ));
@@ -38227,7 +38254,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/svgConstants":285,"../stores/mainstore":297,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":282,"../constants/svgConstants":285,"../stores/mainstore":297,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -39541,6 +39568,13 @@ var PickFront = React.createClass({displayName: "PickFront",
               )
             );
           }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
+             var btnComp;
+            console.log("ashish  " + JSON.stringify(this.state.PutFrontDamagedQuantity));
+            if(this.state.PickFrontDamagedQuantity.current_qty > 0 ){
+               btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})  );
+            }else{
+              btnComp = ( React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
+            }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
@@ -39556,7 +39590,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                     React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})
+                    btnComp
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -39571,7 +39605,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please Put Back Damaged Item Quantity into Exception Area."))
+                      React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -41462,12 +41496,33 @@ var PutBack = React.createClass({displayName: "PutBack",
         break; 
       case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
           this._navigation = '';
+          console.log(JSON.stringify(this.state.PutBackKQDetails));
+          if(this.state.PutBackExceptionScreen == "damaged")
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        else if(this.state.PutBackExceptionScreen == "damaged_confirm")
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
+                    )
+                  ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
@@ -41480,6 +41535,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         break; 
        case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
           this._navigation = '';
+          if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
@@ -41489,6 +41545,25 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          else if(this.state.PutBackExceptionScreen == "oversized_confirm")
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put oversized entities in exception area."))
+                    )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
@@ -41529,7 +41604,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -41785,6 +41860,13 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
           }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+            var btnComp;
+            console.log("ashish  " + JSON.stringify(this.state.PutFrontDamagedQuantity));
+            if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
+               btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.MOVE_TO_DAMAGED_CONFIRM}) );
+            }else{
+              btnComp = ( React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
+            }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
@@ -41800,11 +41882,30 @@ var PutFront = React.createClass({displayName: "PutFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                   btnComp
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing_confirm"){
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41818,7 +41919,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Take the Items out from the Bin")
+                      React.createElement("div", {className: "kq-header"}, "Take the Items out from the Slot")
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -42609,9 +42710,13 @@ var appConstants = {
 	PICK : "pick",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
+	CHANGE_DAMAGED_SCREEN_CONFIRM:"CHANGE_DAMAGED_SCREEN_CONFIRM",
+	CHANGE_OVERSIZED_SCREEN_CONFIRM:"CHANGE_OVERSIZED_SCREEN_CONFIRM",
+	MOVE_TO_DAMAGED_CONFIRM:"MOVE_TO_DAMAGED_CONFIRM",
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
 	SET_PUT_FRONT_DATA:"SET_PUT_FRONT_DATA",
+	CHANGE_PUT_BACK_EXCEPTION_SCREEN:"CHANGE_PUT_BACK_EXCEPTION_SCREEN",
 	POPUP_VISIBLE:"POPUP_VISIBLE",
 	PUT_BACK_STAGE:"put_back_stage",
 	REPRINT_INVOICE:"REPRINT_INVOICE",
@@ -42731,8 +42836,8 @@ module.exports = appConstants;
 
 },{}],283:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost:8888/wss",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 
 module.exports = configConstants;
@@ -43071,7 +43176,16 @@ var serverMessages = {
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
-    "PtF002" : "Space Not Available"
+    "PtF002" : "Space Not Available",
+    "PkF001" : "Item Missing/Unscannable",
+    "PkF005" : "Missing Box",
+    "PkB007" : "Disassociate Tote",
+    "PkB008" : "Overwrite Tote Required",
+    "PkB009" : "Reprint",
+    "PkB010" : "Skip Print",
+    "AdF001" : "Items In Box Unscannable",
+    "AdF002" : "Box Unscannable",
+    "AdF003" : "Loose Items Unscannable",
 
 
 };
@@ -44242,6 +44356,7 @@ var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _s
     _scanAllowed = true,
     _clearNotification = false,
     _enableButton = true,
+    _putBackExceptionScreen,
     _finishAuditFlag = true;
 
 var modalContent = {
@@ -45158,6 +45273,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)
+            _putBackExceptionScreen = "damaged";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS)
+            _putBackExceptionScreen = "oversized";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -45311,6 +45430,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
+    },
+
+    setPutBackExceptionScreen: function(data){
+        _putBackExceptionScreen = data;
+    },
+
+    getPutBackExceptionScreen: function(data){
+        return _putBackExceptionScreen;
     },
 
     setPickFrontExceptionScreen: function(data) {
@@ -45554,6 +45681,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -45562,6 +45690,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -45951,6 +46080,10 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.setPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+         case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
+            mainstore.setPutBackExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:

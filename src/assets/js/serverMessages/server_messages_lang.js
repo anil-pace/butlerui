@@ -297,5 +297,22 @@ function server_messages_list() {
     _("Product Desc");
     _("Product SKU");
     _("Product Type");
+
+    _("Entity Unscannable");
+    _("Extra Entities in Bin");
+    _("Entity Missing / Unscannable");
+    _("Space Not Available");
+    _("Item Missing/Unscannable");
+    _("Missing Box");
+    _("Disassociate Tote");
+    _("Override Tote Required")
+    _("Reprint");
+    _("Skip Print");
+    _("Items In Box Unscannable");
+    _("Box Unscannable");
+    _("Loose Items Unscannable");
+    _("Please put unscannable entities in exception area.");
+    _("Please put oversized entities in exception area.");
+    _("Take the Items out from the Slot");
     
 }

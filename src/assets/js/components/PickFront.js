@@ -83,13 +83,12 @@ var PickFront = React.createClass({
     };
     console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
     if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
-      console.log('this.state.PickFrontChecklistOverlayStatus');
       checkListOpen = true;
       setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
       });
-      $('.modal').modal({backdrop: 'static', keyboard: false});
+      $('.modal').modal({backdrop: false, keyboard: false});
       return false;
       }),0)
 
@@ -97,8 +96,6 @@ var PickFront = React.createClass({
 
     }
     else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
-      console.log(this.state.PickFrontChecklistOverlayStatus);
-     
       setTimeout((function (){
           $( ".modal" ).modal('hide');
           //$('.modal-backdrop').remove();

@@ -41914,7 +41914,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Take the Items out from the Slot")
+                      React.createElement("div", {className: "kq-header"}, _("Take the Items out from the Slot"))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -41933,7 +41933,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Space Available For"), 
+                      React.createElement("div", {className: "kq-header"}, _("Space Available For")), 
                       React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
                     )
                   ), 
@@ -42981,7 +42981,7 @@ var serverMessages = {
     "PtB.E.012" : "No free bins. Please scan later",
     "PtB.E.013" : "Wrong PPTL pressed. Please try another",
     "PtB.E.014" : "{0} excess entities found in tote. Please put entities in exception area and confirm", 
-    "PtB.E.015" : "Entity not expected in tote. Please put entities in exception area and confirm",
+    "PtB.E.015" : "Entity not expected in tote. Please put entity in exception area and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same SKU to complete this exception",
     "PtB.E.018" : "Entity scan not expected.",  
@@ -43175,7 +43175,7 @@ var serverMessages = {
     "PkF001" : "Item Missing/Unscannable",
     "PkF005" : "Missing Box",
     "PkB007" : "Disassociate Tote",
-    "PkB008" : "Overwrite Tote Required",
+    "PkB008" : "Override Tote Required",
     "PkB009" : "Reprint",
     "PkB010" : "Skip Print",
     "AdF001" : "Items In Box Unscannable",

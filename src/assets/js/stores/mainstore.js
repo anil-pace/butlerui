@@ -579,7 +579,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('reconciliation')) {
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Tote Details"), "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
             data["tableRows"].push([new this.tableCol(_("Product SKU"), "enabled", false, "small", false, true, true, false), new this.tableCol(_("Expected Quantity"), "enabled", false, "small", true, false, true, false, true), new this.tableCol(_("Actual Quantity"), "enabled", false, "small", true, false, true, false, true)]);

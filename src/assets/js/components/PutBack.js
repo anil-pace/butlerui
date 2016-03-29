@@ -123,12 +123,23 @@ var PutBack = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var subComponent='';
           var messageType = 'large';
+          var m = {
+            "details": [],
+            "code": "PtB.E.020",
+            "description": "Tote Match successfully",
+            "level": "info"
+          };
+          if(this.state.PutBackReconciliation["tableRows"].length > 1 )
             subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
                     <TabularData data = {this.state.PutBackReconciliation}/>
                   </div>
                 </div>
+              );
+          else
+            subComponent=(
+                <Reconcile navMessagesJson={this.props.navMessagesJson} message={m} />
               );
             messageType = "small";
           this._component = (
@@ -254,7 +265,7 @@ var PutBack = React.createClass({
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

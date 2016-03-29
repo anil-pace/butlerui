@@ -41473,12 +41473,23 @@ var PutBack = React.createClass({displayName: "PutBack",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var subComponent='';
           var messageType = 'large';
+          var m = {
+            "details": [],
+            "code": "PtB.E.020",
+            "description": "Tote Match successfully",
+            "level": "info"
+          };
+          if(this.state.PutBackReconciliation["tableRows"].length > 1 )
             subComponent=(
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement("div", {className: "audit-reconcile-left"}, 
                     React.createElement(TabularData, {data: this.state.PutBackReconciliation})
                   )
                 )
+              );
+          else
+            subComponent=(
+                React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: m})
               );
             messageType = "small";
           this._component = (
@@ -41604,7 +41615,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -42836,8 +42847,8 @@ module.exports = appConstants;
 
 },{}],283:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.214:8888/ws",
+	INTERFACE_IP : "https://192.168.3.214:5000"
 };
 
 module.exports = configConstants;
@@ -42974,7 +42985,7 @@ var serverMessages = {
     "PtB.H.011" : "Please put entity in exception area and confirm",
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",
-    "PtB.E.003" : "No matching tote found",
+    "PtB.E.003" : "Close current tote first",
     "PtB.E.004" : "Wrong entity scanned. Please scan tote",
     "PtB.E.005" : "No entities added yet. Scan entities and then press PPTL",
     "PtB.E.006" : "Wrong entity scanned. Please scan Container/Item.",
@@ -42989,8 +43000,9 @@ var serverMessages = {
     "PtB.E.015" : "Entity not expected in tote. Please put entities in exception area and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same SKU to complete this exception",
-    "PtB.E.018" : "Entity scan not expected.",  
-    "PtB.E.019" : "Tote not present in database.",  
+    "PtB.E.018" : "Expecting tote closure.",  
+    "PtB.E.019" : "Tote not present in database.",
+    "PtB.E.020" : "Tote matched .",  
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
@@ -44909,7 +44921,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('reconciliation')) {
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Tote Details"), "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
             data["tableRows"].push([new this.tableCol(_("Product SKU"), "enabled", false, "small", false, true, true, false), new this.tableCol(_("Expected Quantity"), "enabled", false, "small", true, false, true, false, true), new this.tableCol(_("Actual Quantity"), "enabled", false, "small", true, false, true, false, true)]);

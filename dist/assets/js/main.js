@@ -38177,7 +38177,6 @@ var Header = React.createClass({displayName: "Header",
                  x = prop;
         }
      }
-        console.log("jindal" + x);
         if(x.search("EXCEPTION") != -1 )
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
@@ -38230,9 +38229,7 @@ var Header = React.createClass({displayName: "Header",
               )
             ), 
             React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
-                React.createElement("div", {className: "actionItem", onClick: this.refresh}, 
-                    "Home"
-                ), 
+             
                 this.exceptionMenu, 
                 React.createElement("div", {className: "actionItem", onClick: this.utilityMenu}, 
                     "Utility", 
@@ -38282,7 +38279,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(e){   
+  handleLogin: function(e){ 
   if(_seat_name == null){
     _seat_name = this.refs.seat_name.value;
   }
@@ -38291,8 +38288,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              //'seat_name': _seat_name
-              'seat_name':this.refs.seat_name.value
+              'seat_name': _seat_name
+              
           }
       }
       console.log(data);
@@ -38405,6 +38402,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
             var ppsOption = seatData;
           }
           else{
+            _seat_name = null;
             var ppsOption =  React.createElement("select", {className: "selectPPS", ref: "seat_name"}, seatData) ;
           }
 
@@ -39362,13 +39360,12 @@ var PickFront = React.createClass({displayName: "PickFront",
     };
     console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
     if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
-      console.log('this.state.PickFrontChecklistOverlayStatus');
       checkListOpen = true;
       setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'pick_checklist'
       });
-      $('.modal').modal({backdrop: 'static', keyboard: false});
+      $('.modal').modal({backdrop: false, keyboard: false});
       return false;
       }),0)
 
@@ -39376,8 +39373,6 @@ var PickFront = React.createClass({displayName: "PickFront",
 
     }
     else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
-      console.log(this.state.PickFrontChecklistOverlayStatus);
-     
       setTimeout((function (){
           $( ".modal" ).modal('hide');
           //$('.modal-backdrop').remove();
@@ -41930,7 +41925,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Take the Items out from the Slot")
+                      React.createElement("div", {className: "kq-header"}, _("Take the Items out from the Slot"))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -41949,7 +41944,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Space Available For"), 
+                      React.createElement("div", {className: "kq-header"}, _("Space Available For")), 
                       React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
                     )
                   ), 
@@ -42997,7 +42992,7 @@ var serverMessages = {
     "PtB.E.012" : "No free bins. Please scan later",
     "PtB.E.013" : "Wrong PPTL pressed. Please try another",
     "PtB.E.014" : "{0} excess entities found in tote. Please put entities in exception area and confirm", 
-    "PtB.E.015" : "Entity not expected in tote. Please put entities in exception area and confirm",
+    "PtB.E.015" : "Entity not expected in tote. Please put entity in exception area and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same SKU to complete this exception",
     "PtB.E.018" : "Expecting tote closure.",  
@@ -43192,7 +43187,7 @@ var serverMessages = {
     "PkF001" : "Item Missing/Unscannable",
     "PkF005" : "Missing Box",
     "PkB007" : "Disassociate Tote",
-    "PkB008" : "Overwrite Tote Required",
+    "PkB008" : "Override Tote Required",
     "PkB009" : "Reprint",
     "PkB010" : "Skip Print",
     "AdF001" : "Items In Box Unscannable",
@@ -44595,8 +44590,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 "message": _("Place extra entity in Exception area .")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
-            console.log("jindal");
-            console.log(showModal);
             showModal = false;
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
@@ -46192,7 +46185,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-               console.log(evt.data);
                  if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
                     console.log(serverMessages[msgCode]);

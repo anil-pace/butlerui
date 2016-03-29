@@ -216,7 +216,7 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Take the Items out from the Slot"}</div>
+                      <div className="kq-header">{_("Take the Items out from the Slot")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
@@ -235,7 +235,7 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Space Available For"}</div>
+                      <div className="kq-header">{_("Space Available For")}</div>
                       <KQ scanDetailsGood = {this.state.PutFrontKQQuantity}  />
                     </div>
                   </div>

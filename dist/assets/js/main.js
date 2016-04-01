@@ -38714,7 +38714,7 @@ function loadComponent(modalType,modalData){
           React.createElement("div", null, 
             React.createElement("div", {className: "row"}, 
               React.createElement("div", {className: "col-md-12"}, 
-                React.createElement("div", {className: "title-textbox"}, "Enter Barcode"), 
+                React.createElement("div", {className: "title-textbox"}, "Enter Scanner Id"), 
                 React.createElement("div", {className: "textBox-div"}, 
                   React.createElement("input", {className: "width95", type: "text", id: "add_scanner", onClick: attachKeyboard.bind(this, 'add_scanner')})
                 )
@@ -39365,7 +39365,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               data:data,
               type:'pick_checklist'
       });
-      $('.modal').modal({backdrop: false, keyboard: false});
+      $('.modal').modal();
       return false;
       }),0)
 
@@ -39491,7 +39491,8 @@ var PickFront = React.createClass({displayName: "PickFront",
                 ), 
                 React.createElement("div", {className: "actions"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                   editButton
+                   editButton, 
+                   React.createElement(Button1, {disabled: false, text: _("Edit last Details"), onClick: this.showModal.bind(this,this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex), color: "orange"})
                 )
               )
             );
@@ -42842,8 +42843,8 @@ module.exports = appConstants;
 
 },{}],283:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.214:8888/ws",
-	INTERFACE_IP : "https://192.168.3.214:5000"
+	WEBSOCKET_IP : "ws://192.168.3.150:8888/ws",
+	INTERFACE_IP : "https://192.168.3.150:5000"
 };
 
 module.exports = configConstants;
@@ -42875,7 +42876,9 @@ var resourceConstants = {
 	CLIENTCODE_013 :'CLIENTCODE_013',
 	CLIENTCODE_014 :"CLIENTCODE_014",
 	CLIENTCODE_015 : "CLIENTCODE_015",
-	CLIENTCODE_016 : 'CLIENTCODE_016'
+	CLIENTCODE_016 : 'CLIENTCODE_016',
+	CLIENTCODE_409 : "CLIENTCODE_409",
+	CLIENTCODE_400 : "CLIENTCODE_400"
  
 };
 module.exports = resourceConstants;
@@ -43120,6 +43123,8 @@ var serverMessages = {
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
+    "CLIENTCODE_409" : "Peripheral already added",
+    "CLIENTCODE_400" : "Bad Data",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
     "PkF.E.012" : "Data capture failed at item {0}",       
@@ -45598,7 +45603,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 dataNotification["code"]= resourceConstants.CLIENTCODE_016;
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
-        }else {
+        }else if(status == "409"){
+            dataNotification["code"]= resourceConstants.CLIENTCODE_409;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }else if(status == "400"){
+            dataNotification["code"]= resourceConstants.CLIENTCODE_400;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }
+        else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";
@@ -46185,6 +46199,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
+               console.log(evt.data);
                  if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
                     console.log(serverMessages[msgCode]);
@@ -46360,11 +46375,23 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'accept': 'application/json',
                 'Authentication-Token' : authentication_token
             }
-        }).done(function(response) {
+            /*complete:function(xhr,textStatus) {
+                if(xhr.status == 409)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
+
+            //utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
+        }*/
+        }).done(function(response,statusText,xhr) {
             utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
+            if(jqXhr.status == 409)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
+            else if(jqXhr.status == 400)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '400', method)
+            else
+                utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
                     
         });
     },

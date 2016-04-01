@@ -88,7 +88,7 @@ var PickFront = React.createClass({
               data:data,
               type:'pick_checklist'
       });
-      $('.modal').modal({backdrop: false, keyboard: false});
+      $('.modal').modal();
       return false;
       }),0)
 
@@ -215,6 +215,7 @@ var PickFront = React.createClass({
                 <div className = 'actions'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
+                   <Button1 disabled = {false} text = {_("Edit last Details")} onClick = {this.showModal.bind(this,this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex)} color={"orange"} />
                 </div>
               </div>
             );

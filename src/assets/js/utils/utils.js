@@ -223,11 +223,23 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'accept': 'application/json',
                 'Authentication-Token' : authentication_token
             }
-        }).done(function(response) {
+            /*complete:function(xhr,textStatus) {
+                if(xhr.status == 409)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
+
+            //utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
+        }*/
+        }).done(function(response,statusText,xhr) {
             utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
+            if(jqXhr.status == 409)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
+            else if(jqXhr.status == 400)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '400', method)
+            else
+                utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
                     
         });
     },

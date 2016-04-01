@@ -1261,7 +1261,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 dataNotification["code"]= resourceConstants.CLIENTCODE_016;
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
-        }else {
+        }else if(status == "409"){
+            dataNotification["code"]= resourceConstants.CLIENTCODE_409;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }else if(status == "400"){
+            dataNotification["code"]= resourceConstants.CLIENTCODE_400;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }
+        else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";

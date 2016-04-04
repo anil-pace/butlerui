@@ -175,7 +175,7 @@ function server_messages_list() {
     _("Wrong barcode scanned");
     _("Please scan the tote first and then scan PPTL barcode");
     _("No tote scanned");
-    _("'Override Tote Exception' cannot be raised for bins with totes associated");
+    _("Override Tote Exception cannot be raised for bins with totes associated");
     _("PPTL scan not allowed. System not configured for tote");
     _("PPTL scan not allowed");
     _("Tote scan expected");
@@ -297,7 +297,8 @@ function server_messages_list() {
     _("Product Desc");
     _("Product SKU");
     _("Product Type");
-
+    _("Tote already associated with bin {0}");
+    _("Entity Scan not expected. Press PPTL");
     _("Entity Unscannable");
     _("Extra Entities in Bin");
     _("Entity Missing / Unscannable");

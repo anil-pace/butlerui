@@ -220,7 +220,7 @@ var Bin = React.createClass({
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
 
             return (
                 <div className = "bin selected">
@@ -228,6 +228,17 @@ var Bin = React.createClass({
                  </span>   
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+
+            return (
+                <div className = "bin selected">
+                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
+                 </span>   
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl selected" >{compData.ppsbin_id}</div>
                 </div>
             );
         }

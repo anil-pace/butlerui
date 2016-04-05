@@ -50,6 +50,9 @@ var Button1 = React.createClass({
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.SEND_KQ_QTY_1:
+                                ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
+                                break;
                             case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
@@ -71,10 +74,11 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
-                                 data["event_name"] = "put_back_exception";
-                                 data["event_data"]["action"] ="finish_exception";
-                                 data["event_data"]["event"] = mainstore.getExceptionType();
-                                 ActionCreators.postDataToInterface(data);
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                                ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
                                 ActionCreators.changePutBackExceptionScreen("damaged_confirm");

@@ -945,6 +945,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "damaged";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS)
             _putBackExceptionScreen = "oversized";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
+            _putBackExceptionScreen = "extra_quantity";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else

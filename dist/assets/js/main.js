@@ -37527,8 +37527,15 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                            case appConstants.SEND_KQ_QTY:
+                            case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
+                                break;
+                            case appConstants.SEND_KQ_QTY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                                ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                                   data["event_name"] = "put_back_exception";
@@ -41903,7 +41910,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY_1})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -45599,6 +45606,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "damaged";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS)
             _putBackExceptionScreen = "oversized";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
+            _putBackExceptionScreen = "extra_quantity";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else

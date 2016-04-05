@@ -246,7 +246,7 @@ var PutBack = React.createClass({
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY_1} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

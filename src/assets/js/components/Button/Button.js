@@ -50,8 +50,15 @@ var Button1 = React.createClass({
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                            case appConstants.SEND_KQ_QTY:
+                            case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
+                                break;
+                            case appConstants.SEND_KQ_QTY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                                ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                                   data["event_name"] = "put_back_exception";

@@ -20,26 +20,6 @@ var Reconcile = require("./Reconcile");
 
 
 function getStateData(){
- /* return {
-           StageActive:mainstore.getStageActiveStatus(),
-           StageAllActive:mainstore.getStageAllActiveStatus(),
-           PutBackNavData : mainstore.getNavData(),
-           PutBackNotification : mainstore.getNotificationData(),
-           PutBackBinData: mainstore.getBinData(),
-           PutBackScreenId:mainstore.getScreenId(),
-           PutBackScanDetails : mainstore.scanDetails(),
-           PutBackProductDetails : mainstore.productDetails(),
-           PutBackServerNavData : mainstore.getServerNavData(),
-           PutBackItemUid : mainstore.getItemUid(),
-           PutBackReconciliation : mainstore.getReconcileData(),
-           PutBackToteId : mainstore.getToteId(),
-           PutBackExceptionStatus:mainstore.getExceptionStatus(),
-           PutBackExceptionData:mainstore.getExceptionData(),
-           PutBackKQDetails:mainstore.getScanDetails(),
-           PutBackExceptionProductDetails:mainstore.getItemDetailsData()
-
-
-    };*/
     return mainstore.getScreenData();
 
 }
@@ -258,6 +238,7 @@ var PutBack = React.createClass({
         break; 
       case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
           this._navigation = '';
+          if(this.state.PutBackExceptionScreen == "extra_quantity")
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
@@ -265,7 +246,26 @@ var PutBack = React.createClass({
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY_1} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Please put extra entities in exception area.")}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_ITEM_PLACE_IN_IRT} />    
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

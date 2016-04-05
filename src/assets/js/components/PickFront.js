@@ -15,6 +15,7 @@ var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var BoxSerial = require('./BoxSerial.js');
 var Modal = require('./Modal/Modal');
+var Modal1 = require('./Modal/Modal1');
 var CurrentSlot = require('./CurrentSlot');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
@@ -24,24 +25,7 @@ var TabularData = require('./TabularData');
 var checkListOpen = false;
 
 function getStateData(){
-  /*return {
-           PickFrontNavData : PickFrontStore.getNavData(),
-           PickFrontNotification : PickFrontStore.getNotificationData(),
-           PickFrontBinData: PickFrontStore.getBinData(),
-           PickFrontScreenId:PickFrontStore.getScreenId(),
-           PickFrontScanDetails : PickFrontStore.scanDetails(),
-           PickFrontProductDetails : PickFrontStore.productDetails(),
-           PickFrontRackDetails: PickFrontStore.getRackDetails(),
-           PickFrontBoxDetails: PickFrontStore.getBoxDetails(),
-           PickFrontServerNavData : PickFrontStore.getServerNavData(),
-           PickFrontCurrentBin:PickFrontStore.getCurrentSelectedBin(),
-           PickFrontItemUid : PickFrontStore.getItemUid(),
-           PickFrontSlotDetails :PickFrontStore.getCurrentSlot(),
-           PickFrontChecklistDetails :PickFrontStore.getChecklistDetails(),
-           PickFrontChecklistIndex : PickFrontStore.getChecklistIndex(),
-           PickFrontChecklistOverlayStatus :PickFrontStore.getChecklistOverlayStatus()
-    };*/
-    return mainstore.getScreenData();
+     return mainstore.getScreenData();
 };
 
 var PickFront = React.createClass({
@@ -75,7 +59,9 @@ var PickFront = React.createClass({
     else
       this._notification = "";
   },
-  showModal:function(data,index){
+  showModal:function(data,index,manual){
+    if(manual==true)
+      checkListOpen = false;
     var data ={
       'checklist_data' : data,
       "checklist_index" : index,
@@ -89,6 +75,8 @@ var PickFront = React.createClass({
               type:'pick_checklist'
       });
       $('.modal').modal();
+      //$('.modal').data('bs.modal').escape(); // reset keyboard
+      $('.modal').data('bs.modal').options.backdrop = 'static';
       return false;
       }),0)
 
@@ -99,6 +87,11 @@ var PickFront = React.createClass({
       setTimeout((function (){
           $( ".modal" ).modal('hide');
           //$('.modal-backdrop').remove();
+          //$('.modal').on('hidden.bs.modal', function (e) {
+            $('.modal').data('bs.modal').escape(); // reset keyboard
+            $('.modal').data('bs.modal').options.backdrop = true;
+            $('button.close', $('.modal')).show();
+          //});
       }), 0)
       checkListOpen = false;
      /* $('.modal').css('display', 'none');
@@ -206,7 +199,7 @@ var PickFront = React.createClass({
         }
         this._component = (
               <div className='grid-container'>
-                <Modal />             
+                <Modal />          
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
@@ -215,7 +208,6 @@ var PickFront = React.createClass({
                 <div className = 'actions'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
-                   <Button1 disabled = {false} text = {_("Edit last Details")} onClick = {this.showModal.bind(this,this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex)} color={"orange"} />
                 </div>
               </div>
             );
@@ -226,6 +218,7 @@ var PickFront = React.createClass({
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
          if(this.state.PickFrontExceptionStatus == false){
+          console.log("jindal");
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
           var editButton = ( <Button1 disabled = {false} text = {_("Edit Details")} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );

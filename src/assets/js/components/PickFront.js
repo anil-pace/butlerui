@@ -218,13 +218,13 @@ var PickFront = React.createClass({
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
          if(this.state.PickFrontExceptionStatus == false){
+          console.log("jindal");
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
           var editButton = ( <Button1 disabled = {false} text = {_("Edit Details")} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';
         }
-        if(this.state.PickFrontChecklistOverlayStatus === true)
         this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -235,7 +235,6 @@ var PickFront = React.createClass({
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
                     {editButton}
-                    <a className="custom-button orange" onClick = {this.showModal.bind(this,this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex,true)} >{_("Edit last Details")}</a>
                 </div>
               </div>
             );

@@ -37275,6 +37275,17 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        }
         else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && compData.ppsbin_state == 'pick_processed') ){
 
             return (
@@ -42843,7 +42854,7 @@ module.exports = appConstants;
 
 },{}],283:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/ws",
+	WEBSOCKET_IP : "wss://localhost/wss",
 	INTERFACE_IP : "https://localhost"
 };
 
@@ -43037,7 +43048,6 @@ var serverMessages = {
     "PtB.I.012" : "{0} oversized entities recorded.WMS notified",
     "PtB.I.013" : "Exception cancelled",
     "PtB.I.014" : "Cancelled excess entity in tote",
-    "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PtB.I.015" : "Cancelled invalid entity in tote",
     "PtB.I.016" : "Invalid entity in tote recorded",
     "PtB.I.017" : "PPS mode change requested:scan not allowed",
@@ -43050,7 +43060,7 @@ var serverMessages = {
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
     "PkF.E.011" : "Data capture failed at item {0}",
-    "PkF.E.013" : "Scan items and place in bin {0}",
+    "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PkF.E.014" : "Press PPTL for bin {0} to confirm",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
@@ -43154,6 +43164,8 @@ var serverMessages = {
     "PkB.E.005" : "Wrong PPTL pressed",
     "PkB.E.006" : "Tote association failed. Repeat scan operation",
     "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
+    "PkB.E.008": "Tote already associated with bin {0}",
+    "PkB.E.009": "Entity Scan not expected. Press PPTL",
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
@@ -43166,7 +43178,7 @@ var serverMessages = {
     "PkB.W.003" : "Wrong barcode scanned",
     "PkB.W.004" : "Please scan the tote first and then scan PPTL barcode",
     "PkB.W.005" : "No tote scanned",
-    "PkB.W.006" : "'Override Tote Exception' cannot be raised for bins with totes associated",
+    "PkB.W.006" : "Override Tote Exception cannot be raised for bins with totes associated",
     "PkB.W.007" : "PPTL scan not allowed. System not configured for tote",
     "PkB.W.008" : "PPTL scan not allowed",
     "PkB.W.009" : "Tote scan expected",

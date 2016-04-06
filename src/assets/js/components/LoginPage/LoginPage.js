@@ -130,21 +130,29 @@ var LoginPage = React.createClass({
     var seatData;
     var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
+          var parseSeatID;
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
+               parseSeatID = null;
                return (
                   <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_type} {data.pps_id}</option>
                 )
             }else{
-              var parseSeatID = data.split('_');
+              parseSeatID = data.split('_');
               _seat_name = data;
               seat_name = parseSeatID[0] +' '+parseSeatID[1];
+              if (seat_name.charAt(seat_name.length - 1) == '#') {
+                seat_name = seat_name.substr(0, seat_name.length - 1);
+              }
+              if (_seat_name.charAt(_seat_name.length - 1) == '#') {
+                _seat_name = _seat_name.substr(0, _seat_name.length - 1);
+              }
               return (
                 <header className="ppsSeat" key={'pps' + index}  >PPS {seat_name}</header>
               )
             }
           });
-          if(this.state.seatList.length == 1){
+          if(parseSeatID != null){
             var ppsOption = seatData;
           }
           else{

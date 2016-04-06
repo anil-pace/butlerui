@@ -38410,21 +38410,29 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var seatData;
     var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
+          var parseSeatID;
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
+               parseSeatID = null;
                return (
                   React.createElement("option", {key: 'pps' + index, value: data.seat_name}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
             }else{
-              var parseSeatID = data.split('_');
+              parseSeatID = data.split('_');
               _seat_name = data;
               seat_name = parseSeatID[0] +' '+parseSeatID[1];
+              if (seat_name.charAt(seat_name.length - 1) == '#') {
+                seat_name = seat_name.substr(0, seat_name.length - 1);
+              }
+              if (_seat_name.charAt(_seat_name.length - 1) == '#') {
+                _seat_name = _seat_name.substr(0, _seat_name.length - 1);
+              }
               return (
                 React.createElement("header", {className: "ppsSeat", key: 'pps' + index}, "PPS ", seat_name)
               )
             }
           });
-          if(this.state.seatList.length == 1){
+          if(parseSeatID != null){
             var ppsOption = seatData;
           }
           else{
@@ -46520,10 +46528,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-               console.log(evt.data);
-                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
-                    console.log(serverMessages[msgCode]);
                     CommonActions.showErrorMessage(serverMessages[msgCode]);
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
@@ -46647,8 +46653,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }).done(function(response) {
 
-        }).fail(function(jqXhr) {
-
+        }).fail(function(jqXhr) { console.log(jqXhr);
+            if(jqXhr.status == 401){
+                var msgCode = "CLIENTCODE_401";
+                CommonActions.showErrorMessage(serverMessages[msgCode]);
+                sessionStorage.setItem('sessionData', null);
+                CommonActions.loginSeat(false);
+                utils.enableKeyboard();
+            }
         });
     },
     generateSessionId: function() {

@@ -37016,9 +37016,9 @@ var Audit = React.createClass({displayName: "Audit",
 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
-          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+          if(this.state.AuditScreenId == appConstants.SCANNER_MANAGEMENT){
           _button = (React.createElement("div", {className: "staging-action"}, 
                           React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
                           React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
@@ -37031,10 +37031,10 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickFrontSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.AuditSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -46366,6 +46366,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionData"] = this.getExceptionData();
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditPpsMode"] = this.getPpsMode();
+                data["AuditSeatType"] = this.getSeatType();
 
                 break;
             default:

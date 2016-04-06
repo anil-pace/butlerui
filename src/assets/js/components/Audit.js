@@ -258,9 +258,9 @@ var Audit = React.createClass({
 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
-          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+          this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
           var _button;
-          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+          if(this.state.AuditScreenId == appConstants.SCANNER_MANAGEMENT){
           _button = (<div className = 'staging-action' >                          
                           <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
                           <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
@@ -273,10 +273,10 @@ var Audit = React.createClass({
               <div className='grid-container audit-reconcilation'>
                   <div className="row scannerHeader">
                     <div className="col-md-6">
-                      <div className="ppsMode"> PPS Mode : {this.state.PickFrontPpsMode.toUpperCase()} </div>
+                      <div className="ppsMode"> PPS Mode : {this.state.AuditPpsMode.toUpperCase()} </div>
                     </div>
                     <div className="col-md-6">
-                      <div className="seatType"> Seat Type : {this.state.PickFrontSeatType.toUpperCase()}</div>
+                      <div className="seatType"> Seat Type : {this.state.AuditSeatType.toUpperCase()}</div>
                     </div>
                   </div>
                   <TabularData data = {this.state.utility}/>

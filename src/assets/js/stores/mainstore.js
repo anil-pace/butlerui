@@ -1667,6 +1667,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionData"] = this.getExceptionData();
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditPpsMode"] = this.getPpsMode();
+                data["AuditSeatType"] = this.getSeatType();
 
                 break;
             default:

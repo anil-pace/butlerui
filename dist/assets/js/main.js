@@ -37016,9 +37016,9 @@ var Audit = React.createClass({displayName: "Audit",
 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
-          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
+          if(this.state.AuditScreenId == appConstants.SCANNER_MANAGEMENT){
           _button = (React.createElement("div", {className: "staging-action"}, 
                           React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
                           React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
@@ -37031,10 +37031,10 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickFrontSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.AuditSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -38440,21 +38440,29 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var seatData;
     var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
+          var parseSeatID;
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
+               parseSeatID = null;
                return (
                   React.createElement("option", {key: 'pps' + index, value: data.seat_name}, "PPS ", data.seat_type, " ", data.pps_id)
                 )
             }else{
-              var parseSeatID = data.split('_');
+              parseSeatID = data.split('_');
               _seat_name = data;
               seat_name = parseSeatID[0] +' '+parseSeatID[1];
+              if (seat_name.charAt(seat_name.length - 1) == '#') {
+                seat_name = seat_name.substr(0, seat_name.length - 1);
+              }
+              if (_seat_name.charAt(_seat_name.length - 1) == '#') {
+                _seat_name = _seat_name.substr(0, _seat_name.length - 1);
+              }
               return (
                 React.createElement("header", {className: "ppsSeat", key: 'pps' + index}, "PPS ", seat_name)
               )
             }
           });
-          if(this.state.seatList.length == 1){
+          if(parseSeatID != null){
             var ppsOption = seatData;
           }
           else{
@@ -46358,6 +46366,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionData"] = this.getExceptionData();
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditPpsMode"] = this.getPpsMode();
+                data["AuditSeatType"] = this.getSeatType();
 
                 break;
             default:
@@ -46550,10 +46560,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-               console.log(evt.data);
-                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
-                    console.log(serverMessages[msgCode]);
                     CommonActions.showErrorMessage(serverMessages[msgCode]);
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
@@ -46677,8 +46685,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }).done(function(response) {
 
-        }).fail(function(jqXhr) {
-
+        }).fail(function(jqXhr) { console.log(jqXhr);
+            if(jqXhr.status == 401){
+                var msgCode = "CLIENTCODE_401";
+                CommonActions.showErrorMessage(serverMessages[msgCode]);
+                sessionStorage.setItem('sessionData', null);
+                CommonActions.loginSeat(false);
+                utils.enableKeyboard();
+            }
         });
     },
     generateSessionId: function() {

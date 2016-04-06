@@ -47,10 +47,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-               console.log(evt.data);
-                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
-                    console.log(serverMessages[msgCode]);
                     CommonActions.showErrorMessage(serverMessages[msgCode]);
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
@@ -174,8 +172,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }).done(function(response) {
 
-        }).fail(function(jqXhr) {
-
+        }).fail(function(jqXhr) { console.log(jqXhr);
+            if(jqXhr.status == 401){
+                var msgCode = "CLIENTCODE_401";
+                CommonActions.showErrorMessage(serverMessages[msgCode]);
+                sessionStorage.setItem('sessionData', null);
+                CommonActions.loginSeat(false);
+                utils.enableKeyboard();
+            }
         });
     },
     generateSessionId: function() {

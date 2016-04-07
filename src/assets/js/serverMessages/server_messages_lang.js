@@ -315,5 +315,10 @@ function server_messages_list() {
     _("Please put unscannable entities in exception area.");
     _("Please put oversized entities in exception area.");
     _("Take the Items out from the Slot");
+    _("Pptl press not expected.");
+    _("Scan not expected.");
+    _("Wrong scan.Expecting item scan.");
+    _("Wrong scan.Expecting container scan.");
+    _("Wrong scan.Expecting location scan.");
     
 }

@@ -37815,6 +37815,10 @@ var Button1 = React.createClass({displayName: "Button1",
                                 closeModalBox();
                                 location.reload();
                                 break;
+                            case appConstants.CANCEL_CLOSE_SCANNER:                            
+                                closeModalBox();
+                                //location.reload();
+                                break;
                             case appConstants.CANCEL_PPTL:                           
                                 location.reload();
                                 break;
@@ -38787,7 +38791,7 @@ function loadComponent(modalType,modalData){
             React.createElement("div", {className: "modal-footer removeBorder"}, 
               React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                 React.createElement("div", {className: "row removeBorder"}, 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_ADD_SCANNER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_CLOSE_SCANNER})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.ADD_SCANNER_DETAILS}))
                 )
               )
@@ -43190,6 +43194,7 @@ var appConstants = {
 	PERIPHERAL_MANAGEMENT :'PERIPHERAL_MANAGEMENT',
 	ADD_SCANNER_DETAILS : "ADD_SCANNER_DETAILS",
 	CANCEL_ADD_SCANNER : "CANCEL_ADD_SCANNER",
+	CANCEL_CLOSE_SCANNER: "CANCEL_CLOSE_SCANNER",
 	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
 	CANCEL_PPTL : 'CANCEL_PPTL'
 
@@ -45941,6 +45946,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getPeripheralData: function(data) {
+         _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
     },
     updateSeatData: function(data, type, status, method) {

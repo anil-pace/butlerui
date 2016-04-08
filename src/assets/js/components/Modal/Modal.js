@@ -244,7 +244,7 @@ function loadComponent(modalType,modalData){
             <div className="modal-footer removeBorder">
               <div className="buttonContainer center-block chklstButtonContainer">
                 <div className="row removeBorder">
-                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.CANCEL_ADD_SCANNER}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.CANCEL_CLOSE_SCANNER}/></div>
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Submit")} color={"orange"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.ADD_SCANNER_DETAILS}/></div>
                 </div>
               </div>

@@ -1237,6 +1237,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getPeripheralData: function(data) {
+         _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
     },
     updateSeatData: function(data, type, status, method) {

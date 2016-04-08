@@ -308,6 +308,10 @@ var Button1 = React.createClass({
                                 closeModalBox();
                                 location.reload();
                                 break;
+                            case appConstants.CANCEL_CLOSE_SCANNER:                            
+                                closeModalBox();
+                                //location.reload();
+                                break;
                             case appConstants.CANCEL_PPTL:                           
                                 location.reload();
                                 break;

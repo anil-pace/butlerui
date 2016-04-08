@@ -306,7 +306,7 @@ var Button1 = React.createClass({
 
                             case appConstants.CANCEL_ADD_SCANNER:                            
                                 closeModalBox();
-                                location.reload();
+                                //location.reload();
                                 break;
                             case appConstants.CANCEL_PPTL:                           
                                 location.reload();

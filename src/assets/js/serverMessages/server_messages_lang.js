@@ -79,7 +79,7 @@ function server_messages_list() {
     _("PPTL press successful");
     _("Data capture valid");
     _("Excess item in tote recorded. Now press PPTL");
-    _("Invalid item in tote recorded.");
+    _("Excess item in tote recorded.");
     _("{0} unscannable entities recorded. WMS notified");
     _("{0} extra entities recorded in bin. WMS notified");
     _("{0} oversized entities recorded.WMS notified");
@@ -153,6 +153,8 @@ function server_messages_list() {
     _("No PPS bins empty. Please empty them from Pickback");
     _("PPS mode change requested:scan not allowed");
     _("PPS mode change requested:auto staging all bins");
+    _("PPTL press not expected");
+    _("Scan not expected");
 
     _("Barcode didn't match the current tote barcode");
     _("System not configured for totes");

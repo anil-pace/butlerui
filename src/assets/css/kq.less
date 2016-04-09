@@ -21,7 +21,8 @@
         border:1px solid @kq-border-color;
         margin-bottom:25px;
         .view-more-link{
-            flex:1.5 0 0;
+            //flex:1.5 0 0;
+            flex-grow:1;
             display:flex;
             justify-content:center;
             align-items:center;
@@ -39,7 +40,8 @@
             display:flex;
             justify-content:center;
             align-items:center;
-            flex:9 0 auto;
+           // flex:9 0 auto;
+           flex-grow:9;
             width:100%;
             img{
                 max-width:100%;
@@ -149,6 +151,7 @@ div.ui-keyboard, div.ui-widget-content, .ui-widget{
     flex-basis:0;
         a {
             flex:1.5 0 0;
+           //flex-grow:1;
             display:flex;
             justify-content:center;
             align-items:center;

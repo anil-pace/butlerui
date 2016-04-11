@@ -80,6 +80,7 @@ var TableRow = React.createClass({
             //var borderBottom = value.borderBottom == false ? classes = classes + "":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
             var color = value.color == "blue" ? classes = classes + value.color + " ": "";
+            var totalWidth = value.totalWidth == true ? classes = classes + "totalWidth ":"";
 
             if((value.type != undefined && value.type=="button"))
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus}/></div>));

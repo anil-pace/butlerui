@@ -37327,7 +37327,7 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
-        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && compData.ppsbin_state == 'pick_processed') ){
+        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete')) ){
 
             return (
                 React.createElement("div", {className: "bin pick_processed"}, 
@@ -42817,6 +42817,7 @@ var TableRow = React.createClass({displayName: "TableRow",
             //var borderBottom = value.borderBottom == false ? classes = classes + "":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
             var color = value.color == "blue" ? classes = classes + value.color + " ": "";
+            var totalWidth = value.totalWidth == true ? classes = classes + "totalWidth ":"";
 
             if((value.type != undefined && value.type=="button"))
                 comp.push((React.createElement("div", {className: classes}, React.createElement(IconButton, {type: value.buttonType, module: appConstants.AUDIT, action: appConstants.FINISH_BOX, status: value.buttonStatus}))));
@@ -45208,7 +45209,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return binData;
     },
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, id, management) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox,totalWidth, id, management) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -45228,7 +45229,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.actionButton = actionButton,
         this.textbox = textbox,
         this.id = id,
-        this.management = management
+        this.management = management,
+        this.totalWidth = totalWidth
     },
     getPptlData: function() {
         if (_seatData.hasOwnProperty('utility')) {
@@ -45262,20 +45264,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         buttonText = 'Finish';
                     }
                     data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id)]); 
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox,true, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, true, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, true, value.pps_bin_id)]); 
 
                 });
             }else{
                 data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
-                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, false, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, "scanner-id"),
-                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, null, "scanner-id"),
+                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false, null, value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }

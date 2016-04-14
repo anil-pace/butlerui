@@ -1103,6 +1103,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setPutBackExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
     },
 

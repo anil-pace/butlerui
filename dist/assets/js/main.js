@@ -43240,6 +43240,8 @@ var resourceConstants = {
 	CLIENTCODE_015 : "CLIENTCODE_015",
 	CLIENTCODE_016 : 'CLIENTCODE_016',
 	CLIENTCODE_409 : "CLIENTCODE_409",
+	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
+	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
 	CLIENTCODE_400 : "CLIENTCODE_400"
  
 };
@@ -43489,8 +43491,9 @@ var serverMessages = {
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
-    "CLIENTCODE_409" : "Peripheral already added",
+    "CLIENTCODE_409_PERIPHERAL" : "Peripheral already added",
     "CLIENTCODE_400" : "Bad Data",
+    "CLIENTCODE_400_PERIPHERAL":"Bad Data",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
     "PkF.E.012" : "Data capture failed at item {0}",       
@@ -45983,7 +45986,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "409"){
-            dataNotification["code"]= resourceConstants.CLIENTCODE_409;
+            dataNotification["code"]= resourceConstants.CLIENTCODE_409_PERIPHERAL;
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "400"){

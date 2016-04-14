@@ -1273,7 +1273,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "409"){
-            dataNotification["code"]= resourceConstants.CLIENTCODE_409;
+            dataNotification["code"]= resourceConstants.CLIENTCODE_409_PERIPHERAL;
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "400"){

@@ -43205,8 +43205,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.1.45/wss",
+	INTERFACE_IP : "https://192.168.1.45"
 };
 
 module.exports = configConstants;
@@ -45338,7 +45338,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
             ]);
-        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
+        else if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),

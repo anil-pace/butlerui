@@ -43466,7 +43466,7 @@ var serverMessages = {
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
     "AdF.H.001" : "Scan Box or Items",
     "AdF.H.006" :"Check Count",
-    "AdF.H.007" :"Waiting for MSU",
+    "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successful",

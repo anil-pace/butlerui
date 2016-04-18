@@ -40476,7 +40476,10 @@ var KQ = React.createClass({displayName: "KQ",
                     data["code"] = resourceConstants.CLIENTCODE_009;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
-                    $('.ui-keyboard-preview').val(_updatedQty);
+                    if(parseInt(keypressed.last.val) <= 9999)
+                        $('.ui-keyboard-preview').val(_updatedQty);
+                    else
+                        $('.ui-keyboard-preview').val(9999);
                 }else{
                     data["code"] = null;
                     data["level"] = 'error'
@@ -45820,11 +45823,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
+        _seatData.notification_list[0].code = null;
     },
 
     setPutBackExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
+        _seatData.notification_list[0].code = null;
     },
 
     getPutBackExceptionScreen: function(data){
@@ -45832,6 +45837,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setPickFrontExceptionScreen: function(data) {
+        _seatData.notification_list[0].code = null;
         if (data == "pick_front_quantity") {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {

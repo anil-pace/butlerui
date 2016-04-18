@@ -283,7 +283,10 @@ var KQ = React.createClass({
                     data["code"] = resourceConstants.CLIENTCODE_009;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
-                    $('.ui-keyboard-preview').val(_updatedQty);
+                    if(parseInt(keypressed.last.val) <= 9999)
+                        $('.ui-keyboard-preview').val(_updatedQty);
+                    else
+                        $('.ui-keyboard-preview').val(9999);
                 }else{
                     data["code"] = null;
                     data["level"] = 'error'

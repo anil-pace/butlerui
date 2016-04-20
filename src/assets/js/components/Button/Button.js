@@ -172,7 +172,10 @@ var Button1 = React.createClass({
                                         })
                                     });
                                 }
-                                data["event_name"] = "pick_checklist_update";
+                                if(mainstore.getChecklistCompleteDetails()["checklist_index"] == "all")
+                                    data["event_name"] = "all_items_pick_checklist_update";
+                                else
+                                    data["event_name"] = "single_item_pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 

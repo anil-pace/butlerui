@@ -336,6 +336,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
+    getChecklistCompleteDetails:function(){
+        if (_seatData.hasOwnProperty('checklist_details')) {
+                return _seatData.checklist_details;
+        }
+    },
+
     getChecklistIndex: function() {
         if (_seatData.hasOwnProperty('checklist_details')) {
             if (_seatData.checklist_details.checklist_index != null) {

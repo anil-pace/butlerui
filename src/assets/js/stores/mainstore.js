@@ -1113,13 +1113,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
-        _seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+        //_seatData.notification_list[0].code = null;
     },
 
     setPutBackExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
-        _seatData.notification_list[0].code = null;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
     },
 
     getPutBackExceptionScreen: function(data){
@@ -1127,7 +1139,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setPickFrontExceptionScreen: function(data) {
-        _seatData.notification_list[0].code = null;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
         if (data == "pick_front_quantity") {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {

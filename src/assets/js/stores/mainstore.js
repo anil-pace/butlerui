@@ -183,7 +183,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-                    _NavData = navConfig.utility[0];
+                    _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
                 else 

@@ -36908,7 +36908,7 @@ var Audit = React.createClass({displayName: "Audit",
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               React.createElement("div", {className: "cancel-scan"}, 
-                React.createElement(Button1, {disabled: false, text: _("Cancel Audit"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+                React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
               )
             );
           }else{

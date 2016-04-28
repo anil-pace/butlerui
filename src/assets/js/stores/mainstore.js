@@ -960,6 +960,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
+        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
+            _auditExceptionScreen = "first_screen";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -1136,6 +1138,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
+    },
+
+    setAuditExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
+        _auditExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
+
+    getAuditExceptionScreen: function(data){
+        return _auditExceptionScreen;
     },
 
     setPickFrontExceptionScreen: function(data) {
@@ -1656,6 +1674,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
@@ -1801,6 +1820,10 @@ AppDispatcher.register(function(payload) {
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
             mainstore.setPutBackExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN:
+            mainstore.setAuditExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:

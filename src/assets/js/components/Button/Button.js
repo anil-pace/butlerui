@@ -276,6 +276,9 @@ var Button1 = React.createClass({
                                 data["event_data"]["type"] = "finish_current_audit";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.AUDIT_NEXT_SCREEN:
+                                ActionCreators.changeAuditExceptionScreen("second_screen");
+                                break;
                              case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "audit_actions";
                                 data["event_data"]["type"] = "exception_response";

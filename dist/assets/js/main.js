@@ -36684,6 +36684,13 @@ var commonActions = {
     });
   },
 
+  changeAuditExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   changePickFrontExceptionScreen:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN,
@@ -36997,12 +37004,33 @@ var Audit = React.createClass({displayName: "Audit",
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
+          if(this.state.AuditExceptionScreen == "first_screen"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.AUDIT, action: appConstants.AUDIT_NEXT_SCREEN})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          }
+          else if(this.state.AuditExceptionScreen == "second_screen"){
+              this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.AuditExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put entities in exception area."))
+                    )
+                  ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
                   )
@@ -37012,6 +37040,7 @@ var Audit = React.createClass({displayName: "Audit",
                 )
               )
             );
+           }
         break; 
 
       case appConstants.PPTL_MANAGEMENT:
@@ -37782,6 +37811,9 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.FINISH_CURRENT_AUDIT:
                                 data["event_data"]["type"] = "finish_current_audit";
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.AUDIT_NEXT_SCREEN:
+                                ActionCreators.changeAuditExceptionScreen("second_screen");
                                 break;
                              case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "audit_actions";
@@ -43082,6 +43114,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	CHANGE_AUDIT_EXCEPTION_SCREEN:"CHANGE_AUDIT_EXCEPTION_SCREEN",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	CHANGE_DAMAGED_SCREEN_CONFIRM:"CHANGE_DAMAGED_SCREEN_CONFIRM",
@@ -45679,6 +45712,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
+        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
+            _auditExceptionScreen = "first_screen";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -45855,6 +45890,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
+    },
+
+    setAuditExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
+        _auditExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
+
+    getAuditExceptionScreen: function(data){
+        return _auditExceptionScreen;
     },
 
     setPickFrontExceptionScreen: function(data) {
@@ -46375,6 +46426,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
@@ -46520,6 +46572,10 @@ AppDispatcher.register(function(payload) {
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
             mainstore.setPutBackExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN:
+            mainstore.setAuditExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:

@@ -765,7 +765,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ]);
 
         });
-        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0){
+        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0){
             data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),

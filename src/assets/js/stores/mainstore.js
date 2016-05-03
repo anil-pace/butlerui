@@ -227,6 +227,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
                     if (_seatData.screen_id == appConstants.PUT_BACK_TOTE_CLOSE)
                         _NavData[index].image = SVGConstants.tote;
+                     else if (_seatData.screen_id == appConstants.PUT_BACK_STAGE)
+                        _NavData[index].image = SVGConstants.stage;
+                    else if (_seatData.screen_id == appConstants.PUT_BACK_SCAN_TOTE)
+                        _NavData[index].image = SVGConstants.stage;
                     else
                         _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';

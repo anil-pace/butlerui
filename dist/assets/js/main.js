@@ -37962,7 +37962,7 @@ var Exception = React.createClass({displayName: "Exception",
     render: function() {
         return (
             React.createElement("div", {className: "exception"}, 
-                React.createElement(ExceptionHeader, {data: _("Exceptions")}), 
+                React.createElement(ExceptionHeader, {data: _("EXCEPTION")}), 
                 React.createElement(ExceptionList, {data: this.props.data.list, action: this.props.action})
             )
         );
@@ -40450,7 +40450,7 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 $(".ui-keyboard").css("width","230px");
-                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 $(".current-quantity").val("");
@@ -40912,7 +40912,7 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 $(".ui-keyboard").css("width","230px");
-                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 $(".current-quantity").val("");
@@ -41341,7 +41341,7 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 $(".ui-keyboard").css("width","230px");
-                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 $(".current-quantity").val("");
@@ -43208,8 +43208,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.2.217/wss",
+	INTERFACE_IP : "https://192.168.2.217"
 };
 
 module.exports = configConstants;

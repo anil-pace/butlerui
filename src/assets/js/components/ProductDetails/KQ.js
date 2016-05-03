@@ -239,7 +239,7 @@ var KQ = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
-
+    $('#keyboard').removeAttr("disabled");
     var action = this.props.action;
     if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
@@ -352,6 +352,8 @@ var KQ = React.createClass({
 
             }
         }); }, 0)
+    }else{
+        $('#keyboard').attr("disabled","disabled");
     }
     
   },

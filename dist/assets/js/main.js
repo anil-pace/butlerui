@@ -36684,6 +36684,13 @@ var commonActions = {
     });
   },
 
+  changeAuditExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   changePickFrontExceptionScreen:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN,
@@ -36901,7 +36908,7 @@ var Audit = React.createClass({displayName: "Audit",
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               React.createElement("div", {className: "cancel-scan"}, 
-                React.createElement(Button1, {disabled: false, text: _("Cancel Audit"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+                React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
               )
             );
           }else{
@@ -36997,12 +37004,33 @@ var Audit = React.createClass({displayName: "Audit",
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
+          if(this.state.AuditExceptionScreen == "first_screen"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.AUDIT, action: appConstants.AUDIT_NEXT_SCREEN})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          }
+          else if(this.state.AuditExceptionScreen == "second_screen"){
+              this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.AuditExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put entities in exception area."))
+                    )
+                  ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
                   )
@@ -37012,6 +37040,7 @@ var Audit = React.createClass({displayName: "Audit",
                 )
               )
             );
+           }
         break; 
 
       case appConstants.PPTL_MANAGEMENT:
@@ -37679,7 +37708,10 @@ var Button1 = React.createClass({displayName: "Button1",
                                         })
                                     });
                                 }
-                                data["event_name"] = "pick_checklist_update";
+                                if(mainstore.getChecklistCompleteDetails()["checklist_index"] == "all")
+                                    data["event_name"] = "all_items_pick_checklist_update";
+                                else
+                                    data["event_name"] = "single_item_pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 
@@ -37779,6 +37811,9 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.FINISH_CURRENT_AUDIT:
                                 data["event_data"]["type"] = "finish_current_audit";
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.AUDIT_NEXT_SCREEN:
+                                ActionCreators.changeAuditExceptionScreen("second_screen");
                                 break;
                              case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "audit_actions";
@@ -40432,7 +40467,7 @@ var KQ = React.createClass({displayName: "KQ",
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
-
+    $('#keyboard').removeAttr("disabled");
     var action = this.props.action;
     if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
@@ -40545,6 +40580,8 @@ var KQ = React.createClass({displayName: "KQ",
 
             }
         }); }, 0)
+    }else{
+        $('#keyboard').attr("disabled","disabled");
     }
     
   },
@@ -43079,6 +43116,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	CHANGE_AUDIT_EXCEPTION_SCREEN:"CHANGE_AUDIT_EXCEPTION_SCREEN",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	CHANGE_DAMAGED_SCREEN_CONFIRM:"CHANGE_DAMAGED_SCREEN_CONFIRM",
@@ -43256,8 +43294,8 @@ var allSvgConstants = {
 	putBackPlace : 'assets/images/place.svg',
 	logo : 'assets/images/logo.png',
 	menu : 'assets/images/menu.png',
-	stage : 'assets/images/nav2.png',
-	place:'assets/images/nav1.png',
+	stage : 'assets/images/Icon1.png',
+	place:'assets/images/Icon2.png',
 	scan : 'assets/images/scan-item.png',
 	rack: 'assets/images/rack.png',
 	gorLogo : 'assets/images/LogoVectorSmartObject.png',
@@ -44899,7 +44937,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-                    _NavData = navConfig.utility[0];
+                    _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
                 else 
@@ -45049,6 +45087,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
         } else {
             return [];
+        }
+    },
+
+    getChecklistCompleteDetails:function(){
+        if (_seatData.hasOwnProperty('checklist_details')) {
+                return _seatData.checklist_details;
         }
     },
 
@@ -45475,7 +45519,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ]);
 
         });
-        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0){
+        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0){
             data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -45670,6 +45714,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
+        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
+            _auditExceptionScreen = "first_screen";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -45823,21 +45869,55 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
-        _seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+        //_seatData.notification_list[0].code = null;
     },
 
     setPutBackExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
-        _seatData.notification_list[0].code = null;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
     },
 
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
     },
 
+    setAuditExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
+        _auditExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
+
+    getAuditExceptionScreen: function(data){
+        return _auditExceptionScreen;
+    },
+
     setPickFrontExceptionScreen: function(data) {
-        _seatData.notification_list[0].code = null;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
         if (data == "pick_front_quantity") {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
@@ -46348,6 +46428,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
@@ -46493,6 +46574,10 @@ AppDispatcher.register(function(payload) {
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
             mainstore.setPutBackExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN:
+            mainstore.setAuditExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:

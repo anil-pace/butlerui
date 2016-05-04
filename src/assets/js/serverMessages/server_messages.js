@@ -140,6 +140,7 @@ var serverMessages = {
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
     "CLIENTCODE_409" : "Back seat not supported for this mode",
+    "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
     "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012":"No Items to Reconcile",

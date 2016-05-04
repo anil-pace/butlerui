@@ -47,7 +47,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
                     CommonActions.showErrorMessage(serverMessages[msgCode]);
                     sessionStorage.setItem('sessionData', null);

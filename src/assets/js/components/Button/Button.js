@@ -172,7 +172,10 @@ var Button1 = React.createClass({
                                         })
                                     });
                                 }
-                                data["event_name"] = "pick_checklist_update";
+                                if(mainstore.getChecklistCompleteDetails()["checklist_index"] == "all")
+                                    data["event_name"] = "all_items_pick_checklist_update";
+                                else
+                                    data["event_name"] = "single_item_pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 
@@ -272,6 +275,9 @@ var Button1 = React.createClass({
                             case appConstants.FINISH_CURRENT_AUDIT:
                                 data["event_data"]["type"] = "finish_current_audit";
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.AUDIT_NEXT_SCREEN:
+                                ActionCreators.changeAuditExceptionScreen("second_screen");
                                 break;
                              case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "audit_actions";

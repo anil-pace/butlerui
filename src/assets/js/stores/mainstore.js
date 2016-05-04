@@ -183,7 +183,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-                    _NavData = navConfig.utility[0];
+                    _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
                 else 
@@ -333,6 +333,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
         } else {
             return [];
+        }
+    },
+
+    getChecklistCompleteDetails:function(){
+        if (_seatData.hasOwnProperty('checklist_details')) {
+                return _seatData.checklist_details;
         }
     },
 
@@ -628,7 +634,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
             ]);
-        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
+        else if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -759,6 +765,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ]);
 
         });
+        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0){
+            data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+        }
         
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
@@ -947,6 +960,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
+        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
+            _auditExceptionScreen = "first_screen";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -1100,17 +1115,55 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+        //_seatData.notification_list[0].code = null;
     },
 
     setPutBackExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
     },
 
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
     },
 
+    setAuditExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
+        _auditExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
+
+    getAuditExceptionScreen: function(data){
+        return _auditExceptionScreen;
+    },
+
     setPickFrontExceptionScreen: function(data) {
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
         if (data == "pick_front_quantity") {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
@@ -1265,7 +1318,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "409"){
-            dataNotification["code"]= resourceConstants.CLIENTCODE_409;
+            dataNotification["code"]= resourceConstants.CLIENTCODE_409_PERIPHERAL;
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "400"){
@@ -1621,6 +1674,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
@@ -1766,6 +1820,10 @@ AppDispatcher.register(function(payload) {
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
             mainstore.setPutBackExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN:
+            mainstore.setAuditExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:

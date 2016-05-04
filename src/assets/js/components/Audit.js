@@ -143,7 +143,7 @@ var Audit = React.createClass({
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               <div className = 'cancel-scan'>
-                <Button1 disabled = {false} text = {_("Cancel Audit")} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+                <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
               </div>
             );
           }else{
@@ -239,6 +239,7 @@ var Audit = React.createClass({
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
+          if(this.state.AuditExceptionScreen == "first_screen"){
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.AuditExceptionData}/>
@@ -246,6 +247,26 @@ var Audit = React.createClass({
                   <ExceptionHeader data={this.state.AuditServerNavData} />
                   <KQ scanDetailsGood = {this.state.AuditKQDetails} />
                   <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.AUDIT} action={appConstants.AUDIT_NEXT_SCREEN} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.AUDIT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          }
+          else if(this.state.AuditExceptionScreen == "second_screen"){
+              this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.AuditExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Please put entities in exception area.")}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode"> 
                     <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.AUDIT} action={appConstants.SEND_KQ_QTY} />  
                   </div>
                 </div>
@@ -254,6 +275,7 @@ var Audit = React.createClass({
                 </div>
               </div>
             );
+           }
         break; 
 
       case appConstants.PPTL_MANAGEMENT:

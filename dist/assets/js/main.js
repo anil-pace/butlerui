@@ -36684,6 +36684,13 @@ var commonActions = {
     });
   },
 
+  changeAuditExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   changePickFrontExceptionScreen:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN,
@@ -36901,7 +36908,7 @@ var Audit = React.createClass({displayName: "Audit",
           if(this.state.AuditCancelScanStatus == true){
             this._cancelStatus = (
               React.createElement("div", {className: "cancel-scan"}, 
-                React.createElement(Button1, {disabled: false, text: _("Cancel Audit"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
+                React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
               )
             );
           }else{
@@ -36997,12 +37004,33 @@ var Audit = React.createClass({displayName: "Audit",
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
+          if(this.state.AuditExceptionScreen == "first_screen"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
                   React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.AUDIT, action: appConstants.AUDIT_NEXT_SCREEN})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          }
+          else if(this.state.AuditExceptionScreen == "second_screen"){
+              this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.AuditExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put entities in exception area."))
+                    )
+                  ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
                   )
@@ -37012,6 +37040,7 @@ var Audit = React.createClass({displayName: "Audit",
                 )
               )
             );
+           }
         break; 
 
       case appConstants.PPTL_MANAGEMENT:
@@ -37679,7 +37708,10 @@ var Button1 = React.createClass({displayName: "Button1",
                                         })
                                     });
                                 }
-                                data["event_name"] = "pick_checklist_update";
+                                if(mainstore.getChecklistCompleteDetails()["checklist_index"] == "all")
+                                    data["event_name"] = "all_items_pick_checklist_update";
+                                else
+                                    data["event_name"] = "single_item_pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 
@@ -37779,6 +37811,9 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.FINISH_CURRENT_AUDIT:
                                 data["event_data"]["type"] = "finish_current_audit";
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.AUDIT_NEXT_SCREEN:
+                                ActionCreators.changeAuditExceptionScreen("second_screen");
                                 break;
                              case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "audit_actions";
@@ -37962,7 +37997,7 @@ var Exception = React.createClass({displayName: "Exception",
     render: function() {
         return (
             React.createElement("div", {className: "exception"}, 
-                React.createElement(ExceptionHeader, {data: _("Exceptions")}), 
+                React.createElement(ExceptionHeader, {data: _("EXCEPTION")}), 
                 React.createElement(ExceptionList, {data: this.props.data.list, action: this.props.action})
             )
         );
@@ -40432,7 +40467,7 @@ var KQ = React.createClass({displayName: "KQ",
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
-
+    $('#keyboard').removeAttr("disabled");
     var action = this.props.action;
     if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
@@ -40450,7 +40485,7 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 $(".ui-keyboard").css("width","230px");
-                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 $(".current-quantity").val("");
@@ -40476,7 +40511,10 @@ var KQ = React.createClass({displayName: "KQ",
                     data["code"] = resourceConstants.CLIENTCODE_009;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
-                    $('.ui-keyboard-preview').val(_updatedQty);
+                    if(parseInt(keypressed.last.val) <= 9999)
+                        $('.ui-keyboard-preview').val(_updatedQty);
+                    else
+                        $('.ui-keyboard-preview').val(9999);
                 }else{
                     data["code"] = null;
                     data["level"] = 'error'
@@ -40542,6 +40580,8 @@ var KQ = React.createClass({displayName: "KQ",
 
             }
         }); }, 0)
+    }else{
+        $('#keyboard').attr("disabled","disabled");
     }
     
   },
@@ -40909,7 +40949,7 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 $(".ui-keyboard").css("width","230px");
-                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 $(".current-quantity").val("");
@@ -41338,7 +41378,7 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 $(".ui-keyboard").css("width","230px");
-                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 $(".current-quantity").val("");
@@ -43076,6 +43116,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	CHANGE_AUDIT_EXCEPTION_SCREEN:"CHANGE_AUDIT_EXCEPTION_SCREEN",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	CHANGE_DAMAGED_SCREEN_CONFIRM:"CHANGE_DAMAGED_SCREEN_CONFIRM",
@@ -43240,6 +43281,8 @@ var resourceConstants = {
 	CLIENTCODE_015 : "CLIENTCODE_015",
 	CLIENTCODE_016 : 'CLIENTCODE_016',
 	CLIENTCODE_409 : "CLIENTCODE_409",
+	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
+	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
 	CLIENTCODE_400 : "CLIENTCODE_400"
  
 };
@@ -43251,8 +43294,8 @@ var allSvgConstants = {
 	putBackPlace : 'assets/images/place.svg',
 	logo : 'assets/images/logo.png',
 	menu : 'assets/images/menu.png',
-	stage : 'assets/images/nav2.png',
-	place:'assets/images/nav1.png',
+	stage : 'assets/images/Icon1.png',
+	place:'assets/images/Icon2.png',
 	scan : 'assets/images/scan-item.png',
 	rack: 'assets/images/rack.png',
 	gorLogo : 'assets/images/LogoVectorSmartObject.png',
@@ -43464,7 +43507,7 @@ var serverMessages = {
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
     "AdF.H.001" : "Scan Box or Items",
     "AdF.H.006" :"Check Count",
-    "AdF.H.007" :"Waiting for MSU",
+    "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",
     "AdF.B.001" :"Wrong Barcode.",
     "AdF.B.002" :"Box Scan successful",
@@ -43490,8 +43533,9 @@ var serverMessages = {
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
-    "CLIENTCODE_409" : "Peripheral already added",
+    "CLIENTCODE_409_PERIPHERAL" : "Peripheral already added",
     "CLIENTCODE_400" : "Bad Data",
+    "CLIENTCODE_400_PERIPHERAL":"Bad Data",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
     "PkF.E.012" : "Data capture failed at item {0}",       
@@ -44894,7 +44938,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-                    _NavData = navConfig.utility[0];
+                    _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
                 else 
@@ -45044,6 +45088,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
         } else {
             return [];
+        }
+    },
+
+    getChecklistCompleteDetails:function(){
+        if (_seatData.hasOwnProperty('checklist_details')) {
+                return _seatData.checklist_details;
         }
     },
 
@@ -45339,7 +45389,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
             ]);
-        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
+        else if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -45470,6 +45520,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ]);
 
         });
+        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0){
+            data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+        }
         
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
@@ -45658,6 +45715,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
+        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
+            _auditExceptionScreen = "first_screen";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -45811,17 +45870,55 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+        //_seatData.notification_list[0].code = null;
     },
 
     setPutBackExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
     },
 
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
     },
 
+    setAuditExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
+        _auditExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
+
+    getAuditExceptionScreen: function(data){
+        return _auditExceptionScreen;
+    },
+
     setPickFrontExceptionScreen: function(data) {
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
         if (data == "pick_front_quantity") {
             if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
@@ -45976,7 +46073,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "409"){
-            dataNotification["code"]= resourceConstants.CLIENTCODE_409;
+            dataNotification["code"]= resourceConstants.CLIENTCODE_409_PERIPHERAL;
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
         }else if(status == "400"){
@@ -46332,6 +46429,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
@@ -46477,6 +46575,10 @@ AppDispatcher.register(function(payload) {
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
             mainstore.setPutBackExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN:
+            mainstore.setAuditExceptionScreen(action.data);
             mainstore.emitChange();
             break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:

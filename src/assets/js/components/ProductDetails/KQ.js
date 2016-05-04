@@ -239,7 +239,7 @@ var KQ = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
-
+    $('#keyboard').removeAttr("disabled");
     var action = this.props.action;
     if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
@@ -257,7 +257,7 @@ var KQ = React.createClass({
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
                 $(".ui-keyboard-button.ui-keyboard-46").css('opacity', "0.6");
                 $(".ui-keyboard").css("width","230px");
-                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","40px");
+                $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 $(".current-quantity").val("");
@@ -283,7 +283,10 @@ var KQ = React.createClass({
                     data["code"] = resourceConstants.CLIENTCODE_009;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
-                    $('.ui-keyboard-preview').val(_updatedQty);
+                    if(parseInt(keypressed.last.val) <= 9999)
+                        $('.ui-keyboard-preview').val(_updatedQty);
+                    else
+                        $('.ui-keyboard-preview').val(9999);
                 }else{
                     data["code"] = null;
                     data["level"] = 'error'
@@ -349,6 +352,8 @@ var KQ = React.createClass({
 
             }
         }); }, 0)
+    }else{
+        $('#keyboard').attr("disabled","disabled");
     }
     
   },

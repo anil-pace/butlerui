@@ -1415,6 +1415,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();

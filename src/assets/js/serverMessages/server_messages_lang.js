@@ -322,5 +322,5 @@ function server_messages_list() {
     _("Wrong scan.Expecting item scan.");
     _("Wrong scan.Expecting container scan.");
     _("Wrong scan.Expecting location scan.");
-    
+    _("Scan Excess Entity Quantity");
 }

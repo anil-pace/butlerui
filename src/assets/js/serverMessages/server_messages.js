@@ -8,7 +8,7 @@ var serverMessages = {
     "PtB.H.007" : "Enter Unscannable Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
-    "PtB.H.010" : "Enter Quantity of Excess Entities",
+    "PtB.H.010" : "Scan Excess Entity Quantity",
     "PtB.H.011" : "Please put entity in exception area and confirm",
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",

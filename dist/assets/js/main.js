@@ -43017,7 +43017,7 @@ var navData = {
         }, {
             "screen_id": "pick_front_pptl_press",
             "code": "Common.001",
-            "image": svgConstants.place,
+            "image": svgConstants.pptl,
             "message": "PPTL",
             "showImage": true,
             "level": 2,
@@ -43246,8 +43246,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.178:8888/ws",
+	INTERFACE_IP : "https://192.168.3.178:5000"
 };
 
 module.exports = configConstants;
@@ -44982,6 +44982,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
                     if (_seatData.screen_id == appConstants.PUT_BACK_TOTE_CLOSE)
                         _NavData[index].image = SVGConstants.tote;
+                     else if (_seatData.screen_id == appConstants.PUT_BACK_STAGE)
+                        _NavData[index].image = SVGConstants.stage;
+                    else if (_seatData.screen_id == appConstants.PUT_BACK_SCAN_TOTE)
+                        _NavData[index].image = SVGConstants.stage;
                     else
                         _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';

@@ -1169,7 +1169,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             "level": "info"
         }];
         if (data == "pick_front_quantity") {
-            if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
+            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
+                if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = resourceConstants.CLIENTCODE_011;
+                    data["level"] = "error";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
+                   
+                } else {
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0].level = "error";
+                }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+                  
+            } else {
+                _pickFrontExceptionScreen = data;
+            }
+        } else if (data == "damaged_or_missing") {
+            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
@@ -1216,11 +1239,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var flag = false;
         var details;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
+            flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
             details = _seatData.pick_quantity;
         }
         else{
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
+            flag = (_goodQuantity + _missingQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
         }
         if (flag) {

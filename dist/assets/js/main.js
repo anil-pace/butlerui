@@ -39947,6 +39947,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, "Good Quantity"), 
                       React.createElement(KQ, {scanDetailsGood: this.state.PickFrontGoodQuantity, action: "GOOD"})
+                    ), 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
+                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PickFrontMissingQuantity, action: "MISSING"})
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -39972,11 +39976,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Missing Quantity"), 
-                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PickFrontMissingQuantity, action: "MISSING"})
-                    ), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Unscannable Quantity"), 
+                      React.createElement("div", {className: "kq-header"}, "Bad Barcode Quantity"), 
                       React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, action: "DAMAGED"})
                     )
                   ), 
@@ -43246,8 +43246,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.178:8888/ws",
-	INTERFACE_IP : "https://192.168.3.178:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 
 module.exports = configConstants;
@@ -43527,7 +43527,7 @@ var serverMessages = {
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
     "CLIENTCODE_009" : "You cannot enter 0",
     "CLIENTCODE_010" : "Sum of missing, good and damaged should be equal to {0}",
-    "CLIENTCODE_011" : "Sum of missing, good and damaged should be equal to {0}",
+    "CLIENTCODE_011" : "Sum of missing and good quantity should be equal to {0}",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
     "CLIENTCODE_013" : "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.",
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
@@ -43602,7 +43602,7 @@ var serverMessages = {
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
     "PtF002" : "Space Not Available",
-    "PkF001" : "Item Missing/Unscannable",
+    "PkF001" : "Item Missing/Bad Barcode",
     "PkF005" : "Missing Box",
     "PkB007" : "Disassociate Tote",
     "PkB008" : "Override Tote Required",
@@ -45924,7 +45924,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             "level": "info"
         }];
         if (data == "pick_front_quantity") {
-            if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
+            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
+                if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = resourceConstants.CLIENTCODE_011;
+                    data["level"] = "error";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
+                   
+                } else {
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0].level = "error";
+                }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+                  
+            } else {
+                _pickFrontExceptionScreen = data;
+            }
+        } else if (data == "damaged_or_missing") {
+            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
@@ -45971,11 +45994,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var flag = false;
         var details;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
+            flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
             details = _seatData.pick_quantity;
         }
         else{
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
+            flag = (_goodQuantity + _missingQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
         }
         if (flag) {

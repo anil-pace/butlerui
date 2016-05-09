@@ -269,6 +269,10 @@ var PickFront = React.createClass({
                       <div className="kq-header">{"Good Quantity"}</div>
                       <KQ scanDetailsGood = {this.state.PickFrontGoodQuantity} action={"GOOD"} />
                     </div>
+                    <div className = "kq-exception">
+                      <div className="kq-header">{"Missing Quantity"}</div>
+                      <KQExceptionMissing scanDetailsMissing = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
+                    </div>
                   </div>
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
@@ -293,11 +297,7 @@ var PickFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Missing Quantity"}</div>
-                      <KQExceptionMissing scanDetailsMissing = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
-                    </div>
-                    <div className = "kq-exception">
-                      <div className="kq-header">{"Unscannable Quantity"}</div>
+                      <div className="kq-header">{"Bad Barcode Quantity"}</div>
                       <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
                     </div>
                   </div>

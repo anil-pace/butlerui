@@ -240,11 +240,28 @@ var PutBack = React.createClass({
           this._navigation = '';
           if(this.state.PutBackExceptionScreen == "extra_quantity")
           this._component = (
-              <div className='grid-container exception'>
+              /*<div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY_1} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>*/
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <div className="main-container exception1">
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
+                    <TabularData data = {this.state.PutBackExceptionProductDetails}/>
+                    <KQ scanDetails = {this.state.PutBackKQDetails} />
+                  </div>
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY_1} />  
                   </div>
@@ -265,7 +282,7 @@ var PutBack = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_ITEM_PLACE_IN_IRT} />    
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />    
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

@@ -40348,7 +40348,7 @@ var KQ = React.createClass({displayName: "KQ",
           }          
                       
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 CommonActions.updateKQQuantity(parseInt(_updatedQty));
                 return true;
             }
@@ -40379,6 +40379,16 @@ var KQ = React.createClass({displayName: "KQ",
                         "quantity": parseInt(_updatedQty)
                     }
                 };
+            }
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQty),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
             } 
             else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
                 data = {
@@ -40407,7 +40417,7 @@ var KQ = React.createClass({displayName: "KQ",
         if (this._enableDecrement === true && _keypress == false ) {
             if (parseInt(_updatedQty) >= 0 ) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                     CommonActions.updateKQQuantity(parseInt(_updatedQty) );
                      return true;
                 }
@@ -40437,6 +40447,16 @@ var KQ = React.createClass({displayName: "KQ",
                         }
                     };
                 }
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE) {
+                data = {
+                    "event_name": "put_back_exception",
+                    "event_data": {
+                        "action": "confirm_quantity_update",
+                        "quantity": parseInt(_updatedQty),
+                        "event":mainstore.getExceptionType()
+                    }
+                };
+                } 
                 else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
@@ -40526,7 +40546,7 @@ var KQ = React.createClass({displayName: "KQ",
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
                 } else  {  
                     var data = {};
-                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
                          return true;
                     }
@@ -40553,6 +40573,16 @@ var KQ = React.createClass({displayName: "KQ",
                             "event_data": {
                                 "type": "change_qty",
                                 "quantity": parseInt(e.target.value)
+                            }
+                        };
+                    }
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE) {
+                         data = {
+                            "event_name": "put_back_exception",
+                            "event_data": {
+                                "action": "confirm_quantity_update",
+                                "quantity": parseInt(e.target.value),
+                                "event":mainstore.getExceptionType()
                             }
                         };
                     }
@@ -41986,11 +42016,28 @@ var PutBack = React.createClass({displayName: "PutBack",
           this._navigation = '';
           if(this.state.PutBackExceptionScreen == "extra_quantity")
           this._component = (
+              /*<div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY_1} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>*/
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
-                  React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
+                    React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
+                    React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
+                  ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY_1})
                   )
@@ -42011,7 +42058,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -43246,8 +43293,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.178:8888/ws",
+	INTERFACE_IP : "https://192.168.3.178:5000"
 };
 
 module.exports = configConstants;
@@ -43384,7 +43431,7 @@ var serverMessages = {
     "PtB.H.007" : "Enter Unscannable Entity Quantity",
     "PtB.H.008" : "Scan Oversized Entity Quantity",
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
-    "PtB.H.010" : "Enter Quantity of Excess Entities",
+    "PtB.H.010" : "Scan Excess Entity Quantity",
     "PtB.H.011" : "Please put entity in exception area and confirm",
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",
@@ -43405,7 +43452,8 @@ var serverMessages = {
     "PtB.E.017" : "Please scan same SKU to complete this exception",
     "PtB.E.018" : "Expecting tote closure.",  
     "PtB.E.019" : "Tote not present in database.",
-    "PtB.E.020" : "Tote matched .",  
+    "PtB.E.020" : "Tote matched .",
+    "PtB.E.021" : "Entity already scanned.Confirm exception",  
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
@@ -46193,6 +46241,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();

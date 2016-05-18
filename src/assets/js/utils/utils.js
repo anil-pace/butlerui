@@ -215,7 +215,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         if(method == 'POST'){
             url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
         }else{
-            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'?peripheral_id='+ data.peripheral_id/*.replace(/\//g, "%2F")*/;
         }
          $.ajax({
             type: method,

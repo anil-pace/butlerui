@@ -202,7 +202,7 @@ var LoginPage = React.createClass({
               </div>
               <select className="selectLang" ref='language' onChange={this.changeLanguage}>
                   <option value="en-US">English</option>
-                  <option value="jp">Japanese</option>
+                  <option value="ja-JP">Japanese</option>
               </select>
               <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value="Login" />
           </form>

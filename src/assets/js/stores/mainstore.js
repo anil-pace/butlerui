@@ -1038,7 +1038,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         };
         switch (data) {
-            case "jp":
+            case "ja-JP":
                 _.setTranslation(japanese);
                 break;
             case "ch":

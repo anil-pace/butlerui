@@ -12,3 +12,5 @@ Open Po edit and open the chinese.po file and you can see the text extracted fro
 After edit PO file make it json with the command
 
 python src/assets/js/utils/vendor/localization_lib/po_to_json.py src/assets/js/utils/vendor/i18n/chinese*.po
+
+copy chinese.json to serverMessages/chinese.js

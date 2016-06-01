@@ -1243,7 +1243,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             details = _seatData.pick_quantity;
         }
         else{
-            flag = (_goodQuantity + _missingQuantity) != _seatData.put_quantity;
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
         }
         if (flag) {

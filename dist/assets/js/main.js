@@ -38551,7 +38551,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
               ), 
               React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
                   React.createElement("option", {value: "en-US"}, "English"), 
-                  React.createElement("option", {value: "jp"}, "Japanese")
+                  React.createElement("option", {value: "ja-JP"}, "Japanese")
               ), 
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
           )
@@ -46126,7 +46126,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         };
         switch (data) {
-            case "jp":
+            case "ja-JP":
                 _.setTranslation(japanese);
                 break;
             case "ch":

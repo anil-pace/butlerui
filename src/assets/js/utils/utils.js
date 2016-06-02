@@ -45,6 +45,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 console.log("connected");
                 utils.checkSessionStorage();
                 clearTimeout(utils.connectToWebSocket)
+                var retrieved_token_language = sessionStorage.getItem('localeData');
+                console.log(retrieved_token_language);
+                if(retrieved_token_language != null && retrieved_token_language != 'null'){
+                    var language = JSON.parse(retrieved_token_language)["data"]["locale"];
+                    CommonActions.changeLanguage(language);
+                }
             };
             ws.onmessage = function(evt) { 
                  if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
@@ -62,6 +68,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                         return false;
                     }
                 }
+                
                 putSeatData(data);
                 CommonActions.setCurrentSeat(data.state_data);
                 CommonActions.setServerMessages();

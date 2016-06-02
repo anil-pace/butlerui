@@ -159,16 +159,16 @@ var Header = React.createClass({
              
                 {this.exceptionMenu}  
                 <div className="actionItem" onClick = {this.utilityMenu} >
-                    Utility
+                    {_("Utility")}
                     <div className="subMenu" onClick={this.peripheralData.bind(this, 'pptl')}>
-                        PPTL Management
+                       {_("PPTL Management")}
                     </div>
                     <div className="subMenu" onClick={this.peripheralData.bind(this, 'barcode_scanner')}>
-                        Scanner Management
+                        {_("Scanner Management")}
                     </div>
                 </div>  
                 <div className={logoutClass} onClick = {this.logoutSession} >
-                    Logout
+                    {_("Logout")}
                 </div>
             </div>
             </div>

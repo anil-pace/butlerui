@@ -38327,16 +38327,16 @@ var Header = React.createClass({displayName: "Header",
              
                 this.exceptionMenu, 
                 React.createElement("div", {className: "actionItem", onClick: this.utilityMenu}, 
-                    "Utility", 
+                    _("Utility"), 
                     React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'pptl')}, 
-                        "PPTL Management"
+                       _("PPTL Management")
                     ), 
                     React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'barcode_scanner')}, 
-                        "Scanner Management"
+                        _("Scanner Management")
                     )
                 ), 
                 React.createElement("div", {className: logoutClass, onClick: this.logoutSession}, 
-                    "Logout"
+                    _("Logout")
                 )
             )
             )
@@ -42770,7 +42770,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 				React.createElement("div", {className: "systemIdle"}, 
 					React.createElement(Header, null), 
 					React.createElement("div", {className: "idleScreen"}, 
-						allresourceConstants.SYS_IDLE	
+						_(allresourceConstants.SYS_IDLE)	
 					)
 				)
 			);

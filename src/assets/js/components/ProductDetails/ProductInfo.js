@@ -73,9 +73,10 @@ var ProductInfo = React.createClass({
          if(data_locale.locale == locale){
             if(data_locale.display_name != 'product_local_image_url' ){
               product_info_locale[data_locale.display_name] = keyValue;
-            }else if(data_locale.display_name == 'product_local_image_url' ){
-              image_url[data_locale.display_name] = imageKey;
             }
+          }
+         if(data_locale.display_name == 'product_local_image_url' ){
+              image_url[data_locale.display_name] = imageKey;
           }
         
         }

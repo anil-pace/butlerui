@@ -4,6 +4,13 @@ var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var  _updatedQty = 0, _scanDetails = {},_keypress = false;
+function generateExcessNotification () {
+    var data={};
+    data["code"] = resourceConstants.CLIENTCODE_008;
+    data["level"] = 'error';
+    CommonActions.generateNotification(data);
+    return;
+};
 
 var KQ = React.createClass({
     _appendClassDown : '',
@@ -11,57 +18,72 @@ var KQ = React.createClass({
     _qtyComponent : null,
     _appendClassDown: '',
     _appendClassUp: '',
-    virtualKeyboard: null, 
+    virtualKeyboard: null,
     _id : 'keyboard',
     _enableIncrement : true,
     _enableDecrement : true,
+
+     getEnableIncrement : function() {
+            return this._enableIncrement;
+        },
+
+        disableIncrement : function(data) {
+            this._appendClassUp = 'topArrow disable';
+            this._enableIncrement = data;
+        },
+
     changeValueIncrement : function(){
         if( parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
         {
             return false;
         }
-        
         _updatedQty++;
         $("#keyboard").val(_updatedQty);
     },
     incrementValue: function(event){
-       var self = this;
-       var interval;
-        if (this._enableIncrement === true) {  
-            _keypress = true;
-           if( event.type == "mousedown"){
-                interval = setInterval(this.changeValueIncrement, 300);           
+       if(parseInt(_updatedQty)>=9999) {
+                generateExcessNotification();
+                this.disableIncrement(false);
             }
-            else if(event.type == 'click'){
-                _updatedQty++;
-                console.log(_updatedQty);
+        else {
+            var self = this;
+            var interval;
+            if (this._enableIncrement === true) {
+                _keypress = true;
+               if( event.type == "mousedown"){
+                    interval = setInterval(this.changeValueIncrement, 300);
+                }
+                else if(event.type == 'click'){
+                    _updatedQty++;
+                    console.log(_updatedQty);
+                }
+
+                $('.topArrow').mouseup(function() {
+                    clearInterval(interval);
+
+                });
+                $('.topArrow').mouseout(function(event) {
+                    clearInterval(interval);
+                });
+
+                if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE
+                    || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
+                    || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+
+
+                }
+                else if(parseInt(_updatedQty) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
+                   _updatedQty = _updatedQty - 1;
+                }
+                if(interval == undefined){
+                   _keypress = false;
+                }
+                console.log(interval);
+                self.handleIncrement();
             }
-            
-            $('.topArrow').mouseup(function() {
-                clearInterval(interval);
-                
-            });
-            $('.topArrow').mouseout(function(event) {
-                clearInterval(interval);              
-            });
-         
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
-                || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
-                || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-           
-               
-            }
-            else if(parseInt(_updatedQty) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
-               _updatedQty = _updatedQty - 1; 
-            }
-            if(interval == undefined){
-               _keypress = false;
-            }
-            console.log(interval);
-            self.handleIncrement();
         }
-                                  
-    },  
+
+    },
     changeValueDecrement : function(){
 
         if(_updatedQty <= 0 ){
@@ -69,29 +91,29 @@ var KQ = React.createClass({
         }else{
             _updatedQty--;
         }
-        if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+        if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
             _updatedQty = 1;
         }
-        
+
         $("#keyboard").val(_updatedQty);
     },
     decrementValue: function(event){
         var self = this;
         var interval;
-        if (this._enableDecrement === true) { 
+        if (this._enableDecrement === true) {
             _keypress = true;
-            if( event.type == "mousedown" ){     
-                interval = setInterval(this.changeValueDecrement, 300);                
-            
+            if( event.type == "mousedown" ){
+                interval = setInterval(this.changeValueDecrement, 300);
+
             }else if(event.type == 'click') {
                if(_updatedQty <= 0){
                 _updatedQty = 0;
                 }else{
                 _updatedQty--;
                 }
-    
+
             }
             $('.downArrow').mouseup(function(){
                 clearInterval(interval);
@@ -100,7 +122,7 @@ var KQ = React.createClass({
             $('.downArrow').mouseout(function(event) {
                 clearInterval(interval);
             });
-             if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
+             if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
                 _updatedQty = 1;
@@ -111,14 +133,14 @@ var KQ = React.createClass({
             }
             self.handleDecrement();
         }
-                          
-    },                    
-    
+
+    },
+
     handleIncrement: function(event, qty) { console.log(_keypress);
-        if (this._enableIncrement === true && _keypress == false) {           
+        if (this._enableIncrement === true && _keypress == false) {
           if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
-          }          
-                      
+          }
+
             var data = {};
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 CommonActions.updateKQQuantity(parseInt(_updatedQty));
@@ -161,7 +183,7 @@ var KQ = React.createClass({
                         "event":mainstore.getExceptionType()
                     }
                 };
-            } 
+            }
             else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
@@ -171,7 +193,7 @@ var KQ = React.createClass({
                         "event":mainstore.getExceptionType()
                     }
                 };
-            }  
+            }
             else {
                 data = {
                     "event_name": "quantity_update_from_gui",
@@ -228,7 +250,7 @@ var KQ = React.createClass({
                         "event":mainstore.getExceptionType()
                     }
                 };
-                } 
+                }
                 else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
@@ -238,7 +260,7 @@ var KQ = React.createClass({
                         "event":mainstore.getExceptionType()
                     }
                 };
-                }   
+                }
                 else {
                     data = {
                         "event_name": "quantity_update_from_gui",
@@ -259,7 +281,7 @@ var KQ = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   openNumpad : function(id){
-    $('#keyboard').removeAttr("disabled");
+    var self = this;
     var action = this.props.action;
     if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
@@ -271,7 +293,7 @@ var KQ = React.createClass({
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
-            alwaysOpen: false,          
+            alwaysOpen: false,
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
@@ -292,11 +314,10 @@ var KQ = React.createClass({
                     CommonActions.generateNotification(data);
                 }
                 else if(parseInt(keypressed.last.val) > 9999){
-                    data["code"] = resourceConstants.CLIENTCODE_008;
-                    data["level"] = 'error';
-                    CommonActions.generateNotification(data);
+                    self.disableIncrement(false);
+                    generateExcessNotification();
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+               }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
                      mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
@@ -316,7 +337,7 @@ var KQ = React.createClass({
             accepted: function(e, keypressed, el) {
                 if (e.target.value === '' ) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
-                } else  {  
+                } else  {
                     var data = {};
                      if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
@@ -367,7 +388,7 @@ var KQ = React.createClass({
                                 "event":mainstore.getExceptionType()
                             }
                         };
-                    }   
+                    }
                     else {
                         data = {
                             "event_name": "quantity_update_from_gui",
@@ -385,9 +406,9 @@ var KQ = React.createClass({
     }else{
         $('#keyboard').attr("disabled","disabled");
     }
-    
+
   },
-  componentWillUnmount: function(){    
+  componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
     /*
     if(this.virtualKeyboard != null){
@@ -395,36 +416,42 @@ var KQ = React.createClass({
     }
     */
   },
-  onChange: function(){ 
+  onChange: function(){
   },
-  checkKqAllowed : function(){    
-    if(_scanDetails.kq_allowed === true){        
-      if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
-        
+  checkKqAllowed : function(){
+    if(_scanDetails.kq_allowed === true){
+      if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){
+
           if((mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(_updatedQty) == 1) ){
 
-              this._appendClassDown = 'downArrow disable'; 
+              this._appendClassDown = 'downArrow disable';
               this._enableDecrement = false;
               _scanDetails.kq_allowed = false;
-              
+
           }else{
-              this._appendClassDown = 'downArrow enable'; 
+              this._appendClassDown = 'downArrow enable';
               this._enableDecrement = true;
             }
-           this._appendClassUp = 'topArrow disable'; 
-           this._enableIncrement = false;          
+           this._appendClassUp = 'topArrow disable';
+           this._enableIncrement = false;
       }
       else{
-          this._appendClassUp = 'topArrow enable';
-          this._enableIncrement = true;  
-          if (mainstore.getCurrentSeat() == "audit_front"){
+           if(parseInt(_updatedQty) >= 9999) {
+                    this.disableIncrement(false);
+            }
+
+           if(parseInt(_updatedQty) < 9999) {
+                this._appendClassUp = 'topArrow enable';
+                this._enableIncrement = true;
+            }
+           if (mainstore.getCurrentSeat() == "audit_front"){
                if(_updatedQty== 0){
                   this._appendClassDown = 'downArrow disable';
                     this._enableDecrement = false;
                 }else{
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
-                } 
+                }
             }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
@@ -432,7 +459,7 @@ var KQ = React.createClass({
                 }else{
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
-                }   
+                }
             }
             else{
                 if(_updatedQty == 1){
@@ -450,24 +477,24 @@ var KQ = React.createClass({
         this._appendClassDown = 'downArrow disable';
 
         this._enableDecrement = false;
-        this._enableIncrement = false;      
-    }    
+        this._enableIncrement = false;
+    }
   },
- 
+
   handleTotalQty : function(){
- 
+
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           <div id='textbox'>
             <input id="keyboard" className="current-quantity" key="text_1" value={_updatedQty} onClick={this.openNumpad.call(null)}/>
             <span className="separator">/</span>
-            <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span> 
+            <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span>
           </div>
         );
     }else{
         this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard"  key="text_1"  value={_updatedQty} onClick={this.openNumpad.call(null)}/> 
+            <input id="keyboard"  key="text_1"  value={_updatedQty} onClick={this.openNumpad.call(null)}/>
           </div>
         );
     }
@@ -479,7 +506,7 @@ var KQ = React.createClass({
             this.handleTotalQty();
             _updatedQty = parseInt(this.props.scanDetails.current_qty);
             _scanDetails = this.props.scanDetails;
-           
+
         }
         else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
             _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
@@ -487,13 +514,13 @@ var KQ = React.createClass({
             this.checkKqAllowed();
             this.handleTotalQty();
         }
-        
-        
+
+
         return ( < div className = "kq-wrapper" >
             < a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
-            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent} 
+            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent}
             < a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
-            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a> 
+            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a>
             < /div>
         )
 

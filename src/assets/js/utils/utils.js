@@ -11,8 +11,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -47,10 +47,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-               console.log(evt.data);
-                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_503"){
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
                     var msgCode = evt.data;
-                    console.log(serverMessages[msgCode]);
                     CommonActions.showErrorMessage(serverMessages[msgCode]);
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
@@ -174,8 +172,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }).done(function(response) {
 
-        }).fail(function(jqXhr) {
-
+        }).fail(function(jqXhr) { console.log(jqXhr);
+            if(jqXhr.status == 401){
+                var msgCode = "CLIENTCODE_401";
+                CommonActions.showErrorMessage(serverMessages[msgCode]);
+                sessionStorage.setItem('sessionData', null);
+                CommonActions.loginSeat(false);
+                utils.enableKeyboard();
+            }
         });
     },
     generateSessionId: function() {
@@ -211,7 +215,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         if(method == 'POST'){
             url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+appConstants.PERIPHERALS+appConstants.ADD;
         }else{
-            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+data.peripheral_id;
+            url = configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + appConstants.PERIPHERALS+'/'+data.peripheral_type+'/'+ encodeURIComponent(data.peripheral_id)/*.replace(/\//g, "%2F")*/;
         }
          $.ajax({
             type: method,
@@ -223,11 +227,23 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'accept': 'application/json',
                 'Authentication-Token' : authentication_token
             }
-        }).done(function(response) {
+            /*complete:function(xhr,textStatus) {
+                if(xhr.status == 409)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
+
+            //utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
+        }*/
+        }).done(function(response,statusText,xhr) {
             utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
         }).fail(function(jqXhr) {
-            utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
+            if(jqXhr.status == 409)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
+            else if(jqXhr.status == 400)
+                    utils.getPeripheralData(data.peripheral_type, seat_name , '400', method)
+            else
+                utils.getPeripheralData(data.peripheral_type, seat_name , 'fail', method);
                     
         });
     },

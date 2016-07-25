@@ -39,9 +39,7 @@ gulp.task('copy', function(){
   gulp.src('src/assets/fonts/*.*')
     .pipe(gulp.dest('dist/assets/fonts'));
   gulp.src('src/assets/js/utils/vendor/**/*.*')
-    .pipe(gulp.dest('dist/assets/js/vendor/'));
-  gulp.src('package.sh')
-    .pipe(gulp.dest('dist/'));      		
+    .pipe(gulp.dest('dist/assets/js/vendor/'));   		
 });
 gulp.task('json', function() {
         gulp.src('src/assets/js/serverMessages/server_messages.json')

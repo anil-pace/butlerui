@@ -25,7 +25,7 @@ var LoginPage = React.createClass({
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(e){   
+  handleLogin: function(e){ 
   if(_seat_name == null){
     _seat_name = this.refs.seat_name.value;
   }
@@ -34,8 +34,8 @@ var LoginPage = React.createClass({
         'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
-              //'seat_name': _seat_name
-              'seat_name':this.refs.seat_name.value
+              'seat_name': _seat_name
+              
           }
       }
       console.log(data);
@@ -51,8 +51,8 @@ var LoginPage = React.createClass({
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -85,8 +85,8 @@ var LoginPage = React.createClass({
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
-        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
@@ -130,25 +130,34 @@ var LoginPage = React.createClass({
     var seatData;
     var display = this.state.flag === true ? 'block' : 'none';
       if(this.state.seatList.length > 0){
+          var parseSeatID;
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
+               parseSeatID = null;
                return (
                   <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_type} {data.pps_id}</option>
                 )
             }else{
-              var parseSeatID = data.split('_');
+              parseSeatID = data.split('_');
               _seat_name = data;
               seat_name = parseSeatID[0] +' '+parseSeatID[1];
+              if (seat_name.charAt(seat_name.length - 1) == '#') {
+                seat_name = seat_name.substr(0, seat_name.length - 1);
+              }
+              if (_seat_name.charAt(_seat_name.length - 1) == '#') {
+                _seat_name = _seat_name.substr(0, _seat_name.length - 1);
+              }
               return (
                 <header className="ppsSeat" key={'pps' + index}  >PPS {seat_name}</header>
               )
             }
           });
-          if(this.state.seatList.length == 1){
+          if(parseSeatID != null){
             var ppsOption = seatData;
           }
           else{
-            var ppsOption =  <select className="selectPPS" ref='seat_name'>{seatData}</select> ;
+            _seat_name = null;
+            var ppsOption =  <select className="selectPPS"  ref='seat_name'>{seatData}</select> ;
           }
 
       }else{

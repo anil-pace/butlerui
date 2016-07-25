@@ -96,7 +96,7 @@ var navData = {
         }, {
             "screen_id": "pick_front_pptl_press",
             "code": "Common.001",
-            "image": svgConstants.place,
+            "image": svgConstants.pptl,
             "message": "PPTL",
             "showImage": true,
             "level": 2,

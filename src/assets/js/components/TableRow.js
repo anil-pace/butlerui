@@ -37,10 +37,10 @@ var TableRow = React.createClass({
     openKeyboard_peripheral: function(id){
         setTimeout(function(){ $('#'+id).keyboard({
           layout: 'custom',
-          customLayout: {
-              'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
-          },
+           customLayout: {
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
+      },
           css: {
             container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
           },
@@ -80,6 +80,7 @@ var TableRow = React.createClass({
             //var borderBottom = value.borderBottom == false ? classes = classes + "":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
             var color = value.color == "blue" ? classes = classes + value.color + " ": "";
+            var totalWidth = value.totalWidth == true ? classes = classes + "totalWidth ":"";
 
             if((value.type != undefined && value.type=="button"))
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus}/></div>));

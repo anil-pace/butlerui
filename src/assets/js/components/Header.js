@@ -5,6 +5,7 @@ var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
+var appConstants = require('../constants/appConstants');
 
 function getState(){
      return {
@@ -25,10 +26,10 @@ var Header = React.createClass({
         $(".form-control").blur();
          virtualKeyBoard_header = $('#barcode').keyboard({
             layout: 'custom',
-            customLayout: {
-              'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
-              'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
-            },
+             customLayout: {
+        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
+      },
             css: {
                 container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
             },
@@ -96,7 +97,16 @@ var Header = React.createClass({
         this.setState(getState());
     },
     getExceptionMenu:function(){
-         if(mainstore.getExceptionAllowed().length > 0 )
+        var x = "";
+        for( var prop in appConstants ) {
+        if( appConstants.hasOwnProperty( prop ) ) {
+             if( appConstants[ prop ] == mainstore.getScreenId() )
+                 x = prop;
+        }
+     }
+        if(x.search("EXCEPTION") != -1 )
+            this.exceptionMenu = '';
+        else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (<div className="actionItem" onClick = {this.enableException} >
                                         Exception
                                     </div>);
@@ -146,9 +156,7 @@ var Header = React.createClass({
               </div>
             </div>
             <div className="actionMenu" id="actionMenu" >
-                <div className="actionItem" onClick = {this.refresh} >
-                    Home
-                </div>
+             
                 {this.exceptionMenu}  
                 <div className="actionItem" onClick = {this.utilityMenu} >
                     Utility

@@ -9,7 +9,7 @@ var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
-
+var CommonActions = require('../actions/CommonActions');
 var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
@@ -34,11 +34,40 @@ var modalContent = {
     type: ""
 };
 
+/*
+* This function enables the logout due to inactivity feature - Krishna.
+*/
+var idleLogout = function() {
+    var t;
+    window.addEventListener('load', resetTimer,false);
+    window.addEventListener('mousemove', resetTimer,false);
+    window.addEventListener('mousedown', resetTimer,false);
+    window.addEventListener('onclick', resetTimer,false);
+    window.addEventListener('scroll', resetTimer,false);
+    window.addEventListener('keypress', resetTimer,false);
+
+    function logout() {
+        if(mainstore.getLogoutState()){
+                console.log("Logging out since user has been idle past the time threshold")
+                CommonActions.logoutSession(true);
+            }
+            
+    }
+
+    function resetTimer() {
+        clearTimeout(t);
+        t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
+        // time is in milliseconds
+    }
+}();
+
+
 function setPopUpVisible(status) {
     popupVisible = status;
     mainstore.emit(CHANGE_EVENT);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
+
     emitChange: function() {
         this.emit(CHANGE_EVENT);
     },
@@ -62,7 +91,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getLogoutState: function() {
-        if (_seatData.hasOwnProperty("logout_allowed"))
+        if (_seatData && _seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
     getScanAllowedStatus : function(){
@@ -1895,5 +1924,7 @@ AppDispatcher.register(function(payload) {
             return true;
     }
 });
+
+
 
 module.exports = mainstore;

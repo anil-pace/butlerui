@@ -43296,7 +43296,6 @@ var configConstants = {
 	WEBSOCKET_IP : "wss://localhost/wss",
 	INTERFACE_IP : "https://localhost"
 };
-
 module.exports = configConstants;
 
 },{}],285:[function(require,module,exports){
@@ -44864,7 +44863,6 @@ var idleLogout = function() {
     }
 }();
 
-
 function setPopUpVisible(status) {
     popupVisible = status;
     mainstore.emit(CHANGE_EVENT);
@@ -44946,10 +44944,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.notification_list[0] = notification_list;
         }
     },
-    enableButton : function(){
 
+    getEnableButton : function(){
         return _enableButton;
     },
+
+    setEnableButtonIntialState : function(){
+        _enableButton=true;
+    },
+
+    enableButton : function(){
+        var currentState=this.getEnableButton();
+        this.setEnableButtonIntialState();
+        return currentState;
+    },
+    
     getStageActiveStatus: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var flag = false;

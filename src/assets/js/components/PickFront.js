@@ -267,7 +267,7 @@ var PickFront = React.createClass({
         }
       break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
+          this._navigation = '';          
           if(this.state.PickFrontExceptionScreen == "good"){
           this._component = (
               <div className='grid-container exception'>
@@ -414,7 +414,8 @@ var PickFront = React.createClass({
   },
   
   render: function(data){ 
-	  this.getNotificationComponent();
+	  
+    this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
 	
 	return (

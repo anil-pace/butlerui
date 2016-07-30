@@ -157,6 +157,7 @@ var PutFront = React.createClass({
               </div>
             );
           }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+            this.disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0) ? false :true;
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
@@ -172,7 +173,7 @@ var PutFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />  
+                    <Button1 disabled = {this.disableConfirm} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

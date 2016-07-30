@@ -39937,7 +39937,11 @@ var PickFront = React.createClass({displayName: "PickFront",
         }
       break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';          
+          this._navigation = '';
+          /**
+          * { T2715: confirm button disabled if missing/unscannable quantity is zero }
+          */
+            this._disableConfirm = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontGoodQuantity.current_qty > 0 )? false : true;          
           if(this.state.PickFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -39964,7 +39968,7 @@ var PickFront = React.createClass({displayName: "PickFront",
             );
           }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
              var btnComp;
-            console.log("ashish  " + JSON.stringify(this.state.PutFrontDamagedQuantity));
+             
             if(this.state.PickFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})  );
             }else{
@@ -42346,7 +42350,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
              */
-            this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true
+            this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.MOVE_TO_DAMAGED_CONFIRM}) );
             }else{

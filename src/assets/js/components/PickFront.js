@@ -258,7 +258,11 @@ var PickFront = React.createClass({
         }
       break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';          
+          this._navigation = '';
+          /**
+          * { T2715: confirm button disabled if missing/unscannable quantity is zero }
+          */
+            this._disableConfirm = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontGoodQuantity.current_qty > 0 )? false : true;          
           if(this.state.PickFrontExceptionScreen == "good"){
           this._component = (
               <div className='grid-container exception'>
@@ -285,7 +289,7 @@ var PickFront = React.createClass({
             );
           }else if(this.state.PickFrontExceptionScreen == "damaged_or_missing"){
              var btnComp;
-            console.log("ashish  " + JSON.stringify(this.state.PutFrontDamagedQuantity));
+             
             if(this.state.PickFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} />  );
             }else{

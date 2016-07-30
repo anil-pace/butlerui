@@ -50,6 +50,9 @@ var Button1 = React.createClass({
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.SEND_KQ_QTY_1:
+                                ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
+                                break;
                             case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
@@ -71,10 +74,17 @@ var Button1 = React.createClass({
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
-                                 data["event_name"] = "put_back_exception";
-                                 data["event_data"]["action"] ="finish_exception";
-                                 data["event_data"]["event"] = mainstore.getExceptionType();
-                                 ActionCreators.postDataToInterface(data);
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen("damaged_confirm");
+                                break;
+                            case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen("oversized_confirm");
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
@@ -115,6 +125,9 @@ var Button1 = React.createClass({
                                 break;
                             case appConstants.GET_REVISED_QUANTITY:
                                  ActionCreators.changePutFrontExceptionScreen("revised_quantity");
+                                break;
+                            case appConstants.MOVE_TO_DAMAGED_CONFIRM:
+                                ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
                                 break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
@@ -159,7 +172,10 @@ var Button1 = React.createClass({
                                         })
                                     });
                                 }
-                                data["event_name"] = "pick_checklist_update";
+                                if(mainstore.getChecklistCompleteDetails()["checklist_index"] == "all")
+                                    data["event_name"] = "all_items_pick_checklist_update";
+                                else
+                                    data["event_name"] = "single_item_pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
                                 
@@ -260,6 +276,9 @@ var Button1 = React.createClass({
                                 data["event_data"]["type"] = "finish_current_audit";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.AUDIT_NEXT_SCREEN:
+                                ActionCreators.changeAuditExceptionScreen("second_screen");
+                                break;
                              case appConstants.SEND_KQ_QTY:
                                 data["event_name"] = "audit_actions";
                                 data["event_data"]["type"] = "exception_response";
@@ -294,6 +313,10 @@ var Button1 = React.createClass({
                             case appConstants.CANCEL_ADD_SCANNER:                            
                                 closeModalBox();
                                 location.reload();
+                                break;
+                            case appConstants.CANCEL_CLOSE_SCANNER:                            
+                                closeModalBox();
+                                //location.reload();
                                 break;
                             case appConstants.CANCEL_PPTL:                           
                                 location.reload();

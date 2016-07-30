@@ -79,7 +79,7 @@ function server_messages_list() {
     _("PPTL press successful");
     _("Data capture valid");
     _("Excess item in tote recorded. Now press PPTL");
-    _("Invalid item in tote recorded.");
+    _("Excess item in tote recorded.");
     _("{0} unscannable entities recorded. WMS notified");
     _("{0} extra entities recorded in bin. WMS notified");
     _("{0} oversized entities recorded.WMS notified");
@@ -153,6 +153,8 @@ function server_messages_list() {
     _("No PPS bins empty. Please empty them from Pickback");
     _("PPS mode change requested:scan not allowed");
     _("PPS mode change requested:auto staging all bins");
+    _("PPTL press not expected");
+    _("Scan not expected");
 
     _("Barcode didn't match the current tote barcode");
     _("System not configured for totes");
@@ -175,7 +177,7 @@ function server_messages_list() {
     _("Wrong barcode scanned");
     _("Please scan the tote first and then scan PPTL barcode");
     _("No tote scanned");
-    _("'Override Tote Exception' cannot be raised for bins with totes associated");
+    _("Override Tote Exception cannot be raised for bins with totes associated");
     _("PPTL scan not allowed. System not configured for tote");
     _("PPTL scan not allowed");
     _("Tote scan expected");
@@ -297,5 +299,29 @@ function server_messages_list() {
     _("Product Desc");
     _("Product SKU");
     _("Product Type");
-    
+    _("Tote already associated with bin {0}");
+    _("Entity Scan not expected. Press PPTL");
+    _("Entity Unscannable");
+    _("Extra Entities in Bin");
+    _("Entity Missing / Unscannable");
+    _("Space Not Available");
+    _("Item Missing/Unscannable");
+    _("Missing Box");
+    _("Disassociate Tote");
+    _("Override Tote Required")
+    _("Reprint");
+    _("Skip Print");
+    _("Items In Box Unscannable");
+    _("Box Unscannable");
+    _("Loose Items Unscannable");
+    _("Please put unscannable entities in exception area.");
+    _("Please put oversized entities in exception area.");
+    _("Take the Items out from the Slot");
+    _("Pptl press not expected.");
+    _("Scan not expected.");
+    _("Wrong scan.Expecting item scan.");
+    _("Wrong scan.Expecting container scan.");
+    _("Wrong scan.Expecting location scan.");
+    _("Scan Excess Entity Quantity");
+    _("Entity already scanned.Confirm exception");
 }

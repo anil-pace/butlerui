@@ -9,7 +9,7 @@ var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
-
+var CommonActions = require('../actions/CommonActions');
 var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
@@ -26,6 +26,7 @@ var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _s
     _scanAllowed = true,
     _clearNotification = false,
     _enableButton = true,
+    _putBackExceptionScreen,
     _finishAuditFlag = true;
 
 var modalContent = {
@@ -33,11 +34,39 @@ var modalContent = {
     type: ""
 };
 
+/*
+* This function enables the logout due to inactivity feature - Krishna.
+*/
+var idleLogout = function() {
+    var t;
+    window.addEventListener('load', resetTimer,false);
+    window.addEventListener('mousemove', resetTimer,false);
+    window.addEventListener('mousedown', resetTimer,false);
+    window.addEventListener('onclick', resetTimer,false);
+    window.addEventListener('scroll', resetTimer,false);
+    window.addEventListener('keypress', resetTimer,false);
+
+    function logout() {
+        if(mainstore.getLogoutState()){
+                console.log("Logging out since user has been idle past the time threshold")
+                CommonActions.logoutSession(true);
+            }
+            
+    }
+
+    function resetTimer() {
+        clearTimeout(t);
+        t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
+        // time is in milliseconds
+    }
+}();
+
 function setPopUpVisible(status) {
     popupVisible = status;
     mainstore.emit(CHANGE_EVENT);
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
+
     emitChange: function() {
         this.emit(CHANGE_EVENT);
     },
@@ -61,7 +90,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getLogoutState: function() {
-        if (_seatData.hasOwnProperty("logout_allowed"))
+        if (_seatData && _seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
     getScanAllowedStatus : function(){
@@ -113,10 +142,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.notification_list[0] = notification_list;
         }
     },
-    enableButton : function(){
 
+    getEnableButton : function(){
         return _enableButton;
     },
+
+    setEnableButtonIntialState : function(){
+        _enableButton=true;
+    },
+
+    enableButton : function(){
+        var currentState=this.getEnableButton();
+        this.setEnableButtonIntialState();
+        return currentState;
+    },
+    
     getStageActiveStatus: function() {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -182,7 +222,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-                    _NavData = navConfig.utility[0];
+                    _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
                 else 
@@ -226,6 +266,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
                     if (_seatData.screen_id == appConstants.PUT_BACK_TOTE_CLOSE)
                         _NavData[index].image = SVGConstants.tote;
+                     else if (_seatData.screen_id == appConstants.PUT_BACK_STAGE)
+                        _NavData[index].image = SVGConstants.stage;
+                    else if (_seatData.screen_id == appConstants.PUT_BACK_SCAN_TOTE)
+                        _NavData[index].image = SVGConstants.stage;
                     else
                         _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';
@@ -252,8 +296,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 "message": _("Place extra entity in Exception area .")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
-            console.log("jindal");
-            console.log(showModal);
             showModal = false;
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
@@ -334,6 +376,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
         } else {
             return [];
+        }
+    },
+
+    getChecklistCompleteDetails:function(){
+        if (_seatData.hasOwnProperty('checklist_details')) {
+                return _seatData.checklist_details;
         }
     },
 
@@ -500,7 +548,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return binData;
     },
-    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, id, management) {
+    tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox,totalWidth, id, management) {
         this.text = text;
         this.status = status;
         this.selected = selected;
@@ -520,7 +568,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.actionButton = actionButton,
         this.textbox = textbox,
         this.id = id,
-        this.management = management
+        this.management = management,
+        this.totalWidth = totalWidth
     },
     getPptlData: function() {
         if (_seatData.hasOwnProperty('utility')) {
@@ -554,20 +603,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         buttonText = 'Finish';
                     }
                     data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
-                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox, value.pps_bin_id), 
-                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, value.pps_bin_id),
-                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, value.pps_bin_id),
-                    new self.tableCol(deletButton, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id)]); 
+                    new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox,true, value.pps_bin_id), 
+                    new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, true, value.pps_bin_id),
+                    new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, true, value.pps_bin_id)]); 
 
                 });
             }else{
                 data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
-                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, false, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
                 data["tableRows"] = [];
                 var self = this;
                 _seatData.utility.map(function(value, index) {
-                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, "scanner-id"),
-                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false,value.peripheral_id, "scanner-action")]); 
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, null, "scanner-id"),
+                    new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false, null, value.peripheral_id, "scanner-action")]); 
 
                 }); 
             }
@@ -578,7 +626,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('reconciliation')) {
             var data = {};
             data["header"] = [];
-            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Tote Details"), "header", false, "small", false, true, true, false));
             data["tableRows"] = [];
             var self = this;
             data["tableRows"].push([new this.tableCol(_("Product SKU"), "enabled", false, "small", false, true, true, false), new this.tableCol(_("Expected Quantity"), "enabled", false, "small", true, false, true, false, true), new this.tableCol(_("Actual Quantity"), "enabled", false, "small", true, false, true, false, true)]);
@@ -629,7 +677,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
             ]);
-        if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
+        else if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
             data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -760,6 +808,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ]);
 
         });
+        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0){
+            data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+            ]);
+        }
         
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
@@ -942,6 +997,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)
+            _putBackExceptionScreen = "damaged";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS)
+            _putBackExceptionScreen = "oversized";
+        else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
+            _putBackExceptionScreen = "extra_quantity";
+        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
+            _auditExceptionScreen = "first_screen";
         if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
             showModal = true;
         else
@@ -1095,11 +1158,80 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     setPutFrontExceptionScreen: function(data) {
         _putFrontExceptionScreen = data;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+        //_seatData.notification_list[0].code = null;
+    },
+
+    setPutBackExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
+        _putBackExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
+
+    getPutBackExceptionScreen: function(data){
+        return _putBackExceptionScreen;
+    },
+
+    setAuditExceptionScreen: function(data){
+        _seatData.scan_allowed = false;
+        _auditExceptionScreen = data;
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
+
+    getAuditExceptionScreen: function(data){
+        return _auditExceptionScreen;
     },
 
     setPickFrontExceptionScreen: function(data) {
+        //_seatData.notification_list[0].code = null;
+        _seatData["notification_list"] =  [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
         if (data == "pick_front_quantity") {
-            if ((_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
+            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
+                if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = resourceConstants.CLIENTCODE_011;
+                    data["level"] = "error";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
+                   
+                } else {
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0].level = "error";
+                }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+                  
+            } else {
+                _pickFrontExceptionScreen = data;
+            }
+        } else if (data == "damaged_or_missing") {
+            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
@@ -1146,11 +1278,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var flag = false;
         var details;
         if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.pick_quantity;
+            flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
             details = _seatData.pick_quantity;
         }
         else{
-            flag = (_goodQuantity + _damagedQuantity + _missingQuantity) != _seatData.put_quantity;
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
         }
         if (flag) {
@@ -1224,6 +1356,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getPeripheralData: function(data) {
+         _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
     },
     updateSeatData: function(data, type, status, method) {
@@ -1250,7 +1383,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 dataNotification["code"]= resourceConstants.CLIENTCODE_016;
             dataNotification["level"] = "error";
             this.generateNotification(dataNotification);
-        }else {
+        }else if(status == "409"){
+            dataNotification["code"]= resourceConstants.CLIENTCODE_409_PERIPHERAL;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }else if(status == "400"){
+            dataNotification["code"]= resourceConstants.CLIENTCODE_400;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }
+        else {
             if(_seatData.notification_list.length > 0){
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";
@@ -1335,9 +1477,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -1346,6 +1490,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -1596,6 +1741,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
@@ -1643,6 +1789,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionData"] = this.getExceptionData();
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditPpsMode"] = this.getPpsMode();
+                data["AuditSeatType"] = this.getSeatType();
 
                 break;
             default:
@@ -1737,6 +1885,14 @@ AppDispatcher.register(function(payload) {
             mainstore.setPutFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
+         case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
+            mainstore.setPutBackExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN:
+            mainstore.setAuditExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:
             mainstore.setPickFrontExceptionScreen(action.data);
             mainstore.emitChange();
@@ -1778,5 +1934,7 @@ AppDispatcher.register(function(payload) {
             return true;
     }
 });
+
+
 
 module.exports = mainstore;

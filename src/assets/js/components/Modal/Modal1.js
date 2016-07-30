@@ -25,10 +25,10 @@ function getStateData(){
 function attachKeyboard(id){   
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
-             customLayout: {
-        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
-        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
-      },
+            customLayout: {
+              'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{a} {c}'],
+              'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{a} {c}']
+            },
             css: {
               container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
             },
@@ -244,7 +244,7 @@ function loadComponent(modalType,modalData){
             <div className="modal-footer removeBorder">
               <div className="buttonContainer center-block chklstButtonContainer">
                 <div className="row removeBorder">
-                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.CANCEL_CLOSE_SCANNER}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.CANCEL_ADD_SCANNER}/></div>
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Submit")} color={"orange"} module ={appConstants.PERIPHERAL_MANAGEMENT} action={appConstants.ADD_SCANNER_DETAILS}/></div>
                 </div>
               </div>
@@ -280,7 +280,7 @@ var Modal = React.createClass({
     this.setState(getStateData());
   },
   render: function () {      
-    return (<div className="modal fade">
+    return (<div className="modal1 fade">
         <div className="modal-dialog">
           <div className="modal-content">
             <ModalHeader title={title}/>

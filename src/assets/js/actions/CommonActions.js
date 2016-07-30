@@ -211,9 +211,23 @@ var commonActions = {
     });
   },
 
+  changeAuditExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
   changePickFrontExceptionScreen:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
+
+  changePutBackExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN,
       data:data
     });
   },

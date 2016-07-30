@@ -39937,7 +39937,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         }
       break;
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
+          this._navigation = '';          
           if(this.state.PickFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -40091,7 +40091,8 @@ var PickFront = React.createClass({displayName: "PickFront",
   },
   
   render: function(data){ 
-	  this.getNotificationComponent();
+	  
+    this.getNotificationComponent();
     this.getScreenComponent(this.state.PickFrontScreenId);
 	
 	return (
@@ -42342,11 +42343,14 @@ var PutFront = React.createClass({displayName: "PutFront",
             );
           }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
             var btnComp;
-            console.log("ashish  " + JSON.stringify(this.state.PutFrontDamagedQuantity));
+            /**
+             * { T2714: confirm button disabled if missing/unscannable quantity is zero }
+             */
+            this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.MOVE_TO_DAMAGED_CONFIRM}) );
             }else{
-              btnComp = ( React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
+              btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
             }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -43320,8 +43324,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.118/wss",
+	INTERFACE_IP : "https://192.168.8.118"
 };
 module.exports = configConstants;
 

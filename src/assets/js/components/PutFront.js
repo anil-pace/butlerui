@@ -158,11 +158,14 @@ var PutFront = React.createClass({
             );
           }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
             var btnComp;
-            console.log("ashish  " + JSON.stringify(this.state.PutFrontDamagedQuantity));
+            /**
+             * { T2714: confirm button disabled if missing/unscannable quantity is zero }
+             */
+            this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.MOVE_TO_DAMAGED_CONFIRM} /> );
             }else{
-              btnComp = ( <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );
+              btnComp = ( <Button1 disabled = {this._disableConfirm} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );
             }
             this._component = (
               <div className='grid-container exception'>

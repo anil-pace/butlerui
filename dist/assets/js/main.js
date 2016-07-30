@@ -38074,50 +38074,51 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
     CommonActions.postDataToInterface(data1);
 		CommonActions.setActiveException(data.text);
 	},
-    render: function() {
-      var server_message = this.props.data.text;
+
+  /**
+   * gets the header message for the list item.
+   * @return {String} Text message to be displayed for the exception item
+   * */
+  _getHeaderMessage: function (){
+     var server_message = this.props.data.text;
       var navMessagesJson = this.state.navMessages;
       var errorCode = this.props.data.exception_id;
       var message_args  = this.props.data.details.slice(0);
+   if(navMessagesJson != undefined){
+    message_args.unshift(navMessagesJson[errorCode]);
+    if(message_args[0] == undefined){
+      return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+  },
+ /**
+  * creates the div needed for the exception list item and returns it
+  * @return {<div>} div which is needed to be displayed
+  */
+  _getExceptionItemDiv: function (){
 
-        if(this.props.action!=undefined && this.props.action == true){
-          return (
-              React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item", onClick: this.setCurrentException.bind(this,this.props.data)}, 
-                   (function(){
-                        if(navMessagesJson != undefined){
-                            message_args.unshift(navMessagesJson[errorCode]);
-                            if(message_args[0] == undefined){
-                              return server_message;  
-                            }else{
-                            var header_message = _.apply(null, message_args);
-                            return header_message;
-                            }
-                        }
-                       
-                        }
-                    )()
-        		)
-          );
-        }
-      else{
-        return (
-            React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":"exception-list-item"}, 
-                 (function(){
-                        if(navMessagesJson != undefined){
-                            message_args.unshift(navMessagesJson[errorCode]);
-                            if(message_args[0] == undefined){
-                              return server_message;  
-                            }else{
-                            var header_message = _.apply(null, message_args);
-                            return header_message;
-                            }
-                        }
-                       
-                        }
-                    )()
-            )
-        );
-      }
+    var clickHandler = null;
+    if(this.props.action!=undefined && this.props.action == true){
+      clickHandler = this.setCurrentException.bind(this,this.props.data);
+    }
+
+    return(
+        React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":
+          (this.props.data.disabled === true?"exception-list-item disabled":"exception-list-item"), 
+             onClick: clickHandler}, 
+               this._getHeaderMessage()
+                
+        ));
+    
+  },
+
+  render: function() {
+    var exceptionItemDiv = this._getExceptionItemDiv();
+    
+    return  exceptionItemDiv;
     },
 });
 
@@ -44842,7 +44843,7 @@ var CommonActions = require('../actions/CommonActions');
 var CHANGE_EVENT = 'change';
 var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
     _logoutStatus,
-    _activeException = "",
+    _activeException = null,
     _enableException = false,
     popupVisible = false,
     _showSpinner = true,
@@ -45323,23 +45324,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["activeException"] = this.getActiveException();
         data["list"] = [];
         data["header"] = "Exceptions";
+        var bSelected = false;
+        var bDisabled = false;
         _seatData.exception_allowed.map(function(value, index) {
-            if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) || value.exception_name == data["activeException"])
-                data["list"].push({
+            //all exception items should be enabled and unselected first hence putting disabled = false 
+            bDisabled = false;
+            bSelected = false;
+            if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) || 
+                value.exception_name === data["activeException"]){
+                bSelected = true;                
+            }
+
+            if(_seatData["exception_type"] != undefined && !bSelected )  {
+                bDisabled = true;
+            }
+
+            data["list"].push({
                     "text": value.exception_name,
-                    "selected": true,
+                    "selected": bSelected,
                     "exception_id" : value.exception_id,
                     "details" : [],
+                    "disabled" : bDisabled,
                     "event": value["event"] != undefined ? value["event"] : ""
-                });
-            else
-                data["list"].push({
-                    "text": value.exception_name,
-                    "selected": false,
-                    "exception_id" : value.exception_id,
-                    "details" : [],
-                    "event": value["event"] != undefined ? value["event"] : ""
-                });
+                });            
         })
         return data;
     },
@@ -45802,7 +45809,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _goodQuantity = 0;
         _damagedQuantity = 0;
         _missingQuantity = 0;
-        _activeException = "";
+        _activeException = null;
         _showSpinner = false;
         _enableException = false;
         _seatData = data;
@@ -45935,7 +45942,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     enableException: function(data) {
         _KQQty = 0;
-        _activeException = "";
+        _activeException = null;
         if(data == true){
             _seatData["scan_allowed"] = false;    
         }else{
@@ -45949,10 +45956,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     setActiveException: function(data) {
-        _activeException = data;
+        if (!data){
+            _activeException = null;
+        }else{
+            _activeException = data;    
+        }
     },
     getActiveException: function() {
-        return _activeException;
+        if (!_activeException){
+            return null;
+        }else{
+            return _activeException;    
+        }
     },
     setKQQuanity: function(data) {
         _KQQty = data;

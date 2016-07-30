@@ -23,50 +23,51 @@ var ExceptionListItem = React.createClass({
     CommonActions.postDataToInterface(data1);
 		CommonActions.setActiveException(data.text);
 	},
-    render: function() {
-      var server_message = this.props.data.text;
+
+  /**
+   * gets the header message for the list item.
+   * @return {String} Text message to be displayed for the exception item
+   * */
+  _getHeaderMessage: function (){
+     var server_message = this.props.data.text;
       var navMessagesJson = this.state.navMessages;
       var errorCode = this.props.data.exception_id;
       var message_args  = this.props.data.details.slice(0);
+   if(navMessagesJson != undefined){
+    message_args.unshift(navMessagesJson[errorCode]);
+    if(message_args[0] == undefined){
+      return server_message;  
+                            }else{
+                            var header_message = _.apply(null, message_args);
+                            return header_message;
+                            }
+                        }
+  },
+ /**
+  * creates the div needed for the exception list item and returns it
+  * @return {<div>} div which is needed to be displayed
+  */
+  _getExceptionItemDiv: function (){
 
-        if(this.props.action!=undefined && this.props.action == true){
-          return (
-              <div className={this.props.data.selected==true?"exception-list-item selected":"exception-list-item"} onClick={this.setCurrentException.bind(this,this.props.data)}>
-                   {(function(){
-                        if(navMessagesJson != undefined){
-                            message_args.unshift(navMessagesJson[errorCode]);
-                            if(message_args[0] == undefined){
-                              return server_message;  
-                            }else{
-                            var header_message = _.apply(null, message_args);
-                            return header_message;
-                            }
-                        }
-                       
-                        }
-                    )()}
-        		</div>
-          );
-        }
-      else{
-        return (
-            <div className={this.props.data.selected==true?"exception-list-item selected":"exception-list-item"} >
-                 {(function(){
-                        if(navMessagesJson != undefined){
-                            message_args.unshift(navMessagesJson[errorCode]);
-                            if(message_args[0] == undefined){
-                              return server_message;  
-                            }else{
-                            var header_message = _.apply(null, message_args);
-                            return header_message;
-                            }
-                        }
-                       
-                        }
-                    )()}
-            </div>
-        );
-      }
+    var clickHandler = null;
+    if(this.props.action!=undefined && this.props.action == true){
+      clickHandler = this.setCurrentException.bind(this,this.props.data);
+    }
+
+    return(
+        <div className={this.props.data.selected==true?"exception-list-item selected":
+          (this.props.data.disabled === true?"exception-list-item disabled":"exception-list-item")} 
+             onClick= {clickHandler}>{
+               this._getHeaderMessage()
+                }
+        </div>);
+    
+  },
+
+  render: function() {
+    var exceptionItemDiv = this._getExceptionItemDiv();
+    
+    return  exceptionItemDiv;
     },
 });
 

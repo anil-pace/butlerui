@@ -39941,7 +39941,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           /**
           * { T2715: confirm button disabled if missing/unscannable quantity is zero }
           */
-            this._disableConfirm = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontGoodQuantity.current_qty > 0 )? false : true;          
+            this._disableNext = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontGoodQuantity.current_qty > 0 )? false : true;          
           if(this.state.PickFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -39958,7 +39958,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+                    React.createElement(Button1, {disabled: this._disableNext, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 

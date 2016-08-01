@@ -16,7 +16,8 @@ function getState(){
       seatList : loginstore.seatList(),
       username : '',
       password : '',
-      showError: loginstore.getErrorMessage()
+      showError: loginstore.getErrorMessage(),
+      getLang : loginstore.getLang()
   }
 }
 
@@ -38,16 +39,17 @@ var LoginPage = React.createClass({
               
           }
       }
-      console.log(data);
+    console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);
-     CommonActions.clearNotification();  
+    CommonActions.clearNotification();  
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
+    CommonActions.setLanguage();                 //Dispatch setLanguage action
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -75,7 +77,6 @@ var LoginPage = React.createClass({
         }    
       }
     }); 
-  
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -108,7 +109,7 @@ var LoginPage = React.createClass({
           $('#loginBtn').prop('disabled', true); 
         }    
       }
-    }); 
+    });
    },
   onChange: function(){    
     this.setState(getState());
@@ -128,8 +129,14 @@ var LoginPage = React.createClass({
     var d = new Date();
     var n = d.getFullYear();   
     var seatData;
+    var _languageDropDown=(
+              <select className="selectLang" ref='language' onChange={this.changeLanguage} >
+                  <option value="en-US">English</option>
+                  <option value="ch">Chinese</option>
+              </select>
+      );
     var display = this.state.flag === true ? 'block' : 'none';
-      if(this.state.seatList.length > 0){
+    if(this.state.seatList.length > 0){
           var parseSeatID;
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
@@ -200,10 +207,9 @@ var LoginPage = React.createClass({
                 <label >{_(resourceConstants.PASSWORD)}</label>
                   <input type="password" className="form-control" id="password" placeholder="Enter Password" ref='password' valueLink={this.linkState('password')} />
               </div>
-              <select className="selectLang" ref='language' onChange={this.changeLanguage}>
-                  <option value="en-US">English</option>
-                  <option value="ch">Chinese</option>
-              </select>
+               
+               {this.state.getLang?'':_languageDropDown}
+
               <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value="Login" />
           </form>
           </div>

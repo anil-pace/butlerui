@@ -38366,7 +38366,8 @@ function getState(){
       seatList : loginstore.seatList(),
       username : '',
       password : '',
-      showError: loginstore.getErrorMessage()
+      showError: loginstore.getErrorMessage(),
+      getLang : loginstore.getLang()
   }
 }
 
@@ -38388,16 +38389,17 @@ var LoginPage = React.createClass({displayName: "LoginPage",
               
           }
       }
-      console.log(data);
+    console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);
-     CommonActions.clearNotification();  
+    CommonActions.clearNotification();  
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
+    CommonActions.setLanguage();                 //Dispatch setLanguage action
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -38425,7 +38427,6 @@ var LoginPage = React.createClass({displayName: "LoginPage",
         }    
       }
     }); 
-  
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -38458,7 +38459,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
           $('#loginBtn').prop('disabled', true); 
         }    
       }
-    }); 
+    });
    },
   onChange: function(){    
     this.setState(getState());
@@ -38478,8 +38479,14 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var d = new Date();
     var n = d.getFullYear();   
     var seatData;
+    var _languageDropDown=(
+              React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
+                  React.createElement("option", {value: "en-US"}, "English"), 
+                  React.createElement("option", {value: "ch"}, "Chinese")
+              )
+      );
     var display = this.state.flag === true ? 'block' : 'none';
-      if(this.state.seatList.length > 0){
+    if(this.state.seatList.length > 0){
           var parseSeatID;
           seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
@@ -38550,10 +38557,9 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                 React.createElement("label", null, _(resourceConstants.PASSWORD)), 
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", ref: "password", valueLink: this.linkState('password')})
               ), 
-              React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
-                  React.createElement("option", {value: "en-US"}, "English"), 
-                  React.createElement("option", {value: "ch"}, "Chinese")
-              ), 
+               
+               this.state.getLang?'':_languageDropDown, 
+
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
           )
           )
@@ -43187,6 +43193,8 @@ var appConstants = {
 	LOGOUT : '/logout',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
+	COMPONENT : '/components',
+	LANG : '/language',     //Language from api
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	LOGIN_SEAT:"LOGIN_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",
@@ -43322,7 +43330,7 @@ var appConstants = {
 	CANCEL_CLOSE_SCANNER: "CANCEL_CLOSE_SCANNER",
 	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
 	CANCEL_PPTL : 'CANCEL_PPTL',
-	IDLE_LOGOUT_TIME : 300000 //in millisec.
+	IDLE_LOGOUT_TIME : 300000 //in millisec
 };
 
 module.exports = appConstants;
@@ -44721,6 +44729,7 @@ var utils  = require('../utils/utils.js');
 var CHANGE_EVENT = 'change';
 var flag = false;
 var currentSeat = [];
+var currentLang = '';
 var _errMsg = null;
 
 function getParameterByName(){
@@ -44764,6 +44773,20 @@ function listPpsSeat(seat){
     }
 }
 
+function checkLang(){             //Ajax call to get language from api
+      $.ajax({
+        type: 'GET',
+        url: configConstants.INTERFACE_IP+appConstants.API+appConstants.COMPONENT+appConstants.LANG,
+        dataType : "json",
+        beforeSend : xhrConfig 
+        }).done(function(response) {
+          currentLang = response.data[0].locale;
+          CommonActions.changeLanguage(currentLang);
+          console.log("Language_Recieved");
+        });
+}
+
+
 var showBox = function(index){
   flag = true;
 }
@@ -44788,6 +44811,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   seatList : function(){ 
     return currentSeat;
   },
+  getLang : function(){            //get language
+    return currentLang;
+  },
   getAuthToken : function(data){
     utils.getAuthToken(data);
   },
@@ -44808,6 +44834,9 @@ AppDispatcher.register(function(payload){
   switch(action.actionType){
     case appConstants.LIST_SEATS:
       getParameterByName();
+      break;
+    case appConstants.SET_LANGUAGE:             // Register callback for SET_LANGUAGE action
+      checkLang();
       break;
     case appConstants.LOGIN:
       loginstore.getAuthToken(action.data);

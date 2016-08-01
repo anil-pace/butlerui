@@ -8,6 +8,8 @@ var appConstants = {
 	LOGOUT : '/logout',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',
+	COMPONENT : '/components',
+	LANG : '/language',     //Language from api
 	OPERATOR_SEAT: "OPERATOR_SEAT",
 	LOGIN_SEAT:"LOGIN_SEAT",
 	SCAN_ITEMS: "Scan the item(s)",
@@ -143,7 +145,7 @@ var appConstants = {
 	CANCEL_CLOSE_SCANNER: "CANCEL_CLOSE_SCANNER",
 	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
 	CANCEL_PPTL : 'CANCEL_PPTL',
-	IDLE_LOGOUT_TIME : 300000 //in millisec.
+	IDLE_LOGOUT_TIME : 300000 //in millisec
 };
 
 module.exports = appConstants;

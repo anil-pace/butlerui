@@ -10,6 +10,7 @@ var utils  = require('../utils/utils.js');
 var CHANGE_EVENT = 'change';
 var flag = false;
 var currentSeat = [];
+var currentLang = '';
 var _errMsg = null;
 
 function getParameterByName(){
@@ -53,6 +54,20 @@ function listPpsSeat(seat){
     }
 }
 
+function checkLang(){             //Ajax call to get language from api
+      $.ajax({
+        type: 'GET',
+        url: configConstants.INTERFACE_IP+appConstants.API+appConstants.COMPONENT+appConstants.LANG,
+        dataType : "json",
+        beforeSend : xhrConfig 
+        }).done(function(response) {
+          currentLang = response.data[0].locale;
+          CommonActions.changeLanguage(currentLang);
+          console.log("Language_Recieved");
+        });
+}
+
+
 var showBox = function(index){
   flag = true;
 }
@@ -77,6 +92,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   seatList : function(){ 
     return currentSeat;
   },
+  getLang : function(){            //get language
+    return currentLang;
+  },
   getAuthToken : function(data){
     utils.getAuthToken(data);
   },
@@ -97,6 +115,9 @@ AppDispatcher.register(function(payload){
   switch(action.actionType){
     case appConstants.LIST_SEATS:
       getParameterByName();
+      break;
+    case appConstants.SET_LANGUAGE:             // Register callback for SET_LANGUAGE action
+      checkLang();
       break;
     case appConstants.LOGIN:
       loginstore.getAuthToken(action.data);

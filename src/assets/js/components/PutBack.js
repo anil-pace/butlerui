@@ -184,11 +184,13 @@ var PutBack = React.createClass({
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
                   <div className="main-container exception1">
                     <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
-                    <TabularData data = {this.state.PutBackExceptionProductDetails}/>
+
+                     <TabularData className="over" data = {this.state.PutBackExceptionProductDetails}/>
+
                     <KQ scanDetails = {this.state.PutBackKQDetails} />
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM} />  
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM} />
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

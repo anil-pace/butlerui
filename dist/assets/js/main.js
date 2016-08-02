@@ -41999,11 +41999,13 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
                   React.createElement("div", {className: "main-container exception1"}, 
                     React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
-                    React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
+
+                     React.createElement(TabularData, {className: "over", data: this.state.PutBackExceptionProductDetails}),
+
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -42992,6 +42994,9 @@ var TabularData = React.createClass({displayName: "TabularData",
     render: function() {
     	this.getTableRows();
         var classes = "tabular-data ";
+
+        classes+=this.props.className ? this.props.className:'';
+
         var size = this.props.size=="double"?classes = classes + "double ":"";
         var size = this.props.size=="triple"?classes = classes + "triple ":"";
         return (

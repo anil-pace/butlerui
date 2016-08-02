@@ -14,6 +14,9 @@ var TabularData = React.createClass({
     render: function() {
     	this.getTableRows();
         var classes = "tabular-data ";
+
+        classes+=this.props.className ? this.props.className:'';
+
         var size = this.props.size=="double"?classes = classes + "double ":"";
         var size = this.props.size=="triple"?classes = classes + "triple ":"";
         return (

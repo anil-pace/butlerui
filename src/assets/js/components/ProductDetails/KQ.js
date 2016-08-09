@@ -286,7 +286,10 @@ var KQ = React.createClass({
     if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
-
+        /**
+         * { T2766- Removed disabled attribute when true }
+         */
+        $('#keyboard').removeAttr("disabled");
           setTimeout(function(){ $('#keyboard').keyboard({
             layout: 'custom',
             customLayout: {

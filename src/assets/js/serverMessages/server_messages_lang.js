@@ -324,4 +324,40 @@ function server_messages_list() {
     _("Wrong scan.Expecting location scan.");
     _("Scan Excess Entity Quantity");
     _("Entity already scanned.Confirm exception");
+    _("Entity already scanned.Confirm exception");
+    _("Exception");
+    _("Logout");
+    _("Utility");
+    _("EXCEPTION");
+    _("Good Quantity");
+    _("Missing Quantity");
+    _("Unscannable Quantity");
+    _("Remove Item");
+    _("Item Missing/Bad Barcode");
+    _("Sum of missing and good quantity should be equal to {0}");
+    _("Login"); 
+    _("Enter Username");
+    _("Enter Password");
+    _("Invalid credentials");
+    _("Login not allowed. You're already logged in");
+    /* messages in passive navigation */
+    _("Place Item in slot and scan more");
+    _("PPTL");
+    _("Scan Slot Barcode");
+    _("Unexpected Item");
+    _("Stage Bin or Scan Item");
+    _("Scan & Confirm");
+    _("Scan Item From Bin");
+    _("Scan Tote");
+    _("Scan MSU Barcode");
+    _("Scan Items");
+    _("Status");
+    _("Could not connect to PPS.Please try again.");
+    /* bin-info modal box */
+    _("product_sku");
+    _("type");
+    _("quantity");
+    _("item");
+    _("box");
+    _("SKU not present in Database.Put in exception area");
 }

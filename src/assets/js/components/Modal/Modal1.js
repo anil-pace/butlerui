@@ -94,7 +94,7 @@ function loadComponent(modalType,modalData){
         if (modalData[0].hasOwnProperty(key)) {
            //component.push((<div className="col-md-4 heading">{key} </div>));
            headerArray.push(              
-              <th>{key}</th>              
+              <th>{_(key)}</th>              
           );
         }
       } 

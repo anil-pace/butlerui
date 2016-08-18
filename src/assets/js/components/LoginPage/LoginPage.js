@@ -132,7 +132,7 @@ var LoginPage = React.createClass({
     var _languageDropDown=(
               <select className="selectLang" ref='language' onChange={this.changeLanguage} >
                   <option value="en-US">English</option>
-                  <option value="ch">Chinese</option>
+                  <option value="ja-JP">Japanese</option>
               </select>
       );
     var display = this.state.flag === true ? 'block' : 'none';

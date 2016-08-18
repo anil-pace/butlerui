@@ -38482,7 +38482,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var _languageDropDown=(
               React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
                   React.createElement("option", {value: "en-US"}, "English"), 
-                  React.createElement("option", {value: "ch"}, "Chinese")
+                  React.createElement("option", {value: "ja-JP"}, "Japanese")
               )
       );
     var display = this.state.flag === true ? 'block' : 'none';
@@ -40526,7 +40526,10 @@ var KQ = React.createClass({displayName: "KQ",
     if (_scanDetails.kq_allowed == true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
-
+        /**
+         * { T2766- Removed disabled attribute when true }
+         */
+        $('#keyboard').removeAttr("disabled");
           setTimeout(function(){ $('#keyboard').keyboard({
             layout: 'custom',
             customLayout: {
@@ -41005,7 +41008,10 @@ var KQ = React.createClass({displayName: "KQ",
     if (_scanDetails.kq_allowed === true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
-
+        /**
+         * { T2766- Removed disabled attribute when true }
+         */
+        $('#keyboard').removeAttr("disabled");
           setTimeout(function(){ $('#damaged_keyboard').keyboard({
             layout: 'custom',
             customLayout: {
@@ -41434,7 +41440,10 @@ var KQ = React.createClass({displayName: "KQ",
     if (_scanDetails.kq_allowed === true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
-
+        /**
+         * { T2766- Removed disabled attribute when true }
+         */
+        $('#keyboard').removeAttr("disabled");
           setTimeout(function(){ $('#keyboard').keyboard({
             layout: 'custom',
             customLayout: {
@@ -42000,7 +42009,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                   React.createElement("div", {className: "main-container exception1"}, 
                     React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
 
-                     React.createElement(TabularData, {className: "over", data: this.state.PutBackExceptionProductDetails}),
+                     React.createElement(TabularData, {className: "over", data: this.state.PutBackExceptionProductDetails}), 
 
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 

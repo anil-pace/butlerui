@@ -195,17 +195,18 @@ var LoginPage = React.createClass({
                     <div className="userFormLoginPage">
                         <form>
                             {ppsOption}
-              <div className={errorClass}><span>{this.state.showError}</span>
+              <div className={errorClass}><span>{_(this.state.showError)}</span>
 
               </div>
-              <div className="form-group">
+              <div className="form-group"> 
                 <label >{_(resourceConstants.USERNAME)}</label>
-                  <input type="text" className="form-control" id="username" placeholder="Enter Username" ref='username' valueLink={this.linkState('username')} />
+                  <input type="text" className
+                  ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
               </div>
 
               <div className="form-group">
                 <label >{_(resourceConstants.PASSWORD)}</label>
-                  <input type="password" className="form-control" id="password" placeholder="Enter Password" ref='password' valueLink={this.linkState('password')} />
+                  <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
               </div>
                
                {this.state.getLang?'':_languageDropDown}

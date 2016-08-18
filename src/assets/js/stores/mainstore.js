@@ -7,6 +7,7 @@ var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
+var japanese = require('../serverMessages/japanese');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -1082,6 +1083,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         };
         switch (data) {
+            case "ja-JP":
+                _.setTranslation(japanese);
+                break;
             case "ch":
                 _.setTranslation(chinese);
                 break;

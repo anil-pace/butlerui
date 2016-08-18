@@ -37100,7 +37100,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/AuditStore":292,"../stores/mainstore":298,"../utils/utils.js":299,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./PrdtDetails/ProductImage.js":260,"./ProductDetails/KQ.js":262,"./Rack/MsuRack.js":270,"./Reconcile":274,"./Spinner/LoaderButler":275,"./SystemIdle":278,"./TabularData":281,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/AuditStore":293,"../stores/mainstore":299,"../utils/utils.js":300,"./Button/Button":238,"./Button/Button.js":238,"./CurrentSlot":240,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./PrdtDetails/ProductImage.js":260,"./ProductDetails/KQ.js":262,"./Rack/MsuRack.js":270,"./Reconcile":274,"./Spinner/LoaderButler":275,"./SystemIdle":278,"./TabularData":281,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37427,7 +37427,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../stores/mainstore":298,"../Modal/Modal":248,"react":230}],236:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../stores/mainstore":299,"../Modal/Modal":248,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37493,7 +37493,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":295,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
+},{"../../stores/PutBackStore":296,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -37893,7 +37893,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../stores/PickFrontStore":294,"../../stores/PutBackStore":295,"../../stores/mainstore":298,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../stores/PickFrontStore":295,"../../stores/PutBackStore":296,"../../stores/mainstore":299,"react":230}],239:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -37963,7 +37963,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../stores/AuditStore":292,"react":230}],240:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../stores/AuditStore":293,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -38124,7 +38124,7 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":298,"react":230}],245:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":299,"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 
@@ -38166,7 +38166,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"../stores/mainstore":298,"react":230}],246:[function(require,module,exports){
+},{"../stores/mainstore":299,"react":230}],246:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -38347,7 +38347,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":283,"../constants/svgConstants":286,"../stores/mainstore":298,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":283,"../constants/svgConstants":286,"../stores/mainstore":299,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],247:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -38545,17 +38545,18 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                     React.createElement("div", {className: "userFormLoginPage"}, 
                         React.createElement("form", null, 
                             ppsOption, 
-              React.createElement("div", {className: errorClass}, React.createElement("span", null, this.state.showError)
+              React.createElement("div", {className: errorClass}, React.createElement("span", null, _(this.state.showError))
 
               ), 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", null, _(resourceConstants.USERNAME)), 
-                  React.createElement("input", {type: "text", className: "form-control", id: "username", placeholder: "Enter Username", ref: "username", valueLink: this.linkState('username')})
+                  React.createElement("input", {type: "text", className: 
+"form-control", id: "username", placeholder: _('Enter Username'), ref: "username", valueLink: this.linkState('username')})
               ), 
 
               React.createElement("div", {className: "form-group"}, 
                 React.createElement("label", null, _(resourceConstants.PASSWORD)), 
-                  React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: "Enter Password", ref: "password", valueLink: this.linkState('password')})
+                  React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: _('Enter Password'), ref: "password", valueLink: this.linkState('password')})
               ), 
                
                this.state.getLang?'':_languageDropDown, 
@@ -38586,7 +38587,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":285,"../../constants/svgConstants":286,"../../stores/loginstore":297,"../../stores/mainstore":298,"../../utils/utils.js":299,"../Operator":256,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],248:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":285,"../../constants/svgConstants":286,"../../stores/loginstore":298,"../../stores/mainstore":299,"../../utils/utils.js":300,"../Operator":256,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],248:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -38885,7 +38886,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":283,"../../constants/svgConstants":286,"../../stores/PickFrontStore":294,"../../stores/mainstore":298,"../Button/Button":238,"./ModalFooter":250,"./ModalHeader":251,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
+},{"../../constants/appConstants":283,"../../constants/svgConstants":286,"../../stores/PickFrontStore":295,"../../stores/mainstore":299,"../Button/Button":238,"./ModalFooter":250,"./ModalHeader":251,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -39184,7 +39185,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":283,"../../constants/svgConstants":286,"../../stores/PickFrontStore":294,"../../stores/mainstore":298,"../Button/Button":238,"./ModalFooter":250,"./ModalHeader":251,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],250:[function(require,module,exports){
+},{"../../constants/appConstants":283,"../../constants/svgConstants":286,"../../stores/PickFrontStore":295,"../../stores/mainstore":299,"../Button/Button":238,"./ModalFooter":250,"./ModalHeader":251,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],250:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -39466,7 +39467,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":283,"../stores/mainstore":298,"./Audit":234,"./PickBack":257,"./PickFront":258,"./PutBack":268,"./PutFront":269,"./Spinner/Overlay":276,"./SystemIdle":278,"react":230}],257:[function(require,module,exports){
+},{"../constants/appConstants":283,"../stores/mainstore":299,"./Audit":234,"./PickBack":257,"./PickFront":258,"./PutBack":268,"./PutFront":269,"./Spinner/Overlay":276,"./SystemIdle":278,"react":230}],257:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -39683,7 +39684,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/PickBackStore":293,"../stores/mainstore":298,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./ProductDetails/Wrapper":267,"./SystemIdle":278,"./TabularData":281,"react":230}],258:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/PickBackStore":294,"../stores/mainstore":299,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./ProductDetails/Wrapper":267,"./SystemIdle":278,"./TabularData":281,"react":230}],258:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
@@ -40119,7 +40120,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/PickFrontStore":294,"../stores/mainstore":298,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Modal/Modal1":249,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./PrdtDetails/ProductDetails.js":259,"./ProductDetails/KQ":262,"./ProductDetails/KQExceptionDamaged":263,"./ProductDetails/KQExceptionMissing":264,"./ProductDetails/Wrapper":267,"./Rack/MsuRack.js":270,"./Spinner/LoaderButler":275,"./TabularData":281,"react":230}],259:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/PickFrontStore":295,"../stores/mainstore":299,"./Bins/Bins.react":236,"./BoxSerial.js":237,"./Button/Button":238,"./CurrentSlot":240,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Modal/Modal1":249,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./PrdtDetails/ProductDetails.js":259,"./ProductDetails/KQ":262,"./ProductDetails/KQExceptionDamaged":263,"./ProductDetails/KQExceptionMissing":264,"./ProductDetails/Wrapper":267,"./Rack/MsuRack.js":270,"./Spinner/LoaderButler":275,"./TabularData":281,"react":230}],259:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -40772,7 +40773,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../constants/resourceConstants":285,"../../stores/mainstore":298,"react":230}],263:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../constants/resourceConstants":285,"../../stores/mainstore":299,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -41204,7 +41205,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../constants/resourceConstants":285,"../../stores/mainstore":298,"react":230}],264:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../constants/resourceConstants":285,"../../stores/mainstore":299,"react":230}],264:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -41637,7 +41638,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../constants/resourceConstants":285,"../../stores/mainstore":298,"react":230}],265:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":283,"../../constants/resourceConstants":285,"../../stores/mainstore":299,"react":230}],265:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -41788,7 +41789,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":285,"../../stores/mainstore":298,"../Modal/Modal":248,"./PopUp":265,"react":230}],267:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":285,"../../stores/mainstore":299,"../Modal/Modal":248,"./PopUp":265,"react":230}],267:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -41821,7 +41822,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":298,"./KQ":262,"./PopUp":265,"./ProductInfo":266,"react":230}],268:[function(require,module,exports){
+},{"../../stores/mainstore":299,"./KQ":262,"./PopUp":265,"./ProductInfo":266,"react":230}],268:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -42204,7 +42205,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":283,"../stores/PutBackStore":295,"../stores/mainstore":298,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./PrdtDetails/ProductImage.js":260,"./ProductDetails/KQ":262,"./ProductDetails/Wrapper":267,"./Reconcile":274,"./SystemIdle":278,"./TabularData":281,"react":230}],269:[function(require,module,exports){
+},{"../constants/appConstants":283,"../stores/PutBackStore":296,"../stores/mainstore":299,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./ExceptionHeader":245,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./PrdtDetails/ProductImage.js":260,"./ProductDetails/KQ":262,"./ProductDetails/Wrapper":267,"./Reconcile":274,"./SystemIdle":278,"./TabularData":281,"react":230}],269:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -42515,7 +42516,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":283,"../stores/PutFrontStore":296,"../stores/mainstore":298,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./ProductDetails/KQ":262,"./ProductDetails/KQExceptionDamaged":263,"./ProductDetails/KQExceptionMissing":264,"./ProductDetails/Wrapper":267,"./Rack/MsuRack.js":270,"./Spinner/LoaderButler":275,"./TabularData":281,"react":230}],270:[function(require,module,exports){
+},{"../constants/appConstants":283,"../stores/PutFrontStore":297,"../stores/mainstore":299,"./Bins/Bins.react":236,"./Button/Button":238,"./Exception/Exception":241,"./Header":246,"./Modal/Modal":248,"./Navigation/Navigation.react":253,"./Notification/Notification":255,"./ProductDetails/KQ":262,"./ProductDetails/KQExceptionDamaged":263,"./ProductDetails/KQExceptionMissing":264,"./ProductDetails/Wrapper":267,"./Rack/MsuRack.js":270,"./Spinner/LoaderButler":275,"./TabularData":281,"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -42986,7 +42987,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/mainstore":298,"./Button/IconButton":239,"react":230}],281:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":283,"../stores/mainstore":299,"./Button/IconButton":239,"react":230}],281:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -43351,8 +43352,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.118/wss",
+	INTERFACE_IP : "https://192.168.8.118"
 };
 module.exports = configConstants;
 
@@ -43478,6 +43479,340 @@ var english = {
 module.exports = english;
 
 },{}],291:[function(require,module,exports){
+var japanese = {
+	"'Override Tote Exception' cannot be raised for bins with totes associated": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3044\u305f\u30d3\u30f3\u3067\u300c\u30c8\u30fc\u30c8\u66f4\u65b0\u4f8b\u5916\u300d\u306f\u767a\u751f\u3057\u307e\u305b\u3093",
+	"Actions": "\u30a2\u30af\u30b7\u30e7\u30f3",
+	"Actual": "\u6b63\u3057\u3044",
+	"Actual Quantity": "\u5b9f\u6570",
+	"Actual put quantity less than than revised quantity.": "\u5165\u8377\u6570\u304c\u5909\u66f4\u6570\u91cf\u3068\u4e00\u81f4\u3057\u3066\u3044\u307e\u305b\u3093",
+	"Actual put quantity not equal to the sum of Good and Expection quantity.": "\u826f\u54c1\u3068\u4e0d\u826f\u54c1\u306e\u5408\u8a08\u6570\u304c\u5165\u8377\u6570\u3068\u7570\u306a\u308a\u307e\u3059",
+	"Add Scanner": "\u30b9\u30ad\u30e3\u30ca\u8ffd\u52a0",
+	"After scannning tote barcode, please scan pptl barcode": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Are You Sure You Want to Close Tote?": "\u30c8\u30fc\u30c8\u3092\u7d42\u4e86\u3057\u3066\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
+	"Are you sure you want to close Tote": "\u30c8\u30fc\u30c8\u3092\u30af\u30ed\u30fc\u30ba\u3057\u3066\u3082\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
+	"Associate tote with bin": "\u30c8\u30fc\u30c8\u3092\u30d3\u30f3\u306b\u7d10\u3065\u3051\u3066\u304f\u3060\u3055\u3044",
+	"BACK": "\u623b\u308b",
+	"Back": "\u623b\u308b",
+	"Barcode": "\u30d0\u30fc\u30b3\u30fc\u30c9",
+	"Barcode Damage": "\u30d0\u30fc\u30b3\u30fc\u30c9\u4e0d\u826f",
+	"Barcode didn't match the current tote barcode": "\u30c8\u30fc\u30c8\u306e\u30d0\u30fc\u30b3\u30fc\u30c9\u304c\u9055\u3044\u307e\u3059",
+	"Barcode didn't match with current tote barcode": "\u30d0\u30fc\u30b3\u30fc\u30c9\u304c\u73fe\u5728\u306e\u30c8\u30fc\u30c8\u30d0\u30fc\u30b3\u30fc\u30c9\u3068\u4e00\u81f4\u3057\u307e\u305b\u3093",
+	"Bin": "\u30d3\u30f3",
+	"Bin ID": "\u30d3\u30f3ID",
+	"Bin Info": "\u30d3\u30f3\u60c5\u5831",
+	"Bin already staged. Ignoring event": "\u30d3\u30f3\u306f\u78ba\u5b9a\u6e08\u307f\u3067\u3059\u3002\u64cd\u4f5c\u3092\u7121\u8996\u3057\u307e\u3057\u305f",
+	"Bin empty. Cannot be staged": "\u30d3\u30f3\u304c\u7a7a\u3067\u3059\u3002\u78ba\u5b9a\u3067\u304d\u307e\u305b\u3093",
+	"Bin selected for put. Cannot be staged": "\u30d3\u30f3\u306f\u5165\u8377\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u78ba\u5b9a\u306f\u3067\u304d\u307e\u305b\u3093",
+	"Bin {0} items removed successfully": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f",
+	"Bin {0} selected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u307e\u3057\u305f",
+	"Bin {0} unselected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+	"Box Scan successful": "\u30dc\u30c3\u30af\u30b9\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
+	"Box Serial Numbers": "\u30dc\u30c3\u30af\u30b9\u30b7\u30ea\u30a2\u30eb\u756a\u53f7",
+	"Box Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u30dc\u30c3\u30af\u30b9",
+	"Box scan successful": "\u30dc\u30c3\u30af\u30b9\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
+	"Box with same serial number already exists in the warehouse": "\u540c\u3058\u30b7\u30ea\u30a2\u30eb\u756a\u53f7\u306e\u30dc\u30c3\u30af\u30b9\u304c\u3001\u65e2\u306b\u5009\u5eab\u5185\u306b\u5b58\u5728\u3057\u307e\u3059",
+	"CLOSE": "\u7d42\u4e86",
+	"CONFIRM": "\u78ba\u8a8d",
+	"CURRENT SLOT": "\u73fe\u5728\u306e\u30b9\u30ed\u30c3\u30c8",
+	"Cancel": "\u30ad\u30e3\u30f3\u30bb\u30eb",
+	"Cancel Exception": "\u4f8b\u5916\u767b\u9332\u306e\u30ad\u30e3\u30f3\u30bb\u30eb",
+	"Cancel Scan": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u306e\u30ad\u30e3\u30f3\u30bb\u30eb",
+	"Cancel audit successful.Audit Restarted": "\u68da\u5378\u30ad\u30e3\u30f3\u30bb\u30eb\u5b8c\u4e86\u3002\u68da\u5378\u3092\u518d\u5b9f\u65bd\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Cancel scan successful": "\u30ad\u30e3\u30f3\u30bb\u30eb\u306e\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
+	"Cancel scan successful.": "\u30b9\u30ad\u30e3\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f",
+	"Cancelled excess entity in tote": "\u30c8\u30fc\u30c8\u306e\u904e\u5270\u5546\u54c1\u3092\u30ad\u30e3\u30f3\u30bb\u30eb\u3057\u307e\u3057\u305f",
+	"Cancelled invalid entity in tote": "\u30c8\u30fc\u30c8\u306e\u4f8b\u5916\u5546\u54c1\u3092\u30ad\u30e3\u30f3\u30bb\u30eb\u3057\u307e\u3057\u305f",
+	"Cannot cancel scan. No scanned box found": "\u30b9\u30ad\u30e3\u30f3\u3092\u30ad\u30e3\u30f3\u30bb\u30eb\u3067\u304d\u307e\u305b\u3093",
+	"Check Count": "\u6570\u91cf\u78ba\u8a8d",
+	"Clear All": "\u5168\u3066\u30af\u30ea\u30a2",
+	"Confirm": "\u78ba\u8a8d",
+	"Confirm MSU Release": "MSU\u306e\u30ea\u30ea\u30fc\u30b9\u3092\u78ba\u8a8d",
+	"Connection is closed. Connecting...": "\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u304c\u5207\u65ad\u3055\u308c\u307e\u3057\u305f\u3002\u518d\u63a5\u7d9a\u4e2d\u30fb\u30fb\u30fb",
+	"Could not connect to PPS.Please try again.": "PPS\u306b\u63a5\u7d9a\u3067\u304d\u307e\u305b\u3093\u3002\u3082\u3046\u4e00\u5ea6\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Current PPS mode does not support back seat. Please logout.": "\u73fe\u5728\u306e\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u306f\u30d0\u30c3\u30af\u30b7\u30fc\u30c8\u3092\u4f7f\u7528\u3067\u304d\u307e\u305b\u3093\u3002\u30ed\u30b0\u30a2\u30a6\u30c8\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Damaged and missing entity recorded.": "\u4e0d\u826f\u54c1\u30fb\u7d1b\u5931\u5546\u54c1\u304c\u8a18\u9332\u3055\u308c\u307e\u3057\u305f",
+	"Data capture failed at item": "\u5546\u54c1\u306e\u60c5\u5831\u53d6\u5f97\u5931\u6557",
+	"Data capture failed at item {0}": "\u5546\u54c1 {0} \u306e\u60c5\u5831\u304c\u3042\u308a\u307e\u305b\u3093",
+	"Data capture valid": "\u6b63\u3057\u3044\u60c5\u5831\u304c\u53d6\u5f97\u3055\u308c\u307e\u3057\u305f",
+	"Delete": "\u524a\u9664",
+	"Details": "\u5546\u54c1\u8a73\u7d30",
+	"Dis-associate Tote": "\u30c8\u30fc\u30c8\u7d10\u4ed8\u3051\u89e3\u9664",
+	"Disassociate Tote": "\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u306a\u3044\u30c8\u30fc\u30c8",
+	"Documents printed Successfully": "\u5370\u5237\u5b8c\u4e86",
+	"Documents printed successfully": "\u5370\u5237\u5b8c\u4e86",
+	"EXCEPTION": "\u4f8b\u5916\u767b\u9332",
+	"Edit Details": "\u8a73\u7d30\u7de8\u96c6",
+	"Enter Good Quantity to be Put into Slot": "\u826f\u54c1\u6570\u5165\u529b",
+	"Enter Password": "\u30d1\u30b9\u30ef\u30fc\u30c9\u3092\u5165\u529b",
+	"Enter Quantity of Excess Entities": "\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u306e\u5546\u54c1\u6570\u5165\u529b",
+	"Enter Unscannable Entity Quantity": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1\u306e\u6570\u91cf\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Enter Username": "\u30e6\u30fc\u30b6\u30fc\u540d\u3092\u5165\u529b",
+	"Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL": "\u5546\u54c1\u304c\u683c\u7d0d\u3067\u304d\u307e\u305b\u3093\u3002\u30d3\u30f3 {0} \u304b\u3089\u3059\u3079\u3066\u306e\u5546\u54c1\u3092\u53d6\u308a\u51fa\u3057\u3001\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Entity Missing / Unscannable": "\u7d1b\u5931 / \u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
+	"Entity Oversized": "\u7279\u5927\u54c1",
+	"Entity Scan not expected. Press PPTL": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Entity Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
+	"Entity already scanned.Waiting for PPTL press": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u6e08\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Entity not expected in tote. Please put entity in exception area and confirm": "\u30c8\u30fc\u30c8\u306b\u5b58\u5728\u3057\u306a\u3044\u5546\u54c1\u3067\u3059\u3002\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Entity scan not expected.": "\u30b9\u30ad\u30e3\u30f3\u304c\u9055\u3044\u307e\u3059",
+	"Entity scan not expected. Waiting for PPTL press": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Entity scan successful": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u304c\u5b8c\u4e86\u3055\u308c\u307e\u3057\u305f",
+	"Entity scan successful.": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f",
+	"Entity scanned is not from bin {0}. Replace and scan from bin {1}": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u3002\u30d3\u30f3 {1} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Exception": "\u4f8b\u5916\u767b\u9332",
+	"Exception cancelled": "\u4f8b\u5916\u767b\u9332\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f",
+	"Exception invalid as totes are not required with this PPS": "\u3053\u306e\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u3067\u5229\u7528\u3055\u308c\u3066\u3044\u308b\u30c8\u30fc\u30c8\u3067\u306f\u3042\u308a\u307e\u305b\u3093",
+	"Exceptions": "\u4f8b\u5916",
+	"Excess item in tote recorded.": "\u30c8\u30fc\u30c8\u306e\u904e\u5270\u306a\u5546\u54c1\u304c\u8a18\u9332\u3055\u308c\u307e\u3057\u305f",
+	"Excess item in tote recorded. Now press PPTL": "\u30c8\u30fc\u30c8\u306e\u5546\u54c1\u304c\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u3067\u3059\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Expected": "\u4e88\u5b9a",
+	"Expected Quantity": "\u4e88\u5b9a\u6570",
+	"Expected quantity exceeded.": "\u6709\u52b9\u306a\u6570\u5024\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Expecting MSU release confirmation from GUI, got invalid event.": "\u8aa4\u3063\u305f\u64cd\u4f5c\u3067\u3059\u3002MSU\u306e\u958b\u653e\u3092\u753b\u9762\u3067\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Extra": "\u904e\u5270",
+	"Extra Entities in Bin": "\u904e\u5270\u54c1",
+	"Extra Entity Found": "\u904e\u5270\u306a\u5546\u54c1\u3067\u3059",
+	"Extra item found please put back item in Exception bin": "\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u3002\u5546\u54c1\u3092\u623b\u3057\u3066\u304f\u3060\u3055\u3044",
+	"FINISH": "\u5b8c\u4e86",
+	"Finish": "\u5b8c\u4e86",
+	"Good Quantity": "\u826f\u54c1\u6570",
+	"Incorrect tote barcode scanned. Please try again": "\u8aa4\u3063\u305f\u30c8\u30fc\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
+	"Input Extra Details": "\u8ffd\u52a0\u60c5\u5831\u3092\u5165\u529b",
+	"Invalid Exception for this configuration": "\u8a2d\u5b9a\u6642\u306b\u4e0d\u6b63\u306a\u4f8b\u5916\u304c\u767a\u751f",
+	"Invalid credentials": "\u7121\u52b9\u306a\u8a8d\u8a3c\u60c5\u5831\u3067\u3059",
+	"Invalid entity in tote recorded": "\u5546\u54c1\u9055\u3044",
+	"Invalid item in tote recorded.": "\u5546\u54c1\u304c\u7570\u306a\u308a\u307e\u3059",
+	"Item Missing/Bad Barcode": "\u7d1b\u5931/\u30d0\u30fc\u30b3\u30fc\u30c9\u4e0d\u826f\u5546\u54c1",
+	"Item Missing/Unscannable": "\u7d1b\u5931\u307e\u305f\u306f\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
+	"Item Not Expected in Tote": "\u30c8\u30fc\u30c8\u306b\u306a\u3044\u5546\u54c1\u3067\u3059",
+	"Item Scan successful": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
+	"Item in Box Serial Numbers": "\u30b7\u30ea\u30a2\u30eb\u756a\u53f7\u7ba1\u7406\u306e\u5546\u54c1",
+	"Item scan successful": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
+	"Items In Box Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
+	"Last Box Scan Completed! Scan Remaining Box/Items": "\u30dc\u30c3\u30af\u30b9\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86\uff01\u6b8b\u308a\u306e\u5546\u54c1\u307e\u305f\u306f\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+	"List Of Items To Reconcile": "\u8abf\u6574\u304c\u5fc5\u8981\u306a\u5546\u54c1\u30ea\u30b9\u30c8",
+	"Location scan successful": "\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u306e\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
+	"Login": "\u30ed\u30b0\u30a4\u30f3",
+	"Login not allowed. You're already logged in": "\u30ed\u30b0\u30a4\u30f3\u3067\u304d\u307e\u305b\u3093\u3002\u65e2\u306b\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u3044\u307e\u3059",
+	"Logout": "\u30ed\u30b0\u30a2\u30a6\u30c8",
+	"Loose Items": "\u672a\u68b1\u5305\u5546\u54c1",
+	"Loose Items Serial Numbers": "\u672a\u68b1\u5305\u5546\u54c1\u306e\u30b7\u30ea\u30a2\u30eb\u756a\u53f7",
+	"Loose Items Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u672a\u68b1\u5305\u5546\u54c1",
+	"Mising Box": "\u7d1b\u5931\u30dc\u30c3\u30af\u30b9",
+	"Missing": "\u7d1b\u5931",
+	"Missing Box": "\u7d1b\u5931\u3057\u305f\u30dc\u30c3\u30af\u30b9",
+	"Missing Quantity": "\u7d1b\u5931\u6570",
+	"NEXT": "\u6b21\u3078",
+	"No Items To Reconcile": "\u8abf\u6574\u304c\u5fc5\u8981\u306a\u5546\u54c1\u306f\u3042\u308a\u307e\u305b\u3093",
+	"No PPS bins empty. Please empty them from Pickback": "\u7a7a\u304d\u30d3\u30f3\u304c\u3042\u308a\u307e\u305b\u3093\u3002\u30d4\u30c3\u30af\u30d0\u30c3\u30af\u4f5c\u696d\u3092\u5b9f\u65bd\u3057\u3066\u304f\u3060\u3055\u3044",
+	"No bins available to stage": "\u78ba\u5b9a\u53ef\u80fd\u306a\u30d3\u30f3\u304c\u3042\u308a\u307e\u305b\u3093",
+	"No entities added yet. Scan entities and then press PPTL": "\u5546\u54c1\u304c\u8ffd\u52a0\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"No free bins. Please scan later": "\u7a7a\u304d\u30d3\u30f3\u304c\u3042\u308a\u307e\u305b\u3093\u3002\u5f8c\u3067\u30b9\u30ad\u30e3\u30f3\u3057\u306a\u304a\u3057\u3066\u304f\u3060\u3055\u3044",
+	"No matching tote found": "\u30c8\u30fc\u30c8\u304c\u9055\u3044\u307e\u3059",
+	"No tote associated. Please keep a tote in bin and scan": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u30c8\u30fc\u30c8\u3092\u30d3\u30f3\u306b\u7f6e\u3044\u3066\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"No tote scanned": "\u30c8\u30fc\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+	"No totes associated. Pease keep totes in the Bin and then scan": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u30d3\u30f3\u306e\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Order removed successfully from bin {0}": "\u30d3\u30f3 {0} \u304b\u3089\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f",
+	"Overide Tote Required": "\u30c8\u30fc\u30c8\u306e\u66f4\u65b0\u304c\u5fc5\u8981\u3067\u3059",
+	"Override": "\u66f4\u65b0",
+	"Override Tote Exception cannot be raised for bins with totes associated": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3044\u305f\u30d3\u30f3\u3067\u306f\u300c\u30c8\u30fc\u30c8\u66f4\u65b0\u4f8b\u5916\u300d\u306f\u767a\u751f\u3057\u307e\u305b\u3093",
+	"Override Tote Required": "\u30c8\u30fc\u30c8\u306e\u66f4\u65b0\u304c\u5fc5\u8981\u3067\u3059",
+	"Override tote not possible": "\u30c8\u30fc\u30c8\u306e\u4e0a\u66f8\u304d\u306f\u3067\u304d\u307e\u305b\u3093",
+	"PPS is in paused mode. Cannot process new entity. Try after some time": "\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u304c\u4e2d\u65ad\u30e2\u30fc\u30c9\u3067\u3059\u3002\u65b0\u3057\u3044\u5546\u54c1\u3092\u51e6\u7406\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u305b\u3093\u3002\u3057\u3070\u3089\u304f\u5f85\u3063\u3066\u518d\u5ea6\u5b9f\u65bd\u3057\u3066\u304f\u3060\u3055\u3044",
+	"PPS mode change requested:auto staging all bins": "\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u304c\u5909\u66f4\u3055\u308c\u307e\u3057\u305f\u3002\u5168\u3066\u306e\u30d3\u30f3\u3092\u78ba\u5b9a\u3057\u307e\u3059",
+	"PPS mode change requested:scan not allowed": "\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u304c\u5909\u66f4\u3055\u308c\u307e\u3057\u305f\u3002\u30b9\u30ad\u30e3\u30f3\u3067\u304d\u307e\u305b\u3093",
+	"PPTL": "\u30d3\u30f3\u30dc\u30bf\u30f3",
+	"PPTL Management": "\u30d3\u30f3\u8a2d\u5b9a",
+	"PPTL press not expected": "\u30d3\u30f3\u30dc\u30bf\u30f3\u306f\u62bc\u3059\u5fc5\u8981\u304c\u3042\u308a\u307e\u305b\u3093",
+	"PPTL press successful": "\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u304c\u62bc\u3055\u308c\u307e\u3057\u305f",
+	"PPTL scan not allowed": "\u30d3\u30f3\u306e\u30b9\u30ad\u30e3\u30f3\u306f\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+	"PPTL scan not allowed. System not configured for tote": "\u30d3\u30f3\u30b9\u30ad\u30e3\u30f3\u306f\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u30c8\u30fc\u30c8\u304c\u672a\u767b\u9332\u3067\u3059",
+	"Password": "\u30d1\u30b9\u30ef\u30fc\u30c9",
+	"Perform Action": "\u5b9f\u65bd",
+	"Peripheral ID": "\u6a5f\u5668ID",
+	"Peripheral added successfully": "\u5468\u8fba\u6a5f\u5668\u8ffd\u52a0\u5b8c\u4e86",
+	"Peripheral deleted successfully": "\u5468\u8fba\u6a5f\u5668\u524a\u9664\u5b8c\u4e86",
+	"Peripheral not added": "\u5468\u8fba\u6a5f\u5668\u8ffd\u52a0\u5931\u6557",
+	"Peripheral not deleted successfully": "\u5468\u8fba\u6a5f\u5668\u524a\u9664\u5931\u6557",
+	"Pick complete. Waiting for next rack.": "\u30d4\u30c3\u30af\u5b8c\u4e86\u3002\u6b21\u306eMSU\u79fb\u52d5\u4e2d",
+	"Picked quantity more than expected. Put extra items back in MSU": "\u30d4\u30c3\u30af\u6570\u30aa\u30fc\u30d0\u30fc\u3002\u904e\u5270\u5206\u3092MSU\u306b\u623b\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Place Entity in Bin and Press PPTL": "\u5546\u54c1\u3092\u30d3\u30f3\u306b\u7f6e\u3044\u3066\u3001\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Place Entity in Slot and Scan More": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30b9\u30ed\u30c3\u30c8\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Place Item in slot and scan more": "\u5546\u54c1\u3092\u30b9\u30ed\u30c3\u30c8\u306b\u7f6e\u3044\u3066\u3001\u30b9\u30ad\u30e3\u30f3\u3092\u7e70\u308a\u8fd4\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Place extra entity in Exception area.": "\u904e\u5270\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Please Select The Bin With Excess Entity": "\u904e\u5270\u5546\u54c1\u306e\u30d3\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please complete pickback for pending bin and then proceed": "\u30d4\u30c3\u30af\u30d0\u30c3\u30af\u672a\u5b8c\u4e86\u306e\u30d3\u30f3\u3092\u78ba\u5b9a\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please complete process for pending bin and then proceed": "\u4fdd\u7559\u4e2d\u306e\u30d3\u30f3\u3092\u5b8c\u4e86\u3055\u305b\u3066\u304f\u3060\u3055\u3044",
+	"Please press PPTL button which does not have any totes associated": "\u30c8\u30fc\u30c8\u306b\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u306a\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please press those buttons having color blink_blue": "\u9752\u8272\u70b9\u6ec5\u306e\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+	"Please put entities in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please put entity in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please put extra entities in exception area.": "\u4f59\u5206\u306a\u3082\u306e\u3092\u4f8b\u5916\u51e6\u7406\u7528\u306e\u5834\u6240\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Please put oversized entities in exception area.": "\u7279\u5927\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Please put unscannable entities in exception area.": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Please scan PPTL barcode": "\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please scan same SKU to complete this exception": "\u540c\u3058\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u4f8b\u5916\u767b\u9332\u3092\u5b8c\u4e86\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please scan the tote first and then scan PPTL barcode": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Please scan the tote first and then scan pptl barcode": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Pptl press not expected.": "\u30d3\u30f3\u30dc\u30bf\u30f3\u306f\u62bc\u3059\u5fc5\u8981\u304c\u3042\u308a\u307e\u305b\u3093",
+	"Pptl scan not allowed. Totes are not required": "\u30d3\u30f3\u306e\u30b9\u30ad\u30e3\u30f3\u306f\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Press PPTL for bin {0} to confirm": "\u30d3\u30f3 {0} \u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Press PPTL or Scan a Tote": "\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u304b\u3001\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Press PPTL to Remove Entities": "\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u3001\u5546\u54c1\u3092\u53d6\u308a\u51fa\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Press PPTL to confirm": "\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Press PpsBin Button Or Scan a Tote": "\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u304b\u3001\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Press PpsBin {0} to remove items": "\u30d3\u30f3 {0} \u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u3001\u5546\u54c1\u3092\u53d6\u308a\u51fa\u3057\u307e\u3059",
+	"Press bin PPTL": "\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Press print button to proceed": "\u5370\u5237\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Print": "\u5370\u5237",
+	"Processing. Please wait and scan later": "\u51e6\u7406\u4e2d\u3002\u3057\u3070\u3089\u304f\u5f85\u3063\u3066\u30b9\u30ad\u30e3\u30f3\u3092\u884c\u3063\u3066\u304f\u3060\u3055\u3044",
+	"Product Desc": "\u5546\u54c1\u8aac\u660e",
+	"Product Details": "\u5546\u54c1\u8a73\u7d30",
+	"Product Information": "\u5546\u54c1\u60c5\u5831",
+	"Product Name": "\u5546\u54c1\u540d",
+	"Product SKU": "\u5546\u54c1",
+	"Product Type": "\u5546\u54c1\u30bf\u30a4\u30d7",
+	"Put Back Entities in the PPS Bin": "\u30d3\u30f3\u306b\u5546\u54c1\u3092\u623b\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Quantity should be less than or equal to {0}": "\u6570\u91cf\u306f {0} \u4ee5\u4e0b\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093",
+	"Remove Item": "\u5546\u54c1\u53d6\u308a\u51fa\u3057",
+	"Reprint": "\u518d\u5370\u5237",
+	"SKU not present in Database.Put in exception area": "\u5546\u54c1\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332\u3067\u3059\u3002\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"SKU not present in database. Put into IRT bin ": "\u5546\u54c1\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332\u3067\u3059\u3002\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Scan & Confirm": "\u30b9\u30ad\u30e3\u30f3\uff06\u78ba\u8a8d",
+	"Scan Box": "\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Scan Box or Items": "\u30dc\u30c3\u30af\u30b9\u304b\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Scan Box/Items from Slot": "\u30b9\u30ed\u30c3\u30c8\u306e\u5546\u54c1\u307e\u305f\u306f\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Scan Entity From Bin {0}": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Scan Excess Entity Quantity": "\u904e\u5270\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Scan Item From Bin": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3",
+	"Scan Items": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3",
+	"Scan MSU Barcode": "\u30b9\u30ed\u30c3\u30c8\u30b9\u30ad\u30e3\u30f3",
+	"Scan Oversized Entity Quantity": "\u7279\u5927\u54c1\u306e\u6570\u91cf\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u2192\u7279\u5927\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u6570\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Scan Remaining Item In Box": "\u30dc\u30c3\u30af\u30b9\u306e\u6b8b\u308a\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Scan Slot": "\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Scan Slot Barcode": "\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Scan Slot to Confirm": "\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Scan Tote": "\u30c8\u30fc\u30c8\u30b9\u30ad\u30e3\u30f3",
+	"Scan Tote or Stage PPS Bin": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b\u304b\u3001\u30d3\u30f3\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Scan Tote to Associate with Bin": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7d10\u4ed8\u3051",
+	"Scan Tote to associate with Bin": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7d10\u4ed8\u3051",
+	"Scan a box first": "\u6700\u521d\u306b\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Scan box barcode": "\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Scan item / Stage PPS Bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
+	"Scan item / Stage pps bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
+	"Scan items and place in bin {0}": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3001\u30d3\u30f3 {0} \u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Scan not expected": "\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059",
+	"Scan not expected.": "\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059",
+	"Scan {0} Items": "\u5546\u54c1\u3092 {0} \u500b\u30b9\u30ad\u30e3\u30f3",
+	"Scan {0} Items and Place in Bin {1}": "\u5546\u54c1\u3092 {0} \u500b\u30b9\u30ad\u30e3\u30f3\u3057\u3001\u30d3\u30f3 {1} \u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Scan {0} items": "\u5546\u54c1\u3092 {0} \u500b\u30b9\u30ad\u30e3\u30f3",
+	"Scanner ID": "\u30b9\u30ad\u30e3\u30caID",
+	"Scanner Management": "\u30b9\u30ad\u30e3\u30ca\u8a2d\u5b9a",
+	"Scanning pptl barcode not allowed": "\u30d3\u30f3\u306e\u30b9\u30ad\u30e3\u30f3\u306f\u3067\u304d\u307e\u305b\u3093",
+	"Select Bin to disassociate tote": "\u30c8\u30fc\u30c8\u306e\u7d10\u3065\u3051\u3092\u3084\u3081\u308b\u30d3\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Select Bin to skip print": "\u5370\u5237\u3092\u30b9\u30ad\u30c3\u30d7\u3059\u308b\u30d3\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Select Bin which does not require tote": "\u30c8\u30fc\u30c8\u4e0d\u8981\u306a\u30d3\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Selected": "\u9078\u629e\u6e08",
+	"Skip Print": "\u5370\u5237\u30b9\u30ad\u30c3\u30d7",
+	"Skip Printing": "\u5370\u5237\u30b9\u30ad\u30c3\u30d7",
+	"Slot scan successful": "\u30b9\u30ed\u30c3\u30c8\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
+	"Space Available For": "\u30b9\u30ed\u30c3\u30c8\u306b\u5e7e\u3064\u5165\u308c\u3089\u308c\u308b\uff1f",
+	"Space Not Available": "\u5229\u7528\u53ef\u80fd\u306a\u5834\u6240\u304c\u3042\u308a\u307e\u305b\u3093",
+	"Space unavailable recorded.": "\u7a7a\u304d\u30b9\u30da\u30fc\u30b9\u306a\u3057\u5546\u54c1\u304c\u8a18\u9332\u3055\u308c\u307e\u3057\u305f",
+	"Stage": "\u30b9\u30c6\u30fc\u30b8",
+	"Stage All": "\u5168\u3066\u30b9\u30c6\u30fc\u30b8",
+	"Stage Bin or Scan Entity": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Stage Bin or Scan Item": "\u30b9\u30c6\u30fc\u30b8\u304b\u5546\u54c1\u30b9\u30ad\u30e3\u30f3",
+	"Status": "\u30b9\u30c6\u30fc\u30bf\u30b9",
+	"Status To Reconcile": "\u8abf\u6574\u4e2d",
+	"Submit": "\u78ba\u5b9a",
+	"Sum of missing and good quantity should be equal to {0}": "\u5408\u8a08\u6570(\u826f\u54c1\u6570\uff0b\u7d1b\u5931\u6570)\u306f {0} \u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
+	"Sum of missing, good and damaged should be equal to {0}": "\u6570\u91cf\u4e0d\u4e00\u81f4\u3002\u7d1b\u5931\u54c1\u3068\u826f\u54c1\u3068\u4e0d\u826f\u54c1\u306e\u5408\u8a08\u306f {0} \u3067\u3059",
+	"System Error. Scanned entity details not available at this time": "\u30b7\u30b9\u30c6\u30e0\u30a8\u30e9\u30fc\u3002\u73fe\u5728\u3001\u5546\u54c1\u8a73\u7d30\u306f\u53c2\u7167\u3067\u304d\u307e\u305b\u3093",
+	"System is Idle": "\u5f85\u6a5f\u4e2d",
+	"System not configured for totes": "\u30c8\u30fc\u30c8\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u767b\u9332\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+	"TOTE": "\u30c8\u30fc\u30c8",
+	"Take the Items out from the Slot": "\u30b9\u30ed\u30c3\u30c8\u304b\u3089\u5546\u54c1\u3092\u53d6\u308a\u51fa\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Testing configuration {0} and {1}": "\u8a2d\u5b9a\u30c6\u30b9\u30c8\u4e2d {0} \u3068 {1}",
+	"This box belongs to some other SKU in the slot.Put it back.Scan next box.": "\u3053\u306e\u30dc\u30c3\u30af\u30b9\u306f\u4ed6\u306e\u5546\u54c1\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u30b9\u30ed\u30c3\u30c8\u306b\u623b\u3057\u3066\u4ed6\u306e\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"This box does not belong to this slot. Remove the box and put in exception area.": "\u3053\u306e\u30dc\u30c3\u30af\u30b9\u306f\u4ed6\u306e\u30b9\u30ed\u30c3\u30c8\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u30dc\u30c3\u30af\u30b9\u3092\u53d6\u308a\u51fa\u3057\u3066\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Tote Details": "\u30c8\u30fc\u30c8\u8a73\u7d30",
+	"Tote already associated with bin {0}": "\u30c8\u30fc\u30c8\u306f\u3059\u3067\u306b\u30d3\u30f3 {0} \u306b\u7d10\u4ed8\u3051\u3055\u308c\u3066\u3044\u307e\u3059",
+	"Tote already associated with ppsbin": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u30d3\u30f3\u306b\u7d10\u4ed8\u3051\u6e08\u307f\u3067\u3059",
+	"Tote already closed. Scan some other tote": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u7d42\u4e86\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u4ed6\u306e\u30c8\u30fc\u30c8\u3092\u4f7f\u7528\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Tote already opened. Scan some other tote": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u4f7f\u308f\u308c\u3066\u3044\u307e\u3059\u3002\u4ed6\u306e\u30c8\u30fc\u30c8\u3092\u4f7f\u7528\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Tote already reserved": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059",
+	"Tote assigned successfully to bin": "\u30c8\u30fc\u30c8\u3068\u30d3\u30f3\u306e\u7d10\u3065\u3051\u5b8c\u4e86",
+	"Tote assigned successfully to ppsbin {0}": "\u30d3\u30f3 {0} \u306b\u30c8\u30fc\u30c8\u3092\u7d10\u4ed8\u3051\u307e\u3057\u305f",
+	"Tote associated with another bin": "\u30c8\u30fc\u30c8\u306f\u4ed6\u306e\u30d3\u30f3\u306b\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u307e\u3059",
+	"Tote association failed. Repeat scan operation": "\u30c8\u30fc\u30c8\u306e\u7d10\u3065\u3051\u5931\u6557\u3002\u518d\u5ea6\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Tote cancelled": "\u30c8\u30fc\u30c8\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f",
+	"Tote close successful.": "\u30c8\u30fc\u30c8\u306e\u30af\u30ed\u30fc\u30ba\u5b8c\u4e86",
+	"Tote could not be reserved as already reserved": "\u30c8\u30fc\u30c8\u306f\u4f7f\u7528\u6e08\u307f\u3067\u3059",
+	"Tote didn't get associated": "\u30c8\u30fc\u30c8\u304c\u7d10\u4ed8\u3051\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+	"Tote disassociated from Bin": "\u30c8\u30fc\u30c8\u3068\u30d3\u30f3\u306e\u7d10\u3065\u3051\u3092\u89e3\u9664\u3057\u307e\u3057\u305f",
+	"Tote has been opened.Scan all items in tote and then scan tote again to close it": "\u30c8\u30fc\u30c8\u306f\u4f7f\u7528\u4e2d\u3067\u3059\u3002\u30c8\u30fc\u30c8\u5185\u306e\u3059\u3079\u3066\u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u518d\u5ea6\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3001\u7d42\u4e86\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Tote is already scanned.Expecting pptl scan.": "\u30c8\u30fc\u30c8\u306f\u30b9\u30ad\u30e3\u30f3\u6e08\u307f\u3067\u3059",
+	"Tote not closed.": "\u30c8\u30fc\u30c8\u306f\u30af\u30ed\u30fc\u30ba\u3057\u3066\u3044\u307e\u305b\u3093",
+	"Tote not present in database.": "\u3053\u306e\u30c8\u30fc\u30c8\u306f\u30b7\u30b9\u30c6\u30e0\u672a\u767b\u9332\u3067\u3059",
+	"Tote scan cancelled": "\u30c8\u30fc\u30c8\u306e\u30b9\u30ad\u30e3\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f",
+	"Tote scan expected": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
+	"Tote scanned.Expecting pptl scan.": "\u30c8\u30fc\u30c8\u306f\u30b9\u30ad\u30e3\u30f3\u6e08\u307f\u3067\u3059\u3002\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Totes are anyway not required.Please proceed further": "\u30c8\u30fc\u30c8\u306e\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059\u3002\u4f5c\u696d\u3092\u7d99\u7d9a\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Totes are not required": "\u30c8\u30fc\u30c8\u306f\u5fc5\u8981\u3042\u308a\u307e\u305b\u3093",
+	"Totes are not required.Please don't scan tote barcode": "\u30c8\u30fc\u30c8\u306e\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059",
+	"Unexpected Item": "\u5546\u54c1\u9055\u3044",
+	"Unhandled event ocurred": "\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u307e\u3057\u305f",
+	"Unscannable Quantity": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u6570",
+	"Unselected": "\u672a\u9078\u629e",
+	"User Name": "\u30e6\u30fc\u30b6\u30fc\u540d",
+	"Utility": "\u74b0\u5883\u8a2d\u5b9a",
+	"View More": "\u8a73\u7d30\u78ba\u8a8d",
+	"Wait for MSU": "MSU\u79fb\u52d5\u4e2d",
+	"Waiting for Bins to be Cleared at Pick Back": "\u30d3\u30f3\u51fa\u3057\u4f5c\u696d\u3092\u884c\u3063\u3066\u304f\u3060\u3055\u3044",
+	"Waiting for MSU": "MSU\u79fb\u52d5\u4e2d",
+	"Waiting for MSU scan. Please scan entity later.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Waiting for MSU. Please wait and scan later": "MSU\u79fb\u52d5\u4e2d\u3002\u3057\u3070\u3089\u304f\u5f85\u3063\u3066\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Waiting for rack": "\u68da\u3092\u547c\u3093\u3067\u3044\u307e\u3059",
+	"Wrong Barcode scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059",
+	"Wrong Barcode.": "\u30b9\u30ad\u30e3\u30f3\u9593\u9055\u3044",
+	"Wrong PPS bin scanned": "\u9593\u9055\u3063\u305f\u30d3\u30f3\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
+	"Wrong PPTL pressed": "\u30d3\u30f3\u9055\u3044",
+	"Wrong PPTL pressed. Please press correct PPTL": "\u30d3\u30f3\u30dc\u30bf\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong PPTL pressed. Please try another": "\u8aa4\u3063\u305f\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u304c\u62bc\u3055\u308c\u307e\u3057\u305f\u3002\u6b63\u3057\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong Ppsbin button pressed.Please press those buttons having color blue": "\u8aa4\u3063\u305f\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u304c\u62bc\u3055\u308c\u307e\u3057\u305f\u3002\u9752\u8272\u306e\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u4e0b\u3055\u3044",
+	"Wrong barcode scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059",
+	"Wrong bin chosen.Try selecting another bin": "\u30d3\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u4ed6\u306e\u30d3\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong box scanned. Please try again": "\u30dc\u30c3\u30af\u30b9\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong enitity scanned. Expecting scan from bin {0}": "\u8aa4\u3063\u305f\u5546\u54c1\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f\u3002\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong entity scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong entity scanned. Please scan Container/Item.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u30b3\u30f3\u30c6\u30ca\u304b\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong entity scanned. Please scan tote": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong item quantity update": "\u6570\u91cf\u304c\u9055\u3044\u307e\u3059",
+	"Wrong item scanned. Please scan correct item": "\u5546\u54c1\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong scan! Entity scan expected but slot barcode scanned.": "\u30b9\u30ed\u30c3\u30c8\u3067\u306f\u306a\u304f\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong scan.Expecting container scan.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u30b3\u30f3\u30c6\u30ca\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong scan.Expecting item scan.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong scan.Expecting location scan.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"Wrong slot location scanned. Please try again": "\u30b9\u30ed\u30c3\u30c8\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u307e\u3059",
+	"Wrong slot scanned": "\u9055\u3046\u30b9\u30ed\u30c3\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u3066\u3044\u307e\u3059",
+	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "\u30ad\u30fc\u30d1\u30c3\u30c9\u3067\u306e\u6570\u5b57\u5165\u529b\u304c\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+	"You cannot enter 0": "0 \u306f\u5165\u529b\u4e0d\u53ef",
+	"You cannot enter value more than 9999": "9999 \u4ee5\u4e0a\u306f\u5165\u529b\u4e0d\u53ef",
+	"box": "\u30dc\u30c3\u30af\u30b9",
+	"item": "\u5546\u54c1",
+	"product_sku": "\u5546\u54c1\u30b3\u30fc\u30c9",
+	"quantity": "\u6570\u91cf",
+	"type.": "\u7a2e\u985e",
+	"user Name": "\u30e6\u30fc\u30b6\u30fc\u540d",
+	"{0} excess entities found in tote. Please put entities in exception area and confirm": "\u30c8\u30fc\u30c8\u306b\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u5546\u54c1\u304c {0} \u500b\u3042\u308a\u307e\u3059\u3002\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
+	"{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",
+	"{0} oversized entities recorded.WMS notified": "\u30b5\u30a4\u30ba\u30aa\u30fc\u30d0\u30fc\u5546\u54c1 {0} \u500b",
+	"{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b"
+}
+module.exports = japanese;
+
+},{}],292:[function(require,module,exports){
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
@@ -43723,7 +44058,7 @@ var serverMessages = {
 
 module.exports = serverMessages;
 
-},{}],292:[function(require,module,exports){
+},{}],293:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -44056,7 +44391,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../dispatchers/AppDispatcher":287,"../utils/utils":299,"events":14,"object-assign":68}],293:[function(require,module,exports){
+},{"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../dispatchers/AppDispatcher":287,"../utils/utils":300,"events":14,"object-assign":68}],294:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -44162,7 +44497,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../dispatchers/AppDispatcher":287,"../utils/utils":299,"events":14,"object-assign":68}],294:[function(require,module,exports){
+},{"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../dispatchers/AppDispatcher":287,"../utils/utils":300,"events":14,"object-assign":68}],295:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -44343,7 +44678,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":282,"../constants/appConstants":283,"../dispatchers/AppDispatcher":287,"../utils/utils":299,"events":14,"object-assign":68}],295:[function(require,module,exports){
+},{"../config/navConfig":282,"../constants/appConstants":283,"../dispatchers/AppDispatcher":287,"../utils/utils":300,"events":14,"object-assign":68}],296:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var SVGConstants = require('../constants/svgConstants');
@@ -44612,7 +44947,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../constants/svgConstants":286,"../dispatchers/AppDispatcher":287,"../utils/utils":299,"events":14,"object-assign":68}],296:[function(require,module,exports){
+},{"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../constants/svgConstants":286,"../dispatchers/AppDispatcher":287,"../utils/utils":300,"events":14,"object-assign":68}],297:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -44730,7 +45065,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":282,"../constants/appConstants":283,"../dispatchers/AppDispatcher":287,"../utils/utils":299,"events":14,"object-assign":68}],297:[function(require,module,exports){
+},{"../config/navConfig":282,"../constants/appConstants":283,"../dispatchers/AppDispatcher":287,"../utils/utils":300,"events":14,"object-assign":68}],298:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -44878,7 +45213,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":283,"../constants/configConstants":284,"../dispatchers/AppDispatcher":287,"../utils/utils.js":299,"events":14,"react/lib/Object.assign":121}],298:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":283,"../constants/configConstants":284,"../dispatchers/AppDispatcher":287,"../utils/utils.js":300,"events":14,"react/lib/Object.assign":121}],299:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -44888,6 +45223,7 @@ var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
+var japanese = require('../serverMessages/japanese');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -45963,6 +46299,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         };
         switch (data) {
+            case "ja-JP":
+                _.setTranslation(japanese);
+                break;
             case "ch":
                 _.setTranslation(chinese);
                 break;
@@ -46834,7 +47173,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../actions/CommonActions":233,"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../constants/svgConstants":286,"../dispatchers/AppDispatcher":287,"../serverMessages/chinese":289,"../serverMessages/english":290,"../serverMessages/server_messages":291,"../utils/utils":299,"events":14,"react/lib/Object.assign":121}],299:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../config/navConfig":282,"../constants/appConstants":283,"../constants/resourceConstants":285,"../constants/svgConstants":286,"../dispatchers/AppDispatcher":287,"../serverMessages/chinese":289,"../serverMessages/english":290,"../serverMessages/japanese":291,"../serverMessages/server_messages":292,"../utils/utils":300,"events":14,"react/lib/Object.assign":121}],300:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -47130,4 +47469,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":283,"../constants/configConstants":284,"../serverMessages/server_messages":291,"events":14,"react/lib/Object.assign":121}]},{},[288]);
+},{"../actions/CommonActions":233,"../constants/appConstants":283,"../constants/configConstants":284,"../serverMessages/server_messages":292,"events":14,"react/lib/Object.assign":121}]},{},[288]);

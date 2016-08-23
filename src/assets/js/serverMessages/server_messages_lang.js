@@ -360,4 +360,8 @@ function server_messages_list() {
     _("item");
     _("box");
     _("SKU not present in Database.Put in exception area");
+    _("Please put extra entities in exception area.");
+    _("Space Available For");
+    _("Tote Details");
+    _("Close current tote first");
 }

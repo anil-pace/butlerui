@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: butler_interface_kerry 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-09 15:13+0530\n"
-"PO-Revision-Date: 2016-07-29 11:32+0900\n"
+"PO-Revision-Date: 2016-08-24 16:14+0900\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.5.7\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1557,11 +1557,11 @@ msgstr "商品がシステムに未登録です。例外エリアに置いてく
 
 #: src/assets/js/serverMessages/server_messages_lang.js:363
 msgid "Please put extra entities in exception area."
-msgstr "余分なものを例外処理用の場所に置いてください"
+msgstr "超過商品を例外エリアに置いてください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:364
 msgid "Space Available For"
-msgstr "スロットに幾つ入れられる？"
+msgstr "場所確保可能"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:365
 msgid "Tote Details"
@@ -1569,4 +1569,4 @@ msgstr "トート詳細"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:366
 msgid "Close current tote first"
-msgstr "閉じる現在のトート最初"
+msgstr " 処理中のトートを、まず閉じて下さい"

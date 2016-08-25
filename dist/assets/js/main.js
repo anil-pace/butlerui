@@ -43352,8 +43352,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.118/wss",
-	INTERFACE_IP : "https://192.168.8.118"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "https://localhost:5000"
 };
 module.exports = configConstants;
 
@@ -43525,6 +43525,7 @@ var japanese = {
 	"Cannot cancel scan. No scanned box found": "\u30b9\u30ad\u30e3\u30f3\u3092\u30ad\u30e3\u30f3\u30bb\u30eb\u3067\u304d\u307e\u305b\u3093",
 	"Check Count": "\u6570\u91cf\u78ba\u8a8d",
 	"Clear All": "\u5168\u3066\u30af\u30ea\u30a2",
+	"Close current tote first": " \u51e6\u7406\u4e2d\u306e\u30c8\u30fc\u30c8\u3092\u3001\u307e\u305a\u9589\u3058\u3066\u4e0b\u3055\u3044",
 	"Confirm": "\u78ba\u8a8d",
 	"Confirm MSU Release": "MSU\u306e\u30ea\u30ea\u30fc\u30b9\u3092\u78ba\u8a8d",
 	"Connection is closed. Connecting...": "\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u304c\u5207\u65ad\u3055\u308c\u307e\u3057\u305f\u3002\u518d\u63a5\u7d9a\u4e2d\u30fb\u30fb\u30fb",
@@ -43647,7 +43648,7 @@ var japanese = {
 	"Please press those buttons having color blink_blue": "\u9752\u8272\u70b9\u6ec5\u306e\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
 	"Please put entities in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
 	"Please put entity in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
-	"Please put extra entities in exception area.": "\u4f59\u5206\u306a\u3082\u306e\u3092\u4f8b\u5916\u51e6\u7406\u7528\u306e\u5834\u6240\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+	"Please put extra entities in exception area.": "\u8d85\u904e\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
 	"Please put oversized entities in exception area.": "\u7279\u5927\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
 	"Please put unscannable entities in exception area.": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
 	"Please scan PPTL barcode": "\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
@@ -43716,7 +43717,7 @@ var japanese = {
 	"Skip Print": "\u5370\u5237\u30b9\u30ad\u30c3\u30d7",
 	"Skip Printing": "\u5370\u5237\u30b9\u30ad\u30c3\u30d7",
 	"Slot scan successful": "\u30b9\u30ed\u30c3\u30c8\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
-	"Space Available For": "\u30b9\u30ed\u30c3\u30c8\u306b\u5e7e\u3064\u5165\u308c\u3089\u308c\u308b\uff1f",
+	"Space Available For": "\u5834\u6240\u78ba\u4fdd\u53ef\u80fd",
 	"Space Not Available": "\u5229\u7528\u53ef\u80fd\u306a\u5834\u6240\u304c\u3042\u308a\u307e\u305b\u3093",
 	"Space unavailable recorded.": "\u7a7a\u304d\u30b9\u30da\u30fc\u30b9\u306a\u3057\u5546\u54c1\u304c\u8a18\u9332\u3055\u308c\u307e\u3057\u305f",
 	"Stage": "\u30b9\u30c6\u30fc\u30b8",
@@ -43803,7 +43804,7 @@ var japanese = {
 	"item": "\u5546\u54c1",
 	"product_sku": "\u5546\u54c1\u30b3\u30fc\u30c9",
 	"quantity": "\u6570\u91cf",
-	"type.": "\u7a2e\u985e",
+	"type": "\u7a2e\u985e",
 	"user Name": "\u30e6\u30fc\u30b6\u30fc\u540d",
 	"{0} excess entities found in tote. Please put entities in exception area and confirm": "\u30c8\u30fc\u30c8\u306b\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u5546\u54c1\u304c {0} \u500b\u3042\u308a\u307e\u3059\u3002\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
 	"{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",

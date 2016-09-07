@@ -38399,7 +38399,8 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
-    CommonActions.setLanguage();                 //Dispatch setLanguage action
+    //CommonActions.setLanguage();                 //Dispatch setLanguage action
+    CommonActions.changeLanguage(this.state.getLang);
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -38479,8 +38480,10 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var d = new Date();
     var n = d.getFullYear();   
     var seatData;
+    var locale = window.sessionStorage.getItem("localeData");
+    //console.log(this.state.getLang);
     var _languageDropDown=(
-              React.createElement("select", {className: "selectLang", ref: "language", onChange: this.changeLanguage}, 
+              React.createElement("select", {className: "selectLang", value: this.state.getLang, ref: "language", onChange: this.changeLanguage}, 
                   React.createElement("option", {value: "en-US"}, "English"), 
                   React.createElement("option", {value: "ja-JP"}, "Japanese")
               )
@@ -38559,7 +38562,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: _('Enter Password'), ref: "password", valueLink: this.linkState('password')})
               ), 
                
-               this.state.getLang?'':_languageDropDown, 
+               _languageDropDown, 
 
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
           )
@@ -43352,8 +43355,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://localhost:8888/ws",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -45101,7 +45104,12 @@ if(retrieved_token != null){
   }
 }
 
-
+function getCurrentLang(){
+  var localeStr = window.sessionStorage.getItem("localeData"),
+  localeObj = localeStr !== "null" ? JSON.parse(localeStr) : {},
+  localeLang = localeObj.data ? localeObj.data.locale : null;
+  return localeLang;
+}
 function listPpsSeat(seat){
     if(seat === null){
       currentSeat.length = 0; 
@@ -45162,7 +45170,7 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
     return currentSeat;
   },
   getLang : function(){            //get language
-    return currentLang;
+    return (currentLang = getCurrentLang());
   },
   getAuthToken : function(data){
     utils.getAuthToken(data);

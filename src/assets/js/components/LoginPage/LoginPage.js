@@ -49,7 +49,8 @@ var LoginPage = React.createClass({
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
-    CommonActions.setLanguage();                 //Dispatch setLanguage action
+    //CommonActions.setLanguage();                 //Dispatch setLanguage action
+    CommonActions.changeLanguage(this.state.getLang);
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -129,8 +130,10 @@ var LoginPage = React.createClass({
     var d = new Date();
     var n = d.getFullYear();   
     var seatData;
+    var locale = window.sessionStorage.getItem("localeData");
+    //console.log(this.state.getLang);
     var _languageDropDown=(
-              <select className="selectLang" ref='language' onChange={this.changeLanguage} >
+              <select className="selectLang" value={this.state.getLang} ref='language' onChange={this.changeLanguage} >
                   <option value="en-US">English</option>
                   <option value="ja-JP">Japanese</option>
               </select>
@@ -209,7 +212,7 @@ var LoginPage = React.createClass({
                   <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
               </div>
                
-               {this.state.getLang?'':_languageDropDown}
+               {_languageDropDown}
 
               <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value="Login" />
           </form>

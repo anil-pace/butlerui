@@ -32,7 +32,12 @@ if(retrieved_token != null){
   }
 }
 
-
+function getCurrentLang(){
+  var localeStr = window.sessionStorage.getItem("localeData"),
+  localeObj = localeStr !== "null" ? JSON.parse(localeStr) : {},
+  localeLang = localeObj.data ? localeObj.data.locale : null;
+  return localeLang;
+}
 function listPpsSeat(seat){
     if(seat === null){
       currentSeat.length = 0; 
@@ -93,7 +98,7 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
     return currentSeat;
   },
   getLang : function(){            //get language
-    return currentLang;
+    return (currentLang = getCurrentLang());
   },
   getAuthToken : function(data){
     utils.getAuthToken(data);

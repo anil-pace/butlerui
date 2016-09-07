@@ -1541,3 +1541,23 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:364
 msgid "Tote Details"
 msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:367
+msgid "CURRENT BIN"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:368
+msgid "CURRENT SLOT"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:369
+msgid "Bad Barcode Quantity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:370
+msgid "Enter Scanner Id"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:371
+msgid "Back seat not supported for this mode"
+msgstr ""

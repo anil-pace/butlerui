@@ -9,7 +9,7 @@ var PassiveNavigation = React.createClass({
                         <div className="image">
                         <img src={this.props.data.image} />
                         </div>
-                        <div className = "info">{this.props.data.message}</div>
+                        <div className = "info">{_(this.props.data.message)}</div>
                     </div>
                 </div>
         );

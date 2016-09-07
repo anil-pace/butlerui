@@ -117,7 +117,7 @@ var PutFront = React.createClass({
                 <Modal />
                 <div className="single-bin">
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
-                      <div className="text">CURRENT BIN</div>
+                      <div className="text">_("CURRENT BIN")</div>
                 </div>
                 <div className='main-container'>
                   <Rack rackData = {this.state.PutFrontRackDetails}/>
@@ -143,7 +143,7 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Good Quantity"}</div>
+                      <div className="kq-header">{_("Good Quantity")}</div>
                       <KQ scanDetailsGood = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
                     </div>
                   </div>
@@ -173,11 +173,11 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Missing Quantity"}</div>
+                      <div className="kq-header">{_("Missing Quantity")}</div>
                       <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
                     </div>
                     <div className = "kq-exception">
-                      <div className="kq-header">{"Unscannable Quantity"}</div>
+                      <div className="kq-header">{_("Unscannable Quantity")}</div>
                       <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
                     </div>
                   </div>

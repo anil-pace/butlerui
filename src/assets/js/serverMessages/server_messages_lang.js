@@ -364,4 +364,9 @@ function server_messages_list() {
     _("Space Available For");
     _("Tote Details");
     _("Close current tote first");
+    _("CURRENT BIN");
+    _("CURRENT SLOT");
+    _("Bad Barcode Quantity");
+    _("Enter Scanner Id");
+    _("Back seat not supported for this mode");
 }

@@ -8,7 +8,7 @@ var SystemIdle = React.createClass({
 				<div className="systemIdle">
 					<Header />
 					<div className="idleScreen">
-						{allresourceConstants.SYS_IDLE}	
+						{_(allresourceConstants.SYS_IDLE)}
 					</div>
 				</div>
 			);

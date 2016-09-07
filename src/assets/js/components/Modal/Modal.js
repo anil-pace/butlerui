@@ -235,7 +235,7 @@ function loadComponent(modalType,modalData){
           <div>
             <div className="row">
               <div className="col-md-12">
-                <div className="title-textbox">Enter Scanner Id</div>
+                <div className="title-textbox">_("Enter Scanner Id")</div>
                 <div className="textBox-div">
                   <input className="width95" type="text" id='add_scanner' onClick={attachKeyboard.bind(this, 'add_scanner')}/>
                 </div>

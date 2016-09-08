@@ -43355,8 +43355,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.118/wss",
+	INTERFACE_IP : "https://192.168.8.118"
 };
 module.exports = configConstants;
 
@@ -47479,4 +47479,3 @@ var putSeatData = function(data) {
 module.exports = utils;
 
 },{"../actions/CommonActions":233,"../constants/appConstants":283,"../constants/configConstants":284,"../serverMessages/server_messages":292,"events":14,"react/lib/Object.assign":121}]},{},[288]);
-[288]);

@@ -38564,7 +38564,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                
                _languageDropDown, 
 
-              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: "Login"})
+              React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: _('Login')})
           )
           )
                 )
@@ -38828,7 +38828,7 @@ function loadComponent(modalType,modalData){
           React.createElement("div", null, 
             React.createElement("div", {className: "row"}, 
               React.createElement("div", {className: "col-md-12"}, 
-                React.createElement("div", {className: "title-textbox"}, "_(\"Enter Scanner Id\")"), 
+                React.createElement("div", {className: "title-textbox"}, _("Enter Scanner Id")), 
                 React.createElement("div", {className: "textBox-div"}, 
                   React.createElement("input", {className: "width95", type: "text", id: "add_scanner", onClick: attachKeyboard.bind(this, 'add_scanner')})
                 )
@@ -43355,8 +43355,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.118/wss",
+	INTERFACE_IP : "https://192.168.8.118"
 };
 module.exports = configConstants;
 

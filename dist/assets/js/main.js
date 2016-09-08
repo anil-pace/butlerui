@@ -45106,7 +45106,7 @@ if(retrieved_token != null){
 
 function getCurrentLang(){
   var localeStr = window.sessionStorage.getItem("localeData"),
-  localeObj = localeStr !== "null" ? JSON.parse(localeStr) : {},
+  localeObj =  (localeStr) ? JSON.parse(localeStr) : {},
   localeLang = localeObj.data ? localeObj.data.locale : null;
   return localeLang;
 }

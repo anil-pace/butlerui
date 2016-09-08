@@ -61,7 +61,7 @@ function server_messages_list() {
     _("Cannot cancel scan. No scanned box found");
     _("Entity scan not expected. Waiting for PPTL press");
     _("Bin selected for put. Cannot be staged");
-    _("SKU not present in database. Put into IRT bin ");
+    _("SKU not present in database. Put into IRT bin.");
     _("Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL");
     _("No free bins. Please scan later");
     _("Wrong PPTL pressed. Please try another");    

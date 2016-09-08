@@ -266,7 +266,7 @@ msgid "Bin selected for put. Cannot be staged"
 msgstr "ビンは入荷で使用されています。確定はできません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:64
-msgid "SKU not present in database. Put into IRT bin "
+msgid "SKU not present in database. Put into IRT bin."
 msgstr "商品がシステムに未登録です。例外エリアに置いてください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:65

@@ -43681,7 +43681,7 @@ var japanese = {
    "Remove Item": "商品取り出し",
    "Reprint": "再印刷",
    "SKU not present in Database.Put in exception area": "商品がシステムに未登録です。例外エリアに置いてください",
-   "SKU not present in database. Put into IRT bin ": "商品がシステムに未登録です。例外エリアに置いてください",
+   "SKU not present in database. Put into IRT bin.": "商品がシステムに未登録です。例外エリアに置いてください",
    "Scan & Confirm": "スキャン＆確認",
    "Scan Box": "ボックスをスキャン",
    "Scan Box or Items": "ボックスか商品をスキャン",

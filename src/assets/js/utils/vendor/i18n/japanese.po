@@ -1569,27 +1569,23 @@ msgstr "トート詳細"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:366
 msgid "Close current tote first"
-msgstr " 処理中のトートを、まず閉じて下さい"
+msgstr "処理中のトートを、まず閉じて下さい"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:367
 msgid "CURRENT BIN"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:368
-msgid "CURRENT SLOT"
-msgstr ""
+msgstr "処理中ビン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:369
 msgid "Bad Barcode Quantity"
-msgstr ""
+msgstr "スキャン不可数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:370
 msgid "Enter Scanner Id"
-msgstr ""
+msgstr "スキャナID入力"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:371
 msgid "Back seat not supported for this mode"
-msgstr ""
+msgstr "選択中のPPSモードではバックでログインできません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:372
 msgid "Bad Data"

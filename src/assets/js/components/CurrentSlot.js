@@ -11,7 +11,7 @@ var CurrentSlot = React.createClass({
 		return (
 				<div className="currentSlotWrapper">
 					<div className="slotRange">	{range} </div>
-					<div className="slotFooter"> {allresourceConstants.CURR_SLOT} </div>
+					<div className="slotFooter"> {_(allresourceConstants.CURR_SLOT)} </div>
 				</div>
 						
 					

@@ -370,4 +370,5 @@ function server_messages_list() {
     _("Enter Scanner Id");
     _("Back seat not supported for this mode");
     _("Bad Data");
+    _("Peripheral already added");
 }

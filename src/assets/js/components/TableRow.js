@@ -17,7 +17,7 @@ var TableRow = React.createClass({
                 "pps_bin_id" : inc
             }
             CommonActions.updateData(data, 'POST' , inc)
-        }else if(action == 'Delete'){
+        }else if(action === _('Delete')){
             if(appConstants.SCANNER_MANAGEMENT == mainstore.getScreenId()){
                 var data = {
                     "peripheral_id": inc,

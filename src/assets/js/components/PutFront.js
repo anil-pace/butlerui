@@ -117,7 +117,7 @@ var PutFront = React.createClass({
                 <Modal />
                 <div className="single-bin">
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
-                      <div className="text">_("CURRENT BIN")</div>
+                      <div className="text">{_("CURRENT BIN")}</div>
                 </div>
                 <div className='main-container'>
                   <Rack rackData = {this.state.PutFrontRackDetails}/>

@@ -1565,3 +1565,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:372
 msgid "Bad Data"
 msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:373
+msgid "Peripheral already added"
+msgstr ""

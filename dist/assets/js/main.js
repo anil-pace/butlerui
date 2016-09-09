@@ -42329,7 +42329,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement(Modal, null), 
                 React.createElement("div", {className: "single-bin"}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
-                      React.createElement("div", {className: "text"}, "_(\"CURRENT BIN\")")
+                      React.createElement("div", {className: "text"}, _("CURRENT BIN"))
                 ), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Rack, {rackData: this.state.PutFrontRackDetails}), 
@@ -43356,8 +43356,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.118/wss",
-	INTERFACE_IP : "https://192.168.8.118"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 

@@ -1591,4 +1591,8 @@ msgstr ""
 msgid "Back seat not supported for this mode"
 msgstr ""
 
+#: src/assets/js/serverMessages/server_messages_lang.js:372
+msgid "Bad Data"
+msgstr ""
+
 

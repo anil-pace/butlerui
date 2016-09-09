@@ -301,7 +301,7 @@ var PickFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Bad Barcode Quantity")}</div>
+                      <div className="kq-header">{_("Unscannable Quantity")}</div>
                       <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} action={"DAMAGED"} />
                     </div>
                   </div>

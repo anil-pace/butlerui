@@ -39261,7 +39261,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
                             if(message_args[0] == undefined){
-                              return server_message;  
+                              return _(server_message);  
                             }else{
                             var header_message = _.apply(null, message_args);
                             return header_message;

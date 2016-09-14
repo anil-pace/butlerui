@@ -371,4 +371,5 @@ function server_messages_list() {
     _("Back seat not supported for this mode");
     _("Bad Data");
     _("Peripheral already added");
+    _("Scan Bin Barcode");
 }

@@ -38726,7 +38726,7 @@ function loadComponent(modalType,modalData){
             React.createElement("div", {className: "image1"}, 
                 React.createElement("img", {src: allSvgConstants.iconBar})
             ), 
-            React.createElement("div", {className: "content1"}, "Scan Bin Barcode"), 
+            React.createElement("div", {className: "content1"}, _("Scan Bin Barcode")), 
             React.createElement("div", {className: "clearfix"})
         ), 
             React.createElement("div", {className: "modal-footer removeBorder"}, 
@@ -39025,7 +39025,7 @@ function loadComponent(modalType,modalData){
             React.createElement("div", {className: "image1"}, 
                 React.createElement("img", {src: allSvgConstants.iconBar})
             ), 
-            React.createElement("div", {className: "content1"}, "Scan Bin Barcode"), 
+            React.createElement("div", {className: "content1"}, _("Scan Bin Barcode")), 
             React.createElement("div", {className: "clearfix"})
         ), 
             React.createElement("div", {className: "modal-footer removeBorder"}, 

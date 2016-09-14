@@ -133,7 +133,7 @@ function loadComponent(modalType,modalData){
             <div className="image1">
                 <img src={allSvgConstants.iconBar} />
             </div>
-            <div className="content1">Scan Bin Barcode</div>
+            <div className="content1">{_("Scan Bin Barcode")}</div>
             <div className="clearfix"></div>
         </div>    
             <div className="modal-footer removeBorder">

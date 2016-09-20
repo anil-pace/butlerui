@@ -252,8 +252,9 @@ var KQ = React.createClass({
                 $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
-                $(".current-quantity").val("");
-                $(".ui-widget-content").val("");
+                //$(".current-quantity").val("");
+                //$(".ui-widget-content").val("");
+                $("#"+id).val("");
             },
             change : function(e, keypressed, el){
                 var data ={}
@@ -394,7 +395,7 @@ var KQ = React.createClass({
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard" className="current-quantity"  value={_updatedQtyMissing} onClick={this.openNumpad.call(null)}/>
+            <input id="keyboard" className="current-quantity"  value={_updatedQtyMissing} onClick={this.openNumpad.call(null,"keyboard")}/>
             <span className="separator">/</span>
             <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span> 
           </div>
@@ -402,7 +403,7 @@ var KQ = React.createClass({
     }else{
         this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard"  value={_updatedQtyMissing} onClick={this.openNumpad.call(null)}/> 
+            <input id="keyboard"  value={_updatedQtyMissing} onClick={this.openNumpad.call(null,"keyboard")}/> 
           </div>
         );
     }

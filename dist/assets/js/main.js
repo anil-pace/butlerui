@@ -40550,8 +40550,9 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
-                $(".current-quantity").val("");
-                $(".ui-widget-content").val("");
+                //$(".current-quantity").val("");
+                //$(".ui-widget-content").val("");
+                $("#"+id).val("");
             },
             change : function(e, keypressed, el){
                 var data ={}
@@ -40734,7 +40735,7 @@ var KQ = React.createClass({displayName: "KQ",
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null)}), 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null,"keyboard")}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
@@ -40742,7 +40743,7 @@ var KQ = React.createClass({displayName: "KQ",
     }else{
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null)})
+            React.createElement("input", {id: "keyboard", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null,"keyboard")})
           )
         );
     }
@@ -41032,8 +41033,8 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
-                $(".current-quantity").val("");
-                $(".ui-widget-content").val("");
+                //$(".current-quantity").val("");
+                $("#"+id).val("");
             },
             change : function(e, keypressed, el){
                 var data ={};
@@ -41174,7 +41175,7 @@ var KQ = React.createClass({displayName: "KQ",
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "damaged_keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)}), 
+            React.createElement("input", {id: "damaged_keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null,"damaged_keyboard")}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
@@ -41464,8 +41465,9 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-preview-wrapper .ui-keyboard-preview").css("font-size","30px");
                 $(".ui-keyboard-button").css("width","74px");
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
-                $(".current-quantity").val("");
-                $(".ui-widget-content").val("");
+                //$(".current-quantity").val("");
+                //$(".ui-widget-content").val("");
+                $("#"+id).val("");
             },
             change : function(e, keypressed, el){
                 var data ={}
@@ -41606,7 +41608,7 @@ var KQ = React.createClass({displayName: "KQ",
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null)}), 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"keyboard")}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
@@ -41614,7 +41616,7 @@ var KQ = React.createClass({displayName: "KQ",
     }else{
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", value: _updatedQtyMissing, onClick: this.openNumpad.call(null)})
+            React.createElement("input", {id: "keyboard", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"keyboard")})
           )
         );
     }
@@ -43357,8 +43359,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.118/wss",
+	INTERFACE_IP : "https://192.168.8.118"
 };
 module.exports = configConstants;
 

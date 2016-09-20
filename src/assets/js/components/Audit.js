@@ -240,6 +240,10 @@ var Audit = React.createClass({
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
           if(this.state.AuditExceptionScreen == "first_screen"){
+          /**
+           * T2803: Next button disable issue in Audit
+           */
+          this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.AuditExceptionData}/>
@@ -247,7 +251,7 @@ var Audit = React.createClass({
                   <ExceptionHeader data={this.state.AuditServerNavData} />
                   <KQ scanDetailsGood = {this.state.AuditKQDetails} />
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.AUDIT} action={appConstants.AUDIT_NEXT_SCREEN} />  
+                    <Button1 disabled = {this._disableNext} text = {_("NEXT")} color={"orange"} module ={appConstants.AUDIT} action={appConstants.AUDIT_NEXT_SCREEN} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

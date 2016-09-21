@@ -116,7 +116,7 @@ var navData = {
         "screen_id": "pick_back_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Tote ",
+        "message": "Scan Tote",
         "showImage": true,
         "level": 1,
         "type": 'passive'

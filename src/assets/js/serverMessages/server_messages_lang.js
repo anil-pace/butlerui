@@ -372,4 +372,5 @@ function server_messages_list() {
     _("Bad Data");
     _("Peripheral already added");
     _("Scan Bin Barcode");
+    _("TOTE");
 }

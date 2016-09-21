@@ -37150,7 +37150,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37172,7 +37172,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37194,7 +37194,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37224,7 +37224,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37285,7 +37285,7 @@ var Bin = React.createClass({displayName: "Bin",
             var binClass = 'bin ';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37304,7 +37304,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37321,7 +37321,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "TOTE"), 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -43377,8 +43377,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.118/wss",
-	INTERFACE_IP : "https://192.168.8.118"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 

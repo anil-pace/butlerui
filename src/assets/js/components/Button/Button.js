@@ -129,6 +129,9 @@ var Button1 = React.createClass({
                             case appConstants.MOVE_TO_DAMAGED_CONFIRM:
                                 ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
                                 break;
+                            case appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM:
+                                ActionCreators.validatePutFrontExceptionScreen("damaged_or_missing_confirm");
+                                break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);

@@ -36683,6 +36683,12 @@ var commonActions = {
       data:data
     });
   },
+  validatePutFrontExceptionScreen:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.VALIDATE_PUT_FRONT_EXCEPTION_SCREEN,
+      data:data
+    });
+  },
 
   changeAuditExceptionScreen:function(data){
     AppDispatcher.handleAction({
@@ -37005,6 +37011,9 @@ var Audit = React.createClass({displayName: "Audit",
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
           this._navigation = '';
           if(this.state.AuditExceptionScreen == "first_screen"){
+          /**
+           * T2803: Next button disable issue in Audit
+           */
           this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -37665,6 +37674,9 @@ var Button1 = React.createClass({displayName: "Button1",
                                 break;
                             case appConstants.MOVE_TO_DAMAGED_CONFIRM:
                                 ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
+                                break;
+                            case appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM:
+                                ActionCreators.validatePutFrontExceptionScreen("damaged_or_missing_confirm");
                                 break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
@@ -40554,6 +40566,7 @@ var KQ = React.createClass({displayName: "KQ",
                 //$(".current-quantity").val("");
                 //$(".ui-widget-content").val("");
                 $("#"+id).val("");
+                $("input.ui-keyboard-preview:visible").val("");
             },
             change : function(e, keypressed, el){
                 var data ={}
@@ -41036,6 +41049,7 @@ var KQ = React.createClass({displayName: "KQ",
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 //$(".current-quantity").val("");
                 $("#"+id).val("");
+                $("input.ui-keyboard-preview:visible").val("");
             },
             change : function(e, keypressed, el){
                 var data ={};
@@ -41469,6 +41483,7 @@ var KQ = React.createClass({displayName: "KQ",
                 //$(".current-quantity").val("");
                 //$(".ui-widget-content").val("");
                 $("#"+id).val("");
+                $("input.ui-keyboard-preview:visible").val("");
             },
             change : function(e, keypressed, el){
                 var data ={}
@@ -42379,7 +42394,7 @@ var PutFront = React.createClass({displayName: "PutFront",
              */
             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
-               btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.MOVE_TO_DAMAGED_CONFIRM}) );
+               btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM}) );
             }else{
               btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
             }
@@ -43149,7 +43164,7 @@ var navData = {
         "screen_id": "pick_back_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Tote ",
+        "message": "Scan Tote",
         "showImage": true,
         "level": 1,
         "type": 'passive'
@@ -43236,6 +43251,7 @@ var appConstants = {
 	CHANGE_DAMAGED_SCREEN_CONFIRM:"CHANGE_DAMAGED_SCREEN_CONFIRM",
 	CHANGE_OVERSIZED_SCREEN_CONFIRM:"CHANGE_OVERSIZED_SCREEN_CONFIRM",
 	MOVE_TO_DAMAGED_CONFIRM:"MOVE_TO_DAMAGED_CONFIRM",
+	VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM:"VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM",
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
 	SET_PUT_BACK_DATA:"SET_PUT_BACK_DATA",
 	SET_PUT_FRONT_DATA:"SET_PUT_FRONT_DATA",
@@ -43353,7 +43369,8 @@ var appConstants = {
 	CANCEL_CLOSE_SCANNER: "CANCEL_CLOSE_SCANNER",
 	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
 	CANCEL_PPTL : 'CANCEL_PPTL',
-	IDLE_LOGOUT_TIME : 300000 //in millisec
+	IDLE_LOGOUT_TIME : 300000, //in millisec
+	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN'
 };
 
 module.exports = appConstants;
@@ -46571,7 +46588,51 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
 
     },
+     validateAndSetPutFrontExceptionScreen: function(screen) {
+        var flag = false;
+        var details;
+        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
+            flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
+            details = _seatData.pick_quantity;
+        }
+        else{
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
+        if (flag) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = resourceConstants.CLIENTCODE_010;
+                data["level"] = "error";
+                data["details"] = [details];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+                _seatData.notification_list[0].details = [details];
+                _seatData.notification_list[0].level = "error";
+            }
+            _putFrontExceptionScreen = "good";
+            _goodQuantity = 0;
+            _damagedQuantity = 0;
+            _missingQuantity = 0;
+        } else {
+            var data = {};
+            if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+                data["event_name"] = "put_front_exception";
+            else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+                data["event_name"] = "pick_front_exception";
+            data["event_data"] = {};
+            data["event_data"]["action"] = "confirm_quantity_update";
+            data["event_data"]["event"] = _seatData.exception_type;
+            data["event_data"]["quantity"] = {};
+            data["event_data"]["quantity"]["good"] = _goodQuantity;
+            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["missing"] = _missingQuantity;
+            
+            mainstore.setPutFrontExceptionScreen(screen);
+        }
 
+    },
 
 
     validateAndSendSpaceUnavailableDataToServer: function() {
@@ -47135,6 +47196,10 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.setPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:
+            mainstore.validateAndSetPutFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:

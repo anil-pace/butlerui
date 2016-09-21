@@ -255,6 +255,7 @@ var KQ = React.createClass({
                 //$(".current-quantity").val("");
                 //$(".ui-widget-content").val("");
                 $("#"+id).val("");
+                $("input.ui-keyboard-preview:visible").val("");
             },
             change : function(e, keypressed, el){
                 var data ={}

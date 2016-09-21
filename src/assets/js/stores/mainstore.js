@@ -1337,7 +1337,51 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
 
     },
+     validateAndSetPutFrontExceptionScreen: function(screen) {
+        var flag = false;
+        var details;
+        if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
+            flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
+            details = _seatData.pick_quantity;
+        }
+        else{
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
+        if (flag) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = resourceConstants.CLIENTCODE_010;
+                data["level"] = "error";
+                data["details"] = [details];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+                _seatData.notification_list[0].details = [details];
+                _seatData.notification_list[0].level = "error";
+            }
+            _putFrontExceptionScreen = "good";
+            _goodQuantity = 0;
+            _damagedQuantity = 0;
+            _missingQuantity = 0;
+        } else {
+            var data = {};
+            if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+                data["event_name"] = "put_front_exception";
+            else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+                data["event_name"] = "pick_front_exception";
+            data["event_data"] = {};
+            data["event_data"]["action"] = "confirm_quantity_update";
+            data["event_data"]["event"] = _seatData.exception_type;
+            data["event_data"]["quantity"] = {};
+            data["event_data"]["quantity"]["good"] = _goodQuantity;
+            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["missing"] = _missingQuantity;
+            
+            mainstore.setPutFrontExceptionScreen(screen);
+        }
 
+    },
 
 
     validateAndSendSpaceUnavailableDataToServer: function() {
@@ -1901,6 +1945,10 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.setPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:
+            mainstore.validateAndSetPutFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:

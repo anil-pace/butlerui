@@ -254,6 +254,7 @@ var KQ = React.createClass({
                 $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width","110px");
                 //$(".current-quantity").val("");
                 $("#"+id).val("");
+                $("input.ui-keyboard-preview:visible").val("");
             },
             change : function(e, keypressed, el){
                 var data ={};

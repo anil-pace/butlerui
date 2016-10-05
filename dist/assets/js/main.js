@@ -45849,16 +45849,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     if(value.hasOwnProperty('peripheral_id')){
                         peripheralId = value.peripheral_id;
                     }
-                    var buttonText = 'Update';
+                    var buttonText = _('Update');
                     var deletButton = 'Delete';
                     if(barcode == '' && peripheralId  == ''){
-                        buttonText = 'Add';
+                        buttonText = _('Add');
                         deletButton = '';
                     }
                     var textBox = false;
                     if((_action == 'Update' || _action == 'Add') && _binId == value.pps_bin_id){
                         textBox = true;
-                        buttonText = 'Finish';
+                        buttonText = _('Finish');
                     }
                     data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
                     new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox,true, value.pps_bin_id), 

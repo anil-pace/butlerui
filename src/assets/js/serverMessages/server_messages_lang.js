@@ -373,4 +373,5 @@ function server_messages_list() {
     _("Peripheral already added");
     _("Scan Bin Barcode");
     _("TOTE");
+    _("Update");
 }

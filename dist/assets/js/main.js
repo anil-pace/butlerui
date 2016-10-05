@@ -40547,8 +40547,8 @@ var KQ = React.createClass({displayName: "KQ",
         /**
          * { T2766- Removed disabled attribute when true }
          */
-        $('#keyboard').removeAttr("disabled");
-          setTimeout(function(){ $('#keyboard').keyboard({
+        $('#'+id).removeAttr("disabled");
+          setTimeout(function(){ $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
@@ -41031,8 +41031,8 @@ var KQ = React.createClass({displayName: "KQ",
         /**
          * { T2766- Removed disabled attribute when true }
          */
-        $('#keyboard').removeAttr("disabled");
-          setTimeout(function(){ $('#damaged_keyboard').keyboard({
+        $('#'+id).removeAttr("disabled");
+          setTimeout(function(){ $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
@@ -41198,7 +41198,7 @@ var KQ = React.createClass({displayName: "KQ",
     }else{
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "damaged_keyboard", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null)})
+            React.createElement("input", {id: "damaged_keyboard", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null,"damaged_keyboard")})
           )
         );
     }
@@ -41464,8 +41464,8 @@ var KQ = React.createClass({displayName: "KQ",
         /**
          * { T2766- Removed disabled attribute when true }
          */
-        $('#keyboard').removeAttr("disabled");
-          setTimeout(function(){ $('#keyboard').keyboard({
+        $('#'+id).removeAttr("disabled");
+          setTimeout(function(){ $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
@@ -41624,7 +41624,7 @@ var KQ = React.createClass({displayName: "KQ",
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"keyboard")}), 
+            React.createElement("input", {id: "missing-keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"missing-keyboard")}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
@@ -41632,7 +41632,7 @@ var KQ = React.createClass({displayName: "KQ",
     }else{
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
-            React.createElement("input", {id: "keyboard", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"keyboard")})
+            React.createElement("input", {id: "missing_keyboard", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"missing_keyboard")})
           )
         );
     }

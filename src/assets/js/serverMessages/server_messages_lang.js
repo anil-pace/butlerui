@@ -374,4 +374,6 @@ function server_messages_list() {
     _("Scan Bin Barcode");
     _("TOTE");
     _("Update");
+    _("Japanese");
+    _("English");
 }

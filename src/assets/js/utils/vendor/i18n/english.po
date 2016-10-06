@@ -1577,3 +1577,15 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:375
 msgid "TOTE"
 msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:376
+msgid "Update"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:377
+msgid "Japanese"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:378
+msgid "English"
+msgstr ""

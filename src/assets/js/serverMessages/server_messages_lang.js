@@ -96,7 +96,7 @@ function server_messages_list() {
     _("This box belongs to some other SKU in the slot.Put it back.Scan next box.");
     _("This box does not belong to this slot. Remove the box and put in exception area.");
     _("Waiting for MSU");
-    _("Wrong Barcode.");
+    _("Wrong Barcode");
     _("Box Scan successful");
     _('Item Scan successful');
     _("Item scan successful");

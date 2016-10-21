@@ -29,10 +29,10 @@ var Notification = React.createClass({
                     if(navMessagesJson != undefined){
                         message_args.unshift(navMessagesJson[errorCode]);
                         if(message_args[0] == undefined){
-                            return compData.description;  
+                            return _(compData.description);  
                         }else{
                             var notification_message = _.apply(null, message_args);
-                            return notification_message;
+                            return _(notification_message);
                         }
                     }
                    

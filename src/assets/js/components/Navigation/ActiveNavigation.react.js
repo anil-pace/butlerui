@@ -44,7 +44,7 @@ var ActiveNavigation = React.createClass({
                               return _(server_message);  
                             }else{
                             var header_message = _.apply(null, message_args);
-                            return header_message;
+                            return _(header_message);
                             }
                         }
                        

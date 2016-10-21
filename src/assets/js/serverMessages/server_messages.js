@@ -134,7 +134,7 @@ var serverMessages = {
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",
-    "AdF.B.001" :"Wrong Barcode.",
+    "AdF.B.001" :"Wrong Barcode",
     "AdF.B.002" :"Box Scan successful",
     "AdF.B.003" :"Item Scan successful",
     "CLIENTCODE_001" : "Bin {0} selected",

@@ -42558,7 +42558,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
             var totalHeight = 0;
             var eachRowHeight=[];
             var eachRowHeight = rackDetails.map(function(row,index){
-                return row[1][0][1];
+                return row[1][0][2];
             });
             for(var i in eachRowHeight) { 
                 totalHeight += eachRowHeight[i]; 
@@ -42570,7 +42570,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
             var rackDetails = this.props.rackData.rack_type_rec;
             var eachRowHeight=[];
             var eachRowHeight = rackDetails.map(function(row,index){
-                return row[1][0][1];
+                return row[1][0][2];
             });
             return eachRowHeight;
         },
@@ -42660,19 +42660,19 @@ var RackRow = React.createClass({displayName: "RackRow",
 			};*/
 			var rackRowHeight;
 		eachSlot = slotData.map(function(slot,index){
-			var x = Math.round((slot[1]/totalRackHeight)*100);
+			var x = Math.round((slot[2]/totalRackHeight)*100);
 			rackRowHeight = {
 				
 				flexGrow : x.toString()
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type})
 					
 				);
 			else
 				return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[1], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type})
 					);
 		});
 		return (
@@ -43377,8 +43377,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.183/wss",
+	INTERFACE_IP : "https://192.168.8.183"
 };
 module.exports = configConstants;
 

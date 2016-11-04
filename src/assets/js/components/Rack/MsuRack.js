@@ -16,7 +16,7 @@ var MsuRack = React.createClass({
             var totalHeight = 0;
             var eachRowHeight=[];
             var eachRowHeight = rackDetails.map(function(row,index){
-                return row[1][0][1];
+                return row[1][0][2];
             });
             for(var i in eachRowHeight) { 
                 totalHeight += eachRowHeight[i]; 
@@ -28,7 +28,7 @@ var MsuRack = React.createClass({
             var rackDetails = this.props.rackData.rack_type_rec;
             var eachRowHeight=[];
             var eachRowHeight = rackDetails.map(function(row,index){
-                return row[1][0][1];
+                return row[1][0][2];
             });
             return eachRowHeight;
         },

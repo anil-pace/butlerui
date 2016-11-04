@@ -20,19 +20,19 @@ var RackRow = React.createClass({
 			};*/
 			var rackRowHeight;
 		eachSlot = slotData.map(function(slot,index){
-			var x = Math.round((slot[1]/totalRackHeight)*100);
+			var x = Math.round((slot[2]/totalRackHeight)*100);
 			rackRowHeight = {
 				
 				flexGrow : x.toString()
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} selectedSlot={true} slotHeightData={slot[1]} slotWidthData={slot[0]} slotWidthDataLength={slot[0].length} key={index} slotIndexArrays={slotIndexArray} rackRange={rackRange} type={type} />
+					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} selectedSlot={true} slotHeightData={slot[2]} slotWidthData={slot[0]} slotWidthDataLength={slot[0].length} key={index} slotIndexArrays={slotIndexArray} rackRange={rackRange} type={type} />
 					
 				);
 			else
 				return(
-					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} slotHeightData={slot[1]} slotWidthData={slot[0]} slotWidthDataLength={slot[0].length} slotIndexArrays={slotIndexArray} key={index} rackRange={rackRange} type={type} />
+					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} slotHeightData={slot[2]} slotWidthData={slot[0]} slotWidthDataLength={slot[0].length} slotIndexArrays={slotIndexArray} key={index} rackRange={rackRange} type={type} />
 					);
 		});
 		return (

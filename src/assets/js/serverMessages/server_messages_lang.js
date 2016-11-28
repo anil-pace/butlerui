@@ -376,4 +376,7 @@ function server_messages_list() {
     _("Update");
     _("Japanese");
     _("English");
+    _("Exception Finished");
+    _("PPS Mode");
+    _("Seat Type");
 }

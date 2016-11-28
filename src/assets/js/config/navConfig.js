@@ -152,7 +152,7 @@ var navData = {
         "screen_id": "audit_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Items ",
+        "message": "Scan Items",
         "showImage": true,
         "level": 2,
         "type": 'passive'

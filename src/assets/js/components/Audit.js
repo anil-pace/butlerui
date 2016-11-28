@@ -196,14 +196,14 @@ var Audit = React.createClass({
           var ItemInBoxData = '';
           var LooseItemsData = '';
           var AuditMessage = '';
-          var m = {
+          var mm = {
             "details": [],
             "code": "Audit.A.012",
             "description": "No Items To Reconcile",
             "level": "info"
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
-            AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={m} />);
+            AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={mm} />);
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
               BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);
           if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
@@ -267,7 +267,7 @@ var Audit = React.createClass({
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please put entities in exception area.")}</div>
+                      <div className="kq-header">{_("Please put entities in exception area and confirm")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode"> 

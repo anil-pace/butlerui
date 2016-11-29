@@ -39966,6 +39966,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           * { T2715: confirm button disabled if missing/unscannable quantity is zero }
           */
             this._disableNext = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontGoodQuantity.current_qty > 0 )? false : true;          
+            this._disableConfirm = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontDamagedQuantity.current_qty > 0 )? false : true;      
           if(this.state.PickFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -39996,7 +39997,7 @@ var PickFront = React.createClass({displayName: "PickFront",
             if(this.state.PickFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PLACE_ITEM_BACK})  );
             }else{
-              btnComp = ( React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
+              btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
             }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -43377,8 +43378,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.55/wss",
-	INTERFACE_IP : "https://192.168.8.55"
+	WEBSOCKET_IP : "wss://192.168.8.139/wss",
+	INTERFACE_IP : "https://192.168.8.139"
 };
 module.exports = configConstants;
 

@@ -46740,7 +46740,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     validateAndSendSpaceUnavailableDataToServer: function() {
         var _allowedQuantity;
-        _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity-1:0;
+        _allowedQuantity=_seatData.put_quantity>0?_seatData.put_quantity-1:0;
         if ((_KQQty) > _allowedQuantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};

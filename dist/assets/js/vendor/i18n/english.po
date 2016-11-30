@@ -1,20 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the butler_interface_kerry package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: butler_interface_kerry 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-11 17:54+0530\n"
-"PO-Revision-Date: 2016-01-11 17:54+0530\n"
+"POT-Creation-Date: 2016-11-28 17:32+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:7
 msgid "Scan item / Stage pps bin"
@@ -33,10 +34,12 @@ msgid "user Name"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:11
+#: src/assets/js/serverMessages/server_messages_lang.js:266
 msgid "Password"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:10
+#: src/assets/js/serverMessages/server_messages_lang.js:265
 msgid "User Name"
 msgstr ""
 
@@ -1088,6 +1091,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:250
 #: src/assets/js/serverMessages/server_messages_lang.js:252
+#: src/assets/js/serverMessages/server_messages_lang.js:375
 msgid "TOTE"
 msgstr ""
 
@@ -1128,6 +1132,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:259
 #: src/assets/js/serverMessages/server_messages_lang.js:261
+#: src/assets/js/serverMessages/server_messages_lang.js:368
 msgid "CURRENT SLOT"
 msgstr ""
 
@@ -1395,118 +1400,147 @@ msgid "Wrong scan.Expecting location scan."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:327
+#: src/assets/js/serverMessages/server_messages_lang.js:328
 msgid "Exception"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:328
+#: src/assets/js/serverMessages/server_messages_lang.js:329
 msgid "Logout"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:329
+#: src/assets/js/serverMessages/server_messages_lang.js:330
 msgid "Utility"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:330
+#: src/assets/js/serverMessages/server_messages_lang.js:331
 msgid "EXCEPTION"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:331
+#: src/assets/js/serverMessages/server_messages_lang.js:332
 msgid "Good Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:332
+#: src/assets/js/serverMessages/server_messages_lang.js:333
 msgid "Missing Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:333
+#: src/assets/js/serverMessages/server_messages_lang.js:334
 msgid "Unscannable Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:334
+#: src/assets/js/serverMessages/server_messages_lang.js:335
 msgid "Remove Item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:335
+#: src/assets/js/serverMessages/server_messages_lang.js:336
 msgid "Item Missing/Bad Barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:336
+#: src/assets/js/serverMessages/server_messages_lang.js:337
 msgid "Sum of missing and good quantity should be equal to {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:337
+#: src/assets/js/serverMessages/server_messages_lang.js:338
 msgid "Login"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:324
+#: src/assets/js/serverMessages/server_messages_lang.js:325
 msgid "Scan Excess Entity Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:338
+#: src/assets/js/serverMessages/server_messages_lang.js:339
 msgid "Enter Username"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:339
+#: src/assets/js/serverMessages/server_messages_lang.js:340
 msgid "Enter Password"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:340
+#: src/assets/js/serverMessages/server_messages_lang.js:341
 msgid "Invalid credentials"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:341
+#: src/assets/js/serverMessages/server_messages_lang.js:342
 msgid "Login not allowed. You're already logged in"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:343
+#: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "Place Item in slot and scan more"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
+#: src/assets/js/serverMessages/server_messages_lang.js:345
 msgid "PPTL"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:345
+#: src/assets/js/serverMessages/server_messages_lang.js:346
 msgid "Scan Slot Barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:346
+#: src/assets/js/serverMessages/server_messages_lang.js:347
 msgid "Unexpected Item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:347
+#: src/assets/js/serverMessages/server_messages_lang.js:348
 msgid "Stage Bin or Scan Item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:348
+#: src/assets/js/serverMessages/server_messages_lang.js:349
 msgid "Scan & Confirm"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:349
+#: src/assets/js/serverMessages/server_messages_lang.js:350
 msgid "Scan Item From Bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:350
+#: src/assets/js/serverMessages/server_messages_lang.js:351
 msgid "Scan Tote"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:351
+#: src/assets/js/serverMessages/server_messages_lang.js:352
 msgid "Scan MSU Barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:352
+#: src/assets/js/serverMessages/server_messages_lang.js:353
 msgid "Scan Items"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:353
+#: src/assets/js/serverMessages/server_messages_lang.js:354
 msgid "Status"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:354
+#: src/assets/js/serverMessages/server_messages_lang.js:355
 msgid "Could not connect to PPS.Please try again."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:356
+#: src/assets/js/serverMessages/server_messages_lang.js:357
 msgid "product_sku"
 msgstr ""
 
@@ -1515,39 +1549,42 @@ msgid "type."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:358
+#: src/assets/js/serverMessages/server_messages_lang.js:359
 msgid "quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:359
+#: src/assets/js/serverMessages/server_messages_lang.js:360
 msgid "item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:360
+#: src/assets/js/serverMessages/server_messages_lang.js:361
 msgid "box"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:361
+#: src/assets/js/serverMessages/server_messages_lang.js:362
 msgid "SKU not present in Database.Put in exception area"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:362
+#: src/assets/js/serverMessages/server_messages_lang.js:363
 msgid "Please put extra entities in exception area."
-msgstr "" 
+msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:363
+#: src/assets/js/serverMessages/server_messages_lang.js:364
 msgid "Space Available For"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:364
+#: src/assets/js/serverMessages/server_messages_lang.js:365
 msgid "Tote Details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:367
 msgid "CURRENT BIN"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:368
-msgid "CURRENT SLOT"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:369
@@ -1574,10 +1611,6 @@ msgstr ""
 msgid "Scan Bin Barcode"
 msgstr ""
 
-#: src/assets/js/serverMessages/server_messages_lang.js:375
-msgid "TOTE"
-msgstr ""
-
 #: src/assets/js/serverMessages/server_messages_lang.js:376
 msgid "Update"
 msgstr ""
@@ -1588,4 +1621,37 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:378
 msgid "English"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:7
+msgid "Scan item / Stage PPS Bin"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:125
+msgid "Scan {0} Items and Place in Bin {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:326
+#: src/assets/js/serverMessages/server_messages_lang.js:327
+msgid "Entity already scanned.Confirm exception"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:358
+msgid "type"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:366
+msgid "Close current tote first"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:379
+msgid "Exception Finished"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:380
+msgid "PPS Mode"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:381
+msgid "Seat Type"
 msgstr ""

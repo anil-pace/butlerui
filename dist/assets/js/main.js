@@ -2430,8 +2430,12 @@ EventEmitter.prototype.emit = function(type) {
       er = arguments[1];
       if (er instanceof Error) {
         throw er; // Unhandled 'error' event
+      } else {
+        // At least give some kind of context to the user
+        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+        err.context = er;
+        throw err;
       }
-      throw TypeError('Uncaught, unspecified "error" event.');
     }
   }
 
@@ -2672,14 +2676,103 @@ function isUndefined(arg) {
 
 },{}],15:[function(require,module,exports){
 // shim for using process in browser
-
 var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
 var queue = [];
 var draining = false;
 var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
@@ -2695,7 +2788,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = setTimeout(cleanUpNextTick);
+    var timeout = runTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -2712,7 +2805,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    clearTimeout(timeout);
+    runClearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -2724,7 +2817,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
+        runTimeout(drainQueue);
     }
 };
 
@@ -36967,14 +37060,14 @@ var Audit = React.createClass({displayName: "Audit",
           var ItemInBoxData = '';
           var LooseItemsData = '';
           var AuditMessage = '';
-          var m = {
+          var mm = {
             "details": [],
             "code": "Audit.A.012",
             "description": "No Items To Reconcile",
             "level": "info"
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
-            AuditMessage=(React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: m}));
+            AuditMessage=(React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: mm}));
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
               BoxSerialData = (React.createElement(TabularData, {data: this.state.AuditReconcileBoxSerialData}));
           if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
@@ -37038,7 +37131,7 @@ var Audit = React.createClass({displayName: "Audit",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put entities in exception area."))
+                      React.createElement("div", {className: "kq-header"}, _("Please put entities in exception area and confirm"))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -43201,7 +43294,7 @@ var navData = {
         "screen_id": "audit_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Items ",
+        "message": "Scan Items",
         "showImage": true,
         "level": 2,
         "type": 'passive'
@@ -43963,6 +44056,8 @@ var serverMessages = {
     "PkB.B.027" : "Please press those buttons having color blink_blue",
     "PkB.B.028" : "Unhandled event ocurred",
     "PkB.B.029" : "Barcode didn't match with current tote barcode",
+    "PkB.B.030" : "PPS Mode",
+    "PkB.B.031" : "Seat Type",
     "Common.000": "Testing configuration {0} and {1}",
     "Common.001": "Processing. Please wait and scan later",
     "Common.002": "Waiting for rack",
@@ -43975,6 +44070,7 @@ var serverMessages = {
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
+    "AdF.I.010" : "Exception Finished",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
@@ -43985,6 +44081,7 @@ var serverMessages = {
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",
+    "AdF.H.009" : "Enter Unscannable Entity Quantity",
     "AdF.B.001" :"Wrong Barcode",
     "AdF.B.002" :"Box Scan successful",
     "AdF.B.003" :"Item Scan successful",
@@ -43995,7 +44092,7 @@ var serverMessages = {
     "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
     "CLIENTCODE_401" : "Invalid Credentials",
-    "Audit.A.012":"No Items to Reconcile",
+    "Audit.A.012":"No Items To Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
     "CLIENTCODE_006" : "Peripheral added successfully",
@@ -45551,14 +45648,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             showModal = false;
             return {
                 "showModal": true,
-                "message": _("Place extra entity in Exception area .")
+                "message": _("Place extra entity in Exception area.")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
             showModal = false;
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": _("Place extra entity in Exception area .")
+                "message": _("Place extra entity in Exception area.")
             }
         } 
         else{

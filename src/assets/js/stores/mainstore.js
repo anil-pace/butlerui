@@ -294,14 +294,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             showModal = false;
             return {
                 "showModal": true,
-                "message": _("Place extra entity in Exception area .")
+                "message": _("Place extra entity in Exception area.")
             }
         } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
             showModal = false;
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
                 "showModal": true,
-                "message": _("Place extra entity in Exception area .")
+                "message": _("Place extra entity in Exception area.")
             }
         } 
         else{

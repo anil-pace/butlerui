@@ -43471,8 +43471,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.139/wss",
+	INTERFACE_IP : "https://192.168.8.139"
 };
 module.exports = configConstants;
 
@@ -46739,16 +46739,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 
     validateAndSendSpaceUnavailableDataToServer: function() {
-        if ((_KQQty) > _seatData.put_quantity) {
+        var _allowedQuantity;
+        _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity-1:0;
+        if ((_KQQty) > _allowedQuantity) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
-                data["details"] = [_seatData.put_quantity];
+                data["details"] = [_allowedQuantity];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
-                _seatData.notification_list[0].details = [_seatData.put_quantity];
+                _seatData.notification_list[0].details = [_allowedQuantity];
                 _seatData.notification_list[0].level = "error";
             }
             _goodQuantity = 0;

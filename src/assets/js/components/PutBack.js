@@ -137,7 +137,7 @@ var PutBack = React.createClass({
         break; 
       case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
           this._navigation = '';
-          console.log(JSON.stringify(this.state.PutBackKQDetails));
+          
           if(this.state.PutBackExceptionScreen == "damaged")
           this._component = (
               <div className='grid-container exception'>
@@ -176,6 +176,7 @@ var PutBack = React.createClass({
         break; 
        case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
           this._navigation = '';
+          console.log("main data",JSON.stringify(this.state.PutBackKQDetails));
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               <div className='grid-container exception'>
@@ -240,6 +241,7 @@ var PutBack = React.createClass({
         break; 
       case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
           this._navigation = '';
+          console.log("main data",JSON.stringify(this.state.PutBackKQDetails));
           if(this.state.PutBackExceptionScreen == "extra_quantity")
           this._component = (
               /*<div className='grid-container exception'>

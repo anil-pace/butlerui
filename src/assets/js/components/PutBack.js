@@ -137,7 +137,7 @@ var PutBack = React.createClass({
         break; 
       case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
           this._navigation = '';
-          console.log(JSON.stringify(this.state.PutBackKQDetails));
+          
           if(this.state.PutBackExceptionScreen == "damaged")
           this._component = (
               <div className='grid-container exception'>

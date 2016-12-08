@@ -50,7 +50,7 @@ var Header = React.createClass({
                     var data = {
                         "event_name": "process_barcode",
                         "event_data": {
-                            "barcode": e.target.value,
+                            "barcode": e.target.value.trim(),
                         }
                     }
                     CommonActions.postDataToInterface(data);

@@ -1,7 +1,7 @@
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
-    "PtB.H.002" : "Place Entity in Bin and Press PPTL",
+    "PtB.H.002" : "Place Entity in Bin {0} and Press PPTL",
     "PtB.H.003": "Are You Sure You Want to Close Tote?",
     "PtB.H.004": "Scan Tote or Stage PPS Bin",
     "PtB.H.005" : "Item Not Expected in Tote",

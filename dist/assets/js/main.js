@@ -37536,9 +37536,9 @@ var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({displayName: "Bins",
-	componentDidMount: function() {
+    componentDidMount: function() {
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-  	},
+    },
     _findCoordinatesIndex:function(x,y){
         var i = 0;
         this.props.binsData.ppsbin_list.map(function(value,index){
@@ -37555,26 +37555,26 @@ var Bins = React.createClass({displayName: "Bins",
         var scrnId = this.props.screenId;
         var self = this;
         return (
-            	 React.createElement("div", {className: "bins"}, 
-            	 	
-            	 		(function(){
-            	 			var l =[]; 
-            	 			for(var j = 0 ;j<compData.structure[0] ;j++){
-            	 			var list = [];
-            	 			var i = 0;
-            	 			for( i = i ; i<compData.structure[1] ; i++){
-            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
-            	 			}
-            	 			l.push((
-            	 				React.createElement("div", {className: "bin-row"}, 
-            	 					list
-            	 				)
-            	 				));
-            	 		}
-            	 		return l;
-            	 		})()
-            	 	
-            	 )
+                 React.createElement("div", {className: "bins"}, 
+                    
+                        (function(){
+                            var l =[]; 
+                            for(var j = 0 ;j<compData.structure[0] ;j++){
+                            var list = [];
+                            var i = 0;
+                            for( i = i ; i<compData.structure[1] ; i++){
+                                list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
+                            }
+                            l.push((
+                                React.createElement("div", {className: "bin-row"}, 
+                                    list
+                                )
+                                ));
+                        }
+                        return l;
+                        })()
+                    
+                 )
         );
     },
 
@@ -43472,8 +43472,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.136:8888/ws",
+	INTERFACE_IP : "http://192.168.3.136:5000"
 };
 module.exports = configConstants;
 
@@ -43946,7 +43946,7 @@ module.exports = japanese;
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
-    "PtB.H.002" : "Place Entity in Bin and Press PPTL",
+    "PtB.H.002" : "Place Entity in Bin {0} and Press PPTL",
     "PtB.H.003": "Are You Sure You Want to Close Tote?",
     "PtB.H.004": "Scan Tote or Stage PPS Bin",
     "PtB.H.005" : "Item Not Expected in Tote",

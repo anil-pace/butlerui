@@ -38422,7 +38422,7 @@ var Header = React.createClass({displayName: "Header",
               React.createElement("img", {src: allSvgConstants.logo})
               ), 
                 React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
-                  React.createElement("img", {className: disableScanClass}), 
+                  React.createElement("img", {src: allSvgConstants.scanHeader, className: disableScanClass}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
               React.createElement("div", {className: "header-actions", onClick: this.showMenu}, 
@@ -43472,13 +43472,8 @@ module.exports = appConstants;
 
 },{}],284:[function(require,module,exports){
 var configConstants = {
-<<<<<<< be24ff4b7d7b3f3ea06f8fc0b709e9363e6fad8d
 	WEBSOCKET_IP : "wss://localhost/wss",
 	INTERFACE_IP : "https://localhost"
-=======
-	WEBSOCKET_IP : "wss://192.168.8.178/wss",
-	INTERFACE_IP : "https://192.168.8.178"
->>>>>>> Headers fixed changed as per new mockup
 };
 module.exports = configConstants;
 

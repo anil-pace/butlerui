@@ -147,7 +147,7 @@ var Header = React.createClass({
               <img src={allSvgConstants.logo} />
               </div>
                 <div className={cssClass} onClick={this.openKeyboard}>
-                  <img  className={disableScanClass} />
+                  <img  src={allSvgConstants.scanHeader} className={disableScanClass} />
                   <input id="barcode" type="text" value='' />
                 </div>
               <div className="header-actions" onClick={this.showMenu} >

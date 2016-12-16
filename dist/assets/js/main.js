@@ -38422,7 +38422,7 @@ var Header = React.createClass({displayName: "Header",
               React.createElement("img", {src: allSvgConstants.logo})
               ), 
                 React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
-                  React.createElement("img", {src: allSvgConstants.scanHeader, className: disableScanClass}), 
+                  React.createElement("img", {className: disableScanClass}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
                 ), 
               React.createElement("div", {className: "header-actions", onClick: this.showMenu}, 
@@ -43519,9 +43519,7 @@ var allSvgConstants = {
 	putBackPlace : 'assets/images/place.svg',
 	logo : 'assets/images/logo.png',
 	menu : 'assets/images/menu.png',
-	stage : 'assets/images/Icon1.png',
 	place:'assets/images/Icon2.png',
-	scan : 'assets/images/scan-item.png',
 	rack: 'assets/images/rack.png',
 	gorLogo : 'assets/images/LogoVectorSmartObject.png',
 	factoryImg : 'assets/images/factoryImage.png',
@@ -43531,8 +43529,7 @@ var allSvgConstants = {
 	iconBar :'assets/images/Icon.png',
 	tote:'assets/images/tote.png',
 	exception:'assets/images/exceptionIcon.png',
-	scanner:'assets/images/scanner.png',
-	pptl:'assets/images/pptl.png'
+	scanner:'assets/images/scanner.png'
 }
 
 module.exports = allSvgConstants;
@@ -45620,14 +45617,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _NavData.map(function(data, index) {
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                    if (_seatData.screen_id == appConstants.PUT_BACK_TOTE_CLOSE)
-                        _NavData[index].image = SVGConstants.tote;
-                     else if (_seatData.screen_id == appConstants.PUT_BACK_STAGE)
-                        _NavData[index].image = SVGConstants.stage;
-                    else if (_seatData.screen_id == appConstants.PUT_BACK_SCAN_TOTE)
-                        _NavData[index].image = SVGConstants.stage;
-                    else
-                        _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';
                 } else {
                     _NavData[index].type = 'passive';

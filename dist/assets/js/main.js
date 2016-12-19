@@ -37209,33 +37209,40 @@ var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({displayName: "BinMap",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var leftCol = document.createElement("ul"),midCol,rightCol=document.createElement("ul");
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					leftCol.appendChild(document.createElement("li"))
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					rightCol.appendChild(document.createElement("li"))
+				}
+
+			}
+		}
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol
+		}
+	},
 	render:function(){		
-			
+		
+		var mapStructure = this.processData();	
 		
 		return (
 				React.createElement("div", {className: "binMapWrapper"}, 
 					React.createElement("div", {className: "mapCont"}, 
 					React.createElement("div", {className: "col1"}, 
-					React.createElement("ul", null, 
-						React.createElement("li", null
-						), 
-						React.createElement("li", null
-						), 
-						React.createElement("li", null
-						)
-					)
+					mapStructure.leftCol
 					), 
 					React.createElement("div", {className: "col2"}
 					), 
 					React.createElement("div", {className: "col3"}, 
-					React.createElement("ul", null, 
-						React.createElement("li", null
-						), 
-						React.createElement("li", null
-						), 
-						React.createElement("li", null
-						)
-					)
+					mapStructure.rightCol
 					)
 					)
 				)
@@ -38370,7 +38377,7 @@ var Header = React.createClass({displayName: "Header",
                     var data = {
                         "event_name": "process_barcode",
                         "event_data": {
-                            "barcode": e.target.value,
+                            "barcode": e.target.value.trim(),
                         }
                     }
                     CommonActions.postDataToInterface(data);
@@ -40044,7 +40051,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails}), 
+               
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
@@ -40062,6 +40069,8 @@ var PickFront = React.createClass({displayName: "PickFront",
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
          var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
+         var cancelButton;
+         
          if(this.state.PickFrontExceptionStatus == false){
           
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
@@ -40070,19 +40079,20 @@ var PickFront = React.createClass({displayName: "PickFront",
         }else{
           var editButton ='';
         }
+        if(cancelScanDisabled){
+          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
+         }
+         else{
+          cancelButton = (React.createElement("div", {className: "cancel-scan"}));
+         }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(BinMap, null), 
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                React.createElement(BinMap, null), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                 ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                    editButton
-                )
+               cancelButton
               )
             );
          }else{
@@ -40527,7 +40537,9 @@ var KQ = React.createClass({displayName: "KQ",
             });
              if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
-                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
+
+                mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK )){
+
                 _updatedQty = 1;
             }
 
@@ -40726,8 +40738,7 @@ var KQ = React.createClass({displayName: "KQ",
                     generateExcessNotification();
                     $('.ui-keyboard-preview').val(9999);
                }else if((parseInt(keypressed.last.val) == 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
-                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
-                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
+                    mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
                     data["code"] = resourceConstants.CLIENTCODE_009;
                     data["level"] = 'error'
@@ -40860,7 +40871,7 @@ var KQ = React.createClass({displayName: "KQ",
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
                 }
-            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                   this._enableDecrement = false;
@@ -42130,7 +42141,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         break; 
       case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
           this._navigation = '';
-          console.log(JSON.stringify(this.state.PutBackKQDetails));
+          
           if(this.state.PutBackExceptionScreen == "damaged")
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -43522,8 +43533,8 @@ module.exports = appConstants;
 
 },{}],285:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.178/wss",
-	INTERFACE_IP : "https://192.168.8.178"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -43573,9 +43584,7 @@ var allSvgConstants = {
 	putBackPlace : 'assets/images/place.svg',
 	logo : 'assets/images/logo.png',
 	menu : 'assets/images/menu.png',
-	stage : 'assets/images/Icon1.png',
 	place:'assets/images/Icon2.png',
-	scan : 'assets/images/scan-item.png',
 	rack: 'assets/images/rack.png',
 	gorLogo : 'assets/images/LogoVectorSmartObject.png',
 	factoryImg : 'assets/images/factoryImage.png',
@@ -43585,8 +43594,7 @@ var allSvgConstants = {
 	iconBar :'assets/images/Icon.png',
 	tote:'assets/images/tote.png',
 	exception:'assets/images/exceptionIcon.png',
-	scanner:'assets/images/scanner.png',
-	pptl:'assets/images/pptl.png'
+	scanner:'assets/images/scanner.png'
 }
 
 module.exports = allSvgConstants;
@@ -45674,14 +45682,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _NavData.map(function(data, index) {
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                    if (_seatData.screen_id == appConstants.PUT_BACK_TOTE_CLOSE)
-                        _NavData[index].image = SVGConstants.tote;
-                     else if (_seatData.screen_id == appConstants.PUT_BACK_STAGE)
-                        _NavData[index].image = SVGConstants.stage;
-                    else if (_seatData.screen_id == appConstants.PUT_BACK_SCAN_TOTE)
-                        _NavData[index].image = SVGConstants.stage;
-                    else
-                        _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';
                 } else {
                     _NavData[index].type = 'passive';
@@ -47086,7 +47086,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
-                data["BinMapDetails"] =  this.getBinMapDetails();
+                //data["BinMapDetails"] =  this.getBinMapDetails();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontProductDetails"] = this.productDetails();

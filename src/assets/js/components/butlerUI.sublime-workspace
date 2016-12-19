@@ -1,0 +1,1794 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"format",
+				"FromattedDate"
+			],
+			[
+				"req",
+				"requireAuth"
+			],
+			[
+				"local",
+				"localLanguage"
+			],
+			[
+				"locale",
+				"localeData"
+			],
+			[
+				"Co",
+				"ConnectedIntlProvider"
+			],
+			[
+				"de",
+				"defineMessages"
+			],
+			[
+				"order",
+				"orderlist"
+			],
+			[
+				"un",
+				"unfulfillable"
+			],
+			[
+				"progre",
+				"progressStatus"
+			],
+			[
+				"form",
+				"formatMessage"
+			],
+			[
+				"up",
+				"updateStatusIntl"
+			],
+			[
+				"time",
+				"timeOffset"
+			],
+			[
+				"Form",
+				"FormattedDate"
+			],
+			[
+				"Forma",
+				"FormattedTime"
+			],
+			[
+				"row",
+				"rowIndex"
+			],
+			[
+				"ro",
+				"rowIndex"
+			],
+			[
+				"op",
+				"openDropDownNode"
+			],
+			[
+				"han",
+				"_handleWindowClick"
+			],
+			[
+				"Reac",
+				"ReactDom"
+			],
+			[
+				"cons",
+				"constructor"
+			],
+			[
+				"bn",
+				"bind"
+			],
+			[
+				"it",
+				"items_picked"
+			],
+			[
+				"data",
+				"dataArray"
+			],
+			[
+				"pars",
+				"parseDate"
+			],
+			[
+				"pic",
+				"pickLine"
+			],
+			[
+				"items",
+				"items_picked"
+			],
+			[
+				"item",
+				"items_put"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"ITEM",
+				"items_picked"
+			],
+			[
+				"next",
+				"nextProps"
+			],
+			[
+				"days",
+				"daysOnHand"
+			],
+			[
+				"def",
+				"defaultMessage"
+			],
+			[
+				"defa",
+				"defaultMessage"
+			],
+			[
+				"mk",
+				"mkdirpSync"
+			],
+			[
+				"ja",
+				"jaTranslationMessages"
+			],
+			[
+				"en",
+				"enTranslationMessages"
+			],
+			[
+				"handl",
+				"handleSelectionChange"
+			],
+			[
+				"ms",
+				"messages"
+			],
+			[
+				"login",
+				"loginData"
+			],
+			[
+				"fil",
+				"fileName"
+			],
+			[
+				"get",
+				"getLocaleMessages"
+			],
+			[
+				"map",
+				"mapStateToProps"
+			],
+			[
+				"dro",
+				"dropDown"
+			],
+			[
+				"Fo",
+				"FormattedMessage"
+			],
+			[
+				"inl",
+				"intlReducer"
+			],
+			[
+				"bu",
+				"Button"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/node_modules/bootstrap/less/variables.less",
+			"settings":
+			{
+				"buffer_size": 27473,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/node_modules/stream-splicer/example/header.js",
+			"settings":
+			{
+				"buffer_size": 685,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/header.less",
+			"settings":
+			{
+				"buffer_size": 1641,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Header.js",
+			"settings":
+			{
+				"buffer_size": 6413,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Navigation/PassiveNavigation.react.js",
+			"settings":
+			{
+				"buffer_size": 638,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/constants/svgConstants.js",
+			"settings":
+			{
+				"buffer_size": 658,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 212 files for \".place\"\n\n/Users/arshdeep.m/git/butlerui/src/assets/css/vendor/less/forms.less:\n  131  \n  132    // Placeholder\n  133:   .placeholder();\n  134  \n  135    // Disabled and read-only inputs\n\n/Users/arshdeep.m/git/butlerui/src/assets/css/vendor/less/mixins/vendor-prefixes.less:\n   99  \n  100  // Placeholder text\n  101: .placeholder(@color: @input-color-placeholder) {\n  102    // Firefox\n  103    &::-moz-placeholder {\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/PickFront.js:\n  292               \n  293              if(this.state.PickFrontDamagedQuantity.current_qty > 0 ){\n  294:                btnComp = ( <Button1 disabled = {false} text = {_(\"NEXT\")} color={\"orange\"} module ={appConstants.PICK_FRONT} action={appConstants.PLACE_ITEM_BACK} />  );\n  295              }else{\n  296                btnComp = ( <Button1 disabled = {false} text = {_(\"CONFIRM\")} color={\"orange\"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/Button/Button.js:\n  190                                  ActionCreators.changePickFrontExceptionScreen(\"confirm_from_user\");\n  191                                  break;\n  192:                              case appConstants.PLACE_ITEM_BACK:\n  193                                  ActionCreators.changePickFrontExceptionScreen(\"pick_front_quantity\");\n  194                                  break;\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/config/navConfig.js:\n  124          \"screen_id\": \"pick_back_bin\",\n  125          \"code\": \"Common.000\",\n  126:         \"image\": svgConstants.place,\n  127          \"message\": \"Remove Item\",\n  128          \"showImage\": true,\n  ...\n  161          \"screen_id\": \"audit_reconcile\",\n  162          \"code\": \"Common.000\",\n  163:         \"image\": svgConstants.place,\n  164          \"message\": \"Status\",\n  165          \"showImage\": true,\n\n6 matches across 5 files\n\n\nSearching 212 files for \".place\" (whole word)\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/config/navConfig.js:\n  124          \"screen_id\": \"pick_back_bin\",\n  125          \"code\": \"Common.000\",\n  126:         \"image\": svgConstants.place,\n  127          \"message\": \"Remove Item\",\n  128          \"showImage\": true,\n  ...\n  161          \"screen_id\": \"audit_reconcile\",\n  162          \"code\": \"Common.000\",\n  163:         \"image\": svgConstants.place,\n  164          \"message\": \"Status\",\n  165          \"showImage\": true,\n\n2 matches in 1 file\n",
+			"settings":
+			{
+				"buffer_size": 2501,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/navigation.less",
+			"settings":
+			{
+				"buffer_size": 3677,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/stores/mainstore.js",
+			"settings":
+			{
+				"buffer_size": 93429,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/constants/configConstants.js",
+			"settings":
+			{
+				"buffer_size": 144,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/vendor/less/variables.less",
+			"settings":
+			{
+				"buffer_size": 29121,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"gi",
+				"Package Control: Install Package"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"bab",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"babel",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"reinde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"re",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"javas",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"babe",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"rein",
+				"Preferences: SublimeLinter Key Bindings – User"
+			],
+			[
+				"RE",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"bable",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"",
+				"DocBlockr: Reparse comment block"
+			],
+			[
+				"baba",
+				"Babel Transform"
+			],
+			[
+				"r",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"packa",
+				"Package Control: Add Channel"
+			],
+			[
+				"reind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"ba",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"reindent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"reinder",
+				"Preferences: SublimeLinter Key Bindings – User"
+			],
+			[
+				"reindet",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"syntax babel",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"in",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"inde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"inden",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"indent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"eslint",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"jav",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"js",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"json",
+				"Set Syntax: JSON"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"exclus",
+				"ToggleExclude: Conditional Patterns: Settings – User"
+			],
+			[
+				"exclue",
+				"ToggleExclude: Conditional File / Folder Patterns: Enable"
+			],
+			[
+				"TOGGle ex",
+				"ToggleExclude: Conditional Patterns: Settings – User"
+			],
+			[
+				"pres",
+				"Preferences: Settings - User"
+			],
+			[
+				"jscs",
+				"JSCS Formatter: Format this file"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 530.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/arshdeep.m/git/butlerui",
+		"/Users/arshdeep.m/git/butlerui/dist",
+		"/Users/arshdeep.m/git/butlerui/src",
+		"/Users/arshdeep.m/git/butlerui/src/assets",
+		"/Users/arshdeep.m/git/butlerui/src/assets/images"
+	],
+	"file_history":
+	[
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/Navigation/ActiveNavigation.react.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/Bins/Bins.react.js",
+		"/Users/arshdeep.m/git/butlerui/dist/assets/js/vendor/i18n/english.po",
+		"/Users/arshdeep.m/git/butlerui/dist/index.html",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/constants/configConstants.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/Header.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/constants/svgConstants.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/spinner.less",
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/vendor/less/badges.less",
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/vendor/less/variables.less",
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/header.less",
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/navigation.less",
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/common.less",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/PickFront.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/styles.css",
+		"/Users/arshdeep.m/git/butlerui/dist/assets/js/localization/english.json",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/utils/utils.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/stores/loginstore.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/stores/mainstore.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/Bins/Bin.react.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/utils/vendor/i18n/english.json",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/utils/vendor/i18n/english.po",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/translations/en-US.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/userTab/addNewUser.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/App.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/orderTab/waveTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/subtab/ordersTabs.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/orderTab/orderListTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/orderTab/orderListTable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/orderTab/waveTable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/auditTab/auditTable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/userTab/userTabTable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/systemTabs/PPStable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/systemTabs/chargingStationsTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/systemTabs/chargingStationsTable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist/assets/common.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist/index.html",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/Login/login.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/topnotify/topnotify.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/constants/messageConstants.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/systemTabs/butlerbotTable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_notify.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/usersTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/constants/configConstants.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/systemTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/actions/validationActions.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/utilities/AjaxParser.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/constants/backEndConstants.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/Find Results",
+		"/Users/arshdeep.m/git/metero-todo/imports/ui/task.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/clientConfigs/initialData.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/Router.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/contributors.txt",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_dropdown.scss",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/Audit.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/logoutTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_paginate.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/langDropDown.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_dataTable.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_login.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/utilities/i18n.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/translations/ja-JP.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/formattedMessages/src/constants/messageConstants.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules/react-intl-redux/README.md",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/Emergency.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/loginReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/utilities/intialData.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/constants/appConstants.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules/react-intl/dist/react-intl.js",
+		"/Users/arshdeep.m/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/auditTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/waveDetailReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/orderFilterReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/index.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/formattedMessages/src/components/connectedIntlProvider.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/inventoryTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/inventoryTab/inventoryHistogram.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/graphd3/histogram.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/ordersTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/legend/legendElement.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/inventory/snapShot.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/tabs.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/inventory/inventory.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/translations/js-JP.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/dropdown/dropdown.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/nonClientUtils/collateMessagesEs5.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/utilities/responseParser.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/nonClientUtils/collateMessages.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/package.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/bin/npmCommands.sh",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/README.md",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/webpack.config.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/constants/initData.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/inventoryTab/inventoryStacked.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/inventoryReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/utilities/codeToString.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/.gitignore",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/commonFunctionsDataTable.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/auditTab/auditTable.js.orig",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/middleware/ajaxMiddleware.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/socketReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist/package.sh",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/ordersReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/formattedMessages/src/reducers/orderDetailReducer.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/tabs.js.orig",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist/assets/common.js.map",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/index.template.html",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules/react-dropdown/dist/index.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules/react-simple-dropdown/components/Dropdown.jsx",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/actions/auditActions.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_modal.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/auditReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/auditStatusWidget.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/graphd3/stackedChartHorizontal.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/main.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_pickPutLineGraph.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/graphd3/multiLineGraph.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/formattedMessages/src/reducers/userDetailReducer.json",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist/assets/bundle.f0faa0ebbc20254f41d8.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_inventory.scss",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/inventory/pickPutLineGraph.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/actions/responseAction.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/inventoryTab/inventoryTab.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers/orderDetailReducer.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/reducers.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/graphd3/lineGraph.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/components/graphd3/graph_horizontal.js",
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/containers/inventoryTab/itemCategoryTable.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"-*/dist/*,-*/node_modules/*",
+			"-*/dist/*",
+			"-*/dist/*, -*/node_modules/*",
+			"-*/dist/*",
+			"-*/dist/*, -*/node_modules/*",
+			"-*/dist/*",
+			"-*/dist/*, -*/node_modules/*",
+			"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist",
+			"-*/node_modules/*, -*/dist/*",
+			"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist",
+			"/dist/*",
+			"/dist/",
+			"-*/node_modules/*, -*/dist/*",
+			"-*/node_modules/, -*/dist/",
+			"",
+			"-*/node_modules/*,-*/dist/*",
+			"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules",
+			"*/node_modules/*",
+			"node_modules",
+			"-*/dist/*",
+			"-*/node_modules/*,-*/dist/*",
+			"-*/node_modules/*",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			".place",
+			"place",
+			"menu",
+			"putBackPlace",
+			"putBackScan",
+			"nowrap",
+			"%;\n",
+			".stage",
+			"allsvgconstants.stage",
+			"#1a252d",
+			"passive",
+			"#1a252d",
+			"@font-size-body-medium",
+			"font-size-active-navigation",
+			"info",
+			"passive-navigation",
+			"PPTL",
+			"pptl",
+			"font-size",
+			"#f16330",
+			"label",
+			"@badge",
+			"fff",
+			"active-nav-bck",
+			".navigation .active-navigation .nav-detail .index",
+			"allSvgConstants.pptl",
+			"pptl.png",
+			"allSvgConstants.scan",
+			"scan-item",
+			"allSvgConstants.scan",
+			"scan-item",
+			"_calculateAndSetBinDimensions",
+			"_findCoordinatesIndex",
+			"clientcode_401",
+			"emitChange",
+			"CHANGE_EVENT",
+			"socket",
+			"favicon",
+			"product_sku",
+			"container",
+			"user.table.totaluser",
+			"import",
+			"adduser",
+			"rowsCount",
+			"totaluser",
+			"column",
+			"render",
+			"total",
+			"class",
+			"gor-info",
+			"MODE_REQUESTED",
+			"notifysuccess",
+			"settimeout",
+			"timeOffset",
+			"';\n",
+			"notifysuccess",
+			"notifyFail",
+			"notifyinfo",
+			"notifyfail",
+			"notify",
+			"notifyerror",
+			"192.168.8.139",
+			"scan slot",
+			"Common.000",
+			"wait for msu",
+			"spinner",
+			".navigation .active-navigation",
+			"primar",
+			"active-navigation",
+			"240, 135, 28",
+			"f0871c",
+			"f8961f",
+			"brand-primary",
+			"primary",
+			"formatteddate",
+			".primary .panel-heading",
+			"primary .panel-heading",
+			"FormattedRelative",
+			"FormattedTime",
+			"FormattedDate",
+			"header.logout",
+			"updateintl",
+			"IntlProvider",
+			"navigator",
+			"IntlProvider",
+			"/*overflow",
+			"Enter quantity of Unscannable Entity",
+			"Unscannable Entity",
+			"no items to reconcile",
+			"place extra entity",
+			"finished",
+			"exception",
+			"exception finished",
+			"please put entities in exception area",
+			"please put entities in exception area.",
+			"please put entities in exception area",
+			"please put entities in exception area.",
+			"please put entities in exception area",
+			"Scan Items",
+			".ddown",
+			":last-",
+			"initial",
+			"  \n",
+			".fixedDataTableRowLayout_rowWrapper",
+			"querySelector",
+			"bottom: 100%",
+			"paginate",
+			"fixedDataTableLayout_main",
+			"/*overflow: hidden;*/",
+			"/*",
+			"react-paginate",
+			"z-index",
+			"langDropdown",
+			"changedropdown",
+			"replace",
+			"setstate",
+			"head",
+			"====",
+			"//",
+			">>>>",
+			"=====",
+			"====",
+			"},\n",
+			"updateIntl",
+			"translationMessages",
+			"updateIntl",
+			" \n",
+			"updateint"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"#f36f36",
+			"f16330",
+			"_handleDocumentClick",
+			"snapshotData",
+			"Wrong Barcode",
+			"butler_md_alpha",
+			"AJAX_LOGIN",
+			"http://blog-slicedscripts.rhcloud.com/"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 10,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/arshdeep.m/git/butlerui/node_modules/bootstrap/less/variables.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 27473,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1367,
+								1369
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 536.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/arshdeep.m/git/butlerui/node_modules/stream-splicer/example/header.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 685,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								270,
+								270
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/header.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1641,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Header.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6413,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5304,
+								5304
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 24.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Navigation/PassiveNavigation.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 638,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								498,
+								502
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/constants/svgConstants.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 658,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								177,
+								182
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2501,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										145,
+										151
+									],
+									[
+										341,
+										347
+									],
+									[
+										762,
+										768
+									],
+									[
+										1289,
+										1295
+									],
+									[
+										1647,
+										1653
+									],
+									[
+										1856,
+										1862
+									],
+									[
+										2193,
+										2199
+									],
+									[
+										2402,
+										2408
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								1962,
+								1962
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 918.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/navigation.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3677,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								78,
+								87
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/stores/mainstore.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 93429,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10636,
+								10636
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4592.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/constants/configConstants.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 144,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								89,
+								89
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/images/Icon.png",
+					"semi_transient": true,
+					"stack_index": 0,
+					"type": "image"
+				},
+				{
+					"buffer": 10,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/vendor/less/variables.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 29121,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								900,
+								900
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 302.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "butlerUI.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"conficonst",
+				"src/assets/js/constants/configConstants.js"
+			],
+			[
+				"svgcon",
+				"src/assets/js/constants/svgConstants.js"
+			],
+			[
+				"config",
+				"src/assets/js/constants/configConstants.js"
+			],
+			[
+				"variable",
+				"node_modules/bootstrap/less/variables.less"
+			],
+			[
+				"navigation",
+				"src/assets/css/navigation.less"
+			],
+			[
+				"",
+				"src/assets/css/navigation.less"
+			],
+			[
+				"action.less",
+				"src/assets/css/navigation.less"
+			],
+			[
+				"header",
+				"src/assets/js/components/Header.js"
+			],
+			[
+				"heade",
+				"node_modules/stream-splicer/example/header.js"
+			],
+			[
+				"activen",
+				"src/assets/js/components/Navigation/ActiveNavigation.react.js"
+			],
+			[
+				"header.js",
+				"src/assets/js/components/Header.js"
+			],
+			[
+				"variabl",
+				"node_modules/bootstrap/less/variables.less"
+			],
+			[
+				"bins.reac",
+				"src/assets/js/components/Bins/Bins.react.js"
+			],
+			[
+				"conficon",
+				"src/assets/js/constants/configConstants.js"
+			],
+			[
+				"confi",
+				"src/assets/js/constants/configConstants.js"
+			],
+			[
+				"bin.react",
+				"src/assets/js/components/Bins/Bin.react.js"
+			],
+			[
+				"loginstore",
+				"src/assets/js/stores/loginstore.js"
+			],
+			[
+				"mainstor",
+				"src/assets/js/stores/mainstore.js"
+			],
+			[
+				"index",
+				"dist/index.html"
+			],
+			[
+				"bins.react",
+				"src/assets/js/components/Bins/Bins.react.js"
+			],
+			[
+				"bin.reac",
+				"src/assets/js/components/Bins/Bin.react.js"
+			],
+			[
+				"enlg",
+				"dist/assets/js/vendor/i18n/english.po"
+			],
+			[
+				"englih",
+				"dist/assets/js/localization/english.json"
+			],
+			[
+				"english",
+				"dist/assets/js/localization/english.json"
+			],
+			[
+				"usertable",
+				"src/containers/userTab/userTabTable.js"
+			],
+			[
+				"addnew",
+				"src/containers/userTab/addNewUser.js"
+			],
+			[
+				"userta",
+				"src/containers/usersTab.js"
+			],
+			[
+				"usertab",
+				"src/containers/userTab/userTabTable.js"
+			],
+			[
+				"audittable",
+				"src/containers/auditTab/auditTable.js"
+			],
+			[
+				"wavetabl",
+				"src/containers/orderTab/waveTable.js"
+			],
+			[
+				"orderlisttable",
+				"src/containers/orderTab/orderListTable.js"
+			],
+			[
+				"orderlisttab",
+				"src/containers/orderTab/orderListTab.js"
+			],
+			[
+				"chargin",
+				"src/containers/systemTabs/chargingStationsTable.js"
+			],
+			[
+				"pps",
+				"src/containers/systemTabs/PPStable.js"
+			],
+			[
+				"butler",
+				"src/containers/systemTabs/butlerbotTable.js"
+			],
+			[
+				"orderta",
+				"src/containers/orderTab/orderListTab.js"
+			],
+			[
+				"ordersta",
+				"src/components/subtab/ordersTabs.js"
+			],
+			[
+				"waveta",
+				"src/containers/orderTab/waveTab.js"
+			],
+			[
+				"topnotify",
+				"src/components/topnotify/topnotify.js"
+			],
+			[
+				"message",
+				"src/constants/messageConstants.js"
+			],
+			[
+				"syst",
+				"src/containers/systemTab.js"
+			],
+			[
+				"configcon",
+				"src/constants/configConstants.js"
+			],
+			[
+				"common.",
+				"dist/assets/common.js"
+			],
+			[
+				"index.html",
+				"dist/index.html"
+			],
+			[
+				"backend",
+				"src/constants/backEndConstants.js"
+			],
+			[
+				"login",
+				"src/components/Login/login.js"
+			],
+			[
+				"appjs",
+				"src/App.js"
+			],
+			[
+				"spin",
+				"src/assets/css/spinner.less"
+			],
+			[
+				"audittab",
+				"src/containers/auditTab.js"
+			],
+			[
+				"configcons",
+				"src/assets/js/constants/configConstants.js"
+			],
+			[
+				"ui/tasks",
+				"imports/ui/task.js"
+			],
+			[
+				"task",
+				"imports/ui/task.html"
+			],
+			[
+				"api/task",
+				"imports/api/tasks.js"
+			],
+			[
+				"index.js",
+				"src/index.js"
+			],
+			[
+				"i18n",
+				"src/utilities/i18n.js"
+			],
+			[
+				"inti",
+				"src/utilities/intialData.js"
+			],
+			[
+				"initialdata",
+				"src/clientConfigs/initialData.json"
+			],
+			[
+				"router.",
+				"src/components/Router.js"
+			],
+			[
+				"login.js",
+				"src/components/Login/login.js"
+			],
+			[
+				"dropdown.scs",
+				"src/assets/css/components/_dropdown.scss"
+			],
+			[
+				"datatable.",
+				"src/assets/css/components/_dataTable.scss"
+			],
+			[
+				"dropdown.scss",
+				"src/assets/css/components/_dropdown.scss"
+			],
+			[
+				"audit",
+				"src/containers/auditTab/auditTable.js"
+			],
+			[
+				"datatabl",
+				"src/assets/css/components/_dataTable.scss"
+			],
+			[
+				"dropdown",
+				"src/containers/langDropDown.js"
+			],
+			[
+				"logout",
+				"src/containers/logoutTab.js"
+			],
+			[
+				"router",
+				"src/components/Router.js"
+			],
+			[
+				"react-intl-redux",
+				"node_modules/react-intl-redux/README.md"
+			],
+			[
+				"rect-intl",
+				"node_modules/react-intl/dist/react-intl.js"
+			],
+			[
+				"ja-",
+				"src/translations/ja-JP.json"
+			],
+			[
+				"en-us",
+				"src/translations/en-US.json"
+			],
+			[
+				"mess",
+				"src/constants/messageConstants.js"
+			],
+			[
+				"appconst",
+				"src/constants/appConstants.js"
+			],
+			[
+				"emergn",
+				"src/containers/Emergency.js"
+			],
+			[
+				"src/app.js",
+				"src/App.js"
+			],
+			[
+				"src/components/login/login.js",
+				"src/components/Login/login.js"
+			],
+			[
+				"orderlist",
+				"src/containers/orderTab/orderListTab.js"
+			],
+			[
+				"messagec",
+				"src/formattedMessages/src/constants/messageConstants.json"
+			],
+			[
+				"app",
+				"src/App.js"
+			],
+			[
+				"mes",
+				"src/constants/messageConstants.js"
+			],
+			[
+				"r",
+				"src/components/Router.js"
+			],
+			[
+				"ja",
+				"src/translations/ja-JP.json"
+			],
+			[
+				"appcon",
+				"src/constants/appConstants.js"
+			],
+			[
+				"appcons",
+				"src/constants/appConstants.js"
+			],
+			[
+				"initial",
+				"src/utilities/intialData.js"
+			],
+			[
+				"conf",
+				"src/constants/configConstants.js"
+			],
+			[
+				"lo",
+				"src/components/Login/login.js"
+			],
+			[
+				"en-",
+				"src/translations/en-US.json"
+			],
+			[
+				"wave",
+				"src/containers/orderTab/waveTab.js"
+			],
+			[
+				"waves",
+				"src/containers/orderTab/waveTab.js"
+			],
+			[
+				"users",
+				"src/containers/usersTab.js"
+			],
+			[
+				"aud",
+				"src/containers/auditTab.js"
+			],
+			[
+				"_data",
+				"src/assets/css/components/_dataTable.scss"
+			],
+			[
+				"orderl",
+				"src/containers/orderTab/orderListTab.js"
+			],
+			[
+				"orderstab",
+				"src/components/subtab/ordersTabs.js"
+			],
+			[
+				"ordertablist",
+				"src/containers/orderTab/orderListTab.js"
+			],
+			[
+				"inten",
+				"src/containers/inventoryTab/inventoryHistogram.js"
+			],
+			[
+				"hi",
+				"src/components/graphd3/histogram.js"
+			],
+			[
+				"messag",
+				"src/formattedMessages/src/constants/messageConstants.json"
+			],
+			[
+				"his",
+				"src/components/graphd3/histogram.js"
+			],
+			[
+				"inventorytab",
+				"src/containers/inventoryTab.js"
+			],
+			[
+				"acon",
+				"src/constants/appConstants.js"
+			],
+			[
+				"configconstants.js",
+				"src/constants/configConstants.js"
+			],
+			[
+				"legend",
+				"src/components/legend/legendElement.js"
+			],
+			[
+				"invento",
+				"src/components/inventory/inventory.js"
+			],
+			[
+				"respon",
+				"src/utilities/responseParser.js"
+			],
+			[
+				"coll",
+				"nonClientUtils/collateMessagesEs5.js"
+			],
+			[
+				"collat",
+				"nonClientUtils/collateMessages.js"
+			],
+			[
+				"en",
+				"src/translations/en-US.json"
+			],
+			[
+				"tabs.js",
+				"src/containers/tabs.js"
+			],
+			[
+				"snapsh",
+				"src/components/inventory/snapShot.js"
+			],
+			[
+				"inve",
+				"src/containers/inventoryTab.js"
+			],
+			[
+				"drop",
+				"src/components/dropdown/dropdown.js"
+			],
+			[
+				"order",
+				"src/containers/ordersTab.js"
+			],
+			[
+				"jap",
+				"src/translations/ja-JP.json"
+			],
+			[
+				"tabs",
+				"src/containers/tabs.js"
+			],
+			[
+				"app.js",
+				"src/App.js"
+			],
+			[
+				"respo",
+				"src/utilities/responseParser.js"
+			],
+			[
+				"src/components/inventory/inventory.js",
+				"src/components/inventory/inventory.js"
+			],
+			[
+				"src/components/inventory/snapshot.js",
+				"src/components/inventory/snapShot.js"
+			],
+			[
+				"src/constants/initdata.js",
+				"src/constants/initData.js"
+			],
+			[
+				"src/containers/inventorytab.js",
+				"src/containers/inventoryTab.js"
+			],
+			[
+				"src/containers/inventorytab/inventorystacked.js",
+				"src/containers/inventoryTab/inventoryStacked.js"
+			],
+			[
+				"inventoryre",
+				"src/reducers/inventoryReducer.js"
+			],
+			[
+				"responsep",
+				"src/utilities/responseParser.js"
+			],
+			[
+				"rou",
+				"src/components/Router.js"
+			],
+			[
+				".gi",
+				".gitignore"
+			],
+			[
+				"_datatabl",
+				"src/assets/css/components/_dataTable.scss"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/git/SublimeProjects/managerDashboardV3.sublime-project"
+			],
+			[
+				"slice",
+				"~/git/SublimeProjects/slicedScripts.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"ChartHorizontal"
+			]
+		],
+		"width": 777.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 298.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

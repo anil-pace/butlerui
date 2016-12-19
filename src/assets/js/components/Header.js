@@ -50,7 +50,7 @@ var Header = React.createClass({
                     var data = {
                         "event_name": "process_barcode",
                         "event_data": {
-                            "barcode": e.target.value,
+                            "barcode": e.target.value.trim(),
                         }
                     }
                     CommonActions.postDataToInterface(data);
@@ -147,7 +147,7 @@ var Header = React.createClass({
               <img src={allSvgConstants.logo} />
               </div>
                 <div className={cssClass} onClick={this.openKeyboard}>
-                  <img src={allSvgConstants.scanHeader} className={disableScanClass} />
+                  <img  src={allSvgConstants.scanHeader} className={disableScanClass} />
                   <input id="barcode" type="text" value='' />
                 </div>
               <div className="header-actions" onClick={this.showMenu} >

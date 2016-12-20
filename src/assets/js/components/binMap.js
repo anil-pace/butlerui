@@ -1,19 +1,19 @@
 var React = require('react');
-var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = document.createElement("ul"),midCol,rightCol=document.createElement("ul");
+		var leftCol = [],selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.appendChild(document.createElement("li"))
+					leftCol.push(<li key={k} className={isSelected}></li>);
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.appendChild(document.createElement("li"))
+					rightCol.push(<li key={k} className={isSelected}></li>);
 				}
 
 			}
@@ -31,12 +31,16 @@ var BinMap = React.createClass({
 				<div className="binMapWrapper">
 					<div className="mapCont">
 					<div className="col1">
+					<ul>
 					{mapStructure.leftCol}
+					</ul>
 					</div>
 					<div className="col2">
 					</div>
 					<div className="col3">
+					<ul>
 					{mapStructure.rightCol}
+					</ul>
 					</div>
 					</div>
 				</div>

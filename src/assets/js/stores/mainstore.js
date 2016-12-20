@@ -1289,6 +1289,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData.group_info || null;
     },
+    getSelectedBinGroup:function(){
+        var groupId = _seatData.ppsbin_list[0].group_id;
+        return groupId || null;
+    },
 
     validateAndSendDataToServer: function() {
         var flag = false;
@@ -1669,7 +1673,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
-                //data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontProductDetails"] = this.productDetails();

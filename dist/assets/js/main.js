@@ -37205,21 +37205,21 @@ module.exports = Audit;
 
 },{"../actions/CommonActions":233,"../constants/appConstants":284,"../stores/AuditStore":294,"../stores/mainstore":300,"../utils/utils.js":301,"./Button/Button":239,"./Button/Button.js":239,"./CurrentSlot":241,"./Exception/Exception":242,"./ExceptionHeader":246,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./PrdtDetails/ProductImage.js":261,"./ProductDetails/KQ.js":263,"./Rack/MsuRack.js":271,"./Reconcile":275,"./Spinner/LoaderButler":276,"./SystemIdle":279,"./TabularData":282,"react":230}],235:[function(require,module,exports){
 var React = require('react');
-var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({displayName: "BinMap",
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = document.createElement("ul"),midCol,rightCol=document.createElement("ul");
+		var leftCol = [],selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.appendChild(document.createElement("li"))
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.appendChild(document.createElement("li"))
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
 				}
 
 			}
@@ -37237,12 +37237,16 @@ var BinMap = React.createClass({displayName: "BinMap",
 				React.createElement("div", {className: "binMapWrapper"}, 
 					React.createElement("div", {className: "mapCont"}, 
 					React.createElement("div", {className: "col1"}, 
+					React.createElement("ul", null, 
 					mapStructure.leftCol
+					)
 					), 
 					React.createElement("div", {className: "col2"}
 					), 
 					React.createElement("div", {className: "col3"}, 
+					React.createElement("ul", null, 
 					mapStructure.rightCol
+					)
 					)
 					)
 				)
@@ -37255,7 +37259,7 @@ var BinMap = React.createClass({displayName: "BinMap",
 
 module.exports = BinMap;
 
-},{"../constants/resourceConstants":286,"./Header":247,"react":230}],236:[function(require,module,exports){
+},{"../constants/resourceConstants":286,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -40047,11 +40051,12 @@ var PickFront = React.createClass({displayName: "PickFront",
           var editButton ='';
         }
         //console.log(this.state.BinMapDetails);
+        
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-               
+               React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
@@ -40079,7 +40084,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         }else{
           var editButton ='';
         }
-        if(cancelScanDisabled){
+        if(!cancelScanDisabled){
           cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
          }
          else{
@@ -43533,8 +43538,8 @@ module.exports = appConstants;
 
 },{}],285:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.177/wss",
+	INTERFACE_IP : "https://192.168.8.177"
 };
 module.exports = configConstants;
 
@@ -46706,6 +46711,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData.group_info || null;
     },
+    getSelectedBinGroup:function(){
+        var groupId = _seatData.ppsbin_list[0].group_id;
+        return groupId || null;
+    },
 
     validateAndSendDataToServer: function() {
         var flag = false;
@@ -47086,7 +47095,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
-                //data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontProductDetails"] = this.productDetails();

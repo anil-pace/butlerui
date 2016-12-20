@@ -48,7 +48,7 @@ var serverMessages = {
     "PkB.H.001" : "Scan Tote to Associate with Bin",
     "PkB.H.002" : "Press PPTL or Scan a Tote",
     "PkB.H.003" : "Press PPTL to Remove Entities",
-    "PkB.H.004" : "Press bin PPTL",
+    "PkB.H.004" : "Press bin {0} PPTL to remove entities",
     "PkB.H.005" : "Press print button to proceed",
     "PkB.H.006" : "Select Bin to skip print",
     "PkB.H.007" : "Select Bin which does not require tote",

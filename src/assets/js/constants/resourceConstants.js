@@ -10,6 +10,9 @@ var resourceConstants = {
 	YES_RECONCILE:'List Of Items To Reconcile',
 	USERNAME :'User Name',
 	PASSWORD : 'Password',
+	BIN_GROUP_LEFT:"left",
+	BIN_GROUP_RIGHT:"right",
+	BIN_GROUP_CENTER:"center",
 	CLIENTCODE_001 : 'CLIENTCODE_001',
 	CLIENTCODE_002 : 'CLIENTCODE_002',
 	CLIENTCODE_004 : 'CLIENTCODE_004',
@@ -29,6 +32,7 @@ var resourceConstants = {
 	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
 	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
 	CLIENTCODE_400 : "CLIENTCODE_400"
+
  
 };
 module.exports = resourceConstants;

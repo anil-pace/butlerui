@@ -139,7 +139,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     sessionLogout:function(data){
         sessionStorage.setItem('sessionData', null);
-        sessionStorage.setItem('localeData', null);
         location.reload();
         $.ajax({
             type: 'GET',
@@ -270,6 +269,16 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     console.log(data);
+    if(data.state_data){
+    data.state_data.group_info = {
+        "1":"left",
+        "2":"left",
+        "3":"left",
+        "4":"right",
+        "5":"right",
+        "6":"right"
+    }
+}
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

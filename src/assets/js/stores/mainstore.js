@@ -265,14 +265,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _NavData.map(function(data, index) {
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                    if (_seatData.screen_id == appConstants.PUT_BACK_TOTE_CLOSE)
-                        _NavData[index].image = SVGConstants.tote;
-                     else if (_seatData.screen_id == appConstants.PUT_BACK_STAGE)
-                        _NavData[index].image = SVGConstants.stage;
-                    else if (_seatData.screen_id == appConstants.PUT_BACK_SCAN_TOTE)
-                        _NavData[index].image = SVGConstants.stage;
-                    else
-                        _NavData[index].image = SVGConstants.scan;
                     _NavData[index].type = 'active';
                 } else {
                     _NavData[index].type = 'passive';
@@ -528,6 +520,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     scanDetails: function() {
         _scanDetails = _seatData.scan_details;
         return _scanDetails;
+    },
+    cancelScanDetails:function(){
+        return _seatData.cancel_scan_enabled || false;
     },
 
     productDetails: function() {
@@ -1291,6 +1286,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+    getBinMapDetails:function(){
+        return _seatData.group_info || null;
+    },
 
     validateAndSendDataToServer: function() {
         var flag = false;
@@ -1671,6 +1669,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                //data["BinMapDetails"] =  this.getBinMapDetails();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontProductDetails"] = this.productDetails();
@@ -1685,6 +1684,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();

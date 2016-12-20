@@ -17,6 +17,7 @@ var BoxSerial = require('./BoxSerial.js');
 var Modal = require('./Modal/Modal');
 var Modal1 = require('./Modal/Modal1');
 var CurrentSlot = require('./CurrentSlot');
+var BinMap = require('./BinMap');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
@@ -197,10 +198,12 @@ var PickFront = React.createClass({
         }else{
           var editButton ='';
         }
+        //console.log(this.state.BinMapDetails);
         this._component = (
               <div className='grid-container'>
                 <Modal />          
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+               
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
@@ -217,14 +220,23 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
+         var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
+         var cancelButton;
+         
          if(this.state.PickFrontExceptionStatus == false){
-          console.log("jindal");
+          
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
           var editButton = ( <Button1 disabled = {false} text = {_("Edit Details")} module ={appConstants.PICK_FRONT} action={appConstants.EDIT_DETAILS} color={"orange"} /> );
         }else{
           var editButton ='';
         }
+        if(!cancelScanDisabled){
+          cancelButton = (<div className = 'cancel-scan'><Button1  text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
+         }
+         else{
+          cancelButton = (<div className = 'cancel-scan'></div>);
+         }
         this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -232,10 +244,7 @@ var PickFront = React.createClass({
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> 
-                    {editButton}
-                </div>
+               {cancelButton}
               </div>
             );
          }else{

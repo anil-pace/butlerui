@@ -139,7 +139,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     sessionLogout:function(data){
         sessionStorage.setItem('sessionData', null);
-        sessionStorage.setItem('localeData', null);
         location.reload();
         $.ajax({
             type: 'GET',

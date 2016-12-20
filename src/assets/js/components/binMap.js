@@ -5,7 +5,7 @@ var BinMap = React.createClass({
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
 				isSelected = selectedGroup === k ? "sel" : "";
@@ -18,9 +18,44 @@ var BinMap = React.createClass({
 
 			}
 		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
 		}
 	},
 	render:function(){		
@@ -30,14 +65,14 @@ var BinMap = React.createClass({
 		return (
 				<div className="binMapWrapper">
 					<div className="mapCont">
-					<div className="col1">
+					<div className={"col1 "+mapStructure.leftColCount}>
 					<ul>
 					{mapStructure.leftCol}
 					</ul>
 					</div>
 					<div className="col2">
 					</div>
-					<div className="col3">
+					<div className={"col3 "+mapStructure.rightColCount}>
 					<ul>
 					{mapStructure.rightCol}
 					</ul>

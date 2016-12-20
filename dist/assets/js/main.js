@@ -37211,7 +37211,7 @@ var BinMap = React.createClass({displayName: "BinMap",
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
 				isSelected = selectedGroup === k ? "sel" : "";
@@ -37224,9 +37224,44 @@ var BinMap = React.createClass({displayName: "BinMap",
 
 			}
 		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
 		}
 	},
 	render:function(){		
@@ -37236,14 +37271,14 @@ var BinMap = React.createClass({displayName: "BinMap",
 		return (
 				React.createElement("div", {className: "binMapWrapper"}, 
 					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
 					React.createElement("ul", null, 
 					mapStructure.leftCol
 					)
 					), 
 					React.createElement("div", {className: "col2"}
 					), 
-					React.createElement("div", {className: "col3"}, 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
 					React.createElement("ul", null, 
 					mapStructure.rightCol
 					)
@@ -47711,10 +47746,11 @@ var putSeatData = function(data) {
     data.state_data.group_info = {
         "1":"left",
         "2":"left",
-        "3":"left",
-        "4":"right",
+       "3":"left",
+       "4":"left",
         "5":"right",
-        "6":"right"
+        "6":"right",
+        "7":"right"
     }
 }
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {

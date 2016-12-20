@@ -274,10 +274,11 @@ var putSeatData = function(data) {
     data.state_data.group_info = {
         "1":"left",
         "2":"left",
-        "3":"left",
-        "4":"right",
+       "3":"left",
+       "4":"left",
         "5":"right",
-        "6":"right"
+        "6":"right",
+        "7":"right"
     }
 }
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {

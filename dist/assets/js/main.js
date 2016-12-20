@@ -40079,7 +40079,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         }else{
           var editButton ='';
         }
-        if(cancelScanDisabled){
+        if(!cancelScanDisabled){
           cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
          }
          else{

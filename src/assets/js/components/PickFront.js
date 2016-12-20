@@ -231,7 +231,7 @@ var PickFront = React.createClass({
         }else{
           var editButton ='';
         }
-        if(cancelScanDisabled){
+        if(!cancelScanDisabled){
           cancelButton = (<div className = 'cancel-scan'><Button1  text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
          }
          else{

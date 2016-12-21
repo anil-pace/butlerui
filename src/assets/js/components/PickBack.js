@@ -104,6 +104,7 @@ var PickBack = React.createClass({
 
         break;
       case appConstants.PICK_BACK_SCAN:
+        console.log("pick back state",state)
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (

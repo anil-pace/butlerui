@@ -522,7 +522,7 @@ msgid "Press PPTL or Scan a Tote"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:129
-msgid "Press PPTL to Remove Entities"
+msgid "Press bin PPTL to remove entities"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:130

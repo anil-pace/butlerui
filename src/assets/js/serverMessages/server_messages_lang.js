@@ -126,7 +126,7 @@ function server_messages_list() {
     _("Press PPTL to confirm");
     _("Scan Tote to Associate with Bin");
     _("Press PPTL or Scan a Tote");
-    _("Press PPTL to Remove Entities");
+    _("Press bin PPTL to remove entities");
     _("Press bin PPTL");
     _("Press PPTL for bin {0} to confirm");
     _("Press print button to proceed");
@@ -155,7 +155,6 @@ function server_messages_list() {
     _("PPS mode change requested:auto staging all bins");
     _("PPTL press not expected");
     _("Scan not expected");
-
     _("Barcode didn't match the current tote barcode");
     _("System not configured for totes");
     _("Invalid Exception for this configuration");

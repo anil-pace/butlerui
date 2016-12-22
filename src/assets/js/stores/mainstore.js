@@ -521,6 +521,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _scanDetails = _seatData.scan_details;
         return _scanDetails;
     },
+    cancelScanDetails:function(){
+        return _seatData.cancel_scan_enabled || false;
+    },
 
     productDetails: function() {
         _prodDetails = _seatData.product_info;
@@ -1283,6 +1286,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+    getBinMapDetails:function(){
+        return _seatData.group_info || null;
+    },
 
     validateAndSendDataToServer: function() {
         var flag = false;
@@ -1663,6 +1669,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["BinMapDetails"] =  this.getBinMapDetails();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontProductDetails"] = this.productDetails();
@@ -1677,6 +1684,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();

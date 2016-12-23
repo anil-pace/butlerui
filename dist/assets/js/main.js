@@ -43573,8 +43573,8 @@ module.exports = appConstants;
 
 },{}],285:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.177/wss",
-	INTERFACE_IP : "https://192.168.8.177"
+	WEBSOCKET_IP : "wss://192.168.8.108/wss",
+	INTERFACE_IP : "https://192.168.8.108"
 };
 module.exports = configConstants;
 
@@ -47742,17 +47742,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     console.log(data);
-    if(data.state_data){
-    data.state_data.group_info = {
-        "1":"left",
-        "2":"left",
-       "3":"left",
-       "4":"left",
-        "5":"right",
-        "6":"right",
-        "7":"right"
-    }
-}
+    
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

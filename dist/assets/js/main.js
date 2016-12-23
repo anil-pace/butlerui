@@ -46999,6 +46999,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this.getBinMapDetails();                
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47012,6 +47013,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();                
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47696,6 +47698,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
+    console.log(data);    
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

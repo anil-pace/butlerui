@@ -200,9 +200,11 @@ var PickFront = React.createClass({
         }
         this._component = (
               <div className='grid-container'>
-                <Modal />          
+                <Modal />  
+                <div>        
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
+               </div>
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
@@ -217,7 +219,7 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
       break;
-
+                  
       case appConstants.PICK_FRONT_PPTL_PRESS:
          var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
          var cancelButton;
@@ -239,8 +241,10 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                 <Modal />
+                <div>
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
+                </div>
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>

@@ -17,6 +17,7 @@ var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
+var BinMap = require('./BinMap');
 
 
 function getStateData(){
@@ -99,6 +100,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <Modal />
+                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
                 <div className='main-container'>
                   <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
@@ -115,6 +117,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <Modal />
+                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
                 <div className="single-bin">
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                       <div className="text">{_("CURRENT BIN")}</div>

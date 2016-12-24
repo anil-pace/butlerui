@@ -3,9 +3,9 @@ var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({
-	componentDidMount: function() {
+    componentDidMount: function() {
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-  	},
+    },
     _findCoordinatesIndex:function(x,y){
         var i = 0;
         this.props.binsData.ppsbin_list.map(function(value,index){
@@ -22,26 +22,26 @@ var Bins = React.createClass({
         var scrnId = this.props.screenId;
         var self = this;
         return (
-            	 <div className="bins">
-            	 	{
-            	 		(function(){
-            	 			var l =[]; 
-            	 			for(var j = 0 ;j<compData.structure[0] ;j++){
-            	 			var list = [];
-            	 			var i = 0;
-            	 			for( i = i ; i<compData.structure[1] ; i++){
-            	 				list.push(<Bin binData={compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)]} screenId={scrnId} />);
-            	 			}
-            	 			l.push((
-            	 				<div className="bin-row">
-            	 					{list}
-            	 				</div>
-            	 				));
-            	 		}
-            	 		return l;
-            	 		})()
-            	 	}
-            	 </div>
+                 <div className="bins">
+                    {
+                        (function(){
+                            var l =[]; 
+                            for(var j = 0 ;j<compData.structure[0] ;j++){
+                            var list = [];
+                            var i = 0;
+                            for( i = i ; i<compData.structure[1] ; i++){
+                                list.push(<Bin binData={compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)]} screenId={scrnId} />);
+                            }
+                            l.push((
+                                <div className="bin-row">
+                                    {list}
+                                </div>
+                                ));
+                        }
+                        return l;
+                        })()
+                    }
+                 </div>
         );
     },
 

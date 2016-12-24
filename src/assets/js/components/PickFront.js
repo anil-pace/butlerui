@@ -199,11 +199,12 @@ var PickFront = React.createClass({
           var editButton ='';
         }
         //console.log(this.state.BinMapDetails);
+        
         this._component = (
               <div className='grid-container'>
                 <Modal />          
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-               
+               <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>

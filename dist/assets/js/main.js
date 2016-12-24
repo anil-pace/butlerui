@@ -37205,28 +37205,63 @@ module.exports = Audit;
 
 },{"../actions/CommonActions":233,"../constants/appConstants":284,"../stores/AuditStore":294,"../stores/mainstore":300,"../utils/utils.js":301,"./Button/Button":239,"./Button/Button.js":239,"./CurrentSlot":241,"./Exception/Exception":242,"./ExceptionHeader":246,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./PrdtDetails/ProductImage.js":261,"./ProductDetails/KQ.js":263,"./Rack/MsuRack.js":271,"./Reconcile":275,"./Spinner/LoaderButler":276,"./SystemIdle":279,"./TabularData":282,"react":230}],235:[function(require,module,exports){
 var React = require('react');
-var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({displayName: "BinMap",
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = document.createElement("ul"),midCol,rightCol=document.createElement("ul");
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.appendChild(document.createElement("li"))
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.appendChild(document.createElement("li"))
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
 				}
 
 			}
 		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
 		}
 	},
 	render:function(){		
@@ -37236,13 +37271,17 @@ var BinMap = React.createClass({displayName: "BinMap",
 		return (
 				React.createElement("div", {className: "binMapWrapper"}, 
 					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
+					React.createElement("ul", null, 
 					mapStructure.leftCol
+					)
 					), 
 					React.createElement("div", {className: "col2"}
 					), 
-					React.createElement("div", {className: "col3"}, 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
+					React.createElement("ul", null, 
 					mapStructure.rightCol
+					)
 					)
 					)
 				)
@@ -37255,7 +37294,7 @@ var BinMap = React.createClass({displayName: "BinMap",
 
 module.exports = BinMap;
 
-},{"../constants/resourceConstants":286,"./Header":247,"react":230}],236:[function(require,module,exports){
+},{"../constants/resourceConstants":286,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37588,9 +37627,9 @@ var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({displayName: "Bins",
-	componentDidMount: function() {
+    componentDidMount: function() {
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-  	},
+    },
     _findCoordinatesIndex:function(x,y){
         var i = 0;
         this.props.binsData.ppsbin_list.map(function(value,index){
@@ -37607,26 +37646,26 @@ var Bins = React.createClass({displayName: "Bins",
         var scrnId = this.props.screenId;
         var self = this;
         return (
-            	 React.createElement("div", {className: "bins"}, 
-            	 	
-            	 		(function(){
-            	 			var l =[]; 
-            	 			for(var j = 0 ;j<compData.structure[0] ;j++){
-            	 			var list = [];
-            	 			var i = 0;
-            	 			for( i = i ; i<compData.structure[1] ; i++){
-            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
-            	 			}
-            	 			l.push((
-            	 				React.createElement("div", {className: "bin-row"}, 
-            	 					list
-            	 				)
-            	 				));
-            	 		}
-            	 		return l;
-            	 		})()
-            	 	
-            	 )
+                 React.createElement("div", {className: "bins"}, 
+                    
+                        (function(){
+                            var l =[]; 
+                            for(var j = 0 ;j<compData.structure[0] ;j++){
+                            var list = [];
+                            var i = 0;
+                            for( i = i ; i<compData.structure[1] ; i++){
+                                list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
+                            }
+                            l.push((
+                                React.createElement("div", {className: "bin-row"}, 
+                                    list
+                                )
+                                ));
+                        }
+                        return l;
+                        })()
+                    
+                 )
         );
     },
 
@@ -39735,7 +39774,6 @@ var PickBack = React.createClass({displayName: "PickBack",
 
         break;
       case appConstants.PICK_BACK_SCAN:
-        console.log("pick back state",state)
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
@@ -40048,11 +40086,12 @@ var PickFront = React.createClass({displayName: "PickFront",
           var editButton ='';
         }
         //console.log(this.state.BinMapDetails);
+        
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-               
+               React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
@@ -42405,6 +42444,7 @@ var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
+var BinMap = require('./BinMap');
 
 
 function getStateData(){
@@ -42487,6 +42527,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
+                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
@@ -42503,6 +42544,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
+                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
                 React.createElement("div", {className: "single-bin"}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
                       React.createElement("div", {className: "text"}, _("CURRENT BIN"))
@@ -42696,7 +42738,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":284,"../stores/PutFrontStore":298,"../stores/mainstore":300,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./TabularData":282,"react":230}],271:[function(require,module,exports){
+},{"../constants/appConstants":284,"../stores/PutFrontStore":298,"../stores/mainstore":300,"./BinMap":235,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./TabularData":282,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -43534,8 +43576,8 @@ module.exports = appConstants;
 
 },{}],285:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.108/wss",
+	INTERFACE_IP : "https://192.168.8.108"
 };
 module.exports = configConstants;
 
@@ -44009,7 +44051,7 @@ module.exports = japanese;
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
-    "PtB.H.002" : "Place Entity in Bin and Press PPTL",
+    "PtB.H.002" : "Place Entity in Bin {0} and Press PPTL",
     "PtB.H.003": "Are You Sure You Want to Close Tote?",
     "PtB.H.004": "Scan Tote or Stage PPS Bin",
     "PtB.H.005" : "Item Not Expected in Tote",
@@ -46707,6 +46749,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData.group_info || null;
     },
+    getSelectedBinGroup:function(){
+        var groupId = _seatData.ppsbin_list[0].group_id;
+        return groupId || null;
+    },
 
     validateAndSendDataToServer: function() {
         var flag = false;
@@ -46999,6 +47045,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47012,6 +47060,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();  
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47087,7 +47137,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
-                //data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontProductDetails"] = this.productDetails();
@@ -47696,17 +47747,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    console.log(data);
-    if(data.state_data){
-    data.state_data.group_info = {
-        "1":"left",
-        "2":"left",
-        "3":"left",
-        "4":"right",
-        "5":"right",
-        "6":"right"
-    }
-}
+
+    console.log(data);    
+
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

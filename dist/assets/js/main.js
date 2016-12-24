@@ -40086,8 +40086,6 @@ var PickFront = React.createClass({displayName: "PickFront",
         }else{
           var editButton ='';
         }
-        //console.log(this.state.BinMapDetails);
-        
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -40130,6 +40128,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                 ), 

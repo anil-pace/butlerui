@@ -37627,9 +37627,9 @@ var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({displayName: "Bins",
-	componentDidMount: function() {
+    componentDidMount: function() {
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-  	},
+    },
     _findCoordinatesIndex:function(x,y){
         var i = 0;
         this.props.binsData.ppsbin_list.map(function(value,index){
@@ -37646,26 +37646,26 @@ var Bins = React.createClass({displayName: "Bins",
         var scrnId = this.props.screenId;
         var self = this;
         return (
-            	 React.createElement("div", {className: "bins"}, 
-            	 	
-            	 		(function(){
-            	 			var l =[]; 
-            	 			for(var j = 0 ;j<compData.structure[0] ;j++){
-            	 			var list = [];
-            	 			var i = 0;
-            	 			for( i = i ; i<compData.structure[1] ; i++){
-            	 				list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
-            	 			}
-            	 			l.push((
-            	 				React.createElement("div", {className: "bin-row"}, 
-            	 					list
-            	 				)
-            	 				));
-            	 		}
-            	 		return l;
-            	 		})()
-            	 	
-            	 )
+                 React.createElement("div", {className: "bins"}, 
+                    
+                        (function(){
+                            var l =[]; 
+                            for(var j = 0 ;j<compData.structure[0] ;j++){
+                            var list = [];
+                            var i = 0;
+                            for( i = i ; i<compData.structure[1] ; i++){
+                                list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
+                            }
+                            l.push((
+                                React.createElement("div", {className: "bin-row"}, 
+                                    list
+                                )
+                                ));
+                        }
+                        return l;
+                        })()
+                    
+                 )
         );
     },
 
@@ -39774,7 +39774,6 @@ var PickBack = React.createClass({displayName: "PickBack",
 
         break;
       case appConstants.PICK_BACK_SCAN:
-        console.log("pick back state",state)
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
@@ -42444,6 +42443,7 @@ var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
+var BinMap = require('./BinMap');
 
 
 function getStateData(){
@@ -42526,6 +42526,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
+                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
@@ -42542,6 +42543,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
+                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
                 React.createElement("div", {className: "single-bin"}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
                       React.createElement("div", {className: "text"}, _("CURRENT BIN"))
@@ -42735,7 +42737,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":284,"../stores/PutFrontStore":298,"../stores/mainstore":300,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./TabularData":282,"react":230}],271:[function(require,module,exports){
+},{"../constants/appConstants":284,"../stores/PutFrontStore":298,"../stores/mainstore":300,"./BinMap":235,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./TabularData":282,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -44048,7 +44050,7 @@ module.exports = japanese;
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
-    "PtB.H.002" : "Place Entity in Bin and Press PPTL",
+    "PtB.H.002" : "Place Entity in Bin {0} and Press PPTL",
     "PtB.H.003": "Are You Sure You Want to Close Tote?",
     "PtB.H.004": "Scan Tote or Stage PPS Bin",
     "PtB.H.005" : "Item Not Expected in Tote",
@@ -47042,6 +47044,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47055,6 +47059,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();  
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47740,8 +47746,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    console.log(data);
-    
+
+    console.log(data);    
+
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

@@ -37205,44 +37205,82 @@ module.exports = Audit;
 
 },{"../actions/CommonActions":233,"../constants/appConstants":284,"../stores/AuditStore":294,"../stores/mainstore":300,"../utils/utils.js":301,"./Button/Button":239,"./Button/Button.js":239,"./CurrentSlot":241,"./Exception/Exception":242,"./ExceptionHeader":246,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./PrdtDetails/ProductImage.js":261,"./ProductDetails/KQ.js":263,"./Rack/MsuRack.js":271,"./Reconcile":275,"./Spinner/LoaderButler":276,"./SystemIdle":279,"./TabularData":282,"react":230}],235:[function(require,module,exports){
 var React = require('react');
-var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({displayName: "BinMap",
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = document.createElement("ul"),midCol,rightCol=document.createElement("ul");
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.appendChild(document.createElement("li"))
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.appendChild(document.createElement("li"))
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
 				}
 
 			}
 		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
 		}
 	},
 	render:function(){		
 		
 		var mapStructure = this.processData();	
-		
 		return (
-				React.createElement("div", {className: "binMapWrapper"}, 
+				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
 					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
+					React.createElement("ul", null, 
 					mapStructure.leftCol
+					)
 					), 
 					React.createElement("div", {className: "col2"}
 					), 
-					React.createElement("div", {className: "col3"}, 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
+					React.createElement("ul", null, 
 					mapStructure.rightCol
+					)
 					)
 					)
 				)
@@ -37255,7 +37293,7 @@ var BinMap = React.createClass({displayName: "BinMap",
 
 module.exports = BinMap;
 
-},{"../constants/resourceConstants":286,"./Header":247,"react":230}],236:[function(require,module,exports){
+},{"../constants/resourceConstants":286,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -42488,7 +42526,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
@@ -42505,7 +42543,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 React.createElement("div", {className: "single-bin"}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
                       React.createElement("div", {className: "text"}, _("CURRENT BIN"))
@@ -46713,7 +46751,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getSplitScreenFlag:function(){
         var navData=_seatData.group_info|| null;
         for(var key in navData){
-            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+            if(navData[key]==resourceConstants.BIN_GROUP_CENTER)
             {
                 return false;
             }

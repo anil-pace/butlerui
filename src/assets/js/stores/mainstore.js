@@ -1292,7 +1292,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getSplitScreenFlag:function(){
         var navData=_seatData.group_info|| null;
         for(var key in navData){
-            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+            if(navData[key]==resourceConstants.BIN_GROUP_CENTER)
             {
                 return false;
             }

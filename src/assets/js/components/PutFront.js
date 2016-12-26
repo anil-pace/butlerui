@@ -100,7 +100,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <Modal />
-                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>
+                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 <div className='main-container'>
                   <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
@@ -117,7 +117,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <Modal />
-                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>
+                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 <div className="single-bin">
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                       <div className="text">{_("CURRENT BIN")}</div>

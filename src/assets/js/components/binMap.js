@@ -70,7 +70,7 @@ var BinMap = React.createClass({
 					{mapStructure.leftCol}
 					</ul>
 					</div>
-					<div className="col2">
+					<div className="col2 spriteIcons">
 					</div>
 					<div className={"col3 "+mapStructure.rightColCount}>
 					<ul>

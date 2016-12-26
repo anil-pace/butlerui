@@ -8,6 +8,7 @@ var Audit = require('./Audit');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
+var SplitPPS = require('./SplitPPS');
 
 
 
@@ -70,6 +71,7 @@ var Operator = React.createClass({
           return (
             <div className="main">
               <SystemIdle />
+              <SplitPPS />
             </div> 
           )
         }else{

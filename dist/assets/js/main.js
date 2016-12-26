@@ -37267,9 +37267,8 @@ var BinMap = React.createClass({displayName: "BinMap",
 	render:function(){		
 		
 		var mapStructure = this.processData();	
-		
 		return (
-				React.createElement("div", {className: "binMapWrapper"}, 
+				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
 					React.createElement("div", {className: "mapCont"}, 
 					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
 					React.createElement("ul", null, 
@@ -42527,7 +42526,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
@@ -42544,7 +42543,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 React.createElement("div", {className: "single-bin"}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
                       React.createElement("div", {className: "text"}, _("CURRENT BIN"))
@@ -46749,6 +46748,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData.group_info || null;
     },
+    getSplitScreenFlag:function(){
+        var navData=_seatData.group_info|| null;
+        for(var key in navData){
+            if(navData[key]==resourceConstants.BIN_GROUP_CENTER)
+            {
+                return false;
+            }
+        }
+        return true;
+    },
     getSelectedBinGroup:function(){
         var groupId = _seatData.ppsbin_list[0].group_id;
         return groupId || null;
@@ -47045,7 +47054,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["BinMapDetails"] =  this.getBinMapDetails();   
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();       
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -47061,6 +47071,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
                 data["BinMapDetails"] =  this.getBinMapDetails();  
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();

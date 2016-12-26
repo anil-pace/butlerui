@@ -37205,83 +37205,44 @@ module.exports = Audit;
 
 },{"../actions/CommonActions":233,"../constants/appConstants":284,"../stores/AuditStore":294,"../stores/mainstore":300,"../utils/utils.js":301,"./Button/Button":239,"./Button/Button.js":239,"./CurrentSlot":241,"./Exception/Exception":242,"./ExceptionHeader":246,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./PrdtDetails/ProductImage.js":261,"./ProductDetails/KQ.js":263,"./Rack/MsuRack.js":271,"./Reconcile":275,"./Spinner/LoaderButler":276,"./SystemIdle":279,"./TabularData":282,"react":230}],235:[function(require,module,exports){
 var React = require('react');
+var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({displayName: "BinMap",
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		var leftCol = document.createElement("ul"),midCol,rightCol=document.createElement("ul");
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
+					leftCol.appendChild(document.createElement("li"))
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
+					rightCol.appendChild(document.createElement("li"))
 				}
 
 			}
 		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
-
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
+			rightCol:rightCol
 		}
 	},
 	render:function(){		
 		
 		var mapStructure = this.processData();	
-		console.log(this.props.screenClass);
+		
 		return (
-				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
+				React.createElement("div", {className: "binMapWrapper"}, 
 					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
-					React.createElement("ul", null, 
+					React.createElement("div", {className: "col1"}, 
 					mapStructure.leftCol
-					)
 					), 
 					React.createElement("div", {className: "col2"}
 					), 
-					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
-					React.createElement("ul", null, 
+					React.createElement("div", {className: "col3"}, 
 					mapStructure.rightCol
-					)
 					)
 					)
 				)
@@ -37294,7 +37255,7 @@ var BinMap = React.createClass({displayName: "BinMap",
 
 module.exports = BinMap;
 
-},{"../constants/resourceConstants":286,"react":230}],236:[function(require,module,exports){
+},{"../constants/resourceConstants":286,"./Header":247,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -46749,6 +46710,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData.group_info || null;
     },
+    getSplitScreenFlag:function(){
+        var navData=_seatData.group_info|| null;
+        for(var key in navData){
+            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+            {
+                return false;
+            }
+        }
+        return true;
+    },
     getSelectedBinGroup:function(){
         var groupId = _seatData.ppsbin_list[0].group_id;
         return groupId || null;
@@ -47045,7 +47016,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["BinMapDetails"] =  this.getBinMapDetails();   
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();       
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -47061,6 +47033,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
                 data["BinMapDetails"] =  this.getBinMapDetails();  
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -47749,25 +47722,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 var putSeatData = function(data) {
 
     console.log(data);    
-     if(data.state_data){
 
-     data.state_data.group_info = {
-        "1":"left",
-
-        "2":"left",
-
-       "3":"left",
-
-       "4":"left",
-
-        "5":"right",
-
-        "6":"right",
-
-        "7":"right"
-     }
-
- }
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

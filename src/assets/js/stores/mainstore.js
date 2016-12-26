@@ -1289,6 +1289,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData.group_info || null;
     },
+    getSplitScreenFlag:function(){
+        var navData=_seatData.group_info|| null;
+        for(var key in navData){
+            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+            {
+                return false;
+            }
+        }
+        return true;
+    },
     getSelectedBinGroup:function(){
         var groupId = _seatData.ppsbin_list[0].group_id;
         return groupId || null;
@@ -1585,7 +1595,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["BinMapDetails"] =  this.getBinMapDetails();   
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();       
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -1601,6 +1612,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
                 data["BinMapDetails"] =  this.getBinMapDetails();  
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();

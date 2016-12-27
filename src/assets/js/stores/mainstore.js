@@ -1290,14 +1290,36 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _seatData.group_info || null;
     },
     getSplitScreenFlag:function(){
-        var navData=_seatData.group_info|| null;
+        var navData=_seatData.group_info|| {};
         for(var key in navData){
-            if(navData[key]==resourceConstants.BIN_GROUP_CENTER)
+            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
+    },
+    getMobileFlag:function(){
+        var bIsMobile = false;
+        if(_seatData)
+        {
+          bIsMobile = _seatData.roll_cage_flow && _currentSeat==appConstants.PUT_FRONT;
+        }
+        return bIsMobile;
+    },
+    getDockedGroup:function(){
+        var dockedGroup = [];
+        if(_seatData){
+            dockedGroup = _seatData.docked||[];
+        }
+        return dockedGroup;
+    },
+    getUndockAwaitedGroup:function(){
+        var undockAwaited = [];
+        if(_seatData){
+            undockAwaited = _seatData.undock_awaited||[];
+        }
+        return undockAwaited;
     },
     getSelectedBinGroup:function(){
         var groupId = _seatData.ppsbin_list[0].group_id;
@@ -1586,6 +1608,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
+                data["MobileFlag"]=this.getMobileFlag();
+                data["DockedGroup"] = this.getDockedGroup();  
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -1621,6 +1645,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 break;
+            case 'put_front_waiting_undock':
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["DockedGroup"] = this.getDockedGroup();  
+                data["UndockAwaited"] = this.getUndockAwaitedGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();

@@ -18,7 +18,7 @@ var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
-
+var SplitPPS = require('./SplitPPS');
 
 function getStateData(){
   /*return {
@@ -85,7 +85,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                    <Spinner />
+                 {this.state.MobileFlag?<SplitPPS/>:<Spinner />}
                  </div>
               </div>
             );
@@ -136,6 +136,22 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+      case 'put_front_waiting_undock':
+        if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._component = (
+              <div className='grid-container'>
+                 <div className='main-container'>
+                 <SplitPPS/>
+                 </div>
+              </div>
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
+
+        break;
+
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           console.log(this.state.PutFrontExceptionScreen);

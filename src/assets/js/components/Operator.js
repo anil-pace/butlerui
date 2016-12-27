@@ -8,16 +8,16 @@ var Audit = require('./Audit');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
-var SplitPPS = require('./SplitPPS');
-
+var MobileSystemIdle = require('./MobileSystemIdle');
 
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
+      isMobile:mainstore.getMobileFlag(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
-      navMessages : mainstore.getServerMessages()
+      navMessages : mainstore.getServerMessages(),
   }
 }
 var Operator = React.createClass({
@@ -62,6 +62,7 @@ var Operator = React.createClass({
 
   render: function(data){ 
      this.getSeatType(this.state.currentSeat);
+     console.log(this.state.isMobile);
       if(this.state.spinner === true){
        this._spinner = <Spinner />
       }else{
@@ -70,8 +71,7 @@ var Operator = React.createClass({
        if(this.state.systemIsIdle === true){
           return (
             <div className="main">
-              <SystemIdle />
-              <SplitPPS />
+              {this.state.isMobile?<MobileSystemIdle/>:<SystemIdle />}
             </div> 
           )
         }else{

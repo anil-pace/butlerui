@@ -61,9 +61,8 @@ var BinMap = React.createClass({
 	render:function(){		
 		
 		var mapStructure = this.processData();	
-		
 		return (
-				<div className="binMapWrapper">
+				<div className={"binMapWrapper "+this.props.screenClass}>
 					<div className="mapCont">
 					<div className={"col1 "+mapStructure.leftColCount}>
 					<ul>

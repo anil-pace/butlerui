@@ -203,7 +203,7 @@ var PickFront = React.createClass({
                 <Modal />  
                 <div>        
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-               <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
+               <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='pickFrontFlow'/>
                </div>
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
@@ -243,7 +243,7 @@ var PickFront = React.createClass({
                 <Modal />
                 <div>
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
+                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='pickFrontFlow'/>
                 </div>
                 <div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>

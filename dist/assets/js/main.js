@@ -36861,7 +36861,7 @@ var commonActions = {
 
 module.exports = commonActions;
 
-},{"../constants/appConstants":287,"../dispatchers/AppDispatcher":291}],234:[function(require,module,exports){
+},{"../constants/appConstants":289,"../dispatchers/AppDispatcher":293}],234:[function(require,module,exports){
 
 var React = require('react');
 var AuditStore = require('../stores/AuditStore');
@@ -37203,97 +37203,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":287,"../stores/AuditStore":297,"../stores/mainstore":303,"../utils/utils.js":304,"./Button/Button":239,"./Button/Button.js":239,"./CurrentSlot":241,"./Exception/Exception":242,"./ExceptionHeader":246,"./Header":247,"./Modal/Modal":250,"./Navigation/Navigation.react":255,"./Notification/Notification":257,"./PrdtDetails/ProductImage.js":262,"./ProductDetails/KQ.js":264,"./Rack/MsuRack.js":272,"./Reconcile":276,"./Spinner/LoaderButler":277,"./SystemIdle":281,"./TabularData":285,"react":230}],235:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var BinMap = React.createClass({displayName: "BinMap",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-
-			}
-		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
-		}
-	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
-		return (
-				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.leftCol
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.rightCol
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = BinMap;
-
-},{"../constants/resourceConstants":289,"react":230}],236:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/AuditStore":299,"../stores/mainstore":305,"../utils/utils.js":306,"./Button/Button":240,"./Button/Button.js":240,"./CurrentSlot":242,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":263,"./ProductDetails/KQ.js":265,"./Rack/MsuRack.js":273,"./Reconcile":277,"./Spinner/LoaderButler":278,"./SystemIdle":281,"./TabularData":285,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37620,7 +37530,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":287,"../../stores/mainstore":303,"../Modal/Modal":250,"react":230}],237:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/mainstore":305,"../Modal/Modal":251,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37686,7 +37596,443 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":300,"./Bin.react":236,"react":230}],238:[function(require,module,exports){
+},{"../../stores/PutBackStore":302,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
+var React = require('react');
+var ActionCreators = require('../../actions/CommonActions');
+var Modal = require('../Modal/Modal');
+var appConstants = require('../../constants/appConstants');
+var MainStore = require('../../stores/mainstore');
+
+var Bin = React.createClass({displayName: "Bin",
+
+    _toggleBinSelection:function(bin_id,e){
+        ActionCreators.toggleBinSelection(bin_id);
+        e.stopPropagation();
+        return false;
+    },
+    pressPptl : function(bin_id, binState){
+        var data = {
+            "event_name":"",
+            "event_data":{}
+        };
+        data["event_name"] = "process_ppsbin_event";
+        data["event_data"]["ppsbin_id"] = bin_id;
+        data["event_data"]["ppsbin_state"] = binState;
+        data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
+        ActionCreators.postDataToInterface(data);
+    },
+    showModal: function(data,type,e) {
+         ActionCreators.showModal({
+            data:data,
+            type:type
+         });
+         $('.modal').modal();
+         e.stopPropagation();
+         return false;
+    },   
+    render: function() {
+        var compData = this.props.binData;
+        if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        else if((this.props.screenId == appConstants.PUT_BACK_STAGE  || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error'){
+            return (
+                React.createElement("div", {className: "bin selected binError"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected binError", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                ));
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
+                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
+                   return (React.createElement("div", {className: "bin excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                ));
+                }else{
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                ));
+            }
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE){
+            var tote = '';
+            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
+                        )
+                    ));
+            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
+                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                ));
+            }else{
+            return (React.createElement("div", {className: "bin no-excess-item"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                ));
+        }
+        }
+        else if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+            return (
+                React.createElement("div", {className: "bin no-excess-item"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error' )
+            return (
+                React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_state == "staged" )
+            return (
+                React.createElement("div", {className: "bin staged"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_state == "completed" )
+            return (
+                React.createElement("div", {className: "bin completed"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl completed"}, compData.ppsbin_id)
+                )
+            );
+
+        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+            return (
+                React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+
+
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )){
+            var tote = '';
+            var binClass = 'bin ';
+            if((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (
+                React.createElement("div", {className: "bin  selected blink1"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+
+        }
+        
+
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
+            var tote = '';
+            if((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+
+        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) ){
+            var tote = '';
+            if((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));
+            return (
+                React.createElement("div", {className: "bin"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete')) ){
+
+            return (
+                React.createElement("div", {className: "bin pick_processed"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl pick_processed"}, compData.ppsbin_id)
+                )
+            );
+        }
+        
+        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN ){
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+            return (
+                React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+            return (
+                React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error' )
+            return (
+                React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
+            return (
+                React.createElement("div", {className: "bin use"}, 
+                   React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty")
+            return (
+                React.createElement("div", {className: "bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        else 
+            return (
+                React.createElement("div", {className: "bin empty"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+                );
+        
+    }
+});
+
+module.exports = Bin;
+
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/mainstore":305,"../Modal/Modal":251,"react":230}],238:[function(require,module,exports){
+var React = require('react');
+var Bin = require('./BinsFlex.react');
+var PutBackStore = require('../../stores/PutBackStore');
+
+var Bins = React.createClass({displayName: "Bins",
+
+    getInitialState: function(){
+        return { 
+            aBins:[],
+            lastHBin:{},
+            lastVBin:{},
+            totalHeight:0,
+            totalWidth:0,
+            htmlBins:[]
+        };
+    },
+    componentDidMount: function() {
+        this._sortBins(this.props.binsData.ppsbin_list);
+    },
+
+      _sortBins:function (aBins){
+         if (aBins.constructor !== Array && aBins.length < 1){
+            //no bins found
+            return;
+         }
+     
+        var totalBins = aBins.length;
+        var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={};
+
+        // get the last bin and then put a break at the end of the last horizontal bin by measuring the 
+        // if seat_type == back then change the coordIndex
+        var coordIndex = 1;
+        //sorting the bins for xAxis
+        aBins.sort(function(frstBin,secondBin){
+            var iSort = 0;
+            iSort =  (frstBin.orig_coordinate[coordIndex] === secondBin.orig_coordinate[coordIndex])?0:
+                    ((frstBin.orig_coordinate[coordIndex] < secondBin.orig_coordinate[coordIndex])?-1:1);
+            return  iSort;
+        });
+    
+        lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
+            if (oBinPrev.orig_coordinate[coordIndex-1] < oBinCurr.orig_coordinate[coordIndex-1]){
+                return oBinCurr;
+            }else if (oBinPrev.orig_coordinate[coordIndex-1] === oBinCurr.orig_coordinate[coordIndex-1]){
+                return oBinCurr;
+            }else{
+                return oBinPrev;
+            }
+        });
+        lastVBin = aBins.reduce(function(oBinPrev,oBinCurr){
+            if (oBinPrev.orig_coordinate[coordIndex] < oBinCurr.orig_coordinate[coordIndex]){
+                return oBinCurr;
+            }else if (oBinPrev.orig_coordinate[coordIndex] === oBinCurr.orig_coordinate[coordIndex]){
+                return oBinCurr;
+            }else{
+                return oBinPrev;
+            }
+        });
+        this.setState({
+            aBins:aBins,
+            lastHBin:lastHBin,
+            lastVBin: lastVBin,
+            totalWidth: lastHBin.orig_coordinate[coordIndex-1] + lastHBin.length,
+            totalHeight: lastVBin.orig_coordinate[coordIndex-1] + lastVBin.length
+        });
+    },
+
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  screenId) {
+        if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
+            //no bins found
+            return;
+         }
+         var aHTMLBins =[];
+         // since the total width would be 100% but the bins would be divided into
+         // ratios, hence each of the bin would have to have the factor into % of the 
+         // .bins container.
+         
+         var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.breadth)));
+         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.length)));
+        
+         for (var i =0; i<aBins.length ;i++){
+                var binWidth = aBins[i].breadth * horFactor +'%';
+                var binHeight = aBins[i].length * vertFactor + '%';
+                  aHTMLBins.push(
+                                 React.createElement("div", {style: {display:'inline-block', width:binWidth, height:binHeight}}, 
+                                     React.createElement(Bin, {binData: aBins[i], screenId: screenId})
+                                )
+                                 )
+              }
+        return aHTMLBins;
+    },
+
+    render: function() {
+        var aHTMLBins = this._createBinLayouts(this.state.aBins,
+                                               this.state.lastHBin, 
+                                               this.state.lastVBin,
+                                               this.state.screenId);
+        var self = this;
+        return (
+                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth}}, 
+                        aHTMLBins
+                 )
+        );
+    }
+});
+
+module.exports = Bins;
+
+},{"../../stores/PutBackStore":302,"./BinsFlex.react":237,"react":230}],239:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -37726,7 +38072,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":289,"react":230}],239:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38089,7 +38435,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":287,"../../stores/PickFrontStore":299,"../../stores/PutBackStore":300,"../../stores/mainstore":303,"react":230}],240:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/PickFrontStore":301,"../../stores/PutBackStore":302,"../../stores/mainstore":305,"react":230}],241:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38159,7 +38505,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":287,"../../stores/AuditStore":297,"react":230}],241:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/AuditStore":299,"react":230}],242:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -38184,7 +38530,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":289,"./Header":247,"react":230}],242:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":248,"react":230}],243:[function(require,module,exports){
 var React = require('react');[]
 var ExceptionHeader = require('./ExceptionHeader');
 var ExceptionList = require('./ExceptionList');
@@ -38202,7 +38548,7 @@ var Exception = React.createClass({displayName: "Exception",
 
 module.exports = Exception;
 
-},{"./ExceptionHeader":243,"./ExceptionList":244,"react":230}],243:[function(require,module,exports){
+},{"./ExceptionHeader":244,"./ExceptionList":245,"react":230}],244:[function(require,module,exports){
 var React = require('react');
 
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
@@ -38218,7 +38564,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"react":230}],244:[function(require,module,exports){
+},{"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var ExceptionListItem = require('./ExceptionListItem');
 
@@ -38244,7 +38590,7 @@ var ExceptionList = React.createClass({displayName: "ExceptionList",
 
 module.exports = ExceptionList;
 
-},{"./ExceptionListItem":245,"react":230}],245:[function(require,module,exports){
+},{"./ExceptionListItem":246,"react":230}],246:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -38320,7 +38666,7 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":303,"react":230}],246:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":305,"react":230}],247:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 
@@ -38362,7 +38708,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"../stores/mainstore":303,"react":230}],247:[function(require,module,exports){
+},{"../stores/mainstore":305,"react":230}],248:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -38543,7 +38889,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":287,"../constants/svgConstants":290,"../stores/mainstore":303,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],248:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../constants/svgConstants":292,"../stores/mainstore":305,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -38786,7 +39132,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":289,"../../constants/svgConstants":290,"../../stores/loginstore":302,"../../stores/mainstore":303,"../../utils/utils.js":304,"../Operator":258,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],249:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":291,"../../constants/svgConstants":292,"../../stores/loginstore":304,"../../stores/mainstore":305,"../../utils/utils.js":306,"../Operator":259,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],250:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var SystemIdleHeader = require('./SystemIdleHeader');
@@ -38827,7 +39173,7 @@ var MobileSystemIdle = React.createClass({displayName: "MobileSystemIdle",
 });
 module.exports = MobileSystemIdle;
 
-},{"../stores/mainstore":303,"./SplitPPS":280,"./SystemIdleHeader":282,"react":230}],250:[function(require,module,exports){
+},{"../stores/mainstore":305,"./SplitPPS":287,"./SystemIdleHeader":282,"react":230}],251:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -39126,7 +39472,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":287,"../../constants/svgConstants":290,"../../stores/PickFrontStore":299,"../../stores/mainstore":303,"../Button/Button":239,"./ModalFooter":252,"./ModalHeader":253,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],251:[function(require,module,exports){
+},{"../../constants/appConstants":289,"../../constants/svgConstants":292,"../../stores/PickFrontStore":301,"../../stores/mainstore":305,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],252:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -39425,7 +39771,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":287,"../../constants/svgConstants":290,"../../stores/PickFrontStore":299,"../../stores/mainstore":303,"../Button/Button":239,"./ModalFooter":252,"./ModalHeader":253,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],252:[function(require,module,exports){
+},{"../../constants/appConstants":289,"../../constants/svgConstants":292,"../../stores/PickFrontStore":301,"../../stores/mainstore":305,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -39438,7 +39784,7 @@ var ModalFooter = React.createClass({displayName: "ModalFooter",
 
 module.exports = ModalFooter;
 
-},{"react":230}],253:[function(require,module,exports){
+},{"react":230}],254:[function(require,module,exports){
 var React = require('react');
 var ModalHeader = React.createClass({displayName: "ModalHeader",
   render: function () {
@@ -39454,7 +39800,7 @@ var ModalHeader = React.createClass({displayName: "ModalHeader",
 
 module.exports = ModalHeader;
 
-},{"react":230}],254:[function(require,module,exports){
+},{"react":230}],255:[function(require,module,exports){
 var React = require('react');
 var appConstants = require('../../constants/appConstants');
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -39515,7 +39861,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"../../constants/appConstants":287,"react":230}],255:[function(require,module,exports){
+},{"../../constants/appConstants":289,"react":230}],256:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -39542,7 +39888,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
 
-},{"./ActiveNavigation.react":254,"./PassiveNavigation.react":256,"react":230}],256:[function(require,module,exports){
+},{"./ActiveNavigation.react":255,"./PassiveNavigation.react":257,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
@@ -39563,7 +39909,7 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 
 module.exports = PassiveNavigation;
 
-},{"react":230}],257:[function(require,module,exports){
+},{"react":230}],258:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -39616,7 +39962,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":233,"react":230}],258:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"react":230}],259:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -39709,7 +40055,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":287,"../stores/mainstore":303,"./Audit":234,"./MobileSystemIdle":249,"./PickBack":259,"./PickFront":260,"./PutBack":270,"./PutFront":271,"./Spinner/Overlay":278,"./SystemIdle":281,"react":230}],259:[function(require,module,exports){
+},{"../constants/appConstants":289,"../stores/mainstore":305,"./Audit":234,"./MobileSystemIdle":250,"./PickBack":260,"./PickFront":261,"./PutBack":271,"./PutFront":272,"./Spinner/Overlay":279,"./SystemIdle":281,"react":230}],260:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -39718,6 +40064,7 @@ var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
@@ -39730,15 +40077,6 @@ var TabularData = require('./TabularData');
 
 
 function getStateData(){
-  /*return {
-           PickBackNavData : PickBackStore.getNavData(),
-           PickBackNotification : PickBackStore.getNotificationData(),
-           PickBackBinData: PickBackStore.getBinData(),
-           PickBackScreenId:PickBackStore.getScreenId(),
-           PickBackServerNavData : PickBackStore.getServerNavData(),
-           PickBackToteDetails : PickBackStore.getToteDetails()
-
-    };*/
     return mainstore.getScreenData();
 }
 
@@ -39802,28 +40140,41 @@ var PickBack = React.createClass({displayName: "PickBack",
       case appConstants.PICK_BACK_BIN:
        if(this.state.PickBackExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        var binComponent ="";
+          if (this.state.SplitScreenFlag){
+            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId}))
+          }else{
+            binComponent =(
+                           React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
+                            )
+                           )
+          }
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
-                )
+               binComponent
               )
             );
         }else{
           this._component = this.getExceptionComponent();
         }
-
         break;
       case appConstants.PICK_BACK_SCAN:
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          var binComponent = "";
+          if (this.state.SplitScreenFlag){
+            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId}));
+          }else{
+            binComponent = (React.createElement("div", {className: "main-container"}, 
+                              React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
+                            ));
+          }
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
-                )
+                binComponent
               )
             );
         }else{
@@ -39836,14 +40187,21 @@ var PickBack = React.createClass({displayName: "PickBack",
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
+          if (this.state.SplitScreenFlag){
+            binComponent = (React.createElement("div", {className: "exception1"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+                            ));
+          }else{
+            binComponent = (React.createElement("div", {className: "main-container exception1"}, 
+                            React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+                            ));
+          } 
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}), 
-                    React.createElement("div", {className: "main-container exception1"}, 
-                      React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
-                   ), 
+                    binComponent, 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     this._exceptionAction
                   )
@@ -39926,7 +40284,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":287,"../stores/PickBackStore":298,"../stores/mainstore":303,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./ExceptionHeader":246,"./Header":247,"./Modal/Modal":250,"./Navigation/Navigation.react":255,"./Notification/Notification":257,"./ProductDetails/Wrapper":269,"./SystemIdle":281,"./TabularData":285,"react":230}],260:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickBackStore":300,"../stores/mainstore":305,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./ProductDetails/Wrapper":270,"./SystemIdle":281,"./TabularData":285,"react":230}],261:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
@@ -39938,6 +40296,7 @@ var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
@@ -40127,17 +40486,21 @@ var PickFront = React.createClass({displayName: "PickFront",
         }else{
           var editButton ='';
         }
-        //console.log(this.state.BinMapDetails);
-        
+        var binComponent="";
+        if (this.state.SplitScreenFlag){
+            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}))
+          }else{
+            binComponent = (React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
+                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
+                ));
+          }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails}), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                ), 
+                binComponent, 
                 React.createElement("div", {className: "actions"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton
@@ -40167,13 +40530,19 @@ var PickFront = React.createClass({displayName: "PickFront",
          else{
           cancelButton = (React.createElement("div", {className: "cancel-scan"}));
          }
+         var binComponent ="";
+          if (this.state.SplitScreenFlag){
+            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS}))
+          }else{
+            binComponent =(React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                ))
+          }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                ), 
+                binComponent, 
                cancelButton
               )
             );
@@ -40184,12 +40553,17 @@ var PickFront = React.createClass({displayName: "PickFront",
       case appConstants.PICK_FRONT_NO_FREE_BIN:
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
- 
+        var binComponent ="";
+          if (this.state.SplitScreenFlag){
+            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS}))
+          }else{
+            binComponent =(React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                ))
+          }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                )
+                binComponent
               )
             );
          }else{
@@ -40373,7 +40747,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":287,"../stores/PickFrontStore":299,"../stores/mainstore":303,"./BinMap":235,"./Bins/Bins.react":237,"./BoxSerial.js":238,"./Button/Button":239,"./CurrentSlot":241,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":250,"./Modal/Modal1":251,"./Navigation/Navigation.react":255,"./Notification/Notification":257,"./PrdtDetails/ProductDetails.js":261,"./ProductDetails/KQ":264,"./ProductDetails/KQExceptionDamaged":265,"./ProductDetails/KQExceptionMissing":266,"./ProductDetails/Wrapper":269,"./Rack/MsuRack.js":272,"./Spinner/LoaderButler":277,"./TabularData":285,"react":230}],261:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickFrontStore":301,"../stores/mainstore":305,"./BinMap":286,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./BoxSerial.js":239,"./Button/Button":240,"./CurrentSlot":242,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Modal/Modal1":252,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductDetails.js":262,"./ProductDetails/KQ":265,"./ProductDetails/KQExceptionDamaged":266,"./ProductDetails/KQExceptionMissing":267,"./ProductDetails/Wrapper":270,"./Rack/MsuRack.js":273,"./Spinner/LoaderButler":278,"./TabularData":285,"react":230}],262:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -40437,7 +40811,7 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
 
 module.exports = ProductDetails;
 
-},{"./ProductImage":262,"./ProductInfo":263,"react":230}],262:[function(require,module,exports){
+},{"./ProductImage":263,"./ProductInfo":264,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 
 var ProductImage = React.createClass({displayName: "ProductImage",
@@ -40461,7 +40835,7 @@ var ProductImage = React.createClass({displayName: "ProductImage",
 
 module.exports = ProductImage;
 
-},{"react":230}],263:[function(require,module,exports){
+},{"react":230}],264:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = React.createClass({displayName: "ProductInfo",
@@ -40492,7 +40866,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"react":230}],264:[function(require,module,exports){
+},{"react":230}],265:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -41030,7 +41404,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":287,"../../constants/resourceConstants":289,"../../stores/mainstore":303,"react":230}],265:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],266:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -41463,7 +41837,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":287,"../../constants/resourceConstants":289,"../../stores/mainstore":303,"react":230}],266:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],267:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -41898,7 +42272,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":287,"../../constants/resourceConstants":289,"../../stores/mainstore":303,"react":230}],267:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],268:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -41944,7 +42318,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],268:[function(require,module,exports){
+},{"react":230}],269:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -42050,7 +42424,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":289,"../../stores/mainstore":303,"../Modal/Modal":250,"./PopUp":267,"react":230}],269:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"../Modal/Modal":251,"./PopUp":268,"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -42083,7 +42457,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":303,"./KQ":264,"./PopUp":267,"./ProductInfo":268,"react":230}],270:[function(require,module,exports){
+},{"../../stores/mainstore":305,"./KQ":265,"./PopUp":268,"./ProductInfo":269,"react":230}],271:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -42092,6 +42466,7 @@ var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
@@ -42148,12 +42523,19 @@ var PutBack = React.createClass({displayName: "PutBack",
       case appConstants.PUT_BACK_SCAN_TOTE:
          if(this.state.PutBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          var binComponent ="";
+          if (this.state.SplitScreenFlag){
+            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}))
+
+          }else{
+              binComponent = ( React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+                ))
+          }
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
-                ), 
+               binComponent, 
                 React.createElement("div", {className: "staging-action"}, 
                   React.createElement(Button1, {disabled: !this.state.StageActive, text: _("Stage"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
                   React.createElement(Button1, {disabled: !this.state.StageAllActive, text: _("Stage All"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
@@ -42167,14 +42549,23 @@ var PutBack = React.createClass({displayName: "PutBack",
         break;
       case appConstants.PUT_BACK_SCAN:
           if(this.state.PutBackExceptionStatus == false){
+          var binComponent = "";
+          if(this.state.SplitScreenFlag){
+            binComponent = (React.createElement("div", null, 
+                            React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
+                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
+                    ));
+          }else{
+            React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
+                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
+                )
+          }
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
-                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
-                ), 
+                binComponent, 
                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
                 )
@@ -42306,14 +42697,22 @@ var PutBack = React.createClass({displayName: "PutBack",
         break; 
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
+          var binComponent="";
+          if(this.state.SplitScreenFlag){
+            binComponent=(React.createElement("div", {className: "exception1"}, 
+                      React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+                   ))
+          }else{
+             binComponent=(React.createElement("div", {className: "main-container exception1"}, 
+                      React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+                   ))
+          }
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
-                    React.createElement("div", {className: "main-container exception1"}, 
-                      React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
-                   ), 
+                    binComponent, 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: this.state.PutBackNextButtonState, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXCESS_ITEMS_BIN})
                   )
@@ -42466,7 +42865,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":287,"../stores/PutBackStore":300,"../stores/mainstore":303,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./ExceptionHeader":246,"./Header":247,"./Modal/Modal":250,"./Navigation/Navigation.react":255,"./Notification/Notification":257,"./PrdtDetails/ProductImage.js":262,"./ProductDetails/KQ":264,"./ProductDetails/Wrapper":269,"./Reconcile":276,"./SystemIdle":281,"./TabularData":285,"react":230}],271:[function(require,module,exports){
+},{"../constants/appConstants":289,"../stores/PutBackStore":302,"../stores/mainstore":305,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":263,"./ProductDetails/KQ":265,"./ProductDetails/Wrapper":270,"./Reconcile":277,"./SystemIdle":281,"./TabularData":285,"react":230}],272:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -42475,6 +42874,7 @@ var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
@@ -42490,19 +42890,6 @@ var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 
 function getStateData(){
-  /*return {
-           PutFrontNavData : PutFrontStore.getNavData(),
-           PutFrontNotification : PutFrontStore.getNotificationData(),
-           PutFrontScreenId:PutFrontStore.getScreenId(),
-           PutFrontBinData: PutFrontStore.getBinData(),
-           PutFrontScanDetails : PutFrontStore.scanDetails(),
-           PutFrontProductDetails : PutFrontStore.productDetails(),
-           PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData(),
-           PutFrontItemUid : PutFrontStore.getItemUid()
-          
-    };*/
      return mainstore.getScreenData();
 };
 
@@ -42565,15 +42952,24 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
       case appConstants.PUT_FRONT_SCAN:
          if(this.state.PutFrontExceptionStatus == false){
+           if (this.state.SplitScreenFlag){
+            binComponent = ( React.createElement("div", null, 
+                            React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+                  ))
+
+          }else{
+            binComponent =(React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+                ))
+          }
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                )
+                binComponent
               )
             );
            }else{
@@ -42583,6 +42979,7 @@ var PutFront = React.createClass({displayName: "PutFront",
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          //need to check this case, if we need flexible bins here?
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -42796,7 +43193,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":287,"../stores/PutFrontStore":301,"../stores/mainstore":303,"./BinMap":235,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":250,"./Navigation/Navigation.react":255,"./Notification/Notification":257,"./ProductDetails/KQ":264,"./ProductDetails/KQExceptionDamaged":265,"./ProductDetails/KQExceptionMissing":266,"./ProductDetails/Wrapper":269,"./Rack/MsuRack.js":272,"./Spinner/LoaderButler":277,"./SplitPPS":280,"./TabularData":285,"react":230}],272:[function(require,module,exports){
+},{"../constants/appConstants":289,"../stores/PutFrontStore":303,"../stores/mainstore":305,"./BinMap":286,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./ProductDetails/KQ":265,"./ProductDetails/KQExceptionDamaged":266,"./ProductDetails/KQExceptionMissing":267,"./ProductDetails/Wrapper":270,"./Rack/MsuRack.js":273,"./Spinner/LoaderButler":278,"./SplitPPS":287,"./TabularData":285,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -42894,7 +43291,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":273,"react":230}],273:[function(require,module,exports){
+},{"./RackRow":274,"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -42942,7 +43339,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":274,"react":230}],274:[function(require,module,exports){
+},{"./RackSlot":275,"react":230}],275:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -42985,7 +43382,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":275,"react":230}],275:[function(require,module,exports){
+},{"./SingleSlot":276,"react":230}],276:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -43005,7 +43402,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],276:[function(require,module,exports){
+},{"react":230}],277:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -43043,7 +43440,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 
 module.exports = ReconcileStatus;
 
-},{"../constants/resourceConstants":289,"./Header":247,"react":230}],277:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":248,"react":230}],278:[function(require,module,exports){
 var React = require('react');
 var SpinnerButler = require('./SpinnerButler');
 
@@ -43060,7 +43457,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"./SpinnerButler":279,"react":230}],278:[function(require,module,exports){
+},{"./SpinnerButler":280,"react":230}],279:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -43078,7 +43475,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":277,"./SpinnerButler":279,"react":230}],279:[function(require,module,exports){
+},{"./LoaderButler":278,"./SpinnerButler":280,"react":230}],280:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
@@ -43093,104 +43490,7 @@ var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 
 module.exports = SpinnerButler;
 
-},{"react":230}],280:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var SplitPPS = React.createClass({displayName: "SplitPPS",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-
-			}
-		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
-		}
-	},
-	render:function(){		
-		
-		//var mapStructure = this.processData();	
-		
-		return (
-				React.createElement("div", {className: "splitPPSWrapper"}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 three"}, 
-					React.createElement("ul", null, 
-					React.createElement("li", {className: "spriteIcons"}, 
-					React.createElement("span", {className: "docked spriteIcons"})
-					), 
-					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock left spriteIcons"})), 
-					React.createElement("li", {className: "spriteIcons"})
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 three"}, 
-					React.createElement("ul", null, 
-					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock right spriteIcons"})), 
-					React.createElement("li", {className: "spriteIcons"}), 
-					React.createElement("li", {className: "spriteIcons"})
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = SplitPPS;
-
-},{"../constants/resourceConstants":289,"react":230}],281:[function(require,module,exports){
+},{"react":230}],281:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -43210,7 +43510,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":289,"./Header":247,"react":230}],282:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":248,"react":230}],282:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -43229,7 +43529,7 @@ var SystemIdleHeader = React.createClass({displayName: "SystemIdleHeader",
 });
 module.exports = SystemIdleHeader;
 
-},{"../constants/resourceConstants":289,"./Header":247,"react":230}],283:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":248,"react":230}],283:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -43271,7 +43571,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"../constants/appConstants":287,"./Button/IconButton":240,"react":230}],284:[function(require,module,exports){
+},{"../constants/appConstants":289,"./Button/IconButton":241,"react":230}],284:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -43383,7 +43683,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":287,"../stores/mainstore":303,"./Button/IconButton":240,"react":230}],285:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/mainstore":305,"./Button/IconButton":241,"react":230}],285:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -43419,6 +43719,193 @@ var TabularData = React.createClass({displayName: "TabularData",
 module.exports = TabularData;
 
 },{"./TableHeader":283,"./TableRow":284,"react":230}],286:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var BinMap = React.createClass({displayName: "BinMap",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+
+			}
+		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
+		}
+	},
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		return (
+				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.leftCol
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.rightCol
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = BinMap;
+
+},{"../constants/resourceConstants":291,"react":230}],287:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var SplitPPS = React.createClass({displayName: "SplitPPS",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+
+			}
+		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
+		}
+	},
+	render:function(){		
+		
+		//var mapStructure = this.processData();	
+		
+		return (
+				React.createElement("div", {className: "splitPPSWrapper"}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 three"}, 
+					React.createElement("ul", null, 
+					React.createElement("li", {className: "spriteIcons"}, 
+					React.createElement("span", {className: "docked spriteIcons"})
+					), 
+					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock left spriteIcons"})), 
+					React.createElement("li", {className: "spriteIcons"})
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 three"}, 
+					React.createElement("ul", null, 
+					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock right spriteIcons"})), 
+					React.createElement("li", {className: "spriteIcons"}), 
+					React.createElement("li", {className: "spriteIcons"})
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = SplitPPS;
+
+},{"../constants/resourceConstants":291,"react":230}],288:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
@@ -43593,7 +44080,7 @@ var navData = {
 
 module.exports = navData;
 
-},{"../constants/svgConstants":290}],287:[function(require,module,exports){
+},{"../constants/svgConstants":292}],289:[function(require,module,exports){
 var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
@@ -43748,14 +44235,14 @@ var appConstants = {
 
 module.exports = appConstants;
 
-},{}],288:[function(require,module,exports){
+},{}],290:[function(require,module,exports){
 var configConstants = {
 	WEBSOCKET_IP : "wss://192.168.8.108/wss",
 	INTERFACE_IP : "https://192.168.8.108"
 };
 module.exports = configConstants;
 
-},{}],289:[function(require,module,exports){
+},{}],291:[function(require,module,exports){
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',
@@ -43795,7 +44282,7 @@ var resourceConstants = {
 };
 module.exports = resourceConstants;
 
-},{}],290:[function(require,module,exports){
+},{}],292:[function(require,module,exports){
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
@@ -43816,7 +44303,7 @@ var allSvgConstants = {
 
 module.exports = allSvgConstants;
 
-},{}],291:[function(require,module,exports){
+},{}],293:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
@@ -43830,7 +44317,7 @@ AppDispatcher.handleAction = function(action){
 
 module.exports = AppDispatcher;
 
-},{"flux":46}],292:[function(require,module,exports){
+},{"flux":46}],294:[function(require,module,exports){
 (function (global){
 global.jQuery = global.$ = require("jquery");
 var React = require('react');
@@ -43859,7 +44346,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":248,"./components/Operator":258,"jquery":67,"react":230,"react-dom":74}],293:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":249,"./components/Operator":259,"jquery":67,"react":230,"react-dom":74}],295:[function(require,module,exports){
 var chinese = {
     "Password": "\u5bc6\u7801",
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
@@ -43870,14 +44357,14 @@ var chinese = {
 
 module.exports = chinese;
 
-},{}],294:[function(require,module,exports){
+},{}],296:[function(require,module,exports){
 var english = {
 
 };
 
 module.exports = english;
 
-},{}],295:[function(require,module,exports){
+},{}],297:[function(require,module,exports){
 var japanese = {
    "'Override Tote Exception' cannot be raised for bins with totes associated": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3044\u305f\u30d3\u30f3\u3067\u300c\u30c8\u30fc\u30c8\u66f4\u65b0\u4f8b\u5916\u300d\u306f\u767a\u751f\u3057\u307e\u305b\u3093",
    "Actions": "\u30a2\u30af\u30b7\u30e7\u30f3",
@@ -44221,7 +44708,7 @@ var japanese = {
 }
 module.exports = japanese;
 
-},{}],296:[function(require,module,exports){
+},{}],298:[function(require,module,exports){
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
@@ -44471,7 +44958,7 @@ var serverMessages = {
 
 module.exports = serverMessages;
 
-},{}],297:[function(require,module,exports){
+},{}],299:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -44804,7 +45291,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":286,"../constants/appConstants":287,"../constants/resourceConstants":289,"../dispatchers/AppDispatcher":291,"../utils/utils":304,"events":14,"object-assign":68}],298:[function(require,module,exports){
+},{"../config/navConfig":288,"../constants/appConstants":289,"../constants/resourceConstants":291,"../dispatchers/AppDispatcher":293,"../utils/utils":306,"events":14,"object-assign":68}],300:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -44910,7 +45397,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":286,"../constants/appConstants":287,"../constants/resourceConstants":289,"../dispatchers/AppDispatcher":291,"../utils/utils":304,"events":14,"object-assign":68}],299:[function(require,module,exports){
+},{"../config/navConfig":288,"../constants/appConstants":289,"../constants/resourceConstants":291,"../dispatchers/AppDispatcher":293,"../utils/utils":306,"events":14,"object-assign":68}],301:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -45091,7 +45578,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":286,"../constants/appConstants":287,"../dispatchers/AppDispatcher":291,"../utils/utils":304,"events":14,"object-assign":68}],300:[function(require,module,exports){
+},{"../config/navConfig":288,"../constants/appConstants":289,"../dispatchers/AppDispatcher":293,"../utils/utils":306,"events":14,"object-assign":68}],302:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var SVGConstants = require('../constants/svgConstants');
@@ -45360,7 +45847,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":286,"../constants/appConstants":287,"../constants/resourceConstants":289,"../constants/svgConstants":290,"../dispatchers/AppDispatcher":291,"../utils/utils":304,"events":14,"object-assign":68}],301:[function(require,module,exports){
+},{"../config/navConfig":288,"../constants/appConstants":289,"../constants/resourceConstants":291,"../constants/svgConstants":292,"../dispatchers/AppDispatcher":293,"../utils/utils":306,"events":14,"object-assign":68}],303:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -45478,7 +45965,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":286,"../constants/appConstants":287,"../dispatchers/AppDispatcher":291,"../utils/utils":304,"events":14,"object-assign":68}],302:[function(require,module,exports){
+},{"../config/navConfig":288,"../constants/appConstants":289,"../dispatchers/AppDispatcher":293,"../utils/utils":306,"events":14,"object-assign":68}],304:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -45631,7 +46118,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":287,"../constants/configConstants":288,"../dispatchers/AppDispatcher":291,"../utils/utils.js":304,"events":14,"react/lib/Object.assign":121}],303:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../constants/configConstants":290,"../dispatchers/AppDispatcher":293,"../utils/utils.js":306,"events":14,"react/lib/Object.assign":121}],305:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -47696,7 +48183,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../actions/CommonActions":233,"../config/navConfig":286,"../constants/appConstants":287,"../constants/resourceConstants":289,"../constants/svgConstants":290,"../dispatchers/AppDispatcher":291,"../serverMessages/chinese":293,"../serverMessages/english":294,"../serverMessages/japanese":295,"../serverMessages/server_messages":296,"../utils/utils":304,"events":14,"react/lib/Object.assign":121}],304:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../config/navConfig":288,"../constants/appConstants":289,"../constants/resourceConstants":291,"../constants/svgConstants":292,"../dispatchers/AppDispatcher":293,"../serverMessages/chinese":295,"../serverMessages/english":296,"../serverMessages/japanese":297,"../serverMessages/server_messages":298,"../utils/utils":306,"events":14,"react/lib/Object.assign":121}],306:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -47993,4 +48480,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":287,"../constants/configConstants":288,"../serverMessages/server_messages":296,"events":14,"react/lib/Object.assign":121}]},{},[292]);
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../constants/configConstants":290,"../serverMessages/server_messages":298,"events":14,"react/lib/Object.assign":121}]},{},[294]);

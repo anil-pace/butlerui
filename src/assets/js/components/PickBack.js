@@ -6,6 +6,7 @@ var Header = require('./Header');
 var Navigation = require("./Navigation/Navigation.react");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
@@ -18,15 +19,6 @@ var TabularData = require('./TabularData');
 
 
 function getStateData(){
-  /*return {
-           PickBackNavData : PickBackStore.getNavData(),
-           PickBackNotification : PickBackStore.getNotificationData(),
-           PickBackBinData: PickBackStore.getBinData(),
-           PickBackScreenId:PickBackStore.getScreenId(),
-           PickBackServerNavData : PickBackStore.getServerNavData(),
-           PickBackToteDetails : PickBackStore.getToteDetails()
-
-    };*/
     return mainstore.getScreenData();
 }
 
@@ -90,28 +82,41 @@ var PickBack = React.createClass({
       case appConstants.PICK_BACK_BIN:
        if(this.state.PickBackExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        var binComponent ="";
+          if (this.state.SplitScreenFlag){
+            binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />)
+          }else{
+            binComponent =(
+                           <div className='main-container'>
+                            <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />
+                            </div>
+                           )
+          }
           this._component = (
               <div className='grid-container'>
                 <Modal />
-                <div className='main-container'>
-                    <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />
-                </div>
+               {binComponent}
               </div>
             );
         }else{
           this._component = this.getExceptionComponent();
         }
-
         break;
       case appConstants.PICK_BACK_SCAN:
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          var binComponent = "";
+          if (this.state.SplitScreenFlag){
+            binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>);
+          }else{
+            binComponent = (<div className='main-container'>
+                              <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>
+                            </div>);
+          }
           this._component = (
               <div className='grid-container'>
                 <Modal />
-                <div className='main-container'>
-                    <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />
-                </div>
+                {binComponent}
               </div>
             );
         }else{
@@ -124,14 +129,21 @@ var PickBack = React.createClass({
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
+          if (this.state.SplitScreenFlag){
+            binComponent = (<div className="exception1">
+                            <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
+                            </div>);
+          }else{
+            binComponent = (<div className="main-container exception1">
+                            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
+                            </div>);
+          } 
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickBackExceptionData}/>
                 <div className="exception-right">
                    <ExceptionHeader data={this.state.PickBackServerNavData} />
-                    <div className="main-container exception1">
-                      <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>
-                   </div>
+                    {binComponent}
                   <div className = "finish-damaged-barcode">
                     {this._exceptionAction} 
                   </div>

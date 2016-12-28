@@ -1287,11 +1287,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getBinMapDetails:function(){
-        return _seatData.group_info || null;
+        return _seatData ? _seatData.group_info : null;
     },
     getSelectedBinGroup:function(){
-        var groupId = _seatData.ppsbin_list[0].group_id;
-        return groupId || null;
+        var groupId = _seatData ? _seatData.ppsbin_list[0].group_id : null;
+        return groupId ;
+    },
+    getUndockAwaitedDetails:function(){
+        return Object.keys(_seatData ? _seatData.undock_awaited : {});
+    },
+    getDockedDetails:function(){
+        return Object.keys(_seatData ? _seatData.docked : {});
     },
 
     validateAndSendDataToServer: function() {

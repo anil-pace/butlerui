@@ -270,7 +270,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     console.log(data);
-    
+    if(data.state_data.group_info){
+        data.state_data.group_info= {
+            "1": "left", 
+            "2": "left", 
+            "3": "right", 
+            "4": "right"
+        }
+        data.state_data.docked={
+            "1": "left",
+             "4": "right"
+        } 
+        data.state_data.undock_awaited = {
+            "2": "left"
+        }
+  
+    }
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

@@ -39596,7 +39596,10 @@ function getState(){
       currentSeat: mainstore.getCurrentSeat(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
-      navMessages : mainstore.getServerMessages()
+      navMessages : mainstore.getServerMessages(),
+      groupInfo : mainstore.getBinMapDetails(),
+      undockAwaited : mainstore.getUndockAwaitedDetails(),
+      docked : mainstore.getDockedDetails()
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -39650,7 +39653,7 @@ var Operator = React.createClass({displayName: "Operator",
           return (
             React.createElement("div", {className: "main"}, 
               React.createElement(SystemIdle, null), 
-              React.createElement(SplitPPS, null)
+              React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked})
             ) 
           )
         }else{
@@ -39911,11 +39914,18 @@ var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
+var SplitPPS = require('./SplitPPS');
 
 var checkListOpen = false;
 
 function getStateData(){
-     return mainstore.getScreenData();
+      var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
 };
 
 var PickFront = React.createClass({displayName: "PickFront",
@@ -40022,7 +40032,8 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
+                    React.createElement(Spinner, null), 
+                    React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked}), ";"
                  )
               )
             );
@@ -40333,7 +40344,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":285,"../stores/PickFrontStore":297,"../stores/mainstore":301,"./BinMap":235,"./Bins/Bins.react":237,"./BoxSerial.js":238,"./Button/Button":239,"./CurrentSlot":241,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Modal/Modal1":250,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./PrdtDetails/ProductDetails.js":260,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./TabularData":283,"react":230}],260:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":285,"../stores/PickFrontStore":297,"../stores/mainstore":301,"./BinMap":235,"./Bins/Bins.react":237,"./BoxSerial.js":238,"./Button/Button":239,"./CurrentSlot":241,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Modal/Modal1":250,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./PrdtDetails/ProductDetails.js":260,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./SplitPPS":279,"./TabularData":283,"react":230}],260:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -42446,6 +42457,7 @@ var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
+var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
@@ -42462,7 +42474,13 @@ function getStateData(){
            PutFrontItemUid : PutFrontStore.getItemUid()
           
     };*/
-     return mainstore.getScreenData();
+     var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
 };
 
 var PutFront = React.createClass({displayName: "PutFront",
@@ -42513,7 +42531,10 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
+                    React.createElement(Spinner, null), 
+                    React.createElement("div", null, 
+                    React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked}), ";"
+                    )
                  )
               )
             );
@@ -42737,7 +42758,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":285,"../stores/PutFrontStore":299,"../stores/mainstore":301,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./TabularData":283,"react":230}],271:[function(require,module,exports){
+},{"../constants/appConstants":285,"../stores/PutFrontStore":299,"../stores/mainstore":301,"./Bins/Bins.react":237,"./Button/Button":239,"./Exception/Exception":242,"./Header":247,"./Modal/Modal":249,"./Navigation/Navigation.react":254,"./Notification/Notification":256,"./ProductDetails/KQ":263,"./ProductDetails/KQExceptionDamaged":264,"./ProductDetails/KQExceptionMissing":265,"./ProductDetails/Wrapper":268,"./Rack/MsuRack.js":271,"./Spinner/LoaderButler":276,"./SplitPPS":279,"./TabularData":283,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -43041,83 +43062,72 @@ var allresourceConstants = require('../constants/resourceConstants');
 var SplitPPS = React.createClass({displayName: "SplitPPS",
 	
 	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		var data =  Object.assign({},(this.props.groupInfo || {}));
+		var leftCol = [],dockedGroup = this.props.docked,
+		undockAwaited = this.props.undockAwaited,
+		rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
+				
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
+					if(dockedGroup.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock left spriteIcons"})
+							));
+					}
+					else{
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
+					if(dockedGroup.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock right spriteIcons"})
+							));
+					}
+					else{
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
 				}
 
 			}
 		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
+	
 
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
+			rightCol:rightCol
 		}
 	},
 	render:function(){		
 		
-		//var mapStructure = this.processData();	
+		var mapStructure = this.processData();	
 		
 		return (
 				React.createElement("div", {className: "splitPPSWrapper"}, 
 					React.createElement("div", {className: "mapCont"}, 
 					React.createElement("div", {className: "col1 three"}, 
 					React.createElement("ul", null, 
-					React.createElement("li", {className: "spriteIcons"}, 
-					React.createElement("span", {className: "docked spriteIcons"})
-					), 
-					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock left spriteIcons"})), 
-					React.createElement("li", {className: "spriteIcons"})
+					mapStructure.leftCol
 					)
 					), 
 					React.createElement("div", {className: "col2 spriteIcons"}
 					), 
 					React.createElement("div", {className: "col3 three"}, 
 					React.createElement("ul", null, 
-					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock right spriteIcons"})), 
-					React.createElement("li", {className: "spriteIcons"}), 
-					React.createElement("li", {className: "spriteIcons"})
+					mapStructure.rightCol
 					)
 					)
 					)
@@ -46843,11 +46853,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getBinMapDetails:function(){
-        return _seatData.group_info || null;
+        return _seatData ? _seatData.group_info : null;
     },
     getSelectedBinGroup:function(){
-        var groupId = _seatData.ppsbin_list[0].group_id;
-        return groupId || null;
+        var groupId = _seatData ? _seatData.ppsbin_list[0].group_id : null;
+        return groupId ;
+    },
+    getUndockAwaitedDetails:function(){
+        return Object.keys(_seatData ? _seatData.undock_awaited : {});
+    },
+    getDockedDetails:function(){
+        return Object.keys(_seatData ? _seatData.docked : {});
     },
 
     validateAndSendDataToServer: function() {
@@ -47841,7 +47857,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     console.log(data);
-    
+    if(data.state_data.group_info){
+        data.state_data.group_info= {
+            "1": "left", 
+            "2": "left", 
+            "3": "right", 
+            "4": "right"
+        }
+        data.state_data.docked={
+            "1": "left",
+             "4": "right"
+        } 
+        data.state_data.undock_awaited = {
+            "2": "left"
+        }
+  
+    }
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

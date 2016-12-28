@@ -17,7 +17,10 @@ function getState(){
       currentSeat: mainstore.getCurrentSeat(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
-      navMessages : mainstore.getServerMessages()
+      navMessages : mainstore.getServerMessages(),
+      groupInfo : mainstore.getBinMapDetails(),
+      undockAwaited : mainstore.getUndockAwaitedDetails(),
+      docked : mainstore.getDockedDetails()
   }
 }
 var Operator = React.createClass({
@@ -71,7 +74,7 @@ var Operator = React.createClass({
           return (
             <div className="main">
               <SystemIdle />
-              <SplitPPS />
+              <SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>
             </div> 
           )
         }else{

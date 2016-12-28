@@ -17,6 +17,7 @@ var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
+var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
@@ -33,7 +34,13 @@ function getStateData(){
            PutFrontItemUid : PutFrontStore.getItemUid()
           
     };*/
-     return mainstore.getScreenData();
+     var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
 };
 
 var PutFront = React.createClass({
@@ -85,6 +92,9 @@ var PutFront = React.createClass({
               <div className='grid-container'>
                  <div className='main-container'>
                     <Spinner />
+                    <div>
+                    <SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>;
+                    </div>
                  </div>
               </div>
             );

@@ -21,8 +21,29 @@ var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 
+
 function getStateData(){
-     return mainstore.getScreenData();
+  /*return {
+           PutFrontNavData : PutFrontStore.getNavData(),
+           PutFrontNotification : PutFrontStore.getNotificationData(),
+           PutFrontScreenId:PutFrontStore.getScreenId(),
+           PutFrontBinData: PutFrontStore.getBinData(),
+           PutFrontScanDetails : PutFrontStore.scanDetails(),
+           PutFrontProductDetails : PutFrontStore.productDetails(),
+           PutFrontRackDetails: PutFrontStore.getRackDetails(),
+           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
+           PutFrontServerNavData : PutFrontStore.getServerNavData(),
+           PutFrontItemUid : PutFrontStore.getItemUid()
+          
+    };*/
+     var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
+
 };
 
 var PutFront = React.createClass({
@@ -73,7 +94,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                 {this.state.MobileFlag?<SplitPPS/>:<Spinner />}
+                 {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>:<Spinner />}
                  </div>
               </div>
             );

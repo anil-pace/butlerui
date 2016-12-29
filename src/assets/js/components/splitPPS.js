@@ -4,83 +4,72 @@ var allresourceConstants = require('../constants/resourceConstants');
 var SplitPPS = React.createClass({
 	
 	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		var data =  Object.assign({},(this.props.groupInfo || {}));
+		var leftCol = [],dockedGroup = this.props.docked,
+		undockAwaited = this.props.undockAwaited,
+		rightCol=[];
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
+				
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(<li key={k} className={isSelected}></li>);
+					if(dockedGroup.indexOf(k) >= 0){
+						leftCol.push(<li key={k} className={"spriteIcons"}>
+							<span className="docked spriteIcons"></span>
+							</li>);
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						leftCol.push(<li key={k} className={"spriteIcons"}>
+							<span className="undock left spriteIcons"></span>
+							</li>);
+					}
+					else{
+						leftCol.push(<li key={k} className={"spriteIcons"}></li>);
+					}
+					
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(<li key={k} className={isSelected}></li>);
+					if(dockedGroup.indexOf(k) >= 0){
+						rightCol.push(<li key={k} className={"spriteIcons"}>
+							<span className="docked spriteIcons"></span>
+							</li>);
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						rightCol.push(<li key={k} className={"spriteIcons"}>
+							<span className="undock right spriteIcons"></span>
+							</li>);
+					}
+					else{
+						rightCol.push(<li key={k} className={"spriteIcons"}></li>);
+					}
+					
 				}
 
 			}
 		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
+	
 
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
+			rightCol:rightCol
 		}
 	},
 	render:function(){		
 		
-		//var mapStructure = this.processData();	
+		var mapStructure = this.processData();	
 		
 		return (
 				<div className="splitPPSWrapper">
 					<div className="mapCont">
 					<div className={"col1 three"}>
 					<ul>
-					<li className="spriteIcons">
-					<span className="docked spriteIcons"></span>
-					</li>
-					<li className="spriteIcons"><span className="undock left spriteIcons"></span></li>
-					<li className="spriteIcons"></li>
+					{mapStructure.leftCol}
 					</ul>
 					</div>
 					<div className="col2 spriteIcons">
 					</div>
 					<div className={"col3 three"}>
 					<ul>
-					<li className="spriteIcons"><span className="undock right spriteIcons"></span></li>
-					<li className="spriteIcons"></li>
-					<li className="spriteIcons"></li>
+					{mapStructure.rightCol}
 					</ul>
 					</div>
 					</div>

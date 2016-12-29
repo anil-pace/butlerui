@@ -23,11 +23,18 @@ var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
+var SplitPPS = require('./SplitPPS');
 
 var checkListOpen = false;
 
 function getStateData(){
-     return mainstore.getScreenData();
+      var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
 };
 
 var PickFront = React.createClass({
@@ -135,6 +142,7 @@ var PickFront = React.createClass({
               <div className='grid-container'>
                  <div className='main-container'>
                     <Spinner />
+                    <SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>;
                  </div>
               </div>
             );

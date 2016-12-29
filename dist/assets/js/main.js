@@ -37203,7 +37203,97 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/AuditStore":299,"../stores/mainstore":305,"../utils/utils.js":306,"./Button/Button":240,"./Button/Button.js":240,"./CurrentSlot":242,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":263,"./ProductDetails/KQ.js":265,"./Rack/MsuRack.js":273,"./Reconcile":277,"./Spinner/LoaderButler":278,"./SystemIdle":281,"./TabularData":285,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/AuditStore":299,"../stores/mainstore":305,"../utils/utils.js":306,"./Button/Button":241,"./Button/Button.js":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":264,"./ProductDetails/KQ.js":266,"./Rack/MsuRack.js":274,"./Reconcile":278,"./Spinner/LoaderButler":279,"./SystemIdle":283,"./TabularData":287,"react":230}],235:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var BinMap = React.createClass({displayName: "BinMap",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+
+			}
+		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
+		}
+	},
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		return (
+				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.leftCol
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.rightCol
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = BinMap;
+
+},{"../constants/resourceConstants":291,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37530,7 +37620,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/mainstore":305,"../Modal/Modal":251,"react":230}],236:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/mainstore":305,"../Modal/Modal":252,"react":230}],237:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37554,6 +37644,7 @@ var Bins = React.createClass({displayName: "Bins",
         var compData = this.props.binsData; 
         var scrnId = this.props.screenId;
         var self = this;
+        console.log(compData);
         return (
                  React.createElement("div", {className: "bins"}, 
                     
@@ -37596,7 +37687,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":302,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
+},{"../../stores/PutBackStore":302,"./Bin.react":236,"react":230}],238:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37923,7 +38014,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/mainstore":305,"../Modal/Modal":251,"react":230}],238:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/mainstore":305,"../Modal/Modal":252,"react":230}],239:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./BinsFlex.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -38032,7 +38123,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":302,"./BinsFlex.react":237,"react":230}],239:[function(require,module,exports){
+},{"../../stores/PutBackStore":302,"./BinsFlex.react":238,"react":230}],240:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -38072,7 +38163,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":291,"react":230}],240:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"react":230}],241:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38435,7 +38526,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/PickFrontStore":301,"../../stores/PutBackStore":302,"../../stores/mainstore":305,"react":230}],241:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/PickFrontStore":301,"../../stores/PutBackStore":302,"../../stores/mainstore":305,"react":230}],242:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38505,7 +38596,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/AuditStore":299,"react":230}],242:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../stores/AuditStore":299,"react":230}],243:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -38530,7 +38621,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":291,"./Header":248,"react":230}],243:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":249,"react":230}],244:[function(require,module,exports){
 var React = require('react');[]
 var ExceptionHeader = require('./ExceptionHeader');
 var ExceptionList = require('./ExceptionList');
@@ -38548,7 +38639,7 @@ var Exception = React.createClass({displayName: "Exception",
 
 module.exports = Exception;
 
-},{"./ExceptionHeader":244,"./ExceptionList":245,"react":230}],244:[function(require,module,exports){
+},{"./ExceptionHeader":245,"./ExceptionList":246,"react":230}],245:[function(require,module,exports){
 var React = require('react');
 
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
@@ -38564,7 +38655,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"react":230}],245:[function(require,module,exports){
+},{"react":230}],246:[function(require,module,exports){
 var React = require('react');
 var ExceptionListItem = require('./ExceptionListItem');
 
@@ -38590,7 +38681,7 @@ var ExceptionList = React.createClass({displayName: "ExceptionList",
 
 module.exports = ExceptionList;
 
-},{"./ExceptionListItem":246,"react":230}],246:[function(require,module,exports){
+},{"./ExceptionListItem":247,"react":230}],247:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -38666,7 +38757,7 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":305,"react":230}],247:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":305,"react":230}],248:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 
@@ -38708,7 +38799,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"../stores/mainstore":305,"react":230}],248:[function(require,module,exports){
+},{"../stores/mainstore":305,"react":230}],249:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -38889,7 +38980,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":289,"../constants/svgConstants":292,"../stores/mainstore":305,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../constants/svgConstants":292,"../stores/mainstore":305,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],250:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -39132,7 +39223,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":291,"../../constants/svgConstants":292,"../../stores/loginstore":304,"../../stores/mainstore":305,"../../utils/utils.js":306,"../Operator":259,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],250:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":291,"../../constants/svgConstants":292,"../../stores/loginstore":304,"../../stores/mainstore":305,"../../utils/utils.js":306,"../Operator":260,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],251:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var SystemIdleHeader = require('./SystemIdleHeader');
@@ -39140,7 +39231,10 @@ var SplitPPS = require('./SplitPPS');
 function getState(){
 		return {
 	      dockedGroup :mainstore.getDockedGroup(),
-    	  undockedAwaited:mainstore.getUndockAwaitedGroup()
+    	  undockedAwaited:mainstore.getUndockAwaitedGroup(),
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
   		}
 }
 
@@ -39166,14 +39260,14 @@ var MobileSystemIdle = React.createClass({displayName: "MobileSystemIdle",
 		return (
 			React.createElement("div", {ref: "myRef"}, 
 					React.createElement(SystemIdleHeader, null), 
-					React.createElement(SplitPPS, null)
+					React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked})
 			)
 		)
 	}
 });
 module.exports = MobileSystemIdle;
 
-},{"../stores/mainstore":305,"./SplitPPS":287,"./SystemIdleHeader":282,"react":230}],251:[function(require,module,exports){
+},{"../stores/mainstore":305,"./SplitPPS":282,"./SystemIdleHeader":284,"react":230}],252:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -39472,7 +39566,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":289,"../../constants/svgConstants":292,"../../stores/PickFrontStore":301,"../../stores/mainstore":305,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],252:[function(require,module,exports){
+},{"../../constants/appConstants":289,"../../constants/svgConstants":292,"../../stores/PickFrontStore":301,"../../stores/mainstore":305,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -39771,7 +39865,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":289,"../../constants/svgConstants":292,"../../stores/PickFrontStore":301,"../../stores/mainstore":305,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
+},{"../../constants/appConstants":289,"../../constants/svgConstants":292,"../../stores/PickFrontStore":301,"../../stores/mainstore":305,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],254:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -39784,7 +39878,7 @@ var ModalFooter = React.createClass({displayName: "ModalFooter",
 
 module.exports = ModalFooter;
 
-},{"react":230}],254:[function(require,module,exports){
+},{"react":230}],255:[function(require,module,exports){
 var React = require('react');
 var ModalHeader = React.createClass({displayName: "ModalHeader",
   render: function () {
@@ -39800,7 +39894,7 @@ var ModalHeader = React.createClass({displayName: "ModalHeader",
 
 module.exports = ModalHeader;
 
-},{"react":230}],255:[function(require,module,exports){
+},{"react":230}],256:[function(require,module,exports){
 var React = require('react');
 var appConstants = require('../../constants/appConstants');
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -39861,7 +39955,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"../../constants/appConstants":289,"react":230}],256:[function(require,module,exports){
+},{"../../constants/appConstants":289,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -39888,7 +39982,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
 
-},{"./ActiveNavigation.react":255,"./PassiveNavigation.react":257,"react":230}],257:[function(require,module,exports){
+},{"./ActiveNavigation.react":256,"./PassiveNavigation.react":258,"react":230}],258:[function(require,module,exports){
 var React = require('react');
 
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
@@ -39909,7 +40003,7 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 
 module.exports = PassiveNavigation;
 
-},{"react":230}],258:[function(require,module,exports){
+},{"react":230}],259:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -39962,7 +40056,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":233,"react":230}],259:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"react":230}],260:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -39983,6 +40077,7 @@ function getState(){
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
       navMessages : mainstore.getServerMessages(),
+
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -40055,7 +40150,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":289,"../stores/mainstore":305,"./Audit":234,"./MobileSystemIdle":250,"./PickBack":260,"./PickFront":261,"./PutBack":271,"./PutFront":272,"./Spinner/Overlay":279,"./SystemIdle":281,"react":230}],260:[function(require,module,exports){
+},{"../constants/appConstants":289,"../stores/mainstore":305,"./Audit":234,"./MobileSystemIdle":251,"./PickBack":261,"./PickFront":262,"./PutBack":272,"./PutFront":273,"./Spinner/Overlay":280,"./SystemIdle":283,"react":230}],261:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -40284,7 +40379,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickBackStore":300,"../stores/mainstore":305,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./ProductDetails/Wrapper":270,"./SystemIdle":281,"./TabularData":285,"react":230}],261:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickBackStore":300,"../stores/mainstore":305,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/Wrapper":271,"./SystemIdle":283,"./TabularData":287,"react":230}],262:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
@@ -40310,11 +40405,18 @@ var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
+var SplitPPS = require('./SplitPPS');
 
 var checkListOpen = false;
 
 function getStateData(){
-     return mainstore.getScreenData();
+      var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
 };
 
 var PickFront = React.createClass({displayName: "PickFront",
@@ -40421,7 +40523,8 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
+                    React.createElement(Spinner, null), 
+                    React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked}), ";"
                  )
               )
             );
@@ -40747,7 +40850,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickFrontStore":301,"../stores/mainstore":305,"./BinMap":286,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./BoxSerial.js":239,"./Button/Button":240,"./CurrentSlot":242,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Modal/Modal1":252,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductDetails.js":262,"./ProductDetails/KQ":265,"./ProductDetails/KQExceptionDamaged":266,"./ProductDetails/KQExceptionMissing":267,"./ProductDetails/Wrapper":270,"./Rack/MsuRack.js":273,"./Spinner/LoaderButler":278,"./TabularData":285,"react":230}],262:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickFrontStore":301,"../stores/mainstore":305,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./BoxSerial.js":240,"./Button/Button":241,"./CurrentSlot":243,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Modal/Modal1":253,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductDetails.js":263,"./ProductDetails/KQ":266,"./ProductDetails/KQExceptionDamaged":267,"./ProductDetails/KQExceptionMissing":268,"./ProductDetails/Wrapper":271,"./Rack/MsuRack.js":274,"./Spinner/LoaderButler":279,"./SplitPPS":282,"./TabularData":287,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -40811,7 +40914,7 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
 
 module.exports = ProductDetails;
 
-},{"./ProductImage":263,"./ProductInfo":264,"react":230}],263:[function(require,module,exports){
+},{"./ProductImage":264,"./ProductInfo":265,"react":230}],264:[function(require,module,exports){
 var React = require('react');
 
 var ProductImage = React.createClass({displayName: "ProductImage",
@@ -40835,7 +40938,7 @@ var ProductImage = React.createClass({displayName: "ProductImage",
 
 module.exports = ProductImage;
 
-},{"react":230}],264:[function(require,module,exports){
+},{"react":230}],265:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = React.createClass({displayName: "ProductInfo",
@@ -40866,7 +40969,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"react":230}],265:[function(require,module,exports){
+},{"react":230}],266:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -41404,7 +41507,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],266:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],267:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -41837,7 +41940,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],267:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],268:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -42272,7 +42375,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],268:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":289,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"react":230}],269:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -42318,7 +42421,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],269:[function(require,module,exports){
+},{"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -42424,7 +42527,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"../Modal/Modal":251,"./PopUp":268,"react":230}],270:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":291,"../../stores/mainstore":305,"../Modal/Modal":252,"./PopUp":269,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -42457,7 +42560,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":305,"./KQ":265,"./PopUp":268,"./ProductInfo":269,"react":230}],271:[function(require,module,exports){
+},{"../../stores/mainstore":305,"./KQ":266,"./PopUp":269,"./ProductInfo":270,"react":230}],272:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -42556,10 +42659,10 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
                     ));
           }else{
-            React.createElement("div", {className: "main-container"}, 
+            binComponent = (React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
                     React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
-                )
+                ));
           }
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
@@ -42865,7 +42968,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":289,"../stores/PutBackStore":302,"../stores/mainstore":305,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":263,"./ProductDetails/KQ":265,"./ProductDetails/Wrapper":270,"./Reconcile":277,"./SystemIdle":281,"./TabularData":285,"react":230}],272:[function(require,module,exports){
+},{"../constants/appConstants":289,"../stores/PutBackStore":302,"../stores/mainstore":305,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":264,"./ProductDetails/KQ":266,"./ProductDetails/Wrapper":271,"./Reconcile":278,"./SystemIdle":283,"./TabularData":287,"react":230}],273:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -42889,8 +42992,29 @@ var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 
+
 function getStateData(){
-     return mainstore.getScreenData();
+  /*return {
+           PutFrontNavData : PutFrontStore.getNavData(),
+           PutFrontNotification : PutFrontStore.getNotificationData(),
+           PutFrontScreenId:PutFrontStore.getScreenId(),
+           PutFrontBinData: PutFrontStore.getBinData(),
+           PutFrontScanDetails : PutFrontStore.scanDetails(),
+           PutFrontProductDetails : PutFrontStore.productDetails(),
+           PutFrontRackDetails: PutFrontStore.getRackDetails(),
+           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
+           PutFrontServerNavData : PutFrontStore.getServerNavData(),
+           PutFrontItemUid : PutFrontStore.getItemUid()
+          
+    };*/
+     var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
+
 };
 
 var PutFront = React.createClass({displayName: "PutFront",
@@ -42941,7 +43065,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                 this.state.MobileFlag?React.createElement(SplitPPS, null):React.createElement(Spinner, null)
+                 this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked}):React.createElement(Spinner, null)
                  )
               )
             );
@@ -43193,7 +43317,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":289,"../stores/PutFrontStore":303,"../stores/mainstore":305,"./BinMap":286,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./ProductDetails/KQ":265,"./ProductDetails/KQExceptionDamaged":266,"./ProductDetails/KQExceptionMissing":267,"./ProductDetails/Wrapper":270,"./Rack/MsuRack.js":273,"./Spinner/LoaderButler":278,"./SplitPPS":287,"./TabularData":285,"react":230}],273:[function(require,module,exports){
+},{"../constants/appConstants":289,"../stores/PutFrontStore":303,"../stores/mainstore":305,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/KQ":266,"./ProductDetails/KQExceptionDamaged":267,"./ProductDetails/KQExceptionMissing":268,"./ProductDetails/Wrapper":271,"./Rack/MsuRack.js":274,"./Spinner/LoaderButler":279,"./SplitPPS":282,"./TabularData":287,"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -43291,7 +43415,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
 module.exports = MsuRack;
 
-},{"./RackRow":274,"react":230}],274:[function(require,module,exports){
+},{"./RackRow":275,"react":230}],275:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -43339,7 +43463,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":275,"react":230}],275:[function(require,module,exports){
+},{"./RackSlot":276,"react":230}],276:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -43382,7 +43506,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":276,"react":230}],276:[function(require,module,exports){
+},{"./SingleSlot":277,"react":230}],277:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -43402,7 +43526,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],277:[function(require,module,exports){
+},{"react":230}],278:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -43440,7 +43564,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 
 module.exports = ReconcileStatus;
 
-},{"../constants/resourceConstants":291,"./Header":248,"react":230}],278:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":249,"react":230}],279:[function(require,module,exports){
 var React = require('react');
 var SpinnerButler = require('./SpinnerButler');
 
@@ -43457,7 +43581,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"./SpinnerButler":280,"react":230}],279:[function(require,module,exports){
+},{"./SpinnerButler":281,"react":230}],280:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -43475,7 +43599,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":278,"./SpinnerButler":280,"react":230}],280:[function(require,module,exports){
+},{"./LoaderButler":279,"./SpinnerButler":281,"react":230}],281:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
@@ -43490,7 +43614,93 @@ var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 
 module.exports = SpinnerButler;
 
-},{"react":230}],281:[function(require,module,exports){
+},{"react":230}],282:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var SplitPPS = React.createClass({displayName: "SplitPPS",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.groupInfo || {}));
+		var leftCol = [],dockedGroup = this.props.docked,
+		undockAwaited = this.props.undockAwaited,
+		rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					if(dockedGroup.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock left spriteIcons"})
+							));
+					}
+					else{
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					if(dockedGroup.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock right spriteIcons"})
+							));
+					}
+					else{
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
+				}
+
+			}
+		}
+	
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol
+		}
+	},
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		
+		return (
+				React.createElement("div", {className: "splitPPSWrapper"}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 three"}, 
+					React.createElement("ul", null, 
+					mapStructure.leftCol
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 three"}, 
+					React.createElement("ul", null, 
+					mapStructure.rightCol
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = SplitPPS;
+
+},{"../constants/resourceConstants":291,"react":230}],283:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -43510,7 +43720,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":291,"./Header":248,"react":230}],282:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":249,"react":230}],284:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -43529,7 +43739,7 @@ var SystemIdleHeader = React.createClass({displayName: "SystemIdleHeader",
 });
 module.exports = SystemIdleHeader;
 
-},{"../constants/resourceConstants":291,"./Header":248,"react":230}],283:[function(require,module,exports){
+},{"../constants/resourceConstants":291,"./Header":249,"react":230}],285:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -43571,7 +43781,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"../constants/appConstants":289,"./Button/IconButton":241,"react":230}],284:[function(require,module,exports){
+},{"../constants/appConstants":289,"./Button/IconButton":242,"react":230}],286:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -43683,7 +43893,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/mainstore":305,"./Button/IconButton":241,"react":230}],285:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/mainstore":305,"./Button/IconButton":242,"react":230}],287:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -43718,194 +43928,7 @@ var TabularData = React.createClass({displayName: "TabularData",
 
 module.exports = TabularData;
 
-},{"./TableHeader":283,"./TableRow":284,"react":230}],286:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var BinMap = React.createClass({displayName: "BinMap",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-
-			}
-		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
-		}
-	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
-		return (
-				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.leftCol
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.rightCol
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = BinMap;
-
-},{"../constants/resourceConstants":291,"react":230}],287:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var SplitPPS = React.createClass({displayName: "SplitPPS",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-
-			}
-		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
-		}
-	},
-	render:function(){		
-		
-		//var mapStructure = this.processData();	
-		
-		return (
-				React.createElement("div", {className: "splitPPSWrapper"}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 three"}, 
-					React.createElement("ul", null, 
-					React.createElement("li", {className: "spriteIcons"}, 
-					React.createElement("span", {className: "docked spriteIcons"})
-					), 
-					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock left spriteIcons"})), 
-					React.createElement("li", {className: "spriteIcons"})
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 three"}, 
-					React.createElement("ul", null, 
-					React.createElement("li", {className: "spriteIcons"}, React.createElement("span", {className: "undock right spriteIcons"})), 
-					React.createElement("li", {className: "spriteIcons"}), 
-					React.createElement("li", {className: "spriteIcons"})
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = SplitPPS;
-
-},{"../constants/resourceConstants":291,"react":230}],288:[function(require,module,exports){
+},{"./TableHeader":285,"./TableRow":286,"react":230}],288:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
 
 var navData = {
@@ -44347,7 +44370,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":249,"./components/Operator":259,"jquery":67,"react":230,"react-dom":74}],295:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":250,"./components/Operator":260,"jquery":67,"react":230,"react-dom":74}],295:[function(require,module,exports){
 var chinese = {
     "Password": "\u5bc6\u7801",
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
@@ -46161,27 +46184,27 @@ var modalContent = {
 * This function enables the logout due to inactivity feature - Krishna.
 */
 var idleLogout = function() {
-    var t;
-    window.addEventListener('load', resetTimer,false);
-    window.addEventListener('mousemove', resetTimer,false);
-    window.addEventListener('mousedown', resetTimer,false);
-    window.addEventListener('onclick', resetTimer,false);
-    window.addEventListener('scroll', resetTimer,false);
-    window.addEventListener('keypress', resetTimer,false);
+    // var t;
+    // window.addEventListener('load', resetTimer,false);
+    // window.addEventListener('mousemove', resetTimer,false);
+    // window.addEventListener('mousedown', resetTimer,false);
+    // window.addEventListener('onclick', resetTimer,false);
+    // window.addEventListener('scroll', resetTimer,false);
+    // window.addEventListener('keypress', resetTimer,false);
 
-    function logout() {
-        if(mainstore.getLogoutState()){
-                console.log("Logging out since user has been idle past the time threshold")
-                CommonActions.logoutSession(true);
-            }
+    // function logout() {
+    //     if(mainstore.getLogoutState()){
+    //             console.log("Logging out since user has been idle past the time threshold")
+    //             CommonActions.logoutSession(true);
+    //         }
             
-    }
+    // }
 
-    function resetTimer() {
-        clearTimeout(t);
-        t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
-        // time is in milliseconds
-    }
+    // function resetTimer() {
+    //     clearTimeout(t);
+    //     t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
+    //     // time is in milliseconds
+    // }
 }();
 
 function setPopUpVisible(status) {
@@ -47409,7 +47432,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getBinMapDetails:function(){
-        return _seatData.group_info || null;
+        return _seatData ? _seatData.group_info : null;
     },
     getSplitScreenFlag:function(){
         var navData=_seatData.group_info|| {};
@@ -47444,8 +47467,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return undockAwaited;
     },
     getSelectedBinGroup:function(){
-        var groupId = _seatData.ppsbin_list[0].group_id;
-        return groupId || null;
+        var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var groupId = null;
+        ppsbin_list.forEach(function(el){
+            if(Number(el["ppsbin_count"]) > 0){
+                groupId = el["group_id"];
+                return false;
+            }
+        })
+        return groupId ;
+    },
+    getUndockAwaitedDetails:function(){
+        return Object.keys(_seatData ? _seatData.undock_awaited : {});
+    },
+    getDockedDetails:function(){
+        return Object.keys(_seatData ? _seatData.docked : {});
     },
 
     validateAndSendDataToServer: function() {
@@ -48455,8 +48491,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-
     console.log(data);    
+
 
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

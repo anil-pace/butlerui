@@ -18,6 +18,7 @@ function getState(){
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
       navMessages : mainstore.getServerMessages(),
+
   }
 }
 var Operator = React.createClass({

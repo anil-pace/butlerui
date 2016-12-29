@@ -5,7 +5,10 @@ var SplitPPS = require('./SplitPPS');
 function getState(){
 		return {
 	      dockedGroup :mainstore.getDockedGroup(),
-    	  undockedAwaited:mainstore.getUndockAwaitedGroup()
+    	  undockedAwaited:mainstore.getUndockAwaitedGroup(),
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
   		}
 }
 
@@ -31,7 +34,7 @@ var MobileSystemIdle = React.createClass({
 		return (
 			<div ref="myRef">
 					<SystemIdleHeader />
-					<SplitPPS />
+					<SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>
 			</div>
 		)
 	}

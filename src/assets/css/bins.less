@@ -173,15 +173,24 @@
 }
 }
 
+.bin-container{
+    position: relative;
+    float:left;
+}
+
 .bins-flex {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
     max-height: 100%;
+    min-height: 500px;
     padding-left:20%;
     padding-right: 20%;
+    
     .bin {
+
         border: 2px solid @text-color;
+        height: 100%;
         &.use {
             background: @bin-selected-bck;
             color: white;
@@ -311,7 +320,7 @@
 .item-count {
     top: 0;
     bottom: 20%;
-    height: 50%;
+    height: 80%;
     width: 50%;
     margin: auto;
     display: flex;

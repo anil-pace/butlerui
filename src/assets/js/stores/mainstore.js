@@ -1287,7 +1287,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getBinMapDetails:function(){
-        return _seatData.group_info || null;
+        return _seatData ? _seatData.group_info : null;
     },
     getSplitScreenFlag:function(){
         var navData=_seatData.group_info|| {};
@@ -1322,8 +1322,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return undockAwaited;
     },
     getSelectedBinGroup:function(){
-        var groupId = _seatData.ppsbin_list[0].group_id;
-        return groupId || null;
+        var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var groupId = null;
+        ppsbin_list.forEach(function(el){
+            if(Number(el["ppsbin_count"]) > 0){
+                groupId = el["group_id"];
+                return false;
+            }
+        })
+        return groupId ;
+    },
+    getUndockAwaitedDetails:function(){
+        return Object.keys(_seatData ? _seatData.undock_awaited : {});
+    },
+    getDockedDetails:function(){
+        return Object.keys(_seatData ? _seatData.docked : {});
     },
 
     validateAndSendDataToServer: function() {

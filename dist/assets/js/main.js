@@ -42605,7 +42605,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = this.getExceptionComponent();
         }
         break;
-      case 'put_front_waiting_undock':
+      case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
@@ -43743,7 +43743,8 @@ var appConstants = {
 	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
 	CANCEL_PPTL : 'CANCEL_PPTL',
 	IDLE_LOGOUT_TIME : 300000, //in millisec
-	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN'
+	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN',
+	PUT_FRONT_WAITING_UNDOCK : 'put_front_waiting_undock'
 };
 
 module.exports = appConstants;
@@ -47279,7 +47280,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 break;
-            case 'put_front_waiting_undock':
+            case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();

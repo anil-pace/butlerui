@@ -1645,7 +1645,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 break;
-            case 'put_front_waiting_undock':
+            case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();

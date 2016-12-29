@@ -136,7 +136,7 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
-      case 'put_front_waiting_undock':
+      case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (

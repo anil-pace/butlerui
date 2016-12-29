@@ -39,27 +39,27 @@ var modalContent = {
 * This function enables the logout due to inactivity feature - Krishna.
 */
 var idleLogout = function() {
-    var t;
-    window.addEventListener('load', resetTimer,false);
-    window.addEventListener('mousemove', resetTimer,false);
-    window.addEventListener('mousedown', resetTimer,false);
-    window.addEventListener('onclick', resetTimer,false);
-    window.addEventListener('scroll', resetTimer,false);
-    window.addEventListener('keypress', resetTimer,false);
+    // var t;
+    // window.addEventListener('load', resetTimer,false);
+    // window.addEventListener('mousemove', resetTimer,false);
+    // window.addEventListener('mousedown', resetTimer,false);
+    // window.addEventListener('onclick', resetTimer,false);
+    // window.addEventListener('scroll', resetTimer,false);
+    // window.addEventListener('keypress', resetTimer,false);
 
-    function logout() {
-        if(mainstore.getLogoutState()){
-                console.log("Logging out since user has been idle past the time threshold")
-                CommonActions.logoutSession(true);
-            }
+    // function logout() {
+    //     if(mainstore.getLogoutState()){
+    //             console.log("Logging out since user has been idle past the time threshold")
+    //             CommonActions.logoutSession(true);
+    //         }
             
-    }
+    // }
 
-    function resetTimer() {
-        clearTimeout(t);
-        t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
-        // time is in milliseconds
-    }
+    // function resetTimer() {
+    //     clearTimeout(t);
+    //     t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
+    //     // time is in milliseconds
+    // }
 }();
 
 function setPopUpVisible(status) {

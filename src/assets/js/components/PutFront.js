@@ -6,6 +6,7 @@ var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
@@ -21,19 +22,6 @@ var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 
 function getStateData(){
-  /*return {
-           PutFrontNavData : PutFrontStore.getNavData(),
-           PutFrontNotification : PutFrontStore.getNotificationData(),
-           PutFrontScreenId:PutFrontStore.getScreenId(),
-           PutFrontBinData: PutFrontStore.getBinData(),
-           PutFrontScanDetails : PutFrontStore.scanDetails(),
-           PutFrontProductDetails : PutFrontStore.productDetails(),
-           PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData(),
-           PutFrontItemUid : PutFrontStore.getItemUid()
-          
-    };*/
      return mainstore.getScreenData();
 };
 
@@ -96,15 +84,24 @@ var PutFront = React.createClass({
         break;
       case appConstants.PUT_FRONT_SCAN:
          if(this.state.PutFrontExceptionStatus == false){
+           if (this.state.SplitScreenFlag){
+            binComponent = ( <div>
+                            <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+                  </div>)
+
+          }else{
+            binComponent =(<div className='main-container'>
+                  <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+                </div>)
+          }
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                 <Modal />
                 {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
-                <div className='main-container'>
-                  <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
-                </div>
+                {binComponent}
               </div>
             );
            }else{
@@ -114,6 +111,7 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          //need to check this case, if we need flexible bins here?
           this._component = (
               <div className='grid-container'>
                 <Modal />

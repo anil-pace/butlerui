@@ -37645,6 +37645,7 @@ var Bins = React.createClass({displayName: "Bins",
         var compData = this.props.binsData; 
         var scrnId = this.props.screenId;
         var self = this;
+        console.log(compData);
         return (
             	 React.createElement("div", {className: "bins"}, 
             	 	

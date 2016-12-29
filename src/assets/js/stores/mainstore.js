@@ -1290,7 +1290,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _seatData ? _seatData.group_info : null;
     },
     getSelectedBinGroup:function(){
-        var groupId = _seatData ? _seatData.ppsbin_list[0].group_id : null;
+        var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var groupId = null;
+        ppsbin_list.forEach(function(el){
+            if(Number(el["ppsbin_count"]) > 0){
+                groupId = el["group_id"];
+                return false;
+            }
+        })
         return groupId ;
     },
     getUndockAwaitedDetails:function(){

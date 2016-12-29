@@ -21,6 +21,7 @@ var Bins = React.createClass({
         var compData = this.props.binsData; 
         var scrnId = this.props.screenId;
         var self = this;
+        console.log(compData);
         return (
             	 <div className="bins">
             	 	{

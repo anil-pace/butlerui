@@ -36,13 +36,8 @@ function getStateData(){
            PutFrontItemUid : PutFrontStore.getItemUid()
           
     };*/
-     var screenData = mainstore.getScreenData();
-      var splitPPSData ={
-        groupInfo : mainstore.getBinMapDetails(),
-        undockAwaited : mainstore.getUndockAwaitedDetails(),
-        docked : mainstore.getDockedDetails()
-    }
-      return Object.assign({},screenData,splitPPSData);
+     
+      return mainstore.getScreenData();
 
 };
 
@@ -94,7 +89,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                 {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>:<Spinner />}
+                 {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
                  </div>
               </div>
             );
@@ -161,7 +156,7 @@ var PutFront = React.createClass({
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                 <SplitPPS/>
+                 <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
                  </div>
               </div>
             );

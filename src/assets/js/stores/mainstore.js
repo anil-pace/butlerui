@@ -1310,14 +1310,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getDockedGroup:function(){
         var dockedGroup = [];
         if(_seatData){
-            dockedGroup = _seatData.docked||[];
+            dockedGroup = Object.keys(_seatData.docked)||[];
         }
         return dockedGroup;
     },
     getUndockAwaitedGroup:function(){
         var undockAwaited = [];
         if(_seatData){
-            undockAwaited = _seatData.undock_awaited||[];
+            undockAwaited = Object.keys(_seatData.undock_awaited)||[];
         }
         return undockAwaited;
     },
@@ -1622,7 +1622,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["MobileFlag"]=this.getMobileFlag();
+                data["BinMapDetails"] =  this.getBinMapDetails();   
                 data["DockedGroup"] = this.getDockedGroup();  
+                data["UndockAwaited"] = this.getUndockAwaitedGroup();               
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -1662,6 +1664,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] =  this.getBinMapDetails();   
                 data["DockedGroup"] = this.getDockedGroup();  
                 data["UndockAwaited"] = this.getUndockAwaitedGroup();
                 data["PutFrontExceptionData"] = this.getExceptionData();

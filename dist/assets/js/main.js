@@ -39231,10 +39231,8 @@ var SplitPPS = require('./SplitPPS');
 function getState(){
 		return {
 	      dockedGroup :mainstore.getDockedGroup(),
-    	  undockedAwaited:mainstore.getUndockAwaitedGroup(),
-        groupInfo : mainstore.getBinMapDetails(),
-        undockAwaited : mainstore.getUndockAwaitedDetails(),
-        docked : mainstore.getDockedDetails()
+    	  undockAwaited:mainstore.getUndockAwaitedGroup(),
+        groupInfo : mainstore.getBinMapDetails()
   		}
 }
 
@@ -39260,7 +39258,7 @@ var MobileSystemIdle = React.createClass({displayName: "MobileSystemIdle",
 		return (
 			React.createElement("div", {ref: "myRef"}, 
 					React.createElement(SystemIdleHeader, null), 
-					React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked})
+					React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.dockedGroup})
 			)
 		)
 	}
@@ -40076,8 +40074,7 @@ function getState(){
       isMobile:mainstore.getMobileFlag(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
-      navMessages : mainstore.getServerMessages(),
-
+      navMessages : mainstore.getServerMessages()
   }
 }
 var Operator = React.createClass({displayName: "Operator",
@@ -43007,13 +43004,8 @@ function getStateData(){
            PutFrontItemUid : PutFrontStore.getItemUid()
           
     };*/
-     var screenData = mainstore.getScreenData();
-      var splitPPSData ={
-        groupInfo : mainstore.getBinMapDetails(),
-        undockAwaited : mainstore.getUndockAwaitedDetails(),
-        docked : mainstore.getDockedDetails()
-    }
-      return Object.assign({},screenData,splitPPSData);
+     
+      return mainstore.getScreenData();
 
 };
 
@@ -43065,7 +43057,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                 this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked}):React.createElement(Spinner, null)
+                 this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup}):React.createElement(Spinner, null)
                  )
               )
             );
@@ -43132,7 +43124,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                 React.createElement(SplitPPS, null)
+                 React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup})
                  )
               )
             );
@@ -44772,6 +44764,7 @@ var serverMessages = {
     "PtF.H.004" : "Scan Entity From Bin {0}",
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
+    "PtF.H.007" : "Undock Roll Cage",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -47455,14 +47448,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getDockedGroup:function(){
         var dockedGroup = [];
         if(_seatData){
-            dockedGroup = _seatData.docked||[];
+            dockedGroup = Object.keys(_seatData.docked)||[];
         }
         return dockedGroup;
     },
     getUndockAwaitedGroup:function(){
         var undockAwaited = [];
         if(_seatData){
-            undockAwaited = _seatData.undock_awaited||[];
+            undockAwaited = Object.keys(_seatData.undock_awaited)||[];
         }
         return undockAwaited;
     },
@@ -47767,7 +47760,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["MobileFlag"]=this.getMobileFlag();
+                data["BinMapDetails"] =  this.getBinMapDetails();   
                 data["DockedGroup"] = this.getDockedGroup();  
+                data["UndockAwaited"] = this.getUndockAwaitedGroup();               
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -47807,6 +47802,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] =  this.getBinMapDetails();   
                 data["DockedGroup"] = this.getDockedGroup();  
                 data["UndockAwaited"] = this.getUndockAwaitedGroup();
                 data["PutFrontExceptionData"] = this.getExceptionData();

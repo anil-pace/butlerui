@@ -17,8 +17,7 @@ function getState(){
       isMobile:mainstore.getMobileFlag(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
-      navMessages : mainstore.getServerMessages(),
-
+      navMessages : mainstore.getServerMessages()
   }
 }
 var Operator = React.createClass({

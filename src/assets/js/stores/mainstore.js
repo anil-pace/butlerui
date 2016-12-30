@@ -1325,7 +1325,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
         ppsbin_list.forEach(function(el){
-            if(Number(el["ppsbin_count"]) > 0){
+            if(el["selected_state"]){
                 groupId = el["group_id"];
                 return false;
             }

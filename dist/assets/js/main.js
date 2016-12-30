@@ -44299,7 +44299,8 @@ var resourceConstants = {
 	CLIENTCODE_409 : "CLIENTCODE_409",
 	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
 	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
-	CLIENTCODE_400 : "CLIENTCODE_400"
+	CLIENTCODE_400 : "CLIENTCODE_400",
+	CLIENTCODE_MODE_CHANGED:"CLIENTCODE_MODE_CHANGED"
 
  
 };
@@ -47469,7 +47470,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
         ppsbin_list.forEach(function(el){
-            if(Number(el["ppsbin_count"]) > 0){
+            if(el["selected_state"]){
                 groupId = el["group_id"];
                 return false;
             }
@@ -48223,6 +48224,7 @@ module.exports = mainstore;
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
+var resourceConstants = require('../constants/resourceConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
@@ -48275,6 +48277,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
                     utils.enableKeyboard();
+                }
+                else if(evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED){
+                    utils.sessionLogout();
+                        return false;
                 }else{
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
@@ -48516,4 +48522,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":289,"../constants/configConstants":290,"../serverMessages/server_messages":298,"events":14,"react/lib/Object.assign":121}]},{},[294]);
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../constants/configConstants":290,"../constants/resourceConstants":291,"../serverMessages/server_messages":298,"events":14,"react/lib/Object.assign":121}]},{},[294]);

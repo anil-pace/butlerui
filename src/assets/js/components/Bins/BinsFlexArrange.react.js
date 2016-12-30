@@ -75,14 +75,21 @@ var Bins = React.createClass({
          // ratios, hence each of the bin would have to have the factor into % of the 
          // .bins container.
          
-         var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.breadth)));
-         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.length)));
-        
+         var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)));
+         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.breadth)));
+         
          for (var i =0; i<aBins.length ;i++){
-                var binWidth = aBins[i].breadth * horFactor +'%';
-                var binHeight = aBins[i].length * vertFactor + '%';
+                var binWidth = aBins[i].length * horFactor +'%';
+                var binHeight = aBins[i].breadth * vertFactor +'%';
+                var itop = aBins[i].length* vertFactor  +'px';
+                var ileft =aBins[i].breadth* horFactor  +'px';
+                itop = '-'+itop;
                   aHTMLBins.push(
-                                 <div style={{display:'inline-block', width:binWidth, height:binHeight}} >
+                                 <div className="bin-container" style={{
+                                 width:binWidth, 
+                                 height:binHeight,
+                                 top: itop,
+                                 left:ileft}} >
                                      <Bin binData={aBins[i]} screenId={screenId} />
                                 </div>
                                  )
@@ -97,7 +104,7 @@ var Bins = React.createClass({
                                                this.state.screenId);
         var self = this;
         return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth}}>
+                 <div className="bins-flex" style={{width:document.body.clientWidth, height:document.body.clientHeight/3}}>
                         {aHTMLBins}
                  </div>
         );

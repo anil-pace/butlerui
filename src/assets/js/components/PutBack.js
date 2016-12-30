@@ -64,7 +64,7 @@ var PutBack = React.createClass({
          if(this.state.PutBackExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent ="";
-          if (this.state.SplitScreenFlag){
+          if (this.state.BinMapDetails){
             binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />)
 
           }else{
@@ -90,16 +90,16 @@ var PutBack = React.createClass({
       case appConstants.PUT_BACK_SCAN:
           if(this.state.PutBackExceptionStatus == false){
           var binComponent = "";
-          if(this.state.SplitScreenFlag){
+          if(this.state.BinMapDetails){
             binComponent = (<div>
                             <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                     <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
                     </div>);
           }else{
-            binComponent = (<div className='main-container'>
-                    <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
-                </div>);
+           binComponent =( <div className='main-container'>
+                               <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
+                               <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
+                           </div>)
           }
           this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
@@ -238,7 +238,7 @@ var PutBack = React.createClass({
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
           var binComponent="";
-          if(this.state.SplitScreenFlag){
+          if(this.state.BinMapDetails){
             binComponent=(<div className="exception1">
                       <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                    </div>)

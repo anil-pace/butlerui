@@ -10,7 +10,7 @@ var Navigation = React.createClass({
                 {this.props.navData.map(function(value,index){
                     if(value.type == "active")
                         return (
-                                <ActiveNavigation key={index} navId={this.props.navData[0].screen_id} data={value} serverNavData={this.props.serverNavData} navMessagesJson={this.props.navMessagesJson} />
+                                <ActiveNavigation key={index} navId={this.props.navData[0].screen_id} data={value} serverNavData={this.props.serverNavData} navMessagesJson={this.props.navMessagesJson} subMessage={this.props.subMessage} showSpinner={this.props.showSpinner} />
                             );
                     else
                         return (

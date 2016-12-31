@@ -10,6 +10,7 @@ var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
+var allresourceConstants = require('../constants/resourceConstants');
 var Rack = require('./Rack/MsuRack.js');
 var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
@@ -36,13 +37,8 @@ function getStateData(){
            PutFrontItemUid : PutFrontStore.getItemUid()
           
     };*/
-     var screenData = mainstore.getScreenData();
-      var splitPPSData ={
-        groupInfo : mainstore.getBinMapDetails(),
-        undockAwaited : mainstore.getUndockAwaitedDetails(),
-        docked : mainstore.getDockedDetails()
-    }
-      return Object.assign({},screenData,splitPPSData);
+     
+      return mainstore.getScreenData();
 
 };
 
@@ -90,11 +86,11 @@ var PutFront = React.createClass({
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
         if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                 {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>:<Spinner />}
+                 {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
                  </div>
               </div>
             );
@@ -137,7 +133,7 @@ var PutFront = React.createClass({
               <div className='grid-container'>
                 <Modal />
                 {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
-                <div className="single-bin">
+                <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                       <div className="text">{_("CURRENT BIN")}</div>
                 </div>
@@ -155,13 +151,13 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
-      case 'put_front_waiting_undock':
+      case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.UNDOCK_PUSH}/>);
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                 <SplitPPS/>
+                 <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
                  </div>
               </div>
             );

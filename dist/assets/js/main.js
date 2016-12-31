@@ -39944,8 +39944,10 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
                         }
                        
                         }
-                    )()
-            		)
+                    )(), 
+                    this.props.subMessage && React.createElement("div", {className: "sub-message"}, _(this.props.subMessage)), 
+            		this.props.showSpinner && React.createElement("p", null, "Spinner here!")
+                    )
             	)
         );
     },
@@ -39966,7 +39968,7 @@ var Navigation = React.createClass({displayName: "Navigation",
                 this.props.navData.map(function(value,index){
                     if(value.type == "active")
                         return (
-                                React.createElement(ActiveNavigation, {key: index, navId: this.props.navData[0].screen_id, data: value, serverNavData: this.props.serverNavData, navMessagesJson: this.props.navMessagesJson})
+                                React.createElement(ActiveNavigation, {key: index, navId: this.props.navData[0].screen_id, data: value, serverNavData: this.props.serverNavData, navMessagesJson: this.props.navMessagesJson, subMessage: this.props.subMessage, showSpinner: this.props.showSpinner})
                             );
                     else
                         return (
@@ -40119,7 +40121,6 @@ var Operator = React.createClass({displayName: "Operator",
 
   render: function(data){ 
      this.getSeatType(this.state.currentSeat);
-     console.log(this.state.isMobile);
       if(this.state.spinner === true){
        this._spinner = React.createElement(Spinner, null)
       }else{
@@ -40402,16 +40403,13 @@ var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
-var SplitPPS = require('./SplitPPS');
 
 var checkListOpen = false;
 
 function getStateData(){
       var screenData = mainstore.getScreenData();
       var splitPPSData ={
-        groupInfo : mainstore.getBinMapDetails(),
-        undockAwaited : mainstore.getUndockAwaitedDetails(),
-        docked : mainstore.getDockedDetails()
+        groupInfo : mainstore.getBinMapDetails()
     }
       return Object.assign({},screenData,splitPPSData);
 };
@@ -40520,8 +40518,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null), 
-                    React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, undockAwaited: this.state.undockAwaited, docked: this.state.docked}), ";"
+                    React.createElement(Spinner, null)
                  )
               )
             );
@@ -40847,7 +40844,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickFrontStore":301,"../stores/mainstore":305,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./BoxSerial.js":240,"./Button/Button":241,"./CurrentSlot":243,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Modal/Modal1":253,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductDetails.js":263,"./ProductDetails/KQ":266,"./ProductDetails/KQExceptionDamaged":267,"./ProductDetails/KQExceptionMissing":268,"./ProductDetails/Wrapper":271,"./Rack/MsuRack.js":274,"./Spinner/LoaderButler":279,"./SplitPPS":282,"./TabularData":287,"react":230}],263:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":289,"../stores/PickFrontStore":301,"../stores/mainstore":305,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./BoxSerial.js":240,"./Button/Button":241,"./CurrentSlot":243,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Modal/Modal1":253,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductDetails.js":263,"./ProductDetails/KQ":266,"./ProductDetails/KQExceptionDamaged":267,"./ProductDetails/KQExceptionMissing":268,"./ProductDetails/Wrapper":271,"./Rack/MsuRack.js":274,"./Spinner/LoaderButler":279,"./TabularData":287,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -42978,6 +42975,7 @@ var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
+var allresourceConstants = require('../constants/resourceConstants');
 var Rack = require('./Rack/MsuRack.js');
 var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
@@ -43053,7 +43051,7 @@ var PutFront = React.createClass({displayName: "PutFront",
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
         if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, showSpinner: this.state.MobileFlag}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
@@ -43100,7 +43098,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                React.createElement("div", {className: "single-bin"}, 
+                React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
                       React.createElement("div", {className: "text"}, _("CURRENT BIN"))
                 ), 
@@ -43120,7 +43118,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.UNDOCK_PUSH}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
@@ -43309,7 +43307,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":289,"../stores/PutFrontStore":303,"../stores/mainstore":305,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/KQ":266,"./ProductDetails/KQExceptionDamaged":267,"./ProductDetails/KQExceptionMissing":268,"./ProductDetails/Wrapper":271,"./Rack/MsuRack.js":274,"./Spinner/LoaderButler":279,"./SplitPPS":282,"./TabularData":287,"react":230}],274:[function(require,module,exports){
+},{"../constants/appConstants":289,"../constants/resourceConstants":291,"../stores/PutFrontStore":303,"../stores/mainstore":305,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/KQ":266,"./ProductDetails/KQExceptionDamaged":267,"./ProductDetails/KQExceptionMissing":268,"./ProductDetails/Wrapper":271,"./Rack/MsuRack.js":274,"./Spinner/LoaderButler":279,"./SplitPPS":282,"./TabularData":287,"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 
@@ -43997,6 +43995,14 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],
+        [{
+            "screen_id": "put_front_waiting_undock",
+            "code": "Common.000",
+            "message": "Undock Roll Cage",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [
@@ -44264,6 +44270,7 @@ var resourceConstants = {
 	SELECTED : 'Selected',
 	UNSELECTED:"Unselected",
 	SYS_IDLE : 'System is Idle',
+	UNDOCK_PUSH : 'Gently push roll cage away from the frame',
 	CURR_SLOT: 'CURRENT SLOT',
 	VIEW_MORE: 'View More',
 	TBL_HEADER: 'Box Serial Numbers',
@@ -46344,6 +46351,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.putFront[0];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
+                    _NavData = navConfig.putFront[2];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -47446,18 +47455,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return bIsMobile;
     },
     getDockedGroup:function(){
-        var dockedGroup = [];
-        if(_seatData){
-            dockedGroup = Object.keys(_seatData.docked)||[];
-        }
-        return dockedGroup;
+            return (_seatData && _seatData.docked ? Object.keys(_seatData.docked):[]);
+        
     },
     getUndockAwaitedGroup:function(){
-        var undockAwaited = [];
-        if(_seatData){
-            undockAwaited = Object.keys(_seatData.undock_awaited)||[];
-        }
-        return undockAwaited;
+            return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
     },
     getSelectedBinGroup:function(){
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
@@ -47470,13 +47472,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return groupId ;
     },
-    getUndockAwaitedDetails:function(){
-        return Object.keys(_seatData ? _seatData.undock_awaited : {});
-    },
-    getDockedDetails:function(){
-        return Object.keys(_seatData ? _seatData.docked : {});
-    },
-
     validateAndSendDataToServer: function() {
         var flag = false;
         var details;

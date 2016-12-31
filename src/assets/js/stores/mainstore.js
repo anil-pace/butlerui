@@ -206,6 +206,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.putFront[0];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
+                    _NavData = navConfig.putFront[2];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -1308,18 +1310,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return bIsMobile;
     },
     getDockedGroup:function(){
-        var dockedGroup = [];
-        if(_seatData){
-            dockedGroup = Object.keys(_seatData.docked)||[];
-        }
-        return dockedGroup;
+            return (_seatData && _seatData.docked ? Object.keys(_seatData.docked):[]);
+        
     },
     getUndockAwaitedGroup:function(){
-        var undockAwaited = [];
-        if(_seatData){
-            undockAwaited = Object.keys(_seatData.undock_awaited)||[];
-        }
-        return undockAwaited;
+            return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
     },
     getSelectedBinGroup:function(){
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
@@ -1332,13 +1327,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         })
         return groupId ;
     },
-    getUndockAwaitedDetails:function(){
-        return Object.keys(_seatData ? _seatData.undock_awaited : {});
-    },
-    getDockedDetails:function(){
-        return Object.keys(_seatData ? _seatData.docked : {});
-    },
-
     validateAndSendDataToServer: function() {
         var flag = false;
         var details;

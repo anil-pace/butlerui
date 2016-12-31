@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"sea",
+				"seatType"
+			],
+			[
+				"v",
+				"vertFactor"
+			],
+			[
+				"a",
+				"aHTMLBins"
+			],
+			[
+				"_get",
+				"_getHTMLBackBins"
+			],
+			[
+				"max",
+				"max-height"
+			],
+			[
+				"max-",
+				"max-width"
+			],
+			[
+				"wrapp",
+				"WrapperSplitRoll"
+			],
+			[
+				"WRapp",
+				"WrapperSplitRoll"
+			],
+			[
 				"par",
 				"parentWidth"
 			],
@@ -42,10 +74,6 @@
 			[
 				"tit",
 				"totalWidth"
-			],
-			[
-				"a",
-				"aBins"
 			],
 			[
 				"oBin",
@@ -259,7 +287,8 @@
 			"file": "PickFront.js",
 			"settings":
 			{
-				"buffer_size": 22204,
+				"buffer_size": 22339,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -267,7 +296,16 @@
 			"file": "PutFront.js",
 			"settings":
 			{
-				"buffer_size": 16488,
+				"buffer_size": 16673,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "PickBack.js",
+			"settings":
+			{
+				"buffer_size": 10032,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -276,19 +314,17 @@
 			"file": "PutBack.js",
 			"settings":
 			{
-				"buffer_size": 21133,
+				"buffer_size": 20406,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Searching 225 files for \"BinsFlex\"\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/PickBack.js:\n    7  var Notification = require(\"./Notification/Notification\");\n    8  var Bins = require(\"./Bins/Bins.react\");\n    9: var BinsFlex = require(\"./Bins/BinsFlexArrange.react\");\n   10  var Button1 = require(\"./Button/Button\");\n   11  var Wrapper = require('./ProductDetails/Wrapper');\n   ..\n   85          var binComponent =\"\";\n   86            if (this.state.BinMapDetails){\n   87:             binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />)\n   88            }else{\n   89              binComponent =(\n   ..\n  108            var binComponent = \"\";\n  109            if (this.state.BinMapDetails){\n  110:             binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>);\n  111            }else{\n  112              binComponent = (<div className='main-container'>\n  ...\n  132            if (this.state.BinMapDetails){\n  133              binComponent = (<div className=\"exception1\">\n  134:                             <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>\n  135                              </div>);\n  136            }else{\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/PickFront.js:\n   10  var Notification = require(\"./Notification/Notification\");\n   11  var Bins = require(\"./Bins/Bins.react\");\n   12: var BinsFlex = require(\"./Bins/BinsFlexArrange.react\");\n   13  var Button1 = require(\"./Button/Button\");\n   14  var Wrapper = require('./ProductDetails/Wrapper');\n   ..\n  210          var binComponent=\"\";\n  211          if (this.state.BinMapDetails){\n  212:             binComponent = (<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>)\n  213            }else{\n  214              binComponent = (<div className='main-container'>\n  ...\n  254           var binComponent =\"\";\n  255            if (this.state.BinMapDetails){\n  256:             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)\n  257            }else{\n  258              binComponent =(<div className='main-container'>\n  ...\n  277          var binComponent =\"\";\n  278            if (this.state.BinMapDetails){\n  279:             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)\n  280            }else{\n  281              binComponent =(<div className='main-container'>\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/PutBack.js:\n    7  var Notification = require(\"./Notification/Notification\");\n    8  var Bins = require(\"./Bins/Bins.react\");\n    9: var BinsFlex = require(\"./Bins/BinsFlexArrange.react\");\n   10  var Button1 = require(\"./Button/Button\");\n   11  var Wrapper = require('./ProductDetails/Wrapper');\n   ..\n   66            var binComponent =\"\";\n   67            if (this.state.BinMapDetails){\n   68:             binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />)\n   69  \n   70            }else{\n   ..\n   93            if(this.state.BinMapDetails){\n   94              binComponent = (<div>\n   95:                             <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>\n   96                              <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />\n   97                      </div>);\n   ..\n  241            if(this.state.BinMapDetails){\n  242              binComponent=(<div className=\"exception1\">\n  243:                       <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>\n  244                     </div>)\n  245            }else{\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/PutFront.js:\n    7  var Notification = require(\"./Notification/Notification\");\n    8  var Bins = require(\"./Bins/Bins.react\");\n    9: var BinsFlex = require(\"./Bins/BinsFlexArrange.react\");\n   10  var Button1 = require(\"./Button/Button\");\n   11  var Wrapper = require('./ProductDetails/Wrapper');\n   ..\n   96             if (this.state.BinMapDetails){\n   97              binComponent = ( <div>\n   98:                             <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>\n   99                    <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>\n  100                    </div>)\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/Bins/BinsFlexArrange.react.js:\n    1  var React = require('react');\n    2: var Bin = require('./BinsFlex.react');\n    3  var PutBackStore = require('../../stores/PutBackStore');\n    4  \n\n19 matches across 5 files\n",
+			"file": "ProductDetails/ProductInfo.js",
 			"settings":
 			{
-				"buffer_size": 4972,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
+				"buffer_size": 3208,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -296,6 +332,15 @@
 			"settings":
 			{
 				"buffer_size": 785,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ProductDetails/WrapperSplitRoll.js",
+			"settings":
+			{
+				"buffer_size": 789,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -308,26 +353,11 @@
 			}
 		},
 		{
-			"file": "PrdtDetails/ProductInfo.js",
-			"settings":
-			{
-				"buffer_size": 608,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "PickBack.js",
-			"settings":
-			{
-				"buffer_size": 9985,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/stores/mainstore.js",
 			"settings":
 			{
-				"buffer_size": 96623,
+				"buffer_size": 96733,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -335,8 +365,26 @@
 			"file": "Bins/BinsFlexArrange.react.js",
 			"settings":
 			{
-				"buffer_size": 3915,
+				"buffer_size": 4347,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 227 files for \"seat_type\"\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/audit.json:\n   89  \t\t\"mode\": \"audit\",\n   90  \t\t\"is_idle\": false,\n   91: \t\t\"seat_type\": \"front\",\n   92  \t\t\"time_stamp\": \"1452087202\",\n   93  \t\t\"header_msge_list\": [{\n   ..\n  196  \t\t\"all_peripheral_status\": \"true\",\n  197  \t\t\"logout_allowed\": \"true\",\n  198: \t\t\"seat_type\": \"front\",\n  199  \t\t\"product_info\": [],\n  200  \t\t\"time_stamp\": \"1454146877\",\n  ...\n  375  \t\t\"mode\": \"audit\",\n  376  \t\t\"is_idle\": false,\n  377: \t\t\"seat_type\": \"front\",\n  378  \t\t\"time_stamp\": \"1452087202\",\n  379  \t\t\"header_msge_list\": [{\n  ...\n  519  \t\t\"mode\": \"audit\",\n  520  \t\t\"is_idle\": false,\n  521: \t\t\"seat_type\": \"front\",\n  522  \t\t\"time_stamp\": \"1452087202\",\n  523  \t\t\"header_msge_list\": [{\n  ...\n  663  \t\t\"mode\": \"audit\",\n  664  \t\t\"is_idle\": false,\n  665: \t\t\"seat_type\": \"front\",\n  666  \t\t\"time_stamp\": \"1452087202\",\n  667  \t\t\"header_msge_list\": [{\n  ...\n  766  \t\t\"all_peripheral_status\": \"true\",\n  767  \t\t\"logout_allowed\": true,\n  768: \t\t\"seat_type\": \"front\",\n  769  \t\t\"product_info\": [],\n  770  \t\t\"time_stamp\": \"1456490510\",\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/pick_back.json:\n   25  \t\t\"mode\": \"pick\",\n   26  \t\t\"is_idle\": false,\n   27: \t\t\"seat_type\": \"back\",\n   28  \t\t\"time_stamp\": \"1451025208\",\n   29  \t\t\"ppsbin_list\": [{\n   ..\n  144  \t\t\"mode\": \"pick\",\n  145  \t\t\"is_idle\": false,\n  146: \t\t\"seat_type\": \"back\",\n  147  \t\t\"time_stamp\": \"1451025288\",\n  148  \t\t\"ppsbin_list\": [{\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/pick_front.json:\n   86          \"mode\": \"pick\",\n   87          \"is_idle\": false,\n   88:         \"seat_type\": \"front\",\n   89          \"item_uid\" : \"123\",\n   90          \"product_info\": [\n   ..\n  227          \"mode\": \"pick\",\n  228          \"is_idle\": false,\n  229:         \"seat_type\": \"front\",\n  230          \"time_stamp\": \"1451023444\",\n  231          \"header_msge_list\": [{\n  ...\n  325          \"mode\": \"pick\",\n  326          \"is_idle\": false,\n  327:         \"seat_type\": \"front\",\n  328          \"time_stamp\": \"1451023841\",\n  329          \"header_msge_list\": [{\n  ...\n  365          \"mode\": \"pick\",\n  366          \"is_idle\": false,\n  367:         \"seat_type\": \"front\",\n  368          \"time_stamp\": \"1451024311\",\n  369          \"checklist_details\":{\n  ...\n  641          \"mode\": \"pick\",\n  642          \"is_idle\": false,\n  643:         \"seat_type\": \"front\",\n  644          \"item_uid\" : \"123\",\n  645          \"product_info\":[\n  ...\n  847          \"mode\": \"pick\",\n  848          \"is_idle\": false,\n  849:         \"seat_type\": \"front\",\n  850          \"item_uid\" : \"123\",\n  851          \"product_info\": [\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/put_back.json:\n   29  \t\t\"mode\": \"put\",\n   30  \t\t\"is_idle\": false,\n   31: \t\t\"seat_type\": \"back\",\n   32  \t\t\"time_stamp\": \"1455628394\",\n   33  \t\t\"ppsbin_list\": [{\n   ..\n  125  \t\t\"mode\": \"put\",\n  126  \t\t\"is_idle\": false,\n  127: \t\t\"seat_type\": \"back\",\n  128  \t\t\"time_stamp\": \"1449827300\",\n  129  \t\t\"ppsbin_list\": [{\n  ...\n  250  \t\t\"mode\": \"put\",\n  251  \t\t\"is_idle\": false,\n  252: \t\t\"seat_type\": \"back\",\n  253  \t\t\"product_info\": [\n  254  \t\t\t[{\n  ...\n  370   \t\t\"is_idle\": false,\n  371   \t\t\"logout_allowed\": \"false\",\n  372:  \t\t\"seat_type\": \"back\",\n  373   \t\t\"time_stamp\": \"1452370620\",\n  374   \t\t\"header_msge_list\": [{\n  ...\n  400  \t\t\"is_idle\": false,\n  401  \t\t\"logout_allowed\": \"false\",\n  402: \t\t\"seat_type\": \"back\",\n  403  \t\t\"time_stamp\": \"1452534790\",\n  404  \t\t\"header_msge_list\": [{\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/put_front.json:\n   18   \t\t\"mode\": \"put\",\n   19   \t\t\"is_idle\": true,\n   20:  \t\t\"seat_type\": \"front\",\n   21   \t\t\"time_stamp\": \"1450171282\",\n   22   \t\t\"ppsbin_list\": [{\n   ..\n  118  \t\t\"mode\": \"put\",\n  119  \t\t\"is_idle\": false,\n  120: \t\t\"seat_type\": \"front\",\n  121  \t\t\"product_info\": [],\n  122  \t\t\"time_stamp\": \"1455794289\",\n  ...\n  288  \t\t\"mode\": \"put\",\n  289  \t\t\"is_idle\": false,\n  290: \t\t\"seat_type\": \"front\",\n  291  \t\t\"item_uid\" : \"123\",\n  292  \t\t\"product_info\": [\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/exceptions/audit_exception_data.json:\n   33          \"screen_version\": \"1\", \n   34          \"seat_name\": \"front_10\", \n   35:         \"seat_type\": \"front\", \n   36          \"time_stamp\": \"1456122400\"\n   37      }\n   ..\n   74          \"screen_version\": \"1\", \n   75          \"seat_name\": \"front_10\", \n   76:         \"seat_type\": \"front\", \n   77          \"time_stamp\": \"1456122455\"\n   78      }\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/exceptions/pick_back_exception_data.json:\n   25  \t\t\"mode\": \"pick\",\n   26  \t\t\"is_idle\": false,\n   27: \t\t\"seat_type\": \"back\",\n   28  \t\t\"time_stamp\": \"1455796184\",\n   29  \t\t\"ppsbin_list\": [{\n   ..\n  145  \t\t\"mode\": \"pick\",\n  146  \t\t\"is_idle\": false,\n  147: \t\t\"seat_type\": \"back\",\n  148  \t\t\"time_stamp\": \"1455796315\",\n  149  \t\t\"ppsbin_list\": [{\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/exceptions/pick_front_exception_data.json:\n   17  \t\t\"mode\": \"pick\",\n   18  \t\t\"is_idle\": false,\n   19: \t\t\"seat_type\": \"front\",\n   20  \t\t\"time_stamp\": \"1455795693\",\n   21  \t\t\"header_msge_list\": [],\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/exceptions/put_back_exception_data.json:\n   27  \t\t\"mode\": \"put\",\n   28  \t\t\"is_idle\": false,\n   29: \t\t\"seat_type\": \"back\",\n   30  \t\t\"time_stamp\": \"1455628652\",\n   31  \t\t\"ppsbin_list\": [{\n   ..\n  132  \t\t\"mode\": \"put\",\n  133  \t\t\"is_idle\": false,\n  134: \t\t\"seat_type\": \"back\",\n  135  \t\t\"time_stamp\": \"1456483001\",\n  136  \t\t\"header_msge_list\": [{\n  ...\n  171  \t\t\"mode\": \"put\",\n  172  \t\t\"is_idle\": false,\n  173: \t\t\"seat_type\": \"back\",\n  174  \t\t\"time_stamp\": \"1455628723\",\n  175  \t\t\"header_msge_list\": [{\n  ...\n  208  \t\t\"mode\": \"put\",\n  209  \t\t\"is_idle\": false,\n  210: \t\t\"seat_type\": \"back\",\n  211  \t\t\"time_stamp\": \"1455711041\",\n  212  \t\t\"header_msge_list\": [{\n  ...\n  250  \t\t\"mode\": \"put\",\n  251  \t\t\"is_idle\": false,\n  252: \t\t\"seat_type\": \"back\",\n  253  \t\t\"time_stamp\": \"1455792285\",\n  254  \t\t\"header_msge_list\": [{\n  ...\n  293  \t\t\"mode\": \"put\",\n  294  \t\t\"is_idle\": false,\n  295: \t\t\"seat_type\": \"back\",\n  296  \t\t\"time_stamp\": \"1455792506\",\n  297  \t\t\"header_msge_list\": [{\n  ...\n  342  \t\t\"mode\": \"put\",\n  343  \t\t\"is_idle\": false,\n  344: \t\t\"seat_type\": \"back\",\n  345  \t\t\"product_info\": [],\n  346  \t\t\"time_stamp\": \"1455793202\",\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/exceptions/put_back_extra_item.json:\n   13  \t\t\"mode\": \"put\",\n   14  \t\t\"is_idle\": false,\n   15: \t\t\"seat_type\": \"back\",\n   16  \t\t\"time_stamp\": \"1452888110\",\n   17  \t\t\"ppsbin_list\": [{\n\n/Users/arshdeep.m/git/butlerui/src/assets/Data_format/exceptions/put_front_exception_data.json:\n   25  \t\t\"mode\": \"put\",\n   26  \t\t\"is_idle\": false,\n   27: \t\t\"seat_type\": \"front\",\n   28  \t\t\"time_stamp\": \"1455794382\",\n   29  \t\t\"header_msge_list\": [{\n   ..\n   64  \t\t\"mode\": \"put\",\n   65  \t\t\"is_idle\": false,\n   66: \t\t\"seat_type\": \"front\",\n   67  \t\t\"time_stamp\": \"1455794856\",\n   68  \t\t\"header_msge_list\": [{\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/Bins/BinsFlexArrange.react.js:\n   29  \n   30          // get the last bin and then put a break at the end of the last horizontal bin by measuring the \n   31:         // if seat_type == back then change the coordIndex\n   32      \n   33          lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/components/LoginPage/LoginPage.js:\n  143            var parseSeatID;\n  144            seatData = this.state.seatList.map(function(data, index){ \n  145:             if(data.hasOwnProperty('seat_type')){\n  146                 parseSeatID = null;\n  147                 return (\n  148:                   <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_type} {data.pps_id}</option>\n  149                  )\n  150              }else{\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/stores/mainstore.js:\n  985          _seatName = data.seat_name;\n  986          _seatMode = data.mode;\n  987:         _seatType = data.seat_type;\n  988:         _currentSeat = data.mode + \"_\" + data.seat_type;\n  989          _itemUid = data[\"item_uid\"] != undefined ? data[\"item_uid\"] : \"\";\n  990          _exceptionType = data[\"exception_type\"] != undefined ? data[\"exception_type\"] : \"\";\n\n/Users/arshdeep.m/git/butlerui/src/assets/js/utils/utils.js:\n  272  \n  273  \n  274:     switch (data.state_data.mode + \"_\" + data.state_data.seat_type) {\n  275          case appConstants.PUT_BACK:\n  276              CommonActions.setPutBackData(data.state_data);\n\n43 matches across 15 files\n\n\nSearching 227 files for \"build-md\"\n\n0 matches",
+			"settings":
+			{
+				"buffer_size": 8494,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/utils/utils.js",
+			"settings":
+			{
+				"buffer_size": 12288,
 				"line_ending": "Unix"
 			}
 		},
@@ -368,7 +416,16 @@
 			"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/bins.less",
 			"settings":
 			{
-				"buffer_size": 7126,
+				"buffer_size": 8080,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/kq.less",
+			"settings":
+			{
+				"buffer_size": 6534,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -589,6 +646,9 @@
 	],
 	"file_history":
 	[
+		"/Users/arshdeep.m/git/butlerui/src/assets/css/kqflex.less",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/PutBack.js",
+		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/PrdtDetails/ProductInfo.js",
 		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/ProductDetails/Wrapper.js",
 		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/Bins/Bins.react.js",
 		"/Users/arshdeep.m/git/butlerui/src/assets/js/utils/utils.js",
@@ -605,7 +665,6 @@
 		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/Bins/BinFlex.react.js",
 		"/Users/arshdeep.m/git/butlerui/src/assets/js/stores/mainstore.js",
 		"/Users/arshdeep.m/git/butlerui/src/assets/css/common.less",
-		"/Users/arshdeep.m/git/butlerui/src/assets/js/components/PutBack.js",
 		"/Users/arshdeep.m/git/butlerui/src/assets/css/styles.css",
 		"/Users/arshdeep.m/git/butlerui/src/assets/js/constants/configConstants.js",
 		"/Users/arshdeep.m/git/butlerui/src/assets/js/constants/svgConstants.js",
@@ -714,9 +773,7 @@
 		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/dist/assets/common.js.map",
 		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/index.template.html",
 		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules/react-dropdown/dist/index.js",
-		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules/react-simple-dropdown/components/Dropdown.jsx",
-		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/actions/auditActions.js",
-		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/src/assets/css/components/_modal.scss"
+		"/Users/arshdeep.m/git/gor.butler.ui.managerdashboard/node_modules/react-simple-dropdown/components/Dropdown.jsx"
 	],
 	"find":
 	{
@@ -757,6 +814,37 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"build-md",
+			"_getHTMLFrontBins",
+			"binsflex",
+			"seattype",
+			"getseatType",
+			"_seatType",
+			"getSeatType",
+			"type",
+			"getBinMapDetails",
+			"seat_type",
+			"seattype",
+			"seat_",
+			"seat",
+			"getBinMapDetails",
+			"_front_",
+			"front",
+			"bins",
+			"pickfron`",
+			"kq",
+			"kq-wrapper",
+			"Wrapper",
+			"wrapper",
+			"Wrapper",
+			"bins",
+			"Wrapper",
+			"wrapper",
+			"wrapp",
+			"wrapper",
+			"product-details-wrapper",
+			"return",
+			"temp",
 			"BinsFlex",
 			"selecte",
 			"use se",
@@ -853,38 +941,7 @@
 			"arrange",
 			"Bins",
 			"this.props",
-			"ppsbin_list",
-			"bins.react",
-			"bin empty",
-			"width",
-			".keyboard",
-			"username",
-			"keyboard-input",
-			"username_keyboard",
-			"custom-keypad",
-			"ui-keyboard-preview",
-			"ui-keyboard-preview-wrapper",
-			"virtualke",
-			"bin-row",
-			"selected_state",
-			"_calculateAndSetBinDimensions",
-			"_findCoordinatesIndex",
-			"seat_type",
-			"bins",
-			"_calculateAndSetBinDimensions",
-			"logoutSession",
-			"getLogoutState",
-			"logout",
-			".place",
-			"place",
-			"menu",
-			"putBackPlace",
-			"putBackScan",
-			"nowrap",
-			"%;\n",
-			".stage",
-			"allsvgconstants.stage",
-			"#1a252d"
+			"ppsbin_list"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -911,7 +968,7 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 10,
 			"sheets":
 			[
 				{
@@ -920,15 +977,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 22204,
+						"buffer_size": 22339,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								303,
-								303
+								8569,
+								8577
 							]
 						],
 						"settings":
@@ -939,11 +996,11 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": 12.0,
+						"translation.y": 3312.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -952,15 +1009,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16488,
+						"buffer_size": 16673,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								466,
-								466
+								333,
+								341
 							]
 						],
 						"settings":
@@ -975,24 +1032,56 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "PutBack.js",
+					"file": "PickBack.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21133,
+						"buffer_size": 10032,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2578,
-								2586
+								359,
+								367
+							]
+						],
+						"settings":
+						{
+							"git_savvy.file_path": "/Users/arshdeep.m/git/butlerui/src/assets/js/components/PickBack.js",
+							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 1.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "PutBack.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20406,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3917,
+								3925
 							]
 						],
 						"settings":
@@ -1003,134 +1092,47 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 5.0,
-						"translation.y": 756.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4972,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										230,
-										238
-									],
-									[
-										257,
-										265
-									],
-									[
-										516,
-										524
-									],
-									[
-										797,
-										805
-									],
-									[
-										1135,
-										1143
-									],
-									[
-										1487,
-										1495
-									],
-									[
-										1514,
-										1522
-									],
-									[
-										1770,
-										1778
-									],
-									[
-										2091,
-										2099
-									],
-									[
-										2406,
-										2414
-									],
-									[
-										2790,
-										2798
-									],
-									[
-										2817,
-										2825
-									],
-									[
-										3079,
-										3087
-									],
-									[
-										3331,
-										3339
-									],
-									[
-										3777,
-										3785
-									],
-									[
-										4118,
-										4126
-									],
-									[
-										4145,
-										4153
-									],
-									[
-										4410,
-										4418
-									],
-									[
-										4855,
-										4863
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([^ \t].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
 						"translation.x": 0.0,
-						"translation.y": 935.0,
+						"translation.y": 1242.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
+					"file": "ProductDetails/ProductInfo.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3208,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2583,
+								2583
+							]
+						],
+						"settings":
+						{
+							"git_savvy.file_path": "/Users/arshdeep.m/git/butlerui/src/assets/js/components/ProductDetails/ProductInfo.js",
+							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 919.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
 					"file": "ProductDetails/Wrapper.js",
 					"semi_transient": false,
 					"settings":
@@ -1142,8 +1144,8 @@
 						"selection":
 						[
 							[
-								136,
-								147
+								0,
+								785
 							]
 						],
 						"settings":
@@ -1158,11 +1160,42 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
+					"file": "ProductDetails/WrapperSplitRoll.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 789,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								555,
+								571
+							]
+						],
+						"settings":
+						{
+							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "ProductDetails/KQ.js",
 					"semi_transient": false,
 					"settings":
@@ -1174,8 +1207,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								22682,
+								22688
 							]
 						],
 						"settings":
@@ -1186,72 +1219,8 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 5.0,
-						"translation.y": 3747.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "PrdtDetails/ProductInfo.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 608,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_savvy.file_path": "/Users/arshdeep.m/git/butlerui/src/assets/js/components/PrdtDetails/ProductInfo.js",
-							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "PickBack.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9985,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								332,
-								336
-							]
-						],
-						"settings":
-						{
-							"git_savvy.file_path": "/Users/arshdeep.m/git/butlerui/src/assets/js/components/PickBack.js",
-							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": 19.0,
+						"translation.y": 8748.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 11,
@@ -1263,15 +1232,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 96623,
+						"buffer_size": 96733,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6238,
-								6251
+								66483,
+								66496
 							]
 						],
 						"settings":
@@ -1283,10 +1252,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2665.0,
+						"translation.y": 27051.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -1295,15 +1264,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3915,
+						"buffer_size": 4347,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1784,
-								1784
+								3166,
+								3184
 							]
 						],
 						"settings":
@@ -1315,14 +1284,261 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 896.0,
+						"translation.y": 746.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8494,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										166,
+										175
+									],
+									[
+										349,
+										358
+									],
+									[
+										505,
+										514
+									],
+									[
+										664,
+										673
+									],
+									[
+										823,
+										832
+									],
+									[
+										1004,
+										1013
+									],
+									[
+										1224,
+										1233
+									],
+									[
+										1376,
+										1385
+									],
+									[
+										1612,
+										1621
+									],
+									[
+										1787,
+										1796
+									],
+									[
+										1975,
+										1984
+									],
+									[
+										2163,
+										2172
+									],
+									[
+										2350,
+										2359
+									],
+									[
+										2524,
+										2533
+									],
+									[
+										2744,
+										2753
+									],
+									[
+										2895,
+										2904
+									],
+									[
+										3046,
+										3055
+									],
+									[
+										3188,
+										3197
+									],
+									[
+										3358,
+										3367
+									],
+									[
+										3581,
+										3590
+									],
+									[
+										3735,
+										3744
+									],
+									[
+										3889,
+										3898
+									],
+									[
+										4155,
+										4164
+									],
+									[
+										4334,
+										4343
+									],
+									[
+										4570,
+										4579
+									],
+									[
+										4722,
+										4731
+									],
+									[
+										4966,
+										4975
+									],
+									[
+										5214,
+										5223
+									],
+									[
+										5365,
+										5374
+									],
+									[
+										5521,
+										5530
+									],
+									[
+										5677,
+										5686
+									],
+									[
+										5833,
+										5842
+									],
+									[
+										5989,
+										5998
+									],
+									[
+										6145,
+										6154
+									],
+									[
+										6384,
+										6393
+									],
+									[
+										6626,
+										6635
+									],
+									[
+										6783,
+										6792
+									],
+									[
+										7102,
+										7111
+									],
+									[
+										7461,
+										7470
+									],
+									[
+										7635,
+										7644
+									],
+									[
+										7900,
+										7909
+									],
+									[
+										7964,
+										7973
+									],
+									[
+										8297,
+										8306
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								8449,
+								8449
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
+							"line_numbers": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 5004.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 11,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/utils/utils.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12288,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11571,
+								11571
+							]
+						],
+						"settings":
+						{
+							"git_savvy.file_path": "/Users/arshdeep.m/git/butlerui/src/assets/js/utils/utils.js",
+							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4357.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
 					"file": "/Users/arshdeep.m/git/butlerui/dist/index.html",
 					"semi_transient": false,
 					"settings":
@@ -1349,11 +1565,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 13,
 					"file": "Bins/BinsFlex.react.js",
 					"semi_transient": false,
 					"settings":
@@ -1378,14 +1594,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 18.0,
-						"translation.y": 10.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 14,
 					"file": "Bins/Bin.react.js",
 					"semi_transient": false,
 					"settings":
@@ -1410,27 +1626,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 3.0,
-						"translation.y": 3435.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 15,
 					"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/bins.less",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7126,
+						"buffer_size": 8080,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4280,
-								4280
+								4261,
+								4261
 							]
 						],
 						"settings":
@@ -1442,14 +1658,46 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2614.0,
+						"translation.y": 2916.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 16,
+					"file": "/Users/arshdeep.m/git/butlerui/src/assets/css/kq.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1102,
+								1802
+							]
+						],
+						"settings":
+						{
+							"git_savvy.file_path": "/Users/arshdeep.m/git/butlerui/src/assets/css/kq.less",
+							"git_savvy.repo_path": "/Users/arshdeep.m/git/butlerui",
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 599.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
 					"file": "/Users/arshdeep.m/git/butlerui/src/assets/js/constants/configConstants.js",
 					"semi_transient": false,
 					"settings":
@@ -1475,7 +1723,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
+					"stack_index": 15,
 					"type": "text"
 				}
 			]
@@ -1530,16 +1778,44 @@
 		"selected_items":
 		[
 			[
+				"pickback",
+				"src/assets/js/components/PickBack.js"
+			],
+			[
+				"putback",
+				"src/assets/js/components/PutBack.js"
+			],
+			[
 				"kq.js",
 				"src/assets/js/components/ProductDetails/KQ.js"
+			],
+			[
+				"productinfo.js",
+				"src/assets/js/components/PrdtDetails/ProductInfo.js"
+			],
+			[
+				"wrapper",
+				"src/assets/js/components/ProductDetails/Wrapper.js"
 			],
 			[
 				"productinfo",
 				"src/assets/js/components/PrdtDetails/ProductInfo.js"
 			],
 			[
-				"wrapper",
+				"wrapp",
 				"src/assets/js/components/ProductDetails/Wrapper.js"
+			],
+			[
+				"binsarr",
+				"src/assets/js/components/Bins/BinsFlexArrange.react.js"
+			],
+			[
+				"configcon",
+				"src/assets/js/constants/configConstants.js"
+			],
+			[
+				"putfron",
+				"src/assets/js/components/PutFront.js"
 			],
 			[
 				"mainst",
@@ -1602,24 +1878,12 @@
 				"src/assets/js/components/PickBack.js"
 			],
 			[
-				"putfron",
-				"src/assets/js/components/PutFront.js"
-			],
-			[
-				"putback",
-				"src/assets/js/components/PutBack.js"
-			],
-			[
 				"english.csv",
 				"dist/assets/js/vendor/i18n/english.csv"
 			],
 			[
 				"english",
 				"dist/assets/js/vendor/i18n/english.po"
-			],
-			[
-				"binsarr",
-				"src/assets/js/components/Bins/BinsFlexArrange.react.js"
 			],
 			[
 				"binsar",
@@ -1684,10 +1948,6 @@
 			[
 				"dist/",
 				"dist/assets/css/styles.css"
-			],
-			[
-				"configcon",
-				"src/assets/js/constants/configConstants.js"
 			],
 			[
 				"commonaction",
@@ -2028,18 +2288,6 @@
 			[
 				"orderl",
 				"src/containers/orderTab/orderListTab.js"
-			],
-			[
-				"orderstab",
-				"src/components/subtab/ordersTabs.js"
-			],
-			[
-				"ordertablist",
-				"src/containers/orderTab/orderListTab.js"
-			],
-			[
-				"inten",
-				"src/containers/inventoryTab/inventoryHistogram.js"
 			]
 		],
 		"width": 0.0

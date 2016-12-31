@@ -1291,6 +1291,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData ? _seatData.group_info : null;
     },
+
+
     getSplitScreenFlag:function(){
         var navData=_seatData.group_info|| {};
         for(var key in navData){
@@ -1528,7 +1530,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getScreenData: function() {
         var data = {};
         //since binmapdetails is needed in all the screens.
-        data["BinMapDetails"] =  this.getBinMapDetails();   
+        data["BinMapDetails"] =  this.getBinMapDetails();  
+        data["SeatType"] = this.getSeatType();
         switch (_screenId) {
 
             case appConstants.PUT_BACK_STAGE:

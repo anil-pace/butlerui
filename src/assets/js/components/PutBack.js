@@ -93,7 +93,7 @@ var PutBack = React.createClass({
           if(this.state.BinMapDetails){
             binComponent = (<div>
                             <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
+                            <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
                     </div>);
           }else{
            binComponent =( <div className='main-container'>

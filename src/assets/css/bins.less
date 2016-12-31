@@ -1,8 +1,4 @@
 .bins {
-    /* padding-top: 3.75em;
-    padding-bottom: 3.75em;
-    padding-left: 3.75em;
-    padding-right: 3.75em;*/
     display: flex;
     flex-flow: column;
     flex-grow: 1;
@@ -174,8 +170,7 @@
 }
 
 .bin-container{
-    position: relative;
-    float:left;
+    position: absolute;
 }
 
 .bins-flex {
@@ -183,14 +178,14 @@
     justify-content: center;
     box-sizing: border-box;
     max-height: 100%;
-    min-height: 500px;
     padding-left:20%;
     padding-right: 20%;
-    
+    position: relative;
+    float: left;
     .bin {
-
         border: 2px solid @text-color;
         height: 100%;
+        position: relative;
         &.use {
             background: @bin-selected-bck;
             color: white;
@@ -280,7 +275,7 @@
 .pptl {
     bottom: 0;
     width: 100%;
-    display: flex;
+    position: absolute;
     align-items: center;
     justify-content: center;
     align-items: center;
@@ -320,16 +315,14 @@
 .item-count {
     top: 0;
     bottom: 20%;
-    height: 80%;
     width: 50%;
     margin: auto;
-    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     left: 0;
     right: 0;
-    font-size: @font-size-body-bin-item;
+    font-size: 3.6rem;
 }
 }
 }

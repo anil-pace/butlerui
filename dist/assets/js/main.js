@@ -38046,28 +38046,20 @@ var Bins = React.createClass({displayName: "Bins",
 
         // get the last bin and then put a break at the end of the last horizontal bin by measuring the 
         // if seat_type == back then change the coordIndex
-        var coordIndex = 1;
-        //sorting the bins for xAxis
-        aBins.sort(function(frstBin,secondBin){
-            var iSort = 0;
-            iSort =  (frstBin.orig_coordinate[coordIndex] === secondBin.orig_coordinate[coordIndex])?0:
-                    ((frstBin.orig_coordinate[coordIndex] < secondBin.orig_coordinate[coordIndex])?-1:1);
-            return  iSort;
-        });
     
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            if (oBinPrev.orig_coordinate[coordIndex-1] < oBinCurr.orig_coordinate[coordIndex-1]){
+            if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
                 return oBinCurr;
-            }else if (oBinPrev.orig_coordinate[coordIndex-1] === oBinCurr.orig_coordinate[coordIndex-1]){
+            }else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]){
                 return oBinCurr;
             }else{
                 return oBinPrev;
             }
         });
         lastVBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            if (oBinPrev.orig_coordinate[coordIndex] < oBinCurr.orig_coordinate[coordIndex]){
+            if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]){
                 return oBinCurr;
-            }else if (oBinPrev.orig_coordinate[coordIndex] === oBinCurr.orig_coordinate[coordIndex]){
+            }else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]){
                 return oBinCurr;
             }else{
                 return oBinPrev;
@@ -38077,8 +38069,6 @@ var Bins = React.createClass({displayName: "Bins",
             aBins:aBins,
             lastHBin:lastHBin,
             lastVBin: lastVBin,
-            totalWidth: lastHBin.orig_coordinate[coordIndex-1] + lastHBin.length,
-            totalHeight: lastVBin.orig_coordinate[coordIndex-1] + lastVBin.length
         });
     },
 
@@ -38098,17 +38088,18 @@ var Bins = React.createClass({displayName: "Bins",
          for (var i =0; i<aBins.length ;i++){
                 var binWidth = aBins[i].length * horFactor +'%';
                 var binHeight = aBins[i].breadth * vertFactor +'%';
-                var itop = aBins[i].length* vertFactor  +'px';
-                var ileft =aBins[i].breadth* horFactor  +'px';
-                itop = '-'+itop;
-                  aHTMLBins.push(
+                var ileft=0;
+                var itop=0;
+                ileft = aBins[i].orig_coordinate[0] * horFactor +'%';
+                itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
+                aHTMLBins.push(
                                  React.createElement("div", {className: "bin-container", style: {
-                                 width:binWidth, 
-                                 height:binHeight,
-                                 top: itop,
-                                 left:ileft}}, 
+                                width: binWidth,height:binHeight,
+                    
+                                top: itop,
+                                left:ileft}}, 
                                      React.createElement(Bin, {binData: aBins[i], screenId: screenId})
-                                )
+                                 )
                                  )
               }
         return aHTMLBins;
@@ -38118,10 +38109,10 @@ var Bins = React.createClass({displayName: "Bins",
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
                                                this.state.lastHBin, 
                                                this.state.lastVBin,
-                                               this.state.screenId);
+                                               this.props.screenId);
         var self = this;
         return (
-                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth, height:document.body.clientHeight/3}}, 
+                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.5, height:document.body.clientHeight/2}}, 
                         aHTMLBins
                  )
         );
@@ -42657,7 +42648,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(this.state.BinMapDetails){
             binComponent = (React.createElement("div", null, 
                             React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
-                    React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
+                            React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
                     ));
           }else{
            binComponent =( React.createElement("div", {className: "main-container"}, 
@@ -42996,6 +42987,7 @@ var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
+<<<<<<< 1e4ba5d39b20610f8a2728c21a251b1901b49967
   /*return {
            PutFrontNavData : PutFrontStore.getNavData(),
            PutFrontNotification : PutFrontStore.getNotificationData(),
@@ -43011,6 +43003,16 @@ function getStateData(){
     };*/
      
       return mainstore.getScreenData();
+=======
+ 
+     var screenData = mainstore.getScreenData();
+      var splitPPSData ={
+        groupInfo : mainstore.getBinMapDetails(),
+        undockAwaited : mainstore.getUndockAwaitedDetails(),
+        docked : mainstore.getDockedDetails()
+    }
+      return Object.assign({},screenData,splitPPSData);
+>>>>>>> temp bins fix
 
 };
 

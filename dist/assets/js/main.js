@@ -38438,7 +38438,9 @@ var Header = React.createClass({displayName: "Header",
                                          _("Exception")
                                     ));
         else
-            this.exceptionMenu = '';
+            this.exceptionMenu = (React.createElement("div", {className: "actionItem disable"}, 
+                                         _("Exception")
+                                    ));
     },    
     peripheralData : function(type){
         CommonActions.getPeriPheralData(type);
@@ -43533,8 +43535,8 @@ module.exports = appConstants;
 
 },{}],285:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.108/wss",
+	INTERFACE_IP : "https://192.168.8.108"
 };
 module.exports = configConstants;
 

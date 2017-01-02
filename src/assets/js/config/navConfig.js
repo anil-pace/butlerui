@@ -74,6 +74,14 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],
+        [{
+            "screen_id": "put_front_waiting_undock",
+            "code": "Common.000",
+            "message": "Undock Roll Cage",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [

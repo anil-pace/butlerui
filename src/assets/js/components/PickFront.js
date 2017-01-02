@@ -12,6 +12,7 @@ var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
+var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll');
 var appConstants = require('../constants/appConstants');
 var Rack = require('./Rack/MsuRack.js');
 var BoxSerial = require('./BoxSerial.js');
@@ -23,16 +24,13 @@ var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
-var SplitPPS = require('./SplitPPS');
 
 var checkListOpen = false;
 
 function getStateData(){
       var screenData = mainstore.getScreenData();
       var splitPPSData ={
-        groupInfo : mainstore.getBinMapDetails(),
-        undockAwaited : mainstore.getUndockAwaitedDetails(),
-        docked : mainstore.getDockedDetails()
+        groupInfo : mainstore.getBinMapDetails()
     }
       return Object.assign({},screenData,splitPPSData);
 };
@@ -142,7 +140,6 @@ var PickFront = React.createClass({
               <div className='grid-container'>
                  <div className='main-container'>
                     <Spinner />
-                    <SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.docked}/>;
                  </div>
               </div>
             );
@@ -209,7 +206,10 @@ var PickFront = React.createClass({
         }
         var binComponent="";
         if (this.state.BinMapDetails){
-            binComponent = (<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>)
+            binComponent = (<div>
+                            <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
+                            <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
+                            </div>)
           }else{
             binComponent = (<div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
@@ -253,7 +253,7 @@ var PickFront = React.createClass({
          }
          var binComponent ="";
           if (this.state.BinMapDetails){
-            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
+            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
           }else{
             binComponent =(<div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
@@ -276,7 +276,7 @@ var PickFront = React.createClass({
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
           if (this.state.BinMapDetails){
-            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
+            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
           }else{
             binComponent =(<div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>

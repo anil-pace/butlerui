@@ -40082,7 +40082,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           var editButton ='';
         }
         if(!cancelScanDisabled){
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
+          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
          }
          else{
           cancelButton = (React.createElement("div", {className: "cancel-scan"}));
@@ -43535,8 +43535,8 @@ module.exports = appConstants;
 
 },{}],285:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.108/wss",
-	INTERFACE_IP : "https://192.168.8.108"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 

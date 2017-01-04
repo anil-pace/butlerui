@@ -1,6 +1,7 @@
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
+var resourceConstants = require('../constants/resourceConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');

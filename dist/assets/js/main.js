@@ -43574,7 +43574,8 @@ var resourceConstants = {
 	CLIENTCODE_409 : "CLIENTCODE_409",
 	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
 	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
-	CLIENTCODE_400 : "CLIENTCODE_400"
+	CLIENTCODE_400 : "CLIENTCODE_400",
+	CLIENTCODE_MODE_CHANGED:"CLIENTCODE_MODE_CHANGED"
 
  
 };
@@ -47430,6 +47431,7 @@ module.exports = mainstore;
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
+var resourceConstants = require('../constants/resourceConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
@@ -47482,7 +47484,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
                     utils.enableKeyboard();
-                }else{
+                }else if(evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED){
+                    utils.sessionLogout();
+                        return false;
+                }
+                else{
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 if(data.hasOwnProperty('data')){
@@ -47731,4 +47737,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":284,"../constants/configConstants":285,"../serverMessages/server_messages":293,"events":14,"react/lib/Object.assign":121}]},{},[289]);
+},{"../actions/CommonActions":233,"../constants/appConstants":284,"../constants/configConstants":285,"../constants/resourceConstants":286,"../serverMessages/server_messages":293,"events":14,"react/lib/Object.assign":121}]},{},[289]);

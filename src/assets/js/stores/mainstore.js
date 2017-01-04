@@ -39,27 +39,27 @@ var modalContent = {
 * This function enables the logout due to inactivity feature - Krishna.
 */
 var idleLogout = function() {
-    var t;
-    window.addEventListener('load', resetTimer,false);
-    window.addEventListener('mousemove', resetTimer,false);
-    window.addEventListener('mousedown', resetTimer,false);
-    window.addEventListener('onclick', resetTimer,false);
-    window.addEventListener('scroll', resetTimer,false);
-    window.addEventListener('keypress', resetTimer,false);
+    // var t;
+    // window.addEventListener('load', resetTimer,false);
+    // window.addEventListener('mousemove', resetTimer,false);
+    // window.addEventListener('mousedown', resetTimer,false);
+    // window.addEventListener('onclick', resetTimer,false);
+    // window.addEventListener('scroll', resetTimer,false);
+    // window.addEventListener('keypress', resetTimer,false);
 
-    function logout() {
-        if(mainstore.getLogoutState()){
-                console.log("Logging out since user has been idle past the time threshold")
-                CommonActions.logoutSession(true);
-            }
+    // function logout() {
+    //     if(mainstore.getLogoutState()){
+    //             console.log("Logging out since user has been idle past the time threshold")
+    //             CommonActions.logoutSession(true);
+    //         }
             
-    }
+    // }
 
-    function resetTimer() {
-        clearTimeout(t);
-        t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
-        // time is in milliseconds
-    }
+    // function resetTimer() {
+    //     clearTimeout(t);
+    //     t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
+    //     // time is in milliseconds
+    // }
 }();
 
 function setPopUpVisible(status) {
@@ -1289,6 +1289,38 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData.group_info || null;
     },
+    getSplitScreenFlag:function(){
+        var navData=_seatData.group_info|| {};
+        for(var key in navData){
+            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+            {
+                return true;
+            }
+        }
+        return false;
+    },
+    getMobileFlag:function(){
+        var bIsMobile = false;
+        if(_seatData)
+        {
+          bIsMobile = _seatData.roll_cage_flow && _currentSeat==appConstants.PUT_FRONT;
+        }
+        return bIsMobile;
+    },
+    getDockedGroup:function(){
+        var dockedGroup = [];
+        if(_seatData){
+            dockedGroup = _seatData.docked||[];
+        }
+        return dockedGroup;
+    },
+    getUndockAwaitedGroup:function(){
+        var undockAwaited = [];
+        if(_seatData){
+            undockAwaited = _seatData.undock_awaited||[];
+        }
+        return undockAwaited;
+    },
     getSelectedBinGroup:function(){
         var groupId = _seatData.ppsbin_list[0].group_id;
         return groupId || null;
@@ -1576,6 +1608,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
+                data["MobileFlag"]=this.getMobileFlag();
+                data["DockedGroup"] = this.getDockedGroup();  
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -1585,7 +1619,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["BinMapDetails"] =  this.getBinMapDetails();   
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();       
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -1601,6 +1636,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
                 data["BinMapDetails"] =  this.getBinMapDetails();  
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -1609,6 +1645,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 break;
+            case 'put_front_waiting_undock':
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["DockedGroup"] = this.getDockedGroup();  
+                data["UndockAwaited"] = this.getUndockAwaitedGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -1687,6 +1733,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();
                 break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
@@ -1702,6 +1749,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();
+                data["BinMapDetails"] =  this.getBinMapDetails();
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();

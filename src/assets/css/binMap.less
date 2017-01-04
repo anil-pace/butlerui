@@ -2,12 +2,13 @@
 	border: 4px solid #9D9FA2;
 	box-sizing:border-box;
     min-height: 146px;
-    width: 150px;
+    width: 158px;
     padding: 12px;
     position: absolute;
     left: 0;
 	.col1{
 		display: inline-block;
+		vertical-align:middle;
 		
 		ul{
 			margin: 0;
@@ -53,10 +54,14 @@
 	.col2{
 		display: inline-block;
 		width:39%;
+		height:64px;
+		overflow: hidden;
+		vertical-align:middle;
+		background-position: -110px -1px;
 	}
 	.col3{
 		display: inline-block;
-		
+		vertical-align:middle;
 		ul{
 			margin: 0;
 		    padding: 0;
@@ -102,6 +107,6 @@
 		list-style:none;
 	}
    &.frontFlow{
-	    top: 0;
+	    top: 150px;
    }
 }

@@ -9,6 +9,7 @@ var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var appConstants = require('../constants/appConstants');
@@ -198,21 +199,29 @@ var PickFront = React.createClass({
         }else{
           var editButton ='';
         }
+
+        var binComponent="";
+        if (this.state.BinMapDetails){
+            binComponent = (<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>)
+          }else{
+            binComponent = (<div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
+                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
+                </div>);
+          }
+
         this._component = (
               <div className='grid-container'>
                 <Modal />  
                 <div>        
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-               <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='pickFrontFlow'/>
-               </div>
-                <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
-                  <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
-                </div>
+               {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
+                {binComponent}
                 <div className = 'actions'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
                 </div>
+              </div>
               </div>
             );
         }else{
@@ -238,17 +247,24 @@ var PickFront = React.createClass({
          else{
           cancelButton = (<div className = 'cancel-scan'></div>);
          }
+         var binComponent ="";
+          if (this.state.BinMapDetails){
+            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
+          }else{
+            binComponent =(<div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
+                </div>)
+          }
         this._component = (
               <div className='grid-container'>
                 <Modal />
                 <div>
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-                <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='pickFrontFlow'/>
-                </div>
-                <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
-                </div>
+                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
+                {binComponent}
+
                {cancelButton}
+              </div>
               </div>
             );
          }else{
@@ -258,12 +274,17 @@ var PickFront = React.createClass({
       case appConstants.PICK_FRONT_NO_FREE_BIN:
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
- 
+        var binComponent ="";
+          if (this.state.SplitScreenFlag){
+            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
+          }else{
+            binComponent =(<div className='main-container'>
+                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
+                </div>)
+          }
         this._component = (
               <div className='grid-container'>
-                <div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
-                </div>
+                {binComponent}
               </div>
             );
          }else{

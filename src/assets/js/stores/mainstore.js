@@ -1291,6 +1291,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBinMapDetails:function(){
         return _seatData ? _seatData.group_info : null;
     },
+
+
     getSplitScreenFlag:function(){
         var navData=_seatData.group_info|| {};
         for(var key in navData){
@@ -1323,7 +1325,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
         ppsbin_list.forEach(function(el){
-            if(Number(el["ppsbin_count"]) > 0){
+            if(el["selected_state"]){
                 groupId = el["group_id"];
                 return false;
             }
@@ -1530,8 +1532,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getScreenData: function() {
         var data = {};
+
         //since OrigBinUse Flag is needed in all the screens.
         data["OrigBinUse"] = this.getOrigBinUse();
+        data["SeatType"] = this.getSeatType();
         switch (_screenId) {
 
             case appConstants.PUT_BACK_STAGE:

@@ -9,6 +9,7 @@ var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
+var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll');
 var appConstants = require('../constants/appConstants');
 var allresourceConstants = require('../constants/resourceConstants');
 var Rack = require('./Rack/MsuRack.js');
@@ -24,22 +25,7 @@ var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
-  /*return {
-           PutFrontNavData : PutFrontStore.getNavData(),
-           PutFrontNotification : PutFrontStore.getNotificationData(),
-           PutFrontScreenId:PutFrontStore.getScreenId(),
-           PutFrontBinData: PutFrontStore.getBinData(),
-           PutFrontScanDetails : PutFrontStore.scanDetails(),
-           PutFrontProductDetails : PutFrontStore.productDetails(),
-           PutFrontRackDetails: PutFrontStore.getRackDetails(),
-           PutFrontCurrentBin:PutFrontStore.getCurrentSelectedBin(),
-           PutFrontServerNavData : PutFrontStore.getServerNavData(),
-           PutFrontItemUid : PutFrontStore.getItemUid()
-          
-    };*/
-     
-      return mainstore.getScreenData();
-
+   return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({
@@ -103,8 +89,8 @@ var PutFront = React.createClass({
          if(this.state.PutFrontExceptionStatus == false){
            if (this.state.OrigBinUse){
             binComponent = ( <div>
-                            <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+                            <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>
+                  <WrapperSplitRoll scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                   </div>)
 
           }else{

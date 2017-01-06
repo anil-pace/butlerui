@@ -1,6 +1,7 @@
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
+var resourceConstants = require('../constants/resourceConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
@@ -53,6 +54,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
                     utils.enableKeyboard();
+                }
+                else if(evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED){
+                    utils.sessionLogout();
+                        return false;
                 }else{
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);

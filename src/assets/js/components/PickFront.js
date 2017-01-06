@@ -252,13 +252,8 @@ var PickFront = React.createClass({
           cancelButton = (<div className = 'cancel-scan'></div>);
          }
          var binComponent ="";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
-=======
-          if (this.state.BinMapDetails){
             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
->>>>>>> feature-split-rollcage
           }else{
             binComponent =(<div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
@@ -280,13 +275,8 @@ var PickFront = React.createClass({
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
-=======
-          if (this.state.BinMapDetails){
             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
->>>>>>> feature-split-rollcage
           }else{
             binComponent =(<div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>

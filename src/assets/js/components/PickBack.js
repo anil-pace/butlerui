@@ -82,13 +82,8 @@ var PickBack = React.createClass({
        if(this.state.PickBackExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} />)
-=======
-          if (this.state.BinMapDetails){
             binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} seatType = {this.state.SeatType}/>)
->>>>>>> feature-split-rollcage
           }else{
             binComponent =(
                            <div className='main-container'>

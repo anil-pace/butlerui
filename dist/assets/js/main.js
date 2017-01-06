@@ -40236,13 +40236,8 @@ var PickBack = React.createClass({displayName: "PickBack",
        if(this.state.PickBackExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
         var binComponent ="";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId}))
-=======
-          if (this.state.BinMapDetails){
             binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId, seatType: this.state.SeatType}))
->>>>>>> feature-split-rollcage
           }else{
             binComponent =(
                            React.createElement("div", {className: "main-container"}, 
@@ -40264,13 +40259,8 @@ var PickBack = React.createClass({displayName: "PickBack",
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var binComponent = "";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId}));
-=======
-          if (this.state.BinMapDetails){
             binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId, seatType: this.state.SeatType}));
->>>>>>> feature-split-rollcage
           }else{
             binComponent = (React.createElement("div", {className: "main-container"}, 
                               React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
@@ -40597,16 +40587,11 @@ var PickFront = React.createClass({displayName: "PickFront",
           var editButton ='';
         }
         var binComponent="";
-<<<<<<< HEAD
         if (this.state.OrigBinUse){
-            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}))
-=======
-        if (this.state.BinMapDetails){
             binComponent = (React.createElement("div", null, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
                             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                             ))
->>>>>>> feature-split-rollcage
           }else{
             binComponent = (React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
@@ -40649,13 +40634,8 @@ var PickFront = React.createClass({displayName: "PickFront",
           cancelButton = (React.createElement("div", {className: "cancel-scan"}));
          }
          var binComponent ="";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS}))
-=======
-          if (this.state.BinMapDetails){
             binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS, seatType: this.state.SeatType}))
->>>>>>> feature-split-rollcage
           }else{
             binComponent =(React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
@@ -40677,13 +40657,8 @@ var PickFront = React.createClass({displayName: "PickFront",
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         var binComponent ="";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS}))
-=======
-          if (this.state.BinMapDetails){
             binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS, seatType: this.state.SeatType}))
->>>>>>> feature-split-rollcage
           }else{
             binComponent =(React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
@@ -42609,7 +42584,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
   render: function(data){
       return (
         React.createElement("div", {className: "wrapper-flexible"}, 
-           React.createElement(ProductInfo, {productDetails: this.props.productDetails}), 
+            this.props.productDetails?(React.createElement(ProductInfo, {productDetails: this.props.productDetails})):(React.createElement("div", {className: "product-details-empty"})), 
             React.createElement(KQ, {scanDetails: this.props.scanDetails, itemUid: this.props.itemUid})
         )    
       )
@@ -42686,14 +42661,8 @@ var PutBack = React.createClass({displayName: "PutBack",
          if(this.state.PutBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var binComponent ="";
-<<<<<<< HEAD
           if (this.state.OrigBinUse){
-            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}))
-
-=======
-          if (this.state.BinMapDetails){
             binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType}))
->>>>>>> feature-split-rollcage
           }else{
               binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
@@ -47720,14 +47689,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getScreenData: function() {
         var data = {};
-<<<<<<< HEAD
+
         //since OrigBinUse Flag is needed in all the screens.
         data["OrigBinUse"] = this.getOrigBinUse();
-=======
-        //since binmapdetails is needed in all the screens.
-        data["BinMapDetails"] =  this.getBinMapDetails();  
         data["SeatType"] = this.getSeatType();
->>>>>>> feature-split-rollcage
         switch (_screenId) {
 
             case appConstants.PUT_BACK_STAGE:

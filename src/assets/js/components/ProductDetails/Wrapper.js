@@ -21,7 +21,7 @@ var Wrapper = React.createClass({
   render: function(data){
       return (
         <div className='rightWrapper'>
-           <ProductInfo productDetails={this.props.productDetails}/>
+            {this.props.productDetails?(<ProductInfo productDetails={this.props.productDetails}/>):(<div className='product-details-empty'></div>)}
             <KQ scanDetails={this.props.scanDetails} itemUid={this.props.itemUid} />
         </div>    
       )

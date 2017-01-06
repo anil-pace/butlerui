@@ -204,7 +204,7 @@ var PickFront = React.createClass({
           var editButton ='';
         }
         var binComponent="";
-        if (this.state.BinMapDetails){
+        if (this.state.OrigBinUse){
             binComponent = (<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>)
           }else{
             binComponent = (<div className='main-container'>
@@ -248,7 +248,7 @@ var PickFront = React.createClass({
           cancelButton = (<div className = 'cancel-scan'></div>);
          }
          var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
           }else{
             binComponent =(<div className='main-container'>
@@ -271,7 +271,7 @@ var PickFront = React.createClass({
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>)
           }else{
             binComponent =(<div className='main-container'>

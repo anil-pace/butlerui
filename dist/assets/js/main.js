@@ -37644,7 +37644,6 @@ var Bins = React.createClass({displayName: "Bins",
         var compData = this.props.binsData; 
         var scrnId = this.props.screenId;
         var self = this;
-        console.log(compData);
         return (
                  React.createElement("div", {className: "bins"}, 
                     
@@ -40241,7 +40240,7 @@ var PickBack = React.createClass({displayName: "PickBack",
        if(this.state.PickBackExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
         var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId}))
           }else{
             binComponent =(
@@ -40264,7 +40263,7 @@ var PickBack = React.createClass({displayName: "PickBack",
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var binComponent = "";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId}));
           }else{
             binComponent = (React.createElement("div", {className: "main-container"}, 
@@ -40287,7 +40286,7 @@ var PickBack = React.createClass({displayName: "PickBack",
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent = (React.createElement("div", {className: "exception1"}, 
                             React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                             ));
@@ -40591,7 +40590,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           var editButton ='';
         }
         var binComponent="";
-        if (this.state.BinMapDetails){
+        if (this.state.OrigBinUse){
             binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}))
           }else{
             binComponent = (React.createElement("div", {className: "main-container"}, 
@@ -40635,7 +40634,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           cancelButton = (React.createElement("div", {className: "cancel-scan"}));
          }
          var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS}))
           }else{
             binComponent =(React.createElement("div", {className: "main-container"}, 
@@ -40658,7 +40657,7 @@ var PickFront = React.createClass({displayName: "PickFront",
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS}))
           }else{
             binComponent =(React.createElement("div", {className: "main-container"}, 
@@ -42552,7 +42551,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
   render: function(data){
       return (
         React.createElement("div", {className: "rightWrapper"}, 
-           React.createElement(ProductInfo, {productDetails: this.props.productDetails}), 
+            this.props.productDetails?(React.createElement(ProductInfo, {productDetails: this.props.productDetails})):(React.createElement("div", {className: "product-details-empty"})), 
             React.createElement(KQ, {scanDetails: this.props.scanDetails, itemUid: this.props.itemUid})
         )    
       )
@@ -42628,7 +42627,7 @@ var PutBack = React.createClass({displayName: "PutBack",
          if(this.state.PutBackExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}))
 
           }else{
@@ -42654,7 +42653,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       case appConstants.PUT_BACK_SCAN:
           if(this.state.PutBackExceptionStatus == false){
           var binComponent = "";
-          if(this.state.BinMapDetails){
+          if(this.state.OrigBinUse){
             binComponent = (React.createElement("div", null, 
                             React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
                     React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
@@ -42802,7 +42801,7 @@ var PutBack = React.createClass({displayName: "PutBack",
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
           var binComponent="";
-          if(this.state.BinMapDetails){
+          if(this.state.OrigBinUse){
             binComponent=(React.createElement("div", {className: "exception1"}, 
                       React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
                    ))
@@ -43073,7 +43072,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
       case appConstants.PUT_FRONT_SCAN:
          if(this.state.PutFrontExceptionStatus == false){
-           if (this.state.BinMapDetails){
+           if (this.state.OrigBinUse){
             binComponent = ( React.createElement("div", null, 
                             React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
@@ -43089,7 +43088,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
                 binComponent
               )
             );
@@ -43104,7 +43103,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
                 React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
                     React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
                       React.createElement("div", {className: "text"}, _("CURRENT BIN"))
@@ -43141,7 +43140,6 @@ var PutFront = React.createClass({displayName: "PutFront",
 
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
-          console.log(this.state.PutFrontExceptionScreen);
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -44266,8 +44264,8 @@ module.exports = appConstants;
 
 },{}],290:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.108/wss",
-	INTERFACE_IP : "https://192.168.8.108"
+	WEBSOCKET_IP : "wss://192.168.8.167/wss",
+	INTERFACE_IP : "https://192.168.8.167"
 };
 module.exports = configConstants;
 
@@ -44742,7 +44740,7 @@ module.exports = japanese;
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
-    "PtB.H.002" : "Place Entity in Bin {0} and Press PPTL",
+    "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are You Sure You Want to Close Tote?",
     "PtB.H.004": "Scan Tote or Stage PPS Bin",
     "PtB.H.005" : "Item Not Expected in Tote",
@@ -47468,6 +47466,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getUndockAwaitedGroup:function(){
             return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
     },
+    getOrigBinUse:function(){
+        return (_seatData && _seatData.bin_coordinate_plotting ? true:false);
+    },
     getSelectedBinGroup:function(){
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
@@ -47679,8 +47680,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getScreenData: function() {
         var data = {};
-        //since binmapdetails is needed in all the screens.
-        data["BinMapDetails"] =  this.getBinMapDetails();   
+        //since OrigBinUse Flag is needed in all the screens.
+        data["OrigBinUse"] = this.getOrigBinUse();
         switch (_screenId) {
 
             case appConstants.PUT_BACK_STAGE:
@@ -47764,8 +47765,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
-                data["MobileFlag"]=this.getMobileFlag();
                 data["BinMapDetails"] =  this.getBinMapDetails();   
+                data["MobileFlag"]=this.getMobileFlag();
                 data["DockedGroup"] = this.getDockedGroup();  
                 data["UndockAwaited"] = this.getUndockAwaitedGroup();               
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47777,6 +47778,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this.getBinMapDetails();               
                 data["SplitScreenFlag"] = this.getSplitScreenFlag();       
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
@@ -47792,6 +47794,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();           
                 data["SplitScreenFlag"] = this.getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
@@ -47805,7 +47808,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
-                data["BinMapDetails"] =  this.getBinMapDetails();   
+                data["BinMapDetails"] =  this.getBinMapDetails();           
                 data["DockedGroup"] = this.getDockedGroup();  
                 data["UndockAwaited"] = this.getUndockAwaitedGroup();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -47860,6 +47863,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] =  this.getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -47880,6 +47884,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["BinMapDetails"] =  this.getBinMapDetails();                               
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
@@ -47904,6 +47909,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] =  this.getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();

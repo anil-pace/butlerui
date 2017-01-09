@@ -19,7 +19,7 @@ var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Reconcile = require("./Reconcile");
-
+var MtuNavigation = require("./mtuNavigation");
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -76,6 +76,7 @@ var PutBack = React.createClass({
               <div className='grid-container'>
                 <Modal />
                {binComponent}
+               <MtuNavigation/>
                 <div className = 'staging-action' >
                   <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
                   <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
@@ -108,6 +109,7 @@ var PutBack = React.createClass({
               <div className='grid-container'>
                 <Modal />
                 {binComponent}
+
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} barcode={this.state.PutBackItemUid} color={"black"}/>
                 </div>

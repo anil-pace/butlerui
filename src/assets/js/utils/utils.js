@@ -54,11 +54,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
                     utils.enableKeyboard();
-                }
-                else if(evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED){
+                }else if(evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED){
                     utils.sessionLogout();
                         return false;
-                }else{
+                }
+                else{
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 if(data.hasOwnProperty('data')){

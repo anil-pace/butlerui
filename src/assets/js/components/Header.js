@@ -111,7 +111,9 @@ var Header = React.createClass({
                                          {_("Exception")}
                                     </div>);
         else
-            this.exceptionMenu = '';
+            this.exceptionMenu = (<div className="actionItem disable">
+                                         {_("Exception")}
+                                    </div>);
     },    
     peripheralData : function(type){
         CommonActions.getPeriPheralData(type);

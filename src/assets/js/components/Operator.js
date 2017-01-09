@@ -5,6 +5,7 @@ var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PickFront');
 var Audit = require('./Audit');
+var PrePut = require('./PrePut');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
@@ -55,6 +56,8 @@ var Operator = React.createClass({
       case appConstants.AUDIT:
           this._currentSeat = <Audit navMessagesJson={this.state.navMessages}/>;
         break;
+      case 4:
+          this._currentSeat = <PrePut navMessagesJson={this.state.navMessages}/>;            
       default:
         return true; 
       }

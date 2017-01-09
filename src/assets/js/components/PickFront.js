@@ -205,7 +205,7 @@ var PickFront = React.createClass({
           var editButton ='';
         }
         var binComponent="";
-        if (this.state.BinMapDetails){
+        if (this.state.OrigBinUse){
             binComponent = (<div>
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
@@ -246,13 +246,13 @@ var PickFront = React.createClass({
           var editButton ='';
         }
         if(!cancelScanDisabled){
-          cancelButton = (<div className = 'cancel-scan'><Button1  text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
+          cancelButton = (<div className = 'cancel-scan'><Button1  disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
          }
          else{
           cancelButton = (<div className = 'cancel-scan'></div>);
          }
          var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
           }else{
             binComponent =(<div className='main-container'>
@@ -275,7 +275,7 @@ var PickFront = React.createClass({
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
           }else{
             binComponent =(<div className='main-container'>

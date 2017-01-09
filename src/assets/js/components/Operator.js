@@ -17,7 +17,7 @@ function getState(){
       isMobile:mainstore.getMobileFlag(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
-      navMessages : mainstore.getServerMessages(),
+      navMessages : mainstore.getServerMessages()
   }
 }
 var Operator = React.createClass({
@@ -62,7 +62,6 @@ var Operator = React.createClass({
 
   render: function(data){ 
      this.getSeatType(this.state.currentSeat);
-     console.log(this.state.isMobile);
       if(this.state.spinner === true){
        this._spinner = <Spinner />
       }else{

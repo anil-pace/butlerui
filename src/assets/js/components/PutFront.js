@@ -9,7 +9,9 @@ var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
+var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll');
 var appConstants = require('../constants/appConstants');
+var allresourceConstants = require('../constants/resourceConstants');
 var Rack = require('./Rack/MsuRack.js');
 var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
@@ -21,8 +23,9 @@ var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 
+
 function getStateData(){
-     return mainstore.getScreenData();
+   return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({
@@ -69,11 +72,11 @@ var PutFront = React.createClass({
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
         if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                 {this.state.MobileFlag?<SplitPPS/>:<Spinner />}
+                 {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
                  </div>
               </div>
             );
@@ -84,10 +87,10 @@ var PutFront = React.createClass({
         break;
       case appConstants.PUT_FRONT_SCAN:
          if(this.state.PutFrontExceptionStatus == false){
-           if (this.state.SplitScreenFlag){
+           if (this.state.BinMapDetails){
             binComponent = ( <div>
-                            <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+                            <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>
+                  <WrapperSplitRoll scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                   </div>)
 
           }else{
@@ -116,7 +119,7 @@ var PutFront = React.createClass({
               <div className='grid-container'>
                 <Modal />
                 {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
-                <div className="single-bin">
+                <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
                     <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
                       <div className="text">{_("CURRENT BIN")}</div>
                 </div>
@@ -134,13 +137,13 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
-      case 'put_front_waiting_undock':
+      case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.UNDOCK_PUSH}/>);
           this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                 <SplitPPS/>
+                 <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
                  </div>
               </div>
             );

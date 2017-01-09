@@ -27,30 +27,20 @@ var Bins = React.createClass({
         var totalBins = aBins.length;
         var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={};
 
-        // get the last bin and then put a break at the end of the last horizontal bin by measuring the 
-        // if seat_type == back then change the coordIndex
-        var coordIndex = 1;
-        //sorting the bins for xAxis
-        aBins.sort(function(frstBin,secondBin){
-            var iSort = 0;
-            iSort =  (frstBin.orig_coordinate[coordIndex] === secondBin.orig_coordinate[coordIndex])?0:
-                    ((frstBin.orig_coordinate[coordIndex] < secondBin.orig_coordinate[coordIndex])?-1:1);
-            return  iSort;
-        });
     
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            if (oBinPrev.orig_coordinate[coordIndex-1] < oBinCurr.orig_coordinate[coordIndex-1]){
+            if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
                 return oBinCurr;
-            }else if (oBinPrev.orig_coordinate[coordIndex-1] === oBinCurr.orig_coordinate[coordIndex-1]){
+            }else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]){
                 return oBinCurr;
             }else{
                 return oBinPrev;
             }
         });
         lastVBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            if (oBinPrev.orig_coordinate[coordIndex] < oBinCurr.orig_coordinate[coordIndex]){
+            if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]){
                 return oBinCurr;
-            }else if (oBinPrev.orig_coordinate[coordIndex] === oBinCurr.orig_coordinate[coordIndex]){
+            }else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]){
                 return oBinCurr;
             }else{
                 return oBinPrev;
@@ -60,12 +50,10 @@ var Bins = React.createClass({
             aBins:aBins,
             lastHBin:lastHBin,
             lastVBin: lastVBin,
-            totalWidth: lastHBin.orig_coordinate[coordIndex-1] + lastHBin.length,
-            totalHeight: lastVBin.orig_coordinate[coordIndex-1] + lastVBin.length
         });
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  screenId) {
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
@@ -74,17 +62,32 @@ var Bins = React.createClass({
          // since the total width would be 100% but the bins would be divided into
          // ratios, hence each of the bin would have to have the factor into % of the 
          // .bins container.
+         // for reference orig_coordinate[0] === x axis and orig_coordinate[1] === y axis
+         var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)));
+         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.breadth)));
          
-         var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.breadth)));
-         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.length)));
-        
+         var totalPpsWidth = Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)
+         
+         // if the seat type is front then we have to modify the x co-ordinate as per the formula:
+         // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
+         
          for (var i =0; i<aBins.length ;i++){
-                var binWidth = aBins[i].breadth * horFactor +'%';
-                var binHeight = aBins[i].length * vertFactor + '%';
-                  aHTMLBins.push(
-                                 <div style={{display:'inline-block', width:binWidth, height:binHeight}} >
+                var binWidth = aBins[i].length * horFactor +'%';
+                var binHeight = aBins[i].breadth * vertFactor +'%';
+                var ileft=0;
+                var itop=0;
+
+                ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'): 
+                    (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
+                itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
+                aHTMLBins.push(
+                                 <div className="bin-container" style={{
+                                width: binWidth,height:binHeight,
+                    
+                                top: itop,
+                                left:ileft}}>
                                      <Bin binData={aBins[i]} screenId={screenId} />
-                                </div>
+                                 </div>
                                  )
               }
         return aHTMLBins;
@@ -94,10 +97,13 @@ var Bins = React.createClass({
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
                                                this.state.lastHBin, 
                                                this.state.lastVBin,
+
+                                               this.props.seatType,
+
                                                this.props.screenId);
         var self = this;
         return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth}}>
+                 <div className="bins-flex" style={{width:document.body.clientWidth/1.5, height:document.body.clientHeight/2}}>
                         {aHTMLBins}
                  </div>
         );

@@ -9,6 +9,7 @@ var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
+var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var SystemIdle = require('./SystemIdle');
@@ -64,9 +65,8 @@ var PutBack = React.createClass({
          if(this.state.PutBackExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent ="";
-          if (this.state.SplitScreenFlag){
-            binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />)
-
+          if (this.state.BinMapDetails){
+            binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
           }else{
               binComponent = ( <div className='main-container'>
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
@@ -90,16 +90,18 @@ var PutBack = React.createClass({
       case appConstants.PUT_BACK_SCAN:
           if(this.state.PutBackExceptionStatus == false){
           var binComponent = "";
-          if(this.state.SplitScreenFlag){
+          if(this.state.BinMapDetails){
             binComponent = (<div>
-                            <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
+                            <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>
+                            <WrapperSplitRoll scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
                     </div>);
           }else{
+
             binComponent = (<div className='main-container'>
                     <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
                     <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
                 </div>);
+
           }
           this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
@@ -238,9 +240,9 @@ var PutBack = React.createClass({
        case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
           this._navigation = '';
           var binComponent="";
-          if(this.state.SplitScreenFlag){
+          if(this.state.BinMapDetails){
             binComponent=(<div className="exception1">
-                      <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
+                      <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>
                    </div>)
           }else{
              binComponent=(<div className="main-container exception1">
@@ -267,19 +269,6 @@ var PutBack = React.createClass({
           this._navigation = '';
           if(this.state.PutBackExceptionScreen == "extra_quantity")
           this._component = (
-              /*<div className='grid-container exception'>
-                <Exception data={this.state.PutBackExceptionData}/>
-                <div className="exception-right">
-                  <ExceptionHeader data={this.state.PutBackServerNavData} />
-                  <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY_1} />  
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>*/
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">

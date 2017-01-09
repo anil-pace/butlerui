@@ -38916,7 +38916,9 @@ var Header = React.createClass({displayName: "Header",
                                          _("Exception")
                                     ));
         else
-            this.exceptionMenu = '';
+            this.exceptionMenu = (React.createElement("div", {className: "actionItem disable"}, 
+                                         _("Exception")
+                                    ));
     },    
     peripheralData : function(type){
         CommonActions.getPeriPheralData(type);
@@ -40628,7 +40630,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           var editButton ='';
         }
         if(!cancelScanDisabled){
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
+          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
          }
          else{
           cancelButton = (React.createElement("div", {className: "cancel-scan"}));
@@ -48292,11 +48294,19 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                     sessionStorage.setItem('sessionData', null);
                     CommonActions.loginSeat(false);
                     utils.enableKeyboard();
+<<<<<<< HEAD
                 }
                 else if(evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED){
                     utils.sessionLogout();
                         return false;
                 }else{
+=======
+                }else if(evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED){
+                    utils.sessionLogout();
+                        return false;
+                }
+                else{
+>>>>>>> develop
                 var received_msg = evt.data;
                 var data = JSON.parse(evt.data);
                 if(data.hasOwnProperty('data')){
@@ -48537,4 +48547,8 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
+<<<<<<< HEAD
 },{"../actions/CommonActions":233,"../constants/appConstants":290,"../constants/configConstants":291,"../constants/resourceConstants":292,"../serverMessages/server_messages":299,"events":14,"react/lib/Object.assign":121}]},{},[295]);
+=======
+},{"../actions/CommonActions":233,"../constants/appConstants":284,"../constants/configConstants":285,"../constants/resourceConstants":286,"../serverMessages/server_messages":293,"events":14,"react/lib/Object.assign":121}]},{},[289]);
+>>>>>>> develop

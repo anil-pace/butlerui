@@ -68,8 +68,6 @@ var Bins = React.createClass({
          
          var totalPpsWidth = Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)
          
-         // if the seat type is front then we have to modify the x co-ordinate as per the formula:
-         // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
          
          for (var i =0; i<aBins.length ;i++){
                 var binWidth = aBins[i].length * horFactor +'%';
@@ -77,6 +75,9 @@ var Bins = React.createClass({
                 var ileft=0;
                 var itop=0;
 
+                // if the seat type is front then we have to modify the x co-ordinate as per the formula:
+                // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
+                
                 ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'): 
                     (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
                 itop = aBins[i].orig_coordinate[1] * vertFactor+'%';

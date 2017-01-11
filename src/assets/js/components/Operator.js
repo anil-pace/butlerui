@@ -56,7 +56,7 @@ var Operator = React.createClass({
       case appConstants.AUDIT:
           this._currentSeat = <Audit navMessagesJson={this.state.navMessages}/>;
         break;
-      case 4:
+      case appConstants.PRE_PUT:
           this._currentSeat = <PrePut navMessagesJson={this.state.navMessages}/>;            
       default:
         return true; 

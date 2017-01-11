@@ -241,8 +241,11 @@ var serverMessages = {
     "AdF001" : "Items In Box Unscannable",
     "AdF002" : "Box Unscannable",
     "AdF003" : "Loose Items Unscannable",
-
-
+    "PpB.H.001" : "Scan Tote and place it in slot",
+    "PpB.H.002" : "Scan Slot to confirm",
+    "PpB.H.005" : "Release MTU",
+    "PpB.I.001" : "Entity scan successful.",
+    "PpB.I.002" : "Slot scan successful"
 };
 
 

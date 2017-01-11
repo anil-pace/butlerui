@@ -7,15 +7,10 @@ var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
 var Button1 = require("./Button/Button");
-var Wrapper = require('./ProductDetails/Wrapper');
-var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll');
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
-var TabularData = require('./TabularData');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
-var KQ = require('./ProductDetails/KQ');
-var Img = require('./PrdtDetails/ProductImage.js');
 var Reconcile = require("./Reconcile");
 
 
@@ -32,11 +27,11 @@ var PrePut = React.createClass({
     return getStateData();
   },
   componentWillMount: function(){
-    //PutBackStore.addChangeListener(this.onChange);
+    //PrePutStore.addChangeListener(this.onChange);
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    //PutBackStore.removeChangeListener(this.onChange);
+    //PrePutStore.removeChangeListener(this.onChange);
     mainstore.addChangeListener(this.onChange);
   },
   onChange: function(){ 
@@ -48,7 +43,7 @@ var PrePut = React.createClass({
       return (
               <div className='grid-container exception'>
                 <Modal />
-                <Exception data={this.state.PutBackExceptionData} action={true}/>
+                <Exception data={this.state.PrePutExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
@@ -58,16 +53,15 @@ var PrePut = React.createClass({
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
-      case appConstants.PUT_BACK_STAGE:
-      case appConstants.PUT_BACK_SCAN_TOTE:
-         if(this.state.PutBackExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+      case appConstants.PRE_PUT_STAGE:
+         if(this.state.PrePutExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent ="";
           if (this.state.OrigBinUse){
-            binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
           }else{
               binComponent = ( <div className='main-container'>
-                    <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+                    <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
                 </div>)
           }
           this._component = (
@@ -75,8 +69,7 @@ var PrePut = React.createClass({
                 <Modal />
                {binComponent}
                 <div className = 'staging-action' >
-                  <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
-                  <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
+                  <Button1 disabled = {!this.state.ReleaseActive} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
                 </div>
               </div>
             );
@@ -85,27 +78,28 @@ var PrePut = React.createClass({
         }
 
         break;
-      case appConstants.PUT_BACK_SCAN:
-          if(this.state.PutBackExceptionStatus == false){
+      case appConstants.PRE_PUT_SCAN:
+          if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
           if(this.state.OrigBinUse){
             binComponent = (<div>
-                            <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>
-                            <WrapperSplitRoll scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
+                            <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>
                     </div>);
           }else{
            binComponent =( <div className='main-container'>
-                               <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                               <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
+                               <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId}/>
                            </div>)
           }
-          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                 <Modal />
                 {binComponent}
+                <div className = 'staging-action' >
+                  <Button1 disabled = {!this.state.ReleaseActive} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
+                </div>                
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} barcode={this.state.PutBackItemUid} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_SCAN} barcode={this.state.PrePutItemUid} color={"black"}/>
                 </div>
               </div>
             );
@@ -113,86 +107,46 @@ var PrePut = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_BACK_TOTE_CLOSE:
-          if(this.state.PutBackExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-          var subComponent='';
-          var messageType = 'large';
-          var m = {
-            "details": [],
-            "code": "PtB.E.020",
-            "description": "Tote Match successfully",
-            "level": "info"
-          };
-          if(this.state.PutBackReconciliation["tableRows"].length > 1 )
-            subComponent=(
-                <div className='main-container'>
-                  <div className="audit-reconcile-left">
-                    <TabularData data = {this.state.PutBackReconciliation}/>
-                  </div>
-                </div>
-              );
-          else
-            subComponent=(
-                <Reconcile navMessagesJson={this.props.navMessagesJson} message={m} />
-              );
-            messageType = "small";
+      case appConstants.PRE_PUT_RELEASE:
+          if(this.state.PrePutExceptionStatus == false){
+          var binComponent = "";
+          if(this.state.OrigBinUse){
+            binComponent = (<div>
+                            <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>
+                    </div>);
+          }else{
+           binComponent =( <div className='main-container'>
+                               <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId}/>
+                           </div>)
+          }
+          this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
-              <div className='grid-container audit-reconcilation'>
-                {subComponent}
-                 <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={false} action={appConstants.CANCEL_TOTE} color={"black"}/>
-                  <Button1 disabled = {false} text = {_("CLOSE")} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={true} action={appConstants.CLOSE_TOTE} color={"orange"} />  
-                </div>
+              <div className='grid-container'>
+                <Modal />
+                {binComponent}
+                <div className = 'staging-action' >
+                  <Button1 text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
+                </div>                
               </div>
             );
         }else{
           this._component = this.getExceptionComponent();
         }
-        break; 
-      case appConstants.PPTL_MANAGEMENT:
-      case appConstants.SCANNER_MANAGEMENT:
-          this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
-          var _button;
-          if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
-          _button = (<div className = 'staging-action' >                          
-                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
-                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
-                      </div>)
-          }
-          else{
-            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
-          }
-          this._component = (
-              <div className='grid-container audit-reconcilation'>
-                  <div className="row scannerHeader">
-                    <div className="col-md-6">
-                      <div className="ppsMode"> PPS Mode : {this.state.PutBackPpsMode.toUpperCase()} </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="seatType"> Seat Type : {this.state.PutBackSeatType.toUpperCase()}</div>
-                    </div>
-                  </div>
-                  <TabularData data = {this.state.utility}/>
-                  {_button}
-                  <Modal /> 
-              </div>
-            );
-        break;      
+        break;        
       default:
         return true; 
     }
   },
 
   getNotificationComponent:function(){
-    if(this.state.PutBackNotification != undefined)
-      this._notification = <Notification notification={this.state.PutBackNotification} navMessagesJson={this.props.navMessagesJson}/>
+    if(this.state.PrePutNotification != undefined)
+      this._notification = <Notification notification={this.state.PrePutNotification} navMessagesJson={this.props.navMessagesJson}/>
     else
       this._notification = "";
   },
   render: function(data){ 
     this.getNotificationComponent();
-    this.getScreenComponent(this.state.PutBackScreenId);
+    this.getScreenComponent(this.state.PrePutScreenId);
       return (
         <div className="main">
           <Header />

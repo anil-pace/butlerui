@@ -12,7 +12,7 @@ var Modal = require('./Modal/Modal');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var Reconcile = require("./Reconcile");
-
+var MtuNavigation = require("./mtuNavigation")
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -66,6 +66,7 @@ var PrePut = React.createClass({
           }
           this._component = (
               <div className='grid-container'>
+               <MtuNavigation data={[1,0,0]}/>
                 <Modal />
                {binComponent}
                 <div className = 'staging-action' >
@@ -93,6 +94,7 @@ var PrePut = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
+                <MtuNavigation data={[0,1,0]}/>
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >
@@ -122,6 +124,7 @@ var PrePut = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
+                <MtuNavigation data={[0,0,1]]}/>            
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >

@@ -45208,8 +45208,8 @@ var serverMessages = {
     "PpB.H.001" : "Scan Tote and place it in slot",
     "PpB.H.002" : "Scan Slot to confirm",
     "PpB.H.005" : "Release MTU",
-    "PpB.I.001" : "Entity scan successful.",
-    "PpB.I.002" : "Slot scan successful"
+    "PpB.I.001" : "Tote scan successful.",
+    "PpB.I.002" : "Slot barcode scan successful"
 };
 
 

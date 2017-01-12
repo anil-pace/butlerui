@@ -344,7 +344,7 @@
 			"level": "info",
 			"code": "PtB.H.002",
 			"details": [],
-			"description": "Place Entity in Bin 3 and Press PPTL"
+			"description": "Place Entity in Bin and Press PPTL"
 		}],
 		"structure": [2, 4]
 	}

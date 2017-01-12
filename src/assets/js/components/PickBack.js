@@ -82,7 +82,7 @@ var PickBack = React.createClass({
        if(this.state.PickBackExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} seatType = {this.state.SeatType}/>)
           }else{
             binComponent =(
@@ -105,7 +105,7 @@ var PickBack = React.createClass({
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent = "";
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} seatType = {this.state.SeatType}/>);
           }else{
             binComponent = (<div className='main-container'>
@@ -128,7 +128,7 @@ var PickBack = React.createClass({
        case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
-          if (this.state.BinMapDetails){
+          if (this.state.OrigBinUse){
             binComponent = (<div className="exception1">
                             <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>
                             </div>);

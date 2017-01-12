@@ -18,10 +18,22 @@ var ProductDetails = React.createClass({
           locale = JSON.parse(language_locale)["data"]["locale"]; 
         }
         data.map(function(value, index){
-          var keyValue;
+          var keyValue ="";
           var imageKey;
           for (var key in value[0]) { 
-            if(key != 'display_data' && key != 'product_local_image_url' ){
+            if (key === "product_dimensions") {
+              var dimentions = value[0][key];
+              for (var i = 0; i < dimentions.length; i++) {
+                if(i === 0) {
+                  keyValue = dimentions[i] + "";
+                }
+                else {
+                  keyValue = keyValue + " X " + dimentions[i]
+                }
+              }
+              
+            }
+            else if(key != 'display_data' && key != 'product_local_image_url' ){
               keyValue = value[0][key] + ' ';
              }else if(key != 'display_data' && key == 'product_local_image_url' ){
               imageKey = value[0][key];

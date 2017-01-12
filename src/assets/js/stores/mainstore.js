@@ -1788,6 +1788,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();
                 break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
@@ -1803,7 +1804,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();
+                data["BinMapDetails"] =  this.getBinMapDetails();
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();

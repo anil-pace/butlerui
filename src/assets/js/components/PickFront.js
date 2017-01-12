@@ -204,6 +204,7 @@ var PickFront = React.createClass({
         }else{
           var editButton ='';
         }
+
         var binComponent="";
         if (this.state.OrigBinUse){
             binComponent = (<div>
@@ -216,23 +217,26 @@ var PickFront = React.createClass({
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                 </div>);
           }
+
         this._component = (
               <div className='grid-container'>
-                <Modal />          
+                <Modal />  
+                <div>        
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-               <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}/>
+               {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
                 <div className = 'actions'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
                 </div>
               </div>
+              </div>
             );
         }else{
           this._component = this.getExceptionComponent();
         }
       break;
-
+                  
       case appConstants.PICK_FRONT_PPTL_PRESS:
          var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
          var cancelButton;
@@ -253,6 +257,7 @@ var PickFront = React.createClass({
          }
          var binComponent ="";
           if (this.state.OrigBinUse){
+
             binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
           }else{
             binComponent =(<div className='main-container'>
@@ -262,9 +267,13 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                 <Modal />
+                <div>
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
+
                {cancelButton}
+              </div>
               </div>
             );
          }else{

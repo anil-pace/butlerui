@@ -5,7 +5,7 @@ var MtuNavigation = React.createClass({
 	
 
 	processData: function(){
-		var data =  [0,1,0,0,1], navData=[];
+		var data =  this.props.data, navData=[]; // data should be in form of array with 0,1 data = [0,0,0,1]
 		for (var i = data.length - 1; i >= 0; i--) {
 			if(data[i] === 1) {
 				navData.push(<div className={"gor-single-mtu-wrap"}>

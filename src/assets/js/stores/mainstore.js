@@ -261,6 +261,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 else
                     _NavData = navConfig.audit[1];
                 break;
+            case appConstants.PRE_PUT:
+                if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE){
+                    _NavData = navConfig.prePut[1];
+                }
+                else{
+                    _NavData = navConfig.prePut[0];
+                }
+                break;
+
             default:
                 //return true; 
         }
@@ -1615,6 +1624,37 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 break;
+            case appConstants.PRE_PUT_STAGE:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this.getStageActiveStatus();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PRE_PUT_SCAN:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this.getStageActiveStatus();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutItemUid"] = this.getItemUid();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;               
+            case appConstants.PRE_PUT_RELEASE:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this.getStageActiveStatus();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;                               
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();

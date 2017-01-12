@@ -76,7 +76,6 @@ var PutBack = React.createClass({
               <div className='grid-container'>
                 <Modal />
                {binComponent}
-               <MtuNavigation/>
                 <div className = 'staging-action' >
                   <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
                   <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  

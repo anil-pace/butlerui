@@ -378,4 +378,6 @@ function server_messages_list() {
     _("Exception Finished");
     _("PPS Mode");
     _("Seat Type");
+    /*Pre-put */
+    _("Release MTU");
 }

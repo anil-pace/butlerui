@@ -378,4 +378,5 @@ function server_messages_list() {
     _("Exception Finished");
     _("PPS Mode");
     _("Seat Type");
+    _("Good Quantity Cannot be Equal to the Total Quantity");
 }

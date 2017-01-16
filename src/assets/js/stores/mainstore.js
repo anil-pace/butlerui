@@ -1244,7 +1244,26 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _pickFrontExceptionScreen = data;
             }
         } else if (data == "damaged_or_missing") {
-            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
+            if(_goodQuantity === _seatData["pick_quantity"]){
+                      if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = resourceConstants.CLIENTCODE_017;
+                    data["level"] = "error";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
+                   
+                } else {
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_017;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0].level = "error";
+                }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+            }
+            else if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;

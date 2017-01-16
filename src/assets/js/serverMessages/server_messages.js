@@ -162,6 +162,7 @@ var serverMessages = {
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
+    "CLIENTCODE_017" : "Good Quantity Cannot be Equal to the Total Quantity",
     "CLIENTCODE_409_PERIPHERAL" : "Peripheral already added",
     "CLIENTCODE_400" : "Bad Data",
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",

@@ -1303,11 +1303,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 
     getSplitScreenFlag:function(){
-        var navData=_seatData.group_info|| {};
-        for(var key in navData){
-            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
-            {
-                return true;
+        if(_seatData.hasOwnProperty('group_info')){
+            var navData=_seatData.group_info|| {};
+            for(var key in navData){
+                if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+                {
+                    return true;
+                }
             }
         }
         return false;

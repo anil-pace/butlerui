@@ -44557,8 +44557,8 @@ module.exports = appConstants;
 
 },{}],293:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.167/wss",
-	INTERFACE_IP : "https://192.168.8.167"
+	WEBSOCKET_IP : "wss://192.168.8.155/wss",
+	INTERFACE_IP : "https://192.168.8.155"
 };
 module.exports = configConstants;
 
@@ -47756,11 +47756,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 
     getSplitScreenFlag:function(){
-        var navData=_seatData.group_info|| {};
-        for(var key in navData){
-            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
-            {
-                return true;
+        if(_seatData.hasOwnProperty('group_info')){
+            var navData=_seatData.group_info|| {};
+            for(var key in navData){
+                if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+                {
+                    return true;
+                }
             }
         }
         return false;

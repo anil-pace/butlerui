@@ -12,7 +12,7 @@ var Modal = require('./Modal/Modal');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var Reconcile = require("./Reconcile");
-
+var MtuNavigation = require("./mtuNavigation")
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -35,7 +35,9 @@ var PrePut = React.createClass({
     mainstore.addChangeListener(this.onChange);
   },
   onChange: function(){ 
-    this.setState(getStateData());
+    if(this.refs.prePut){
+      this.setState(getStateData());
+    }
   },
   getExceptionComponent:function(){
       var _rightComponent = '';
@@ -63,9 +65,10 @@ var PrePut = React.createClass({
               binComponent = ( <div className='main-container'>
                     <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
                 </div>)
-          }
+          }          
           this._component = (
               <div className='grid-container'>
+               <MtuNavigation data={[1,0,0]}/>
                 <Modal />
                {binComponent}
                 <div className = 'staging-action' >
@@ -81,25 +84,24 @@ var PrePut = React.createClass({
       case appConstants.PRE_PUT_SCAN:
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
-          if(this.state.OrigBinUse){
-            binComponent = (<div>
-                            <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>
-                    </div>);
+          if (this.state.OrigBinUse){
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
           }else{
-           binComponent =( <div className='main-container'>
-                               <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId}/>
-                           </div>)
-          }
+              binComponent = ( <div className='main-container'>
+                    <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
+                </div>)
+          }          
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
+                <MtuNavigation data={[0,1,0]}/>
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >
                   <Button1 disabled = {!this.state.ReleaseActive} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
                 </div>                
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_SCAN} barcode={this.state.PrePutItemUid} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_SCAN} barcode={this.state.PrePutToteid} color={"black"}/>
                 </div>
               </div>
             );
@@ -110,22 +112,21 @@ var PrePut = React.createClass({
       case appConstants.PRE_PUT_RELEASE:
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
-          if(this.state.OrigBinUse){
-            binComponent = (<div>
-                            <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>
-                    </div>);
+          if (this.state.OrigBinUse){
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
           }else{
-           binComponent =( <div className='main-container'>
-                               <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId}/>
-                           </div>)
-          }
+              binComponent = ( <div className='main-container'>
+                    <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
+                </div>)
+          }          
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
+                <MtuNavigation data={[0,0,1]}/>            
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >
-                  <Button1 text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
+                  <Button1 disabled = {false} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
                 </div>                
               </div>
             );
@@ -148,7 +149,7 @@ var PrePut = React.createClass({
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PrePutScreenId);
       return (
-        <div className="main">
+        <div ref="prePut" className="main">
           <Header />
           {this._navigation}
           {this._component}

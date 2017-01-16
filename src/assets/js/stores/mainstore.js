@@ -39,27 +39,27 @@ var modalContent = {
 * This function enables the logout due to inactivity feature - Krishna.
 */
 var idleLogout = function() {
-    // var t;
-    // window.addEventListener('load', resetTimer,false);
-    // window.addEventListener('mousemove', resetTimer,false);
-    // window.addEventListener('mousedown', resetTimer,false);
-    // window.addEventListener('onclick', resetTimer,false);
-    // window.addEventListener('scroll', resetTimer,false);
-    // window.addEventListener('keypress', resetTimer,false);
+    var t;
+    window.addEventListener('load', resetTimer,false);
+    window.addEventListener('mousemove', resetTimer,false);
+    window.addEventListener('mousedown', resetTimer,false);
+    window.addEventListener('onclick', resetTimer,false);
+    window.addEventListener('scroll', resetTimer,false);
+    window.addEventListener('keypress', resetTimer,false);
 
-    // function logout() {
-    //     if(mainstore.getLogoutState()){
-    //             console.log("Logging out since user has been idle past the time threshold")
-    //             CommonActions.logoutSession(true);
-    //         }
+    function logout() {
+        if(mainstore.getLogoutState()){
+                console.log("Logging out since user has been idle past the time threshold")
+                CommonActions.logoutSession(true);
+            }
             
-    // }
+    }
 
-    // function resetTimer() {
-    //     clearTimeout(t);
-    //     t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
-    //     // time is in milliseconds
-    // }
+    function resetTimer() {
+        clearTimeout(t);
+        t = setTimeout(logout, appConstants.IDLE_LOGOUT_TIME);
+        // time is in milliseconds
+    }
 }();
 
 function setPopUpVisible(status) {
@@ -1303,11 +1303,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 
     getSplitScreenFlag:function(){
-        var navData=_seatData.group_info|| {};
-        for(var key in navData){
-            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
-            {
-                return true;
+        if(_seatData.hasOwnProperty('group_info')){
+            var navData=_seatData.group_info|| {};
+            for(var key in navData){
+                if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -1329,6 +1331,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getOrigBinUse:function(){
         return (_seatData && _seatData.bin_coordinate_plotting ? true:false);
+    },
+    getReleaseActiveStatus:function(){
+        return (_seatData && _seatData.release_mtu ? true:false);
     },
     getSelectedBinGroup:function(){
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
@@ -1627,7 +1632,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_STAGE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
-                data["ReleaseActive"] = this.getStageActiveStatus();
+                data["ReleaseActive"] = this.getReleaseActiveStatus();
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();
@@ -1637,9 +1642,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_SCAN:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
-                data["ReleaseActive"] = this.getStageActiveStatus();
+                data["ReleaseActive"] = this.getReleaseActiveStatus();
                 data["PrePutNavData"] = this.getNavData();
-                data["PrePutItemUid"] = this.getItemUid();
+                data["PrePutToteid"] = this.getToteId();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();
                 data["PrePutNotification"] = this.getNotificationData();
@@ -1648,7 +1653,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_RELEASE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
-                data["ReleaseActive"] = this.getStageActiveStatus();
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();
@@ -1788,7 +1792,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["SplitScreenFlag"] = this.getSplitScreenFlag();
                 break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
@@ -1804,8 +1807,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["SplitScreenFlag"] = this.getSplitScreenFlag();
-                data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();

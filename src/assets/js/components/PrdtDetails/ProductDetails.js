@@ -22,13 +22,13 @@ var ProductDetails = React.createClass({
           var imageKey;
           for (var key in value[0]) { 
             if (key === "product_dimensions") {
-              var dimentions = value[0][key];
-              for (var i = 0; i < dimentions.length; i++) {
+              var dimension = value[0][key];
+              for (var i = 0; i < dimension.length; i++) {
                 if(i === 0) {
-                  keyValue = dimentions[i] + "";
+                  keyValue = dimension[i] + "";
                 }
                 else {
-                  keyValue = keyValue + " X " + dimentions[i]
+                  keyValue = keyValue + " X " + dimension[i]
                 }
               }
               

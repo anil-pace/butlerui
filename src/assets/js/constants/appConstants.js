@@ -147,7 +147,13 @@ var appConstants = {
 	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
 	CANCEL_PPTL : 'CANCEL_PPTL',
 	IDLE_LOGOUT_TIME : 300000, //in millisec
-	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN'
+	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN',
+	PUT_FRONT_WAITING_UNDOCK : 'put_front_waiting_undock',
+	PRE_PUT_STAGE : "pre_put_stage",
+	PRE_PUT_SCAN : "pre_put_scan",
+	PRE_PUT_RELEASE : "pre_put_release",	
+	PRE_PUT : "pre_put_back",
+	RELEASE_MTU : "release_mtu"
 };
 
 module.exports = appConstants;

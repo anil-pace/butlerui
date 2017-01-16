@@ -7263,6 +7263,22 @@ button.close {
 .bins .bin-row .bin .grey-icon {
   color: grey;
 }
+
+.bins .bin .pptl {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /*min-height: 15%;*/
+
+  /*display: flex;*/
+  justify-content: center;
+  align-items: center;
+  background: #939598;
+  text-align: center;
+  color: white;
+  font-size: 2.2rem;
+}
+
 .bins .bin-row .bin .pptl {
   position: absolute;
   bottom: 0;
@@ -7305,6 +7321,22 @@ button.close {
     background: #939598;
   }
 }
+.bins .bin .item-count {
+  position: absolute;
+  top: 0;
+  bottom: 20%;
+  height: 50%;
+  width: 50%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  left: 0;
+  right: 0;
+  font-size: 5.6rem;
+}
+
+
 .bins .bin-row .bin .item-count {
   position: absolute;
   top: 0;
@@ -9905,7 +9937,7 @@ button.ui-keyboard-extender span {
   position: absolute;
   left: 0;
   top: -3px;
-  width: 9%;
+  width: 10%;
   height: 20%;
   display: -webkit-flex;
   display: flex;

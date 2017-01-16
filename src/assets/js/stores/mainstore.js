@@ -206,6 +206,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_FRONT:
                 if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                     _NavData = navConfig.putFront[0];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
+                    _NavData = navConfig.putFront[2];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -259,6 +261,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 else
                     _NavData = navConfig.audit[1];
                 break;
+            case appConstants.PRE_PUT:
+                if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE){
+                    _NavData = navConfig.prePut[1];
+                }
+                else{
+                    _NavData = navConfig.prePut[0];
+                }
+                break;
+
             default:
                 //return true; 
         }
@@ -1287,9 +1298,54 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
     getBinMapDetails:function(){
-        return _seatData.group_info || null;
+        return _seatData ? _seatData.group_info : null;
     },
 
+
+    getSplitScreenFlag:function(){
+        if(_seatData.hasOwnProperty('group_info')){
+            var navData=_seatData.group_info|| {};
+            for(var key in navData){
+                if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+    getMobileFlag:function(){
+        var bIsMobile = false;
+        if(_seatData)
+        {
+          bIsMobile = _seatData.roll_cage_flow && _currentSeat==appConstants.PUT_FRONT;
+        }
+        return bIsMobile;
+    },
+    getDockedGroup:function(){
+            return (_seatData && _seatData.docked ? Object.keys(_seatData.docked):[]);
+        
+    },
+    getUndockAwaitedGroup:function(){
+            return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
+    },
+    getOrigBinUse:function(){
+        return (_seatData && _seatData.bin_coordinate_plotting ? true:false);
+    },
+    getReleaseActiveStatus:function(){
+        return (_seatData && _seatData.release_mtu ? true:false);
+    },
+    getSelectedBinGroup:function(){
+        var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var groupId = null;
+        ppsbin_list.forEach(function(el){
+            if(el["selected_state"]){
+                groupId = el["group_id"];
+                return false;
+            }
+        })
+        return groupId ;
+    },
     validateAndSendDataToServer: function() {
         var flag = false;
         var details;
@@ -1490,7 +1546,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getScreenData: function() {
         var data = {};
+
+        //since OrigBinUse Flag is needed in all the screens.
+        data["OrigBinUse"] = this.getOrigBinUse();
+        data["SeatType"] = this.getSeatType();
         switch (_screenId) {
+
             case appConstants.PUT_BACK_STAGE:
             case appConstants.PUT_BACK_SCAN_TOTE:
                 data["PutBackBinData"] = this.getBinData();
@@ -1568,10 +1629,44 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 break;
+            case appConstants.PRE_PUT_STAGE:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this.getReleaseActiveStatus();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PRE_PUT_SCAN:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this.getReleaseActiveStatus();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutToteid"] = this.getToteId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;               
+            case appConstants.PRE_PUT_RELEASE:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;                               
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] =  this.getBinMapDetails();   
+                data["MobileFlag"]=this.getMobileFlag();
+                data["DockedGroup"] = this.getDockedGroup();  
+                data["UndockAwaited"] = this.getUndockAwaitedGroup();               
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -1581,6 +1676,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this.getBinMapDetails();               
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();       
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -1594,6 +1692,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["SplitScreenFlag"] = this.getSplitScreenFlag();                
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
                 data["PutFrontExceptionData"] = this.getExceptionData();
@@ -1601,6 +1702,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 break;
+            case appConstants.PUT_FRONT_WAITING_UNDOCK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["DockedGroup"] = this.getDockedGroup();  
+                data["UndockAwaited"] = this.getUndockAwaitedGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -1649,6 +1761,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] =  this.getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -1669,7 +1782,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
-                //data["BinMapDetails"] =  this.getBinMapDetails();
+                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
                 data["PickFrontProductDetails"] = this.productDetails();
@@ -1693,6 +1807,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] =  this.getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();

@@ -51,7 +51,7 @@ var ActiveNavigation = React.createClass({
                         }
                     )()}
                     {this.props.subMessage && <div className="sub-message">{_(this.props.subMessage)}</div>}         
-            		{this.props.showSpinner && <p>Spinner here!</p>}
+            		{this.props.showSpinner}
                     </div>
             	</div>
         );

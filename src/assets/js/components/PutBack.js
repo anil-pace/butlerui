@@ -19,7 +19,7 @@ var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Reconcile = require("./Reconcile");
-
+var MtuNavigation = require("./mtuNavigation");
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -96,16 +96,19 @@ var PutBack = React.createClass({
                             <WrapperSplitRoll scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
                     </div>);
           }else{
-           binComponent =( <div className='main-container'>
-                               <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
-                               <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
-                           </div>)
+
+            binComponent = (<div className='main-container'>
+                    <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId}/>
+                    <Wrapper scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid}/>
+                </div>);
+
           }
           this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
                 <Modal />
                 {binComponent}
+
                 <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN} barcode={this.state.PutBackItemUid} color={"black"}/>
                 </div>

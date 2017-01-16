@@ -98,7 +98,9 @@ var Bins = React.createClass({
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
                                                this.state.lastHBin, 
                                                this.state.lastVBin,
+
                                                this.props.seatType,
+
                                                this.props.screenId);
         var self = this;
         return (

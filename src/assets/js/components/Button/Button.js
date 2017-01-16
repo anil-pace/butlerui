@@ -326,6 +326,21 @@ var Button1 = React.createClass({
                                 break;
                         }   
                         break;
+                    case appConstants.PRE_PUT:
+                        switch (action) {
+                            case appConstants.CANCEL_SCAN:
+                                data["event_name"] = "cancel_barcode_scan";
+                                data["event_data"]["barcode"] = this.props.barcode;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.RELEASE_MTU:
+                                data["event_name"] = "release_mtu";
+                                ActionCreators.postDataToInterface(data);
+                                break;                            
+                            default:
+                                return true;
+                        }
+                        break;
                     default:
                         return true;
                 }

@@ -37,6 +37,7 @@ var serverMessages = {
     "PtF.H.004" : "Scan Entity From Bin {0}",
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
+    "PtF.H.007" : "Undock Roll Cage",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -241,8 +242,17 @@ var serverMessages = {
     "AdF001" : "Items In Box Unscannable",
     "AdF002" : "Box Unscannable",
     "AdF003" : "Loose Items Unscannable",
-
-
+    "PpB.H.001" : "Scan tote and place it in the slot",
+    "PpB.H.002" : "Scan slot to confirm",
+    "PpB.H.005" : "Release MTU",
+    "PpB.I.001" : "Tote scan successful.",
+    "PpB.I.002" : "Slot barcode scan successful",
+    "PpB.W.001" : "Tote already scanned",
+    "PpB.W.002" : "Tote scanned is not idle",
+    "PpB.W.003" : "Tote scanned is not opened",
+    "PpB.W.004" : "Scan Tote first and then scan rack",
+    "PpB.W.005" : "Invalid Slot scanned",
+    "PpB.W.006" : "Tote already associated with slot.Scan empty slot"    
 };
 
 

@@ -5,15 +5,17 @@ var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PickFront');
 var Audit = require('./Audit');
+var PrePut = require('./PrePut');
 var appConstants = require('../constants/appConstants');
 var Spinner = require('./Spinner/Overlay');
 var SystemIdle = require('./SystemIdle');
-
+var MobileSystemIdle = require('./MobileSystemIdle');
 
 
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
+      isMobile:mainstore.getMobileFlag(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
       navMessages : mainstore.getServerMessages()
@@ -54,6 +56,8 @@ var Operator = React.createClass({
       case appConstants.AUDIT:
           this._currentSeat = <Audit navMessagesJson={this.state.navMessages}/>;
         break;
+      case appConstants.PRE_PUT:
+          this._currentSeat = <PrePut navMessagesJson={this.state.navMessages}/>;            
       default:
         return true; 
       }
@@ -69,7 +73,7 @@ var Operator = React.createClass({
        if(this.state.systemIsIdle === true){
           return (
             <div className="main">
-              <SystemIdle />
+              {this.state.isMobile?<MobileSystemIdle/>:<SystemIdle />}
             </div> 
           )
         }else{

@@ -74,6 +74,14 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],
+        [{
+            "screen_id": "put_front_waiting_undock",
+            "code": "Common.000",
+            "message": "Undock Roll Cage",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [
@@ -166,6 +174,35 @@ var navData = {
         "level": 3,
         "type": 'passive'
     }]
+    ],
+    "prePut": [
+        [{
+            "screen_id": "pre_put_stage",
+            "code": "Common.000",
+            "image": svgConstants.stage,
+            "message": "Scan tote",
+            "showImage": true,            
+            "level": 1,
+            "type": 'passive'
+        }, 
+        {
+        "screen_id": "pre_put_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan slot",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
+        }],
+        [ 
+        {
+        "screen_id": "pre_put_release",
+        "code": "Common.000",
+        "message": "Release MTU",
+        "showImage": false,
+        "level": 1,
+        "type": 'active'
+        }]
     ]
 
 };

@@ -40626,7 +40626,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", null, 
+                       
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
@@ -40634,7 +40634,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                    React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton
                 )
-              )
+              
               )
             );
         }else{
@@ -40672,13 +40672,13 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", null, 
+               
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                 this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
 
                cancelButton
-              )
+           
               )
             );
          }else{
@@ -40907,13 +40907,13 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
           var imageKey;
           for (var key in value[0]) { 
             if (key === "product_dimensions") {
-              var dimentions = value[0][key];
-              for (var i = 0; i < dimentions.length; i++) {
+              var dimension = value[0][key];
+              for (var i = 0; i < dimension.length; i++) {
                 if(i === 0) {
-                  keyValue = dimentions[i] + "";
+                  keyValue = dimension[i] + "";
                 }
                 else {
-                  keyValue = keyValue + " X " + dimentions[i]
+                  keyValue = keyValue + " X " + dimension[i]
                 }
               }
               

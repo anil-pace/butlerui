@@ -153,6 +153,8 @@ var appConstants = {
 	PRE_PUT_SCAN : "pre_put_scan",
 	PRE_PUT_RELEASE : "pre_put_release",	
 	PRE_PUT : "pre_put_back",
+	PRE_PUT_EXCEPTION_EXCESS_TOTE:"pre_put_excess_items_tote",
+	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu"
 };
 

@@ -15,7 +15,7 @@ var MobileSystemIdle = require('./MobileSystemIdle');
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
-      isMobile:mainstore.getMobileFlag(),
+      isMobile:mainstore._getMobileFlag(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
       navMessages : mainstore.getServerMessages()

@@ -38509,6 +38509,10 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "release_mtu";
                                 ActionCreators.postDataToInterface(data);
                                 break;                            
+                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
+                                break;    
                             default:
                                 return true;
                         }
@@ -39253,9 +39257,9 @@ var SystemIdleHeader = require('./SystemIdleHeader');
 var SplitPPS = require('./SplitPPS');
 function getState(){
 		return {
-	      dockedGroup :mainstore.getDockedGroup(),
-    	  undockAwaited:mainstore.getUndockAwaitedGroup(),
-        groupInfo : mainstore.getBinMapDetails()
+	      dockedGroup :mainstore._getDockedGroup(),
+    	  undockAwaited:mainstore._getUndockAwaitedGroup(),
+        groupInfo : mainstore._getBinMapDetails()
   		}
 }
 
@@ -40099,7 +40103,7 @@ var MobileSystemIdle = require('./MobileSystemIdle');
 function getState(){
   return {
       currentSeat: mainstore.getCurrentSeat(),
-      isMobile:mainstore.getMobileFlag(),
+      isMobile:mainstore._getMobileFlag(),
       spinner : mainstore.getSpinnerState(),
       systemIsIdle : mainstore.getSystemIdleState(),
       navMessages : mainstore.getServerMessages()
@@ -40437,7 +40441,7 @@ var checkListOpen = false;
 function getStateData(){
       var screenData = mainstore.getScreenData();
       var splitPPSData ={
-        groupInfo : mainstore.getBinMapDetails()
+        groupInfo : mainstore._getBinMapDetails()
     }
       return Object.assign({},screenData,splitPPSData);
 };
@@ -41031,6 +41035,7 @@ var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation")
+var TabularData = require('./TabularData');
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -41077,13 +41082,6 @@ var PrePut = React.createClass({displayName: "PrePut",
          if(this.state.PrePutExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var binComponent ="";
-          if (this.state.OrigBinUse){
-            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}))
-          }else{
-              binComponent = ( React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
-                ))
-          }          
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                React.createElement(MtuNavigation, {data: [1,0,0]}), 
@@ -41151,7 +41149,68 @@ var PrePut = React.createClass({displayName: "PrePut",
         }else{
           this._component = this.getExceptionComponent();
         }
-        break;        
+        break; 
+      case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please Scan tote which has excess item"))
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, barcode: this.state.PrePutToteid, color: "black"})
+                )
+              )
+          );      
+        break; 
+      case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please Scan tote which has excess item"))
+                    )
+                  )
+                )
+              )
+          );      
+        break; 
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          console.log(this.state.PrePutNavData,this.state.PrePutServerNavData);
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}))
+          var _button;
+          if(this.state.PrePutScreenId == appConstants.SCANNER_MANAGEMENT){
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                      ))
+          }
+          else{
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PrePutPpsMode.toUpperCase(), " ")
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
+                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PrePutSeatType.toUpperCase())
+                    )
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
+                  React.createElement(Modal, null)
+              )
+            );
+        break;              
       default:
         return true; 
     }
@@ -41180,7 +41239,7 @@ var PrePut = React.createClass({displayName: "PrePut",
 
 module.exports = PrePut;
 
-},{"../constants/appConstants":292,"../stores/mainstore":308,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./Reconcile":280,"./mtuNavigation":290,"react":230}],267:[function(require,module,exports){
+},{"../constants/appConstants":292,"../stores/mainstore":308,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./Reconcile":280,"./TabularData":289,"./mtuNavigation":290,"react":230}],267:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -44550,6 +44609,8 @@ var appConstants = {
 	PRE_PUT_SCAN : "pre_put_scan",
 	PRE_PUT_RELEASE : "pre_put_release",	
 	PRE_PUT : "pre_put_back",
+	PRE_PUT_EXCEPTION_EXCESS_TOTE:"pre_put_excess_items_tote",
+	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu"
 };
 
@@ -44557,8 +44618,8 @@ module.exports = appConstants;
 
 },{}],293:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.155/wss",
-	INTERFACE_IP : "https://192.168.8.155"
+	WEBSOCKET_IP : "ws://192.168.3.115:8888/ws",
+	INTERFACE_IP : "https://192.168.3.115:5000"
 };
 module.exports = configConstants;
 
@@ -46718,6 +46779,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE){
                     _NavData = navConfig.prePut[1];
                 }
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }                
                 else{
                     _NavData = navConfig.prePut[0];
                 }
@@ -47750,12 +47819,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    getBinMapDetails:function(){
+    _getBinMapDetails:function(){
         return _seatData ? _seatData.group_info : null;
     },
-
-
-    getSplitScreenFlag:function(){
+    _getSplitScreenFlag:function(){
         if(_seatData.hasOwnProperty('group_info')){
             var navData=_seatData.group_info|| {};
             for(var key in navData){
@@ -47767,7 +47834,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return false;
     },
-    getMobileFlag:function(){
+    _getMobileFlag:function(){
         var bIsMobile = false;
         if(_seatData)
         {
@@ -47775,17 +47842,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return bIsMobile;
     },
-    getDockedGroup:function(){
+    _getDockedGroup:function(){
             return (_seatData && _seatData.docked ? Object.keys(_seatData.docked):[]);
         
     },
-    getUndockAwaitedGroup:function(){
+    _getUndockAwaitedGroup:function(){
             return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
     },
-    getOrigBinUse:function(){
+    _getOrigBinUse:function(){
         return (_seatData && _seatData.bin_coordinate_plotting ? true:false);
     },
-    getReleaseActiveStatus:function(){
+    _getReleaseActiveStatus:function(){
         return (_seatData && _seatData.release_mtu ? true:false);
     },
     getSelectedBinGroup:function(){
@@ -48001,7 +48068,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
 
         //since OrigBinUse Flag is needed in all the screens.
-        data["OrigBinUse"] = this.getOrigBinUse();
+        data["OrigBinUse"] = this._getOrigBinUse();
         data["SeatType"] = this.getSeatType();
         switch (_screenId) {
 
@@ -48085,7 +48152,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_STAGE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
-                data["ReleaseActive"] = this.getReleaseActiveStatus();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();
@@ -48095,7 +48162,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_SCAN:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
-                data["ReleaseActive"] = this.getReleaseActiveStatus();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutToteid"] = this.getToteId();
                 data["PrePutServerNavData"] = this.getServerNavData();
@@ -48111,15 +48178,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PrePutExceptionData"] = this.getExceptionData();
                 data["PrePutNotification"] = this.getNotificationData();
                 data["PrePutExceptionStatus"] = this.getExceptionStatus();
-                break;                               
+                break;      
+            case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                break;                                   
+            case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                break;                                   
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
-                data["BinMapDetails"] =  this.getBinMapDetails();   
-                data["MobileFlag"]=this.getMobileFlag();
-                data["DockedGroup"] = this.getDockedGroup();  
-                data["UndockAwaited"] = this.getUndockAwaitedGroup();               
+                data["BinMapDetails"] =  this._getBinMapDetails();   
+                data["MobileFlag"]=this._getMobileFlag();
+                data["DockedGroup"] = this._getDockedGroup();  
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();               
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -48129,8 +48208,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
-                data["BinMapDetails"] =  this.getBinMapDetails();               
-                data["SplitScreenFlag"] = this.getSplitScreenFlag();       
+                data["BinMapDetails"] =  this._getBinMapDetails();               
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();       
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -48145,8 +48224,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
-                data["SplitScreenFlag"] = this.getSplitScreenFlag();                
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -48159,9 +48238,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
-                data["DockedGroup"] = this.getDockedGroup();  
-                data["UndockAwaited"] = this.getUndockAwaitedGroup();
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["DockedGroup"] = this._getDockedGroup();  
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -48214,7 +48293,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["BinMapDetails"] =  this._getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -48235,7 +48314,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
-                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["BinMapDetails"] =  this._getBinMapDetails();                               
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
@@ -48260,7 +48339,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["BinMapDetails"] =  this._getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -48424,6 +48503,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditPpsMode"] = this.getPpsMode();
                 data["AuditSeatType"] = this.getSeatType();
 
+                //Peripheral management for pre-put
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutPpsMode"] = this.getPpsMode();
+                data["PrePutSeatType"] = this.getSeatType();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
                 break;
             default:
         }

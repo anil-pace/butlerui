@@ -38120,7 +38120,7 @@ var Bins = React.createClass({displayName: "Bins",
                                                this.props.screenId);
         var self = this;
         return (
-                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.5, height:document.body.clientHeight/2}}, 
+                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}, 
                         aHTMLBins
                  )
         );

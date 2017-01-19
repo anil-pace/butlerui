@@ -39055,7 +39055,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
-    //CommonActions.setLanguage();                 //Dispatch setLanguage action
+    CommonActions.setLanguage();                 //Dispatch setLanguage action
     CommonActions.changeLanguage(this.state.getLang);
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
@@ -39218,7 +39218,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: _('Enter Password'), ref: "password", valueLink: this.linkState('password')})
               ), 
                
-               _languageDropDown, 
+               this.state.getLang?'':_languageDropDown, 
 
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: _('Login')})
           )
@@ -44557,8 +44557,8 @@ module.exports = appConstants;
 
 },{}],293:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.155/wss",
-	INTERFACE_IP : "https://192.168.8.155"
+	WEBSOCKET_IP : "wss://192.168.8.148/wss",
+	INTERFACE_IP : "https://192.168.8.148"
 };
 module.exports = configConstants;
 

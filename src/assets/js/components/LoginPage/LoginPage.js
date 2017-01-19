@@ -49,7 +49,7 @@ var LoginPage = React.createClass({
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
-    //CommonActions.setLanguage();                 //Dispatch setLanguage action
+    CommonActions.setLanguage();                 //Dispatch setLanguage action
     CommonActions.changeLanguage(this.state.getLang);
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
@@ -212,7 +212,7 @@ var LoginPage = React.createClass({
                   <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
               </div>
                
-               {_languageDropDown}
+               {this.state.getLang?'':_languageDropDown}
 
               <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value={_('Login')} />
           </form>

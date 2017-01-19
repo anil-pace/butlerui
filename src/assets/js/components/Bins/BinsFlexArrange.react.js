@@ -104,7 +104,7 @@ var Bins = React.createClass({
                                                this.props.screenId);
         var self = this;
         return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth/1.5, height:document.body.clientHeight/2}}>
+                 <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}>
                         {aHTMLBins}
                  </div>
         );

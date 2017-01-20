@@ -246,12 +246,18 @@ var serverMessages = {
     "PpB.H.005" : "Release MTU",
     "PpB.I.001" : "Tote scan successful.",
     "PpB.I.002" : "Slot barcode scan successful",
-    "PpB.W.001" : "Tote already scanned",
-    "PpB.W.002" : "Tote scanned is not idle",
-    "PpB.W.003" : "Tote scanned is not opened",
-    "PpB.W.004" : "Scan Tote first and then scan rack",
-    "PpB.W.005" : "Invalid Slot scanned",
-    "PpB.W.006" : "Tote already associated with slot.Scan empty slot"    
+    "PpB.I.003" : "Exception cancelled",
+    "PpB.I.004" : "Tote scan cancelled.",
+    "PpB.I.005" : "Exception finished",
+    "PpB.E.001" : "Tote already scanned",
+    "PpB.E.002" : "Tote scanned is not idle",
+    "PpB.E.003" : "Tote scanned is not opened",
+    "PpB.E.004" : "Scan Tote first and then scan rack",
+    "PpB.E.005" : "Invalid Slot scanned",
+    "PpB.E.006" : "Tote already associated with slot.Scan empty slot",
+    "PpB.E.007" : "Unexpected entity scanned",
+    "PpB.E.008" : "Wrong barcode scanned",
+    "PpB001" : "Enter excess item quantity"   
 };
 
 

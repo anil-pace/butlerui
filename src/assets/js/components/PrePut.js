@@ -49,7 +49,7 @@ var PrePut = React.createClass({
                 <Exception data={this.state.PrePutExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -60,6 +60,13 @@ var PrePut = React.createClass({
          if(this.state.PrePutExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent ="";
+          if (this.state.OrigBinUse){
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
+          }else{
+              binComponent = ( <div className='main-container'>
+                    <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
+                </div>)
+          }          
           this._component = (
               <div className='grid-container'>
                <MtuNavigation data={[1,0,0]}/>
@@ -135,26 +142,36 @@ var PrePut = React.createClass({
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please Scan tote which has excess item")}</div>
+                      <div className="kq-header">{_("Please scan tote which has excess item")}</div>
                     </div>
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} barcode={this.state.PrePutToteid} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
                 </div>
               </div>
           );      
         break; 
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
+          var _button;
+          console.log(this.state);
+          _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+                    </div>);
           this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PrePutExceptionData}/>
                 <div className="exception-right">
-                  <div className="main-container exception2">
+                  <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please Scan tote which has excess item")}</div>
+                      <div className="kq-header">{_("Scan excess item quantity")}</div>
+                      <TabularData data={this.state.PrePutExcessItems}/>
+                      {_button}
                     </div>
                   </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
                 </div>
               </div>
           );      

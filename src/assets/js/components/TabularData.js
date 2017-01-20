@@ -1,6 +1,7 @@
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
+var TableFooter = require('./TableFooter');
 
 var TabularData = React.createClass({ 
     _tableRows:[],
@@ -22,9 +23,10 @@ var TabularData = React.createClass({
         return (
             <div className={classes}>
                 <TableHeader data={this.props.data.header}/>
-                <div className="overflow" >
+                <div className={"overflow "+(this.props.data.footer?'negate-flex':'')} >
                     {this._tableRows}
       		    </div>
+      		    {this.props.data.footer && <TableFooter data={this.props.data.footer}/>}
             </div>
         );
     },

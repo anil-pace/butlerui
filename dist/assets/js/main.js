@@ -38120,7 +38120,7 @@ var Bins = React.createClass({displayName: "Bins",
                                                this.props.screenId);
         var self = this;
         return (
-                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.5, height:document.body.clientHeight/2}}, 
+                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}, 
                         aHTMLBins
                  )
         );
@@ -39065,7 +39065,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
-    //CommonActions.setLanguage();                 //Dispatch setLanguage action
+    CommonActions.setLanguage();                 //Dispatch setLanguage action
     CommonActions.changeLanguage(this.state.getLang);
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
@@ -39228,7 +39228,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: _('Enter Password'), ref: "password", valueLink: this.linkState('password')})
               ), 
                
-               _languageDropDown, 
+               this.state.getLang?'':_languageDropDown, 
 
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: _('Login')})
           )
@@ -40638,7 +40638,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", null, 
+                       
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
@@ -40646,7 +40646,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                    React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton
                 )
-              )
+              
               )
             );
         }else{
@@ -40684,13 +40684,13 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement("div", null, 
+               
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                 this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
 
                cancelButton
-              )
+           
               )
             );
          }else{
@@ -40919,13 +40919,13 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
           var imageKey;
           for (var key in value[0]) { 
             if (key === "product_dimensions") {
-              var dimentions = value[0][key];
-              for (var i = 0; i < dimentions.length; i++) {
+              var dimension = value[0][key];
+              for (var i = 0; i < dimension.length; i++) {
                 if(i === 0) {
-                  keyValue = dimentions[i] + "";
+                  keyValue = dimension[i] + "";
                 }
                 else {
-                  keyValue = keyValue + " X " + dimentions[i]
+                  keyValue = keyValue + " X " + dimension[i]
                 }
               }
               
@@ -44685,8 +44685,8 @@ module.exports = appConstants;
 
 },{}],294:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.115:8888/ws",
-	INTERFACE_IP : "https://192.168.3.115:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -44722,6 +44722,7 @@ var resourceConstants = {
 	CLIENTCODE_014 :"CLIENTCODE_014",
 	CLIENTCODE_015 : "CLIENTCODE_015",
 	CLIENTCODE_016 : 'CLIENTCODE_016',
+	CLIENTCODE_017 : 'CLIENTCODE_017',
 	CLIENTCODE_409 : "CLIENTCODE_409",
 	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
 	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
@@ -45324,6 +45325,7 @@ var serverMessages = {
     "CLIENTCODE_014" : "Place extra entity in Exception area.",
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
+    "CLIENTCODE_017" : "Good Quantity Cannot be Equal to the Total Quantity",
     "CLIENTCODE_409_PERIPHERAL" : "Peripheral already added",
     "CLIENTCODE_400" : "Bad Data",
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",
@@ -47851,7 +47853,26 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _pickFrontExceptionScreen = data;
             }
         } else if (data == "damaged_or_missing") {
-            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
+            if(_goodQuantity === _seatData["pick_quantity"]){
+                      if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = resourceConstants.CLIENTCODE_017;
+                    data["level"] = "error";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
+                   
+                } else {
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_017;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0].level = "error";
+                }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+            }
+            else if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;

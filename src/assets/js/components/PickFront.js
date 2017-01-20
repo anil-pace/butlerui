@@ -221,7 +221,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                 <Modal />  
-                <div>        
+                       
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
@@ -229,7 +229,7 @@ var PickFront = React.createClass({
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
                 </div>
-              </div>
+              
               </div>
             );
         }else{
@@ -267,13 +267,13 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                 <Modal />
-                <div>
+               
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
 
                {cancelButton}
-              </div>
+           
               </div>
             );
          }else{

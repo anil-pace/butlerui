@@ -394,4 +394,6 @@ function server_messages_list() {
     _("Invalid Slot scanned");
     _("Tote already associated with slot.Scan empty slot");
     _("Please Scan tote which has excess item");
+    _("Release MTU");
+    _("Good Quantity Cannot be Equal to the Total Quantity");
 }

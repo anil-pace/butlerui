@@ -1396,6 +1396,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return true;
     },
+    _getBinFullStatus:function(){
+        return (_seatData && _seatData.bin_full_allowed ? true:false);
+    },
+    _getSelectedPpsBin:function(){
+        var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var bId = null;
+        ppsbin_list.forEach(function(bin){
+            if(bin["selected_state"]){
+                bId = bin["ppsbin_id"];
+            }
+        })
+        return bId ;
+    },
+
     getSelectedBinGroup:function(){
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
@@ -1867,6 +1881,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["PickFrontBinFullStatus"] = this._getBinFullStatus();
                 break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();

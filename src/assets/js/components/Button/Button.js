@@ -216,7 +216,7 @@ var Button1 = React.createClass({
                                 break;
                             case appConstants.BIN_FULL:
                                 data["event_name"] = "bin_full";
-                                data["event_data"] = mainstore.getSelectedBin();
+                                data["event_data"] = mainstore._getSelectedPpsBin();
                                 ActionCreators.postDataToInterface(data);                                
                             default:
                                 return true;

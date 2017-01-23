@@ -228,7 +228,7 @@ var PickFront = React.createClass({
                 <div className = 'actions'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
-                   {true && BinFull}
+                   {this.state.PickFrontBinFullStatus && BinFull}
                 </div>
               
               </div>

@@ -58,6 +58,13 @@ var PrePut = React.createClass({
          if(this.state.PrePutExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent ="";
+          if (this.state.OrigBinUse){
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
+          }else{
+              binComponent = ( <div className='main-container'>
+                    <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
+                </div>)
+          }          
           this._component = (
               <div className='grid-container'>
                <MtuNavigation data={[1,0,0]}/>
@@ -76,6 +83,13 @@ var PrePut = React.createClass({
       case appConstants.PRE_PUT_SCAN:
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
+          if (this.state.OrigBinUse){
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
+          }else{
+              binComponent = ( <div className='main-container'>
+                    <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
+                </div>)
+          }          
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
@@ -97,6 +111,13 @@ var PrePut = React.createClass({
       case appConstants.PRE_PUT_RELEASE:
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
+          if (this.state.OrigBinUse){
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
+          }else{
+              binComponent = ( <div className='main-container'>
+                    <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
+                </div>)
+          }          
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
@@ -141,7 +162,7 @@ var PrePut = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{_("Scan excess item quantity")}</div>
-                      <TabularData data={this.state.PrePutExcessItems} className='limit-height' />
+                      <TabularData data={this.state.PrePutExcessItems}  className='limit-height' />
                       {_button}
                     </div>
                   </div>

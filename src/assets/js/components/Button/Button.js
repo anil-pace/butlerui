@@ -214,6 +214,10 @@ var Button1 = React.createClass({
                                 case appConstants.CHECKLIST_CLEARALL:
                                 this.removeTextField();
                                 break;
+                            case appConstants.BIN_FULL:
+                                data["event_name"] = "bin_full";
+                                data["event_data"] = mainstore.getSelectedBin();
+                                ActionCreators.postDataToInterface(data);                                
                             default:
                                 return true;
                         }

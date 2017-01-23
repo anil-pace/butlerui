@@ -38386,6 +38386,10 @@ var Button1 = React.createClass({displayName: "Button1",
                                 case appConstants.CHECKLIST_CLEARALL:
                                 this.removeTextField();
                                 break;
+                            case appConstants.BIN_FULL:
+                                data["event_name"] = "bin_full";
+                                data["event_data"] = mainstore.getSelectedBin();
+                                ActionCreators.postDataToInterface(data);                                
                             default:
                                 return true;
                         }
@@ -40621,7 +40625,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         }else{
           var editButton ='';
         }
-
+        var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
         var binComponent="";
         if (this.state.OrigBinUse){
             binComponent = (React.createElement("div", null, 
@@ -40644,7 +40648,8 @@ var PickFront = React.createClass({displayName: "PickFront",
                 binComponent, 
                 React.createElement("div", {className: "actions"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                   editButton
+                   editButton, 
+                   true && BinFull
                 )
               
               )
@@ -40700,17 +40705,11 @@ var PickFront = React.createClass({displayName: "PickFront",
       case appConstants.PICK_FRONT_NO_FREE_BIN:
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        var binComponent ="";
-          if (this.state.OrigBinUse){
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS, seatType: this.state.SeatType}))
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                ))
-          }
-        this._component = (
+         this._component = (
               React.createElement("div", {className: "grid-container"}, 
-                binComponent
+                 React.createElement("div", {className: "main-container"}, 
+                    React.createElement(Spinner, null)
+                 )
               )
             );
          }else{
@@ -41034,7 +41033,7 @@ var Navigation = require("./Navigation/Navigation.react");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
-var Button1 = require("./Button/Button");
+var Button = require("./Button/Button");
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var Exception = require('./Exception/Exception');
@@ -41056,12 +41055,10 @@ var PrePut = React.createClass({displayName: "PrePut",
     return getStateData();
   },
   componentWillMount: function(){
-    //PrePutStore.addChangeListener(this.onChange);
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    //PrePutStore.removeChangeListener(this.onChange);
-    mainstore.addChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
     if(this.refs.prePut){
@@ -41077,7 +41074,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
             );
@@ -41088,20 +41085,13 @@ var PrePut = React.createClass({displayName: "PrePut",
          if(this.state.PrePutExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var binComponent ="";
-          if (this.state.OrigBinUse){
-            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}))
-          }else{
-              binComponent = ( React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
-                ))
-          }          
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                React.createElement(MtuNavigation, {data: [1,0,0]}), 
                 React.createElement(Modal, null), 
                binComponent, 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: !this.state.ReleaseActive, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
+                  React.createElement(Button, {disabled: !this.state.ReleaseActive, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
                 )
               )
             );
@@ -41113,13 +41103,6 @@ var PrePut = React.createClass({displayName: "PrePut",
       case appConstants.PRE_PUT_SCAN:
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
-          if (this.state.OrigBinUse){
-            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}))
-          }else{
-              binComponent = ( React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
-                ))
-          }          
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
@@ -41127,10 +41110,10 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Modal, null), 
                 binComponent, 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: !this.state.ReleaseActive, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
+                  React.createElement(Button, {disabled: !this.state.ReleaseActive, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_SCAN, barcode: this.state.PrePutToteid, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel Scan"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_SCAN, barcode: this.state.PrePutToteid, color: "black"})
                 )
               )
             );
@@ -41141,13 +41124,6 @@ var PrePut = React.createClass({displayName: "PrePut",
       case appConstants.PRE_PUT_RELEASE:
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
-          if (this.state.OrigBinUse){
-            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}))
-          }else{
-              binComponent = ( React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
-                ))
-          }          
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
@@ -41155,7 +41131,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Modal, null), 
                 binComponent, 
                 React.createElement("div", {className: "staging-action"}, 
-                  React.createElement(Button1, {disabled: false, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
+                  React.createElement(Button, {disabled: false, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
                 )
               )
             );
@@ -41175,16 +41151,15 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
           );      
         break; 
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
-          console.log(this.state);
           _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+                          React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
                     ));
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -41193,13 +41168,13 @@ var PrePut = React.createClass({displayName: "PrePut",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
-                      React.createElement(TabularData, {data: this.state.PrePutExcessItems}), 
+                      React.createElement(TabularData, {data: this.state.PrePutExcessItems, className: "limit-height"}), 
                       _button
                     )
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
           );      
@@ -41211,12 +41186,12 @@ var PrePut = React.createClass({displayName: "PrePut",
           var _button;
           if(this.state.PrePutScreenId == appConstants.SCANNER_MANAGEMENT){
           _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
-                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                          React.createElement(Button, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                          React.createElement(Button, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
                       ))
           }
           else{
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
+            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
@@ -44678,15 +44653,16 @@ var appConstants = {
 	PRE_PUT : "pre_put_back",
 	PRE_PUT_EXCEPTION_EXCESS_TOTE:"pre_put_excess_items_tote",
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
-	RELEASE_MTU : "release_mtu"
+	RELEASE_MTU : "release_mtu",
+	BIN_FULL : "bin_full"
 };
 
 module.exports = appConstants;
 
 },{}],294:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.115:8888/ws",
+	INTERFACE_IP : "https://192.168.3.115:5000"
 };
 module.exports = configConstants;
 
@@ -47484,7 +47460,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 )              
             });
-            console.log(product_info_locale);
             for (var key in product_info_locale) {
                 if (product_info_locale.hasOwnProperty(key)) {
                     data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
@@ -47960,7 +47935,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         data["image_url"] = null;
         var self=this;
-        if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
+        if (_seatData.excess_items && Object.keys(_seatData.excess_items).length > 0) {
 
             var product_details,product_sku,quantity,total_excess = 0;
             _seatData.excess_items.map(function(value, index){
@@ -47969,9 +47944,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     product_sku=product_details[0].product_sku;
                     quantity = value.qty;  
                     total_excess += quantity     
-                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity+_("items"), "enabled", false, "small", false, true, false, false)]);
+                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
             });
-            data["footer"].push(new this.tableCol(total_excess, "header", false, "small", false, true, true, false));       
+            data["footer"].push(new this.tableCol(total_excess+_(" items"), "header", false, "small", false, true, true, false));       
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)

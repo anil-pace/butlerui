@@ -204,7 +204,7 @@ var PickFront = React.createClass({
         }else{
           var editButton ='';
         }
-
+        var BinFull = ( <Button1 disabled = {false} text = {_("Bin full")} module ={appConstants.PICK_FRONT} action={appConstants.BIN_FULL} color={"black"} /> );
         var binComponent="";
         if (this.state.OrigBinUse){
             binComponent = (<div>
@@ -228,6 +228,7 @@ var PickFront = React.createClass({
                 <div className = 'actions'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
+                   {true && BinFull}
                 </div>
               
               </div>
@@ -283,17 +284,11 @@ var PickFront = React.createClass({
       case appConstants.PICK_FRONT_NO_FREE_BIN:
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-        var binComponent ="";
-          if (this.state.OrigBinUse){
-            binComponent=(<BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS} seatType = {this.state.SeatType}/>)
-          }else{
-            binComponent =(<div className='main-container'>
-                  <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
-                </div>)
-          }
-        this._component = (
+         this._component = (
               <div className='grid-container'>
-                {binComponent}
+                 <div className='main-container'>
+                    <Spinner />
+                 </div>
               </div>
             );
          }else{

@@ -13,6 +13,7 @@ var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation")
+var TabularData = require('./TabularData');
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -48,7 +49,7 @@ var PrePut = React.createClass({
                 <Exception data={this.state.PrePutExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -133,7 +134,78 @@ var PrePut = React.createClass({
         }else{
           this._component = this.getExceptionComponent();
         }
-        break;        
+        break; 
+      case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PrePutExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Please scan tote which has excess item")}</div>
+                    </div>
+                  </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                </div>
+              </div>
+          );      
+        break; 
+      case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
+          var _button;
+          console.log(this.state);
+          _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+                    </div>);
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PrePutExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Scan excess item quantity")}</div>
+                      <TabularData data={this.state.PrePutExcessItems}/>
+                      {_button}
+                    </div>
+                  </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                </div>
+              </div>
+          );      
+        break; 
+      case appConstants.PPTL_MANAGEMENT:
+      case appConstants.SCANNER_MANAGEMENT:
+          console.log(this.state.PrePutNavData,this.state.PrePutServerNavData);
+          this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
+          var _button;
+          if(this.state.PrePutScreenId == appConstants.SCANNER_MANAGEMENT){
+          _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+                      </div>)
+          }
+          else{
+            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
+          }
+          this._component = (
+              <div className='grid-container audit-reconcilation'>
+                  <div className="row scannerHeader">
+                    <div className="col-md-6">
+                      <div className="ppsMode"> PPS Mode : {this.state.PrePutPpsMode.toUpperCase()} </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="seatType"> Seat Type : {this.state.PrePutSeatType.toUpperCase()}</div>
+                    </div>
+                  </div>
+                  <TabularData data = {this.state.utility}/>
+                  {_button}
+                  <Modal /> 
+              </div>
+            );
+        break;              
       default:
         return true; 
     }

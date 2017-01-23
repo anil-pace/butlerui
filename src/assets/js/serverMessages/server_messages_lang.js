@@ -378,8 +378,22 @@ function server_messages_list() {
     _("Exception Finished");
     _("PPS Mode");
     _("Seat Type");
+    /*Roll-cage*/
+    _("Undock Roll Cage");
+    _("Gently push roll cage away from the frame");
+    /*Pre-put */
+    _("Scan tote and place it in the slot");
+    _("Scan slot to confirm");
+    _("Release MTU");
+    _("Tote scan successful.");
+    _("Slot barcode scan successful");
+    _("Tote already scanned");
+    _("Tote scanned is not idle");
+    _("Tote scanned is not opened");
+    _("Scan Tote first and then scan rack");
+    _("Invalid Slot scanned");
+    _("Tote already associated with slot.Scan empty slot");
+    _("Please Scan tote which has excess item");
     _("Release MTU");
     _("Good Quantity Cannot be Equal to the Total Quantity");
-
-
 }

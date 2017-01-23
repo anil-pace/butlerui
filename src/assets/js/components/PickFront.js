@@ -30,7 +30,7 @@ var checkListOpen = false;
 function getStateData(){
       var screenData = mainstore.getScreenData();
       var splitPPSData ={
-        groupInfo : mainstore.getBinMapDetails()
+        groupInfo : mainstore._getBinMapDetails()
     }
       return Object.assign({},screenData,splitPPSData);
 };

@@ -265,6 +265,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE){
                     _NavData = navConfig.prePut[1];
                 }
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                    _NavData = navConfig.utility[0];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                    _NavData = navConfig.utility[1];
+                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }                
                 else{
                     _NavData = navConfig.prePut[0];
                 }
@@ -887,6 +895,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 )              
             });
+            console.log(product_info_locale);
             for (var key in product_info_locale) {
                 if (product_info_locale.hasOwnProperty(key)) {
                     data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
@@ -1316,12 +1325,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
-    getBinMapDetails:function(){
+    _getBinMapDetails:function(){
         return _seatData ? _seatData.group_info : null;
     },
-
-
-    getSplitScreenFlag:function(){
+    _getSplitScreenFlag:function(){
         if(_seatData.hasOwnProperty('group_info')){
             var navData=_seatData.group_info|| {};
             for(var key in navData){
@@ -1333,7 +1340,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return false;
     },
-    getMobileFlag:function(){
+    _getMobileFlag:function(){
         var bIsMobile = false;
         if(_seatData)
         {
@@ -1341,18 +1348,54 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return bIsMobile;
     },
-    getDockedGroup:function(){
+    _getDockedGroup:function(){
             return (_seatData && _seatData.docked ? Object.keys(_seatData.docked):[]);
         
     },
-    getUndockAwaitedGroup:function(){
+    _getUndockAwaitedGroup:function(){
             return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
     },
-    getOrigBinUse:function(){
+    _getOrigBinUse:function(){
         return (_seatData && _seatData.bin_coordinate_plotting ? true:false);
     },
-    getReleaseActiveStatus:function(){
+    _getReleaseActiveStatus:function(){
         return (_seatData && _seatData.release_mtu ? true:false);
+    },
+    _getExcessItemsData: function() {
+        var data = {};
+        data["header"] = [];
+        data["footer"] = [];
+        data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_("Total:"), "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        data["image_url"] = null;
+        var self=this;
+        if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
+
+            var product_details,product_sku,quantity,total_excess = 0;
+            _seatData.excess_items.map(function(value, index){
+
+                    product_details = value.product_info[2];
+                    product_sku=product_details[0].product_sku;
+                    quantity = value.qty;  
+                    total_excess += quantity     
+                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity+_("items"), "enabled", false, "small", false, true, false, false)]);
+            });
+            data["footer"].push(new this.tableCol(total_excess, "header", false, "small", false, true, true, false));       
+        } else {
+            data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["footer"].push(new this.tableCol(_("-"), "header", false, "small", false, true, true, false));       
+        }
+        return data;
+    },
+    _getExcessExceptionFlag:function(){
+        if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
+            return false;
+        }
+        return true;
     },
     getSelectedBinGroup:function(){
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
@@ -1567,7 +1610,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
 
         //since OrigBinUse Flag is needed in all the screens.
-        data["OrigBinUse"] = this.getOrigBinUse();
+        data["OrigBinUse"] = this._getOrigBinUse();
         data["SeatType"] = this.getSeatType();
         switch (_screenId) {
 
@@ -1651,7 +1694,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_STAGE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
-                data["ReleaseActive"] = this.getReleaseActiveStatus();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();
@@ -1661,7 +1704,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_SCAN:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
-                data["ReleaseActive"] = this.getReleaseActiveStatus();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutToteid"] = this.getToteId();
                 data["PrePutServerNavData"] = this.getServerNavData();
@@ -1677,15 +1720,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PrePutExceptionData"] = this.getExceptionData();
                 data["PrePutNotification"] = this.getNotificationData();
                 data["PrePutExceptionStatus"] = this.getExceptionStatus();
-                break;                               
+                break;      
+            case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                break;                                   
+            case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExcessItems"] = this._getExcessItemsData();
+                data["PrePutExceptionFlag"] = this._getExcessExceptionFlag();
+                break;                                   
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
-                data["BinMapDetails"] =  this.getBinMapDetails();   
-                data["MobileFlag"]=this.getMobileFlag();
-                data["DockedGroup"] = this.getDockedGroup();  
-                data["UndockAwaited"] = this.getUndockAwaitedGroup();               
+                data["BinMapDetails"] =  this._getBinMapDetails();   
+                data["MobileFlag"]=this._getMobileFlag();
+                data["DockedGroup"] = this._getDockedGroup();  
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();               
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -1695,8 +1752,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontBinData"] = this.getBinData();
-                data["BinMapDetails"] =  this.getBinMapDetails();               
-                data["SplitScreenFlag"] = this.getSplitScreenFlag();       
+                data["BinMapDetails"] =  this._getBinMapDetails();               
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();       
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -1711,8 +1768,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
-                data["SplitScreenFlag"] = this.getSplitScreenFlag();                
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
                 data["PutFrontProductDetails"] = this.productDetails();
@@ -1725,9 +1782,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
-                data["DockedGroup"] = this.getDockedGroup();  
-                data["UndockAwaited"] = this.getUndockAwaitedGroup();
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["DockedGroup"] = this._getDockedGroup();  
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
@@ -1780,7 +1837,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["BinMapDetails"] =  this._getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -1801,7 +1858,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistDetails"] = this.getChecklistDetails();
                 data["PickFrontChecklistIndex"] = this.getChecklistIndex();
                 data["PickFrontSlotDetails"] = this.getCurrentSlot();
-                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["BinMapDetails"] =  this._getBinMapDetails();                               
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
                 data["PickFrontBinData"] = this.getBinData();
                 data["PickFrontScanDetails"] = this.scanDetails();
@@ -1826,7 +1883,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["BinMapDetails"] =  this.getBinMapDetails();                               
+                data["BinMapDetails"] =  this._getBinMapDetails();                               
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -1990,6 +2047,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditPpsMode"] = this.getPpsMode();
                 data["AuditSeatType"] = this.getSeatType();
 
+                //Peripheral management for pre-put
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutPpsMode"] = this.getPpsMode();
+                data["PrePutSeatType"] = this.getSeatType();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
                 break;
             default:
         }

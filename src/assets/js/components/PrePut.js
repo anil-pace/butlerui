@@ -6,7 +6,7 @@ var Navigation = require("./Navigation/Navigation.react");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
-var Button1 = require("./Button/Button");
+var Button = require("./Button/Button");
 var appConstants = require('../constants/appConstants');
 var Modal = require('./Modal/Modal');
 var Exception = require('./Exception/Exception');
@@ -28,12 +28,10 @@ var PrePut = React.createClass({
     return getStateData();
   },
   componentWillMount: function(){
-    //PrePutStore.addChangeListener(this.onChange);
     mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function(){
-    //PrePutStore.removeChangeListener(this.onChange);
-    mainstore.addChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
     if(this.refs.prePut){
@@ -49,7 +47,7 @@ var PrePut = React.createClass({
                 <Exception data={this.state.PrePutExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
                 </div>
               </div>
             );
@@ -73,7 +71,7 @@ var PrePut = React.createClass({
                 <Modal />
                {binComponent}
                 <div className = 'staging-action' >
-                  <Button1 disabled = {!this.state.ReleaseActive} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
+                  <Button disabled = {!this.state.ReleaseActive} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
                 </div>
               </div>
             );
@@ -99,10 +97,10 @@ var PrePut = React.createClass({
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >
-                  <Button1 disabled = {!this.state.ReleaseActive} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
+                  <Button disabled = {!this.state.ReleaseActive} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
                 </div>                
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_SCAN} barcode={this.state.PrePutToteid} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_SCAN} barcode={this.state.PrePutToteid} color={"black"}/>
                 </div>
               </div>
             );
@@ -127,7 +125,7 @@ var PrePut = React.createClass({
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >
-                  <Button1 disabled = {false} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
+                  <Button disabled = {false} text = {_("Release MTU")} module ={appConstants.PRE_PUT} action={appConstants.RELEASE_MTU} color={"orange"}/>
                 </div>                
               </div>
             );
@@ -147,16 +145,15 @@ var PrePut = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
                 </div>
               </div>
           );      
         break; 
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
-          console.log(this.state);
-          _button = (<div className = 'staging-action' >                          
-                          <Button1 disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+          _button = (<div className = "staging-action">                          
+                          <Button disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
                     </div>);
           this._component = (
               <div className='grid-container exception'>
@@ -165,13 +162,13 @@ var PrePut = React.createClass({
                   <div className="main-container">
                     <div className = "kq-exception">
                       <div className="kq-header">{_("Scan excess item quantity")}</div>
-                      <TabularData data={this.state.PrePutExcessItems}/>
+                      <TabularData data={this.state.PrePutExcessItems}  className='limit-height' />
                       {_button}
                     </div>
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
                 </div>
               </div>
           );      
@@ -183,12 +180,12 @@ var PrePut = React.createClass({
           var _button;
           if(this.state.PrePutScreenId == appConstants.SCANNER_MANAGEMENT){
           _button = (<div className = 'staging-action' >                          
-                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
-                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+                          <Button disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+                          <Button disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
                       </div>)
           }
           else{
-            _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
+            _button = (<div className = 'staging-action' ><Button disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>

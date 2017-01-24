@@ -895,7 +895,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 )              
             });
-            console.log(product_info_locale);
             for (var key in product_info_locale) {
                 if (product_info_locale.hasOwnProperty(key)) {
                     data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
@@ -1371,7 +1370,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         data["image_url"] = null;
         var self=this;
-        if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
+        if (_seatData.excess_items && Object.keys(_seatData.excess_items).length > 0) {
 
             var product_details,product_sku,quantity,total_excess = 0;
             _seatData.excess_items.map(function(value, index){
@@ -1380,9 +1379,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     product_sku=product_details[0].product_sku;
                     quantity = value.qty;  
                     total_excess += quantity     
-                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity+_("items"), "enabled", false, "small", false, true, false, false)]);
+                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
             });
-            data["footer"].push(new this.tableCol(total_excess, "header", false, "small", false, true, true, false));       
+            data["footer"].push(new this.tableCol(total_excess+_(" items"), "header", false, "small", false, true, true, false));       
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
@@ -1397,6 +1396,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return true;
     },
+    _getBinFullStatus:function(){
+        return (_seatData && _seatData.bin_full_allowed ? true:false);
+    },
+    _getSelectedPpsBin:function(){
+        var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var bId = null;
+        ppsbin_list.forEach(function(bin){
+            if(bin["selected_state"]){
+                bId = bin["ppsbin_id"];
+            }
+        })
+        return bId ;
+    },
+
     getSelectedBinGroup:function(){
         var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
@@ -1868,6 +1881,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["PickFrontBinFullStatus"] = this._getBinFullStatus();
                 break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();

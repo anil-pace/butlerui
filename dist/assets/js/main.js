@@ -44273,9 +44273,9 @@ var MtuNavigation = React.createClass({displayName: "MtuNavigation",
 	
 
 	processData: function(){
-		var data =  this.props.data, navData=[]; // data should be in form of array with 0,1 data = [0,0,0,1]
+		var data =  this.props.data, navData=[];
 		for (var i = 0; i < data.length; i++) {
-			if(data[i] === 1) {
+			if(data[i] === true) {
 				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap"}, 
 								React.createElement("div", {className: "gor-mtu-block-sel"})
 							 ))
@@ -44682,8 +44682,8 @@ module.exports = appConstants;
 
 },{}],294:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.115:8888/ws",
-	INTERFACE_IP : "https://192.168.3.115:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -47914,26 +47914,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _seatData ? _seatData.group_info : null;
     },
     _getMtuDetails:function(){
-        var nSlots, mtuList, currentSlot, selectedSlot;
+        var nSlots, mtuList, currentSlotId, selectedSlotId;
         nSlots = 0;
-        selectedSlot = 0;
+        selectedSlotId = 0;
         mtuList = [];
-        if( _seatData && _seatData.group_info){
+        if(_seatData && _seatData.group_info){
             nSlots = Object.keys(_seatData.group_info).length;
         }
-        if(  _seatData && _seatData.active_group){
-            selectedSlot = _seatData.active_group - 1;
-            console.log(selectedSlot);
+        if(_seatData && _seatData.active_group){
+            selectedSlotId = _seatData.active_group - 1;
         }
-        for(currentSlot = 0; currentSlot < nSlots; currentSlot++){
-            if(currentSlot == selectedSlot){
-                mtuList.push(1);                
-            }
-            else{
-                mtuList.push(0);
-            }
+        for(currentSlotId = 0; currentSlotId < nSlots; currentSlotId++){
+            mtuList.push((currentSlotId === selectedSlotId)?true:false);
         }
-        console.log(mtuList);
         return mtuList;
     },
     _getSplitScreenFlag:function(){

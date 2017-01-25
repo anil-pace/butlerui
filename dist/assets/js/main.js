@@ -41091,10 +41091,10 @@ var PrePut = React.createClass({displayName: "PrePut",
               binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
                 ))
-          }          
+          }    
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
-               React.createElement(MtuNavigation, {data: [1,0,0]}), 
+               React.createElement(MtuNavigation, {data: this.state.MtuDetails}), 
                 React.createElement(Modal, null), 
                binComponent, 
                 React.createElement("div", {className: "staging-action"}, 
@@ -41116,11 +41116,11 @@ var PrePut = React.createClass({displayName: "PrePut",
               binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
                 ))
-          }          
+          }    
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
-                React.createElement(MtuNavigation, {data: [0,1,0]}), 
+                React.createElement(MtuNavigation, {data: this.state.MtuDetails}), 
                 React.createElement(Modal, null), 
                 binComponent, 
                 React.createElement("div", {className: "staging-action"}, 
@@ -41144,11 +41144,11 @@ var PrePut = React.createClass({displayName: "PrePut",
               binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
                 ))
-          }          
+          }    
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
-                React.createElement(MtuNavigation, {data: [0,0,1]}), 
+                React.createElement(MtuNavigation, {data: this.state.MtuDetails}), 
                 React.createElement(Modal, null), 
                 binComponent, 
                 React.createElement("div", {className: "staging-action"}, 
@@ -44273,9 +44273,9 @@ var MtuNavigation = React.createClass({displayName: "MtuNavigation",
 	
 
 	processData: function(){
-		var data =  this.props.data, navData=[]; // data should be in form of array with 0,1 data = [0,0,0,1]
-		for (var i = data.length - 1; i >= 0; i--) {
-			if(data[i] === 1) {
+		var data =  this.props.data, navData=[];
+		for (var i = 0; i < data.length; i++) {
+			if(data[i] === true) {
 				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap"}, 
 								React.createElement("div", {className: "gor-mtu-block-sel"})
 							 ))
@@ -47913,6 +47913,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _getBinMapDetails:function(){
         return _seatData ? _seatData.group_info : null;
     },
+    _getMtuDetails:function(){
+        var nSlots, mtuList, currentSlotId, selectedSlotId;
+        nSlots = 0;
+        selectedSlotId = 0;
+        mtuList = [];
+        if(_seatData && _seatData.group_info){
+            nSlots = Object.keys(_seatData.group_info).length;
+        }
+        if(_seatData && _seatData.active_group){
+            selectedSlotId = _seatData.active_group - 1;
+        }
+        for(currentSlotId = 0; currentSlotId < nSlots; currentSlotId++){
+            mtuList.push((currentSlotId === selectedSlotId)?true:false);
+        }
+        return mtuList;
+    },
     _getSplitScreenFlag:function(){
         if(_seatData.hasOwnProperty('group_info')){
             var navData=_seatData.group_info|| {};
@@ -48294,6 +48310,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
                 data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] =  this._getMtuDetails();   
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();
@@ -48304,6 +48321,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
                 data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] =  this._getMtuDetails();   
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutToteid"] = this.getToteId();
                 data["PrePutServerNavData"] = this.getServerNavData();
@@ -48314,6 +48332,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_RELEASE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
+                data["MtuDetails"] =  this._getMtuDetails();   
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();

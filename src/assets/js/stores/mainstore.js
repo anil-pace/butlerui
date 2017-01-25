@@ -1327,6 +1327,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _getBinMapDetails:function(){
         return _seatData ? _seatData.group_info : null;
     },
+    _getMtuDetails:function(){
+        var nSlots, mtuList, currentSlotId, selectedSlotId;
+        nSlots = 0;
+        selectedSlotId = 0;
+        mtuList = [];
+        if(_seatData && _seatData.group_info){
+            nSlots = Object.keys(_seatData.group_info).length;
+        }
+        if(_seatData && _seatData.active_group){
+            selectedSlotId = _seatData.active_group - 1;
+        }
+        for(currentSlotId = 0; currentSlotId < nSlots; currentSlotId++){
+            mtuList.push((currentSlotId === selectedSlotId)?true:false);
+        }
+        return mtuList;
+    },
     _getSplitScreenFlag:function(){
         if(_seatData.hasOwnProperty('group_info')){
             var navData=_seatData.group_info|| {};
@@ -1708,6 +1724,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
                 data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] =  this._getMtuDetails();   
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();
@@ -1718,6 +1735,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
                 data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] =  this._getMtuDetails();   
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutToteid"] = this.getToteId();
                 data["PrePutServerNavData"] = this.getServerNavData();
@@ -1728,6 +1746,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PRE_PUT_RELEASE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
+                data["MtuDetails"] =  this._getMtuDetails();   
                 data["PrePutNavData"] = this.getNavData();
                 data["PrePutServerNavData"] = this.getServerNavData();
                 data["PrePutExceptionData"] = this.getExceptionData();

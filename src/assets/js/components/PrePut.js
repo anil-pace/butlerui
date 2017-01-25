@@ -64,10 +64,10 @@ var PrePut = React.createClass({
               binComponent = ( <div className='main-container'>
                     <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
                 </div>)
-          }          
+          }    
           this._component = (
               <div className='grid-container'>
-               <MtuNavigation data={[1,0,0]}/>
+               <MtuNavigation data={this.state.MtuDetails}/>
                 <Modal />
                {binComponent}
                 <div className = 'staging-action' >
@@ -89,11 +89,11 @@ var PrePut = React.createClass({
               binComponent = ( <div className='main-container'>
                     <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
                 </div>)
-          }          
+          }    
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
-                <MtuNavigation data={[0,1,0]}/>
+                <MtuNavigation data={this.state.MtuDetails}/>
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >
@@ -117,11 +117,11 @@ var PrePut = React.createClass({
               binComponent = ( <div className='main-container'>
                     <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
                 </div>)
-          }          
+          }    
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
-                <MtuNavigation data={[0,0,1]}/>            
+                <MtuNavigation data={this.state.MtuDetails}/>            
                 <Modal />
                 {binComponent}
                 <div className = 'staging-action' >

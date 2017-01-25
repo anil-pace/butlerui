@@ -3,21 +3,14 @@
 
 
 .drawRack{
-	//margin:2% 0 0 5%;
-    //width: 22vw; //452px
-    //width: -moz-min-content;
-    //width: -webkit-min-content;
-    //width: min-content;
-    //height: 54vh;   //575px 
-   /* border: 0.625vw 0.312vw solid #939598;
-    border-bottom: 0;*/
-    //height: 85%;
+	
     display: flex;
     flex-flow:column;
     border-top: 0.625vw solid #939598;
     margin-bottom: 20px;
     max-width: 22vw; //25vw;
     width: 100%;
+
     .rackRow{
          
     	//border: 0.15vw solid #939598;
@@ -86,5 +79,20 @@
         border-top: none;
         border-bottom: none;
     }
+    &.drawers{
+        margin-left:5%;
+        width:20%;
+        border: 3px solid #979797;
+        height: 120px;
+        margin-top: 10%;
+        margin-bottom: 10%;
 
+        .rackRow{
+            border:none;
+            border-top:3px solid #979797;
+            &:first-child{
+                border-top:none;
+            }
+        }
+    }
 }

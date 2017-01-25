@@ -1492,6 +1492,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return null;
         }
     },
+    getDrawerFlag: function(){
+        if (_seatData.rack_details) {
+            return _seatData.rack_details.slot_type === "drawer" ? true : false;
+        } 
+    },
     getPeripheralData: function(data) {
          _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
@@ -1711,7 +1716,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
-                data["BinMapDetails"] =  this.getBinMapDetails();           
+                data["BinMapDetails"] =  this.getBinMapDetails(); 
+                data["isDrawer"] =  this.getDrawerFlag();          
                 data["SplitScreenFlag"] = this.getSplitScreenFlag();                
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
                 data["PutFrontScanDetails"] = this.scanDetails();
@@ -1776,6 +1782,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontRackDetails"] = this.getRackDetails();
                 data["PickFrontProductDetails"] = this.productDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();

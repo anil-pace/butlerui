@@ -4,9 +4,9 @@ var SystemIdleHeader = require('./SystemIdleHeader');
 var SplitPPS = require('./SplitPPS');
 function getState(){
 		return {
-	      dockedGroup :mainstore.getDockedGroup(),
-    	  undockAwaited:mainstore.getUndockAwaitedGroup(),
-        groupInfo : mainstore.getBinMapDetails()
+	      dockedGroup :mainstore._getDockedGroup(),
+    	  undockAwaited:mainstore._getUndockAwaitedGroup(),
+        groupInfo : mainstore._getBinMapDetails()
   		}
 }
 

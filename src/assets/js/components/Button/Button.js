@@ -214,6 +214,10 @@ var Button1 = React.createClass({
                                 case appConstants.CHECKLIST_CLEARALL:
                                 this.removeTextField();
                                 break;
+                            case appConstants.BIN_FULL:
+                                data["event_name"] = "bin_full";
+                                data["event_data"] = mainstore._getSelectedPpsBin();
+                                ActionCreators.postDataToInterface(data);                                
                             default:
                                 return true;
                         }
@@ -337,6 +341,16 @@ var Button1 = React.createClass({
                                 data["event_name"] = "release_mtu";
                                 ActionCreators.postDataToInterface(data);
                                 break;                            
+                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
+                                break;   
+                            case appConstants.SEND_EXCESS_ITEMS_BIN:
+                                data["event_name"] = "pre_put_exception";
+                                data["event_data"]["action"] ="finish_exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;                                 
                             default:
                                 return true;
                         }

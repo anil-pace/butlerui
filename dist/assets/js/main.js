@@ -39041,7 +39041,8 @@ function getState(){
       username : '',
       password : '',
       showError: loginstore.getErrorMessage(),
-      getLang : loginstore.getLang()
+      getLang : loginstore.getLang(),
+      getCurrentLang : loginstore.getCurrentLang()
   }
 }
 
@@ -39074,7 +39075,12 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
     CommonActions.setLanguage();                 //Dispatch setLanguage action
-    CommonActions.changeLanguage(this.state.getLang);
+    if(this.state.getLang){
+      CommonActions.changeLanguage(this.state.getLang);
+    }
+    else if(this.state.getCurrentLang){    
+      CommonActions.changeLanguage(this.state.getCurrentLang);
+    }
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -39157,7 +39163,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var locale = window.sessionStorage.getItem("localeData");
     //console.log(this.state.getLang);
     var _languageDropDown=(
-              React.createElement("select", {className: "selectLang", value: this.state.getLang, ref: "language", onChange: this.changeLanguage}, 
+              React.createElement("select", {className: "selectLang", value: this.state.getCurrentLang, ref: "language", onChange: this.changeLanguage}, 
                   React.createElement("option", {value: "en-US"}, _("English")), 
                   React.createElement("option", {value: "ja-JP"}, _("Japanese"))
               )
@@ -44888,8 +44894,8 @@ module.exports = appConstants;
 
 },{}],296:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.117/wss",
-	INTERFACE_IP : "https://192.168.8.117"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -46675,7 +46681,7 @@ function getCurrentLang(){
   var localeStr = window.sessionStorage.getItem("localeData"),
   localeObj =  (localeStr) ? JSON.parse(localeStr) : {},
   localeLang = (localeObj && localeObj.data) ? localeObj.data.locale : null;
-  return localeLang;
+  return localeLang
 }
 function listPpsSeat(seat){
     if(seat === null){
@@ -46737,7 +46743,7 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
     return currentSeat;
   },
   getLang : function(){            //get language
-    return (currentLang = getCurrentLang());
+    return currentLang;
   },
   getAuthToken : function(data){
     utils.getAuthToken(data);
@@ -46751,6 +46757,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   showErrorMessage : function(data){
     _errMsg = data;
   },
+  getCurrentLang : function(){
+    return getCurrentLang();
+  }
 });
 
 
@@ -46781,7 +46790,8 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.SHOW_ERROR_MESSAGE:
       loginstore.showErrorMessage(action.data);
-      loginstore.emitChange();  
+      loginstore.emitChange(); 
+      break; 
     default:
       return true;
   }

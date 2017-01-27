@@ -36,7 +36,7 @@ function getCurrentLang(){
   var localeStr = window.sessionStorage.getItem("localeData"),
   localeObj =  (localeStr) ? JSON.parse(localeStr) : {},
   localeLang = (localeObj && localeObj.data) ? localeObj.data.locale : null;
-  return localeLang;
+  return localeLang
 }
 function listPpsSeat(seat){
     if(seat === null){
@@ -98,7 +98,7 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
     return currentSeat;
   },
   getLang : function(){            //get language
-    return (currentLang = getCurrentLang());
+    return currentLang;
   },
   getAuthToken : function(data){
     utils.getAuthToken(data);
@@ -112,6 +112,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   showErrorMessage : function(data){
     _errMsg = data;
   },
+  getCurrentLang : function(){
+    return getCurrentLang();
+  }
 });
 
 
@@ -142,7 +145,8 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.SHOW_ERROR_MESSAGE:
       loginstore.showErrorMessage(action.data);
-      loginstore.emitChange();  
+      loginstore.emitChange(); 
+      break; 
     default:
       return true;
   }

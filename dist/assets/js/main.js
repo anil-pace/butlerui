@@ -38523,6 +38523,10 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;                                 
+                            case appConstants.CANCEL_LAST_SCAN:
+                                data["event_name"] = "cancel_last_scan";
+                                ActionCreators.postDataToInterface(data);
+                                break;   
                             default:
                                 return true;
                         }
@@ -41180,6 +41184,7 @@ var PrePut = React.createClass({displayName: "PrePut",
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_LAST_SCAN, color: "black"}), 
                           React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
                     ));
           this._component = (
@@ -44126,7 +44131,7 @@ var mainstore = require('../stores/mainstore');
 var TableRow = React.createClass({displayName: "TableRow", 
 	_component:[],
     peripheralAction : function(action, inc){
-        if(action == 'Update' || action == 'Add'){
+        if(action == _('Update') || action == _('Add')){
             CommonActions.convertTextBox(action, inc)     
         }else if(action == 'Finish'){
             var data = {
@@ -44675,15 +44680,16 @@ var appConstants = {
 	PRE_PUT_EXCEPTION_EXCESS_TOTE:"pre_put_excess_items_tote",
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
-	BIN_FULL : "bin_full"
+	BIN_FULL : "bin_full",
+	CANCEL_LAST_SCAN : "cancel_last_scan"
 };
 
 module.exports = appConstants;
 
 },{}],294:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.117/wss",
+	INTERFACE_IP : "https://192.168.8.117"
 };
 module.exports = configConstants;
 
@@ -47205,7 +47211,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         deletButton = '';
                     }
                     var textBox = false;
-                    if((_action == 'Update' || _action == 'Add') && _binId == value.pps_bin_id){
+                    if((_action == _('Update') || _action == _('Add')) && _binId == value.pps_bin_id){
                         textBox = true;
                         buttonText = _('Finish');
                     }

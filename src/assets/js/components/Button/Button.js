@@ -351,6 +351,10 @@ var Button1 = React.createClass({
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;                                 
+                            case appConstants.CANCEL_LAST_SCAN:
+                                data["event_name"] = "cancel_last_scan";
+                                ActionCreators.postDataToInterface(data);
+                                break;   
                             default:
                                 return true;
                         }

@@ -124,7 +124,7 @@ var PutFront = React.createClass({
                       <div className="text">{_("CURRENT BIN")}</div>
                 </div>
                 <div className='main-container'>
-                  <Rack rackData = {this.state.PutFrontRackDetails}/>
+                  <Rack isDrawer = {this.state.isDrawer} rackData = {this.state.PutFrontRackDetails}/>
                   <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
                 </div>
                 <div className = 'cancel-scan'>

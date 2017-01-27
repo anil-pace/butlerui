@@ -17,7 +17,8 @@ function getState(){
       username : '',
       password : '',
       showError: loginstore.getErrorMessage(),
-      getLang : loginstore.getLang()
+      getLang : loginstore.getLang(),
+      getCurrentLang : loginstore.getCurrentLang()
   }
 }
 
@@ -50,7 +51,12 @@ var LoginPage = React.createClass({
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
     CommonActions.setLanguage();                 //Dispatch setLanguage action
-    CommonActions.changeLanguage(this.state.getLang);
+    if(this.state.getLang){
+      CommonActions.changeLanguage(this.state.getLang);
+    }
+    else if(this.state.getCurrentLang){    
+      CommonActions.changeLanguage(this.state.getCurrentLang);
+    }
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -133,7 +139,7 @@ var LoginPage = React.createClass({
     var locale = window.sessionStorage.getItem("localeData");
     //console.log(this.state.getLang);
     var _languageDropDown=(
-              <select className="selectLang" value={this.state.getLang} ref='language' onChange={this.changeLanguage} >
+              <select className="selectLang" value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
                   <option value="en-US">{_("English")}</option>
                   <option value="ja-JP">{_("Japanese")}</option>
               </select>

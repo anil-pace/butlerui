@@ -156,7 +156,8 @@ var appConstants = {
 	PRE_PUT_EXCEPTION_EXCESS_TOTE:"pre_put_excess_items_tote",
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
-	BIN_FULL : "bin_full"
+	BIN_FULL : "bin_full",
+	CANCEL_LAST_SCAN : "cancel_last_scan"
 };
 
 module.exports = appConstants;

@@ -38523,6 +38523,10 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;                                 
+                            case appConstants.CANCEL_LAST_SCAN:
+                                data["event_name"] = "cancel_last_scan";
+                                ActionCreators.postDataToInterface(data);
+                                break;   
                             default:
                                 return true;
                         }
@@ -39037,7 +39041,8 @@ function getState(){
       username : '',
       password : '',
       showError: loginstore.getErrorMessage(),
-      getLang : loginstore.getLang()
+      getLang : loginstore.getLang(),
+      getCurrentLang : loginstore.getCurrentLang()
   }
 }
 
@@ -39070,7 +39075,12 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
     CommonActions.setLanguage();                 //Dispatch setLanguage action
-    CommonActions.changeLanguage(this.state.getLang);
+    if(this.state.getLang){
+      CommonActions.changeLanguage(this.state.getLang);
+    }
+    else if(this.state.getCurrentLang){    
+      CommonActions.changeLanguage(this.state.getCurrentLang);
+    }
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -39153,7 +39163,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var locale = window.sessionStorage.getItem("localeData");
     //console.log(this.state.getLang);
     var _languageDropDown=(
-              React.createElement("select", {className: "selectLang", value: this.state.getLang, ref: "language", onChange: this.changeLanguage}, 
+              React.createElement("select", {className: "selectLang", value: this.state.getCurrentLang, ref: "language", onChange: this.changeLanguage}, 
                   React.createElement("option", {value: "en-US"}, _("English")), 
                   React.createElement("option", {value: "ja-JP"}, _("Japanese"))
               )
@@ -41180,6 +41190,7 @@ var PrePut = React.createClass({displayName: "PrePut",
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_LAST_SCAN, color: "black"}), 
                           React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
                     ));
           this._component = (
@@ -44326,7 +44337,7 @@ var mainstore = require('../stores/mainstore');
 var TableRow = React.createClass({displayName: "TableRow", 
 	_component:[],
     peripheralAction : function(action, inc){
-        if(action == 'Update' || action == 'Add'){
+        if(action == _('Update') || action == _('Add')){
             CommonActions.convertTextBox(action, inc)     
         }else if(action == 'Finish'){
             var data = {
@@ -44875,7 +44886,8 @@ var appConstants = {
 	PRE_PUT_EXCEPTION_EXCESS_TOTE:"pre_put_excess_items_tote",
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
-	BIN_FULL : "bin_full"
+	BIN_FULL : "bin_full",
+	CANCEL_LAST_SCAN : "cancel_last_scan"
 };
 
 module.exports = appConstants;
@@ -46669,7 +46681,7 @@ function getCurrentLang(){
   var localeStr = window.sessionStorage.getItem("localeData"),
   localeObj =  (localeStr) ? JSON.parse(localeStr) : {},
   localeLang = (localeObj && localeObj.data) ? localeObj.data.locale : null;
-  return localeLang;
+  return localeLang
 }
 function listPpsSeat(seat){
     if(seat === null){
@@ -46731,7 +46743,7 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
     return currentSeat;
   },
   getLang : function(){            //get language
-    return (currentLang = getCurrentLang());
+    return currentLang;
   },
   getAuthToken : function(data){
     utils.getAuthToken(data);
@@ -46745,6 +46757,9 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   showErrorMessage : function(data){
     _errMsg = data;
   },
+  getCurrentLang : function(){
+    return getCurrentLang();
+  }
 });
 
 
@@ -46775,7 +46790,8 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.SHOW_ERROR_MESSAGE:
       loginstore.showErrorMessage(action.data);
-      loginstore.emitChange();  
+      loginstore.emitChange(); 
+      break; 
     default:
       return true;
   }
@@ -47405,7 +47421,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         deletButton = '';
                     }
                     var textBox = false;
-                    if((_action == 'Update' || _action == 'Add') && _binId == value.pps_bin_id){
+                    if((_action == _('Update') || _action == _('Add')) && _binId == value.pps_bin_id){
                         textBox = true;
                         buttonText = _('Finish');
                     }

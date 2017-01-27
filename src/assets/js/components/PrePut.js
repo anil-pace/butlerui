@@ -153,6 +153,7 @@ var PrePut = React.createClass({
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (<div className = "staging-action">                          
+                          <Button disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_LAST_SCAN} color={"black"} />
                           <Button disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
                     </div>);
           this._component = (

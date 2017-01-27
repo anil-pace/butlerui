@@ -619,7 +619,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         deletButton = '';
                     }
                     var textBox = false;
-                    if((_action == 'Update' || _action == 'Add') && _binId == value.pps_bin_id){
+                    if((_action == _('Update') || _action == _('Add')) && _binId == value.pps_bin_id){
                         textBox = true;
                         buttonText = _('Finish');
                     }

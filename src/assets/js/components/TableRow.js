@@ -7,7 +7,7 @@ var mainstore = require('../stores/mainstore');
 var TableRow = React.createClass({ 
 	_component:[],
     peripheralAction : function(action, inc){
-        if(action == 'Update' || action == 'Add'){
+        if(action == _('Update') || action == _('Add')){
             CommonActions.convertTextBox(action, inc)     
         }else if(action == 'Finish'){
             var data = {

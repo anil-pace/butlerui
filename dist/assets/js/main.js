@@ -44882,8 +44882,8 @@ module.exports = appConstants;
 
 },{}],296:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.108/wss",
-	INTERFACE_IP : "https://192.168.8.108"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -49310,62 +49310,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     console.log(data); 
-    //Need to remove when actual data from server is coming
-   if(data.state_data && data.state_data.rack_details){
-    data.state_data.rack_details = {
-    "rack_type_rec": [
-        ["A", [
-            [
-                ["01", "02"], 96.0, 10, 48.0
-            ]
-        ]],
-        ["B", [
-            [
-                ["01", "02", "03"],
-                48.0, 30, 48.0, [
-                    [
-                        ["01"], 48.0, 30, 12.0
-                    ],
-                    [
-                        ["02"], 48.0, 30, 12.0
-                    ],
-                    [
-                        ["03"], 48.0, 30, 12.0
-                    ],
-                    [
-                        ["04"], 48.0, 30, 12.0
-                    ]
-                ]
-            ],
-            [
-                ["04", "05", "06"],
-                48.0, 30, 48.0, [
-                    [
-                        ["01"], 48.0, 30, 24.0
-                    ],
-                    [
-                        ["02"], 48.0, 30, 24.0
-                    ]
-                ]
-            ]
-        ]],
-        ["C", [
-            [
-                ["01", "02"], 32.0, 20, 48.0
-            ],
-            [
-                ["03", "04"], 32.0, 20, 48.0
-            ],
-            [
-                ["05", "06"], 32.0, 20, 48.0
-            ]
-        ]]
-    ],
-    "slot_barcodes": ["999.1.B.01.03", "999.1.B.03.03"],
-    "slot_type": "drawer"
-}
-   } 
-
 
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

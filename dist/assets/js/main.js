@@ -37694,7 +37694,6 @@ var appConstants = require('../../constants/appConstants');
 var MainStore = require('../../stores/mainstore');
 
 var Bin = React.createClass({displayName: "Bin",
-
     _toggleBinSelection:function(bin_id,e){
         ActionCreators.toggleBinSelection(bin_id);
         e.stopPropagation();
@@ -37741,6 +37740,19 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected binError"}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected binError", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE )){
+            var tote = '';
+            if(compData.ppsbin_count>0){
+              tote = (React.createElement("span", {className: "bin-icon tote-icon"}));  
+            }
+            return (
+                React.createElement("div", {className: "bin"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
         }
@@ -38030,7 +38042,7 @@ var Bins = React.createClass({displayName: "Bins",
             htmlBins:[]
         };
     },
-    componentDidMount: function() {
+    componentWillReceiveProps: function() {
         this._sortBins(this.props.binsData.ppsbin_list);
     },
 
@@ -38111,6 +38123,7 @@ var Bins = React.createClass({displayName: "Bins",
     },
 
     render: function() {
+
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
                                                this.state.lastHBin, 
                                                this.state.lastVBin,
@@ -41071,7 +41084,7 @@ var PrePut = React.createClass({displayName: "PrePut",
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
-    if(this.refs.prePut){
+     if(this.refs.prePut){
       this.setState(getStateData());
     }
   },
@@ -41096,11 +41109,11 @@ var PrePut = React.createClass({displayName: "PrePut",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           var binComponent ="";
           if (this.state.OrigBinUse){
-            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}))
+            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}));
           }else{
               binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
-                ))
+                ));
           }    
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
@@ -41121,11 +41134,11 @@ var PrePut = React.createClass({displayName: "PrePut",
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
           if (this.state.OrigBinUse){
-            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}))
+            binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}));
           }else{
               binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
-                ))
+                ));
           }    
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
@@ -41190,7 +41203,6 @@ var PrePut = React.createClass({displayName: "PrePut",
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_LAST_SCAN, color: "black"}), 
                           React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
                     ));
           this._component = (

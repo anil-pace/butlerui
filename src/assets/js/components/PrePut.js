@@ -34,7 +34,7 @@ var PrePut = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){ 
-    if(this.refs.prePut){
+     if(this.refs.prePut){
       this.setState(getStateData());
     }
   },
@@ -59,11 +59,11 @@ var PrePut = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent ="";
           if (this.state.OrigBinUse){
-            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>);
           }else{
               binComponent = ( <div className='main-container'>
                     <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
-                </div>)
+                </div>);
           }    
           this._component = (
               <div className='grid-container'>
@@ -84,11 +84,11 @@ var PrePut = React.createClass({
           if(this.state.PrePutExceptionStatus == false){
           var binComponent = "";
           if (this.state.OrigBinUse){
-            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>)
+            binComponent =(  <BinsFlex binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} seatType = {this.state.SeatType}/>);
           }else{
               binComponent = ( <div className='main-container'>
                     <Bins binsData={this.state.PrePutBinData} screenId = {this.state.PrePutScreenId} />
-                </div>)
+                </div>);
           }    
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
@@ -153,7 +153,6 @@ var PrePut = React.createClass({
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (<div className = "staging-action">                          
-                          <Button disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_LAST_SCAN} color={"black"} />
                           <Button disabled = {this.state.PrePutExceptionFlag} text = {_("Confirm")} module ={appConstants.PRE_PUT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
                     </div>);
           this._component = (

@@ -14,7 +14,7 @@ var Bins = React.createClass({
             htmlBins:[]
         };
     },
-    componentDidMount: function() {
+    componentWillReceiveProps: function() {
         this._sortBins(this.props.binsData.ppsbin_list);
     },
 
@@ -95,6 +95,7 @@ var Bins = React.createClass({
     },
 
     render: function() {
+
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
                                                this.state.lastHBin, 
                                                this.state.lastVBin,

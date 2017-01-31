@@ -5,7 +5,6 @@ var appConstants = require('../../constants/appConstants');
 var MainStore = require('../../stores/mainstore');
 
 var Bin = React.createClass({
-
     _toggleBinSelection:function(bin_id,e){
         ActionCreators.toggleBinSelection(bin_id);
         e.stopPropagation();
@@ -52,6 +51,19 @@ var Bin = React.createClass({
                 <div className = "bin selected binError">
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl selected binError" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }
+        else if((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE )){
+            var tote = '';
+            if(compData.ppsbin_count>0){
+              tote = (<span className="bin-icon tote-icon"></span>);  
+            }
+            return (
+                <div className = "bin">
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    {tote}
+                    <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
         }

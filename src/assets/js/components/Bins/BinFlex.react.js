@@ -55,6 +55,15 @@ var BinFlex = React.createClass({
                 </div>
             );
         }
+        else if((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE ) ){
+            return (
+                <div className = "bin">
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl">{compData.ppsbin_id}</div>
+                </div>
+            );
+        }
+
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
@@ -318,7 +327,7 @@ var BinFlex = React.createClass({
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
                 );
-        
+
     }
 });
 

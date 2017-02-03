@@ -40598,7 +40598,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, rackData: this.state.PickFrontRackDetails})
+                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails})
                  )
               )
             );
@@ -40613,7 +40613,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, rackData: this.state.PickFrontRackDetails}), 
+                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails}), 
                      React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                  )
               )
@@ -40631,7 +40631,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               React.createElement("div", {className: "grid-container"}, 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
-                    React.createElement(Rack, {rackData: this.state.PickFrontRackDetails})
+                    React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
                  )
               )
             );
@@ -43430,7 +43430,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                       React.createElement("div", {className: "text"}, _("CURRENT BIN"))
                 ), 
                 React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Rack, {isDrawer: this.state.isDrawer, rackData: this.state.PutFrontRackDetails}), 
+                  React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -43836,6 +43836,7 @@ getOffset( el ) {
         var drawerCompartment=null;
         var drawerRows;
         var drawerCompartmentArr;
+        var slotType = this.props.slotType;
         if(compartment_details.length === 1){
             //slotStart = (compartment_details[0].split(".")[3])%10;
             //slotEnd = (compartment_details[0].split(".")[3])%10;
@@ -43882,13 +43883,13 @@ getOffset( el ) {
                 drawerSlotData = row[1];
                 
                 return (
-                        React.createElement(RackRow, {slots: row[1], key: index, slotIndexArray: slotIndexList, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
+                        React.createElement(RackRow, {slots: row[1], key: index, slotIndexArray: slotIndexList, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:"", slotType: slotType})
                     );
             }
 
             else{
                 return (
-        				React.createElement(RackRow, {slots: row[1], key: index, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:""})
+        				React.createElement(RackRow, {slots: row[1], key: index, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:"", slotType: slotType})
         			);
             }
         	});
@@ -43945,6 +43946,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 		var totalRackHeight= this.props.totalRackHeight;
 		var noOfRows = this.props.noOfRows;	
 		var eachRowHeight = this.props.eachRowHeight;
+		var slotType = this.props.slotType;
 		var eachSlot =[];	
 		var type = this.props.type;
         /*var calculateHeight = (eachRowHeight/totalRackHeight)*100;
@@ -43961,12 +43963,12 @@ var RackRow = React.createClass({displayName: "RackRow",
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type, slotType: slotType})
 					
 				);
 			else
 				return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type, slotType: slotType})
 					);
 		});
 		return (
@@ -43992,6 +43994,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		var noOfRows = this.props.noOfRows;
 		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
 		var type = this.props.type;
+		var slotType = this.props.slotType;
 		//var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {
 				width : calculateWidth + '%',
@@ -44003,11 +44006,11 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 			//if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
 				if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(parseInt(singSlot.replace(/^0+/, ''))) >= 0)
 				return(
-						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot.replace(/^0+/, ''), type: type})
+						React.createElement(SingleSlot, {selected: true, key: singSlot, rackRange: rackRange, index: singSlot.replace(/^0+/, ''), type: type, slotType: slotType})
 					);
 				else
 				return(
-						React.createElement(SingleSlot, {key: index, rackRange: rackRange, type: type})
+						React.createElement(SingleSlot, {key: index, rackRange: rackRange, type: type, slotType: slotType})
 					);
 			
 		});
@@ -44031,10 +44034,19 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 	render : function(){
 		var rackRange = this.props.rackRange;
 		var slotId = this.props.index;
-		
+		var slotText = rackRange+slotId;
+		var slotContent;
+		var hangerIcon = (React.createElement("span", {className: "slot-icon hanger-icon"}));
+		if(this.props.slotType === "hanger"){
+			slotContent = (React.createElement("span", {className: "slot-text"}, slotText));
+		}
+		else{
+			slotContent = slotText;
+		}
 		return (
 			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : ''), style: this.props.type=="small"?fontSize:{}}, 
-				this.props.selected ? rackRange + slotId : ''
+				this.props.selected && slotContent, 
+				this.props.selected && this.props.slotType === "hanger" && hangerIcon
 			)
 			);
 	}
@@ -44906,8 +44918,8 @@ module.exports = appConstants;
 
 },{}],296:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.103/wss",
+	INTERFACE_IP : "https://192.168.8.103"
 };
 module.exports = configConstants;
 
@@ -48383,6 +48395,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.rack_details.slot_type === "drawer" ? true : false;
         } 
     },
+    getSlotType: function(){
+        if (_seatData.rack_details) {
+            return _seatData.rack_details.slot_type ? _seatData.rack_details.slot_type : "none";
+        } 
+    },
     getPeripheralData: function(data) {
          _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
@@ -48620,6 +48637,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
                 data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
                 data["BinMapDetails"] =  this._getBinMapDetails();           
                 data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
                 data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
@@ -48674,6 +48692,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] =  this.getSlotType(); 
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
@@ -48685,7 +48704,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontRackDetails"] = this.getRackDetails();
                 data["PickFrontProductDetails"] = this.productDetails();
-                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["isDrawer"] =  this.getDrawerFlag();
+                data["SlotType"] =  this.getSlotType();                  
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
@@ -48698,6 +48718,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontBoxDetails"] = this.getBoxDetails();
                 data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] =  this.getSlotType();                                  
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
@@ -49338,7 +49359,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     console.log(data); 
-
+    //Need to remove when actual data from server is coming
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

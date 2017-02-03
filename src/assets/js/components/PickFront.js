@@ -154,7 +154,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                    <Rack isDrawer={this.state.isDrawer} rackData = {this.state.PickFrontRackDetails}/>
+                    <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PickFrontRackDetails}/>
                  </div>
               </div>
             );
@@ -169,7 +169,7 @@ var PickFront = React.createClass({
         this._component = (
               <div className='grid-container'>
                  <div className='main-container'>
-                    <Rack isDrawer={this.state.isDrawer} rackData = {this.state.PickFrontRackDetails}/>
+                    <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PickFrontRackDetails}/>
                      <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
                  </div>
               </div>
@@ -187,7 +187,7 @@ var PickFront = React.createClass({
               <div className='grid-container'>
                  <div className='main-container'>
                     <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
-                    <Rack rackData = {this.state.PickFrontRackDetails}/>
+                    <Rack rackData = {this.state.PickFrontRackDetails} slotType={this.state.SlotType}/>
                  </div>
               </div>
             );

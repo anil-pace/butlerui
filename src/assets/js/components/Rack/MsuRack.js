@@ -109,6 +109,7 @@ getOffset( el ) {
         var drawerCompartment=null;
         var drawerRows;
         var drawerCompartmentArr;
+        var slotType = this.props.slotType;
         if(compartment_details.length === 1){
             //slotStart = (compartment_details[0].split(".")[3])%10;
             //slotEnd = (compartment_details[0].split(".")[3])%10;
@@ -155,13 +156,13 @@ getOffset( el ) {
                 drawerSlotData = row[1];
                 
                 return (
-                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""}   />
+                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
                     );
             }
 
             else{
                 return (
-        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} />
+        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
         			);
             }
         	});

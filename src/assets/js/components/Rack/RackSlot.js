@@ -10,6 +10,7 @@ var RackSlot = React.createClass({
 		var noOfRows = this.props.noOfRows;
 		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
 		var type = this.props.type;
+		var slotType = this.props.slotType;
 		//var calculateHeight = this.props.slotHeightData;
 		var slotWidth = {
 				width : calculateWidth + '%',
@@ -21,11 +22,11 @@ var RackSlot = React.createClass({
 			//if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
 				if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(parseInt(singSlot.replace(/^0+/, ''))) >= 0)
 				return(
-						<SingleSlot selected={true} key={singSlot} rackRange={rackRange} index={singSlot.replace(/^0+/, '')} type={type} />
+						<SingleSlot selected={true} key={singSlot} rackRange={rackRange} index={singSlot.replace(/^0+/, '')} type={type} slotType={slotType} />
 					);
 				else
 				return(
-						<SingleSlot key={index} rackRange={rackRange} type={type} />
+						<SingleSlot key={index} rackRange={rackRange} type={type} slotType={slotType} />
 					);
 			
 		});

@@ -23,7 +23,7 @@ var Bin = React.createClass({
     },
     showModal: function(data,type,e) {
          ActionCreators.showModal({
-            data:data,
+            data:data, 
             type:type
          });
          $('.modal').modal();
@@ -36,7 +36,7 @@ var Bin = React.createClass({
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="text">_("TOTE")</span>
+                        <span className="text">{_("TOTE")}</span>
                         <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
                         </span>
                     </div>);
@@ -71,7 +71,7 @@ var Bin = React.createClass({
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="text">_("TOTE")</span>
+                        <span className="text">{_("TOTE")}</span>
                         <span className="glyphicon glyphicon-info-sign info-icon"  >
                         </span>
                     </div>);
@@ -93,7 +93,7 @@ var Bin = React.createClass({
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="text">_("TOTE")</span>
+                        <span className="text">{_("TOTE")}</span>
                         <span className="glyphicon glyphicon-info-sign info-icon"  >
                         </span>
                     </div>);
@@ -123,7 +123,7 @@ var Bin = React.createClass({
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="text">_("TOTE")</span>
+                        <span className="text">{_("TOTE")}</span>
                         <span className="glyphicon glyphicon-info-sign info-icon"  >
                         </span>
                     </div>);
@@ -184,7 +184,7 @@ var Bin = React.createClass({
             var binClass = 'bin ';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="text">_("TOTE")</span>
+                        <span className="text">{_("TOTE")}</span>
                         <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
                         </span>
                     </div>);
@@ -203,7 +203,7 @@ var Bin = React.createClass({
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="text">_("TOTE")</span>
+                        <span className="text">{_("TOTE")}</span>
                         <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
                         </span>
                     </div>);
@@ -220,7 +220,7 @@ var Bin = React.createClass({
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="text">_("TOTE")</span>
+                        <span className="text">{_("TOTE")}</span>
                         <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
                         </span>
                     </div>);

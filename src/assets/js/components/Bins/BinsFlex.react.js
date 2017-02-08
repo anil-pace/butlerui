@@ -67,13 +67,34 @@ var Bin = React.createClass({
                 </div>
             );
         }
-        else if((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS)){
+
+        else if((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state == true && compData.ppsbin_count>0){
+            var tote = (<span className="bin-icon tote-icon"></span>);  
+            return (
+                <div className = "bin selected">
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    {tote}
+                    <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }        
+        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state == true){
+            var tote = (<span className="bin-icon tote-icon"></span>);  
+            return (
+                <div className = "bin pick_processed">
+                    <div className ="item-count">{"-"}</div>
+                    {tote}
+                    <div className="pptl pick_processed" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }        
+        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS){
             var tote = (<span className="bin-icon tote-icon"></span>);  
             return (
                 <div className = "bin">
-                    <div className ="item-count">{compData.ppsbin_count>0?compData.ppsbin_count:'-'}</div>
+                    <div className ="item-count">{compData.ppsbin_count>0?compData.ppsbin_count:"-"}</div>
                     {tote}
-                    <div className="pptl" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                    <div className="pptl"}>{compData.ppsbin_id}</div>
                 </div>
             );
         }        

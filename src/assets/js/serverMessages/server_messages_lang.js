@@ -408,4 +408,5 @@ function server_messages_list() {
     _("Wrong barcode scanned");
     _("Enter excess item quantity"); 
     _("items");
+    _("Wrong ppsbin button pressed");
 }

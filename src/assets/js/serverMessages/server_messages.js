@@ -258,7 +258,8 @@ var serverMessages = {
     "PpB.E.006" : "Tote already associated with slot.Scan empty slot",
     "PpB.E.007" : "Unexpected entity scanned",
     "PpB.E.008" : "Wrong barcode scanned",
-    "PpB001" : "Enter excess item quantity"   
+    "PpB001" : "Enter excess item quantity",
+    "PtF.E.010" : "Wrong ppsbin button pressed" 
 };
 
 

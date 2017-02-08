@@ -1832,7 +1832,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-                break;                
+                break; 
+            case appConstants.PUT_FRONT_PPTL_PRESS:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this._getBinMapDetails();               
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();       
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;                               
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -1851,6 +1863,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontKQQuantity"] = this.getScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
+           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                break;                                                   
+            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExcessItems"] = this._getExcessItemsData();
+                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 data["PickFrontNavData"] = this.getNavData();

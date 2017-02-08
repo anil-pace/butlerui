@@ -61,12 +61,22 @@ var Bin = React.createClass({
             }
             return (
                 <div className = "bin">
-                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className ="item-count">{compData.ppsbin_count>0?compData.ppsbin_count:'-'}</div>
                     {tote}
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
         }
+        else if((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS)){
+            var tote = (<span className="bin-icon tote-icon"></span>);  
+            return (
+                <div className = "bin">
+                    <div className ="item-count">{compData.ppsbin_count>0?compData.ppsbin_count:'-'}</div>
+                    {tote}
+                    <div className="pptl" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }        
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))

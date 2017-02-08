@@ -37750,12 +37750,22 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin"}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count>0?compData.ppsbin_count:'-'), 
                     tote, 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
         }
+        else if((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS)){
+            var tote = (React.createElement("span", {className: "bin-icon tote-icon"}));  
+            return (
+                React.createElement("div", {className: "bin"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count>0?compData.ppsbin_count:'-'), 
+                    tote, 
+                    React.createElement("div", {className: "pptl", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }        
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
@@ -43375,6 +43385,7 @@ var PutFront = React.createClass({displayName: "PutFront",
   },
   
   getScreenComponent : function(screen_id){
+    console.log(this.state);
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
         if(this.state.PutFrontExceptionStatus == false){
@@ -43456,7 +43467,27 @@ var PutFront = React.createClass({displayName: "PutFront",
            }else{
           this._component = this.getExceptionComponent();
         }
-
+        break;
+      case appConstants.PUT_FRONT_PPTL_PRESS:
+         if(this.state.PutFrontExceptionStatus == false){
+           if (this.state.OrigBinUse){
+            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
+          }else{
+            binComponent =(React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
+                ))
+          }
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+                binComponent
+              )
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
         break;
 
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
@@ -43579,7 +43610,46 @@ var PutFront = React.createClass({displayName: "PutFront",
            }
           
         break;
-
+      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please scan tote which has excess item"))
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+          );      
+        break;         
+      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+          var _button;
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+                    ));
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+                      React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
+                      _button
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+          );      
+        break; 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
@@ -44511,13 +44581,13 @@ var MtuNavigation = React.createClass({displayName: "MtuNavigation",
 		var data =  this.props.data, navData=[];
 		for (var i = 0; i < data.length; i++) {
 			if(data[i] === true) {
-				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap"}, 
+				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i}, 
 								React.createElement("div", {className: "gor-mtu-block-sel"})
 							 ))
 			}
 
 			else {
-				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap"}, 
+				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i}, 
 								React.createElement("div", {className: "gor-mtu-block-not-sel"})
 							 ))
 			}
@@ -44805,6 +44875,9 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
+	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
+	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_exception_excess_items",
+	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_damaged_item",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
@@ -44918,8 +44991,8 @@ module.exports = appConstants;
 
 },{}],296:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.115:8888/ws",
+	INTERFACE_IP : "https://192.168.3.115:5000"
 };
 module.exports = configConstants;
 
@@ -48658,7 +48731,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-                break;                
+                break; 
+            case appConstants.PUT_FRONT_PPTL_PRESS:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this._getBinMapDetails();               
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();       
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;                               
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -48677,6 +48762,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontKQQuantity"] = this.getScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
+           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                break;                                                   
+            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExcessItems"] = this._getExcessItemsData();
+                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 data["PickFrontNavData"] = this.getNavData();
@@ -49359,7 +49457,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     console.log(data); 
-    //Need to remove when actual data from server is coming
+
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

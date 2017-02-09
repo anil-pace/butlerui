@@ -94,7 +94,7 @@ var Bin = React.createClass({
                 <div className = "bin">
                     <div className ="item-count">{compData.ppsbin_count>0?compData.ppsbin_count:"-"}</div>
                     {tote}
-                    <div className="pptl"}>{compData.ppsbin_id}</div>
+                    <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
         }        

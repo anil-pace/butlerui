@@ -266,8 +266,8 @@ function loadComponent(modalType,modalData){
             <div className="modal-footer removeBorder">
               <div className="buttonContainer center-block chklstButtonContainer">
                 <div className="row removeBorder">
-                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Yes")} color={"orange"} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}/></div>
-                  <div className="col-md-6"><Button1 disabled = {false} text ={_("No")} color={"black"} module ={appConstants.PRE_PUT} action={appConstants.CLOSE_CANCEL_EXCEPTION}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Yes")} color={"orange"} module ={modalData} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("No")} color={"black"} module ={modalData} action={appConstants.CLOSE_CANCEL_EXCEPTION}/></div>
                 </div>
               </div>
             </div>

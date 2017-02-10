@@ -47,7 +47,7 @@ var PrePut = React.createClass({
                 <Exception data={this.state.PrePutExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
               </div>
             );
@@ -146,7 +146,7 @@ var PrePut = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      
@@ -170,7 +170,7 @@ var PrePut = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      

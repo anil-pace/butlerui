@@ -297,6 +297,7 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
               <div className='grid-container exception'>
+                <Modal />
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">
@@ -306,7 +307,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      
@@ -318,6 +319,7 @@ var PutFront = React.createClass({
                     </div>);
           this._component = (
               <div className='grid-container exception'>
+                <Modal />
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container">
@@ -329,7 +331,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      

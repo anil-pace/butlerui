@@ -134,6 +134,7 @@ var Button1 = React.createClass({
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
@@ -147,6 +148,12 @@ var Button1 = React.createClass({
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;                                 
+                            case appConstants.CANCEL_EXCEPTION_MODAL:
+                                this.showModal(appConstants.PUT_FRONT, "cancel_exception");
+                                break;
+                            case appConstants.CLOSE_CANCEL_EXCEPTION:
+                               closeModalBox(); 
+                               break;                                                               
                             default:
                                 return true;
                         }
@@ -338,7 +345,7 @@ var Button1 = React.createClass({
                     case appConstants.PRE_PUT:
                         switch (action) {
                             case appConstants.CANCEL_EXCEPTION_MODAL:
-                                this.showModal(null, "cancel_exception");
+                                this.showModal(appConstants.PRE_PUT, "cancel_exception");
                                 break;
                             case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_barcode_scan";
@@ -352,6 +359,7 @@ var Button1 = React.createClass({
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;   
                             case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "pre_put_exception";

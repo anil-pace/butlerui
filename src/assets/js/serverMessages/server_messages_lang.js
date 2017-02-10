@@ -407,6 +407,7 @@ function server_messages_list() {
     _("Unexpected entity scanned");
     _("Wrong barcode scanned");
     _("Enter excess item quantity"); 
-    _("items");
+    _(" items");
     _("Wrong ppsbin button pressed");
+    _("Total ");
 }

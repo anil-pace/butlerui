@@ -38350,6 +38350,7 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
@@ -38363,6 +38364,12 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;                                 
+                            case appConstants.CANCEL_EXCEPTION_MODAL:
+                                this.showModal(appConstants.PUT_FRONT, "cancel_exception");
+                                break;
+                            case appConstants.CLOSE_CANCEL_EXCEPTION:
+                               closeModalBox(); 
+                               break;                                                               
                             default:
                                 return true;
                         }
@@ -38554,7 +38561,7 @@ var Button1 = React.createClass({displayName: "Button1",
                     case appConstants.PRE_PUT:
                         switch (action) {
                             case appConstants.CANCEL_EXCEPTION_MODAL:
-                                this.showModal(null, "cancel_exception");
+                                this.showModal(appConstants.PRE_PUT, "cancel_exception");
                                 break;
                             case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_barcode_scan";
@@ -38568,6 +38575,7 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;   
                             case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "pre_put_exception";
@@ -39636,8 +39644,8 @@ function loadComponent(modalType,modalData){
             React.createElement("div", {className: "modal-footer removeBorder"}, 
               React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                 React.createElement("div", {className: "row removeBorder"}, 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: appConstants.PRE_PUT, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: modalData, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: modalData, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
                 )
               )
             )
@@ -41182,7 +41190,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -41281,7 +41289,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -41305,7 +41313,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -43690,6 +43698,7 @@ var PutFront = React.createClass({displayName: "PutFront",
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
@@ -43699,7 +43708,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -43711,6 +43720,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                     ));
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
@@ -43722,7 +43732,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -45593,6 +45603,8 @@ var serverMessages = {
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PtF.H.007" : "Undock Roll Cage",
+    "PtF.H.008" : "Place the tote back in bin {0} and press pptl",
+    "PtF.H.009" : "Take out the tote from bin {0} and scan entity",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",

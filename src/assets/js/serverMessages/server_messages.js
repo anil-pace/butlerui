@@ -38,6 +38,8 @@ var serverMessages = {
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PtF.H.007" : "Undock Roll Cage",
+    "PtF.H.008" : "Place the tote back in bin {0} and press pptl",
+    "PtF.H.009" : "Take out the tote from bin {0} and scan entity",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",

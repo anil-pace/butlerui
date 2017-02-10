@@ -19,7 +19,7 @@ var Bins = React.createClass({
     },
 
       _sortBins:function (aBins){
-         if (aBins.constructor !== Array && aBins.length < 1){
+         if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
             //no bins found
             return;
          }

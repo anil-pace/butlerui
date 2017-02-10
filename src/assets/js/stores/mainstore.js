@@ -208,6 +208,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[0];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
                     _NavData = navConfig.putFront[2];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
+                    _NavData = navConfig.putFront[3];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -1382,7 +1384,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["footer"] = [];
         data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
-        data["footer"].push(new this.tableCol(_("Total:"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
         var self=this;
@@ -1397,12 +1399,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     total_excess += quantity     
                     data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
             });
-            data["footer"].push(new this.tableCol(total_excess+_(" items"), "header", false, "small", false, true, true, false));       
+            data["footer"].push(new this.tableCol(_("Total: ")+total_excess+_(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("-"), "header", false, "small", false, true, true, false));       
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }
         return data;
     },

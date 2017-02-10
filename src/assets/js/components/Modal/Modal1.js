@@ -254,6 +254,28 @@ function loadComponent(modalType,modalData){
          
       title = _("Add Scanner");
       break;
+    case "cancel_exception":
+        component = [];
+        component.push((
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="title-textbox">{_("Are you sure you want to cancel the exception?")}</div>
+              </div>
+            </div>
+            <div className="modal-footer removeBorder">
+              <div className="buttonContainer center-block chklstButtonContainer">
+                <div className="row removeBorder">
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Yes")} color={"orange"} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("No")} color={"black"} module ={appConstants.PRE_PUT} action={appConstants.CLOSE_CANCEL_EXCEPTION}/></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          ));
+      title = _("Cancel Exception");    
+      break;
+
     default:
       component = null;
       title = null;

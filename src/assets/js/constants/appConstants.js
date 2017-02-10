@@ -160,7 +160,9 @@ var appConstants = {
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
 	BIN_FULL : "bin_full",
-	CANCEL_LAST_SCAN : "cancel_last_scan"
+	CANCEL_LAST_SCAN : "cancel_last_scan",
+	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
+	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal"
 };
 
 module.exports = appConstants;

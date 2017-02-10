@@ -38078,7 +38078,7 @@ var Bins = React.createClass({displayName: "Bins",
     },
 
       _sortBins:function (aBins){
-         if (aBins.constructor !== Array && aBins.length < 1){
+         if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
             //no bins found
             return;
          }
@@ -38224,7 +38224,6 @@ var mainstore = require('../../stores/mainstore');
 
 function closeModalBox(){ 
     $(".modal").modal("hide");
-    //$(".modal-backdrop").remove();
 };
 
 var Button1 = React.createClass({displayName: "Button1",
@@ -38358,6 +38357,12 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendSpaceUnavailableDataToServer();
                                 break;
+                            case appConstants.SEND_EXCESS_ITEMS_BIN:
+                                data["event_name"] = "put_front_exception";
+                                data["event_data"]["action"] ="finish_exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;                                 
                             default:
                                 return true;
                         }
@@ -38548,6 +38553,9 @@ var Button1 = React.createClass({displayName: "Button1",
                         break;
                     case appConstants.PRE_PUT:
                         switch (action) {
+                            case appConstants.CANCEL_EXCEPTION_MODAL:
+                                this.showModal(null, "cancel_exception");
+                                break;
                             case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_barcode_scan";
                                 data["event_data"]["barcode"] = this.props.barcode;
@@ -38571,6 +38579,9 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "cancel_last_scan";
                                 ActionCreators.postDataToInterface(data);
                                 break;   
+                            case appConstants.CLOSE_CANCEL_EXCEPTION:
+                               closeModalBox(); 
+                               break;                               
                             default:
                                 return true;
                         }
@@ -39613,6 +39624,27 @@ function loadComponent(modalType,modalData){
          
       title = _("Add Scanner");
       break;
+    case "cancel_exception":
+        component = [];
+        component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the exception?"))
+              )
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: appConstants.PRE_PUT, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
+                )
+              )
+            )
+          )
+          ));
+      title = _("Cancel Exception");    
+      break;
     default:
       component = null;
       title = null;
@@ -39912,6 +39944,28 @@ function loadComponent(modalType,modalData){
          
       title = _("Add Scanner");
       break;
+    case "cancel_exception":
+        component = [];
+        component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the exception?"))
+              )
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: appConstants.PRE_PUT, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
+                )
+              )
+            )
+          )
+          ));
+      title = _("Cancel Exception");    
+      break;
+
     default:
       component = null;
       title = null;
@@ -41128,7 +41182,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
@@ -41217,6 +41271,7 @@ var PrePut = React.createClass({displayName: "PrePut",
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
@@ -41238,6 +41293,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                     ));
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
@@ -44715,7 +44771,15 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
-        }]
+        }],
+        [{
+            "screen_id": "put_front_pptl_press",
+            "code": "Common.000",
+            "message": "Place the tote back in bin {0} and press pptl",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }]        
     ],
     "pickFront": [
         [{
@@ -44994,7 +45058,7 @@ var appConstants = {
 	CANCEL_CLOSE_SCANNER: "CANCEL_CLOSE_SCANNER",
 	GENERATE_NOTIFICATION : 'GENERATE_NOTIFICATION',
 	CANCEL_PPTL : 'CANCEL_PPTL',
-	IDLE_LOGOUT_TIME : 30000000, //in millisec
+	IDLE_LOGOUT_TIME : 300000, //in millisec
 	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN',
 	PUT_FRONT_WAITING_UNDOCK : 'put_front_waiting_undock',
 	PRE_PUT_STAGE : "pre_put_stage",
@@ -45005,15 +45069,17 @@ var appConstants = {
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
 	BIN_FULL : "bin_full",
-	CANCEL_LAST_SCAN : "cancel_last_scan"
+	CANCEL_LAST_SCAN : "cancel_last_scan",
+	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
+	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal"
 };
 
 module.exports = appConstants;
 
 },{}],296:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.116:888/ws",
-	INTERFACE_IP : "https://192.168.3.116:5000"
+	WEBSOCKET_IP : "ws://192.168.3.115:8888/ws",
+	INTERFACE_IP : "https://192.168.3.115:5000"
 };
 module.exports = configConstants;
 
@@ -47129,6 +47195,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[0];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
                     _NavData = navConfig.putFront[2];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
+                    _NavData = navConfig.putFront[3];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -48303,7 +48371,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["footer"] = [];
         data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
-        data["footer"].push(new this.tableCol(_("Total:"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
         var self=this;
@@ -48318,12 +48386,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     total_excess += quantity     
                     data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
             });
-            data["footer"].push(new this.tableCol(total_excess+_(" items"), "header", false, "small", false, true, true, false));       
+            data["footer"].push(new this.tableCol(_("Total: ")+total_excess+_(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("-"), "header", false, "small", false, true, true, false));       
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }
         return data;
     },

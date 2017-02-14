@@ -1880,7 +1880,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExcessItems"] = this._getExcessItemsData();
                 data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
-
+                break;
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();

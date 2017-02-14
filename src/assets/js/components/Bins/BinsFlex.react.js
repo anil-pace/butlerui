@@ -56,17 +56,66 @@ var Bin = React.createClass({
         }
         else if((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE )){
             var tote = '';
-            if(compData.ppsbin_count>0){
-              tote = (<span className="bin-icon tote-icon"></span>);  
+            if(compData.totes_associated == true){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                    </div>);    
             }
             return (
                 <div className = "bin">
-                    <div className ="item-count">{compData.ppsbin_count}</div>
                     {tote}
+                    <div className ="item-count">{compData.ppsbin_count>0?compData.ppsbin_count:'-'}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
         }
+
+        else if((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state == true && compData.ppsbin_count>0){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
+                        </span>
+                    </div>);  
+            }  
+            return (
+                <div className = "bin selected">
+                    {tote}
+                    <div className ="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }        
+        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state == true){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                    </div>);  
+            }  
+            return (
+                <div className = "bin pick_processed">
+                    <div className ="item-count">{"-"}</div>
+                    {tote}
+                    <div className="pptl pick_processed" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }        
+        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS){
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                    </div>);  
+            }  
+            return (
+                <div className = "bin">
+                    <div className ="item-count">{compData.ppsbin_count>0?compData.ppsbin_count:"-"}</div>
+                    {tote}
+                    <div className="pptl">{compData.ppsbin_id}</div>
+                </div>
+            );
+        }        
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
@@ -284,13 +333,23 @@ var Bin = React.createClass({
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
+                        </span>
+                    </div>);  
+            }  
             return (
                 <div className = {compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}>
+                    {tote}
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className={compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}>{compData.ppsbin_id}</div>
                 </div>
             );
+        }
         else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
@@ -307,29 +366,55 @@ var Bin = React.createClass({
                     <div className="pptl selected">{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) ){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
+                        </span>
+                    </div>);  
+            }  
             return (
                 <div className = "bin use" >
+                   {tote}
                    <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")}  >
                     </span>
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty")
+        }
+    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty"){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                    </div>);  
+            }         
             return (
                 <div className = "bin empty">
+                    {tote}
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
             );
-        else 
+        }
+        else {
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (<div className="tote">
+                        <span className="bin-icon tote-icon"></span>
+                    </div>);  
+            }            
             return (
                 <div className = "bin empty">
+                    {tote}
                     <div className ="item-count">{compData.ppsbin_count}</div>
                     <div className="pptl">{compData.ppsbin_id}</div>
                 </div>
                 );
+        }
         
     }
 });

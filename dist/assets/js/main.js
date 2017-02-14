@@ -37485,7 +37485,8 @@ var Bin = React.createClass({displayName: "Bin",
         
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
-            var tote = '';
+            var tote = '', binClass = '';
+            binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
                         React.createElement("span", {className: "bin-icon tote-icon"}), 
@@ -37493,10 +37494,10 @@ var Bin = React.createClass({displayName: "Bin",
                         )
                     ));
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: "bin selected"+binClass}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected"+binClass, onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
         }
@@ -37972,7 +37973,8 @@ var Bin = React.createClass({displayName: "Bin",
         
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
-            var tote = '';
+            var tote = '', binClass = '';
+            binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
                         React.createElement("span", {className: "bin-icon tote-icon"}), 
@@ -37980,10 +37982,10 @@ var Bin = React.createClass({displayName: "Bin",
                         )
                     ));
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: "bin selected"+binClass}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected"+binClass, onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
         }

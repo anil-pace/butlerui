@@ -114,24 +114,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     getAuthToken : function(data){
         sessionStorage.setItem('sessionData', null);
-        var loginData ={
-          "username" : data.data.username,
-          "password" : data.data.password
-        }
+        var username = data.data.username;
+        var password = data.data.password;
+        var url = configConstants.OAUTH_IP + configConstants.OAUTH_TOKEN_ENDPOINT + '?username='+username+'&password='+password+'&client_id='+configConstants.CLIENT_ID+'&client_secret='+configConstants.CLIENT_SECRET+'&grant_type='+configConstants.GRANT_TYPE
         $.ajax({
             type: 'POST',
-            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
-            data: JSON.stringify(loginData),
-            dataType: "json",
+            url: url,
             headers: {
-                'content-type': 'application/json',
-                'accept': 'application/json'
+                'content-type': 'application/x-www-form-urlencoded',
+                'accept': 'application/json',
+                'authorization': 'Basic d21zOnJ1Yml4'
             }
         }).done(function(response) {
             var webSocketData = {
                 'data_type': 'auth',
                 'data' : {
-                    "auth-token" : response.auth_token,
+                    "auth-token" : response.access_token,
                     "seat_name" : data.data.seat_name
                 }
             };

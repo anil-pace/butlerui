@@ -1392,13 +1392,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
             var product_details,product_sku,quantity,total_excess = 0;
             _seatData.excess_items.map(function(value, index){
-
-                    product_details = value.product_info[2];
-                    product_sku=product_details[0].product_sku;
-                    quantity = value.qty;  
-                    total_excess += quantity     
-                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
-            });
+                    value.product_info.map(function(product_details, index){
+                        if(product_details[0].product_sku){
+                            product_sku=product_details[0].product_sku;
+                            quantity = value.qty;  
+                            total_excess += quantity     
+                            data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                        }
+                    });
+            });                            
             data["footer"].push(new this.tableCol(_("Total: ")+total_excess+_(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),

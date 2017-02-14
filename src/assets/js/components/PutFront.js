@@ -62,14 +62,13 @@ var PutFront = React.createClass({
                 <Exception data={this.state.PutFrontExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
               </div>
             );
   },
   
   getScreenComponent : function(screen_id){
-    console.log(this.state);
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
         if(this.state.PutFrontExceptionStatus == false){
@@ -307,7 +306,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      
@@ -315,7 +314,7 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (<div className = "staging-action">                          
-                          <Button disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+                          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
                     </div>);
           this._component = (
               <div className='grid-container exception'>
@@ -331,7 +330,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      

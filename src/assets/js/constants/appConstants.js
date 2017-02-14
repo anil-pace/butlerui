@@ -52,7 +52,7 @@ var appConstants = {
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
-	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_exception_excess_items",
+	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_damaged_item",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",

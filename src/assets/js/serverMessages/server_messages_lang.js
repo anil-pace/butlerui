@@ -410,4 +410,11 @@ function server_messages_list() {
     _(" items");
     _("Wrong ppsbin button pressed");
     _("Total ");
+    _("Place the tote back in bin {0} and press pptl");
+    _("Take out the tote from bin {0} and scan entity");
+    _("Scan tote first and then scan item");
+    _("Scan excess item");
+    _("Scan tote which has excess item");
+    _("Invalid tote scanned");
+    _("Exception entry successful");
 }

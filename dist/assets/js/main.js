@@ -44980,7 +44980,7 @@ var navData = {
             "screen_id": "",
             "code": "Common.001",
             "image": svgConstants.pptl,
-            "message": "Scan Item",
+            "message": "Press PPTL",
             "showImage": true,
             "level": 3,
             "type": 'passive'
@@ -45006,7 +45006,7 @@ var navData = {
             "screen_id": "",
             "code": "Common.001",
             "image": svgConstants.pptl,
-            "message": "Scan Item",
+            "message": "Press PPTL",
             "showImage": true,
             "level": 3,
             "type": 'passive'
@@ -45020,19 +45020,20 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
-            "screen_id": "",
-            "code": "Common.000",
-            "image": svgConstants.scan,
-            "message": "Scan Box",
-            "showImage": true,
-            "level": 2,
-            "type": 'passive'
         }, {
             "screen_id": ["pick_front_packing_item_scan"],
             "code": "Common.001",
             "image": svgConstants.pptl,
             "message": "Scan",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        },
+        {
+            "screen_id": "",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan PPTL",
             "showImage": true,
             "level": 3,
             "type": 'passive'

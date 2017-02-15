@@ -37339,7 +37339,8 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
+
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37361,7 +37362,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37383,7 +37384,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37413,7 +37414,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37474,7 +37475,7 @@ var Bin = React.createClass({displayName: "Bin",
             var binClass = 'bin ';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37490,18 +37491,19 @@ var Bin = React.createClass({displayName: "Bin",
         
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
-            var tote = '';
+            var tote = '', binClass = '';
+            binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: "bin selected"+binClass}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected"+binClass, onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
         }
@@ -37510,7 +37512,8 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37585,13 +37588,21 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }                     
             return (
                 React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
+                    tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
                 )
             );
+        }
         else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
@@ -37608,29 +37619,53 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) ){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }                     
             return (
                 React.createElement("div", {className: "bin use"}, 
+                    tote, 
                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty")
+        }
+    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty"){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }            
             return (
                 React.createElement("div", {className: "bin empty"}, 
+                    tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else 
+        }
+        else {
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }                        
             return (
                 React.createElement("div", {className: "bin empty"}, 
+                tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
                 );
+        }
         
     }
 });
@@ -37729,7 +37764,7 @@ var Bin = React.createClass({displayName: "Bin",
     },
     showModal: function(data,type,e) {
          ActionCreators.showModal({
-            data:data,
+            data:data, 
             type:type
          });
          $('.modal').modal();
@@ -37742,7 +37777,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37762,22 +37797,71 @@ var Bin = React.createClass({displayName: "Bin",
         }
         else if((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE )){
             var tote = '';
-            if(compData.ppsbin_count>0){
-              tote = (React.createElement("span", {className: "bin-icon tote-icon"}));  
+            if(compData.totes_associated == true){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));    
             }
             return (
                 React.createElement("div", {className: "bin"}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count>0?compData.ppsbin_count:'-'), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
         }
+
+        else if((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state == true && compData.ppsbin_count>0){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));  
+            }  
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }        
+        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state == true){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }  
+            return (
+                React.createElement("div", {className: "bin pick_processed"}, 
+                    React.createElement("div", {className: "item-count"}, "-"), 
+                    tote, 
+                    React.createElement("div", {className: "pptl pick_processed", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }        
+        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS){
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }  
+            return (
+                React.createElement("div", {className: "bin"}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count>0?compData.ppsbin_count:"-"), 
+                    tote, 
+                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                )
+            );
+        }        
         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37799,7 +37883,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37829,7 +37913,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
                         )
                     ));
@@ -37890,7 +37974,7 @@ var Bin = React.createClass({displayName: "Bin",
             var binClass = 'bin ';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37906,18 +37990,19 @@ var Bin = React.createClass({displayName: "Bin",
         
 
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
-            var tote = '';
+            var tote = '', binClass = '';
+            binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: "bin selected"+binClass}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected"+binClass, onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
         }
@@ -37926,7 +38011,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "text"}, "_(\"TOTE\")"), 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
                         React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                         )
                     ));
@@ -37990,13 +38075,23 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN ))
+        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));  
+            }  
             return (
                 React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
+                    tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
                 )
             );
+        }
         else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
@@ -38013,29 +38108,55 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) )
+        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) ){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"}), 
+                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                        )
+                    ));  
+            }  
             return (
                 React.createElement("div", {className: "bin use"}, 
+                   tote, 
                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty")
+        }
+    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty"){
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }         
             return (
                 React.createElement("div", {className: "bin empty"}, 
+                    tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
             );
-        else 
+        }
+        else {
+            var tote = '';
+            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
+              tote = (React.createElement("div", {className: "tote"}, 
+                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    ));  
+            }            
             return (
                 React.createElement("div", {className: "bin empty"}, 
+                    tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
                 )
                 );
+        }
         
     }
 });
@@ -38064,7 +38185,7 @@ var Bins = React.createClass({displayName: "Bins",
     },
 
       _sortBins:function (aBins){
-         if (aBins.constructor !== Array && aBins.length < 1){
+         if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
             //no bins found
             return;
          }
@@ -38210,7 +38331,6 @@ var mainstore = require('../../stores/mainstore');
 
 function closeModalBox(){ 
     $(".modal").modal("hide");
-    //$(".modal-backdrop").remove();
 };
 
 var Button1 = React.createClass({displayName: "Button1",
@@ -38337,6 +38457,7 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
@@ -38344,6 +38465,18 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendSpaceUnavailableDataToServer();
                                 break;
+                            case appConstants.SEND_EXCESS_ITEMS_BIN:
+                                data["event_name"] = "put_front_exception";
+                                data["event_data"]["action"] ="finish_exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;                                 
+                            case appConstants.CANCEL_EXCEPTION_MODAL:
+                                this.showModal(appConstants.PUT_FRONT, "cancel_exception");
+                                break;
+                            case appConstants.CLOSE_CANCEL_EXCEPTION:
+                               closeModalBox(); 
+                               break;                                                               
                             default:
                                 return true;
                         }
@@ -38565,6 +38698,9 @@ var Button1 = React.createClass({displayName: "Button1",
                         break;
                     case appConstants.PRE_PUT:
                         switch (action) {
+                            case appConstants.CANCEL_EXCEPTION_MODAL:
+                                this.showModal(appConstants.PRE_PUT, "cancel_exception");
+                                break;
                             case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_barcode_scan";
                                 data["event_data"]["barcode"] = this.props.barcode;
@@ -38577,6 +38713,7 @@ var Button1 = React.createClass({displayName: "Button1",
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;   
                             case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "pre_put_exception";
@@ -38588,6 +38725,9 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_name"] = "cancel_last_scan";
                                 ActionCreators.postDataToInterface(data);
                                 break;   
+                            case appConstants.CLOSE_CANCEL_EXCEPTION:
+                               closeModalBox(); 
+                               break;                               
                             default:
                                 return true;
                         }
@@ -39668,6 +39808,27 @@ function loadComponent(modalType,modalData){
          
       title = _("Add Scanner");
       break;
+    case "cancel_exception":
+        component = [];
+        component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the exception?"))
+              )
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: modalData, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: modalData, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
+                )
+              )
+            )
+          )
+          ));
+      title = _("Cancel Exception");    
+      break;
     default:
       component = null;
       title = null;
@@ -39967,6 +40128,28 @@ function loadComponent(modalType,modalData){
          
       title = _("Add Scanner");
       break;
+    case "cancel_exception":
+        component = [];
+        component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the exception?"))
+              )
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: appConstants.PRE_PUT, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
+                )
+              )
+            )
+          )
+          ));
+      title = _("Cancel Exception");    
+      break;
+
     default:
       component = null;
       title = null;
@@ -41387,7 +41570,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -41476,6 +41659,7 @@ var PrePut = React.createClass({displayName: "PrePut",
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
@@ -41485,7 +41669,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -41497,6 +41681,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                     ));
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
@@ -41508,7 +41693,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -43658,7 +43843,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -43746,7 +43931,27 @@ var PutFront = React.createClass({displayName: "PutFront",
            }else{
           this._component = this.getExceptionComponent();
         }
-
+        break;
+      case appConstants.PUT_FRONT_PPTL_PRESS:
+         if(this.state.PutFrontExceptionStatus == false){
+           if (this.state.OrigBinUse){
+            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
+          }else{
+            binComponent =(React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
+                ))
+          }
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+                binComponent
+              )
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
         break;
 
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
@@ -43869,7 +44074,48 @@ var PutFront = React.createClass({displayName: "PutFront",
            }
           
         break;
-
+      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please scan tote which has excess item"))
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+          );      
+        break;         
+      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+          var _button;
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+                    ));
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+                      React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
+                      _button
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+          );      
+        break; 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
@@ -44801,13 +45047,13 @@ var MtuNavigation = React.createClass({displayName: "MtuNavigation",
 		var data =  this.props.data, navData=[];
 		for (var i = 0; i < data.length; i++) {
 			if(data[i] === true) {
-				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap"}, 
+				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i}, 
 								React.createElement("div", {className: "gor-mtu-block-sel"})
 							 ))
 			}
 
 			else {
-				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap"}, 
+				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i}, 
 								React.createElement("div", {className: "gor-mtu-block-not-sel"})
 							 ))
 			}
@@ -44922,7 +45168,15 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
-        }]
+        }],
+        [{
+            "screen_id": "put_front_pptl_press",
+            "code": "Common.000",
+            "message": "Place the tote back in bin {0} and press pptl",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }]        
     ],
     "pickFront": [
         [{
@@ -45217,6 +45471,9 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
+	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
+	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
+	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_damaged_item",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
@@ -45339,7 +45596,9 @@ var appConstants = {
 	CONFIRM_LOCATION:"CONFIRM_LOCATION",
 	CONFIRM_LOCATION_PRESS:"container_kept_in_rack",
 	HIDE_SPINNER:"HIDE_SPINNER",
-	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm"
+	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm",
+	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
+	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal"
 
 };
 
@@ -45347,8 +45606,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.136:8888/ws",
-	INTERFACE_IP : "http://192.168.3.136:5000"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -45865,6 +46124,10 @@ var serverMessages = {
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PtF.H.007" : "Undock Roll Cage",
+    "PtF.H.008" : "Place the tote back in bin {0} and press PPTL",
+    "PtF.H.009" : "Scan excess item",
+    "PtF.H.010" : "Scan tote which has excess item",
+    "PtF.H.011" : "Take out the tote from bin {0} and scan entity",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -46049,17 +46312,24 @@ var serverMessages = {
     "PtF.E.006" : "Total Quantity Expected {0}. Quantity entered {1}",
     "PtF.E.007" : "Actual put quantity less than than revised quantity.", 
     "PtF.E.008" : "Wrong slot scanned", 
+    "PtF.E.010" : "Wrong ppsbin button pressed",
+    "PtF.E.011" : "Tote scanned is not opened",
+    "PtF.E.012" : "Scan tote first and then scan item",
+    "PtF.E.013" : "Tote already scanned",
+    "PtF.E.014" : "Invalid tote scanned",
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
     "PtF.I.004" : "Damaged and missing entity recorded.",
     "PtF.I.005" : "Space unavailable recorded.",
     "PtF.I.006" : "Cancel scan successful",
+    "PtF.I.007" : "Exception entry successful",    
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
     "PtF002" : "Space Not Available",
+    "PtF003" : "Excess quantity",
     "PkF001" : "Item Missing/Bad Barcode",
     "PkF005" : "Missing Box",
     "PkB007" : "Disassociate Tote",
@@ -46091,7 +46361,10 @@ var serverMessages = {
     "PkF.I.009":"Packing box discarded",
     "PkF.H.011":"Place box in MSU slot and confirm",
     "PkF.H.010":"Scan a packing box and keep in bin {0}",
-    "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}"
+    "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
+    "PpB.E.009" : "Scan tote first and then scan item",
+    "PpB.E.010" : "Invalid tote scan",
+    "PpB001" : "Excess quantity"
 };
 
 
@@ -47476,6 +47749,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[0];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
                     _NavData = navConfig.putFront[2];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
+                    _NavData = navConfig.putFront[3];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -48692,7 +48967,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["footer"] = [];
         data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
-        data["footer"].push(new this.tableCol(_("Total:"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
         var self=this;
@@ -48700,19 +48975,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
             var product_details,product_sku,quantity,total_excess = 0;
             _seatData.excess_items.map(function(value, index){
-
-                    product_details = value.product_info[2];
-                    product_sku=product_details[0].product_sku;
-                    quantity = value.qty;  
-                    total_excess += quantity     
-                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
-            });
-            data["footer"].push(new this.tableCol(total_excess+_(" items"), "header", false, "small", false, true, true, false));       
+                    value.product_info.map(function(product_details, index){
+                        if(product_details[0].product_sku){
+                            product_sku=product_details[0].product_sku;
+                            quantity = value.qty;  
+                            total_excess += quantity     
+                            data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                        }
+                    });
+            });                            
+            data["footer"].push(new this.tableCol(_("Total: ")+total_excess+_(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("-"), "header", false, "small", false, true, true, false));       
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }
         return data;
     },
@@ -49142,7 +49419,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-                break;                
+                break; 
+            case appConstants.PUT_FRONT_PPTL_PRESS:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] =  this._getBinMapDetails();               
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();       
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;                               
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -49161,7 +49450,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontKQQuantity"] = this.getScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
-
+           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                break;                                                   
+            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExcessItems"] = this._getExcessItemsData();
+                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -50013,7 +50315,7 @@ var putSeatData = function(data) {
 }*/
 
     console.log(data); 
-    //Need to remove when actual data from server is coming
+
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

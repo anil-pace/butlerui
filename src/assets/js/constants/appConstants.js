@@ -51,6 +51,9 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
+	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
+	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
+	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_damaged_item",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
@@ -173,7 +176,9 @@ var appConstants = {
 	CONFIRM_LOCATION:"CONFIRM_LOCATION",
 	CONFIRM_LOCATION_PRESS:"container_kept_in_rack",
 	HIDE_SPINNER:"HIDE_SPINNER",
-	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm"
+	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm",
+	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
+	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal"
 
 };
 

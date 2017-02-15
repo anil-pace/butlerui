@@ -90,7 +90,15 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
-        }]
+        }],
+        [{
+            "screen_id": "put_front_pptl_press",
+            "code": "Common.000",
+            "message": "Place the tote back in bin {0} and press pptl",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }]        
     ],
     "pickFront": [
         [{

@@ -47,7 +47,7 @@ var PrePut = React.createClass({
                 <Exception data={this.state.PrePutExceptionData} action={true}/>
                 <div className="exception-right"></div>
                 <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION}  color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
               </div>
             );
@@ -136,6 +136,7 @@ var PrePut = React.createClass({
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
           this._component = (
               <div className='grid-container exception'>
+                <Modal /> 
                 <Exception data={this.state.PrePutExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">
@@ -145,7 +146,7 @@ var PrePut = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      
@@ -157,6 +158,7 @@ var PrePut = React.createClass({
                     </div>);
           this._component = (
               <div className='grid-container exception'>
+                <Modal /> 
                 <Exception data={this.state.PrePutExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container">
@@ -168,7 +170,7 @@ var PrePut = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                   <Button disabled = {false} text = {_("Cancel exception")} module ={appConstants.PRE_PUT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      

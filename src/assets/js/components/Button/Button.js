@@ -148,6 +148,7 @@ var Button1 = React.createClass({
                         break;
                     case appConstants.PICK_FRONT:
                         switch (action) {
+
                             case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_scan_all";
                                 ActionCreators.postDataToInterface(data);
@@ -217,7 +218,37 @@ var Button1 = React.createClass({
                             case appConstants.BIN_FULL:
                                 data["event_name"] = "bin_full";
                                 data["event_data"] = mainstore._getSelectedPpsBin();
-                                ActionCreators.postDataToInterface(data);                                
+                                ActionCreators.postDataToInterface(data);   
+                                break; 
+                            case appConstants.BOX_FULL:
+                                data["event_name"] = appConstants.BOX_FULL_REQUEST;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                                this.showModal(null, appConstants.BOX_FULL);
+                                break; 
+                            case appConstants.DISCARD_PACKING_BOX: 
+                                data["event_name"] = appConstants.BOX_FULL_REQUEST;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                                this.showModal(null, appConstants.DISCARD_PACKING_BOX);
+                                break; 
+                            case appConstants.CANCEL_BOX_FULL:
+                                data["event_name"] = appConstants.CANCEL_BOX_FULL_REQUEST;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break;   
+                            case appConstants.CONFIRM_BOX_FULL:
+                                data["event_name"] = appConstants.CONFIRM_BOX_FULL;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break; 
+                            case appConstants.CONFIRM_LOCATION:
+                            data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            break;                      
                             default:
                                 return true;
                         }

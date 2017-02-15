@@ -121,6 +121,8 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){
   var action = payload.action;
   switch(action.actionType){
+   // case appConstants.HIDE_SPINNER:
+
     case appConstants.LIST_SEATS:
       getParameterByName();
       break;

@@ -157,7 +157,24 @@ var appConstants = {
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
 	BIN_FULL : "bin_full",
-	CANCEL_LAST_SCAN : "cancel_last_scan"
+	CANCEL_LAST_SCAN : "cancel_last_scan",
+	PICK_FRONT_PACKING_BOX:"pick_front_packing_box",
+	PICK_FRONT_PACKING_CONTAINER_SCAN:"pick_front_packing_container_scan",
+	PICK_FRONT_PACKING_ITEM_SCAN:"pick_front_packing_item_scan",
+	PICK_FRONT_PACKING_PPTL_PRESS:"pick_front_packing_pptl_press",
+	PACKING_BOX:"PACKING_BOX",
+	BOX_FULL:"BOX_FULL",
+	BOX_FULL_REQUEST:"packing_box_full_request",
+	BOX_FULL_REQUEST_CONFIRMED:"packing_box_full_confirmed",
+	DISCARD_PACKING_BOX:"DISCARD_PACKING_BOX",
+	CANCEL_BOX_FULL:"CANCEL_BOX_FULL",
+	CANCEL_BOX_FULL_REQUEST:"packing_box_full_cancel",
+	CONFIRM_BOX_FULL:"packing_box_full_confirmed",
+	CONFIRM_LOCATION:"CONFIRM_LOCATION",
+	CONFIRM_LOCATION_PRESS:"container_kept_in_rack",
+	HIDE_SPINNER:"HIDE_SPINNER",
+	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm"
+
 };
 
 module.exports = appConstants;

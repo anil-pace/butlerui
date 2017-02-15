@@ -32,6 +32,14 @@ var navData = {
             "type": 'active'
         }],
         [{
+            "screen_id": ["put_back_stag","put_back_scan_tote"],
+            "code": "Common.000",
+            "image": svgConstants.stage,
+            "message": "Stage Bin or Scan Item",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
             "screen_id": ["put_back_stage","put_back_scan_tote"],
             "code": "Common.000",
             "image": svgConstants.stage,
@@ -118,7 +126,120 @@ var navData = {
             "showImage": true,
             "level": null,
             "type": 'active'
+        }],
+        [{
+            "screen_id": ["pick_front_packing_box"],
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan a packing box and keep in in bin {0}",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": "",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan Box",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        },
+        {
+            "screen_id": "",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan Item",
+            "showImage": true,
+            "level": 3,
+            "type": 'passive'
+        }],
+        [
+        {
+            "screen_id": "",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan PB",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": ["pick_front_packing_container_scan"],
+            "code": "PkF.H.005",
+            "image": svgConstants.scan,
+            "message": "Scan box from MSU slot",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }, {
+            "screen_id": "",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan Item",
+            "showImage": true,
+            "level": 3,
+            "type": 'passive'
+        }],
+        [
+        {
+            "screen_id": "",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan PB",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan Box",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }, {
+            "screen_id": ["pick_front_packing_item_scan"],
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan",
+            "showImage": true,
+            "level": 3,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": "",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan PB",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "",
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan Box",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }, {
+            "screen_id": ["pick_front_packing_pptl_press"],
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Press PPTL to confirm",
+            "showImage": true,
+            "level": 3,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": ["pick_front_location_confirm"],
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan Slot Barcode",
+            "showImage": true,
+            "level": null,
+            "type": 'passive'
         }]
+
     ],
     "pickBack": [ {
         "screen_id": "pick_back_scan",

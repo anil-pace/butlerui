@@ -240,10 +240,32 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
+                else if(_seatData.screen_id === appConstants.PICK_FRONT_PACKING_BOX){
+                     _NavData = navConfig.pickFront[3];
+                    _NavData[0].type = 'active';
+                } 
+
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN){
+                   _NavData = navConfig.pickFront[4];
+                    _NavData[1].type = 'active';
+                }
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN){
+                   _NavData = navConfig.pickFront[5];
+                    _NavData[2].type = 'active';
+                }
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS){
+                   _NavData = navConfig.pickFront[6];
+                    _NavData[2].type = 'active';
+                }
+                else if(_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM){
+                    _NavData = navConfig.pickFront[7];
+                    //_NavData[2].type = 'active';
+                }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
                     _NavData = navConfig.utility[1];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
+                
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
@@ -377,6 +399,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
     },
+    getOrderDetails: function() {
+        if (_seatData.hasOwnProperty('order_details'))
+            return _seatData.order_details;
+    },
 
     getChecklistDetails: function() {
         if (_seatData.hasOwnProperty('checklist_details')) {
@@ -440,6 +466,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return _seatData.notification_list[0];
     },
+    getLocationButtonStatus:function(){
+        return _seatData.button_press_allowed;
+
+    },
     clearNotifications : function(){
         _clearNotification = true;
     },
@@ -448,6 +478,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         binData["structure"] = _seatData.structure;
         binData["ppsbin_list"] = _seatData.ppsbin_list;
         return binData;
+    },
+    getPickFrontButtonType:function(){
+        return _seatData.button_press_id || null;
+        
+    },
+    getPickFrontButtonStatus:function(){
+        return _seatData.button_press_allowed;
+    },
+    getPickFrontPackingCancelStatus:function(){
+        return _seatData.cancel_scan_allowed;
     },
 
     stageOneBin: function() {
@@ -984,7 +1024,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
-
+    hideSpinner:function(){
+        _showSpinner = false;
+    },
     setCurrentSeat: function(data) {
         //showModal = false;
         _action = undefined;
@@ -1861,6 +1903,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 break;
+            case appConstants.PICK_FRONT_LOCATION_CONFIRM:
             case appConstants.PICK_FRONT_LOCATION_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -1871,7 +1914,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
                 break;
+            
             case appConstants.PICK_FRONT_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -1881,11 +1926,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["isDrawer"] =  this.getDrawerFlag();
                 data["SlotType"] =  this.getSlotType();                  
                 data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["BinMapDetails"] =  this._getBinMapDetails();                               
                 break;
+                case appConstants.PICK_FRONT_PACKING_BOX:
+                data["PickFrontBoxOrderDetails"]= this.getOrderDetails();
+                data["PickFrontBinData"] = this.getBinData();
+                
+            case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN: 
+            data["PickFrontBoxOrderDetails"]= this.getOrderDetails();
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -1898,6 +1950,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 break;
+            case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
+            data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
+                data["PickFrontPackingCancelStatus"] =  this.getPickFrontPackingCancelStatus();
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -1917,7 +1973,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PickFrontBinFullStatus"] = this._getBinFullStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
                 break;
+            case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -2118,6 +2176,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload) {
     var action = payload.action;
     switch (action.actionType) {
+
         case appConstants.TOGGLE_BIN_SELECTION:
             mainstore.toggleBinSelection(action.bin_id);
             mainstore.emitChange();
@@ -2144,9 +2203,14 @@ AppDispatcher.register(function(payload) {
         case appConstants.POPUP_VISIBLE:
             setPopUpVisible(action.status);
             break;
+        case appConstants.HIDE_SPINNER:
+            mainstore.hideSpinner();
+            break;
         case appConstants.POST_DATA_TO_INTERFACE:
             mainstore.showSpinner();
             mainstore.postDataToInterface(action.data);
+            if(payload.action.data.event_name === appConstants.BOX_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST)
+                mainstore.hideSpinner();
             mainstore.emit(CHANGE_EVENT);
             break;
         case appConstants.RESET_NUMPAD:

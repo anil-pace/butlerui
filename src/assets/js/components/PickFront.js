@@ -56,9 +56,6 @@ var PickFront = React.createClass({
 	this.setState(getStateData());
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }else{
-     /* $('.modal').modal('hide');
-      $('.modal-backdrop').remove();*/
     }
   },
   getNotificationComponent:function(){
@@ -94,27 +91,16 @@ var PickFront = React.createClass({
     else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
       setTimeout((function (){
           $( ".modal" ).modal('hide');
-          //$('.modal-backdrop').remove();
-          //$('.modal').on('hidden.bs.modal', function (e) {
+          
             $('.modal').data('bs.modal').escape(); // reset keyboard
             $('.modal').data('bs.modal').options.backdrop = true;
             $('button.close', $('.modal')).show();
-          //});
+          
       }), 0)
       checkListOpen = false;
-     /* $('.modal').css('display', 'none');
-      $('.modal-backdrop').css('display', 'none');*/
-     /* $('.modal').on('hidden.bs.modal', function(e)
-        { 
-            $(this).removeData();
-        }) */
+   
     }
-    else {
-      /*$('.modal').on('hidden.bs.modal', function(e)
-        { 
-            $(this).removeData();
-        }) ;*/
-    }
+    
 
   },
   getExceptionComponent:function(){
@@ -455,10 +441,7 @@ var PickFront = React.createClass({
         case appConstants.PICK_FRONT_PACKING_BOX:
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-        /* var _button = (<div className = 'staging-action' >                          
-                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PICK_FRONT} status={true} action={appConstants.CANCEL_BOX_FULL} color={"black"} />
-                          <Button1 disabled = {false} text = {_("Box Full")} module ={appConstants.PICK_FRONT} status={true} action={appConstants.BOX_FULL} color={"black"} />
-                      </div>);*/
+        
           var binComponent ="";
           if (this.state.OrigBinUse){
 

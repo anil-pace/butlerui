@@ -38056,6 +38056,17 @@ var Bin = React.createClass({displayName: "Bin",
                 )
             );
         }
+         else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
+
+            return (
+                React.createElement("div", {className: "bin selected"}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                )
+            );
+        }
         else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete')) ){
 
             return (
@@ -40816,9 +40827,6 @@ var PickFront = React.createClass({displayName: "PickFront",
 	this.setState(getStateData());
    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
         this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }else{
-     /* $('.modal').modal('hide');
-      $('.modal-backdrop').remove();*/
     }
   },
   getNotificationComponent:function(){
@@ -40854,27 +40862,16 @@ var PickFront = React.createClass({displayName: "PickFront",
     else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
       setTimeout((function (){
           $( ".modal" ).modal('hide');
-          //$('.modal-backdrop').remove();
-          //$('.modal').on('hidden.bs.modal', function (e) {
+          
             $('.modal').data('bs.modal').escape(); // reset keyboard
             $('.modal').data('bs.modal').options.backdrop = true;
             $('button.close', $('.modal')).show();
-          //});
+          
       }), 0)
       checkListOpen = false;
-     /* $('.modal').css('display', 'none');
-      $('.modal-backdrop').css('display', 'none');*/
-     /* $('.modal').on('hidden.bs.modal', function(e)
-        { 
-            $(this).removeData();
-        }) */
+   
     }
-    else {
-      /*$('.modal').on('hidden.bs.modal', function(e)
-        { 
-            $(this).removeData();
-        }) ;*/
-    }
+    
 
   },
   getExceptionComponent:function(){
@@ -41215,10 +41212,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         case appConstants.PICK_FRONT_PACKING_BOX:
          if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        /* var _button = (<div className = 'staging-action' >                          
-                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PICK_FRONT} status={true} action={appConstants.CANCEL_BOX_FULL} color={"black"} />
-                          <Button1 disabled = {false} text = {_("Box Full")} module ={appConstants.PICK_FRONT} status={true} action={appConstants.BOX_FULL} color={"black"} />
-                      </div>);*/
+        
           var binComponent ="";
           if (this.state.OrigBinUse){
 
@@ -50167,153 +50161,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    
-    /*if(data.state_data && data.state_data.screen_id){
-        data.state_data.screen_id ="pick_front_packing_box";
-    }*/
-   /* if(data.state_data){
-    data.state_data = {
-        "seat_name": "front_10",
-        "screen_id": "pick_front_packing_box",
-        "screen_version": "1",
-        "notification_list": [{
-            "details": [],
-            "code": "Common.001",
-            "description": "Processing. Please wait and scan later",
-            "level": "error"
-        }],
-        "logout_allowed": "false",
-           "rack_details": {
-            "rack_type_rec": [
-                ["A", [
-                    [
-                        ["01", "02"], 33, 48
-                    ],
-                    [
-                        ["03", "04"], 33, 48
-                    ],
-                    [
-                        ["05", "06"], 33, 48
-                    ]
-                ]],
-                ["B", [
-                    [
-                        ["01", "02"], 33, 48
-                    ],
-                    [
-                        ["03", "04"], 33, 48
-                    ],
-                    [
-                        ["05", "06"], 33, 48
-                    ]
-                ]],
-                ["C", [
-                    [
-                        ["01", "02"], 33, 48
-                    ],
-                    [
-                        ["03", "04"], 33, 48
-                    ],
-                    [
-                        ["05", "06"], 33, 48
-                    ]
-                ]],
-                ["D", [
-                    [
-                        ["01", "02"], 33, 48
-                    ],
-                    [
-                        ["03", "04"], 33, 48
-                    ],
-                    [
-                        ["05", "06"], 33, 48
-                    ]
-                ]],
-                ["E", [
-                    [
-                        ["01", "02"], 33, 48
-                    ],
-                    [
-                        ["03", "04"], 33, 48
-                    ],
-                    [
-                        ["05", "06"], 33, 48
-                    ]
-                ]]
-            ],
-            "slot_barcodes": ["080.1.B.05", "080.1.B.06"]
-        },
-        "exception_allowed": [{
-            "exception_id": "Common000",
-            "exception_name": "Reset Scanner"
-        }],
-        "mode": "pick",
-        "is_idle": false,
-        "box_serials": ["A000000091", "A000000092","A000000093"],
-        "seat_type": "front",
-        "item_uid" : "123",
-        "order_details":{
-            "order_id": "o_091",
-            "rem_qty": 11,
-            "volume": 53
-      },
-        "product_info":[
-            [{
-                "display_data":
-                [
-                    {
-                    "display_name":"product_sku-display",
-                    "locale":"zn"
-                    },
-                    {"display_name":"product_sku-display-2",
-                    "locale":"en-US"
-                    }
-                ],
-                "product_sku":"266ed6a3c9e4413fbf55108af99832d0"
-            }],
-
-            [{
-                "display_data":
-                [
-                    {
-                    "display_name":"product_barcode_4",
-                     "locale":"zn"
-                    },
-                    {
-                    "display_name":"product_barcode",
-                    "locale":"en-US"
-                    }
-                ],
-                "product_barcode":"88888"
-             }],
-             
-            [{
-                "display_data":
-                [
-                    {
-                    "display_name":"product_local_image_url",
-                    "locale":"zn"
-                    },
-                    {
-                    "display_name":"product_local_image_url",
-                    "locale":"en-US"
-                    }
-                ],
-                "product_local_image_url":"https://192.168.3.17/product_images/d39fbbe8-dc80-40b4-94bb-64d1c17f4d10.png"
-            }]
-        ],
-        "time_stamp": "1450294487",
-        "header_msge_list": [{
-            "details": [2],
-            "code": "PkF.A.box",
-            "description": "Scan box from MSU slot",
-            "level": "info"
-        }],
-        "api_version": "1"
-    
-}
-}*/
-
     console.log(data); 
 
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {

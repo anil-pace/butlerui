@@ -52,6 +52,12 @@ var commonActions = {
       data:seat
     })
   },
+  hideSpinner:function(data){ 
+    AppDispatcher.handleAction({
+      actionType: appConstants.HIDE_SPINNER,
+      data:data
+    })
+  },
 
   showErrorMessage:function(seat){
     AppDispatcher.handleAction({

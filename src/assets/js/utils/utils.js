@@ -175,8 +175,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 'Authentication-Token' : authentication_token
             }
         }).done(function(response) {
-
+            CommonActions.hideSpinner();
         }).fail(function(jqXhr) { console.log(jqXhr);
+            CommonActions.hideSpinner();
             if(jqXhr.status == 401){
                 var msgCode = "CLIENTCODE_401";
                 CommonActions.showErrorMessage(serverMessages[msgCode]);

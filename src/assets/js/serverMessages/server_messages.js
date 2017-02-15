@@ -46,7 +46,7 @@ var serverMessages = {
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
     "PkF.H.004" : "Scan {0} Items",
-    "PkF.H.005" : "Scan Box",
+    "PkF.H.005" : "Scan box from MSU slot",
     "PkF.H.006" : "Scan {0} Items and Place in Bin {1}",
     "PkF.H.007" : "Press PPTL to confirm",
     "PkF.H.008" : "Waiting for Bins to be Cleared at Pick Back",
@@ -269,9 +269,16 @@ var serverMessages = {
     "PpB.E.006" : "Tote already associated with slot.Scan empty slot",
     "PpB.E.007" : "Unexpected entity scanned",
     "PpB.E.008" : "Wrong barcode scanned",
+    "PpB001" : "Enter excess item quantity"  ,
+    "PkF.E.014":"Packing box scan failed",
+    "PkF.I.008":"Packing box closed",
+    "PkF.I.009":"Packing box discarded",
+    "PkF.H.011":"Place box in MSU slot and confirm",
+    "PkF.H.010":"Scan a packing box and keep in bin {0}",
+    "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
-    "PpB001" : "Excess quantity" 
+    "PpB001" : "Excess quantity"
 };
 
 

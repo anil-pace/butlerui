@@ -28,7 +28,9 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         if (_PickFrontData.screen_id === AppConstants.PICK_FRONT_WAITING_FOR_MSU) {
             _NavData = navConfig.pickFront[0];
             _NavData[0].type = 'active';
-        } else {
+        }
+        
+        else {
             _NavData = navConfig.pickFront[1];
             _NavData.map(function(data, index) {
                 if(data.screen_id instanceof Array){

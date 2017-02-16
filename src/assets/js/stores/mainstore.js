@@ -2005,6 +2005,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
                 break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
+                data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();

@@ -41344,6 +41344,13 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                 ))
           }
+           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='';
+        if(btnId){
+          btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
+          action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;
+          actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
+          actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, action: action, color: "black"}))
+        }
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
@@ -41352,8 +41359,8 @@ var PickFront = React.createClass({displayName: "PickFront",
                 this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
 
-               cancelButton
-           
+               cancelButton, 
+                actionBtn
               )
             );
          }else{
@@ -49540,6 +49547,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
                 break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
+                data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();

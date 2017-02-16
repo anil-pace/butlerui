@@ -45281,7 +45281,7 @@ var navData = {
             "screen_id": "",
             "code": "Common.000",
             "image": svgConstants.scan,
-            "message": "Scan PPTL",
+            "message": "Press PPTL",
             "showImage": true,
             "level": 3,
             "type": 'passive'

@@ -45281,7 +45281,7 @@ var navData = {
             "screen_id": "",
             "code": "Common.000",
             "image": svgConstants.scan,
-            "message": "Scan PPTL",
+            "message": "Press PPTL",
             "showImage": true,
             "level": 3,
             "type": 'passive'
@@ -45600,8 +45600,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.136:8888/ws",
+	INTERFACE_IP : "http://192.168.3.136:5000"
 };
 module.exports = configConstants;
 

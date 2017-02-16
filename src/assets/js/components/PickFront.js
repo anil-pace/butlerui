@@ -573,6 +573,13 @@ var PickFront = React.createClass({
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>)
           }
+           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='';
+        if(btnId){
+          btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
+          action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;
+          actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
+          actionBtn = (<Button1 disabled = {actionBtnStatus} text = {btnName} module ={appConstants.PICK_FRONT} action={action} color={"black"}/>)
+        }
         this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -582,7 +589,7 @@ var PickFront = React.createClass({
                 {binComponent}
 
                {cancelButton}
-           
+                {actionBtn}
               </div>
             );
          }else{

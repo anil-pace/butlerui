@@ -1980,7 +1980,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 break;
             case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
-            data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
                 data["PickFrontPackingCancelStatus"] =  this.getPickFrontPackingCancelStatus();
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:

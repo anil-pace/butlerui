@@ -32,14 +32,6 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["put_back_stag","put_back_scan_tote"],
-            "code": "Common.000",
-            "image": svgConstants.stage,
-            "message": "Stage Bin or Scan Item",
-            "showImage": true,
-            "level": 1,
-            "type": 'passive'
-        },{
             "screen_id": ["put_back_stage","put_back_scan_tote"],
             "code": "Common.000",
             "image": svgConstants.stage,

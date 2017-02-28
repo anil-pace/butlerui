@@ -9,7 +9,7 @@ var TableRow = React.createClass({
     peripheralAction : function(action, inc){
         if(action == _('Update') || action == _('Add')){
             CommonActions.convertTextBox(action, inc)     
-        }else if(action == 'Finish'){
+        }else if(action == _('Finish')){
             var data = {
                 "peripheral_id": document.getElementById("peripheralId").value,
                 "peripheral_type" : "pptl",

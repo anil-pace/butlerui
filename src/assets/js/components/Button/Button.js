@@ -260,7 +260,13 @@ var Button1 = React.createClass({
                             data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
-                            break;                      
+                            break;  
+                             case appConstants.DISCARD_EMPTY_PACKING_BOX:
+                                data["event_name"] = appConstants.DISCARD_EMPTY_PACKING_BOX;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break;                     
                             default:
                                 return true;
                         }

@@ -152,6 +152,34 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
       break;
+         case appConstants.PICK_FRONT_ITEM_SCAN://PICK_FRONT_PACKING_DISCARD_BOX:
+          if(this.state.PickFrontExceptionStatus == false){
+         this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+         var _button = (<div className = 'staging-action' >                          
+                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PICK_FRONT} status={true} action={appConstants.CANCEL_BOX_FULL} color={"black"} />
+                          <Button1 disabled = {false} text = {_("Box Full")} module ={appConstants.PICK_FRONT} status={true} action={appConstants.BOX_FULL} color={"black"} />
+                      </div>);
+        this._component = (
+              
+              <div className='grid-container'>
+                 <div className='main-container'>
+                 <div className="contentWrap">
+                   <div className="discardWrap">
+                   <p className="discardIcon"></p>
+                    </div>  
+                    <p className="message">Don't keep the empty container back in MSU</p>                      
+                    <div className = 'discard-action' >  
+                    <Button1 disabled = {false} text = {_("Confirm")} module ={appConstants.PICK_FRONT} status={true} action={appConstants.DISCARD_EMPTY_PACKING_BOX} color={"orange"} />
+                    </div>      
+                  </div> 
+                 </div>
+                 
+              </div>
+            );
+         }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
        if(this.state.PickFrontExceptionStatus == false){
@@ -595,6 +623,8 @@ var PickFront = React.createClass({
          }else{
           this._component = this.getExceptionComponent();
         }
+
+ 
 
       default:
         return true;

@@ -239,6 +239,15 @@ var navData = {
             "showImage": true,
             "level": null,
             "type": 'passive'
+        }],
+        [{
+            "screen_id": ["pick_front_packing_discard_box"],
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Discard Empty Box and Confirm",
+            "showImage": true,
+            "level": null,
+            "type": 'passive'
         }]
 
     ],

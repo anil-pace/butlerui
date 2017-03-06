@@ -38594,7 +38594,13 @@ var Button1 = React.createClass({displayName: "Button1",
                             data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
-                            break;                      
+                            break;  
+                             case appConstants.DISCARD_EMPTY_PACKING_BOX:
+                                data["event_name"] = appConstants.DISCARD_EMPTY_PACKING_BOX;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break;                     
                             default:
                                 return true;
                         }
@@ -40923,6 +40929,34 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._component = this.getExceptionComponent();
         }
       break;
+         case appConstants.PICK_FRONT_ITEM_SCAN://PICK_FRONT_PACKING_DISCARD_BOX:
+          if(this.state.PickFrontExceptionStatus == false){
+         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+         var _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PICK_FRONT, status: true, action: appConstants.CANCEL_BOX_FULL, color: "black"}), 
+                          React.createElement(Button1, {disabled: false, text: _("Box Full"), module: appConstants.PICK_FRONT, status: true, action: appConstants.BOX_FULL, color: "black"})
+                      ));
+        this._component = (
+              
+              React.createElement("div", {className: "grid-container"}, 
+                 React.createElement("div", {className: "main-container"}, 
+                 React.createElement("div", {className: "contentWrap"}, 
+                   React.createElement("div", {className: "discardWrap"}, 
+                   React.createElement("p", {className: "discardIcon"})
+                    ), 
+                    React.createElement("p", {className: "message"}, "Don't keep the empty container back in MSU"), 
+                    React.createElement("div", {className: "discard-action"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), module: appConstants.PICK_FRONT, status: true, action: appConstants.DISCARD_EMPTY_PACKING_BOX, color: "orange"})
+                    )
+                  )
+                 )
+                 
+              )
+            );
+         }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
 
       case appConstants.PICK_FRONT_ITEM_SCAN:
        if(this.state.PickFrontExceptionStatus == false){
@@ -41366,6 +41400,8 @@ var PickFront = React.createClass({displayName: "PickFront",
          }else{
           this._component = this.getExceptionComponent();
         }
+
+ 
 
       default:
         return true;
@@ -45318,6 +45354,15 @@ var navData = {
             "showImage": true,
             "level": null,
             "type": 'passive'
+        }],
+        [{
+            "screen_id": ["pick_front_packing_discard_box"],
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Discard Empty Box and Confirm",
+            "showImage": true,
+            "level": null,
+            "type": 'passive'
         }]
 
     ],
@@ -45579,10 +45624,12 @@ var appConstants = {
 	PICK_FRONT_PACKING_ITEM_SCAN:"pick_front_packing_item_scan",
 	PICK_FRONT_PACKING_PPTL_PRESS:"pick_front_packing_pptl_press",
 	PACKING_BOX:"PACKING_BOX",
+	PICK_FRONT_PACKING_DISCARD_BOX:"pick_front_packing_discard_box",
 	BOX_FULL:"BOX_FULL",
 	BOX_FULL_REQUEST:"packing_box_full_request",
 	BOX_FULL_REQUEST_CONFIRMED:"packing_box_full_confirmed",
 	DISCARD_PACKING_BOX:"DISCARD_PACKING_BOX",
+	DISCARD_EMPTY_PACKING_BOX:"DISCARD_EMPTY_PACKING_BOX",
 	CANCEL_BOX_FULL:"CANCEL_BOX_FULL",
 	CANCEL_BOX_FULL_REQUEST:"packing_box_full_cancel",
 	CONFIRM_BOX_FULL:"packing_box_full_confirmed",
@@ -45599,8 +45646,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.207/wss",
+	INTERFACE_IP : "https://192.168.8.207"
 };
 module.exports = configConstants;
 

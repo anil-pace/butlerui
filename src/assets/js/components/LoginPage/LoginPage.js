@@ -7,6 +7,7 @@ var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
 var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
+var Accordion = require('../Accordion/Accordion');
 var utils = require('../../utils/utils.js');
 
 var virtualKeyBoard_login, _seat_name = null;
@@ -186,6 +187,26 @@ var LoginPage = React.createClass({
         } else{
             errorClass = 'ErrorMsg'
         }
+        /**
+         * Remove this
+         */
+        var options = {
+          data:[
+                              {
+                                "title":"Section 1",
+                                "content":"Our content for the section 1"
+                              },
+                              {
+                                "title":"Section 2",
+                                "content":"Our content for the section 2"
+                              },
+                              {
+                                "title":"Section 3",
+                                "content":"Our content for the section 3"
+                              }
+                            ],
+          openPanelIndex:-1
+        }
         return (
         <div>
           <div className="headerLoginPage">
@@ -197,6 +218,7 @@ var LoginPage = React.createClass({
                   </div>
           </div>
           <div className="bodyContent">
+          <Accordion options={options}/>
                 <div className="bodyLoginPage">
                     <div className="factoryImage">
                         <img src ={allSvgConstants.factoryImg} />

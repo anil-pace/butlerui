@@ -1,0 +1,1062 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the butler_interface_kerry package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: butler_interface_kerry 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-28 17:32+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+   msgid "Scan item / Stage pps bin"
+   msgstr "Artikel scannen/Öffnen des PPS Behälter"
+ 
+   msgid "Scan Tote to associate with Bin"
+   msgstr "Tasche scannen, um mit dem Behälter zu verknüpfen."
+ 
+   msgid "Press PpsBin Button Or Scan a Tote"
+   msgstr "Drücken Sie PPS Behälter-Taste oder scannen Sie eine Tasche."
+ 
+   msgid "user Name"
+   msgstr "Benutzername"
+ 
+   msgid "Password"
+   msgstr "Passwort"
+ 
+   msgid "User Name"
+   msgstr "Benutzername"
+ 
+   msgid "Are you sure you want to close Tote"
+   msgstr "Sind Sie sicher, dass Sie diese Tasche schließen möchten?"
+ 
+   msgid "Details"
+   msgstr "Details"
+ 
+   msgid "Scan {0} items"
+   msgstr "{0} Artikel gescannt"
+ 
+   msgid "Scan box barcode"
+   msgstr "Strichcode scannen"
+ 
+   msgid "Press PpsBin {0} to remove items"
+   msgstr "PPS Behälter drücken, um {0} Artikel zu entfernen"
+ 
+   msgid "Tote is already scanned.Expecting pptl scan."
+   msgstr "Tasche ist bereits gescannt. Erwarte PPTL Scan."
+ 
+   msgid "Totes are not required.Please don't scan tote barcode"
+   msgstr "Taschen sind nicht erforderlich.Nicht den Strichcode der Tasche scannen"
+ 
+   msgid "Wrong PPS bin scanned"
+   msgstr "Falscher PPS-Behälter gescannt"
+ 
+   msgid "Please scan the tote first and then scan pptl barcode"
+   msgstr "Scannen Sie bitte zuerst die Tasche und danach den PPTL-Strichcode"
+ 
+   msgid "Tote scanned.Expecting pptl scan."
+   msgstr "Tasche ist gescannt. Erwarte PPTL Scan."
+ 
+   msgid "Pptl scan not allowed. Totes are not required"
+   msgstr "PPTL scannen ist nicht erlaubt. Tasche ist nicht erforderlich"
+ 
+   msgid "Tote didn't get associated"
+   msgstr "Tasche wurde nicht verknüpft."
+ 
+   msgid "After scannning tote barcode, please scan pptl barcode"
+   msgstr "Nach dem Scannen des Strichcodes der Tasche, bitte PPTL Strichcode scannen"
+ 
+   msgid "Wrong Ppsbin button pressed.Please press those buttons having color blue"
+   msgstr "Falscher PPS-Behälter-Taste gedrückt. Drücken Sie bitte diese Tasten mit der Farbe blau"
+ 
+   msgid "Please complete pickback for pending bin and then proceed"
+   msgstr "Bitte füllen Sie den Abholvorgang für ausstehenden Behälter aus und fahren Sie dann fort"
+ 
+   msgid "No totes associated. Pease keep totes in the Bin and then scan"
+   msgstr "Keine Taschen verknüpft. Bitte halten Sie die Tasche im Behälter und scannen Sie dann ein."
+ 
+   msgid "Documents printed Successfully"
+   msgstr "Dokumente wurden erfolgreich gedruck."
+ 
+   msgid "No tote scanned"
+   msgstr "Keine Tasche gescannt."
+ 
+   msgid "Tote cancelled"
+   msgstr "Tasche ist storniert."
+ 
+   msgid "Tote already associated with ppsbin"
+   msgstr "Tasche ist bereits mit PPS-Behälter verknüpft."
+ 
+   msgid "Incorrect tote barcode scanned. Please try again"
+   msgstr "Falscher Taschen-Strichcode gescannt. Bitte versuchen Sie es erneut."
+ 
+   msgid "Please press PPTL button which does not have any totes associated"
+   msgstr "Drücken Sie bitte die PPTL-Taste, die keine verknüpften Taschen enthält."
+ 
+   msgid "Tote assigned successfully to ppsbin {0}"
+   msgstr "Tasche wurde erfolgreich dem PPS-Behälter {0} zugewiesen."
+ 
+   msgid "Bin {0} items removed successfully"
+   msgstr "{0}-Artikel im Behälter wurden erfolgreich entfernt."
+ 
+   msgid "Totes are not required"
+   msgstr "Taschen sind nicht erforderlich. Bitte fortfahren."
+ 
+   msgid "Wrong Barcode scanned"
+   msgstr "Falscher Strichcode gescannt."
+ 
+   msgid "Tote could not be reserved as already reserved"
+   msgstr "Tasche konnte nicht reserviert werden, da sie bereits reserviert ist."
+ 
+   msgid "Exception invalid as totes are not required with this PPS"
+   msgstr "Ausnahme ist ungültig, da Taschen mit diesem PPS nicht erforderlich sind."
+ 
+   msgid "Override tote not possible"
+   msgstr "Überschreiben der Tasche ist nicht möglich."
+ 
+   msgid "Scanning pptl barcode not allowed"
+   msgstr "Scannen des PPTL Strichcodes ist nicht erlaubt."
+ 
+   msgid "Please press those buttons having color blink_blue"
+   msgstr "Drücken Sie bitte diese Tasten mit der blinkenden_blauen Farbe."
+ 
+   msgid "Unhandled event ocurred"
+   msgstr "Unbearbeitetes Ereignis."
+ 
+   msgid "Barcode didn't match with current tote barcode"
+   msgstr "Strichcode stimmt nicht mit dem aktuellen Taschen-Strichcode überein."
+ 
+   msgid "Testing configuration {0} and {1}"
+   msgstr "Prüfung der Konfiguration {0} und {1}."
+ 
+   msgid "Processing. Please wait and scan later"
+   msgstr "In Bearbeitung. Bitte warten und später scannen."
+ 
+   msgid "Waiting for rack"
+   msgstr "Auf das Regal warten."
+ 
+   msgid "Current PPS mode does not support back seat. Please logout."
+   msgstr "Der aktuelle PPS-Modus unterstützt keinen Rücksitz. Bitte abmelden."
+ 
+   msgid "Scan items and place in bin {0}"
+   msgstr "Artikel scannen und in den Behälter legen {0}"
+ 
+   msgid "Stage Bin or Scan Entity"
+   msgstr "Behälter öffnen oder die Einheit scannen"
+ 
+   msgid "Place Entity in Bin and Press PPTL"
+   msgstr "Einheit in den Behälter legen und auf PPTL drücken."
+ 
+   msgid "Are You Sure You Want to Close Tote?"
+   msgstr "Sind Sie sicher, dass Sie diese Tasche schließen möchten?"
+ 
+   msgid "Scan Tote or Stage PPS Bin"
+   msgstr "Artikel scannen/Öffnen des PPS Behälters."
+ 
+   msgid "Item Not Expected in Tote"
+   msgstr "Artikel wird nicht in der Tasche erwartet."
+ 
+   msgid "Tote already opened. Scan some other tote"
+   msgstr "Tasche ist bereits geöffnet. Scannen Sie eine andere Tasche."
+ 
+   msgid "Tote already closed. Scan some other tote"
+   msgstr "Tasche ist bereits geschlossen. Scannen Sie eine andere Tasche."
+ 
+   msgid "No matching tote found"
+   msgstr "Keine passende Tasche gefunden."
+ 
+   msgid "Wrong entity scanned. Please scan tote"
+   msgstr "Falsche Einheit gescannt. Bitte die Tasche scannen."
+ 
+   msgid "No entities added yet. Scan entities and then press PPTL"
+   msgstr "Noch keine Einheiten hinzugefügt. Einheiten scannen und dann PPTL drücken."
+ 
+   msgid "Wrong entity scanned. Please scan Container/Item."
+   msgstr "Falsche Einheit gescannt. Bitte den Container/Artikel scannen."
+ 
+   msgid "Cannot cancel scan. No scanned box found"
+   msgstr "Kann den Scan nicht abbrechen. Keine gescannte Box gefunden."
+ 
+   msgid "Entity scan not expected. Waiting for PPTL press"
+   msgstr "Scan der Einheit wird nicht erwartet. Warte, dass PPTL gedrückt wird."
+ 
+   msgid "Bin selected for put. Cannot be staged"
+   msgstr "Behälter zum Ablegen gewählt. Kann nicht bereitgestellt werden."
+ 
+   msgid "SKU not present in database. Put into IRT bin."
+   msgstr "Artikelnummer ist nicht in der Datenbank. In den IRT Behälter legen."
+ 
+   msgid "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL"
+   msgstr "Die Einheiten können nicht untergebracht werden! Entfernen Sie alle Einheiten aus dem Behälter {0} und drücken PPTL."
+ 
+   msgid "No free bins. Please scan later"
+   msgstr "Keine leeren Behälter. Bitte später scannen."
+ 
+   msgid "Wrong PPTL pressed. Please try another"
+   msgstr "Falsche PPTL gedrückt. Bitte versuchen Sie es erneut."
+ 
+   msgid "Please put entities in exception area and confirm"
+   msgstr "Legen Sie bitte die Einheiten in den Ausnahmebereich und bestätigen."
+ 
+   msgid "Wrong bin chosen.Try selecting another bin"
+   msgstr "Falscher Behälter gewählt. Wählen Sie einen anderen Behälter aus."
+ 
+   msgid "Please scan same SKU to complete this exception"
+   msgstr "Bitte scannen Sie die gleiche Artikelnummer, um diese Ausnahme zu vervollständigen."
+ 
+   msgid "Entity scan not expected."
+   msgstr "Scan der Einheit wird nicht erwartet."
+ 
+   msgid "Tote not present in database."
+   msgstr "Tasche ist nicht in der Datenbank."
+ 
+   msgid "Tote has been opened.Scan all items in tote and then scan tote again to close it"
+   msgstr "Tasche wurde geöffnet. Scannen Sie alle Artikel in der Tasche und dann die Tasche noch einmal scannen, um sie zu schließen."
+ 
+   msgid "PPS is in paused mode. Cannot process new entity. Try after some time"
+   msgstr "PPS ist im Pausenmodus. Kann keine neue Einheit verarbeiten. Versuchen Sie es nach einiger Zeit noch einmal."
+ 
+   msgid "Cancel scan successful."
+   msgstr "Scan erfolgreich abgebrochen."
+ 
+   msgid "Tote close successful."
+   msgstr "Tasche erfolgreich geschlossen."
+ 
+   msgid "Tote not closed."
+   msgstr "Tasche ist nicht geschlossen."
+ 
+   msgid "Entity scan successful."
+   msgstr "Einheit erfolgreich gescannt."
+ 
+   msgid "PPTL press successful"
+   msgstr "PPTL erfolgreich gedrückt."
+ 
+   msgid "Data capture valid"
+   msgstr "Datenerfassung gültig."
+ 
+   msgid "Excess item in tote recorded. Now press PPTL"
+   msgstr "Überschüssiger Artikel in der Tasche ist notiert. Jetzt PPTL drücken."
+ 
+   msgid "Invalid item in tote recorded."
+   msgstr "Ungültiger Artikel in der Tasche wurden aufgezeichnet."
+ 
+   msgid "{0} unscannable entities recorded. WMS notified"
+   msgstr "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt."
+ 
+   msgid "{0} extra entities recorded in bin. WMS notified"
+   msgstr "{0} extra Einheiten wurden im Behälter aufgezeichnet. WMS benachrichtigt."
+ 
+   msgid "{0} oversized entities recorded.WMS notified"
+   msgstr "{0} übergroße Einheiten wurden aufgezeichnet. WMS benachrichtigt."
+ 
+   msgid "Exception cancelled"
+   msgstr "Ausnahme storniert."
+ 
+   msgid "Box with same serial number already exists in the warehouse"
+   msgstr "Im Lager ist bereits eine Box mit derselben Seriennummer vorhanden."
+ 
+   msgid "Entity already scanned.Waiting for PPTL press"
+   msgstr "Einheit ist bereits gescannt. Warten auf PPTL drücken.drücken"
+ 
+   msgid "No bins available to stage"
+   msgstr "Es stehen keine Behälter zum Inszenieren zu Verfügung."
+ 
+   msgid "Bin already staged. Ignoring event"
+   msgstr "Behälter."
+ 
+   msgid "Bin empty. Cannot be staged"
+   msgstr "Behälter ist leer. Kann nicht inszeniert werdenBehälter ist leer. Kann nicht inszeniert werden."
+ 
+   msgid "Scan Box/Items from Slot"
+   msgstr "Schachtel scannen/Artikel vom Einschub."
+ 
+   msgid "Scan Remaining Item In Box"
+   msgstr "Restposten in der Schachtel scannen."
+ 
+   msgid "Last Box Scan Completed! Scan Remaining Box/Items"
+   msgstr "Letzter Scan der Schachtel ist abgeschlossen! Verbleibende Schachteln/Artikel scannen"
+ 
+   msgid "Status To Reconcile"
+   msgstr "Status zum Abgleich."
+ 
+   msgid "This box belongs to some other SKU in the slot.Put it back.Scan next box."
+   msgstr "Diese Schachtel gehört zu einer anderen Artikelnummer im Einschub. Legen Sie es zurück. Nächste Schachtel scannen."
+ 
+   msgid "This box does not belong to this slot. Remove the box and put in exception area."
+   msgstr "Diese Schachtel gehört nicht in diesen Einschub. Entfernen Sie diese Schachtel und legen sie in den Ausnahmebereich."
+ 
+   msgid "Waiting for MSU"
+   msgstr "Warten auf MSU"
+ 
+   msgid "Wrong Barcode"
+   msgstr "Falscher Strichcode gescannt"
+ 
+   msgid "Box Scan successful"
+   msgstr "Schachtel Scan erfolgreich."
+ 
+   msgid "Item Scan successful"
+   msgstr "Artikel Scan erfolgreich."
+ 
+   msgid "Item scan successful"
+   msgstr "Artikel erfolgreich gescannt."
+ 
+   msgid "Data capture failed at item {0}"
+   msgstr "Datenerfassung an Artikel {0} fehlgeschlagen."
+ 
+   msgid "Bin {0} selected"
+   msgstr "Behälter {0} ausgewählt."
+ 
+   msgid "Bin {0} unselected"
+   msgstr "Behälter {0} nicht ausgewählt."
+ 
+   msgid "Connection is closed. Connecting..."
+   msgstr "Verbindung ist geschlossen. Verbinden …"
+ 
+   msgid "Extra item found please put back item in Exception bin"
+   msgstr "Ein extra Artikel wurde gefunden, bitte legen Sie den Artikel in den Ausnahmebereich zurück."
+ 
+   msgid "Enter Unscannable Entity Quantity"
+   msgstr "Geben Sie die nicht scanbare Menge der Einheit ein."
+ 
+   msgid "Scan Oversized Entity Quantity"
+   msgstr "Überdimensionierte Menge der Einheit scannen."
+ 
+   msgid "Please Select The Bin With Excess Entity"
+   msgstr "Wählen Sie bitte den Behälter mit der überzähligen Einheit."
+ 
+   msgid "Enter Quantity of Excess Entities"
+   msgstr "Die Menge der überzähligen Einheiten eingeben."
+ 
+   msgid "Place Entity in Slot and Scan More"
+   msgstr "Die Einheit in den Einschub geben und weiter scannen."
+ 
+   msgid "Scan Slot to Confirm"
+   msgstr "Einschub zur Bestätigung scannen."
+ 
+   msgid "Wait for MSU"
+   msgstr "Warten auf MSU."
+ 
+   msgid "Scan Entity From Bin {0}"
+   msgstr "Scannen der Einheit aus Behälter {0}."
+ 
+   msgid "Enter Good Quantity to be Put into Slot"
+   msgstr "Geben Sie die Stückzahl ein, die in den Einschub gelegt wird."
+ 
+   msgid "Put Back Entities in the PPS Bin"
+   msgstr "Legen Sie Einheiten in den PPS Behälter zurück."
+ 
+   msgid "Confirm MSU Release"
+   msgstr "MSU Freigabe bestätigen."
+ 
+   msgid "Scan Slot"
+   msgstr "Einschub scannen."
+ 
+   msgid "Scan {0} Items"
+   msgstr "{0} Artikel scannen."
+ 
+   msgid "Cancel audit successful.Audit Restarted"
+   msgstr "Audit erfolgreich abgebrochen. Audit neu gestartet."
+ 
+   msgid "Scan Box"
+   msgstr "Schachtel scannen."
+ 
+   msgid "Scan {0} Items and Place in Bin {1}"
+   msgstr "{0} Artikel scannen und in den Behälter legen {1}."
+ 
+   msgid "Press PPTL to confirm"
+   msgstr "PPTL drücken, um zu bestätigen."
+ 
+   msgid "Scan Tote to Associate with Bin"
+   msgstr "Tasche scannen, um mit dem Behälter zu assoziieren."
+ 
+   msgid "Press PPTL or Scan a Tote"
+   msgstr "Drücken Sie PPTL oder scannen Sie eine Tasche."
+ 
+   msgid "Press PPTL to Remove Entities"
+   msgstr "Drücken Sie PPTL, um Einheiten zu entfernen."
+ 
+   msgid "Press bin PPTL"
+   msgstr "Drücken Sie Behälter PPTL."
+ 
+   msgid "Press PPTL for bin {0} to confirm"
+   msgstr "Drücken Sie PPTL für den Behälter {0} zur Bestätigung."
+ 
+   msgid "Press print button to proceed"
+   msgstr "Drücken Sie der Druckertaste, um fortzufahren."
+ 
+   msgid "Select Bin to skip print"
+   msgstr "Wählen Sie einen Behälter, um den Druck zu überspringen."
+ 
+   msgid "Select Bin which does not require tote"
+   msgstr "Wählen Sie einen Behälter, der keine Tasche benötigt."
+ 
+   msgid "Select Bin to disassociate tote"
+   msgstr "Wählen Sie Bin, um die Tasche zu trennen."
+ 
+   msgid "Pick complete. Waiting for next rack."
+   msgstr "Auwahl beenden. Auf das nächste Regal warten."
+ 
+   msgid "Location scan successful"
+   msgstr "Standort-Scan erfolgreich."
+ 
+   msgid "Box scan successful"
+   msgstr "Schachtel Scan erfolgreich."
+ 
+   msgid "Cancel scan successful"
+   msgstr "Scan erfolgreich abgebrochen."
+ 
+   msgid "Expecting MSU release confirmation from GUI, got invalid event."
+   msgstr "Bestätigung der MSU Freigabe von GUI erwartet, ungültiges Ereignis angezeigt."
+ 
+   msgid "Data capture failed at item"
+   msgstr "Datenerfassung an Artikel fehlgeschlagen."
+ 
+   msgid "Wrong slot location scanned. Please try again"
+   msgstr "Falscher Einschubstandort gescannt. Bitte versuchen Sie es erneut."
+ 
+   msgid "Wrong box scanned. Please try again"
+   msgstr "Falsche Schachtel gescannt. Bitte versuchen Sie es erneut."
+ 
+   msgid "Scan a box first"
+   msgstr "Zuerst nur eine Schachtel scannen."
+ 
+   msgid "Wrong PPTL pressed. Please press correct PPTL"
+   msgstr "Falsche PPTL gedrückt. Drücken Sie bitte die korrekte PPTL."
+ 
+   msgid "Picked quantity more than expected. Put extra items back in MSU"
+   msgstr "Ausgewählte Menge ist größer als erwartet. Legen Sie die zusätzlichen Artikel wieder in MSU."
+ 
+   msgid "Wrong item quantity update"
+   msgstr "Falsche Artikelmengenaktualisierung."
+ 
+   msgid "Wrong item scanned. Please scan correct item"
+   msgstr "Falsche Artikel gescannt. Bitte den korrekten Artikel scannen."
+ 
+   msgid "Waiting for MSU. Please wait and scan later"
+   msgstr "Warten auf MSU. Bitte warten und später scannen."
+ 
+   msgid "System Error. Scanned entity details not available at this time"
+   msgstr "Systemfehler. Gescannte Einheitendetails sind zur Zeit nicht verfügbar."
+ 
+   msgid "No PPS bins empty. Please empty them from Pickback"
+   msgstr "Keine PPS Behälter sind leer. Leeren Sie bitte die Retouren."
+ 
+   msgid "PPS mode change requested:scan not allowed"
+   msgstr "PPS-Modusänderung angefordert: Scan ist nicht erlaubt."
+ 
+   msgid "PPS mode change requested:auto staging all bins"
+   msgstr "PPS-Modusänderung angefordert: automatische Inszenierung aller Behälter."
+ 
+   msgid "Barcode didn't match the current tote barcode"
+   msgstr "Strichcode stimmt nicht mit dem aktuellen Taschen-Strichcode überein."
+ 
+   msgid "System not configured for totes"
+   msgstr "System ist nicht für Taschen konfiguriert."
+ 
+   msgid "Invalid Exception for this configuration"
+   msgstr "Ungültige Ausnahme für diese Konfiguration."
+ 
+   msgid "No tote associated. Please keep a tote in bin and scan"
+   msgstr "Keine Tasche assoziiert. Behalten Sie bitte eine Tasche im Behälter und scannen."
+ 
+   msgid "Wrong PPTL pressed"
+   msgstr "Falsche PPTL gedrückt. Bitte versuchen Sie es erneut."
+ 
+   msgid "Totes are anyway not required.Please proceed further"
+   msgstr "Taschen sind nicht erforderlich. Bitte fortfahren."
+ 
+   msgid "Tote scan cancelled"
+   msgstr "Taschenscan ist storniert."
+ 
+   msgid "Documents printed successfully"
+   msgstr "Dokumente wurden erfolgreich gedruckt."
+ 
+   msgid "Order removed successfully from bin {0}"
+   msgstr "Auftrag wurde erfolgreich aus dem Behälter entfernt {0}."
+ 
+   msgid "Tote assigned successfully to bin"
+   msgstr "Tasche wurde erfolgreich dem Behälter zugewiesen."
+ 
+   msgid "Tote association failed. Repeat scan operation"
+   msgstr "Zuordnung der Tasche ist fehlgeschlagen Wiederholen Sie den Scanvorgang."
+ 
+   msgid "Tote associated with another bin"
+   msgstr "Tasche wurde einem anderen Behälter zugewiesen."
+ 
+   msgid "Please scan PPTL barcode"
+   msgstr "Bitte den PPTL Strichcode scannen."
+ 
+   msgid "Tote disassociated from Bin"
+   msgstr "Tasche ist vom Behälter getrennt."
+ 
+   msgid "Please complete process for pending bin and then proceed"
+   msgstr "Vervollständigen Sie bitte den Vorgang für ausstehende Behälter und fahren dann fort."
+ 
+   msgid "Tote already reserved"
+   msgstr "Tasche ist bereits reserviertTasche ist bereits reserviert."
+ 
+   msgid "Wrong barcode scanned"
+   msgstr "Falscher Strichcode gescannt."
+ 
+   msgid "Please scan the tote first and then scan PPTL barcode"
+   msgstr "Scannen Sie bitte zuerst die Tasche und dann den PPTL-Strichcode."
+ 
+   msgid "Override Tote Exception' cannot be raised for bins with totes associated"
+   msgstr "Taschenausnahme überschreiben kann nicht für Behälter, die mit Taschen verbunden sind, durchgeführt werden."
+ 
+   msgid "PPTL scan not allowed. System not configured for tote"
+   msgstr "PPTL scannen ist nicht erlaubt. System ist nicht für Taschen konfiguriert."
+ 
+   msgid "PPTL scan not allowed"
+   msgstr "PPTL scannen ist nicht erlaubt."
+ 
+   msgid "Tote scan expected"
+   msgstr "Taschenscan wird erwartet"
+ 
+   msgid "Entity scanned is not from bin {0}. Replace and scan from bin {1}"
+   msgstr "Die gescannte Einheit ist nicht von Behälter {0}. Ersetzen und von Behälter {1} scannen."
+ 
+   msgid "Wrong entity scanned"
+   msgstr "Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}Falsche Einheit gescannt. Erwarte Scan von Behälter {0}"
+ 
+   msgid "Waiting for MSU scan. Please scan entity later."
+   msgstr "Warten auf MSU Scan. Die Einheit bitte später scannen."
+ 
+   msgid "Expected quantity exceeded."
+   msgstr "Die erwartete Menge ist überschritten."
+ 
+   msgid "Wrong scan! Entity scan expected but slot barcode scanned."
+   msgstr "Falscher Scan! Scan der Einheit erwartet, aber der Strichcode des Einschubs ist gescannt."
+ 
+   msgid "Actual put quantity not equal to the sum of Good and Expection quantity."
+   msgstr "Tatsächliche Menge entspricht nicht der Summe der Gut- und Prüfmenge."
+ 
+   msgid "Actual put quantity less than than revised quantity."
+   msgstr "Tatsächliche Menge ist weniger als die überarbeitete Menge."
+ 
+   msgid "Wrong slot scanned"
+   msgstr "Falscher Einschub gescannt."
+ 
+   msgid "Entity scan successful"
+   msgstr "Einheit erfolgreich scannen."
+ 
+   msgid "Slot scan successful"
+   msgstr "Einschub erfolgreich scannen."
+ 
+   msgid "Damaged and missing entity recorded."
+   msgstr "Beschädigte und fehlende Einheit aufgezeichnet."
+ 
+   msgid "Space unavailable recorded."
+   msgstr "Nicht verfügbarer Platz aufgezeichnet."
+ 
+   msgid "Please put entity in exception area and confirm"
+   msgstr "Legen Sie bitte die Einheit in den Ausnahmebereich und bestätigen Sie diese."
+ 
+   msgid "Entity not expected in tote. Please put entity in exception area and confirm"
+   msgstr "Einheit nicht in der Tasche erwartet. Legen Sie bitte die Einheit in den Ausnahmebereich und bestätigen Sie diese."
+ 
+   msgid "{0} excess entities found in tote. Please put entities in exception area and confirm"
+   msgstr "{0} überzählige Einheiten in der Tasche gefunden. Legen Sie bitte die Einheiten in den Ausnahmebereich und bestätigen Sie diese."
+ 
+   msgid "Cancelled excess entity in tote"
+   msgstr "Überzählige Einheiten in der Tasche storniert."
+ 
+   msgid "Cancelled invalid entity in tote"
+   msgstr "Ungültige Einheit in der Tasche storniert."
+ 
+   msgid "Invalid entity in tote recorded"
+   msgstr "Ungültige Einheit in der Tasche wurde aufgezeichnet."
+ 
+   msgid "Wrong enitity scanned. Expecting scan from bin {0}"
+   msgstr "Falsche Einheit gescannt. Erwarte Scan von Behälter {0}."
+ 
+   msgid "PPTL Management"
+   msgstr "PPTL-Verwaltung."
+ 
+   msgid "Scanner Management"
+   msgstr "Scannerverwaltung."
+ 
+   msgid "Entity Oversized"
+   msgstr "Überdimensionierte Einheit."
+ 
+   msgid "Entity Unscannable"
+   msgstr "Einheit nicht scanbar."
+ 
+   msgid "Extra Entities in Bin"
+   msgstr "Extra Einheiten im Behälter."
+ 
+   msgid "Entity Missing / Unscannable"
+   msgstr "Fehlende Einheiten/nicht scanbar."
+ 
+   msgid "Space Not Available"
+   msgstr "Platz ist nicht verfügbar."
+ 
+   msgid "Mising Box"
+   msgstr "Fehlende Schachtel."
+ 
+   msgid "Disassociate Tote"
+   msgstr "Tasche trennen."
+ 
+   msgid "Overide Tote Required"
+   msgstr "Tasche überschreiben ist erforderlich."
+ 
+   msgid "Reprint"
+   msgstr "Nachdrucken."
+ 
+   msgid "Skip Print"
+   msgstr "Drucken überspringen."
+ 
+   msgid "Peripheral added successfully"
+   msgstr "Peripherie erfolgreich hinzugefügt."
+ 
+   msgid "Peripheral not added"
+   msgstr "Peripherie nicht hinzugefügt."
+ 
+   msgid "Scan Box or Items"
+   msgstr "Schachtel oder Artikel scannen."
+ 
+   msgid "Check Count"
+   msgstr "Anzahl prüfen."
+ 
+   msgid "You cannot enter value more than 9999"
+   msgstr "Sie können keinen Wert höher als 9999 eingeben."
+ 
+   msgid "You cannot enter 0"
+   msgstr "Sie können keine 0 eingeben."
+ 
+   msgid "Place extra entity in Exception area."
+   msgstr "Legen Sie die extra Einheit in dem Ausnahmebereich ab."
+ 
+   msgid "Sum of missing, good and damaged should be equal to {0}"
+   msgstr "Summe der Fehlenden, Guten und Beschädigten sollte gleich {0} ."
+ 
+   msgid "Quantity should be less than or equal to {0}"
+   msgstr "Die Menge sollte kleiner oder gleich {0} sein."
+ 
+   msgid "You are not allowed to keyed in the quantity from the numpad. Force Scan is required."
+   msgstr "Sie dürfen die Menge nicht über den Nummernblock eingeben. Ein forcierter Scan ist erforderlich."
+ 
+   msgid "Waiting for Bins to be Cleared at Pick Back"
+   msgstr "Warten auf Behälter, die bei der Retoure gelöscht werden."
+ 
+   msgid "Peripheral deleted successfully"
+   msgstr "Peripherie erfolgreich gelöscht."
+ 
+   msgid "Peripheral not deleted successfully"
+   msgstr "Peripherie nicht erfolgreich gelöscht."
+ 
+   msgid "Cancel Exception"
+   msgstr "Ausnahme stornieren."
+ 
+   msgid "Cancel Scan"
+   msgstr "Scan stornieren."
+ 
+   msgid "Finish"
+   msgstr "Fertig."
+ 
+   msgid "Back"
+   msgstr "Zurück."
+ 
+   msgid "OK"
+   msgstr "OK."
+ 
+   msgid "FINISH"
+   msgstr "FERTIG."
+ 
+   msgid "Print"
+   msgstr "Drucken."
+ 
+   msgid "Skip Printing"
+   msgstr "Drucken überspringen."
+ 
+   msgid "Dis-associate Tote"
+   msgstr "Tasche trennen."
+ 
+   msgid "Override"
+   msgstr "Überschreiben."
+ 
+   msgid "Add Scanner"
+   msgstr "Scanner hinzufügen."
+ 
+   msgid "Edit Details"
+   msgstr "Details bearbeiten."
+ 
+   msgid "NEXT"
+   msgstr "WEITER."
+ 
+   msgid "CONFIRM"
+   msgstr "BESTÄTIGEN."
+ 
+   msgid "Stage"
+   msgstr "Inszenieren."
+ 
+   msgid "Stage All"
+   msgstr "Alle inszenieren."
+ 
+   msgid "BACK"
+   msgstr "ZURÜCK."
+ 
+   msgid "CLOSE"
+   msgstr "SCHLIESSEN."
+ 
+   msgid "Cancel"
+   msgstr "Abbrechen."
+ 
+   msgid "Confirm"
+   msgstr "Bestätigen."
+ 
+   msgid "TOTE"
+   msgstr "TASCHE."
+ 
+   msgid "Clear All"
+   msgstr "Alles löschen."
+ 
+   msgid "Submit"
+   msgstr "Einreichen."
+ 
+   msgid "Exceptions"
+   msgstr "Ausnahmen."
+ 
+   msgid "Bin"
+   msgstr "Behälter."
+ 
+   msgid "Selected"
+   msgstr "Ausgewählt."
+ 
+   msgid "Unselected"
+   msgstr "Nicht ausgewählt."
+ 
+   msgid "System is Idle"
+   msgstr "Das System ist im Leerlauf."
+ 
+   msgid "CURRENT SLOT"
+   msgstr "AKTUELLER EINSCHUB."
+ 
+   msgid "Box Serial Numbers"
+   msgstr "Seriennummer der Schachtel."
+ 
+   msgid "No Items To Reconcile"
+   msgstr "Keine Artikel zum Abgleichen."
+ 
+   msgid "List Of Items To Reconcile"
+   msgstr "Liste der Artikel zum Abgleichen."
+ 
+   msgid "View More"
+   msgstr "Mehr anzeigen."
+ 
+   msgid "Product Information"
+   msgstr "Produktinformation."
+ 
+   msgid "Bin Info"
+   msgstr "Behälterinformation."
+ 
+   msgid "Associate tote with bin"
+   msgstr "Tasche mit Behälter verbinden."
+ 
+   msgid "Extra Entity Found"
+   msgstr "Extra Einheit gefunden."
+ 
+   msgid "Perform Action"
+   msgstr "Aktion ausführen."
+ 
+   msgid "Input Extra Details"
+   msgstr "Zusätzliche Details eingeben."
+ 
+   msgid "Expected"
+   msgstr "Erwartet."
+ 
+   msgid "Actual"
+   msgstr "Aktuell."
+ 
+   msgid "Bin ID"
+   msgstr "Behälter ID."
+ 
+   msgid "Barcode"
+   msgstr "Strichcode."
+ 
+   msgid "Peripheral ID"
+   msgstr "Peripherie ID."
+ 
+   msgid "Actions"
+   msgstr "Aktionen."
+ 
+   msgid "Scanner ID"
+   msgstr "Scanner ID."
+ 
+   msgid "Delete"
+   msgstr "Löschen."
+ 
+   msgid "Product SKU"
+   msgstr "Löschen."
+ 
+   msgid "Expected Quantity"
+   msgstr "Erwartete Menge."
+ 
+   msgid "Actual Quantity"
+   msgstr "Tatsächliche Menge."
+ 
+   msgid "Missing"
+   msgstr "Fehlend."
+ 
+   msgid "Extra"
+   msgstr "Zusätzlich/Extra."
+ 
+   msgid "Barcode Damage"
+   msgstr "Beschädigter Strichcode."
+ 
+   msgid "Item in Box Serial Numbers"
+   msgstr "Artikel mit Seriennummer."
+ 
+   msgid "Loose Items"
+   msgstr "Lose Artikel."
+ 
+   msgid "Loose Items Serial Numbers"
+   msgstr "Seriennummer der losen Artikel."
+ 
+   msgid "Product Details"
+   msgstr "Produktangaben."
+ 
+   msgid "Product Name"
+   msgstr "Produktname."
+ 
+   msgid "Product Desc"
+   msgstr "Produktbeschreibung."
+ 
+   msgid "Product Type"
+   msgstr "Produkttyp."
+ 
+   msgid "Item Missing/Unscannable"
+   msgstr "Fehlender Artikel/nicht scanbar."
+ 
+   msgid "Missing Box"
+   msgstr "Fehlende Schachtel."
+ 
+   msgid "Override Tote Required"
+   msgstr "Tasche überschreiben ist erforderlich."
+ 
+   msgid "Items In Box Unscannable"
+   msgstr "Artikel in der Schachtel sind nicht scanbar."
+ 
+   msgid "Box Unscannable"
+   msgstr "Schachtel ist nicht scanbar."
+ 
+   msgid "Loose Items Unscannable"
+   msgstr "Lose Artikel sind nicht scanbar."
+ 
+   msgid "Please put unscannable entities in exception area."
+   msgstr "Legen Sie bitte nicht scanbare Einheiten in dem Ausnahmebereich ab."
+ 
+   msgid "Please put oversized entities in exception area."
+   msgstr "Legen Sie bitte überdimensionierte Einheiten in dem Ausnahmebereich ab."
+ 
+   msgid "Take the Items out from the Slot"
+   msgstr "Nehmen Sie die Artikel aus dem Einschub."
+ 
+   msgid "Tote already associated with bin {0}"
+   msgstr "Tasche ist bereits mit dem Behälter {0} assoziiert."
+ 
+   msgid "Entity Scan not expected. Press PPTL"
+   msgstr "Einheit Scan wird nicht erwartet. Drücken Sie PPTL."
+ 
+   msgid "Override Tote Exception cannot be raised for bins with totes associated"
+   msgstr "Taschenausnahme überschreiben kann nicht für Behälter, die mit Taschen verbunden sind, durchgeführt werden."
+ 
+   msgid "Excess item in tote recorded."
+   msgstr "Überschüssiger Artikel in der Tasche ist notiert."
+ 
+   msgid "PPTL press not expected"
+   msgstr "PPTL drücken wird nicht erwartet."
+ 
+   msgid "Scan not expected"
+   msgstr "Scan wird nicht erwartet.Scan wird nicht erwartet.Scan wird nicht erwartet.Scan wird nicht erwartet."
+ 
+   msgid "Pptl press not expected."
+   msgstr "PPTL drücken wird nicht erwartet."
+ 
+   msgid "Scan not expected."
+   msgstr "Scan wird nicht erwartet."
+ 
+   msgid "Wrong scan.Expecting item scan."
+   msgstr "Falscher Scan. Erwarte Scannen des Artikels."
+ 
+   msgid "Wrong scan.Expecting container scan."
+   msgstr "Falscher Scan. Erwarte Scannen des Containers."
+ 
+   msgid "Wrong scan.Expecting location scan."
+   msgstr "Falscher Scan. Erwarte Scannen des Standorts."
+ 
+   msgid "Exception"
+   msgstr "Ausnahme."
+ 
+   msgid "Logout"
+   msgstr "Ausloggen."
+ 
+   msgid "Utility"
+   msgstr "Dienstprogramm."
+ 
+   msgid "EXCEPTION"
+   msgstr "AUSNAHME."
+ 
+   msgid "Good Quantity"
+   msgstr "Gutmenge."
+ 
+   msgid "Missing Quantity"
+   msgstr "Fehlende Menge."
+ 
+   msgid "Unscannable Quantity"
+   msgstr "Nicht scanbare Menge."
+ 
+   msgid "Remove Item"
+   msgstr "Artikel entfernen."
+ 
+   msgid "Item Missing/Bad Barcode"
+   msgstr "Fehlender Artikel/Fehlerhafter Strichcode."
+ 
+   msgid "Sum of missing and good quantity should be equal to {0}"
+   msgstr "Summe der fehlenden Menge und Gutmenge sollte gleich {0} sein."
+ 
+   msgid "Login"
+   msgstr "Einloggen."
+ 
+   msgid "Scan Excess Entity Quantity"
+   msgstr "Überzählige Menge der Einheit scannen."
+ 
+   msgid "Enter Username"
+   msgstr "Benutzername eingeben."
+ 
+   msgid "Enter Password"
+   msgstr "Passwort eingeben."
+ 
+   msgid "Invalid credentials"
+   msgstr "Ungültige Anmeldeinformationen."
+ 
+   msgid "Login not allowed. You're already logged in"
+   msgstr "Einloggen nicht erlaubt. Sie sind bereits eingeloggt."
+ 
+   msgid "Place Item in slot and scan more"
+   msgstr "Die Einheit in den Einschub geben und weiter scannen."
+ 
+   msgid "PPTL"
+   msgstr "PPTL."
+ 
+   msgid "Scan Slot Barcode"
+   msgstr "Strichcode des Einschubs scannen."
+ 
+   msgid "Unexpected Item"
+   msgstr "Unerwarteter Artikel."
+ 
+   msgid "Stage Bin or Scan Item"
+   msgstr "Behälter inszenieren oder die Einheit scannen."
+ 
+   msgid "Scan & Confirm"
+   msgstr "Scannen und bestätigen."
+ 
+   msgid "Scan Item From Bin"
+   msgstr "Scannen des Artikels im Behälter."
+ 
+   msgid "Scan Tote"
+   msgstr "Tasche scannen."
+ 
+   msgid "Scan MSU Barcode"
+   msgstr "MSU Strichcode scannen."
+ 
+   msgid "Scan Items"
+   msgstr "Artikel scannen."
+ 
+   msgid "Status"
+   msgstr "Status."
+ 
+   msgid "Could not connect to PPS.Please try again."
+   msgstr "Konnte nicht mit PPS verbinden. Versuchen Sie es bitte erneut."
+ 
+   msgid "product_sku"
+   msgstr "produkt_artikelnummer"
+ 
+   msgid "type."
+   msgstr "Typ."
+ 
+   msgid "quantity"
+   msgstr "Menge."
+ 
+   msgid "item"
+   msgstr "Artikel."
+ 
+   msgid "box"
+   msgstr "Schachtel."
+ 
+   msgid "SKU not present in Database.Put in exception area"
+   msgstr "Artikelnummer ist nicht in der Datenbank. In den Ausnahmebereich legen."
+ 
+   msgid "Please put extra entities in exception area."
+   msgstr "Legen Sie bitte extra Einheiten in dem Ausnahmebereich ab."
+ 
+   msgid "Space Available For"
+   msgstr "Platz verfügbar für..."
+ 
+   msgid "Tote Details"
+   msgstr "Taschendetails."
+ 
+   msgid "CURRENT BIN"
+   msgstr "AKTUELLER BEHÄLTER."
+ 
+   msgid "Bad Barcode Quantity"
+   msgstr "Menge der schlechten Strichcodes."
+ 
+   msgid "Enter Scanner Id"
+   msgstr "Scanner ID eingeben."
+ 
+   msgid "Back seat not supported for this mode"
+   msgstr "In diesem Modus wird Back Seat nicht unterstützt."
+ 
+   msgid "Bad Data"
+   msgstr "Fehlerhafte Angaben."
+ 
+   msgid "Peripheral already added"
+   msgstr "Peripherie bereits hinzugefügt."
+ 
+   msgid "Scan Bin Barcode"
+   msgstr "Behälter-Strichcode scannen"
+ 
+   msgid "Update"
+   msgstr "Aktualisieren"
+ 
+   msgid "Japanese"
+   msgstr "Japanisch"
+ 
+   msgid "English"
+   msgstr "Englisch"
+ 
+   msgid "Scan item / Stage PPS Bin"
+   msgstr "Artikel scannen/Öffnen des PPS Behälter"
+ 
+   msgid "Scan {0} Items and Place in Bin {0}"
+   msgstr "Artikel {0} scannen und in den Behälter legen {0}"
+ 
+   msgid "Entity already scanned.Confirm exception"
+   msgstr "Einheit ist bereits gescannt. Ausnahme bestätigen"
+ 
+   msgid "type"
+   msgstr "Typ"
+ 
+   msgid "Close current tote first"
+   msgstr "Zuerst die aktuelle Tasche schließen"
+ 
+   msgid "Exception Finished"
+   msgstr "Ausnahme beendet"
+ 
+   msgid "PPS Mode"
+   msgstr "PPS Modus"
+ 
+   msgid "Seat Type"
+   msgstr "Sitztyp"
+ 
+   msgid "Good Quantity Cannot be Equal to the Total Quantity"
+   msgstr "Gutmenge kann nicht gleich der Gesamtmenge sein"

@@ -61,7 +61,13 @@ var IconButton = React.createClass({
                             <span className="glyphicon glyphicon-pencil"></span>
                         </div>
                 </div>
-            );              
+            );     
+            else if(this.props.type == "action" )
+                return (
+               <div className="audit-actions" >
+                        <button disabled = {!this.props.status} className = "audit-action done" type="button"  onClick={this.performAction.bind(this,this.props.module,this.props.action)} >{_("Done")}</button>
+                    </div>
+            );                 
     }
 });
 

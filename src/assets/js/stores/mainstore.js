@@ -351,9 +351,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var self = this;
         data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+           // data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol(_("Finish"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Action"), "header", false, "small", false, false, true, false, true));
         _finishAuditFlag = true;
         var d = [];
         _seatData.Box_qty_list.map(function(value, index) {
@@ -361,16 +361,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (value.Scan_status != "close") {
                 d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                    //d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
                 d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
             } else {
                 d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
+                    //d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
                 d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
             }
 
@@ -383,9 +383,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+               // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
             data["tableRows"].push(d);
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
@@ -803,7 +803,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
+                //d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
         });
@@ -812,7 +812,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+               // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         });

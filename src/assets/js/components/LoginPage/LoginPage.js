@@ -7,7 +7,6 @@ var CommonActions = require('../../actions/CommonActions');
 var Operator = require('../Operator');
 var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
-var Accordion = require('../Accordion/Accordion');
 var utils = require('../../utils/utils.js');
 
 var virtualKeyBoard_login, _seat_name = null;
@@ -218,7 +217,7 @@ var LoginPage = React.createClass({
                   </div>
           </div>
           <div className="bodyContent">
-          <Accordion options={options}/>
+         
                 <div className="bodyLoginPage">
                     <div className="factoryImage">
                         <img src ={allSvgConstants.factoryImg} />

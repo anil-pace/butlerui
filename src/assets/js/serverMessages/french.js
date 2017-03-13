@@ -341,3 +341,5 @@ var french = {
 	"{0} oversized entities recorded.WMS notified": "{0} entit\u00e9s surdimensionn\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
 	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9"
 }
+
+module.exports = french;

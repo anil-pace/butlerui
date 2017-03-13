@@ -8,6 +8,8 @@ var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
 var japanese = require('../serverMessages/japanese');
+var german = require('../serverMessages/german');
+var french = require('../serverMessages/french');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -1134,7 +1136,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _messageJson;
     },
     changeLanguage: function(data) {
-
         var locale_data ={
             "data" :{
                 "locale" : data
@@ -1144,16 +1145,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case "ja-JP":
                 _.setTranslation(japanese);
                 break;
-            case "ch":
+            case "zh-ZH":
                 _.setTranslation(chinese);
                 break;
             case "en-US":
                 _.setTranslation(english);
                 break;
+            case "de-DE":
+                _.setTranslation(german);
+                break;
+            case "fr-FR":
+                _.setTranslation(french);
+                break;
             default:
                 return true;
         }
-
         sessionStorage.setItem('localeData', JSON.stringify(locale_data));
     },
     postDataToInterface: function(data) {

@@ -37209,97 +37209,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/AuditStore":307,"../stores/mainstore":313,"../utils/utils.js":314,"./Button/Button":241,"./Button/Button.js":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ.js":269,"./Rack/MsuRack.js":280,"./Reconcile":284,"./Spinner/LoaderButler":285,"./SystemIdle":289,"./TabularData":294,"react":230}],235:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var BinMap = React.createClass({displayName: "BinMap",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-
-			}
-		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
-		}
-	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
-		return (
-				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.leftCol
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.rightCol
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = BinMap;
-
-},{"../constants/resourceConstants":299,"react":230}],236:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/AuditStore":309,"../stores/mainstore":315,"../utils/utils.js":316,"./Button/Button":240,"./Button/Button.js":240,"./CurrentSlot":242,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":265,"./ProductDetails/KQ.js":268,"./Rack/MsuRack.js":279,"./Reconcile":283,"./Spinner/LoaderButler":284,"./SystemIdle":287,"./TabularData":292,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37672,7 +37582,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":313,"../Modal/Modal":252,"react":230}],237:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":315,"../Modal/Modal":251,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37738,7 +37648,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":310,"./Bin.react":236,"react":230}],238:[function(require,module,exports){
+},{"../../stores/PutBackStore":312,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -38174,7 +38084,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":313,"../Modal/Modal":252,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":315,"../Modal/Modal":251,"react":230}],238:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./BinsFlex.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -38291,7 +38201,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":310,"./BinsFlex.react":238,"react":230}],240:[function(require,module,exports){
+},{"../../stores/PutBackStore":312,"./BinsFlex.react":237,"react":230}],239:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -38331,7 +38241,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":299,"react":230}],241:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38777,7 +38687,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
         module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/PickFrontStore":309,"../../stores/PutBackStore":310,"../../stores/mainstore":313,"react":230}],242:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/PickFrontStore":311,"../../stores/PutBackStore":312,"../../stores/mainstore":315,"react":230}],241:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38847,7 +38757,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/AuditStore":307,"react":230}],243:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/AuditStore":309,"react":230}],242:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -38872,7 +38782,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],244:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],243:[function(require,module,exports){
 var React = require('react');[]
 var ExceptionHeader = require('./ExceptionHeader');
 var ExceptionList = require('./ExceptionList');
@@ -38890,7 +38800,7 @@ var Exception = React.createClass({displayName: "Exception",
 
 module.exports = Exception;
 
-},{"./ExceptionHeader":245,"./ExceptionList":246,"react":230}],245:[function(require,module,exports){
+},{"./ExceptionHeader":244,"./ExceptionList":245,"react":230}],244:[function(require,module,exports){
 var React = require('react');
 
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
@@ -38906,7 +38816,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"react":230}],246:[function(require,module,exports){
+},{"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var ExceptionListItem = require('./ExceptionListItem');
 
@@ -38932,7 +38842,7 @@ var ExceptionList = React.createClass({displayName: "ExceptionList",
 
 module.exports = ExceptionList;
 
-},{"./ExceptionListItem":247,"react":230}],247:[function(require,module,exports){
+},{"./ExceptionListItem":246,"react":230}],246:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -39008,7 +38918,7 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":313,"react":230}],248:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":315,"react":230}],247:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 
@@ -39050,7 +38960,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"../stores/mainstore":313,"react":230}],249:[function(require,module,exports){
+},{"../stores/mainstore":315,"react":230}],248:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -39233,7 +39143,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../stores/mainstore":313,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],250:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../stores/mainstore":315,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -39373,11 +39283,13 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var n = d.getFullYear();   
     var seatData;
     var locale = window.sessionStorage.getItem("localeData");
-    //console.log(this.state.getLang);
     var _languageDropDown=(
               React.createElement("select", {className: "selectLang", value: this.state.getCurrentLang, ref: "language", onChange: this.changeLanguage}, 
                   React.createElement("option", {value: "en-US"}, _("English")), 
-                  React.createElement("option", {value: "ja-JP"}, _("Japanese"))
+                  React.createElement("option", {value: "ja-JP"}, _("日本語")), 
+                  React.createElement("option", {value: "de-DE"}, _("Deutsche")), 
+                  React.createElement("option", {value: "zh-ZH"}, _("中文")), 
+                  React.createElement("option", {value: "fr-FR"}, _("Français"))
               )
       );
     var display = this.state.flag === true ? 'block' : 'none';
@@ -39482,7 +39394,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../constants/svgConstants":300,"../../stores/loginstore":312,"../../stores/mainstore":313,"../../utils/utils.js":314,"../Operator":260,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],251:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../constants/svgConstants":300,"../../stores/loginstore":314,"../../stores/mainstore":315,"../../utils/utils.js":316,"../Operator":259,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],250:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var SystemIdleHeader = require('./SystemIdleHeader');
@@ -39524,7 +39436,7 @@ var MobileSystemIdle = React.createClass({displayName: "MobileSystemIdle",
 });
 module.exports = MobileSystemIdle;
 
-},{"../stores/mainstore":313,"./SplitPPS":288,"./SystemIdleHeader":290,"react":230}],252:[function(require,module,exports){
+},{"../stores/mainstore":315,"./SplitPPS":295,"./SystemIdleHeader":288,"react":230}],251:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -39882,7 +39794,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":309,"../../stores/mainstore":313,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
+},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":311,"../../stores/mainstore":315,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],252:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -40203,7 +40115,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":309,"../../stores/mainstore":313,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],254:[function(require,module,exports){
+},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":311,"../../stores/mainstore":315,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -40216,7 +40128,7 @@ var ModalFooter = React.createClass({displayName: "ModalFooter",
 
 module.exports = ModalFooter;
 
-},{"react":230}],255:[function(require,module,exports){
+},{"react":230}],254:[function(require,module,exports){
 var React = require('react');
 var ModalHeader = React.createClass({displayName: "ModalHeader",
   render: function () {
@@ -40232,7 +40144,7 @@ var ModalHeader = React.createClass({displayName: "ModalHeader",
 
 module.exports = ModalHeader;
 
-},{"react":230}],256:[function(require,module,exports){
+},{"react":230}],255:[function(require,module,exports){
 var React = require('react');
 var appConstants = require('../../constants/appConstants');
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -40295,7 +40207,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"../../constants/appConstants":297,"react":230}],257:[function(require,module,exports){
+},{"../../constants/appConstants":297,"react":230}],256:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -40324,7 +40236,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
 
-},{"./ActiveNavigation.react":256,"./PassiveNavigation.react":258,"react":230}],258:[function(require,module,exports){
+},{"./ActiveNavigation.react":255,"./PassiveNavigation.react":257,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
@@ -40345,7 +40257,7 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 
 module.exports = PassiveNavigation;
 
-},{"react":230}],259:[function(require,module,exports){
+},{"react":230}],258:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -40398,7 +40310,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":233,"react":230}],260:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"react":230}],259:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -40493,7 +40405,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":297,"../stores/mainstore":313,"./Audit":234,"./MobileSystemIdle":251,"./PickBack":263,"./PickFront":264,"./PrePut":268,"./PutBack":276,"./PutFront":277,"./Spinner/Overlay":286,"./SystemIdle":289,"react":230}],261:[function(require,module,exports){
+},{"../constants/appConstants":297,"../stores/mainstore":315,"./Audit":234,"./MobileSystemIdle":250,"./PickBack":262,"./PickFront":263,"./PrePut":267,"./PutBack":275,"./PutFront":276,"./Spinner/Overlay":285,"./SystemIdle":287,"react":230}],260:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../../constants/resourceConstants');
 var OrderRow = require('./OrderRow');
@@ -40517,7 +40429,7 @@ var OrderDetails = React.createClass({displayName: "OrderDetails",
 
 module.exports  = OrderDetails;
 
-},{"../../constants/resourceConstants":299,"./OrderRow":262,"react":230}],262:[function(require,module,exports){
+},{"../../constants/resourceConstants":299,"./OrderRow":261,"react":230}],261:[function(require,module,exports){
 var React = require("react");
 var resourceConstants = require('../../constants/resourceConstants');
 
@@ -40540,7 +40452,7 @@ var OrderRow = React.createClass({displayName: "OrderRow",
 
 module.exports  = OrderRow;
 
-},{"../../constants/resourceConstants":299,"react":230}],263:[function(require,module,exports){
+},{"../../constants/resourceConstants":299,"react":230}],262:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -40768,7 +40680,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickBackStore":308,"../stores/mainstore":313,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./SystemIdle":289,"./TabularData":294,"react":230}],264:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickBackStore":310,"../stores/mainstore":315,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./SystemIdle":287,"./TabularData":292,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
@@ -41390,7 +41302,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickFrontStore":309,"../stores/mainstore":313,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./BoxSerial.js":240,"./Button/Button":241,"./CurrentSlot":243,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Modal/Modal1":253,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./OrderDetails/OrderDetails.js":261,"./PrdtDetails/ProductDetails.js":265,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Rack/MsuRack.js":280,"./Spinner/LoaderButler":285,"./TabularData":294,"react":230}],265:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickFrontStore":311,"../stores/mainstore":315,"./BinMap":293,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./BoxSerial.js":239,"./Button/Button":240,"./CurrentSlot":242,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Modal/Modal1":252,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./OrderDetails/OrderDetails.js":260,"./PrdtDetails/ProductDetails.js":264,"./ProductDetails/KQ":268,"./ProductDetails/KQExceptionDamaged":269,"./ProductDetails/KQExceptionMissing":270,"./ProductDetails/Wrapper":273,"./ProductDetails/WrapperSplitRoll":274,"./Rack/MsuRack.js":279,"./Spinner/LoaderButler":284,"./TabularData":292,"react":230}],264:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -41466,7 +41378,7 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
 
 module.exports = ProductDetails;
 
-},{"./ProductImage":266,"./ProductInfo":267,"react":230}],266:[function(require,module,exports){
+},{"./ProductImage":265,"./ProductInfo":266,"react":230}],265:[function(require,module,exports){
 var React = require('react');
 
 var ProductImage = React.createClass({displayName: "ProductImage",
@@ -41490,7 +41402,7 @@ var ProductImage = React.createClass({displayName: "ProductImage",
 
 module.exports = ProductImage;
 
-},{"react":230}],267:[function(require,module,exports){
+},{"react":230}],266:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = React.createClass({displayName: "ProductInfo",
@@ -41521,7 +41433,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"react":230}],268:[function(require,module,exports){
+},{"react":230}],267:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -41757,7 +41669,7 @@ var PrePut = React.createClass({displayName: "PrePut",
 
 module.exports = PrePut;
 
-},{"../constants/appConstants":297,"../stores/mainstore":313,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./Reconcile":284,"./TabularData":294,"./mtuNavigation":295,"react":230}],269:[function(require,module,exports){
+},{"../constants/appConstants":297,"../stores/mainstore":315,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./Reconcile":283,"./TabularData":292,"./mtuNavigation":294,"react":230}],268:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -42295,7 +42207,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":313,"react":230}],270:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"react":230}],269:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -42728,7 +42640,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":313,"react":230}],271:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -43163,7 +43075,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":313,"react":230}],272:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -43209,7 +43121,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],273:[function(require,module,exports){
+},{"react":230}],272:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -43315,7 +43227,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../stores/mainstore":313,"../Modal/Modal":252,"./PopUp":272,"react":230}],274:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"../Modal/Modal":251,"./PopUp":271,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -43348,7 +43260,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":313,"./KQ":269,"./PopUp":272,"./ProductInfo":273,"react":230}],275:[function(require,module,exports){
+},{"../../stores/mainstore":315,"./KQ":268,"./PopUp":271,"./ProductInfo":272,"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -43381,7 +43293,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":313,"./KQ":269,"./PopUp":272,"./ProductInfo":273,"react":230}],276:[function(require,module,exports){
+},{"../../stores/mainstore":315,"./KQ":268,"./PopUp":271,"./ProductInfo":272,"react":230}],275:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -43779,7 +43691,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
 module.exports = PutBack;
 
-},{"../constants/appConstants":297,"../stores/PutBackStore":310,"../stores/mainstore":313,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ":269,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Reconcile":284,"./SystemIdle":289,"./TabularData":294,"./mtuNavigation":295,"react":230}],277:[function(require,module,exports){
+},{"../constants/appConstants":297,"../stores/PutBackStore":312,"../stores/mainstore":315,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":265,"./ProductDetails/KQ":268,"./ProductDetails/Wrapper":273,"./ProductDetails/WrapperSplitRoll":274,"./Reconcile":283,"./SystemIdle":287,"./TabularData":292,"./mtuNavigation":294,"react":230}],276:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -44170,7 +44082,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":297,"../constants/resourceConstants":299,"../stores/PutFrontStore":311,"../stores/mainstore":313,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Rack/MsuRack.js":280,"./Spinner/LoaderButler":285,"./SplitPPS":288,"./TabularData":294,"react":230}],278:[function(require,module,exports){
+},{"../constants/appConstants":297,"../constants/resourceConstants":299,"../stores/PutFrontStore":313,"../stores/mainstore":315,"./BinMap":293,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./ProductDetails/KQ":268,"./ProductDetails/KQExceptionDamaged":269,"./ProductDetails/KQExceptionMissing":270,"./ProductDetails/Wrapper":273,"./ProductDetails/WrapperSplitRoll":274,"./Rack/MsuRack.js":279,"./Spinner/LoaderButler":284,"./SplitPPS":295,"./TabularData":292,"react":230}],277:[function(require,module,exports){
 var React = require('react');
 var DrawerSlot = require('./DrawerSlot');
 
@@ -44222,7 +44134,7 @@ DrawerRow.propTypes = {
 };
 module.exports = DrawerRow;
 
-},{"./DrawerSlot":279,"react":230}],279:[function(require,module,exports){
+},{"./DrawerSlot":278,"react":230}],278:[function(require,module,exports){
 var React = require('react');
 
 /**
@@ -44261,7 +44173,7 @@ DrawerSlot.propTypes = {
 };
 module.exports = DrawerSlot ;
 
-},{"react":230}],280:[function(require,module,exports){
+},{"react":230}],279:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 var DrawerRow = require('./DrawerRow');
@@ -44469,7 +44381,7 @@ getOffset( el ) {
 
 module.exports = MsuRack;
 
-},{"./DrawerRow":278,"./RackRow":281,"react":230}],281:[function(require,module,exports){
+},{"./DrawerRow":277,"./RackRow":280,"react":230}],280:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -44518,7 +44430,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":282,"react":230}],282:[function(require,module,exports){
+},{"./RackSlot":281,"react":230}],281:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -44562,7 +44474,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":283,"react":230}],283:[function(require,module,exports){
+},{"./SingleSlot":282,"react":230}],282:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -44591,7 +44503,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],284:[function(require,module,exports){
+},{"react":230}],283:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -44629,7 +44541,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 
 module.exports = ReconcileStatus;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],285:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],284:[function(require,module,exports){
 var React = require('react');
 var SpinnerButler = require('./SpinnerButler');
 
@@ -44646,7 +44558,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"./SpinnerButler":287,"react":230}],286:[function(require,module,exports){
+},{"./SpinnerButler":286,"react":230}],285:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -44664,7 +44576,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":285,"./SpinnerButler":287,"react":230}],287:[function(require,module,exports){
+},{"./LoaderButler":284,"./SpinnerButler":286,"react":230}],286:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
@@ -44679,93 +44591,7 @@ var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 
 module.exports = SpinnerButler;
 
-},{"react":230}],288:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var SplitPPS = React.createClass({displayName: "SplitPPS",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.groupInfo || {}));
-		var leftCol = [],dockedGroup = this.props.docked,
-		undockAwaited = this.props.undockAwaited,
-		rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					if(dockedGroup.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "docked spriteIcons"})
-							));
-					}
-					else if(undockAwaited.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "undock left spriteIcons"})
-							));
-					}
-					else{
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
-					}
-					
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					if(dockedGroup.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "docked spriteIcons"})
-							));
-					}
-					else if(undockAwaited.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "undock right spriteIcons"})
-							));
-					}
-					else{
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
-					}
-					
-				}
-
-			}
-		}
-	
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol
-		}
-	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
-		
-		return (
-				React.createElement("div", {className: "splitPPSWrapper"}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 three"}, 
-					React.createElement("ul", null, 
-					mapStructure.leftCol
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 three"}, 
-					React.createElement("ul", null, 
-					mapStructure.rightCol
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = SplitPPS;
-
-},{"../constants/resourceConstants":299,"react":230}],289:[function(require,module,exports){
+},{"react":230}],287:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -44785,7 +44611,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],290:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],288:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -44804,7 +44630,7 @@ var SystemIdleHeader = React.createClass({displayName: "SystemIdleHeader",
 });
 module.exports = SystemIdleHeader;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],291:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],289:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -44846,7 +44672,7 @@ var TableFooter = React.createClass({displayName: "TableFooter",
 
 module.exports = TableFooter;
 
-},{"../constants/appConstants":297,"./Button/IconButton":242,"react":230}],292:[function(require,module,exports){
+},{"../constants/appConstants":297,"./Button/IconButton":241,"react":230}],290:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -44888,7 +44714,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"../constants/appConstants":297,"./Button/IconButton":242,"react":230}],293:[function(require,module,exports){
+},{"../constants/appConstants":297,"./Button/IconButton":241,"react":230}],291:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -45000,7 +44826,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/mainstore":313,"./Button/IconButton":242,"react":230}],294:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/mainstore":315,"./Button/IconButton":241,"react":230}],292:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -45037,7 +44863,97 @@ var TabularData = React.createClass({displayName: "TabularData",
 
 module.exports = TabularData;
 
-},{"./TableFooter":291,"./TableHeader":292,"./TableRow":293,"react":230}],295:[function(require,module,exports){
+},{"./TableFooter":289,"./TableHeader":290,"./TableRow":291,"react":230}],293:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var BinMap = React.createClass({displayName: "BinMap",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+
+			}
+		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
+		}
+	},
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		return (
+				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.leftCol
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.rightCol
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = BinMap;
+
+},{"../constants/resourceConstants":299,"react":230}],294:[function(require,module,exports){
 var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -45075,6 +44991,92 @@ var MtuNavigation = React.createClass({displayName: "MtuNavigation",
 });
 
 module.exports = MtuNavigation;
+
+},{"../constants/resourceConstants":299,"react":230}],295:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var SplitPPS = React.createClass({displayName: "SplitPPS",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.groupInfo || {}));
+		var leftCol = [],dockedGroup = this.props.docked,
+		undockAwaited = this.props.undockAwaited,
+		rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					if(dockedGroup.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock left spriteIcons"})
+							));
+					}
+					else{
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					if(dockedGroup.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock right spriteIcons"})
+							));
+					}
+					else{
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
+				}
+
+			}
+		}
+	
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol
+		}
+	},
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		
+		return (
+				React.createElement("div", {className: "splitPPSWrapper"}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 three"}, 
+					React.createElement("ul", null, 
+					mapStructure.leftCol
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 three"}, 
+					React.createElement("ul", null, 
+					mapStructure.rightCol
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = SplitPPS;
 
 },{"../constants/resourceConstants":299,"react":230}],296:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
@@ -45599,8 +45601,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.207/wss",
+	INTERFACE_IP : "https://192.168.8.207"
 };
 module.exports = configConstants;
 
@@ -45714,7 +45716,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":250,"./components/Operator":260,"jquery":67,"react":230,"react-dom":74}],303:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":249,"./components/Operator":259,"jquery":67,"react":230,"react-dom":74}],303:[function(require,module,exports){
 var chinese = {
     "Password": "\u5bc6\u7801",
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
@@ -45733,6 +45735,706 @@ var english = {
 module.exports = english;
 
 },{}],305:[function(require,module,exports){
+var french = {
+	"Actual": "R\u00e9el",
+	"Actual Quantity": "Quantit\u00e9 R\u00e9elle",
+	"Actual put quantity less than than revised quantity.": "Quantit\u00e9 mise r\u00e9elle inf\u00e9rieure \u00e0 la quantit\u00e9 modifi\u00e9e",
+	"Actual put quantity not equal to the sum of Good and Expection quantity.": "Quantit\u00e9 mise r\u00e9elle pas \u00e9gale \u00e0 la somme des quantit\u00e9s Marchandises et Attente",
+	"Add Scanner": "Ajouter le Scanner",
+	"After scannning tote barcode, please scan pptl barcode": "Apr\u00e8s avoir scann\u00e9 le code-barres du sac, veuillez scanner le code-barres du pptl",
+	"Are You Sure You Want to Close Tote?": "\u00cates-vous S\u00fbr de Vouloir Fermer le Sac",
+	"Are you sure you want to close Tote": "\u00cates-vous s\u00fbr de vouloir fermer le Sac",
+	"Associate tote with bin": "Associer le sac \u00e0 la Corbeille",
+	"BACK": "RETOUR",
+	"Back": "RETOUR",
+	"Back seat not supported for this mode": "Si\u00e8ge arri\u00e8re non pris en charge pour ce mode",
+	"Bad Barcode Quantity": "Quantit\u00e9 du Code-barre Mauvaise",
+	"Bad Data": "Mauvaises Donn\u00e9es",
+	"Barcode": "Code-barre",
+	"Barcode Damage": "Dommage Code-barre",
+	"Barcode didn't match the current tote barcode": "Code-barre ne correspondait pas au code-barre actuel du sac",
+	"Barcode didn't match with current tote barcode": "Le code-barres ne correspondait pas au code-barres actuel du sac",
+	"Bin": "Corbeille",
+	"Bin ID": "Identifiant Corbeille",
+	"Bin Info": "Informations Corbeille",
+	"Bin already staged. Ignoring event": "Corbeille d\u00e9j\u00e0 organis\u00e9e. Ignorer l'\u00e9v\u00e9nement",
+	"Bin empty. Cannot be staged": "Corbeille vide. Ne peut pas \u00eatre organis\u00e9e",
+	"Bin selected for put. Cannot be staged": "Corbeille s\u00e9lectionn\u00e9e pour d\u00e9poser. Impossible d'\u00eatre organis\u00e9e",
+	"Bin {0} items removed successfully": " {0} El\u00e9ments de la corbeille supprim\u00e9s avec succ\u00e8s",
+	"Bin {0} selected": "Corbeille {0} s\u00e9lectionn\u00e9e",
+	"Bin {0} unselected": "Corbeille {0} Non s\u00e9lectionn\u00e9e",
+	"Box Scan successful": "Scan de la Bo\u00eete r\u00e9ussi.",
+	"Box Serial Numbers": "Num\u00e9ros de s\u00e9rie de la Bo\u00eete",
+	"Box Unscannable": "Bo\u00eete Non Scannable",
+	"Box scan successful": "Scan de la Bo\u00eete r\u00e9ussi",
+	"Box with same serial number already exists in the warehouse": "Une bo\u00eete avec le m\u00eame num\u00e9ro de s\u00e9rie existe d\u00e9j\u00e0 dans l'entrep\u00f4t",
+	"CLOSE": "FERMER",
+	"CONFIRM": "CONFIRMER",
+	"CURRENT BIN": "CORBEILLE ACTUELLE",
+	"CURRENT SLOT": "CARTE ACTUELLE",
+	"Cancel": "Annuler",
+	"Cancel Exception": "Annuler Exception",
+	"Cancel Scan": "Annuler Scan",
+	"Cancel audit successful.Audit Restarted": "Annulation de l'audit r\u00e9ussie. Audit red\u00e9marr\u00e9",
+	"Cancel scan successful": "Annulation du scan r\u00e9ussie.",
+	"Cancel scan successful.": "Annulation du scan r\u00e9ussie.",
+	"Cancelled excess entity in tote": "Entit\u00e9 exc\u00e9dentaire en sac annul\u00e9e",
+	"Cancelled invalid entity in tote": "Entit\u00e9 invalide en sac annul\u00e9e",
+	"Cannot cancel scan. No scanned box found": "Impossible d'annuler le scan. Aucune bo\u00eete scann\u00e9e trouv\u00e9e",
+	"Check Count": "V\u00e9rifier le Nombre",
+	"Clear All": "Effacer Tout",
+	"Close current tote first": "Fermer d'abord le sac actuel",
+	"Confirm": "Confirmer",
+	"Confirm MSU Release": "Confirmez la version MSU",
+	"Connection is closed. Connecting...": "La connexion est ferm\u00e9e. Connexion en cours\u2026",
+	"Could not connect to PPS.Please try again.": "N'a pas pu se connecter \u00e0 PPS. Veuillez r\u00e9essayer",
+	"Current PPS mode does not support back seat. Please logout.": "Le mode PPS actuel ne prend pas en charge le si\u00e8ge arri\u00e8re. Veuillez vous d\u00e9connectez.",
+	"Damaged and missing entity recorded.": "Entit\u00e9 manquante et endommag\u00e9e enregistr\u00e9e.",
+	"Data capture failed at item": "La capture de donn\u00e9es a \u00e9chou\u00e9 pour l'\u00e9l\u00e9ment",
+	"Data capture failed at item {0}": "La capture de donn\u00e9es a \u00e9chou\u00e9 \u00e0 l'\u00e9l\u00e9ment {0}",
+	"Data capture valid": "Capture de donn\u00e9es valide",
+	"Delete": "Effacer",
+	"Details": "D\u00e9tails",
+	"Dis-associate Tote": "Dissocier le Sac",
+	"Disassociate Tote": "Dissocier le Sac",
+	"Documents printed Successfully": "Documents imprim\u00e9s avec Succ\u00e8s",
+	"Documents printed successfully": "Documents imprim\u00e9s avec succ\u00e8s",
+	"Edit Details": "Modifier les Informations",
+	"English": "Anglais",
+	"Enter Good Quantity to be Put into Slot": "Entrez la Bonne Quantit\u00e9 \u00e0 Placer dans la Fente",
+	"Enter Password": "Entrer Mot de Passe",
+	"Enter Quantity of Excess Entities": "Entrez la quantit\u00e9 d'entit\u00e9s exc\u00e9dentaires",
+	"Enter Scanner Id": "Entrer l'identifiant du Scanner",
+	"Enter Unscannable Entity Quantity": "Saisissez la quantit\u00e9 de l'entit\u00e9 non scannable",
+	"Enter Username": "Entrer Nom d'Utilisateur",
+	"Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL": "Les entit\u00e9s ne peuvent pas \u00eatre accueillies! Enlevez toutes les entit\u00e9s de la corbeille {0} et appuyez sur PPTL",
+	"Entity Missing / Unscannable": "Entit\u00e9 Manquante/Non scannable",
+	"Entity Oversized": "Entit\u00e9 Surdimensionn\u00e9e",
+	"Entity Scan not expected. Press PPTL": "Scan de l'entit\u00e9 non requis. Appuyez sur PPTL",
+	"Entity Unscannable": "Entit\u00e9 Non Scannable",
+	"Entity already scanned.Confirm exception": "Entit\u00e9 d\u00e9j\u00e0 scann\u00e9e. Confirmer exception",
+	"Entity already scanned.Waiting for PPTL press": "Entit\u00e9 d\u00e9j\u00e0 scann\u00e9e. En attente d'appuyer sur PPTL",
+	"Entity not expected in tote. Please put entity in exception area and confirm": "Entit\u00e9 impr\u00e9vue en sac. Veuillez mettre l'entit\u00e9 dans la zone d'exception et confirmez",
+	"Entity scan not expected.": "Scan de l'entit\u00e9 non attendu.",
+	"Entity scan not expected. Waiting for PPTL press": "Scan de l'entit\u00e9 non attendu. En attente pour appuyer sur PPTL",
+	"Entity scan successful": "Scan de l'entit\u00e9 r\u00e9ussi",
+	"Entity scan successful.": "Entit\u00e9 scann\u00e9e avec succ\u00e8s.",
+	"Entity scanned is not from bin {0}. Replace and scan from bin {1}": "L'Entit\u00e9 scann\u00e9e n'est pas issue de la corbeille {0}. Remplacer et scanner \u00e0 partir de la corbeille {1}",
+	"Exception Finished": "Exception Termin\u00e9e",
+	"Exception cancelled": "Exception annul\u00e9e",
+	"Exception invalid as totes are not required with this PPS": "Exception non valide,  car les sacs ne sont pas obligatoires avec ce PPS",
+	"Excess item in tote recorded.": "Exc\u00e9dent d'\u00e9l\u00e9ment dans le sac enregistr\u00e9.",
+	"Excess item in tote recorded. Now press PPTL": "\u00c9l\u00e9ment en exc\u00e8s dans le sac enregistr\u00e9. Appuyez Maintenant sur PPTL",
+	"Expected": "Attendu",
+	"Expected Quantity": "Quantit\u00e9 Attendue",
+	"Expected quantity exceeded.": "Quantit\u00e9 attendue d\u00e9pass\u00e9e.",
+	"Expecting MSU release confirmation from GUI, got invalid event.": "En attente de la confirmation de la version MSU de GUI, a obtenu un \u00e9v\u00e9nement non valide.",
+	"Extra": "Suppl\u00e9ment",
+	"Extra Entities in Bin": "Entit\u00e9s Suppl\u00e9mentaires dans la Corbeille",
+	"Extra Entity Found": "Entit\u00e9 Suppl\u00e9mentaire Trouv\u00e9e",
+	"Extra item found please put back item in Exception bin": "\u00c9l\u00e9ment suppl\u00e9mentaire trouv\u00e9 veuillez remettre l'\u00c9l\u00e9ment dans la corbeille d'Exception",
+	"FINISH": "TERMINER",
+	"Finish": "Terminer",
+	"Good Quantity": "Bonne Quantit\u00e9",
+	"Good Quantity Cannot be Equal to the Total Quantity": "La bonne quantit\u00e9 ne peut pas \u00eatre \u00e9gale \u00e0 la quantit\u00e9 totale",
+	"Incorrect tote barcode scanned. Please try again": "Scan du code-barres incorrect. Veuillez r\u00e9essayer",
+	"Input Extra Details": "Saisir les Informations Suppl\u00e9mentaires",
+	"Invalid Exception for this configuration": "Exception invalide pour cette configuration",
+	"Invalid credentials": "Identifiants invalides",
+	"Invalid entity in tote recorded": "Entit\u00e9 invalide en sac enregistr\u00e9e",
+	"Invalid item in tote recorded.": "\u00c9l\u00e9ment invalide dans le sac enregistr\u00e9.",
+	"Item Missing/Bad Barcode": "El\u00e9ment manquant / mauvais code barre",
+	"Item Missing/Unscannable": "\u00c9l\u00e9ment Manquant/Non scannable",
+	"Item Not Expected in Tote": "\u00c9l\u00e9ment non Attendu dans le Sac",
+	"Item Scan successful": "Scan de l'\u00c9l\u00e9ment r\u00e9ussi.",
+	"Item in Box Serial Numbers": "El\u00e9ment de Num\u00e9ros de s\u00e9rie de Bo\u00eete ",
+	"Item scan successful": "Scan de l'\u00c9l\u00e9ment r\u00e9ussi.",
+	"Items In Box Unscannable": "\u00c9l\u00e9ments dans bo\u00eete non scannable",
+	"Japanese": "Japonais",
+	"Last Box Scan Completed! Scan Remaining Box/Items": "Dernier Scan de la Bo\u00eete Termin\u00e9! Scannez la bo\u00eete restant/\u00c9l\u00e9ments ",
+	"List Of Items To Reconcile": "Liste d'\u00e9l\u00e9ments \u00e0 recouper",
+	"Location scan successful": "Scan de l'emplacement r\u00e9ussi",
+	"Login": "Connexion",
+	"Login not allowed. You're already logged in": "Connexion non autoris\u00e9e. Vous \u00eates d\u00e9j\u00e0 connect\u00e9",
+	"Logout": "D\u00e9connexion",
+	"Loose Items": "D\u00e9tacher les \u00e9l\u00e9ments ",
+	"Loose Items Serial Numbers": "D\u00e9tacher les num\u00e9ros de s\u00e9rie d'El\u00e9ments            ",
+	"Loose Items Unscannable": "D\u00e9tacher les \u00e9l\u00e9ments Non Scannables",
+	"Mising Box": "Bo\u00eete Manquante",
+	"Missing": "Manquant",
+	"Missing Box": "Bo\u00eete Manquante",
+	"Missing Quantity": "Quantit\u00e9 Manquante",
+	"NEXT": "SUIVANT",
+	"No Items To Reconcile": "Pas d'\u00e9l\u00e9ments \u00e0 recouper",
+	"No PPS bins empty. Please empty them from Pickback": "Pas de corbeilles PPS vides. Veuillez les vider depuis Pickback",
+	"No bins available to stage": "Pas de corbeille disponible \u00e0 organiser",
+	"No entities added yet. Scan entities and then press PPTL": " Aucune entit\u00e9 n'a encore \u00e9t\u00e9 ajout\u00e9e. Scannez les entit\u00e9s et appuyez ensuite sur PPTL",
+	"No free bins. Please scan later": "Pas de corbeilles libres. Veuillez scanner plus tard",
+	"No matching tote found": "Pas de concordance de sac trouv\u00e9",
+	"No tote associated. Please keep a tote in bin and scan": "Pas de sac associ\u00e9. Veuillez garder un sac dans la corbeille et scanner",
+	"No tote scanned": "Pas de sac scann\u00e9",
+	"No totes associated. Pease keep totes in the Bin and then scan": "Pas de sacs associ\u00e9s.  Veuillez conserver les sacs dans la Corbeille, puis scannez-les",
+	"Order removed successfully from bin {0}": "Commande retir\u00e9e avec succ\u00e8s de la corbeille {0}",
+	"Overide Tote Required": "Sac de remplacement exig\u00e9",
+	"Override": "Remplacer",
+	"Override Tote Exception cannot be raised for bins with totes associated": "L'Exception sac de remplacement ne peut \u00eatre soulev\u00e9e pour les corbeilles avec les sacs associ\u00e9s",
+	"Override Tote Exception' cannot be raised for bins with totes associated": "L'Exception de sac de remplacement ne peut \u00eatre soulev\u00e9e pour les corbeilles avec sacs associ\u00e9s",
+	"Override Tote Required": "Sac de remplacement exig\u00e9",
+	"Override tote not possible": "Remplacement du sac impossible",
+	"PPS Mode": "Mode PPS",
+	"PPS is in paused mode. Cannot process new entity. Try after some time": "PPS est en mode pause. Impossible de traiter une nouvelle entit\u00e9. Essayez apr\u00e8s un certain temps. ",
+	"PPS mode change requested:auto staging all bins": "Changement de mode PPS requis : organisation automatique de toutes les corbeilles",
+	"PPS mode change requested:scan not allowed": "Changement de mode PPS requis : scan non autoris\u00e9",
+	"PPTL Management": "Gestion PPTL ",
+	"PPTL press not expected": "PPTL appuy\u00e9 non attendu",
+	"PPTL press successful": "PPTL appuy\u00e9e avec succ\u00e8s",
+	"PPTL scan not allowed": "Scannage PPTL non autoris\u00e9",
+	"PPTL scan not allowed. System not configured for tote": "Scan PPTL non autoris\u00e9. Syst\u00e8me non configur\u00e9 pour sac",
+	"Password": "Mot de passe",
+	"Perform Action": "R\u00e9aliser l'Action",
+	"Peripheral ID": "Identifiant P\u00e9riph\u00e9rique",
+	"Peripheral added successfully": "P\u00e9riph\u00e9rique ajout\u00e9 avec succ\u00e8s",
+	"Peripheral already added": "P\u00e9riph\u00e9rique d\u00e9j\u00e0 ajout\u00e9",
+	"Peripheral deleted successfully": "P\u00e9riph\u00e9rique effac\u00e9 avec succ\u00e8s",
+	"Peripheral not added": "P\u00e9riph\u00e9rique non ajout\u00e9",
+	"Peripheral not deleted successfully": "P\u00e9riph\u00e9rique non effac\u00e9 avec succ\u00e8s",
+	"Pick complete. Waiting for next rack.": "Choix termin\u00e9. En attente de la  prochaine \u00e9tag\u00e8re.",
+	"Picked quantity more than expected. Put extra items back in MSU": "Quantit\u00e9 choisie plus grande que pr\u00e9vu. Remettre les articles en exc\u00e8s dans MSU",
+	"Place Entity in Bin and Press PPTL": "Placez l'entit\u00e9 dans la corbeille et Appuyez sur PPTL",
+	"Place Entity in Slot and Scan More": "Placez l'Entit\u00e9 dans la Carte et Scannez",
+	"Place Item in slot and scan more": "Placer l'\u00e9l\u00e9ment dans la fente et scanner davantage",
+	"Place extra entity in Exception area.": "Veuillez mettre les entit\u00e9s suppl\u00e9mentaires dans la zone d'exception",
+	"Please Select The Bin With Excess Entity": "Veuillez S\u00e9lectionner La Corbeille Avec Entit\u00e9 En Exc\u00e9dent",
+	"Please complete pickback for pending bin and then proceed": "Veuillez terminer le ramassage de la corbeille en cours, et continuez.",
+	"Please complete process for pending bin and then proceed": "Veuillez terminer la proc\u00e9dure pour la corbeille en attente. Ensuite, continuez.",
+	"Please press PPTL button which does not have any totes associated": "Veuillez appuyez sur le bouton PPTL qui n'a pas de sac associ\u00e9",
+	"Please press those buttons having color blink_blue": "Veuillez appuyez sur les boutons de couleur blink_blue",
+	"Please put entities in exception area and confirm": "Veuillez d\u00e9poser les entit\u00e9s en zone d'exception et confirmez",
+	"Please put entity in exception area and confirm": "Veuillez mettre l'entit\u00e9 dans la zone d'exception et confirmez",
+	"Please put extra entities in exception area.": "Veuillez mettre les entit\u00e9s suppl\u00e9mentaires dans la zone d'exception",
+	"Please put oversized entities in exception area.": "Veuillez mettre les entit\u00e9s surdimensionn\u00e9es dans la zone d'exception",
+	"Please put unscannable entities in exception area.": "Veuillez mettre les entit\u00e9s non scannables dans la zone d'exception",
+	"Please scan PPTL barcode": "Veuillez scanner le code-barre PPTL",
+	"Please scan same SKU to complete this exception": "Veuillez scanner le m\u00eame SKU pour terminer cette exception",
+	"Please scan the tote first and then scan PPTL barcode": "Veuillez scanner d'abord le sac. Ensuite, scanner le code-barre PPTL",
+	"Please scan the tote first and then scan pptl barcode": "Veuillez scanner le sac d'abord, puis scannez le code-barres du pptl",
+	"Pptl press not expected.": "PPTL appuy\u00e9 non attendu",
+	"Pptl scan not allowed. Totes are not required": "Scan du Pptl non autoris\u00e9. Les sacs ne sont pas obligatoires",
+	"Press PPTL for bin {0} to confirm": "Appuyez sur PPTL pour la corbeille  {0} \u00e0 confirmer",
+	"Press PPTL or Scan a Tote": "Appuyez sur PPTL ou Scannez un Sac",
+	"Press PPTL to Remove Entities": "Appuyez sur PPTL pour retirer les Entit\u00e9s",
+	"Press PPTL to confirm": "Appuyez sur PPTL pour confirmer",
+	"Press PpsBin Button Or Scan a Tote": "Appuyez sur le Bouton Corbeille Pps ou Scannez un Sac",
+	"Press PpsBin {0} to remove items": "Appuyez sur la Corbeille Pps {0} pour enlever les \u00e9l\u00e9ments",
+	"Press bin PPTL": "Appuyez sur la corbeille PPTL ",
+	"Press print button to proceed": "Appuyez sur le bouton impression pour continuer.",
+	"Print": "Imprimer",
+	"Processing. Please wait and scan later": "En cours de traitement. Veuillez patientez et scannez plus tard",
+	"Product Desc": "Description du Produit",
+	"Product Details": "Coordonn\u00e9es du Produit",
+	"Product Information": "Information Produit",
+	"Product Name": "Nom du Produit",
+	"Product SKU": "Produit SKU",
+	"Product Type": "Type de Produit",
+	"Put Back Entities in the PPS Bin": "Remettez les Entit\u00e9s dans la corbeille PPS",
+	"Quantity should be less than or equal to {0}": "La quantit\u00e9 doit \u00eatre inf\u00e9rieure ou \u00e9gale \u00e0 {0}",
+	"Remove Item": "Enlever \u00c9l\u00e9ment",
+	"Reprint": "Imprimer \u00e0 nouveau",
+	"SKU not present in Database.Put in exception area": "UGS non pr\u00e9sent dans la Base de Donn\u00e9es. Mettre dans la zone d'exception. ",
+	"SKU not present in database. Put into IRT bin.": "SKU n'est pas pr\u00e9sent dans la base de donn\u00e9es. D\u00e9posez dans la corbeille IRT.",
+	"Scan & Confirm": "Scanner et Confirmer",
+	"Scan Bin Barcode": "Scanner Code-barre de la Corbeille",
+	"Scan Box": "Scannez la Bo\u00eete",
+	"Scan Box or Items": "Scanner la Bo\u00eete ou les \u00c9l\u00e9ments",
+	"Scan Box/Items from Slot": "Scannez la Bo\u00eete/\u00c9l\u00e9ments issus de la Fente",
+	"Scan Entity From Bin {0}": "Scannez l'Entit\u00e9 \u00e0 partir de la Corbeille {0}",
+	"Scan Excess Entity Quantity": "Scan de la Quantit\u00e9 d'Entit\u00e9 Exc\u00e9dentaire",
+	"Scan Item From Bin": "Scanner l'\u00c9l\u00e9ment Depuis la corbeille",
+	"Scan Items": "Scanner les \u00c9l\u00e9ments",
+	"Scan MSU Barcode": "Scanner Code-barre MSU",
+	"Scan Oversized Entity Quantity": "Scannez la Quantit\u00e9 d'Entit\u00e9 Surdimensionn\u00e9e",
+	"Scan Remaining Item In Box": "Scannez l'\u00c9l\u00e9ment Restant dans la Bo\u00eete",
+	"Scan Slot": "Scannez la Fente",
+	"Scan Slot Barcode": "Scan du Code-barre \u00e0 Fente",
+	"Scan Slot to Confirm": "Scannez la Fente \u00e0 confirmer",
+	"Scan Tote": "Scanner le Sac",
+	"Scan Tote or Stage PPS Bin": "Scannez le Sac ou Organisez la Corbeille PPS",
+	"Scan Tote to Associate with Bin": "Scannez le Sac pour l'Associer avec la corbeille",
+	"Scan Tote to associate with Bin": "Scannez le Sac pour le mettre dans la Corbeille",
+	"Scan a box first": "Scannez une bo\u00eete d'abord",
+	"Scan box barcode": "V\u00e9rifiez le code-barres de la bo\u00eete",
+	"Scan item / Stage PPS Bin": "Scanner l'\u00e9l\u00e9ment / Organiser la Corbeille PPS",
+	"Scan item / Stage pps bin": "Scannez l'\u00e9l\u00e9ment / Organisez la corbeille pps",
+	"Scan items and place in bin {0}": "Scannez les \u00e9l\u00e9ments et placez-les dans la poubelle {0}",
+	"Scan not expected": "Scan non attendu",
+	"Scan not expected.": "Scan non attendu",
+	"Scan {0} Items": "Scannez {0} \u00c9l\u00e9ments",
+	"Scan {0} Items and Place in Bin {0}": "Scanner {0} \u00c9l\u00e9ments et Organiser dans la Corbeille {0}",
+	"Scan {0} Items and Place in Bin {1}": "V\u00e9rifiez {0} \u00e9l\u00e9ments et placez-les dans la Corbeille {1}",
+	"Scan {0} items": "Scannez {0} les \u00e9l\u00e9ments",
+	"Scanner ID": "Identifiant Scanner",
+	"Scanner Management": "Gestion Scanner",
+	"Scanning pptl barcode not allowed": "Scan du code-barres pptl non autoris\u00e9",
+	"Seat Type": "Type de Si\u00e8ge",
+	"Select Bin to disassociate tote": "S\u00e9lectionner la Corbeille pour se dissocier du sac.",
+	"Select Bin to skip print": "S\u00e9lectionnez la Corbeille pour ignorer l'impression",
+	"Select Bin which does not require tote": "S\u00e9lectionnez la Corbeille qui ne n\u00e9cessite pas de sac",
+	"Selected": "S\u00e9lectionn\u00e9",
+	"Skip Print": "Ignorer Impression",
+	"Skip Printing": "Ignorer Impression",
+	"Slot scan successful": "Scan de carte r\u00e9ussi",
+	"Space Available For": "Espace Disponible ",
+	"Space Not Available": "Espace Non Disponible",
+	"Space unavailable recorded.": "Espace indisponible enregistr\u00e9",
+	"Stage": "Organiser",
+	"Stage All": "Organiser Tout",
+	"Stage Bin or Scan Entity": "Organisez la corbeille ou scannez l'entit\u00e9",
+	"Stage Bin or Scan Item": "Organiser la Corbeille et V\u00e9rifier l'\u00c9l\u00e9ment",
+	"Status": "Statut",
+	"Status To Reconcile": "Statut \u00e0 Rapprocher",
+	"Submit": "Soumettre",
+	"Sum of missing and good quantity should be equal to {0}": "La Somme des quantit\u00e9s manquante et bonnes doit \u00eatre \u00e9gale \u00e0 {0}",
+	"Sum of missing, good and damaged should be equal to {0}": "Somme des quantit\u00e9s manquantes, bonnes et endommag\u00e9es doit \u00eatre \u00e9gale \u00e0 {0}",
+	"System Error. Scanned entity details not available at this time": "Erreur syst\u00e8me. D\u00e9tails de l'entit\u00e9 scann\u00e9e non disponibles pour le moment",
+	"System is Idle": "Le Syst\u00e8me est inactif",
+	"System not configured for totes": "Syst\u00e8me non configur\u00e9 pour les sacs",
+	"TOTE": "SAC",
+	"Take the Items out from the Slot": "Retirer les \u00e9l\u00e9ments de la Fente",
+	"Testing configuration {0} and {1}": "Test de configuration {0} et {1}",
+	"This box belongs to some other SKU in the slot.Put it back.Scan next box.": "Cette bo\u00eete appartient \u00e0 un autre SKU dans la Fente. Remettez-la. Scannez la bo\u00eete suivante.",
+	"This box does not belong to this slot. Remove the box and put in exception area.": "Cette bo\u00eete n'appartient pas \u00e0 cette Fente. Retirez la bo\u00eete et mettez dans la zone d'exception.",
+	"Tote Details": "Informations du Sac",
+	"Tote already associated with bin {0}": "Sac d\u00e9j\u00e0 associ\u00e9 \u00e0 la corbeille {0}",
+	"Tote already associated with ppsbin": "Le sac est d\u00e9j\u00e0 associ\u00e9 \u00e0 la corbeille pps",
+	"Tote already closed. Scan some other tote": "Sac d\u00e9j\u00e0 ferm\u00e9. Scannez un autre sac",
+	"Tote already opened. Scan some other tote": "Sac d\u00e9j\u00e0 ouvert. Scannez un autre sac",
+	"Tote already reserved": "Sac d\u00e9j\u00e0 r\u00e9serv\u00e9",
+	"Tote assigned successfully to bin": "Sac attribu\u00e9 avec succ\u00e8s \u00e0 la corbeille",
+	"Tote assigned successfully to ppsbin {0}": "Sac attribu\u00e9 avec succ\u00e8s \u00e0 la corbeille pps {0}",
+	"Tote associated with another bin": "Sac associ\u00e9 \u00e0 une autre corbeille",
+	"Tote association failed. Repeat scan operation": "L'Association de sac a \u00e9chou\u00e9. R\u00e9p\u00e9ter l'op\u00e9ration de scan",
+	"Tote cancelled": "Sac annul\u00e9",
+	"Tote close successful.": "Sac ferm\u00e9 avec succ\u00e8s.",
+	"Tote could not be reserved as already reserved": "Le sac ne pourrait pas \u00eatre r\u00e9serv\u00e9 puisqu'il est d\u00e9j\u00e0 r\u00e9serv\u00e9",
+	"Tote didn't get associated": "Le sac n'est pas associ\u00e9",
+	"Tote disassociated from Bin": "Sac dissoci\u00e9 de la corbeille",
+	"Tote has been opened.Scan all items in tote and then scan tote again to close it": "Le sac a \u00e9t\u00e9 ouvert. Scannez tous les \u00e9l\u00e9ments du sac, puis scannez encore le sac pour le fermer",
+	"Tote is already scanned.Expecting pptl scan.": "Le sac a d\u00e9j\u00e0 \u00e9t\u00e9 scann\u00e9. En Attendant le scan du pptl.",
+	"Tote not closed.": "Sac non ferm\u00e9.",
+	"Tote not present in database.": "Sac non pr\u00e9sent dans la base de donn\u00e9es.",
+	"Tote scan cancelled": "Scan du sac annul\u00e9",
+	"Tote scan expected": "Scan de sac attendu",
+	"Tote scanned.Expecting pptl scan.": "Sac scann\u00e9. En Attente du scan pptl.",
+	"Totes are anyway not required.Please proceed further": "Les sacs ne sont exig\u00e9s en aucune fa\u00e7on. Veuillez continuer plus loin",
+	"Totes are not required": "Les sacs ne sont pas obligatoires",
+	"Totes are not required.Please don't scan tote barcode": "Les sacs ne sont pas obligatoires. Veuillez ne pas scanner le code-barres du sac",
+	"Unexpected Item": "\u00c9l\u00e9ment Impr\u00e9vu",
+	"Unhandled event ocurred": "Un incident non trait\u00e9 s'est produit",
+	"Unscannable Quantity": "Quantit\u00e9 non Scannable",
+	"Unselected": "Non S\u00e9lectionn\u00e9",
+	"Update": "Mettre \u00e0 jour",
+	"User Name": "Nom d'Utilisateur",
+	"Utility": "Fonctionnalit\u00e9",
+	"View More": "Voir Davantage",
+	"Wait for MSU": "En attente de MSU",
+	"Waiting for Bins to be Cleared at Pick Back": "En attente que les corbeilles soient d\u00e9gag\u00e9es au Pick Back",
+	"Waiting for MSU": "En attente de MSU",
+	"Waiting for MSU scan. Please scan entity later.": "En attente du scan MSU. Veuillez scanner l'entit\u00e9 ult\u00e9rieurement",
+	"Waiting for MSU. Please wait and scan later": "En attente de MSU. Veuillez patientez et scanner plus tard",
+	"Waiting for rack": "En attente de stockage",
+	"Wrong Barcode": "Code-barres Faux",
+	"Wrong Barcode scanned": "Code-barres scann\u00e9 Faux",
+	"Wrong PPS bin scanned": "Erreur de scan de poubelle PPS",
+	"Wrong PPTL pressed": "PPTL mal appuy\u00e9",
+	"Wrong PPTL pressed. Please press correct PPTL": "PPTL mal appuy\u00e9. Veuillez appuyez sur PPTL correctement. ",
+	"Wrong PPTL pressed. Please try another": "PPTL appuy\u00e9 incorrect. Veuillez en essayer un autre",
+	"Wrong Ppsbin button pressed.Please press those buttons having color blue": "Le mauvais bouton corbeille Pps a \u00e9t\u00e9 choisi. Veuillez appuyer sur les boutons de couleur bleue",
+	"Wrong barcode scanned": "Code-barre incorrect scann\u00e9",
+	"Wrong bin chosen.Try selecting another bin": "Corbeille choisie fausse. Essayez de s\u00e9lectionner une autre corbeille.",
+	"Wrong box scanned. Please try again": "Bo\u00eete scann\u00e9e fausse. Veuillez r\u00e9essayer",
+	"Wrong enitity scanned. Expecting scan from bin {0}": "Entit\u00e9 incorrecte scann\u00e9e. En attente de scan de la corbeille {0}",
+	"Wrong entity scanned": "Entit\u00e9 scann\u00e9e fausse",
+	"Wrong entity scanned. Please scan Container/Item.": "Entit\u00e9 scann\u00e9e fausse. Veuillez scanner le Conteneur/\u00c9l\u00e9ment.",
+	"Wrong entity scanned. Please scan tote": "Entit\u00e9 scann\u00e9e fausse. Veuillez scanner le sac.",
+	"Wrong item quantity update": "Mauvaise mise \u00e0 jour de la quantit\u00e9 d'\u00e9l\u00e9ment",
+	"Wrong item scanned. Please scan correct item": "Mauvais \u00e9l\u00e9ment scann\u00e9. Veuillez scanner l'\u00e9l\u00e9ment correct",
+	"Wrong scan! Entity scan expected but slot barcode scanned.": "Scan incorrect! Scan de l'entit\u00e9 attendu mais le code-barre de la carte est scann\u00e9.",
+	"Wrong scan.Expecting container scan.": "Scan incorrect. En attente de scan de conteneur.",
+	"Wrong scan.Expecting item scan.": "Scan incorrect. En attente de scan d'\u00e9l\u00e9ment.",
+	"Wrong scan.Expecting location scan.": "Scan incorrect. En attente de scan d'emplacement.",
+	"Wrong slot location scanned. Please try again": "Emplacement de carte scann\u00e9 incorrect. Veuillez r\u00e9essayer",
+	"Wrong slot scanned": "Carte scann\u00e9e fausse",
+	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "Vous n'\u00eates pas autoris\u00e9 \u00e0 entrer la quantit\u00e9 \u00e0 partir du pav\u00e9 num\u00e9rique. Force Scan est exig\u00e9",
+	"You cannot enter 0": "Vous ne pouvez pas entrer 0",
+	"You cannot enter value more than 9999": "Vous ne pouvez pas entrer de valeur sup\u00e9rieure \u00e0 9999",
+	"box": "bo\u00eete",
+	"item": "\u00e9l\u00e9ment",
+	"product_sku": "produit_ugs",
+	"quantity": "quantit\u00e9",
+	"type.": "type",
+	"user Name": "Nom d'utilisateur",
+	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} entit\u00e9s exc\u00e9dentaires trouv\u00e9es dans le sac. Veuillez mettre les entit\u00e9s dans la zone d'exception et confirmez",
+	"{0} extra entities recorded in bin. WMS notified": "{0} Entit\u00e9s suppl\u00e9mentaires enregistr\u00e9es dans la corbeille. WMS notifi\u00e9",
+	"{0} oversized entities recorded.WMS notified": "{0} entit\u00e9s surdimensionn\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
+	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9"
+}
+
+module.exports = french;
+
+},{}],306:[function(require,module,exports){
+var german = {
+	"Actions": "Aktionen.",
+	"Actual": "Aktuell.",
+	"Actual Quantity": "Tats\u00e4chliche Menge.",
+	"Actual put quantity less than than revised quantity.": "Tats\u00e4chliche Menge ist weniger als die \u00fcberarbeitete Menge.",
+	"Actual put quantity not equal to the sum of Good and Expection quantity.": "Tats\u00e4chliche Menge entspricht nicht der Summe der Gut- und Pr\u00fcfmenge.",
+	"Add Scanner": "Scanner hinzuf\u00fcgen.",
+	"After scannning tote barcode, please scan pptl barcode": "Nach dem Scannen des Strichcodes der Tasche, bitte PPTL Strichcode scannen",
+	"Are You Sure You Want to Close Tote?": "Sind Sie sicher, dass Sie diese Tasche schlie\u00dfen m\u00f6chten?",
+	"Are you sure you want to close Tote": "Sind Sie sicher, dass Sie diese Tasche schlie\u00dfen m\u00f6chten?",
+	"Associate tote with bin": "Tasche mit Beh\u00e4lter verbinden.",
+	"BACK": "ZUR\u00dcCK.",
+	"Back": "Zur\u00fcck.",
+	"Back seat not supported for this mode": "In diesem Modus wird Back Seat nicht unterst\u00fctzt.",
+	"Bad Barcode Quantity": "Menge der schlechten Strichcodes.",
+	"Bad Data": "Fehlerhafte Angaben.",
+	"Barcode": "Strichcode.",
+	"Barcode Damage": "Besch\u00e4digter Strichcode.",
+	"Barcode didn't match the current tote barcode": "Strichcode stimmt nicht mit dem aktuellen Taschen-Strichcode \u00fcberein.",
+	"Barcode didn't match with current tote barcode": "Strichcode stimmt nicht mit dem aktuellen Taschen-Strichcode \u00fcberein.",
+	"Bin": "Beh\u00e4lter.",
+	"Bin ID": "Beh\u00e4lter ID.",
+	"Bin Info": "Beh\u00e4lterinformation.",
+	"Bin already staged. Ignoring event": "Beh\u00e4lter.",
+	"Bin empty. Cannot be staged": "Beh\u00e4lter ist leer. Kann nicht inszeniert werdenBeh\u00e4lter ist leer. Kann nicht inszeniert werden.",
+	"Bin selected for put. Cannot be staged": "Beh\u00e4lter zum Ablegen gew\u00e4hlt. Kann nicht bereitgestellt werden.",
+	"Bin {0} items removed successfully": "{0}-Artikel im Beh\u00e4lter wurden erfolgreich entfernt.",
+	"Bin {0} selected": "Beh\u00e4lter {0} ausgew\u00e4hlt.",
+	"Bin {0} unselected": "Beh\u00e4lter {0} nicht ausgew\u00e4hlt.",
+	"Box Scan successful": "Schachtel Scan erfolgreich.",
+	"Box Serial Numbers": "Seriennummer der Schachtel.",
+	"Box Unscannable": "Schachtel ist nicht scanbar.",
+	"Box scan successful": "Schachtel Scan erfolgreich.",
+	"Box with same serial number already exists in the warehouse": "Im Lager ist bereits eine Box mit derselben Seriennummer vorhanden.",
+	"CLOSE": "SCHLIESSEN.",
+	"CONFIRM": "BEST\u00c4TIGEN.",
+	"CURRENT BIN": "AKTUELLER BEH\u00c4LTER.",
+	"CURRENT SLOT": "AKTUELLER EINSCHUB.",
+	"Cancel": "Abbrechen.",
+	"Cancel Exception": "Ausnahme stornieren.",
+	"Cancel Scan": "Scan stornieren.",
+	"Cancel audit successful.Audit Restarted": "Audit erfolgreich abgebrochen. Audit neu gestartet.",
+	"Cancel scan successful": "Scan erfolgreich abgebrochen.",
+	"Cancel scan successful.": "Scan erfolgreich abgebrochen.",
+	"Cancelled excess entity in tote": "\u00dcberz\u00e4hlige Einheiten in der Tasche storniert.",
+	"Cancelled invalid entity in tote": "Ung\u00fcltige Einheit in der Tasche storniert.",
+	"Cannot cancel scan. No scanned box found": "Kann den Scan nicht abbrechen. Keine gescannte Box gefunden.",
+	"Check Count": "Anzahl pr\u00fcfen.",
+	"Clear All": "Alles l\u00f6schen.",
+	"Close current tote first": "Zuerst die aktuelle Tasche schlie\u00dfen",
+	"Confirm": "Best\u00e4tigen.",
+	"Confirm MSU Release": "MSU Freigabe best\u00e4tigen.",
+	"Connection is closed. Connecting...": "Verbindung ist geschlossen. Verbinden \u2026",
+	"Could not connect to PPS.Please try again.": "Konnte nicht mit PPS verbinden. Versuchen Sie es bitte erneut.",
+	"Current PPS mode does not support back seat. Please logout.": "Der aktuelle PPS-Modus unterst\u00fctzt keinen R\u00fccksitz. Bitte abmelden.",
+	"Damaged and missing entity recorded.": "Besch\u00e4digte und fehlende Einheit aufgezeichnet.",
+	"Data capture failed at item": "Datenerfassung an Artikel fehlgeschlagen.",
+	"Data capture failed at item {0}": "Datenerfassung an Artikel {0} fehlgeschlagen.",
+	"Data capture valid": "Datenerfassung g\u00fcltig.",
+	"Delete": "L\u00f6schen.",
+	"Dis-associate Tote": "Tasche trennen.",
+	"Disassociate Tote": "Tasche trennen.",
+	"Documents printed Successfully": "Dokumente wurden erfolgreich gedruck.",
+	"Documents printed successfully": "Dokumente wurden erfolgreich gedruckt.",
+	"EXCEPTION": "AUSNAHME.",
+	"Edit Details": "Details bearbeiten.",
+	"English": "Englisch",
+	"Enter Good Quantity to be Put into Slot": "Geben Sie die St\u00fcckzahl ein, die in den Einschub gelegt wird.",
+	"Enter Password": "Passwort eingeben.",
+	"Enter Quantity of Excess Entities": "Die Menge der \u00fcberz\u00e4hligen Einheiten eingeben.",
+	"Enter Scanner Id": "Scanner ID eingeben.",
+	"Enter Unscannable Entity Quantity": "Geben Sie die nicht scanbare Menge der Einheit ein.",
+	"Enter Username": "Benutzername eingeben.",
+	"Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL": "Die Einheiten k\u00f6nnen nicht untergebracht werden! Entfernen Sie alle Einheiten aus dem Beh\u00e4lter {0} und dr\u00fccken PPTL.",
+	"Entity Missing / Unscannable": "Fehlende Einheiten/nicht scanbar.",
+	"Entity Oversized": "\u00dcberdimensionierte Einheit.",
+	"Entity Scan not expected. Press PPTL": "Einheit Scan wird nicht erwartet. Dr\u00fccken Sie PPTL.",
+	"Entity Unscannable": "Einheit nicht scanbar.",
+	"Entity already scanned.Confirm exception": "Einheit ist bereits gescannt. Ausnahme best\u00e4tigen",
+	"Entity already scanned.Waiting for PPTL press": "Einheit ist bereits gescannt. Warten auf PPTL dr\u00fccken.dr\u00fccken",
+	"Entity not expected in tote. Please put entity in exception area and confirm": "Einheit nicht in der Tasche erwartet. Legen Sie bitte die Einheit in den Ausnahmebereich und best\u00e4tigen Sie diese.",
+	"Entity scan not expected.": "Scan der Einheit wird nicht erwartet.",
+	"Entity scan not expected. Waiting for PPTL press": "Scan der Einheit wird nicht erwartet. Warte, dass PPTL gedr\u00fcckt wird.",
+	"Entity scan successful": "Einheit erfolgreich scannen.",
+	"Entity scan successful.": "Einheit erfolgreich gescannt.",
+	"Entity scanned is not from bin {0}. Replace and scan from bin {1}": "Die gescannte Einheit ist nicht von Beh\u00e4lter {0}. Ersetzen und von Beh\u00e4lter {1} scannen.",
+	"Exception": "Ausnahme.",
+	"Exception Finished": "Ausnahme beendet",
+	"Exception cancelled": "Ausnahme storniert.",
+	"Exception invalid as totes are not required with this PPS": "Ausnahme ist ung\u00fcltig, da Taschen mit diesem PPS nicht erforderlich sind.",
+	"Exceptions": "Ausnahmen.",
+	"Excess item in tote recorded.": "\u00dcbersch\u00fcssiger Artikel in der Tasche ist notiert.",
+	"Excess item in tote recorded. Now press PPTL": "\u00dcbersch\u00fcssiger Artikel in der Tasche ist notiert. Jetzt PPTL dr\u00fccken.",
+	"Expected": "Erwartet.",
+	"Expected Quantity": "Erwartete Menge.",
+	"Expected quantity exceeded.": "Die erwartete Menge ist \u00fcberschritten.",
+	"Expecting MSU release confirmation from GUI, got invalid event.": "Best\u00e4tigung der MSU Freigabe von GUI erwartet, ung\u00fcltiges Ereignis angezeigt.",
+	"Extra": "Zus\u00e4tzlich/Extra.",
+	"Extra Entities in Bin": "Extra Einheiten im Beh\u00e4lter.",
+	"Extra Entity Found": "Extra Einheit gefunden.",
+	"Extra item found please put back item in Exception bin": "Ein extra Artikel wurde gefunden, bitte legen Sie den Artikel in den Ausnahmebereich zur\u00fcck.",
+	"FINISH": "FERTIG.",
+	"Finish": "Fertig.",
+	"Good Quantity": "Gutmenge.",
+	"Good Quantity Cannot be Equal to the Total Quantity": "Gutmenge kann nicht gleich der Gesamtmenge sein",
+	"Incorrect tote barcode scanned. Please try again": "Falscher Taschen-Strichcode gescannt. Bitte versuchen Sie es erneut.",
+	"Input Extra Details": "Zus\u00e4tzliche Details eingeben.",
+	"Invalid Exception for this configuration": "Ung\u00fcltige Ausnahme f\u00fcr diese Konfiguration.",
+	"Invalid credentials": "Ung\u00fcltige Anmeldeinformationen.",
+	"Invalid entity in tote recorded": "Ung\u00fcltige Einheit in der Tasche wurde aufgezeichnet.",
+	"Invalid item in tote recorded.": "Ung\u00fcltiger Artikel in der Tasche wurden aufgezeichnet.",
+	"Item Missing/Bad Barcode": "Fehlender Artikel/Fehlerhafter Strichcode.",
+	"Item Missing/Unscannable": "Fehlender Artikel/nicht scanbar.",
+	"Item Not Expected in Tote": "Artikel wird nicht in der Tasche erwartet.",
+	"Item Scan successful": "Artikel Scan erfolgreich.",
+	"Item in Box Serial Numbers": "Artikel mit Seriennummer.",
+	"Item scan successful": "Artikel erfolgreich gescannt.",
+	"Items In Box Unscannable": "Artikel in der Schachtel sind nicht scanbar.",
+	"Japanese": "Japanisch",
+	"Last Box Scan Completed! Scan Remaining Box/Items": "Letzter Scan der Schachtel ist abgeschlossen! Verbleibende Schachteln/Artikel scannen",
+	"List Of Items To Reconcile": "Liste der Artikel zum Abgleichen.",
+	"Location scan successful": "Standort-Scan erfolgreich.",
+	"Login": "Einloggen.",
+	"Login not allowed. You're already logged in": "Einloggen nicht erlaubt. Sie sind bereits eingeloggt.",
+	"Logout": "Ausloggen.",
+	"Loose Items": "Lose Artikel.",
+	"Loose Items Serial Numbers": "Seriennummer der losen Artikel.",
+	"Loose Items Unscannable": "Lose Artikel sind nicht scanbar.",
+	"Mising Box": "Fehlende Schachtel.",
+	"Missing": "Fehlend.",
+	"Missing Box": "Fehlende Schachtel.",
+	"Missing Quantity": "Fehlende Menge.",
+	"NEXT": "WEITER.",
+	"No Items To Reconcile": "Keine Artikel zum Abgleichen.",
+	"No PPS bins empty. Please empty them from Pickback": "Keine PPS Beh\u00e4lter sind leer. Leeren Sie bitte die Retouren.",
+	"No bins available to stage": "Es stehen keine Beh\u00e4lter zum Inszenieren zu Verf\u00fcgung.",
+	"No entities added yet. Scan entities and then press PPTL": "Noch keine Einheiten hinzugef\u00fcgt. Einheiten scannen und dann PPTL dr\u00fccken.",
+	"No free bins. Please scan later": "Keine leeren Beh\u00e4lter. Bitte sp\u00e4ter scannen.",
+	"No matching tote found": "Keine passende Tasche gefunden.",
+	"No tote associated. Please keep a tote in bin and scan": "Keine Tasche assoziiert. Behalten Sie bitte eine Tasche im Beh\u00e4lter und scannen.",
+	"No tote scanned": "Keine Tasche gescannt.",
+	"No totes associated. Pease keep totes in the Bin and then scan": "Keine Taschen verkn\u00fcpft. Bitte halten Sie die Tasche im Beh\u00e4lter und scannen Sie dann ein.",
+	"OK": "OK.",
+	"Order removed successfully from bin {0}": "Auftrag wurde erfolgreich aus dem Beh\u00e4lter entfernt {0}.",
+	"Overide Tote Required": "Tasche \u00fcberschreiben ist erforderlich.",
+	"Override": "\u00dcberschreiben.",
+	"Override Tote Exception cannot be raised for bins with totes associated": "Taschenausnahme \u00fcberschreiben kann nicht f\u00fcr Beh\u00e4lter, die mit Taschen verbunden sind, durchgef\u00fchrt werden.",
+	"Override Tote Exception' cannot be raised for bins with totes associated": "Taschenausnahme \u00fcberschreiben kann nicht f\u00fcr Beh\u00e4lter, die mit Taschen verbunden sind, durchgef\u00fchrt werden.",
+	"Override Tote Required": "Tasche \u00fcberschreiben ist erforderlich.",
+	"Override tote not possible": "\u00dcberschreiben der Tasche ist nicht m\u00f6glich.",
+	"PPS Mode": "PPS Modus",
+	"PPS is in paused mode. Cannot process new entity. Try after some time": "PPS ist im Pausenmodus. Kann keine neue Einheit verarbeiten. Versuchen Sie es nach einiger Zeit noch einmal.",
+	"PPS mode change requested:auto staging all bins": "PPS-Modus\u00e4nderung angefordert: automatische Inszenierung aller Beh\u00e4lter.",
+	"PPS mode change requested:scan not allowed": "PPS-Modus\u00e4nderung angefordert: Scan ist nicht erlaubt.",
+	"PPTL": "PPTL.",
+	"PPTL Management": "PPTL-Verwaltung.",
+	"PPTL press not expected": "PPTL dr\u00fccken wird nicht erwartet.",
+	"PPTL press successful": "PPTL erfolgreich gedr\u00fcckt.",
+	"PPTL scan not allowed": "PPTL scannen ist nicht erlaubt.",
+	"PPTL scan not allowed. System not configured for tote": "PPTL scannen ist nicht erlaubt. System ist nicht f\u00fcr Taschen konfiguriert.",
+	"Password": "Passwort",
+	"Perform Action": "Aktion ausf\u00fchren.",
+	"Peripheral ID": "Peripherie ID.",
+	"Peripheral added successfully": "Peripherie erfolgreich hinzugef\u00fcgt.",
+	"Peripheral already added": "Peripherie bereits hinzugef\u00fcgt.",
+	"Peripheral deleted successfully": "Peripherie erfolgreich gel\u00f6scht.",
+	"Peripheral not added": "Peripherie nicht hinzugef\u00fcgt.",
+	"Peripheral not deleted successfully": "Peripherie nicht erfolgreich gel\u00f6scht.",
+	"Pick complete. Waiting for next rack.": "Auwahl beenden. Auf das n\u00e4chste Regal warten.",
+	"Picked quantity more than expected. Put extra items back in MSU": "Ausgew\u00e4hlte Menge ist gr\u00f6\u00dfer als erwartet. Legen Sie die zus\u00e4tzlichen Artikel wieder in MSU.",
+	"Place Entity in Bin and Press PPTL": "Einheit in den Beh\u00e4lter legen und auf PPTL dr\u00fccken.",
+	"Place Entity in Slot and Scan More": "Die Einheit in den Einschub geben und weiter scannen.",
+	"Place Item in slot and scan more": "Die Einheit in den Einschub geben und weiter scannen.",
+	"Place extra entity in Exception area.": "Legen Sie die extra Einheit in dem Ausnahmebereich ab.",
+	"Please Select The Bin With Excess Entity": "W\u00e4hlen Sie bitte den Beh\u00e4lter mit der \u00fcberz\u00e4hligen Einheit.",
+	"Please complete pickback for pending bin and then proceed": "Bitte f\u00fcllen Sie den Abholvorgang f\u00fcr ausstehenden Beh\u00e4lter aus und fahren Sie dann fort",
+	"Please complete process for pending bin and then proceed": "Vervollst\u00e4ndigen Sie bitte den Vorgang f\u00fcr ausstehende Beh\u00e4lter und fahren dann fort.",
+	"Please press PPTL button which does not have any totes associated": "Dr\u00fccken Sie bitte die PPTL-Taste, die keine verkn\u00fcpften Taschen enth\u00e4lt.",
+	"Please press those buttons having color blink_blue": "Dr\u00fccken Sie bitte diese Tasten mit der blinkenden_blauen Farbe.",
+	"Please put entities in exception area and confirm": "Legen Sie bitte die Einheiten in den Ausnahmebereich und best\u00e4tigen.",
+	"Please put entity in exception area and confirm": "Legen Sie bitte die Einheit in den Ausnahmebereich und best\u00e4tigen Sie diese.",
+	"Please put extra entities in exception area.": "Legen Sie bitte extra Einheiten in dem Ausnahmebereich ab.",
+	"Please put oversized entities in exception area.": "Legen Sie bitte \u00fcberdimensionierte Einheiten in dem Ausnahmebereich ab.",
+	"Please put unscannable entities in exception area.": "Legen Sie bitte nicht scanbare Einheiten in dem Ausnahmebereich ab.",
+	"Please scan PPTL barcode": "Bitte den PPTL Strichcode scannen.",
+	"Please scan same SKU to complete this exception": "Bitte scannen Sie die gleiche Artikelnummer, um diese Ausnahme zu vervollst\u00e4ndigen.",
+	"Please scan the tote first and then scan PPTL barcode": "Scannen Sie bitte zuerst die Tasche und dann den PPTL-Strichcode.",
+	"Please scan the tote first and then scan pptl barcode": "Scannen Sie bitte zuerst die Tasche und danach den PPTL-Strichcode",
+	"Pptl press not expected.": "PPTL dr\u00fccken wird nicht erwartet.",
+	"Pptl scan not allowed. Totes are not required": "PPTL scannen ist nicht erlaubt. Tasche ist nicht erforderlich",
+	"Press PPTL for bin {0} to confirm": "Dr\u00fccken Sie PPTL f\u00fcr den Beh\u00e4lter {0} zur Best\u00e4tigung.",
+	"Press PPTL or Scan a Tote": "Dr\u00fccken Sie PPTL oder scannen Sie eine Tasche.",
+	"Press PPTL to Remove Entities": "Dr\u00fccken Sie PPTL, um Einheiten zu entfernen.",
+	"Press PPTL to confirm": "PPTL dr\u00fccken, um zu best\u00e4tigen.",
+	"Press PpsBin Button Or Scan a Tote": "Dr\u00fccken Sie PPS Beh\u00e4lter-Taste oder scannen Sie eine Tasche.",
+	"Press PpsBin {0} to remove items": "PPS Beh\u00e4lter dr\u00fccken, um {0} Artikel zu entfernen",
+	"Press bin PPTL": "Dr\u00fccken Sie Beh\u00e4lter PPTL.",
+	"Press print button to proceed": "Dr\u00fccken Sie der Druckertaste, um fortzufahren.",
+	"Print": "Drucken.",
+	"Processing. Please wait and scan later": "In Bearbeitung. Bitte warten und sp\u00e4ter scannen.",
+	"Product Desc": "Produktbeschreibung.",
+	"Product Details": "Produktangaben.",
+	"Product Information": "Produktinformation.",
+	"Product Name": "Produktname.",
+	"Product SKU": "L\u00f6schen.",
+	"Product Type": "Produkttyp.",
+	"Put Back Entities in the PPS Bin": "Legen Sie Einheiten in den PPS Beh\u00e4lter zur\u00fcck.",
+	"Quantity should be less than or equal to {0}": "Die Menge sollte kleiner oder gleich {0} sein.",
+	"Remove Item": "Artikel entfernen.",
+	"Reprint": "Nachdrucken.",
+	"SKU not present in Database.Put in exception area": "Artikelnummer ist nicht in der Datenbank. In den Ausnahmebereich legen.",
+	"SKU not present in database. Put into IRT bin.": "Artikelnummer ist nicht in der Datenbank. In den IRT Beh\u00e4lter legen.",
+	"Scan & Confirm": "Scannen und best\u00e4tigen.",
+	"Scan Bin Barcode": "Beh\u00e4lter-Strichcode scannen",
+	"Scan Box": "Schachtel scannen.",
+	"Scan Box or Items": "Schachtel oder Artikel scannen.",
+	"Scan Box/Items from Slot": "Schachtel scannen/Artikel vom Einschub.",
+	"Scan Entity From Bin {0}": "Scannen der Einheit aus Beh\u00e4lter {0}.",
+	"Scan Excess Entity Quantity": "\u00dcberz\u00e4hlige Menge der Einheit scannen.",
+	"Scan Item From Bin": "Scannen des Artikels im Beh\u00e4lter.",
+	"Scan Items": "Artikel scannen.",
+	"Scan MSU Barcode": "MSU Strichcode scannen.",
+	"Scan Oversized Entity Quantity": "\u00dcberdimensionierte Menge der Einheit scannen.",
+	"Scan Remaining Item In Box": "Restposten in der Schachtel scannen.",
+	"Scan Slot": "Einschub scannen.",
+	"Scan Slot Barcode": "Strichcode des Einschubs scannen.",
+	"Scan Slot to Confirm": "Einschub zur Best\u00e4tigung scannen.",
+	"Scan Tote": "Tasche scannen.",
+	"Scan Tote or Stage PPS Bin": "Artikel scannen/\u00d6ffnen des PPS Beh\u00e4lters.",
+	"Scan Tote to Associate with Bin": "Tasche scannen, um mit dem Beh\u00e4lter zu assoziieren.",
+	"Scan Tote to associate with Bin": "Tasche scannen, um mit dem Beh\u00e4lter zu verkn\u00fcpfen.",
+	"Scan a box first": "Zuerst nur eine Schachtel scannen.",
+	"Scan box barcode": "Strichcode scannen",
+	"Scan item / Stage PPS Bin": "Artikel scannen/\u00d6ffnen des PPS Beh\u00e4lter",
+	"Scan item / Stage pps bin": "Artikel scannen/\u00d6ffnen des PPS Beh\u00e4lter",
+	"Scan items and place in bin {0}": "Artikel scannen und in den Beh\u00e4lter legen {0}",
+	"Scan not expected": "Scan wird nicht erwartet.Scan wird nicht erwartet.Scan wird nicht erwartet.Scan wird nicht erwartet.",
+	"Scan not expected.": "Scan wird nicht erwartet.",
+	"Scan {0} Items": "{0} Artikel scannen.",
+	"Scan {0} Items and Place in Bin {0}": "Artikel {0} scannen und in den Beh\u00e4lter legen {0}",
+	"Scan {0} Items and Place in Bin {1}": "{0} Artikel scannen und in den Beh\u00e4lter legen {1}.",
+	"Scan {0} items": "{0} Artikel gescannt",
+	"Scanner ID": "Scanner ID.",
+	"Scanner Management": "Scannerverwaltung.",
+	"Scanning pptl barcode not allowed": "Scannen des PPTL Strichcodes ist nicht erlaubt.",
+	"Seat Type": "Sitztyp",
+	"Select Bin to disassociate tote": "W\u00e4hlen Sie Bin, um die Tasche zu trennen.",
+	"Select Bin to skip print": "W\u00e4hlen Sie einen Beh\u00e4lter, um den Druck zu \u00fcberspringen.",
+	"Select Bin which does not require tote": "W\u00e4hlen Sie einen Beh\u00e4lter, der keine Tasche ben\u00f6tigt.",
+	"Selected": "Ausgew\u00e4hlt.",
+	"Skip Print": "Drucken \u00fcberspringen.",
+	"Skip Printing": "Drucken \u00fcberspringen.",
+	"Slot scan successful": "Einschub erfolgreich scannen.",
+	"Space Available For": "Platz verf\u00fcgbar f\u00fcr...",
+	"Space Not Available": "Platz ist nicht verf\u00fcgbar.",
+	"Space unavailable recorded.": "Nicht verf\u00fcgbarer Platz aufgezeichnet.",
+	"Stage": "Inszenieren.",
+	"Stage All": "Alle inszenieren.",
+	"Stage Bin or Scan Entity": "Beh\u00e4lter \u00f6ffnen oder die Einheit scannen",
+	"Stage Bin or Scan Item": "Beh\u00e4lter inszenieren oder die Einheit scannen.",
+	"Status": "Status.",
+	"Status To Reconcile": "Status zum Abgleich.",
+	"Submit": "Einreichen.",
+	"Sum of missing and good quantity should be equal to {0}": "Summe der fehlenden Menge und Gutmenge sollte gleich {0} sein.",
+	"Sum of missing, good and damaged should be equal to {0}": "Summe der Fehlenden, Guten und Besch\u00e4digten sollte gleich {0} .",
+	"System Error. Scanned entity details not available at this time": "Systemfehler. Gescannte Einheitendetails sind zur Zeit nicht verf\u00fcgbar.",
+	"System is Idle": "Das System ist im Leerlauf.",
+	"System not configured for totes": "System ist nicht f\u00fcr Taschen konfiguriert.",
+	"TOTE": "TASCHE.",
+	"Take the Items out from the Slot": "Nehmen Sie die Artikel aus dem Einschub.",
+	"Testing configuration {0} and {1}": "Pr\u00fcfung der Konfiguration {0} und {1}.",
+	"This box belongs to some other SKU in the slot.Put it back.Scan next box.": "Diese Schachtel geh\u00f6rt zu einer anderen Artikelnummer im Einschub. Legen Sie es zur\u00fcck. N\u00e4chste Schachtel scannen.",
+	"This box does not belong to this slot. Remove the box and put in exception area.": "Diese Schachtel geh\u00f6rt nicht in diesen Einschub. Entfernen Sie diese Schachtel und legen sie in den Ausnahmebereich.",
+	"Tote Details": "Taschendetails.",
+	"Tote already associated with bin {0}": "Tasche ist bereits mit dem Beh\u00e4lter {0} assoziiert.",
+	"Tote already associated with ppsbin": "Tasche ist bereits mit PPS-Beh\u00e4lter verkn\u00fcpft.",
+	"Tote already closed. Scan some other tote": "Tasche ist bereits geschlossen. Scannen Sie eine andere Tasche.",
+	"Tote already opened. Scan some other tote": "Tasche ist bereits ge\u00f6ffnet. Scannen Sie eine andere Tasche.",
+	"Tote already reserved": "Tasche ist bereits reserviertTasche ist bereits reserviert.",
+	"Tote assigned successfully to bin": "Tasche wurde erfolgreich dem Beh\u00e4lter zugewiesen.",
+	"Tote assigned successfully to ppsbin {0}": "Tasche wurde erfolgreich dem PPS-Beh\u00e4lter {0} zugewiesen.",
+	"Tote associated with another bin": "Tasche wurde einem anderen Beh\u00e4lter zugewiesen.",
+	"Tote association failed. Repeat scan operation": "Zuordnung der Tasche ist fehlgeschlagen Wiederholen Sie den Scanvorgang.",
+	"Tote cancelled": "Tasche ist storniert.",
+	"Tote close successful.": "Tasche erfolgreich geschlossen.",
+	"Tote could not be reserved as already reserved": "Tasche konnte nicht reserviert werden, da sie bereits reserviert ist.",
+	"Tote didn't get associated": "Tasche wurde nicht verkn\u00fcpft.",
+	"Tote disassociated from Bin": "Tasche ist vom Beh\u00e4lter getrennt.",
+	"Tote has been opened.Scan all items in tote and then scan tote again to close it": "Tasche wurde ge\u00f6ffnet. Scannen Sie alle Artikel in der Tasche und dann die Tasche noch einmal scannen, um sie zu schlie\u00dfen.",
+	"Tote is already scanned.Expecting pptl scan.": "Tasche ist bereits gescannt. Erwarte PPTL Scan.",
+	"Tote not closed.": "Tasche ist nicht geschlossen.",
+	"Tote not present in database.": "Tasche ist nicht in der Datenbank.",
+	"Tote scan cancelled": "Taschenscan ist storniert.",
+	"Tote scan expected": "Taschenscan wird erwartet",
+	"Tote scanned.Expecting pptl scan.": "Tasche ist gescannt. Erwarte PPTL Scan.",
+	"Totes are anyway not required.Please proceed further": "Taschen sind nicht erforderlich. Bitte fortfahren.",
+	"Totes are not required": "Taschen sind nicht erforderlich. Bitte fortfahren.",
+	"Totes are not required.Please don't scan tote barcode": "Taschen sind nicht erforderlich.Nicht den Strichcode der Tasche scannen",
+	"Unexpected Item": "Unerwarteter Artikel.",
+	"Unhandled event ocurred": "Unbearbeitetes Ereignis.",
+	"Unscannable Quantity": "Nicht scanbare Menge.",
+	"Unselected": "Nicht ausgew\u00e4hlt.",
+	"Update": "Aktualisieren",
+	"User Name": "Benutzername",
+	"Utility": "Dienstprogramm.",
+	"View More": "Mehr anzeigen.",
+	"Wait for MSU": "Warten auf MSU.",
+	"Waiting for Bins to be Cleared at Pick Back": "Warten auf Beh\u00e4lter, die bei der Retoure gel\u00f6scht werden.",
+	"Waiting for MSU": "Warten auf MSU",
+	"Waiting for MSU scan. Please scan entity later.": "Warten auf MSU Scan. Die Einheit bitte sp\u00e4ter scannen.",
+	"Waiting for MSU. Please wait and scan later": "Warten auf MSU. Bitte warten und sp\u00e4ter scannen.",
+	"Waiting for rack": "Auf das Regal warten.",
+	"Wrong Barcode": "Falscher Strichcode gescannt",
+	"Wrong Barcode scanned": "Falscher Strichcode gescannt.",
+	"Wrong PPS bin scanned": "Falscher PPS-Beh\u00e4lter gescannt",
+	"Wrong PPTL pressed": "Falsche PPTL gedr\u00fcckt. Bitte versuchen Sie es erneut.",
+	"Wrong PPTL pressed. Please press correct PPTL": "Falsche PPTL gedr\u00fcckt. Dr\u00fccken Sie bitte die korrekte PPTL.",
+	"Wrong PPTL pressed. Please try another": "Falsche PPTL gedr\u00fcckt. Bitte versuchen Sie es erneut.",
+	"Wrong Ppsbin button pressed.Please press those buttons having color blue": "Falscher PPS-Beh\u00e4lter-Taste gedr\u00fcckt. Dr\u00fccken Sie bitte diese Tasten mit der Farbe blau",
+	"Wrong barcode scanned": "Falscher Strichcode gescannt.",
+	"Wrong bin chosen.Try selecting another bin": "Falscher Beh\u00e4lter gew\u00e4hlt. W\u00e4hlen Sie einen anderen Beh\u00e4lter aus.",
+	"Wrong box scanned. Please try again": "Falsche Schachtel gescannt. Bitte versuchen Sie es erneut.",
+	"Wrong enitity scanned. Expecting scan from bin {0}": "Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}.",
+	"Wrong entity scanned": "Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}Falsche Einheit gescannt. Erwarte Scan von Beh\u00e4lter {0}",
+	"Wrong entity scanned. Please scan Container/Item.": "Falsche Einheit gescannt. Bitte den Container/Artikel scannen.",
+	"Wrong entity scanned. Please scan tote": "Falsche Einheit gescannt. Bitte die Tasche scannen.",
+	"Wrong item quantity update": "Falsche Artikelmengenaktualisierung.",
+	"Wrong item scanned. Please scan correct item": "Falsche Artikel gescannt. Bitte den korrekten Artikel scannen.",
+	"Wrong scan! Entity scan expected but slot barcode scanned.": "Falscher Scan! Scan der Einheit erwartet, aber der Strichcode des Einschubs ist gescannt.",
+	"Wrong scan.Expecting container scan.": "Falscher Scan. Erwarte Scannen des Containers.",
+	"Wrong scan.Expecting item scan.": "Falscher Scan. Erwarte Scannen des Artikels.",
+	"Wrong scan.Expecting location scan.": "Falscher Scan. Erwarte Scannen des Standorts.",
+	"Wrong slot location scanned. Please try again": "Falscher Einschubstandort gescannt. Bitte versuchen Sie es erneut.",
+	"Wrong slot scanned": "Falscher Einschub gescannt.",
+	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "Sie d\u00fcrfen die Menge nicht \u00fcber den Nummernblock eingeben. Ein forcierter Scan ist erforderlich.",
+	"You cannot enter 0": "Sie k\u00f6nnen keine 0 eingeben.",
+	"You cannot enter value more than 9999": "Sie k\u00f6nnen keinen Wert h\u00f6her als 9999 eingeben.",
+	"box": "Schachtel.",
+	"item": "Artikel.",
+	"product_sku": "produkt_artikelnummer",
+	"quantity": "Menge.",
+	"type": "Typ",
+	"type.": "Typ.",
+	"user Name": "Benutzername",
+	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} \u00fcberz\u00e4hlige Einheiten in der Tasche gefunden. Legen Sie bitte die Einheiten in den Ausnahmebereich und best\u00e4tigen Sie diese.",
+	"{0} extra entities recorded in bin. WMS notified": "{0} extra Einheiten wurden im Beh\u00e4lter aufgezeichnet. WMS benachrichtigt.",
+	"{0} oversized entities recorded.WMS notified": "{0} \u00fcbergro\u00dfe Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
+	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt."
+}
+
+module.exports = german;
+
+},{}],307:[function(require,module,exports){
 var japanese = {
    "'Override Tote Exception' cannot be raised for bins with totes associated": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3044\u305f\u30d3\u30f3\u3067\u300c\u30c8\u30fc\u30c8\u66f4\u65b0\u4f8b\u5916\u300d\u306f\u767a\u751f\u3057\u307e\u305b\u3093",
    "Actions": "\u30a2\u30af\u30b7\u30e7\u30f3",
@@ -46079,7 +46781,7 @@ var japanese = {
 }
 module.exports = japanese;
 
-},{}],306:[function(require,module,exports){
+},{}],308:[function(require,module,exports){
 var serverMessages = {
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
@@ -46366,7 +47068,7 @@ var serverMessages = {
 
 module.exports = serverMessages;
 
-},{}],307:[function(require,module,exports){
+},{}],309:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -46699,7 +47401,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":314,"events":14,"object-assign":68}],308:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],310:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -46805,7 +47507,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":314,"events":14,"object-assign":68}],309:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],311:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -46988,7 +47690,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":314,"events":14,"object-assign":68}],310:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],312:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var SVGConstants = require('../constants/svgConstants');
@@ -47257,7 +47959,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../utils/utils":314,"events":14,"object-assign":68}],311:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],313:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -47375,7 +48077,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":314,"events":14,"object-assign":68}],312:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],314:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -47534,7 +48236,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/configConstants":298,"../dispatchers/AppDispatcher":301,"../utils/utils.js":314,"events":14,"react/lib/Object.assign":121}],313:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/configConstants":298,"../dispatchers/AppDispatcher":301,"../utils/utils.js":316,"events":14,"react/lib/Object.assign":121}],315:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -47545,6 +48247,8 @@ var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
 var japanese = require('../serverMessages/japanese');
+var german = require('../serverMessages/german');
+var french = require('../serverMessages/french');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -48671,7 +49375,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _messageJson;
     },
     changeLanguage: function(data) {
-
         var locale_data ={
             "data" :{
                 "locale" : data
@@ -48681,16 +49384,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case "ja-JP":
                 _.setTranslation(japanese);
                 break;
-            case "ch":
+            case "zh-ZH":
                 _.setTranslation(chinese);
                 break;
             case "en-US":
                 _.setTranslation(english);
                 break;
+            case "de-DE":
+                _.setTranslation(german);
+                break;
+            case "fr-FR":
+                _.setTranslation(french);
+                break;
             default:
                 return true;
         }
-
         sessionStorage.setItem('localeData', JSON.stringify(locale_data));
     },
     postDataToInterface: function(data) {
@@ -49888,7 +50596,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../actions/CommonActions":233,"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../serverMessages/chinese":303,"../serverMessages/english":304,"../serverMessages/japanese":305,"../serverMessages/server_messages":306,"../utils/utils":314,"events":14,"react/lib/Object.assign":121}],314:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../serverMessages/chinese":303,"../serverMessages/english":304,"../serverMessages/french":305,"../serverMessages/german":306,"../serverMessages/japanese":307,"../serverMessages/server_messages":308,"../utils/utils":316,"events":14,"react/lib/Object.assign":121}],316:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');
@@ -50190,4 +50898,4 @@ var putSeatData = function(data) {
 
 module.exports = utils;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/configConstants":298,"../constants/resourceConstants":299,"../serverMessages/server_messages":306,"events":14,"react/lib/Object.assign":121}]},{},[302]);
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/configConstants":298,"../constants/resourceConstants":299,"../serverMessages/server_messages":308,"events":14,"react/lib/Object.assign":121}]},{},[302]);

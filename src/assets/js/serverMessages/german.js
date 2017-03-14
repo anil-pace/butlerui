@@ -195,6 +195,7 @@ var german = {
 	"Press PpsBin Button Or Scan a Tote": "Dr\u00fccken Sie PPS Beh\u00e4lter-Taste oder scannen Sie eine Tasche.",
 	"Press PpsBin {0} to remove items": "PPS Beh\u00e4lter dr\u00fccken, um {0} Artikel zu entfernen",
 	"Press bin PPTL": "Dr\u00fccken Sie Beh\u00e4lter PPTL.",
+	"Press bin PPTL to remove entities": "Bitte Beh\u00e4ltnis PPTL dr\u00fccken um Eintr\u00e4ge zu l\u00f6schen",
 	"Press print button to proceed": "Dr\u00fccken Sie der Druckertaste, um fortzufahren.",
 	"Print": "Drucken.",
 	"Processing. Please wait and scan later": "In Bearbeitung. Bitte warten und sp\u00e4ter scannen.",

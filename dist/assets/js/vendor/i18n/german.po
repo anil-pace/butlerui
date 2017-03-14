@@ -1060,3 +1060,6 @@ msgstr ""
  
    msgid "Good Quantity Cannot be Equal to the Total Quantity"
    msgstr "Gutmenge kann nicht gleich der Gesamtmenge sein"
+
+   msgid "Press bin PPTL to remove entities"
+   msgstr "Bitte Behältnis PPTL drücken um Einträge zu löschen"

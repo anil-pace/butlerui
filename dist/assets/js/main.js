@@ -37043,7 +37043,7 @@ var Audit = React.createClass({displayName: "Audit",
                    React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
-                    React.createElement(KQ, {scanDetails: this.state.AuditScanDetails}), 
+                    
                    React.createElement("div", {className: "finish-scan"}, 
                     React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: _("Finish"), module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
                   )
@@ -38841,7 +38841,13 @@ var IconButton = React.createClass({displayName: "IconButton",
                             React.createElement("span", {className: "glyphicon glyphicon-pencil"})
                         )
                 )
-            );              
+            );     
+            else if(this.props.type == "action" )
+                return (
+               React.createElement("div", {className: "audit-actions"}, 
+                        React.createElement("button", {disabled: !this.props.status, className: "audit-action done", type: "button", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, _("Done"))
+                    )
+            );                 
     }
 });
 
@@ -39424,6 +39430,26 @@ var LoginPage = React.createClass({displayName: "LoginPage",
         } else{
             errorClass = 'ErrorMsg'
         }
+        /**
+         * Remove this
+         */
+        var options = {
+          data:[
+                              {
+                                "title":"Section 1",
+                                "content":"Our content for the section 1"
+                              },
+                              {
+                                "title":"Section 2",
+                                "content":"Our content for the section 2"
+                              },
+                              {
+                                "title":"Section 3",
+                                "content":"Our content for the section 3"
+                              }
+                            ],
+          openPanelIndex:-1
+        }
         return (
         React.createElement("div", null, 
           React.createElement("div", {className: "headerLoginPage"}, 
@@ -39435,6 +39461,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
                   )
           ), 
           React.createElement("div", {className: "bodyContent"}, 
+         
                 React.createElement("div", {className: "bodyLoginPage"}, 
                     React.createElement("div", {className: "factoryImage"}, 
                         React.createElement("img", {src: allSvgConstants.factoryImg})
@@ -45601,8 +45628,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.12.118:8888/ws",
+	INTERFACE_IP : "http://192.168.12.118:5000"
 };
 module.exports = configConstants;
 
@@ -48595,7 +48622,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
             data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol(_("Finish"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Action"), "header", false, "small", false, false, true, false, true));
         _finishAuditFlag = true;
         var d = [];
         _seatData.Box_qty_list.map(function(value, index) {
@@ -48605,14 +48632,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
                 d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
             } else {
                 d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
                 d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
             }
 
@@ -48625,9 +48652,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+               // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "finish", value.Scan_status == "open"));
+            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
             data["tableRows"].push(d);
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
@@ -49041,12 +49068,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Loose_sku_list.map(function(value, index) {
+        _seatData.Sku_Item_List.map(function(value, index) {
             d = [];
+            var itemQtyList = [];
+            var itemList = value.Item_Qty_List;
+            if(itemList){
+                for(var i =0,listLen = itemList.length ; i < listLen ; i++){
+                    itemQtyList.push(itemList[i].Actual_Qty)
+                }
+            }
             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+            d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
         });
 
@@ -49054,7 +49088,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+               // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         });
@@ -50874,8 +50908,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    console.log(data); 
-
+    console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

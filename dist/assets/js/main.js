@@ -37043,7 +37043,7 @@ var Audit = React.createClass({displayName: "Audit",
                    React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
-                    React.createElement(KQ, {scanDetails: this.state.AuditScanDetails}), 
+                    
                    React.createElement("div", {className: "finish-scan"}, 
                     React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: _("Finish"), module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
                   )
@@ -45626,8 +45626,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.155/wss",
-	INTERFACE_IP : "https://192.168.8.155"
+	WEBSOCKET_IP : "ws://192.168.12.118:8888/ws",
+	INTERFACE_IP : "http://192.168.12.118:5000"
 };
 module.exports = configConstants;
 
@@ -47915,7 +47915,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var self = this;
         data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-           // data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Action"), "header", false, "small", false, false, true, false, true));
         _finishAuditFlag = true;
@@ -47925,14 +47925,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (value.Scan_status != "close") {
                 d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    //d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
                 d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
                 d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
             } else {
                 d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    //d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
+                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
                 d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
                 d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
@@ -48363,12 +48363,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Loose_sku_list.map(function(value, index) {
+        _seatData.Sku_Item_List.map(function(value, index) {
             d = [];
+            var itemQtyList = [];
+            var itemList = value.Item_Qty_List;
+            if(itemList){
+                for(var i =0,listLen = itemList.length ; i < listLen ; i++){
+                    itemQtyList.push(itemList[i].Actual_Qty)
+                }
+            }
             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                //d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
+            d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
         });
 
@@ -50192,148 +50199,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    console.log(data); 
-    if(data.state_data){
-        data.state_data={
-        "seat_name": "front_10",
-        "notification_list": [],
-        "extra_loose_sku_item_list" :[],
-        "rack_details": {
-            "rack_type_rec": [
-                ["A", [
-                    [
-                        ["01", "02"], 44, 48
-                    ],
-                    [
-                        ["03", "04"], 44, 48
-                    ],
-                    [
-                        ["05", "06"], 44, 48
-                    ]
-                ]],
-                ["B", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]],
-                ["C", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ]
-                ]],
-                ["D", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]],
-                ["E", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]],
-                ["F", [
-                    [
-                        ["01", "02"], 25, 48
-                    ],
-                    [
-                        ["03", "04"], 25, 48
-                    ],
-                    [
-                        ["05", "06"], 25, 48
-                    ]
-                ]]
-            ],
-            "slot_barcodes": ["080.0.A.01", "080.0.A.06"]
-        },
-        "exception_allowed": [{
-            "exception_id": "AdF003",
-            "exception_name": "Loose Item Barcode Damaged",
-            "event": "loose_item_damage"
-        }, {
-            "exception_id": "AdF002",
-            "exception_name": "Damaged Box Barcode",
-            "event": "box_damage"
-        }],
-        "show_expected_qty": true,
-        "screen_id": "audit_scan",
-        "Cancel_scan": false,
-        "all_peripheral_status": "true",
-        "logout_allowed": "true",
-        "seat_type": "front",
-        "product_info": [],
-        "time_stamp": "1454146877",
-        "api_version": "1",
-        "Loose_sku_list": [{
-            "Sku": "4de68cc826794b53ba8397f3d5dcedd4",
-            "Actual_qty": 0,
-            "Expected_qty": 4
-        }, {
-            "Sku": "23084982cee04e4fa971acafdac016ad",
-            "Actual_qty": 0,
-            "Expected_qty": 4
-        }],
-        "Box_qty_list": [{
-            "Box_serial": "A000000054",
-            "Scan_status": "no_scan",
-            "Actual_qty": 0,
-            "Expected_qty": 4
-        }],
-        "Extra_box_list": [],
-        "Current_box_details": [],
-        "item_in_box_barcode_damage": [],
-        "peripheral_data": [{
-            "pp_type": "projector",
-            "LastPing": "undefined",
-            "controller_namespace": "undefined",
-            "peripheral_status": "disconnected",
-            "controller_id": "undefined",
-            "id": "1",
-            "mode": "auto_update",
-            "peripheral_state": {
-                "coordinate": "undefined",
-                "bot_deltas": [0, 0, 0],
-                "bot_direction": "3"
-            },
-            "pp_id": {
-                "pp_type": "projector",
-                "id": "1"
-            }
-        }],
-        "screen_version": "1",
-        "enable_kq": false,
-        "loose_item_barcode_damage": 0,
-        "mode": "audit",
-        "is_idle": false,
-        "box_barcode_damage": 0,
-        "header_msge_list": [{
-            "details": [],
-            "code": "AdF.H.001",
-            "description": "Scan Box/Items from Slot",
-            "level": "info"
-        }]
-    }
-}
+    console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

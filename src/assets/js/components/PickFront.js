@@ -218,7 +218,7 @@ var PickFront = React.createClass({
                 <div className = 'actions'>
                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
-                   {this.state.PickFrontBinFullStatus && BinFull}
+                   {(this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''}
                 </div>
               
               </div>
@@ -231,7 +231,7 @@ var PickFront = React.createClass({
       case appConstants.PICK_FRONT_PPTL_PRESS:
          var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
          var cancelButton;
-         
+         var BinFull = ( <Button1 disabled = {false} text = {_("Bin full")} module ={appConstants.PICK_FRONT} action={appConstants.BIN_FULL} color={"black"} /> );
          if(this.state.PickFrontExceptionStatus == false){
           
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
@@ -262,9 +262,10 @@ var PickFront = React.createClass({
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
-
-               {cancelButton}
-           
+                <div className = 'actions'>
+                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                   {(this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''}
+                </div>
               </div>
             );
          }else{

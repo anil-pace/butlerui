@@ -1433,6 +1433,38 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _getReleaseActiveStatus:function(){
         return (_seatData && _seatData.release_mtu ? true:false);
     },
+    _getDamagedItemsData: function() {
+        var data = {};
+        data["header"] = [];
+        data["footer"] = [];
+        data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Damaged Quantity"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        data["image_url"] = null;
+        var self=this;
+        if (_seatData.damaged_items && Object.keys(_seatData.damaged_items).length > 0) {
+
+            var product_details,product_sku,quantity,total_damaged = 0;
+            _seatData.excess_items.map(function(value, index){
+                    value.product_info.map(function(product_details, index){
+                        if(product_details[0].product_sku){
+                            product_sku=product_details[0].product_sku;
+                            quantity = value.qty;  
+                            total_damaged += quantity     
+                            data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                        }
+                    });
+            });                            
+            data["footer"].push(new this.tableCol(_("Total: ")+total_damaged+_(" items"), "header", false, "small", false, true, true, false));
+        } else {
+            data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+        }
+        return data;
+    },
     _getExcessItemsData: function() {
         var data = {};
         data["header"] = [];
@@ -1921,6 +1953,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontKQQuantity"] = this.getScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                break;
+            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExcessItems"] = this._getDamagedItemsData();
+                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
                 break;
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();

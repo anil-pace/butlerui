@@ -172,6 +172,30 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+          var _button;
+          _button = (<div className = "staging-action">                          
+                          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+                    </div>);
+          this._component = (
+              <div className='grid-container exception'>
+                <Modal />
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Scan excess item quantity")}</div>
+                      <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
+                      {_button}
+                    </div>
+                  </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                </div>
+              </div>
+          );      
+        break; 
 
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
@@ -195,7 +219,8 @@ var PutFront = React.createClass({
                 </div>
               </div>
             );
-          }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+          }
+          else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
             var btnComp;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }

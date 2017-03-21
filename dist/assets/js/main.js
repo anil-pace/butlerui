@@ -43965,6 +43965,30 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+          var _button;
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+                    ));
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+                      React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
+                      _button
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+          );      
+        break; 
 
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
@@ -43988,7 +44012,8 @@ var PutFront = React.createClass({displayName: "PutFront",
                 )
               )
             );
-          }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+          }
+          else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
             var btnComp;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
@@ -45475,6 +45500,7 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
+	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_entity_damaged",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
@@ -45610,8 +45636,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.207/wss",
+	INTERFACE_IP : "https://192.168.8.207"
 };
 module.exports = configConstants;
 
@@ -49682,6 +49708,38 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _getReleaseActiveStatus:function(){
         return (_seatData && _seatData.release_mtu ? true:false);
     },
+    _getDamagedItemsData: function() {
+        var data = {};
+        data["header"] = [];
+        data["footer"] = [];
+        data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Damaged Quantity"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        data["image_url"] = null;
+        var self=this;
+        if (_seatData.damaged_items && Object.keys(_seatData.damaged_items).length > 0) {
+
+            var product_details,product_sku,quantity,total_damaged = 0;
+            _seatData.excess_items.map(function(value, index){
+                    value.product_info.map(function(product_details, index){
+                        if(product_details[0].product_sku){
+                            product_sku=product_details[0].product_sku;
+                            quantity = value.qty;  
+                            total_damaged += quantity     
+                            data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                        }
+                    });
+            });                            
+            data["footer"].push(new this.tableCol(_("Total: ")+total_damaged+_(" items"), "header", false, "small", false, true, true, false));
+        } else {
+            data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+        }
+        return data;
+    },
     _getExcessItemsData: function() {
         var data = {};
         data["header"] = [];
@@ -50896,6 +50954,111 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
+    if(data.state_data.screen_id === 'put_front_waiting_for_rack'){
+        data.state_data = {
+        "seat_name": "front_10",
+        "screen_id": "put_front_scan",
+        "screen_version": "1",
+        "structure": [2, 4],
+        "notification_list": [],
+        "scan_details": {
+            "current_qty": "0",
+            "total_qty": "0",
+            "kq_allowed": false
+        },
+        "item_uid": "e4a6f863-8ae3-49bc-b285-cac71f18c817",
+        "peripheral_data": [],
+        "logout_allowed": true,
+        "exception_allowed": [{
+            "exception_id": "PtF002",
+            "exception_name": "Space Unavailable To Put",
+            "event": "space_unavailable"
+        },{
+            "exception_id": "PtF003",
+            "exception_name": "Entity Damaged",
+            "event": "entity_damaged"
+        },
+         {
+            "exception_id": "PtF001",
+            "exception_name": "Damaged or Missing",
+            "event": "damaged_or_missing"
+        }],
+        "mode": "put",
+        "is_idle": false,
+        "seat_type": "front",
+        "product_info": [],
+        "time_stamp": "1455794289",
+        "ppsbin_list": [{
+            "bin_info": [],
+            "ppsbin_id": "4",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 1]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "3",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 2]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "2",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 3]
+        }, {
+            "bin_info": [{
+                "product_sku": "d200164eec5f401b8797081dd6ec928d",
+                "type": "item",
+                "quantity": 1
+            }],
+            "ppsbin_id": "1",
+            "selected_state": true,
+            "ppsbin_state": "IN USE",
+            "ppsbin_count": "1",
+            "coordinate": [1, 4]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "8",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 1]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "7",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 2]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "6",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 3]
+        }, {
+            "bin_info": [],
+            "ppsbin_id": "5",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 4]
+        }],
+        "all_peripheral_status": "true",
+        "header_msge_list": [{
+            "details": ["1"],
+            "code": "PtF.H.004",
+            "description": "Scan entity from bin  1",
+            "level": "info"
+        }],
+        "api_version": "1"
+    }
+    }
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

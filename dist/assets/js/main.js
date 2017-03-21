@@ -50270,7 +50270,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
                 data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
-                break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();

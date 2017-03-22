@@ -43977,7 +43977,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
                       React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
                       _button
                     )
@@ -45500,7 +45500,7 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
-	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_entity_damaged",
+	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
@@ -45636,8 +45636,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.207/wss",
-	INTERFACE_IP : "https://192.168.8.207"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
 };
 module.exports = configConstants;
 
@@ -50229,6 +50229,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontKQQuantity"] = this.getScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
+            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExcessItems"] = this._getDamagedItemsData();
+                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -50974,9 +50982,9 @@ var putSeatData = function(data) {
             "exception_name": "Space Unavailable To Put",
             "event": "space_unavailable"
         },{
-            "exception_id": "PtF003",
+            "exception_id": "PtF004",
             "exception_name": "Entity Damaged",
-            "event": "entity_damaged"
+            "event": "physically_damaged"
         },
          {
             "exception_id": "PtF001",

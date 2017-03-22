@@ -178,7 +178,11 @@ var appConstants = {
 	HIDE_SPINNER:"HIDE_SPINNER",
 	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm",
 	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
-	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal"
+	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal",
+	PUT_BACK_INVOICE : "put_back_invoice",
+	EXIT_INVOICE : "EXIT_INVOICE",
+	DECLINE_CANCEL_INVOICE : "DECLINE_CANCEL_INVOICE",
+	CONFIRM_EXIT_INVOICE : "CONFIRM_EXIT_INVOICE"
 
 };
 

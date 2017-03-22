@@ -278,7 +278,8 @@ var serverMessages = {
     "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
-    "PpB001" : "Excess quantity"
+    "PpB001" : "Excess quantity",
+    "PtB.H.012" : "Scan or Enter {0} number"
 };
 
 

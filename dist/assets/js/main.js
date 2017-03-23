@@ -43452,8 +43452,8 @@ var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
 function getStateData(){
   return mainstore.getScreenData();
-
 }
+
 var PutBack = React.createClass({displayName: "PutBack",
   _component:'',
   _notification:'',
@@ -43492,7 +43492,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                 el.value = '';
             },
             accepted: function(e, keypressed, el) {
-                if (e.target.value === '') {
+                if (e.target.value.trim() === '') {
                 } else {
                     var data = {
                         "event_name": "process_barcode",
@@ -43500,7 +43500,6 @@ var PutBack = React.createClass({displayName: "PutBack",
                             "barcode": e.target.value.trim(),
                         }
                     }
-                    //console.log(data)
                     CommonActions.postDataToInterface(data);
                 }
             }
@@ -43537,7 +43536,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         }
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
-          this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag?React.createElement("div", null, "Invoice number: ", this.state.InvoiceRequired.invoiceId):"", 
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, _("Invoice number:"), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
           React.createElement(Modal, null), 
           binComponent, 
           React.createElement("div", {className: "staging-action"}, 
@@ -43584,6 +43583,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, _("Invoice number:"), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
           React.createElement(Modal, null), 
           binComponent, 
 
@@ -50099,6 +50099,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
                 break;
             case appConstants.PUT_BACK_INVOICE:
                 data["HeaderMessg"] = this.getHeaderMessg();

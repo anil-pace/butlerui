@@ -1762,6 +1762,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
                 break;
             case appConstants.PUT_BACK_INVOICE:
                 data["HeaderMessg"] = this.getHeaderMessg();

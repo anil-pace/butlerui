@@ -24,8 +24,8 @@ var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
 function getStateData(){
   return mainstore.getScreenData();
-
 }
+
 var PutBack = React.createClass({
   _component:'',
   _notification:'',
@@ -64,7 +64,7 @@ var PutBack = React.createClass({
                 el.value = '';
             },
             accepted: function(e, keypressed, el) {
-                if (e.target.value === '') {
+                if (e.target.value.trim() === '') {
                 } else {
                     var data = {
                         "event_name": "process_barcode",
@@ -72,7 +72,6 @@ var PutBack = React.createClass({
                             "barcode": e.target.value.trim(),
                         }
                     }
-                    //console.log(data)
                     CommonActions.postDataToInterface(data);
                 }
             }
@@ -109,7 +108,7 @@ var PutBack = React.createClass({
         }
         this._component = (
           <div className='grid-container'>
-          {this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag?<div>Invoice number: {this.state.InvoiceRequired.invoiceId}</div>:""}
+          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(<div className="gor-invoice-put-back">{_("Invoice number:")} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>):""}
           <Modal/>
           {binComponent}
           <div className = 'staging-action' >
@@ -156,6 +155,7 @@ var PutBack = React.createClass({
         this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
           <div className='grid-container'>
+          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(<div className="gor-invoice-put-back">{_("Invoice number:")} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>):""}
           <Modal />
           {binComponent}
 

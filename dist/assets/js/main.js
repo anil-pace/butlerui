@@ -41067,6 +41067,30 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._component = this.getExceptionComponent();
         }
       break;
+            case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
+          var _button;
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+                    ));
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+                      React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height"}), 
+                      _button
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+          );      
+        break; 
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           /**
@@ -43977,7 +44001,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
                       React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
                       _button
                     )
@@ -45505,6 +45529,7 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_damaged_item",
+	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",
@@ -45636,8 +45661,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
-	INTERFACE_IP : "https://192.168.3.106:5000"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "http://localhost:5000"
 };
 module.exports = configConstants;
 
@@ -49718,10 +49743,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         data["image_url"] = null;
         var self=this;
-        if (_seatData.damaged_items && Object.keys(_seatData.damaged_items).length > 0) {
+        if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
 
             var product_details,product_sku,quantity,total_damaged = 0;
-            _seatData.excess_items.map(function(value, index){
+            _seatData.physically_damaged_items.map(function(value, index){
                     value.product_info.map(function(product_details, index){
                         if(product_details[0].product_sku){
                             product_sku=product_details[0].product_sku;
@@ -49774,6 +49799,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     _getExcessExceptionFlag:function(){
         if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
+            return false;
+        }
+        return true;
+    },
+    _getDamagedExceptionFlag:function(){
+        if (_seatData.physically_damaged_items != undefined && _seatData.physically_damaged_items.length !== 0) {
             return false;
         }
         return true;
@@ -50234,8 +50265,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
-                data["PutFrontExcessItems"] = this._getDamagedItemsData();
-                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 break;
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -50375,6 +50406,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                 data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
                 data["PickFrontScreenId"] = this.getScreenId();

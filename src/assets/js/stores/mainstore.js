@@ -1443,10 +1443,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         data["image_url"] = null;
         var self=this;
-        if (_seatData.damaged_items && Object.keys(_seatData.damaged_items).length > 0) {
+        if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
 
             var product_details,product_sku,quantity,total_damaged = 0;
-            _seatData.excess_items.map(function(value, index){
+            _seatData.physically_damaged_items.map(function(value, index){
                     value.product_info.map(function(product_details, index){
                         if(product_details[0].product_sku){
                             product_sku=product_details[0].product_sku;
@@ -1499,6 +1499,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     _getExcessExceptionFlag:function(){
         if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
+            return false;
+        }
+        return true;
+    },
+    _getDamagedExceptionFlag:function(){
+        if (_seatData.physically_damaged_items != undefined && _seatData.physically_damaged_items.length !== 0) {
             return false;
         }
         return true;
@@ -1959,8 +1965,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
-                data["PutFrontExcessItems"] = this._getDamagedItemsData();
-                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 break;
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -2100,6 +2106,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                 data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
                 data["PickFrontScreenId"] = this.getScreenId();

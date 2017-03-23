@@ -286,6 +286,30 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
       break;
+            case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
+          var _button;
+          _button = (<div className = "staging-action">                          
+                          <Button1 disabled = {this.state.PickFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PICK_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+                    </div>);
+          this._component = (
+              <div className='grid-container exception'>
+                <Modal />
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Scan damaged entity")}</div>
+                      <TabularData data={this.state.PickFrontDamagedItems}  className='limit-height' />
+                      {_button}
+                    </div>
+                  </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                </div>
+              </div>
+          );      
+        break; 
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           /**

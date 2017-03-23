@@ -2107,7 +2107,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
                 break;
-            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+            case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                  data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();

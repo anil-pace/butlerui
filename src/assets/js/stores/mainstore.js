@@ -2036,8 +2036,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-                data["PickFrontBinFullStatus"] = this._getBinFullStatus();
                 data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
                 break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
                 data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
@@ -2057,6 +2058,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["BinMapDetails"] =  this._getBinMapDetails();                               
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();

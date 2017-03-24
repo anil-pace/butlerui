@@ -38598,7 +38598,8 @@ var Button1 = React.createClass({displayName: "Button1",
                             break;  
                             case appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS:
                                 data["event_name"] = "physically_damaged";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]=null;
+                                ActionCreators.postDataToInterface(data);
                                 break;                    
                             default:
                                 return true;
@@ -45667,8 +45668,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
-	INTERFACE_IP : "https://192.168.3.106:5000"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "https://localhost:5000"
 };
 module.exports = configConstants;
 

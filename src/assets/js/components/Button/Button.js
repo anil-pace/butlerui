@@ -264,7 +264,8 @@ var Button1 = React.createClass({
                             break;  
                             case appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS:
                                 data["event_name"] = "physically_damaged";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]=null;
+                                ActionCreators.postDataToInterface(data);
                                 break;                    
                             default:
                                 return true;

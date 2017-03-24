@@ -104,7 +104,8 @@ var Button1 = React.createClass({
                                 data["event_data"]["action"] = "cancel_invalid_item_in_tote",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["item_uid"] = mainstore.getItemUid();
-                                ActionCreators.postDataToInterface(data);      
+                                ActionCreators.postDataToInterface(data);   
+
                             default:
                                 return true;
                         }
@@ -260,7 +261,11 @@ var Button1 = React.createClass({
                             data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
-                            break;                      
+                            break;  
+                            case appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS:
+                                data["event_name"] = "physically_damaged";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                break;                    
                             default:
                                 return true;
                         }

@@ -38438,7 +38438,8 @@ var Button1 = React.createClass({displayName: "Button1",
                                 data["event_data"]["action"] = "cancel_invalid_item_in_tote",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["item_uid"] = mainstore.getItemUid();
-                                ActionCreators.postDataToInterface(data);      
+                                ActionCreators.postDataToInterface(data);   
+
                             default:
                                 return true;
                         }
@@ -38594,7 +38595,11 @@ var Button1 = React.createClass({displayName: "Button1",
                             data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
-                            break;                      
+                            break;  
+                            case appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS:
+                                data["event_name"] = "physically_damaged";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                break;                    
                             default:
                                 return true;
                         }
@@ -41070,7 +41075,7 @@ var PickFront = React.createClass({displayName: "PickFront",
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+                          React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, color: "orange"})
                     ));
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -45571,6 +45576,7 @@ var appConstants = {
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
 	SEND_EXCESS_ITEMS_BIN:"SEND_EXCESS_ITEMS_BIN",
+	CONFIRM_PHYSICALLY_DAMAGED_ITEMS:"CONFIRM_PHYSICALLY_DAMAGED_ITEMS",
 	AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:"audit_loose_item_damage_exception",
 	AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:"audit_box_damage_exception",
 	AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:"audit_item_in_box_damage_exception",
@@ -45661,8 +45667,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://localhost:8888/ws",
-	INTERFACE_IP : "https://localhost:5000"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
 };
 module.exports = configConstants;
 
@@ -51001,111 +51007,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    if(data.state_data.screen_id === 'put_front_waiting_for_rack'){
-        data.state_data = {
-        "seat_name": "front_10",
-        "screen_id": "put_front_scan",
-        "screen_version": "1",
-        "structure": [2, 4],
-        "notification_list": [],
-        "scan_details": {
-            "current_qty": "0",
-            "total_qty": "0",
-            "kq_allowed": false
-        },
-        "item_uid": "e4a6f863-8ae3-49bc-b285-cac71f18c817",
-        "peripheral_data": [],
-        "logout_allowed": true,
-        "exception_allowed": [{
-            "exception_id": "PtF002",
-            "exception_name": "Space Unavailable To Put",
-            "event": "space_unavailable"
-        },{
-            "exception_id": "PtF004",
-            "exception_name": "Entity Damaged",
-            "event": "physically_damaged"
-        },
-         {
-            "exception_id": "PtF001",
-            "exception_name": "Damaged or Missing",
-            "event": "damaged_or_missing"
-        }],
-        "mode": "put",
-        "is_idle": false,
-        "seat_type": "front",
-        "product_info": [],
-        "time_stamp": "1455794289",
-        "ppsbin_list": [{
-            "bin_info": [],
-            "ppsbin_id": "4",
-            "selected_state": false,
-            "ppsbin_state": "empty",
-            "ppsbin_count": "0",
-            "coordinate": [1, 1]
-        }, {
-            "bin_info": [],
-            "ppsbin_id": "3",
-            "selected_state": false,
-            "ppsbin_state": "empty",
-            "ppsbin_count": "0",
-            "coordinate": [1, 2]
-        }, {
-            "bin_info": [],
-            "ppsbin_id": "2",
-            "selected_state": false,
-            "ppsbin_state": "empty",
-            "ppsbin_count": "0",
-            "coordinate": [1, 3]
-        }, {
-            "bin_info": [{
-                "product_sku": "d200164eec5f401b8797081dd6ec928d",
-                "type": "item",
-                "quantity": 1
-            }],
-            "ppsbin_id": "1",
-            "selected_state": true,
-            "ppsbin_state": "IN USE",
-            "ppsbin_count": "1",
-            "coordinate": [1, 4]
-        }, {
-            "bin_info": [],
-            "ppsbin_id": "8",
-            "selected_state": false,
-            "ppsbin_state": "empty",
-            "ppsbin_count": "0",
-            "coordinate": [2, 1]
-        }, {
-            "bin_info": [],
-            "ppsbin_id": "7",
-            "selected_state": false,
-            "ppsbin_state": "empty",
-            "ppsbin_count": "0",
-            "coordinate": [2, 2]
-        }, {
-            "bin_info": [],
-            "ppsbin_id": "6",
-            "selected_state": false,
-            "ppsbin_state": "empty",
-            "ppsbin_count": "0",
-            "coordinate": [2, 3]
-        }, {
-            "bin_info": [],
-            "ppsbin_id": "5",
-            "selected_state": false,
-            "ppsbin_state": "empty",
-            "ppsbin_count": "0",
-            "coordinate": [2, 4]
-        }],
-        "all_peripheral_status": "true",
-        "header_msge_list": [{
-            "details": ["1"],
-            "code": "PtF.H.004",
-            "description": "Scan entity from bin  1",
-            "level": "info"
-        }],
-        "api_version": "1"
-    }
-    }
+
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

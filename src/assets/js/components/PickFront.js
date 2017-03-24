@@ -539,7 +539,7 @@ var PickFront = React.createClass({
                    {this.state.PickFrontBinFullStatus && BinFull}
                 </div>
               
-
+                <OrderDetails orderData = {this.state.PickFrontBoxOrderDetails} />
               </div>
               
             );

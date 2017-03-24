@@ -563,7 +563,7 @@ var PickFront = React.createClass({
                    {this.state.PickFrontBinFullStatus && BinFull}
                 </div>
               
-
+                
               </div>
               
             );

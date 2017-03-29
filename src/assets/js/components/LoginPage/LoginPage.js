@@ -139,11 +139,12 @@ var LoginPage = React.createClass({
     var locale = window.sessionStorage.getItem("localeData");
     var _languageDropDown=(
               <select className="selectLang" value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-                  <option value="en-US">{_("English")}</option>
-                  <option value="ja-JP">{_("日本語")}</option>
-                  <option value="de-DE">{_("Deutsche")}</option>
-                  <option value="zh-ZH">{_("中文")}</option>
-                  <option value="fr-FR">{_("Français")}</option>
+                  <option value="en-US">{"English"}</option>
+                  <option value="ja-JP">{"日本語"}</option>
+                  <option value="de-DE">{"Deutsche"}</option>
+                  <option value="zh-ZH">{"中文"}</option>
+                  <option value="fr-FR">{"Français"}</option>
+                  <option value="es-ES">{"Español"}</option>
               </select>
       );
     var display = this.state.flag === true ? 'block' : 'none';

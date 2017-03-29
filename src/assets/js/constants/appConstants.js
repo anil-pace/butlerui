@@ -183,12 +183,15 @@ var appConstants = {
 	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm",
 	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
 	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal",
+	PUT_BACK_INVOICE : "put_back_invoice",
+	EXIT_INVOICE : "EXIT_INVOICE",
+	DECLINE_CANCEL_INVOICE : "DECLINE_CANCEL_INVOICE",
+	CONFIRM_EXIT_INVOICE : "CONFIRM_EXIT_INVOICE",
 	/*Constants for order details*/
 	VOLUME_UNIT:"vol_unit",
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
 	ENTITY_DAMAGED:"entity_damaged"
-
 };
 
 module.exports = appConstants;

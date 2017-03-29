@@ -126,9 +126,10 @@ var Header = React.createClass({
     render: function() {    
         var logoutClass;
         var cssClass;  
-        var disableScanClass;    
+        var disableScanClass;
+        var invoiceFlow = mainstore.getScreenId()===appConstants.PUT_BACK_INVOICE?true:false; 
         this.getExceptionMenu();
-        if(this.state.spinner || this.state.systemIsIdle){
+        if(this.state.spinner || this.state.systemIsIdle || invoiceFlow){
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else{
             cssClass = 'keyboard-actions'

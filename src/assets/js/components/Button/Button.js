@@ -11,24 +11,24 @@ function closeModalBox(){
 };
 
 var Button1 = React.createClass({
-            _checklistClass: '',
-            removeTextField: function(){
-                  $('.modal-body').find('input:text').val('');
-                },
+    _checklistClass: '',
+    removeTextField: function(){
+      $('.modal-body').find('input:text').val('');
+  },
 
 
-            performAction: function(module, action) {
-                var peripheralId;
-                var data = {
-                    "event_name": "",
-                    "event_data": {}
-                };
-                var peripheralData ={
-                    "peripheral_id": "",
-                    "peripheral_type": ""
-                };
+  performAction: function(module, action) {
+    var peripheralId;
+    var data = {
+        "event_name": "",
+        "event_data": {}
+    };
+    var peripheralData ={
+        "peripheral_id": "",
+        "peripheral_type": ""
+    };
 
-                switch (module) {
+switch (module) {
                     case appConstants.PUT_BACK:
                         switch (action) {
                             case appConstants.STAGE_ONE_BIN:
@@ -98,6 +98,18 @@ var Button1 = React.createClass({
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["item_uid"] = mainstore.getItemUid();
                                 ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.EXIT_INVOICE:
+                                this.showModal(null, appConstants.EXIT_INVOICE);
+                                break;
+                                case appConstants.DECLINE_CANCEL_INVOICE:
+                                closeModalBox();
+                                break;
+                                case appConstants.CONFIRM_EXIT_INVOICE:
+                                data["event_name"] = "close_invoice";
+                                data["event_data"]["barcode"] = mainstore.getInvoiceStatus().invoiceId;
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
                                 break;
                             case appConstants.CANCEL_TOTE_EXCEPTION:
                                 data["event_name"] = "put_back_exception";
@@ -351,86 +363,85 @@ var Button1 = React.createClass({
                                 return true;
                         }
                         break;
+        case appConstants.PERIPHERAL_MANAGEMENT:
+        switch(action) {
+            case appConstants.ADD_SCANNER:
+            this.showModal(null, "enter_barcode");
+            break;
 
-                    case appConstants.PERIPHERAL_MANAGEMENT:
-                        switch(action) {
-                            case appConstants.ADD_SCANNER:
-                                this.showModal(null, "enter_barcode");
-                            break;
+            case appConstants.ADD_SCANNER_DETAILS: 
+            peripheralId = document.getElementById("add_scanner").value;
+            peripheralData["peripheral_id"] = peripheralId;
+            peripheralData["peripheral_type"]= "barcode_scanner";
+            ActionCreators.updateData(peripheralData, 'POST');
+            closeModalBox();
+            document.getElementById("add_scanner").value = '';
+            break;
 
-                            case appConstants.ADD_SCANNER_DETAILS: 
-                                peripheralId = document.getElementById("add_scanner").value;
-                                peripheralData["peripheral_id"] = peripheralId;
-                                peripheralData["peripheral_type"]= "barcode_scanner";
-                                ActionCreators.updateData(peripheralData, 'POST');
-                                closeModalBox();
-                                document.getElementById("add_scanner").value = '';
-                                break;
-
-                            case appConstants.CANCEL_ADD_SCANNER:                            
-                                closeModalBox();
-                                location.reload();
-                                break;
-                            case appConstants.CANCEL_CLOSE_SCANNER:                            
-                                closeModalBox();
+            case appConstants.CANCEL_ADD_SCANNER:                            
+            closeModalBox();
+            location.reload();
+            break;
+            case appConstants.CANCEL_CLOSE_SCANNER:                            
+            closeModalBox();
                                 //location.reload();
                                 break;
-                            case appConstants.CANCEL_PPTL:                           
+                                case appConstants.CANCEL_PPTL:                           
                                 location.reload();
                                 break;
-                        }   
-                        break;
-                    case appConstants.PRE_PUT:
-                        switch (action) {
-                            case appConstants.CANCEL_EXCEPTION_MODAL:
+                            }   
+                            break;
+                            case appConstants.PRE_PUT:
+                            switch (action) {
+                                case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PRE_PUT, "cancel_exception");
                                 break;
-                            case appConstants.CANCEL_SCAN:
+                                case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_barcode_scan";
                                 data["event_data"]["barcode"] = this.props.barcode;
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                            case appConstants.RELEASE_MTU:
+                                case appConstants.RELEASE_MTU:
                                 data["event_name"] = "release_mtu";
                                 ActionCreators.postDataToInterface(data);
                                 break;                            
-                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                                case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
                                 break;   
-                            case appConstants.SEND_EXCESS_ITEMS_BIN:
+                                case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "pre_put_exception";
                                 data["event_data"]["action"] ="finish_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;                                 
-                            case appConstants.CANCEL_LAST_SCAN:
+                                case appConstants.CANCEL_LAST_SCAN:
                                 data["event_name"] = "cancel_last_scan";
                                 ActionCreators.postDataToInterface(data);
                                 break;   
-                            case appConstants.CLOSE_CANCEL_EXCEPTION:
-                               closeModalBox(); 
-                               break;                               
-                            default:
+                                case appConstants.CLOSE_CANCEL_EXCEPTION:
+                                closeModalBox(); 
+                                break;                               
+                                default:
                                 return true;
+                            }
+                            break;
+                            default:
+                            return true;
                         }
-                        break;
-                    default:
-                        return true;
-                }
-            },
-            showModal: function(data,type) {
-                 ActionCreators.showModal({
-                    data:data,
-                    type:type
-                 });
-                 $('.modal').modal();
-            },
-            render: function() {
-                
-                if (this.props.disabled == false)
-                    return ( < a className = {
+                    },
+                    showModal: function(data,type) {
+                       ActionCreators.showModal({
+                        data:data,
+                        type:type
+                    });
+                       $('.modal').modal();
+                   },
+                   render: function() {
+                    
+                    if (this.props.disabled == false)
+                        return ( < a className = {
                             this.props.color == "orange" ? "custom-button orange " : "custom-button black "
                         }
                         onClick = {
@@ -438,14 +449,14 @@ var Button1 = React.createClass({
                         }  > {
                             this.props.text
                         } < /a>
-                    );
-                else
-                    return ( < a className = {
-                            this.props.color == "orange" ? "custom-button disabled orange" : "custom-button disabled black"
-                        } > {
-                            this.props.text
-                        } < /a>);
-                    }
-            });
+                        );
+                        else
+                            return ( < a className = {
+                                this.props.color == "orange" ? "custom-button disabled orange" : "custom-button disabled black"
+                            } > {
+                                this.props.text
+                            } < /a>);
+                        }
+                    });
 
-        module.exports = Button1;
+                    module.exports = Button1;

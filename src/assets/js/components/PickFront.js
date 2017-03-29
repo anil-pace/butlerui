@@ -562,8 +562,7 @@ var PickFront = React.createClass({
                    {editButton}
                    {this.state.PickFrontBinFullStatus && BinFull}
                 </div>
-              
-                
+                <OrderDetails orderData = {this.state.PickFrontBoxOrderDetails} />
               </div>
               
             );

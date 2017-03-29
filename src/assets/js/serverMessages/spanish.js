@@ -1,4 +1,4 @@
-var spanish ={
+var spanish = {
 	"Actions": "Acciones",
 	"Actual": "Real",
 	"Actual Quantity": "Cantidad Real",
@@ -344,3 +344,4 @@ var spanish ={
 	"{0} oversized entities recorded.WMS notified": "{0} art\u00edculos extra grandes registrados. WMS notificado",
 	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado"
 }
+module.exports = spanish;

@@ -10,6 +10,7 @@ var english = require('../serverMessages/english');
 var japanese = require('../serverMessages/japanese');
 var german = require('../serverMessages/german');
 var french = require('../serverMessages/french');
+var spanish = require('../serverMessages/spanish');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -1163,6 +1164,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
             case "fr-FR":
                 _.setTranslation(french);
+                break;
+            case "es-ES":
+                _.setTranslation(spanish);
                 break;
             default:
                 return true;

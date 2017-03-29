@@ -37209,97 +37209,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/AuditStore":309,"../stores/mainstore":315,"../utils/utils.js":316,"./Button/Button":241,"./Button/Button.js":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ.js":269,"./Rack/MsuRack.js":280,"./Reconcile":284,"./Spinner/LoaderButler":285,"./SystemIdle":289,"./TabularData":294,"react":230}],235:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var BinMap = React.createClass({displayName: "BinMap",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.mapDetails || {}));
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
-				}
-
-			}
-		}
-		switch(leftCol.length){
-			case 1:
-			leftColCount = "one";
-			break;
-			case 2:
-			leftColCount = "two";
-			break;
-			case 3:
-			leftColCount = "three";
-			break;
-			case 4:
-			leftColCount = "four";
-			break;
-			default:
-			leftColCount = "zero";
-		}
-		switch(rightCol.length){
-			case 1:
-			rightColCount = "one";
-			break;
-			case 2:
-			rightColCount = "two";
-			break;
-			case 3:
-			rightColCount = "three";
-			break;
-			case 4:
-			rightColCount = "four";
-			break;
-			default:
-			rightColCount = "zero";
-		}
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol,
-			leftColCount:leftColCount,
-			rightColCount:rightColCount
-		}
-	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
-		return (
-				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.leftCol
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
-					React.createElement("ul", null, 
-					mapStructure.rightCol
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = BinMap;
-
-},{"../constants/resourceConstants":299,"react":230}],236:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/AuditStore":310,"../stores/mainstore":316,"../utils/utils.js":317,"./Button/Button":240,"./Button/Button.js":240,"./CurrentSlot":242,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":265,"./ProductDetails/KQ.js":268,"./Rack/MsuRack.js":279,"./Reconcile":283,"./Spinner/LoaderButler":284,"./SystemIdle":287,"./TabularData":292,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -37672,7 +37582,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":315,"../Modal/Modal":252,"react":230}],237:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":316,"../Modal/Modal":251,"react":230}],236:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./Bin.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -37738,7 +37648,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":312,"./Bin.react":236,"react":230}],238:[function(require,module,exports){
+},{"../../stores/PutBackStore":313,"./Bin.react":235,"react":230}],237:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var Modal = require('../Modal/Modal');
@@ -38174,7 +38084,7 @@ var Bin = React.createClass({displayName: "Bin",
 
 module.exports = Bin;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":315,"../Modal/Modal":252,"react":230}],239:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/mainstore":316,"../Modal/Modal":251,"react":230}],238:[function(require,module,exports){
 var React = require('react');
 var Bin = require('./BinsFlex.react');
 var PutBackStore = require('../../stores/PutBackStore');
@@ -38291,7 +38201,7 @@ var Bins = React.createClass({displayName: "Bins",
 
 module.exports = Bins;
 
-},{"../../stores/PutBackStore":312,"./BinsFlex.react":238,"react":230}],240:[function(require,module,exports){
+},{"../../stores/PutBackStore":313,"./BinsFlex.react":237,"react":230}],239:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -38331,7 +38241,7 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 module.exports  = BoxSerial;
 
-},{"../constants/resourceConstants":299,"react":230}],241:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"react":230}],240:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38789,7 +38699,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
                     module.exports = Button1;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/PickFrontStore":311,"../../stores/PutBackStore":312,"../../stores/mainstore":315,"react":230}],242:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/PickFrontStore":312,"../../stores/PutBackStore":313,"../../stores/mainstore":316,"react":230}],241:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
@@ -38865,7 +38775,7 @@ var IconButton = React.createClass({displayName: "IconButton",
 
 module.exports = IconButton;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/AuditStore":309,"react":230}],243:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../stores/AuditStore":310,"react":230}],242:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -38890,7 +38800,7 @@ var CurrentSlot = React.createClass({displayName: "CurrentSlot",
 
 module.exports = CurrentSlot;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],244:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],243:[function(require,module,exports){
 var React = require('react');[]
 var ExceptionHeader = require('./ExceptionHeader');
 var ExceptionList = require('./ExceptionList');
@@ -38908,7 +38818,7 @@ var Exception = React.createClass({displayName: "Exception",
 
 module.exports = Exception;
 
-},{"./ExceptionHeader":245,"./ExceptionList":246,"react":230}],245:[function(require,module,exports){
+},{"./ExceptionHeader":244,"./ExceptionList":245,"react":230}],244:[function(require,module,exports){
 var React = require('react');
 
 var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
@@ -38924,7 +38834,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"react":230}],246:[function(require,module,exports){
+},{"react":230}],245:[function(require,module,exports){
 var React = require('react');
 var ExceptionListItem = require('./ExceptionListItem');
 
@@ -38950,7 +38860,7 @@ var ExceptionList = React.createClass({displayName: "ExceptionList",
 
 module.exports = ExceptionList;
 
-},{"./ExceptionListItem":247,"react":230}],247:[function(require,module,exports){
+},{"./ExceptionListItem":246,"react":230}],246:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -39026,7 +38936,7 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 
 module.exports = ExceptionListItem;
 
-},{"../../actions/CommonActions":233,"../../stores/mainstore":315,"react":230}],248:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../stores/mainstore":316,"react":230}],247:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 
@@ -39068,7 +38978,7 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
 
 module.exports = ExceptionHeader;
 
-},{"../stores/mainstore":315,"react":230}],249:[function(require,module,exports){
+},{"../stores/mainstore":316,"react":230}],248:[function(require,module,exports){
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -39252,7 +39162,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../stores/mainstore":315,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],250:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../stores/mainstore":316,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],249:[function(require,module,exports){
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var Router = require('react-router');
@@ -39394,11 +39304,12 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     var locale = window.sessionStorage.getItem("localeData");
     var _languageDropDown=(
               React.createElement("select", {className: "selectLang", value: this.state.getCurrentLang, ref: "language", onChange: this.changeLanguage}, 
-                  React.createElement("option", {value: "en-US"}, _("English")), 
-                  React.createElement("option", {value: "ja-JP"}, _("日本語")), 
-                  React.createElement("option", {value: "de-DE"}, _("Deutsche")), 
-                  React.createElement("option", {value: "zh-ZH"}, _("中文")), 
-                  React.createElement("option", {value: "fr-FR"}, _("Français"))
+                  React.createElement("option", {value: "en-US"}, "English"), 
+                  React.createElement("option", {value: "ja-JP"}, "日本語"), 
+                  React.createElement("option", {value: "de-DE"}, "Deutsche"), 
+                  React.createElement("option", {value: "zh-ZH"}, "中文"), 
+                  React.createElement("option", {value: "fr-FR"}, "Français"), 
+                  React.createElement("option", {value: "es-ES"}, "Español")
               )
       );
     var display = this.state.flag === true ? 'block' : 'none';
@@ -39505,7 +39416,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
 
 module.exports = LoginPage;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../constants/svgConstants":300,"../../stores/loginstore":314,"../../stores/mainstore":315,"../../utils/utils.js":316,"../Operator":260,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],251:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../constants/svgConstants":300,"../../stores/loginstore":315,"../../stores/mainstore":316,"../../utils/utils.js":317,"../Operator":259,"react":230,"react-addons-linked-state-mixin":73,"react-router":94}],250:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var SystemIdleHeader = require('./SystemIdleHeader');
@@ -39547,7 +39458,7 @@ var MobileSystemIdle = React.createClass({displayName: "MobileSystemIdle",
 });
 module.exports = MobileSystemIdle;
 
-},{"../stores/mainstore":315,"./SplitPPS":288,"./SystemIdleHeader":290,"react":230}],252:[function(require,module,exports){
+},{"../stores/mainstore":316,"./SplitPPS":295,"./SystemIdleHeader":288,"react":230}],251:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -39926,7 +39837,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":311,"../../stores/mainstore":315,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
+},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":312,"../../stores/mainstore":316,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],252:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -40247,7 +40158,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":311,"../../stores/mainstore":315,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],254:[function(require,module,exports){
+},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":312,"../../stores/mainstore":316,"../Button/Button":240,"./ModalFooter":253,"./ModalHeader":254,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
 var React = require('react');
 var ModalFooter = React.createClass({displayName: "ModalFooter",
   render: function () {
@@ -40260,7 +40171,7 @@ var ModalFooter = React.createClass({displayName: "ModalFooter",
 
 module.exports = ModalFooter;
 
-},{"react":230}],255:[function(require,module,exports){
+},{"react":230}],254:[function(require,module,exports){
 var React = require('react');
 var ModalHeader = React.createClass({displayName: "ModalHeader",
   render: function () {
@@ -40276,7 +40187,7 @@ var ModalHeader = React.createClass({displayName: "ModalHeader",
 
 module.exports = ModalHeader;
 
-},{"react":230}],256:[function(require,module,exports){
+},{"react":230}],255:[function(require,module,exports){
 var React = require('react');
 var appConstants = require('../../constants/appConstants');
 var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
@@ -40339,7 +40250,7 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
 
 module.exports = ActiveNavigation;
 
-},{"../../constants/appConstants":297,"react":230}],257:[function(require,module,exports){
+},{"../../constants/appConstants":297,"react":230}],256:[function(require,module,exports){
 var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
@@ -40368,7 +40279,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
 
-},{"./ActiveNavigation.react":256,"./PassiveNavigation.react":258,"react":230}],258:[function(require,module,exports){
+},{"./ActiveNavigation.react":255,"./PassiveNavigation.react":257,"react":230}],257:[function(require,module,exports){
 var React = require('react');
 
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
@@ -40389,7 +40300,7 @@ var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
 
 module.exports = PassiveNavigation;
 
-},{"react":230}],259:[function(require,module,exports){
+},{"react":230}],258:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 
@@ -40442,7 +40353,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":233,"react":230}],260:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"react":230}],259:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -40537,7 +40448,7 @@ var Operator = React.createClass({displayName: "Operator",
 
 module.exports = Operator;
 
-},{"../constants/appConstants":297,"../stores/mainstore":315,"./Audit":234,"./MobileSystemIdle":251,"./PickBack":263,"./PickFront":264,"./PrePut":268,"./PutBack":276,"./PutFront":277,"./Spinner/Overlay":286,"./SystemIdle":289,"react":230}],261:[function(require,module,exports){
+},{"../constants/appConstants":297,"../stores/mainstore":316,"./Audit":234,"./MobileSystemIdle":250,"./PickBack":262,"./PickFront":263,"./PrePut":267,"./PutBack":275,"./PutFront":276,"./Spinner/Overlay":285,"./SystemIdle":287,"react":230}],260:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../../constants/resourceConstants');
 var OrderRow = require('./OrderRow');
@@ -40561,7 +40472,7 @@ var OrderDetails = React.createClass({displayName: "OrderDetails",
 
 module.exports  = OrderDetails;
 
-},{"../../constants/resourceConstants":299,"./OrderRow":262,"react":230}],262:[function(require,module,exports){
+},{"../../constants/resourceConstants":299,"./OrderRow":261,"react":230}],261:[function(require,module,exports){
 var React = require("react");
 var resourceConstants = require('../../constants/resourceConstants');
 
@@ -40584,7 +40495,7 @@ var OrderRow = React.createClass({displayName: "OrderRow",
 
 module.exports  = OrderRow;
 
-},{"../../constants/resourceConstants":299,"react":230}],263:[function(require,module,exports){
+},{"../../constants/resourceConstants":299,"react":230}],262:[function(require,module,exports){
 
 var React = require('react');
 var PickBackStore = require('../stores/PickBackStore');
@@ -40812,7 +40723,7 @@ var PickBack = React.createClass({displayName: "PickBack",
 
 module.exports = PickBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickBackStore":310,"../stores/mainstore":315,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./SystemIdle":289,"./TabularData":294,"react":230}],264:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickBackStore":311,"../stores/mainstore":316,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./SystemIdle":287,"./TabularData":292,"react":230}],263:[function(require,module,exports){
 var React = require('react');
 var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
@@ -41435,7 +41346,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickFrontStore":311,"../stores/mainstore":315,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./BoxSerial.js":240,"./Button/Button":241,"./CurrentSlot":243,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Modal/Modal1":253,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./OrderDetails/OrderDetails.js":261,"./PrdtDetails/ProductDetails.js":265,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Rack/MsuRack.js":280,"./Spinner/LoaderButler":285,"./TabularData":294,"react":230}],265:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/PickFrontStore":312,"../stores/mainstore":316,"./BinMap":293,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./BoxSerial.js":239,"./Button/Button":240,"./CurrentSlot":242,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Modal/Modal1":252,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./OrderDetails/OrderDetails.js":260,"./PrdtDetails/ProductDetails.js":264,"./ProductDetails/KQ":268,"./ProductDetails/KQExceptionDamaged":269,"./ProductDetails/KQExceptionMissing":270,"./ProductDetails/Wrapper":273,"./ProductDetails/WrapperSplitRoll":274,"./Rack/MsuRack.js":279,"./Spinner/LoaderButler":284,"./TabularData":292,"react":230}],264:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -41511,7 +41422,7 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
 
 module.exports = ProductDetails;
 
-},{"./ProductImage":266,"./ProductInfo":267,"react":230}],266:[function(require,module,exports){
+},{"./ProductImage":265,"./ProductInfo":266,"react":230}],265:[function(require,module,exports){
 var React = require('react');
 
 var ProductImage = React.createClass({displayName: "ProductImage",
@@ -41535,7 +41446,7 @@ var ProductImage = React.createClass({displayName: "ProductImage",
 
 module.exports = ProductImage;
 
-},{"react":230}],267:[function(require,module,exports){
+},{"react":230}],266:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = React.createClass({displayName: "ProductInfo",
@@ -41566,7 +41477,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"react":230}],268:[function(require,module,exports){
+},{"react":230}],267:[function(require,module,exports){
 
 var React = require('react');
 var mainstore = require('../stores/mainstore');
@@ -41802,7 +41713,7 @@ var PrePut = React.createClass({displayName: "PrePut",
 
 module.exports = PrePut;
 
-},{"../constants/appConstants":297,"../stores/mainstore":315,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./Reconcile":284,"./TabularData":294,"./mtuNavigation":295,"react":230}],269:[function(require,module,exports){
+},{"../constants/appConstants":297,"../stores/mainstore":316,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./Reconcile":283,"./TabularData":292,"./mtuNavigation":294,"react":230}],268:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -42340,7 +42251,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"react":230}],270:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":316,"react":230}],269:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -42773,7 +42684,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"react":230}],271:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":316,"react":230}],270:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
@@ -43208,7 +43119,7 @@ var KQ = React.createClass({displayName: "KQ",
 
 module.exports = KQ;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"react":230}],272:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":297,"../../constants/resourceConstants":299,"../../stores/mainstore":316,"react":230}],271:[function(require,module,exports){
 var React = require('react');
 var PopUp = React.createClass({displayName: "PopUp", 
   
@@ -43254,7 +43165,7 @@ var PopUp = React.createClass({displayName: "PopUp",
 
 module.exports = PopUp;
 
-},{"react":230}],273:[function(require,module,exports){
+},{"react":230}],272:[function(require,module,exports){
 var React = require('react');
 var CommonActions = require('../../actions/CommonActions');
 var PopUp = require('./PopUp');
@@ -43360,7 +43271,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
 
 module.exports = ProductInfo;
 
-},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../stores/mainstore":315,"../Modal/Modal":252,"./PopUp":272,"react":230}],274:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/resourceConstants":299,"../../stores/mainstore":316,"../Modal/Modal":251,"./PopUp":271,"react":230}],273:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -43393,7 +43304,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":315,"./KQ":269,"./PopUp":272,"./ProductInfo":273,"react":230}],275:[function(require,module,exports){
+},{"../../stores/mainstore":316,"./KQ":268,"./PopUp":271,"./ProductInfo":272,"react":230}],274:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var KQ = require('./KQ');
@@ -43426,7 +43337,7 @@ var Wrapper = React.createClass({displayName: "Wrapper",
 
 module.exports = Wrapper;
 
-},{"../../stores/mainstore":315,"./KQ":269,"./PopUp":272,"./ProductInfo":273,"react":230}],276:[function(require,module,exports){
+},{"../../stores/mainstore":316,"./KQ":268,"./PopUp":271,"./ProductInfo":272,"react":230}],275:[function(require,module,exports){
 
 var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
@@ -43874,7 +43785,7 @@ render: function(data){
 
 module.exports = PutBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../stores/PutBackStore":312,"../stores/mainstore":315,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ":269,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Reconcile":284,"./SystemIdle":289,"./TabularData":294,"./mtuNavigation":295,"react":230}],277:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../stores/PutBackStore":313,"../stores/mainstore":316,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./ExceptionHeader":247,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./PrdtDetails/ProductImage.js":265,"./ProductDetails/KQ":268,"./ProductDetails/Wrapper":273,"./ProductDetails/WrapperSplitRoll":274,"./Reconcile":283,"./SystemIdle":287,"./TabularData":292,"./mtuNavigation":294,"react":230}],276:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -44265,7 +44176,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":297,"../constants/resourceConstants":299,"../stores/PutFrontStore":313,"../stores/mainstore":315,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Rack/MsuRack.js":280,"./Spinner/LoaderButler":285,"./SplitPPS":288,"./TabularData":294,"react":230}],278:[function(require,module,exports){
+},{"../constants/appConstants":297,"../constants/resourceConstants":299,"../stores/PutFrontStore":314,"../stores/mainstore":316,"./BinMap":293,"./Bins/Bins.react":236,"./Bins/BinsFlexArrange.react":238,"./Button/Button":240,"./Exception/Exception":243,"./Header":248,"./Modal/Modal":251,"./Navigation/Navigation.react":256,"./Notification/Notification":258,"./ProductDetails/KQ":268,"./ProductDetails/KQExceptionDamaged":269,"./ProductDetails/KQExceptionMissing":270,"./ProductDetails/Wrapper":273,"./ProductDetails/WrapperSplitRoll":274,"./Rack/MsuRack.js":279,"./Spinner/LoaderButler":284,"./SplitPPS":295,"./TabularData":292,"react":230}],277:[function(require,module,exports){
 var React = require('react');
 var DrawerSlot = require('./DrawerSlot');
 
@@ -44317,7 +44228,7 @@ DrawerRow.propTypes = {
 };
 module.exports = DrawerRow;
 
-},{"./DrawerSlot":279,"react":230}],279:[function(require,module,exports){
+},{"./DrawerSlot":278,"react":230}],278:[function(require,module,exports){
 var React = require('react');
 
 /**
@@ -44356,7 +44267,7 @@ DrawerSlot.propTypes = {
 };
 module.exports = DrawerSlot ;
 
-},{"react":230}],280:[function(require,module,exports){
+},{"react":230}],279:[function(require,module,exports){
 var React = require('react');
 var RackRow = require('./RackRow');
 var DrawerRow = require('./DrawerRow');
@@ -44564,7 +44475,7 @@ getOffset( el ) {
 
 module.exports = MsuRack;
 
-},{"./DrawerRow":278,"./RackRow":281,"react":230}],281:[function(require,module,exports){
+},{"./DrawerRow":277,"./RackRow":280,"react":230}],280:[function(require,module,exports){
 var React = require('react');
 var RackSlot = require('./RackSlot');
 
@@ -44613,7 +44524,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 
 module.exports = RackRow;
 
-},{"./RackSlot":282,"react":230}],282:[function(require,module,exports){
+},{"./RackSlot":281,"react":230}],281:[function(require,module,exports){
 var React = require('react');
 var SingleSlot = require('./SingleSlot');
 
@@ -44657,7 +44568,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 
 module.exports = RackSlot ;
 
-},{"./SingleSlot":283,"react":230}],283:[function(require,module,exports){
+},{"./SingleSlot":282,"react":230}],282:[function(require,module,exports){
 var React = require('react');
 var fontSize = {
 	"font-size":"2rem"};
@@ -44686,7 +44597,7 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 
 module.exports = SingleSlot ;
 
-},{"react":230}],284:[function(require,module,exports){
+},{"react":230}],283:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -44724,7 +44635,7 @@ var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
 
 module.exports = ReconcileStatus;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],285:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],284:[function(require,module,exports){
 var React = require('react');
 var SpinnerButler = require('./SpinnerButler');
 
@@ -44741,7 +44652,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 
 module.exports = LoaderButler;
 
-},{"./SpinnerButler":287,"react":230}],286:[function(require,module,exports){
+},{"./SpinnerButler":286,"react":230}],285:[function(require,module,exports){
 var React = require('react');
 var LoaderButler = require('./LoaderButler');
 var SpinnerButler = require('./SpinnerButler');
@@ -44759,7 +44670,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 
 module.exports = Overlay;
 
-},{"./LoaderButler":285,"./SpinnerButler":287,"react":230}],287:[function(require,module,exports){
+},{"./LoaderButler":284,"./SpinnerButler":286,"react":230}],286:[function(require,module,exports){
 var React = require('react');
 
 var SpinnerButler = React.createClass({displayName: "SpinnerButler",
@@ -44774,93 +44685,7 @@ var SpinnerButler = React.createClass({displayName: "SpinnerButler",
 
 module.exports = SpinnerButler;
 
-},{"react":230}],288:[function(require,module,exports){
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
-
-var SplitPPS = React.createClass({displayName: "SplitPPS",
-	
-	processData: function(){
-		var data =  Object.assign({},(this.props.groupInfo || {}));
-		var leftCol = [],dockedGroup = this.props.docked,
-		undockAwaited = this.props.undockAwaited,
-		rightCol=[];
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					if(dockedGroup.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "docked spriteIcons"})
-							));
-					}
-					else if(undockAwaited.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "undock left spriteIcons"})
-							));
-					}
-					else{
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
-					}
-					
-				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					if(dockedGroup.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "docked spriteIcons"})
-							));
-					}
-					else if(undockAwaited.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							React.createElement("span", {className: "undock right spriteIcons"})
-							));
-					}
-					else{
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
-					}
-					
-				}
-
-			}
-		}
-	
-
-		return {
-			leftCol:leftCol,
-			rightCol:rightCol
-		}
-	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
-		
-		return (
-				React.createElement("div", {className: "splitPPSWrapper"}, 
-					React.createElement("div", {className: "mapCont"}, 
-					React.createElement("div", {className: "col1 three"}, 
-					React.createElement("ul", null, 
-					mapStructure.leftCol
-					)
-					), 
-					React.createElement("div", {className: "col2 spriteIcons"}
-					), 
-					React.createElement("div", {className: "col3 three"}, 
-					React.createElement("ul", null, 
-					mapStructure.rightCol
-					)
-					)
-					)
-				)
-						
-					
-				
-			);
-	}
-});
-
-module.exports = SplitPPS;
-
-},{"../constants/resourceConstants":299,"react":230}],289:[function(require,module,exports){
+},{"react":230}],287:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -44880,7 +44705,7 @@ var SystemIdle = React.createClass({displayName: "SystemIdle",
 
 module.exports = SystemIdle;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],290:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],288:[function(require,module,exports){
 var React = require('react');
 var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
@@ -44899,7 +44724,7 @@ var SystemIdleHeader = React.createClass({displayName: "SystemIdleHeader",
 });
 module.exports = SystemIdleHeader;
 
-},{"../constants/resourceConstants":299,"./Header":249,"react":230}],291:[function(require,module,exports){
+},{"../constants/resourceConstants":299,"./Header":248,"react":230}],289:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -44941,7 +44766,7 @@ var TableFooter = React.createClass({displayName: "TableFooter",
 
 module.exports = TableFooter;
 
-},{"../constants/appConstants":297,"./Button/IconButton":242,"react":230}],292:[function(require,module,exports){
+},{"../constants/appConstants":297,"./Button/IconButton":241,"react":230}],290:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -44983,7 +44808,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
 module.exports = TableHeader;
 
-},{"../constants/appConstants":297,"./Button/IconButton":242,"react":230}],293:[function(require,module,exports){
+},{"../constants/appConstants":297,"./Button/IconButton":241,"react":230}],291:[function(require,module,exports){
 var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
@@ -45095,7 +44920,7 @@ var TableRow = React.createClass({displayName: "TableRow",
 
 module.exports = TableRow;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/mainstore":315,"./Button/IconButton":242,"react":230}],294:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../stores/mainstore":316,"./Button/IconButton":241,"react":230}],292:[function(require,module,exports){
 var React = require('react');
 var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
@@ -45132,7 +44957,97 @@ var TabularData = React.createClass({displayName: "TabularData",
 
 module.exports = TabularData;
 
-},{"./TableFooter":291,"./TableHeader":292,"./TableRow":293,"react":230}],295:[function(require,module,exports){
+},{"./TableFooter":289,"./TableHeader":290,"./TableRow":291,"react":230}],293:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var BinMap = React.createClass({displayName: "BinMap",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				isSelected = selectedGroup === k ? "sel" : "";
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					leftCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					rightCol.push(React.createElement("li", {key: k, className: isSelected}));
+				}
+
+			}
+		}
+		switch(leftCol.length){
+			case 1:
+			leftColCount = "one";
+			break;
+			case 2:
+			leftColCount = "two";
+			break;
+			case 3:
+			leftColCount = "three";
+			break;
+			case 4:
+			leftColCount = "four";
+			break;
+			default:
+			leftColCount = "zero";
+		}
+		switch(rightCol.length){
+			case 1:
+			rightColCount = "one";
+			break;
+			case 2:
+			rightColCount = "two";
+			break;
+			case 3:
+			rightColCount = "three";
+			break;
+			case 4:
+			rightColCount = "four";
+			break;
+			default:
+			rightColCount = "zero";
+		}
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol,
+			leftColCount:leftColCount,
+			rightColCount:rightColCount
+		}
+	},
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		return (
+				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.leftCol
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
+					React.createElement("ul", null, 
+					mapStructure.rightCol
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = BinMap;
+
+},{"../constants/resourceConstants":299,"react":230}],294:[function(require,module,exports){
 var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -45170,6 +45085,92 @@ var MtuNavigation = React.createClass({displayName: "MtuNavigation",
 });
 
 module.exports = MtuNavigation;
+
+},{"../constants/resourceConstants":299,"react":230}],295:[function(require,module,exports){
+var React = require('react');
+var allresourceConstants = require('../constants/resourceConstants');
+
+var SplitPPS = React.createClass({displayName: "SplitPPS",
+	
+	processData: function(){
+		var data =  Object.assign({},(this.props.groupInfo || {}));
+		var leftCol = [],dockedGroup = this.props.docked,
+		undockAwaited = this.props.undockAwaited,
+		rightCol=[];
+		for(var  k in data){
+			if(data.hasOwnProperty(k)){
+				
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+					if(dockedGroup.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock left spriteIcons"})
+							));
+					}
+					else{
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+					if(dockedGroup.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "docked spriteIcons"})
+							));
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
+							React.createElement("span", {className: "undock right spriteIcons"})
+							));
+					}
+					else{
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
+					}
+					
+				}
+
+			}
+		}
+	
+
+		return {
+			leftCol:leftCol,
+			rightCol:rightCol
+		}
+	},
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		
+		return (
+				React.createElement("div", {className: "splitPPSWrapper"}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 three"}, 
+					React.createElement("ul", null, 
+					mapStructure.leftCol
+					)
+					), 
+					React.createElement("div", {className: "col2 spriteIcons"}
+					), 
+					React.createElement("div", {className: "col3 three"}, 
+					React.createElement("ul", null, 
+					mapStructure.rightCol
+					)
+					)
+					)
+				)
+						
+					
+				
+			);
+	}
+});
+
+module.exports = SplitPPS;
 
 },{"../constants/resourceConstants":299,"react":230}],296:[function(require,module,exports){
 var svgConstants = require('../constants/svgConstants');
@@ -45813,7 +45814,7 @@ ReactDOM.render(
 )
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/LoginPage/LoginPage":250,"./components/Operator":260,"jquery":67,"react":230,"react-dom":74}],303:[function(require,module,exports){
+},{"./components/LoginPage/LoginPage":249,"./components/Operator":259,"jquery":67,"react":230,"react-dom":74}],303:[function(require,module,exports){
 var chinese = {
     "Password": "\u5bc6\u7801",
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
@@ -47168,6 +47169,355 @@ var serverMessages = {
 module.exports = serverMessages;
 
 },{}],309:[function(require,module,exports){
+var spanish = {
+	"Actions": "Acciones",
+	"Actual": "Real",
+	"Actual Quantity": "Cantidad Real",
+	"Actual put quantity less than than revised quantity.": "La cantidad real ubicada es menor que la cantidad revisada.",
+	"Actual put quantity not equal to the sum of Good and Expection quantity.": "La cantidad real ubicada no es igual a la suma de la cantidad Correcta y Esperada.",
+	"Add Scanner": "Agregar el Esc\u00e1ner",
+	"After scannning tote barcode, please scan pptl barcode": "Despu\u00e9s de escanear el c\u00f3digo de barras de la bolsa, por favor, escanee el c\u00f3digo de barras pptl",
+	"Are You Sure You Want to Close Tote?": "\u00bfEst\u00e1 seguro que desea cerrar la Bolsa?",
+	"Are you sure you want to close Tote": "Est\u00e1 seguro que desea cerrar la Bolsa",
+	"Associate tote with bin": "Asocie la bolsa con el recipiente",
+	"BACK": "ATR\u00c1S",
+	"Back": "Atr\u00e1s",
+	"Back seat not supported for this mode": "El asiento trasero no es compatible con este modo",
+	"Bad Barcode Quantity": "Cantidad de C\u00f3digo de Barras ",
+	"Bad Data": "Datos Equivocados",
+	"Barcode": "C\u00f3digo de barras",
+	"Barcode Damage": "C\u00f3digo de barras da\u00f1ado",
+	"Barcode didn't match the current tote barcode": "El C\u00f3digo de barras no coincidi\u00f3 con el c\u00f3digo de barras actual de la bolsa",
+	"Barcode didn't match with current tote barcode": "El C\u00f3digo de barras no coincide con el c\u00f3digo de barras actual de la bolsa",
+	"Bin": "Recipiente",
+	"Bin ID": "Identificaci\u00f3n del recipiente",
+	"Bin Info": "Informaci\u00f3n del Recipiente",
+	"Bin already staged. Ignoring event": "El recipiente ya ha sido organizado. Haciendo caso omiso del evento",
+	"Bin empty. Cannot be staged": "Recipiente vac\u00edo. No se puede organizar",
+	"Bin selected for put. Cannot be staged": "Recipiente seleccionado para colocar. No se puede organizar",
+	"Bin {0} items removed successfully": "Recipiente {0} se han quitado los art\u00edculos exitosamente",
+	"Bin {0} selected": "Recipiente {0} seleccionado ",
+	"Bin {0} unselected": "Recipiente {0} no seleccionado",
+	"Box Scan successful": "Escaneo de caja exitoso",
+	"Box Serial Numbers": "N\u00fameros de Serie de la Caja",
+	"Box Unscannable": "Caja no Escaneable",
+	"Box scan successful": "Escaneo de caja exitoso",
+	"Box with same serial number already exists in the warehouse": "Una caja con el mismo n\u00famero de serie ya existe en el almac\u00e9n",
+	"CLOSE": "CERRAR",
+	"CONFIRM": "CONFIRMAR",
+	"CURRENT BIN": "RECIPIENTE ACTUAL",
+	"CURRENT SLOT": "RANURA ACTUAL",
+	"Cancel": "Cancelar",
+	"Cancel Exception": "Excepci\u00f3n Cancelada",
+	"Cancel Scan": "Escaneo Cancelado",
+	"Cancel audit successful.Audit Restarted": "Cancelaci\u00f3n de la auditor\u00eda exitosa. La Auditor\u00eda se ha Reiniciado",
+	"Cancel scan successful": "Escaneo de cancelaci\u00f3n exitoso",
+	"Cancel scan successful.": "Escaneo de cancelaci\u00f3n exitoso.",
+	"Cancelled excess entity in tote": "Art\u00edculos sobrantes cancelados en la bolsa",
+	"Cancelled invalid entity in tote": "Art\u00edculo no v\u00e1lido cancelado en la bolsa",
+	"Cannot cancel scan. No scanned box found": "No es posible cancelar el escaneo. No se ha encontrado caja escaneada",
+	"Check Count": "Verificar la Cuenta",
+	"Clear All": "Borrar Todo",
+	"Close current tote first": "Cierre primero la bolsa actual",
+	"Confirm": "Confirmar",
+	"Confirm MSU Release": "Confirme la Liberaci\u00f3n de MSU",
+	"Connection is closed. Connecting...": "La conexi\u00f3n est\u00e1 cerrada. Conectandose...",
+	"Could not connect to PPS.Please try again.": "No se pudo conectar a PPS. Por favor, int\u00e9ntelo de nuevo.",
+	"Current PPS mode does not support back seat. Please logout.": "El modo actual de PPS no dispone de asiento trasero. Por favor, cierre de sesi\u00f3n.",
+	"Damaged and missing entity recorded.": "Art\u00edculos da\u00f1ados y faltantes registrados.",
+	"Data capture failed at item": "La captura de datos fall\u00f3 en el art\u00edculo",
+	"Data capture failed at item {0}": "La captura de datos fall\u00f3 en el art\u00edculo {0}",
+	"Data capture valid": "Captura de datos v\u00e1lidos",
+	"Delete": "Eliminar",
+	"Details": "Detalles",
+	"Dis-associate Tote": "Desvincular Bolsa",
+	"Disassociate Tote": "Bolsa Desvinculada",
+	"Documents printed Successfully": "Los documentos se imprimieron Exitosamente",
+	"Documents printed successfully": "Los documentos se imprimieron exitosamente",
+	"EXCEPTION": "EXCEPCI\u00d3N",
+	"Edit Details": "Edite los Detalles",
+	"English": "Ingl\u00e9s",
+	"Enter Good Quantity to be Put into Slot": "Entre una Cantidad Correcta Para Ubicar en la Vacante",
+	"Enter Password": "Escriba la Contrase\u00f1a",
+	"Enter Quantity of Excess Entities": "Especificarla Cantidad de Art\u00edculos Sobrantes",
+	"Enter Scanner Id": "Introducir la Identificaci\u00f3n del Esc\u00e1ner",
+	"Enter Unscannable Entity Quantity": "Especifique la Cantidad de Art\u00edculos no Escaneables",
+	"Enter Username": "Ingrese el Nombre de Usuario",
+	"Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL": "\u00a1Los art\u00edculos no pueden ser acomodados! Retire todos los art\u00edculos del recipiente {0} y pulse PPTL",
+	"Entity Missing / Unscannable": "Art\u00edculo Faltante / No Escaneable",
+	"Entity Oversized": "Art\u00edculo Extra Grande",
+	"Entity Scan not expected. Press PPTL": "No se esperaba el escaneo del art\u00edculo. Pulse PPTL",
+	"Entity Unscannable": "Art\u00edculo no escaneable",
+	"Entity already scanned.Confirm exception": "El art\u00edculo ya ha sido escaneado. Confirme la excepci\u00f3n",
+	"Entity already scanned.Waiting for PPTL press": "Art\u00edculo ya escaneado. A la espera de prensionar PPTL",
+	"Entity not expected in tote. Please put entity in exception area and confirm": "El Art\u00edculo no se espera en la bolsa Por favor, ubique los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
+	"Entity scan not expected.": "No se esperaba el escaneo del art\u00edculo.",
+	"Entity scan not expected. Waiting for PPTL press": "No se esperaba el escaneo del art\u00edculo. Esperando que pulse PPTL",
+	"Entity scan successful": "Escaneo de art\u00edculo exitoso.",
+	"Entity scan successful.": "Escaneo de art\u00edculo exitoso.",
+	"Entity scanned is not from bin {0}. Replace and scan from bin {1}": "El art\u00edculo escaneado no es del recipiente {0}. Reemplace y escanee desde el recipiente {1}",
+	"Exception": "Excepci\u00f3n",
+	"Exception Finished": "Excepci\u00f3n Terminada",
+	"Exception cancelled": "Excepci\u00f3n cancelada",
+	"Exception invalid as totes are not required with this PPS": "Excepci\u00f3n no v\u00e1lida como ya que las bolsas no son necesarias con este PPS",
+	"Exceptions": "Excepciones",
+	"Excess item in tote recorded.": "Art\u00edculo sobrante registrado en la bolsa.",
+	"Excess item in tote recorded. Now press PPTL": "Art\u00edculo sobrante registrado en la bolsa. Ahora pulse PPTL",
+	"Expected": "Esperado",
+	"Expected Quantity": "Cantidad Esperada",
+	"Expected quantity exceeded.": "Cantidad esperada excedida.",
+	"Expecting MSU release confirmation from GUI, got invalid event.": "Esperando la confirmaci\u00f3n de liberaci\u00f3n MSU de GUI, tiene evento no v\u00e1lido.",
+	"Extra Entities in Bin": "Art\u00edculos Extra en Recipiente",
+	"Extra Entity Found": "Art\u00edculo Extra Encontrado",
+	"Extra item found please put back item in Exception bin": "Art\u00edculo adicional encontrado, por favor, deuelv\u00e1lo al recipiente de excepci\u00f3n",
+	"FINISH": "TERMINAR",
+	"Finish": "Terminar",
+	"Good Quantity": "Cantidad Correcta",
+	"Good Quantity Cannot be Equal to the Total Quantity": "La Cantidad Correcta no Puede ser Igual a la Cantidad Total",
+	"Incorrect tote barcode scanned. Please try again": "Se escaneo un c\u00f3digo de barra de bolsa incorrecto. Por favor, int\u00e9ntelo de nuevo",
+	"Input Extra Details": "Detalles Adicionales de Entrada",
+	"Invalid Exception for this configuration": "Excepci\u00f3n no v\u00e1lida para esta configuraci\u00f3n",
+	"Invalid credentials": "Credenciales Inv\u00e1lidas",
+	"Invalid entity in tote recorded": "Art\u00edculo no v\u00e1lido registrado en la bolsa.",
+	"Invalid item in tote recorded.": "Art\u00edculo no v\u00e1lido registrado en la bolsa.",
+	"Item Missing/Bad Barcode": "Art\u00edculo Faltante/C\u00f3digo de Barra Equivocado",
+	"Item Missing/Unscannable": "Art\u00edculo faltante/No escaneable",
+	"Item Not Expected in Tote": "El Art\u00edculo no se Espera en la Bolsa",
+	"Item Scan successful": "Escaneo de art\u00edculo exitoso",
+	"Item in Box Serial Numbers": " N\u00fameros de serie del Art\u00edculo en la Caja",
+	"Item scan successful": "Escaneo de art\u00edculo exitoso",
+	"Items In Box Unscannable": "Art\u00edculos en la Caja no Escaneables",
+	"Japanese": "Japon\u00e9s",
+	"Last Box Scan Completed! Scan Remaining Box/Items": "\u00a1\u00daltimo Escaneo de Caja Terminada! Escanee las Cajas Restantes/Art\u00edculos",
+	"List Of Items To Reconcile": "Lista de los pArt\u00edculos a Conciliar",
+	"Location scan successful": "Escaneo de localizaci\u00f3n exitoso",
+	"Login": "Inicio de sesi\u00f3n",
+	"Login not allowed. You're already logged in": "El Inicio de sesi\u00f3n no es permitido. Usted ya ha iniciado sesi\u00f3n",
+	"Logout": "Cierre de sesi\u00f3n",
+	"Loose Items": "Art\u00edculos Sueltos",
+	"Loose Items Serial Numbers": "N\u00fameros de Serie de Art\u00edculos Sueltos",
+	"Loose Items Unscannable": "Art\u00edculos Sueltos no Escaneables",
+	"Mising Box": "Caja Faltante",
+	"Missing": "Faltante",
+	"Missing Box": "Caja Faltante",
+	"Missing Quantity": "Cantidad Faltante",
+	"NEXT": "SIGUIENTE",
+	"No Items To Reconcile": "No Hay Art\u00edculos Para Conciliar",
+	"No PPS bins empty. Please empty them from Pickback": "No hay recipientes PPS vac\u00edos. Por favor, vac\u00edelos desde Pickback",
+	"No bins available to stage": "No hay recipientes disponibles para organizar",
+	"No entities added yet. Scan entities and then press PPTL": "No hay art\u00edculos a\u00f1adidos a\u00fan. Escanee los art\u00edculos y luego pulse PPTL",
+	"No free bins. Please scan later": "No hay recipientes libres. Por favor, escanee despu\u00e9s",
+	"No matching tote found": "No se que encontr\u00f3 la bolsa correspondiente",
+	"No tote associated. Please keep a tote in bin and scan": "No hay bolsas asociadas. Por favor, mantenga una bolsa en el recipiente y escanee",
+	"No tote scanned": "No se escaneo ninguna bolsa",
+	"No totes associated. Pease keep totes in the Bin and then scan": "No hay bolsas asociadas. Por favor, mantenga las bolsas en el Recipiente y luego escanee",
+	"Order removed successfully from bin {0}": "Orden retirada con \u00e9xito del recipiente {0}",
+	"Overide Tote Required": "Bolsa Inv\u00e1lida Requerida",
+	"Override": "Reemplazar",
+	"Override Tote Exception cannot be raised for bins with totes associated": "La Excepci\u00f3n de la Bolsa Anulada no se puede llevar a los recipientes con bolsas asociadas",
+	"Override Tote Exception' cannot be raised for bins with totes associated": "Excepci\u00f3n de Reemplazo de la  la Bolsa no se puede pedir para recipientes con bolsas asociadas",
+	"Override Tote Required": "Bolsa Invalidad Requerida",
+	"Override tote not possible": "No es posible invalidar la bolsa",
+	"PPS Mode": "Modo de PPS",
+	"PPS is in paused mode. Cannot process new entity. Try after some time": "PPS est\u00e1 en modo de pausa. No se puede procesar el nuevo art\u00edculo. Pruebe despu\u00e9s de un tiempo",
+	"PPS mode change requested:auto staging all bins": "Cambio de modo PPS solicitado: auto organizando todos los recipientes",
+	"PPS mode change requested:scan not allowed": "Solicit\u00f3 cambio de modo PPS: escaneo no permitido",
+	"PPTL Management": "Gesti\u00f3n PPTL",
+	"PPTL press not expected": "Pulsado de PPTL no esperado",
+	"PPTL press successful": "Presionado de PPTL exitoso",
+	"PPTL scan not allowed": "El escaneo PPTL no est\u00e1 permitido.",
+	"PPTL scan not allowed. System not configured for tote": "El escaneo PPTL no est\u00e1 permitido. Sistema no configurado para bolsas",
+	"Password": "Contrase\u00f1a",
+	"Perform Action": "Realizar la Acci\u00f3n",
+	"Peripheral ID": "Identificaci\u00f3n de perif\u00e9rico",
+	"Peripheral added successfully": "Se ha agregado el Perif\u00e9rico correctamente",
+	"Peripheral already added": "El Perif\u00e9rico ya se ha agregado",
+	"Peripheral deleted successfully": "Se ha borraddo el Perif\u00e9rico correctamente",
+	"Peripheral not added": "El Perif\u00e9rico no se ha agregado",
+	"Peripheral not deleted successfully": "Perif\u00e9rico no eliminado con \u00e9xito",
+	"Pick complete. Waiting for next rack.": "Selecci\u00f3n completa. A la espera del pr\u00f3ximo estante.",
+	"Picked quantity more than expected. Put extra items back in MSU": "Seleccion\u00f3 una cantidad mayor de la esperada. Devuelva los elementos sobrantes al MSU",
+	"Place Entity in Bin and Press PPTL": "Ubique el Art\u00edculo en el Recipiente y Pulse  PPTL ",
+	"Place Entity in Slot and Scan More": "Ubique el Art\u00edculo en la Vacante y Escanee M\u00e1s",
+	"Place Item in slot and scan more": "Ubique el art\u00edculo en la vacante y escanee m\u00e1s",
+	"Place extra entity in Exception area.": "Ubique los art\u00edculos extra en la zona de Excepci\u00f3n.",
+	"Please Select The Bin With Excess Entity": "Por favor, Seleccione el Recipiente con Art\u00edculos Sobrantes",
+	"Please complete pickback for pending bin and then proceed": "Por favor complete pickback para el recipiente pendiente y luego proceda",
+	"Please complete process for pending bin and then proceed": "Por favor, complete el procesopara el recipiente pendiente y luego proceda",
+	"Please press PPTL button which does not have any totes associated": "Por favor, pulse el bot\u00f3n PPTL que no tiene ninguna bolsa asociada",
+	"Please press those buttons having color blink_blue": "Por favor, pulse los botones que parpadeen en azul",
+	"Please put entities in exception area and confirm": "Por favor, ponga los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
+	"Please put entity in exception area and confirm": "Por favor, ubique los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
+	"Please put extra entities in exception area.": "Por favor, ponga los art\u00edculos no escaneables en la zona de excepci\u00f3n.",
+	"Please put oversized entities in exception area.": "Por favor, ponga los art\u00edculos extra grandes en la zona de excepci\u00f3n.",
+	"Please put unscannable entities in exception area.": "Por favor, ponga los art\u00edculos no escaneables en la zona de excepci\u00f3n.",
+	"Please scan PPTL barcode": "Por favor, escanee el c\u00f3digo de barras PPTL",
+	"Please scan same SKU to complete this exception": "Por favor, escanee el mismo SKU para completar esta excepci\u00f3n",
+	"Please scan the tote first and then scan PPTL barcode": "Por favor, primero escanee la bolsa y luego escanee el c\u00f3digo de barras PPTL",
+	"Please scan the tote first and then scan pptl barcode": "Por favor, primero escanee la bolsa y luego escanee el c\u00f3digo de barras pptl",
+	"Pptl press not expected.": "Pulsado de PPTL  no esperado.",
+	"Pptl scan not allowed. Totes are not required": "El escaneo PPTL no est\u00e1 permitido. Las Bolsas no son necesarias",
+	"Press PPTL for bin {0} to confirm": "Pulse PPTL para confirmar el recipiente {0}",
+	"Press PPTL or Scan a Tote": "Pulse PPTL o Escanee la Bolsa",
+	"Press PPTL to Remove Entities": "Prsione PPTL para Eliminar Art\u00edculos",
+	"Press PPTL to confirm": "Prensione PPTL para confirmar",
+	"Press PpsBin Button Or Scan a Tote": "Pulse el bot\u00f3n PpsBin o Escanee la Bolsa",
+	"Press PpsBin {0} to remove items": "Pulse PpsBin {0} para eliminar los art\u00edculos",
+	"Press bin PPTL": "Pulse Recipiente PPTL",
+	"Press print button to proceed": "Pulse el bot\u00f3n Imprimir para proceder",
+	"Print": "Imprimir",
+	"Processing. Please wait and scan later": "Procesando. Por favor, espere y escanee m\u00e1s adelante",
+	"Product Desc": "Descripci\u00f3n del Producto",
+	"Product Details": "Detalles del Producto",
+	"Product Information": "Informaci\u00f3n del Producto",
+	"Product Name": "Nombre de Producto",
+	"Product SKU": "SKU del Producto ",
+	"Product Type": "Tipo de Producto",
+	"Put Back Entities in the PPS Bin": "Devuelva los Art\u00edculos al Recipiente PPS",
+	"Quantity should be less than or equal to {0}": "La cantidad debe ser menor o igual a {0}",
+	"Remove Item": "Elimine Art\u00edculo",
+	"Reprint": "Reimpresi\u00f3n",
+	"SKU not present in Database.Put in exception area": "SKU no est\u00e1 presente en la Base de Datos. Ubique en la zona de excepci\u00f3n",
+	"SKU not present in database. Put into IRT bin.": "SKU no est\u00e1 presente en la base de datos. Poner en el recipiente IRT.",
+	"Scan & Confirm": "Escanee y Confirme",
+	"Scan Bin Barcode": "Escanear el C\u00f3digo de Barras del Recipiente",
+	"Scan Box": "Escanee la Caja",
+	"Scan Box or Items": "Escanee Caja o Art\u00edculos",
+	"Scan Box/Items from Slot": "Escanear Caja/ Art\u00edculos del Hueco",
+	"Scan Entity From Bin {0}": "Escanee Art\u00edculo del Recipiente {0}",
+	"Scan Excess Entity Quantity": "Cantidad de Art\u00edculos Sobrantes Escaneados",
+	"Scan Item From Bin": "Escanee el Art\u00edculo Desde el Recipiente",
+	"Scan Items": "Escanee los Art\u00edculos",
+	"Scan MSU Barcode": "Escanee el C\u00f3digo de Barras del MSU",
+	"Scan Oversized Entity Quantity": "Cantidad de Art\u00edculos Extra Grandes Escaneados",
+	"Scan Remaining Item In Box": "Escanee el Resto de los Art\u00edculos en la Caja",
+	"Scan Slot": "Escanee la Vacante",
+	"Scan Slot Barcode": "Escanear el C\u00f3digo de Barras de la Vacante",
+	"Scan Slot to Confirm": "Confirme para Escanear Vacante",
+	"Scan Tote": "Escanee la Bolsa",
+	"Scan Tote or Stage PPS Bin": "Escanee la Bolsa u Organice el recipiente PPS",
+	"Scan Tote to Associate with Bin": "Escaneee la Bolsa para Asociarla al Recipiente",
+	"Scan Tote to associate with Bin": "Escaneee la Bolsa para Asociarla al Recipiente",
+	"Scan a box first": "Escanee la caja primero",
+	"Scan box barcode": "Escanee el c\u00f3digo de barras de la caja",
+	"Scan item / Stage PPS Bin": "Escanee el art\u00edculo / Organice el recipiente pps ",
+	"Scan item / Stage pps bin": "Escanee el art\u00edculo / Organice el recipiente pps ",
+	"Scan items and place in bin {0}": "Analice los elementos y coloque en el recipiente {0}",
+	"Scan not expected": "Escaneo no esperado",
+	"Scan not expected.": "Escaneo no esperado.",
+	"Scan {0} Items": "Escanee {0} Art\u00edculos",
+	"Scan {0} Items and Place in Bin {0}": "Escanee {0} Art\u00edculos y ubiquelos en el Recipiente {0}",
+	"Scan {0} Items and Place in Bin {1}": "Escanee {0} Art\u00edculos y ubiquelos en el Recipiente {1}",
+	"Scan {0} items": "Escanee {0} art\u00edculos",
+	"Scanner ID": "Identificaci\u00f3n del esc\u00e1ner",
+	"Scanner Management": "Gesti\u00f3n de Esc\u00e1ner",
+	"Scanning pptl barcode not allowed": "No est\u00e1 permitido escanear el c\u00f3digo de barras",
+	"Seat Type": "Tipo de Asiento",
+	"Select Bin to disassociate tote": "Seleccione Recipiente para desvincular la bolsa",
+	"Select Bin to skip print": "Seleccione Recipiente para omitir impresi\u00f3n",
+	"Select Bin which does not require tote": "Seleccione Recipiente que no requiera de bolsa",
+	"Selected": "Seleccionado",
+	"Skip Print": "Omitir Impresi\u00f3n",
+	"Skip Printing": "Omitir Impresi\u00f3n",
+	"Slot scan successful": "Escaneo de la vacante exitoso",
+	"Space Available For": "Espacio Disponible Para",
+	"Space Not Available": "Espacio No Disponible",
+	"Space unavailable recorded.": "Espacio no disponible registrado.",
+	"Stage": "Organizar",
+	"Stage All": "Organizar Todo",
+	"Stage Bin or Scan Entity": "Organice el Recipiente o Escanee el art\u00edculo",
+	"Stage Bin or Scan Item": "Organice el Recipiente o Escanee el Art\u00edculo",
+	"Status": "Estado",
+	"Status To Reconcile": "Estado Para Conciliar",
+	"Submit": "Enviar",
+	"Sum of missing and good quantity should be equal to {0}": "La suma de la cantidad faltante y de la cantidad correcta deben ser iguales a {0}",
+	"Sum of missing, good and damaged should be equal to {0}": "La suma de faltantes, buenos y da\u00f1ado deben ser iguales a {0}",
+	"System Error. Scanned entity details not available at this time": "Error del Sistema. La informaci\u00f3n del art\u00edculo escaneado no est\u00e1 disponible en este momento",
+	"System is Idle": "El sistema est\u00e1 inactivo",
+	"System not configured for totes": "Sistema no configurado para bolsas",
+	"TOTE": "BOLSA",
+	"Take the Items out from the Slot": "Sacque los art\u00edculos de la Vacante",
+	"Testing configuration {0} and {1}": "Prueba de configuraci\u00f3n {0} y {1}",
+	"This box belongs to some other SKU in the slot.Put it back.Scan next box.": "Este cuadro pertenece a algunos otros SKU en el hueco. Devu\u00e9lvalo. Escanee la caja siguiente.",
+	"This box does not belong to this slot. Remove the box and put in exception area.": "Esta caja no pertenece a este hueco. Retire la caja y p\u00f3ngala en a zona de excepci\u00f3n.",
+	"Tote Details": "Detalles de la Bolsa",
+	"Tote already associated with bin {0}": "La Bolsa ya ha sido desvinculada del recipiente {0}",
+	"Tote already associated with ppsbin": "La Bolsa ya ha sido asociada con la ppsbin",
+	"Tote already closed. Scan some other tote": "La Bolsa ya ha sido cerrada. Escanee alguna otra bolsa",
+	"Tote already opened. Scan some other tote": "Bolsa ya abierta. Escanee alguna otra bolsa",
+	"Tote already reserved": "Bolsa ya reservada",
+	"Tote assigned successfully to bin": "Bolsa asignada con \u00e9xito al recipiente",
+	"Tote assigned successfully to ppsbin {0}": "Bolsa asignada exitosamente a ppsbin {0} ",
+	"Tote associated with another bin": "Bolsa asociada con otro recipiente",
+	"Tote association failed. Repeat scan operation": "Ha fallado la asociaci\u00f3n de la bolsa. Repita la operaci\u00f3n de escaneo",
+	"Tote cancelled": "Bolsa cancelada",
+	"Tote close successful.": "Cierre de bolsa exitoso.",
+	"Tote could not be reserved as already reserved": "La bolsa no se pudo reservar como se habia reservado",
+	"Tote didn't get associated": "La Bolsa no fue asociada",
+	"Tote disassociated from Bin": "La Bolsa est\u00e1 desvinculada del Recipiente",
+	"Tote has been opened.Scan all items in tote and then scan tote again to close it": "La bolsa se ha abierto. Escanee todos los art\u00edculos en la bolsa y luego escanee la bolsa nuevamente para cerrarla",
+	"Tote is already scanned.Expecting pptl scan.": "La bolsa ya est\u00e1 escaneada. Esperando escaneo pptl.",
+	"Tote not closed.": "La Bolsa no ha sido cerrada.",
+	"Tote not present in database.": "La bolsa no est\u00e1 presente en la base de datos.",
+	"Tote scan cancelled": "Escaneo de la bolsa cancelado",
+	"Tote scan expected": "Escaneo de la bolsa esperado",
+	"Tote scanned.Expecting pptl scan.": "La bolsa ya est\u00e1 escaneada. Esperando escaneo pptl.",
+	"Totes are anyway not required.Please proceed further": "Las bolsas de todas formas no son necesarias. Por favor, siga adelante",
+	"Totes are not required": "Las Bolsas no son necesarias",
+	"Totes are not required.Please don't scan tote barcode": "No se requieren bolsas. Por favor no escanee el c\u00f3digo de barras de la bolsa",
+	"Unexpected Item": "Art\u00edculo Inesperado",
+	"Unhandled event ocurred": "Ocurri\u00f3 un evento no controlado",
+	"Unscannable Quantity": "Cantidad no Escaneable",
+	"Unselected": "No seleccionado",
+	"Update": "Actualizaci\u00f3n",
+	"User Name": "Nombre de usuario",
+	"Utility": "Utilidad",
+	"View More": "Ver M\u00e1s",
+	"Wait for MSU": "Espere por MSU",
+	"Waiting for Bins to be Cleared at Pick Back": "A la espera de que los Recipientes sean Despejados para Elegir de Nuevo",
+	"Waiting for MSU": "A la espera de MSU",
+	"Waiting for MSU scan. Please scan entity later.": "A la espera del escaneo MSU. Por favor, escanee el art\u00edculo despu\u00e9s.",
+	"Waiting for MSU. Please wait and scan later": "A la espera de MSU. Por favor, espere y escanee m\u00e1s adelante",
+	"Waiting for rack": "A la espera de estante",
+	"Wrong Barcode": "C\u00f3digo de barras Equivocado",
+	"Wrong Barcode scanned": "Se ha escaneado el C\u00f3digo de Barras equivocado",
+	"Wrong PPS bin scanned": "Se ha escaneado el recipiente PPS equivocado",
+	"Wrong PPTL pressed": "Se ha pulsado el PPTL equivocado",
+	"Wrong PPTL pressed. Please press correct PPTL": "Se ha presionado el PPTL equivocado. Por favo,r presione PPTL correcto",
+	"Wrong PPTL pressed. Please try another": "Se ha presionado el PPTL equivocado. Por favor, intente con otro",
+	"Wrong Ppsbin button pressed.Please press those buttons having color blue": "Se ha pulsado el bot\u00f3n de Ppsbin equivocado. Por favor pulse los botones con color azul",
+	"Wrong barcode scanned": "Se ha escaneado el c\u00f3digo de barras equivocado",
+	"Wrong bin chosen.Try selecting another bin": "Se ha escogido la papelera equivocada. Pruebe seleccionando otro recipiente",
+	"Wrong box scanned. Please try again": "Se escaneo la caja equivocada. Por favor, int\u00e9ntelo de nuevo",
+	"Wrong enitity scanned. Expecting scan from bin {0}": "Art\u00edculo equivocado escaneado. Esperando el escaneo desde el recipiente {0}",
+	"Wrong entity scanned": "Se escaneo el art\u00edculo equivocado",
+	"Wrong entity scanned. Please scan Container/Item.": "Se escaneo el art\u00edculo equivocado. Por favor, escanee el Recipiente/Art\u00edculo.",
+	"Wrong entity scanned. Please scan tote": "Se escaneo el art\u00edculo equivocado. Por favor, escanee la bolsa",
+	"Wrong item quantity update": "Actualizaci\u00f3n equivocada de la cantidad de objetos",
+	"Wrong item scanned. Please scan correct item": "Se escaneo el art\u00edculo equivocado. Por favor, escanee el art\u00edculo correcto",
+	"Wrong scan! Entity scan expected but slot barcode scanned.": "\u00a1Escaneo equivocado! Escaneo del art\u00edculo esperado pero se ha escaneado el c\u00f3digo de barras de la ranura.",
+	"Wrong scan.Expecting container scan.": "Escaneo equivocado. Esperando el el escaneo del recipiente.",
+	"Wrong scan.Expecting item scan.": "Escaneo equivocado. Esperando el el escaneo del art\u00edculo.",
+	"Wrong scan.Expecting location scan.": "Escaneo equivocado. Esperando el el escaneo del lugar.",
+	"Wrong slot location scanned. Please try again": "Ubicaci\u00f3n de vacante mal escaneada. Por favor, int\u00e9ntelo de nuevo",
+	"Wrong slot scanned": "Se ha escaneado la vacante equivocada",
+	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "No se le permite ingresar la cantidad desde el teclado num\u00e9rico. El Escaneo Forzado es necesario.",
+	"You cannot enter 0": "No puede entrar 0",
+	"You cannot enter value more than 9999": "Usted no puede entrar un valor mayor de 9999",
+	"box": "caja",
+	"item": "art\u00edculo",
+	"quantity": "cantidad",
+	"type": "tipo",
+	"type.": "tipo.",
+	"user Name": "Nombre de usuario",
+	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} Art\u00edculos sobrantes encontrados en la bolsa. Por favor, ponga los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
+	"{0} extra entities recorded in bin. WMS notified": "{0} art\u00edculos sobrantes registrados en el recipiente. WMS notificado",
+	"{0} oversized entities recorded.WMS notified": "{0} art\u00edculos extra grandes registrados. WMS notificado",
+	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado"
+}
+module.exports = spanish;
+
+},{}],310:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -47500,7 +47850,7 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AuditStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],310:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":317,"events":14,"object-assign":68}],311:[function(require,module,exports){
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
@@ -47606,7 +47956,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickBackStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],311:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../dispatchers/AppDispatcher":301,"../utils/utils":317,"events":14,"object-assign":68}],312:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -47789,7 +48139,7 @@ PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PickFrontStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],312:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":317,"events":14,"object-assign":68}],313:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var SVGConstants = require('../constants/svgConstants');
@@ -48058,7 +48408,7 @@ PutBackStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutBackStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],313:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../utils/utils":317,"events":14,"object-assign":68}],314:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var AppConstants = require('../constants/appConstants');
 var EventEmitter = require('events').EventEmitter;
@@ -48176,7 +48526,7 @@ PutFrontStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = PutFrontStore;
 
-},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":316,"events":14,"object-assign":68}],314:[function(require,module,exports){
+},{"../config/navConfig":296,"../constants/appConstants":297,"../dispatchers/AppDispatcher":301,"../utils/utils":317,"events":14,"object-assign":68}],315:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
@@ -48335,7 +48685,7 @@ AppDispatcher.register(function(payload){
 
 module.exports = loginstore;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/configConstants":298,"../dispatchers/AppDispatcher":301,"../utils/utils.js":316,"events":14,"react/lib/Object.assign":121}],315:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/configConstants":298,"../dispatchers/AppDispatcher":301,"../utils/utils.js":317,"events":14,"react/lib/Object.assign":121}],316:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
@@ -48348,6 +48698,7 @@ var english = require('../serverMessages/english');
 var japanese = require('../serverMessages/japanese');
 var german = require('../serverMessages/german');
 var french = require('../serverMessages/french');
+var spanish = require('../serverMessages/spanish');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -49501,6 +49852,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
             case "fr-FR":
                 _.setTranslation(french);
+                break;
+            case "es-ES":
+                _.setTranslation(spanish);
                 break;
             default:
                 return true;
@@ -50729,7 +51083,7 @@ AppDispatcher.register(function(payload) {
 
 module.exports = mainstore;
 
-},{"../actions/CommonActions":233,"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../serverMessages/chinese":303,"../serverMessages/english":304,"../serverMessages/french":305,"../serverMessages/german":306,"../serverMessages/japanese":307,"../serverMessages/server_messages":308,"../utils/utils":316,"events":14,"react/lib/Object.assign":121}],316:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../config/navConfig":296,"../constants/appConstants":297,"../constants/resourceConstants":299,"../constants/svgConstants":300,"../dispatchers/AppDispatcher":301,"../serverMessages/chinese":303,"../serverMessages/english":304,"../serverMessages/french":305,"../serverMessages/german":306,"../serverMessages/japanese":307,"../serverMessages/server_messages":308,"../serverMessages/spanish":309,"../utils/utils":317,"events":14,"react/lib/Object.assign":121}],317:[function(require,module,exports){
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var configConstants = require('../constants/configConstants');

@@ -15,7 +15,7 @@ var OrderDetails = React.createClass({
 			if(k === volumeUnit){
 				continue;
 			}
-			if(k === appConstants.volume){
+			if(k === appConstants.VOLUME){
 				orderValue = orderData[k] + " "+(orderData[volumeUnit] || "");
 			}
 			else{

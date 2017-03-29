@@ -405,8 +405,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.box_serials;
     },
     getOrderDetails: function() {
+        var orderDetailsinOrder={};
+        var orderDetails = _seatData['order_details'];
+        /*Performing this action to reorder the object*/
+        if (orderDetails){
+            if(orderDetails.order_id){
+                orderDetailsinOrder.order_id = orderDetails.order_id
+            }
+            if(orderDetails.rem_qty){
+                orderDetailsinOrder.rem_qty = orderDetails.rem_qty
+            }
+            if(orderDetails.volume){
+                orderDetailsinOrder.volume = orderDetails.volume
+            }
+            if(orderDetails.vol_unit){
+                orderDetailsinOrder.vol_unit = orderDetails.vol_unit
+            }
+        }
+            return orderDetailsinOrder;
+    },
+    getOrderID: function() {
         if (_seatData.hasOwnProperty('order_details'))
-            return _seatData.order_details;
+            return {
+                order_id : _seatData.order_details.order_id || ""
+            };
     },
 
     getChecklistDetails: function() {
@@ -2071,6 +2093,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
                 data["PickFrontPackingCancelStatus"] =  this.getPickFrontPackingCancelStatus();
+                data["PickFrontBoxOrderDetails"]= this.getOrderID();
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();

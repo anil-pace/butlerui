@@ -40566,7 +40566,7 @@ var OrderDetails = React.createClass({displayName: "OrderDetails",
 			if(k === volumeUnit){
 				continue;
 			}
-			if(k === appConstants.volume){
+			if(k === appConstants.VOLUME){
 				orderValue = orderData[k] + " "+(orderData[volumeUnit] || "");
 			}
 			else{
@@ -41368,11 +41368,13 @@ var PickFront = React.createClass({displayName: "PickFront",
             binComponent = (React.createElement("div", null, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
                             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
+                            
                             ))
           }else{
             binComponent = (React.createElement("div", {className: "main-container"}, 
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
                   React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
+
                 ));
           }
         var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='',
@@ -41387,10 +41389,11 @@ var PickFront = React.createClass({displayName: "PickFront",
           cancelButton =  React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
         }
         this._component = (
-              React.createElement("div", {className: "grid-container"}, 
+              React.createElement("div", {className: "grid-container gor-pck-itm-scn"}, 
                 React.createElement(Modal, null), 
                        
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails}), 
                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
                 React.createElement("div", {className: "actions"}, 
@@ -41399,8 +41402,8 @@ var PickFront = React.createClass({displayName: "PickFront",
                    actionBtn, 
                    editButton, 
                    this.state.PickFrontBinFullStatus && BinFull
-                ), 
-                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
+                )
+               
               )
               
             );
@@ -45823,8 +45826,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.13.160:8888/ws",
+	INTERFACE_IP : "http://192.168.13.160:5000"
 };
 module.exports = configConstants;
 
@@ -49218,8 +49221,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.box_serials;
     },
     getOrderDetails: function() {
+        var orderDetailsinOrder={};
+        var orderDetails = _seatData['order_details'];
+        /*Performing this action to reorder the object*/
+        if (orderDetails){
+            if(orderDetails.order_id){
+                orderDetailsinOrder.order_id = orderDetails.order_id
+            }
+            if(orderDetails.rem_qty){
+                orderDetailsinOrder.rem_qty = orderDetails.rem_qty
+            }
+            if(orderDetails.volume){
+                orderDetailsinOrder.volume = orderDetails.volume
+            }
+            if(orderDetails.vol_unit){
+                orderDetailsinOrder.vol_unit = orderDetails.vol_unit
+            }
+        }
+            return orderDetailsinOrder;
+    },
+    getOrderID: function() {
         if (_seatData.hasOwnProperty('order_details'))
-            return _seatData.order_details;
+            return {
+                order_id : _seatData.order_details.order_id || ""
+            };
     },
 
     getChecklistDetails: function() {
@@ -50884,6 +50909,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
                 data["PickFrontPackingCancelStatus"] =  this.getPickFrontPackingCancelStatus();
+                data["PickFrontBoxOrderDetails"]= this.getOrderID();
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -51542,7 +51568,275 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-
+if(data.state_data){
+    data.state_data = {
+        "seat_name": "front_2",
+        "notification_list": [{
+            "level": "info",
+            "code": "PkF.I.004",
+            "details": [],
+            "description": "Item Scan successful"
+        }],
+        "scan_details": {
+            "current_qty": "1",
+            "total_qty": "2",
+            "kq_allowed": true
+        },
+        "checklist_details": {
+            "pick_checklist": [],
+            "checklist_index": "undefined",
+            "display_checklist_overlay": false
+        },
+        "rack_details": {
+            "rack_type_rec": [
+                ["A", [
+                    [
+                        ["01", "02"], 32, 33, 48
+                    ],
+                    [
+                        ["03", "04"], 32, 33, 48
+                    ],
+                    [
+                        ["05", "06"], 32, 33, 48
+                    ]
+                ]],
+                ["B", [
+                    [
+                        ["01", "02"], 32, 33, 48
+                    ],
+                    [
+                        ["03", "04"], 32, 33, 48
+                    ],
+                    [
+                        ["05", "06"], 32, 33, 48
+                    ]
+                ]],
+                ["C", [
+                    [
+                        ["01", "02"], 32, 33, 48
+                    ],
+                    [
+                        ["03", "04"], 32, 33, 48
+                    ],
+                    [
+                        ["05", "06"], 32, 33, 48
+                    ]
+                ]],
+                ["D", [
+                    [
+                        ["01", "02"], 32, 33, 48
+                    ],
+                    [
+                        ["03", "04"], 32, 33, 48
+                    ],
+                    [
+                        ["05", "06"], 32, 33, 48
+                    ]
+                ]],
+                ["E", [
+                    [
+                        ["01", "02"], 32, 33, 48
+                    ],
+                    [
+                        ["03", "04"], 32, 33, 48
+                    ],
+                    [
+                        ["05", "06"], 32, 33, 48
+                    ]
+                ]]
+            ],
+            "slot_barcodes": ["014.1.B.01", "014.1.B.02"],
+            "slot_type": "slot"
+        },
+        "exception_allowed": [{
+            "exception_id": "PkF001",
+            "exception_name": "Item Missing/Bad Barcode",
+            "event": "missing_or_damaged_item"
+        }],
+        "roll_cage_flow": false,
+        "bin_coordinate_plotting": false,
+        "screen_id": "pick_front_packing_item_scan",
+        "logout_allowed": false,
+        "seat_type": "front",
+        "product_info": [
+            [{
+                "product_sku": "2001",
+                "display_data": [{
+                    "locale": "ja-JP",
+                    "display_name": "製品SKU"
+                }, {
+                    "locale": "en-US",
+                    "display_name": "Product SKU"
+                }]
+            }],
+            [{
+                "display_data": [{
+                    "locale": "en-US",
+                    "display_name": "product_local_image_url"
+                }],
+                "product_local_image_url": null
+            }],
+            [{
+                "display_data": [{
+                    "locale": "ja-JP",
+                    "display_name": "製品バーコード"
+                }, {
+                    "locale": "en-US",
+                    "display_name": "Product Barcodes"
+                }],
+                "product_barcodes": ["2001"]
+            }],
+            [{
+                "display_data": [{
+                    "locale": "ja-JP",
+                    "display_name": "商品の寸法"
+                }, {
+                    "locale": "en-US",
+                    "display_name": "Product Dimensions"
+                }],
+                "product_dimensions": [1, 3, 10]
+            }]
+        ],
+        "time_stamp": "1490783986",
+        "cancel_scan_allowed": true,
+        "ppsbin_list": [{
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "5",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 1],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "4",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 2],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "3",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 3],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "2",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 4],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "1",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [1, 5],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "10",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 1],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "9",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "0",
+            "coordinate": [2, 2],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [{
+                "product_sku": "2001",
+                "type": "item",
+                "quantity": 2
+            }],
+            "ppsbin_id": "8",
+            "length": "200",
+            "selected_state": true,
+            "ppsbin_state": "empty",
+            "ppsbin_count": "1",
+            "coordinate": [2, 3],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "7",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "order_front_complete",
+            "ppsbin_count": "0",
+            "coordinate": [2, 4],
+            "group_id": "1"
+        }, {
+            "breadth": "200",
+            "direction": "center",
+            "bin_info": [],
+            "ppsbin_id": "6",
+            "length": "200",
+            "selected_state": false,
+            "ppsbin_state": "order_front_complete",
+            "ppsbin_count": "0",
+            "coordinate": [2, 5],
+            "group_id": "1"
+        }],
+        "mode": "pick",
+        "group_info": {
+            "1": "center"
+        },
+        "order_details": {
+            "order_id": "o_751"
+        },
+        "button_press_allowed": true,
+        "item_uid": "7ffa8459e1964d2fafa3d238e2f181c7",
+        "button_press_id": "box_discard",
+        "structure": [2, 5],
+        "screen_version": "1",
+        "docked": [],
+        "api_version": "1",
+        "is_idle": false,
+        "header_msge_list": [{
+            "level": "info",
+            "code": "PkF.H.006",
+            "details": [1, "8"],
+            "description": "Scan1 items and place in Bin8"
+        }]
+    }
+}
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

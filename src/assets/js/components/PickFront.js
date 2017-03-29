@@ -530,11 +530,13 @@ var PickFront = React.createClass({
             binComponent = (<div>
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
+                            
                             </div>)
           }else{
             binComponent = (<div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
+
                 </div>);
           }
         var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='',
@@ -549,10 +551,11 @@ var PickFront = React.createClass({
           cancelButton =  <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
         }
         this._component = (
-              <div className='grid-container'>
+              <div className='grid-container gor-pck-itm-scn'>
                 <Modal />  
                        
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+                <OrderDetails orderData = {this.state.PickFrontBoxOrderDetails} />
                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
                 <div className = 'actions'>
@@ -562,7 +565,7 @@ var PickFront = React.createClass({
                    {editButton}
                    {this.state.PickFrontBinFullStatus && BinFull}
                 </div>
-                <OrderDetails orderData = {this.state.PickFrontBoxOrderDetails} />
+               
               </div>
               
             );

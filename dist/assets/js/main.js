@@ -38393,6 +38393,7 @@ switch (module) {
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                                   data["event_name"] = "put_back_exception";
                                   data["event_data"]["action"] ="finish_exception";
@@ -38415,6 +38416,9 @@ switch (module) {
                                 break;
                             case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
                                 ActionCreators.changePutBackExceptionScreen("damaged_confirm");
+                                break;
+                            case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
                                 break;
                             case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
                                 ActionCreators.changePutBackExceptionScreen("oversized_confirm");
@@ -43731,7 +43735,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -43739,18 +43743,18 @@ var PutBack = React.createClass({displayName: "PutBack",
                 )
               )
             );
-          else if(this.state.PutBackExceptionScreen == "oversized_confirm")
+          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put oversized entities in exception area."))
+                      React.createElement("div", {className: "kq-header"}, _("Please put damaged entities in exception area."))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -45645,6 +45649,8 @@ var appConstants = {
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	CHANGE_DAMAGED_SCREEN_CONFIRM:"CHANGE_DAMAGED_SCREEN_CONFIRM",
 	CHANGE_OVERSIZED_SCREEN_CONFIRM:"CHANGE_OVERSIZED_SCREEN_CONFIRM",
+	CHANGE_DAMAGED_ENTITY_CONFIRM:"CHANGE_DAMAGED_ENTITY_CONFIRM",
+	DAMAGED_ENTITY_CONFIRM:"damaged_entity_confirm",
 	MOVE_TO_DAMAGED_CONFIRM:"MOVE_TO_DAMAGED_CONFIRM",
 	VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM:"VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM",
 	SET_CURRENT_SEAT:"SET_CURRENT_SEAT",
@@ -45711,6 +45717,7 @@ var appConstants = {
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
+	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
 	EDIT_DETAILS:"EDIT_DETAILS",

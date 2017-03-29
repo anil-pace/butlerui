@@ -59,6 +59,7 @@ switch (module) {
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                                   data["event_name"] = "put_back_exception";
                                   data["event_data"]["action"] ="finish_exception";
@@ -81,6 +82,9 @@ switch (module) {
                                 break;
                             case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
                                 ActionCreators.changePutBackExceptionScreen("damaged_confirm");
+                                break;
+                            case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
+                                ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
                                 break;
                             case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
                                 ActionCreators.changePutBackExceptionScreen("oversized_confirm");

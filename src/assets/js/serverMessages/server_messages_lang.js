@@ -417,4 +417,7 @@ function server_messages_list() {
     _("Scan tote which has excess item");
     _("Invalid tote scanned");
     _("Exception entry successful");
+    _("Are you sure you want to exit from {0} invoice and stage all bins");
+    _("Invoice number: {0}");
+    _("Scan or Enter {0} number");
 }

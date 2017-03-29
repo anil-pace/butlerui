@@ -10,6 +10,7 @@ var english = require('../serverMessages/english');
 var japanese = require('../serverMessages/japanese');
 var german = require('../serverMessages/german');
 var french = require('../serverMessages/french');
+var spanish = require('../serverMessages/spanish');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -1164,6 +1165,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case "fr-FR":
                 _.setTranslation(french);
                 break;
+            case "es-ES":
+                _.setTranslation(spanish);
+                break;
             default:
                 return true;
         }
@@ -1704,6 +1708,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.notification_list[0] = notification_list;
         }    
     },
+    getHeaderMessg : function(data) {
+        if(_seatData && _seatData.header_msge_list) {
+            return _seatData.header_msge_list[0];
+        }
+    },
+
+    getInvoiceStatus : function(data) {
+        if(_seatData.invoice_required) {
+            var invoiceData = {invoiceFlag:true, invoiceId:_seatData.invoice_id};
+            return invoiceData;
+        }
+        else {
+            return null;
+        }
+    },
+
     getScreenData: function() {
         var data = {};
 
@@ -1723,6 +1743,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
                 break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -1745,7 +1766,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
                 break;
+            case appConstants.PUT_BACK_INVOICE:
+                data["HeaderMessg"] = this.getHeaderMessg();
+                data["PutBackScreenId"] = this.getScreenId();
+            break;
             case appConstants.PUT_BACK_TOTE_CLOSE:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackReconciliation"] = this.getReconcileData();

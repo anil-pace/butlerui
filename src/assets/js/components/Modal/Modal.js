@@ -267,6 +267,27 @@ function loadComponent(modalType,modalData){
           ));
       title = _("Discard Box");
       break;
+      case appConstants.EXIT_INVOICE:
+      var invoiceId = mainstore.getInvoiceStatus().invoiceId;
+      component = [];
+      component.push((
+          <div>
+            <div className="row">
+              <p>Are you sure you want to exit from {invoiceId} invoice and stage all bins</p>
+            </div>
+            <div className="modal-footer removeBorder">
+              <div className="buttonContainer center-block chklstButtonContainer">
+                <div className="row removeBorder">
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Exit")} color={"black"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_EXIT_INVOICE}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.DECLINE_CANCEL_INVOICE}/></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          ));
+      title = _("Exit invoice and stage all bins");
+      break;
+
     case "enter_barcode":
         component = [];
         component.push((

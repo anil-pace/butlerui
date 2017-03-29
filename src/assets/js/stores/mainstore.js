@@ -1720,6 +1720,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
+    getInvoiceType : function(data) {
+        if(_seatData.invoice_type) {
+            return _seatData.invoice_type;
+        }
+    },
+
     getScreenData: function() {
         var data = {};
 
@@ -1740,6 +1746,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
                 break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -1763,10 +1770,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
                 break;
             case appConstants.PUT_BACK_INVOICE:
                 data["HeaderMessg"] = this.getHeaderMessg();
                 data["PutBackScreenId"] = this.getScreenId();
+                data["InvoiceType"] = this.getInvoiceType();
             break;
             case appConstants.PUT_BACK_TOTE_CLOSE:
                 data["PutBackScreenId"] = this.getScreenId();

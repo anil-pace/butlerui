@@ -136,13 +136,14 @@ var PutBack = React.createClass({
       case appConstants.PUT_BACK_INVOICE:
       var invoiceStringArg = [];
       invoiceStringArg[0] = this.state.InvoiceType;
+      var componentModalString = utils.frntStringTransform("FRNT.PBI.01",invoiceStringArg);
       this._navigation = '';
       this._component = (
         <div className='grid-container gor-invoice-wrap'>
           <div className='gor-invoice-input-wrap'>
-            <div className='gor-invoice-h1-wrap'>{utils.frntStringTransform("FRNT.PBI.01",invoiceStringArg)}</div>
+            <div className='gor-invoice-h1-wrap'>{componentModalString}</div>
             <div className='gor-invoice-input-keyboard-wrap' onClick={this.openKeyboard}> 
-                <input type="text" className="form-control gor-invoice-input-box-wrap" id="invoiceNumber" placeholder={utils.frntStringTransform("FRNT.PBI.01",invoiceStringArg)} ref='invoiceNumber'/> 
+                <input type="text" className="form-control gor-invoice-input-box-wrap" id="invoiceNumber" placeholder={componentModalString} ref='invoiceNumber'/> 
             </div> 
           </div>
         </div>);

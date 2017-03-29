@@ -40513,6 +40513,7 @@ module.exports = Operator;
 },{"../constants/appConstants":297,"../stores/mainstore":315,"./Audit":234,"./MobileSystemIdle":251,"./PickBack":263,"./PickFront":264,"./PrePut":268,"./PutBack":276,"./PutFront":277,"./Spinner/Overlay":286,"./SystemIdle":289,"react":230}],261:[function(require,module,exports){
 var React = require("react");
 var allresourceConstants = require('../../constants/resourceConstants');
+var appConstants = require('../../constants/appConstants');
 var OrderRow = require('./OrderRow');
 
 var OrderDetails = React.createClass({displayName: "OrderDetails",
@@ -40520,9 +40521,20 @@ var OrderDetails = React.createClass({displayName: "OrderDetails",
 
 		var orderData =this.props.orderData;
 		var orderRowArr = [];
+		var orderValue ;
+		var volumeUnit = appConstants.VOLUME_UNIT;
 
 		for(var k in orderData){
-			orderRowArr.push((React.createElement(OrderRow, {orderKey: k, orderValue: orderData[k]})))
+			if(k === volumeUnit){
+				continue;
+			}
+			if(k === appConstants.volume){
+				orderValue = orderData[k] + " "+(orderData[volumeUnit] || "");
+			}
+			else{
+				orderValue = orderData[k]
+			}
+			orderRowArr.push((React.createElement(OrderRow, {orderKey: k, orderValue: orderValue})))
 		}
 		return (
 				React.createElement("div", {className: "orderDetailsWrapper"}, 
@@ -40534,7 +40546,7 @@ var OrderDetails = React.createClass({displayName: "OrderDetails",
 
 module.exports  = OrderDetails;
 
-},{"../../constants/resourceConstants":299,"./OrderRow":262,"react":230}],262:[function(require,module,exports){
+},{"../../constants/appConstants":297,"../../constants/resourceConstants":299,"./OrderRow":262,"react":230}],262:[function(require,module,exports){
 var React = require("react");
 var resourceConstants = require('../../constants/resourceConstants');
 
@@ -41988,7 +42000,7 @@ var KQ = React.createClass({displayName: "KQ",
                     }
                 };
             }
-            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
                     "event_data": {
@@ -42055,7 +42067,7 @@ var KQ = React.createClass({displayName: "KQ",
                     }
                 };
                 }
-                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
                     "event_data": {
@@ -42187,7 +42199,7 @@ var KQ = React.createClass({displayName: "KQ",
                             }
                         };
                     }
-                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS) {
                          data = {
                             "event_name": "put_back_exception",
                             "event_data": {
@@ -43612,6 +43624,50 @@ var PutBack = React.createClass({displayName: "PutBack",
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break; 
+       case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
+          this._navigation = '';
+          if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
+
+                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
+
+                    React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          else if(this.state.PutBackExceptionScreen == "oversized_confirm")
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put oversized entities in exception area."))
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -45530,6 +45586,7 @@ var appConstants = {
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
+	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
@@ -45661,7 +45718,12 @@ var appConstants = {
 	HIDE_SPINNER:"HIDE_SPINNER",
 	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm",
 	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
-	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal"
+	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal",
+	/*Constants for order details*/
+	VOLUME_UNIT:"vol_unit",
+	VOLUME:"volume",
+	/*Constants for Put back exception*/
+	ENTITY_DAMAGED:"entity_damaged"
 
 };
 
@@ -45669,12 +45731,13 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
 };
 module.exports = configConstants;
 
 },{}],299:[function(require,module,exports){
+
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',
@@ -49381,6 +49444,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "box_serial";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)
             _putBackExceptionScreen = "damaged";
+        else if (_screenId == appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS)
+            _putBackExceptionScreen = "entity_damaged";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS)
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
@@ -50112,6 +50177,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
+            case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackKQDetails"] = this.getScanDetails();

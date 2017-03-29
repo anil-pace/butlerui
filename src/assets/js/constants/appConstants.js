@@ -50,6 +50,7 @@ var appConstants = {
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
+	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
@@ -181,7 +182,12 @@ var appConstants = {
 	HIDE_SPINNER:"HIDE_SPINNER",
 	PICK_FRONT_LOCATION_CONFIRM:"pick_front_location_confirm",
 	CLOSE_CANCEL_EXCEPTION : "close_cancel_exception",
-	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal"
+	CANCEL_EXCEPTION_MODAL : "cancel_exception_modal",
+	/*Constants for order details*/
+	VOLUME_UNIT:"vol_unit",
+	VOLUME:"volume",
+	/*Constants for Put back exception*/
+	ENTITY_DAMAGED:"entity_damaged"
 
 };
 

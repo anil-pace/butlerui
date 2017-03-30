@@ -37339,10 +37339,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}, 
                     tote, 
@@ -37362,9 +37359,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
@@ -37384,9 +37379,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
@@ -37414,9 +37407,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
@@ -37475,9 +37466,7 @@ var Bin = React.createClass({displayName: "Bin",
             var binClass = 'bin ';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (
                 React.createElement("div", {className: "bin  selected blink1"}, 
@@ -37495,9 +37484,7 @@ var Bin = React.createClass({displayName: "Bin",
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (
                 React.createElement("div", {className: "bin selected"+binClass}, 
@@ -37512,10 +37499,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (
                 React.createElement("div", {className: "bin"}, 
@@ -37777,9 +37761,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}, 
                     tote, 
@@ -37861,9 +37843,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
@@ -37883,9 +37863,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
@@ -37913,9 +37891,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon"}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
                 return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
@@ -37974,9 +37950,7 @@ var Bin = React.createClass({displayName: "Bin",
             var binClass = 'bin ';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (
                 React.createElement("div", {className: "bin  selected blink1"}, 
@@ -37994,9 +37968,7 @@ var Bin = React.createClass({displayName: "Bin",
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (
                 React.createElement("div", {className: "bin selected"+binClass}, 
@@ -38011,9 +37983,7 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
-                        )
+                        React.createElement("span", {className: "bin-icon tote-icon"})
                     ));
             return (
                 React.createElement("div", {className: "bin"}, 
@@ -45842,8 +45812,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 

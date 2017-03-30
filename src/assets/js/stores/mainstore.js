@@ -410,16 +410,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         /*Performing this action to reorder the object*/
         if (orderDetails){
             if(orderDetails.order_id){
-                orderDetailsinOrder.order_id = orderDetails.order_id
+                orderDetailsinOrder.order_id = orderDetails.order_id;
             }
             if(orderDetails.rem_qty){
-                orderDetailsinOrder.rem_qty = orderDetails.rem_qty
+                orderDetailsinOrder.rem_qty = orderDetails.rem_qty;
             }
             if(orderDetails.volume){
-                orderDetailsinOrder.volume = orderDetails.volume
+                orderDetailsinOrder.volume = orderDetails.volume;
             }
             if(orderDetails.vol_unit){
-                orderDetailsinOrder.vol_unit = orderDetails.vol_unit
+                orderDetailsinOrder.vol_unit = orderDetails.vol_unit;
             }
         }
             return orderDetailsinOrder;

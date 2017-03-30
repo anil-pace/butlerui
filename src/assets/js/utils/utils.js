@@ -259,6 +259,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         data["session"] = localStorage.getItem("session");
         return data;
     },
+
+    frntStringTransform : function(messgCode, stringArg) {
+        var message_args = [];
+        message_args = stringArg?stringArg:[];
+        message_args.unshift(serverMessages[messgCode]?serverMessages[messgCode]:"");
+        return _.apply(null, message_args);
+    },
     logError: function(data) {
         $.ajax({
             type: 'POST',
@@ -274,6 +281,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
+
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

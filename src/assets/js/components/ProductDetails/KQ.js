@@ -186,7 +186,7 @@ var KQ = React.createClass({
                     }
                 };
             }
-            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+            else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
                     "event_data": {
@@ -253,7 +253,7 @@ var KQ = React.createClass({
                     }
                 };
                 }
-                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
                     "event_data": {
@@ -385,7 +385,7 @@ var KQ = React.createClass({
                             }
                         };
                     }
-                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
+                    else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS) {
                          data = {
                             "event_name": "put_back_exception",
                             "event_data": {

@@ -22,6 +22,8 @@ var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation");
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
+var serverMessages = require('../serverMessages/server_messages');
+var utils = require('../utils/utils.js');
 function getStateData(){
   return mainstore.getScreenData();
 }
@@ -92,10 +94,16 @@ var PutBack = React.createClass({
       </div>
       );
   },
+
+  
+
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
+      var invoiceStringArgExitBtn = [], invoiceStringArg = [];
+      invoiceStringArgExitBtn[0] = this.state.InvoiceType;
+      invoiceStringArg[0] = this.state.InvoiceType;
       if(this.state.PutBackExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
@@ -108,16 +116,17 @@ var PutBack = React.createClass({
         }
         this._component = (
           <div className='grid-container'>
-          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(<div className="gor-invoice-put-back">{_("Invoice number:")} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>):""}
+          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(<div className="gor-invoice-put-back">{utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg)} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>):""}
           <Modal/>
           {binComponent}
           <div className = 'staging-action' >
           <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
           <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
           </div>
+          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?
           <div className = 'cancel-scan'>
-            <Button1 disabled = {false} text = {_("Exit Invoice")} module ={appConstants.PUT_BACK} action={appConstants.EXIT_INVOICE} color={"black"}/>
-          </div>
+            <Button1 disabled = {false} text = {utils.frntStringTransform("FRNT.PBI.02",invoiceStringArgExitBtn)} module ={appConstants.PUT_BACK} action={appConstants.EXIT_INVOICE} color={"black"}/>
+          </div>:""}
           </div>
           );
       }else{
@@ -125,18 +134,23 @@ var PutBack = React.createClass({
       }
       break;
       case appConstants.PUT_BACK_INVOICE:
+      var invoiceStringArg = [];
+      invoiceStringArg[0] = this.state.InvoiceType;
+      var componentModalString = utils.frntStringTransform("FRNT.PBI.01",invoiceStringArg);
       this._navigation = '';
       this._component = (
         <div className='grid-container gor-invoice-wrap'>
           <div className='gor-invoice-input-wrap'>
-            <div className='gor-invoice-h1-wrap'>{_("Scan or enter invoice number")}</div>
+            <div className='gor-invoice-h1-wrap'>{componentModalString}</div>
             <div className='gor-invoice-input-keyboard-wrap' onClick={this.openKeyboard}> 
-                <input type="text" className="form-control gor-invoice-input-box-wrap" id="invoiceNumber" placeholder={_('Please scan or enter invoice number')} ref='invoiceNumber'/> 
+                <input type="text" className="form-control gor-invoice-input-box-wrap" id="invoiceNumber" placeholder={componentModalString} ref='invoiceNumber'/> 
             </div> 
           </div>
         </div>);
       break;
       case appConstants.PUT_BACK_SCAN:
+      var invoiceStringArg = [];
+      invoiceStringArg[0] = this.state.InvoiceType;
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
@@ -155,7 +169,7 @@ var PutBack = React.createClass({
         this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
           <div className='grid-container'>
-          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(<div className="gor-invoice-put-back">{_("Invoice number:")} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>):""}
+          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(<div className="gor-invoice-put-back">{utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg)} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>):""}
           <Modal />
           {binComponent}
 
@@ -204,7 +218,7 @@ var PutBack = React.createClass({
       }else{
         this._component = this.getExceptionComponent();
       }
-      break; 
+      break;
       case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
       this._navigation = '';
       
@@ -244,17 +258,60 @@ var PutBack = React.createClass({
           </div>
           );
       break; 
-      case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
-      this._navigation = '';
-      if(this.state.PutBackExceptionScreen == "oversized")
-        this._component = (
-          <div className='grid-container exception'>
-          <Exception data={this.state.PutBackExceptionData}/>
-          <div className="exception-right">
-          <ExceptionHeader data={this.state.PutBackServerNavData} />
-          <div className="main-container exception1">
-          <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
+       case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
+          this._navigation = '';
+          if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <div className="main-container exception1">
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
 
+                     <TabularData  data = {this.state.PutBackExceptionProductDetails}/>
+
+                    <KQ scanDetails = {this.state.PutBackKQDetails} />
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
+            this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Please put damaged entities in exception area.")}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break; 
+       case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
+          this._navigation = '';
+          if(this.state.PutBackExceptionScreen == "oversized")
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <div className="main-container exception1">
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
           <TabularData  data = {this.state.PutBackExceptionProductDetails}/>
 
           <KQ scanDetails = {this.state.PutBackKQDetails} />

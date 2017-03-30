@@ -286,6 +286,30 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
       break;
+            case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
+          var _button;
+          _button = (<div className = "staging-action">                          
+                          <Button1 disabled = {this.state.PickFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS} color={"orange"} />
+                    </div>);
+          this._component = (
+              <div className='grid-container exception'>
+                <Modal />
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Scan damaged entity")}</div>
+                      <TabularData data={this.state.PickFrontDamagedItems}  className='limit-height' />
+                      {_button}
+                    </div>
+                  </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                </div>
+              </div>
+          );      
+        break; 
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           /**
@@ -506,11 +530,13 @@ var PickFront = React.createClass({
             binComponent = (<div>
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
+                            
                             </div>)
           }else{
             binComponent = (<div className='main-container'>
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
                   <Wrapper scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
+
                 </div>);
           }
         var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='',
@@ -525,10 +551,11 @@ var PickFront = React.createClass({
           cancelButton =  <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
         }
         this._component = (
-              <div className='grid-container'>
+              <div className='grid-container gor-pck-itm-scn'>
                 <Modal />  
                        
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+                <OrderDetails orderData = {this.state.PickFrontBoxOrderDetails} />
                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
                 <div className = 'actions'>
@@ -538,8 +565,7 @@ var PickFront = React.createClass({
                    {editButton}
                    {this.state.PickFrontBinFullStatus && BinFull}
                 </div>
-              
-
+               
               </div>
               
             );

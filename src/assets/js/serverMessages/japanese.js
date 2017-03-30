@@ -180,6 +180,7 @@ var japanese = {
    "Please put oversized entities in exception area.": "\u7279\u5927\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
    "Please put unscannable entities in exception area.": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
    "Please scan PPTL barcode": "\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Please scan or enter {0} number": "\u30b7\u30fc\u30c8\u30bf\u30a4\u30d7",
    "Please scan same SKU to complete this exception": "\u540c\u3058\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u4f8b\u5916\u767b\u9332\u3092\u5b8c\u4e86\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please scan the tote first and then scan PPTL barcode": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please scan the tote first and then scan pptl barcode": "\u30c8\u30fc\u30c8\u306e\u5f8c\u306b\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",

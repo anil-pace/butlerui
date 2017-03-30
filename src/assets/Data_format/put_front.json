@@ -110,7 +110,12 @@
 			"exception_id": "PtF002",
 			"exception_name": "Space Unavailable To Put",
 			"event": "space_unavailable"
-		}, {
+		},{
+			"exception_id": "PtF003",
+			"exception_name": "Entity Damaged",
+			"event": "entity_damaged"
+		},
+		 {
 			"exception_id": "PtF001",
 			"exception_name": "Damaged or Missing",
 			"event": "damaged_or_missing"

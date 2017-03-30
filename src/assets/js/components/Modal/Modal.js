@@ -9,7 +9,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
 var jqueryPosition = require('jquery-ui/position');
 var virtualkeyboard = require('virtual-keyboard');
-
+var utils = require('../../utils/utils.js');
 var component,title;
 
 function getStateData(){
@@ -268,12 +268,14 @@ function loadComponent(modalType,modalData){
       title = _("Discard Box");
       break;
       case appConstants.EXIT_INVOICE:
-      var invoiceId = mainstore.getInvoiceStatus().invoiceId;
+      var invoiceStringArg = [];
+      invoiceStringArg[0] = mainstore.getInvoiceStatus()?mainstore.getInvoiceStatus().invoiceId:"";
+      invoiceStringArg[1] = mainstore.getInvoiceType()?mainstore.getInvoiceType():"";
       component = [];
       component.push((
           <div>
             <div className="row">
-              <p>Are you sure you want to exit from {invoiceId} invoice and stage all bins</p>
+              <p>{utils.frntStringTransform("FRNT.PBIM.01",invoiceStringArg)}</p>
             </div>
             <div className="modal-footer removeBorder">
               <div className="buttonContainer center-block chklstButtonContainer">

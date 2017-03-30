@@ -38,9 +38,6 @@ var Bin = React.createClass({
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="bin-icon tote-icon"></span>
-
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
                     </div>);
             return (<div className = {compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}>
                     {tote}
@@ -61,8 +58,6 @@ var Bin = React.createClass({
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="bin-icon tote-icon"></span>
-                        <span className="glyphicon glyphicon-info-sign info-icon"  >
-                        </span>
                     </div>);
             if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 return (<div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
@@ -83,8 +78,6 @@ var Bin = React.createClass({
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="bin-icon tote-icon"></span>
-                        <span className="glyphicon glyphicon-info-sign info-icon"  >
-                        </span>
                     </div>);
             if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
                 if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
@@ -113,8 +106,6 @@ var Bin = React.createClass({
             if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="bin-icon tote-icon"></span>
-                        <span className="glyphicon glyphicon-info-sign info-icon"  >
-                        </span>
                     </div>);
             if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
                 return (<div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
@@ -174,8 +165,6 @@ var Bin = React.createClass({
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="bin-icon tote-icon"></span>
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
                     </div>);
             return (
                 <div className = "bin  selected blink1">
@@ -194,8 +183,6 @@ var Bin = React.createClass({
             if((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
                         <span className="bin-icon tote-icon"></span>
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
                     </div>);
             return (
                 <div className = {"bin selected"+binClass}>
@@ -209,11 +196,8 @@ var Bin = React.createClass({
         else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) ){
             var tote = '';
             if((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (<div className="tote">
-                        
+                tote = (<div className="tote">                        
                         <span className="bin-icon tote-icon"></span>
-                        <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                        </span>
                     </div>);
             return (
                 <div className = "bin">

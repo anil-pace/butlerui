@@ -1607,3 +1607,7 @@ msgstr "シートタイプ"
 #: src/assets/js/serverMessages/server_messages_lang.js:382
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
 msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:423
+msgid "Please scan or enter {0} number"
+msgstr "シートタイプ"

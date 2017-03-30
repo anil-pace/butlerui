@@ -39570,7 +39570,7 @@ var allSvgConstants = require('../../constants/svgConstants');
 var bootstrap = require('bootstrap');
 var jqueryPosition = require('jquery-ui/position');
 var virtualkeyboard = require('virtual-keyboard');
-
+var utils = require('../../utils/utils.js');
 var component,title;
 
 function getStateData(){
@@ -39829,12 +39829,14 @@ function loadComponent(modalType,modalData){
       title = _("Discard Box");
       break;
       case appConstants.EXIT_INVOICE:
-      var invoiceId = mainstore.getInvoiceStatus().invoiceId;
+      var invoiceStringArg = [];
+      invoiceStringArg[0] = mainstore.getInvoiceStatus()?mainstore.getInvoiceStatus().invoiceId:"";
+      invoiceStringArg[1] = mainstore.getInvoiceType()?mainstore.getInvoiceType():"";
       component = [];
       component.push((
           React.createElement("div", null, 
             React.createElement("div", {className: "row"}, 
-              React.createElement("p", null, "Are you sure you want to exit from ", invoiceId, " invoice and stage all bins")
+              React.createElement("p", null, utils.frntStringTransform("FRNT.PBIM.01",invoiceStringArg))
             ), 
             React.createElement("div", {className: "modal-footer removeBorder"}, 
               React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
@@ -39937,7 +39939,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":312,"../../stores/mainstore":316,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
+},{"../../constants/appConstants":297,"../../constants/svgConstants":300,"../../stores/PickFrontStore":312,"../../stores/mainstore":316,"../../utils/utils.js":317,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -43500,6 +43502,8 @@ var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation");
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
+var serverMessages = require('../serverMessages/server_messages');
+var utils = require('../utils/utils.js');
 function getStateData(){
   return mainstore.getScreenData();
 }
@@ -43570,10 +43574,16 @@ var PutBack = React.createClass({displayName: "PutBack",
       )
       );
   },
+
+  
+
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
+      var invoiceStringArgExitBtn = [], invoiceStringArg = [];
+      invoiceStringArgExitBtn[0] = this.state.InvoiceType;
+      invoiceStringArg[0] = this.state.InvoiceType;
       if(this.state.PutBackExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
         var binComponent ="";
@@ -43586,16 +43596,17 @@ var PutBack = React.createClass({displayName: "PutBack",
         }
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
-          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, _("Invoice number:"), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
           React.createElement(Modal, null), 
           binComponent, 
           React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: !this.state.StageActive, text: _("Stage"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
           React.createElement(Button1, {disabled: !this.state.StageAllActive, text: _("Stage All"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
           ), 
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?
           React.createElement("div", {className: "cancel-scan"}, 
-            React.createElement(Button1, {disabled: false, text: _("Exit Invoice"), module: appConstants.PUT_BACK, action: appConstants.EXIT_INVOICE, color: "black"})
-          )
+            React.createElement(Button1, {disabled: false, text: utils.frntStringTransform("FRNT.PBI.02",invoiceStringArgExitBtn), module: appConstants.PUT_BACK, action: appConstants.EXIT_INVOICE, color: "black"})
+          ):""
           )
           );
       }else{
@@ -43603,18 +43614,23 @@ var PutBack = React.createClass({displayName: "PutBack",
       }
       break;
       case appConstants.PUT_BACK_INVOICE:
+      var invoiceStringArg = [];
+      invoiceStringArg[0] = this.state.InvoiceType;
+      var componentModalString = utils.frntStringTransform("FRNT.PBI.01",invoiceStringArg);
       this._navigation = '';
       this._component = (
         React.createElement("div", {className: "grid-container gor-invoice-wrap"}, 
           React.createElement("div", {className: "gor-invoice-input-wrap"}, 
-            React.createElement("div", {className: "gor-invoice-h1-wrap"}, _("Scan or enter invoice number")), 
+            React.createElement("div", {className: "gor-invoice-h1-wrap"}, componentModalString), 
             React.createElement("div", {className: "gor-invoice-input-keyboard-wrap", onClick: this.openKeyboard}, 
-                React.createElement("input", {type: "text", className: "form-control gor-invoice-input-box-wrap", id: "invoiceNumber", placeholder: _('Please scan or enter invoice number'), ref: "invoiceNumber"})
+                React.createElement("input", {type: "text", className: "form-control gor-invoice-input-box-wrap", id: "invoiceNumber", placeholder: componentModalString, ref: "invoiceNumber"})
             )
           )
         ));
       break;
       case appConstants.PUT_BACK_SCAN:
+      var invoiceStringArg = [];
+      invoiceStringArg[0] = this.state.InvoiceType;
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
@@ -43633,7 +43649,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
-          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, _("Invoice number:"), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
           React.createElement(Modal, null), 
           binComponent, 
 
@@ -43966,7 +43982,7 @@ render: function(data){
 
 module.exports = PutBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../stores/PutBackStore":313,"../stores/mainstore":316,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ":269,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Reconcile":284,"./SystemIdle":289,"./TabularData":294,"./mtuNavigation":295,"react":230}],277:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":297,"../constants/svgConstants":300,"../serverMessages/server_messages":308,"../stores/PutBackStore":313,"../stores/mainstore":316,"../utils/utils.js":317,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ":269,"./ProductDetails/Wrapper":274,"./ProductDetails/WrapperSplitRoll":275,"./Reconcile":284,"./SystemIdle":289,"./TabularData":294,"./mtuNavigation":295,"react":230}],277:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');
@@ -45826,8 +45842,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	INTERFACE_IP : "https://192.168.8.109"
 };
 module.exports = configConstants;
 
@@ -46844,6 +46860,7 @@ var japanese = {
    "Please put oversized entities in exception area.": "\u7279\u5927\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
    "Please put unscannable entities in exception area.": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
    "Please scan PPTL barcode": "\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Please scan or enter {0} number": "\u30b7\u30fc\u30c8\u30bf\u30a4\u30d7",
    "Please scan same SKU to complete this exception": "\u540c\u3058\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u4f8b\u5916\u767b\u9332\u3092\u5b8c\u4e86\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please scan the tote first and then scan PPTL barcode": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please scan the tote first and then scan pptl barcode": "\u30c8\u30fc\u30c8\u306e\u5f8c\u306b\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",
@@ -47290,7 +47307,13 @@ var serverMessages = {
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
-    "PtB.H.012" : "Scan or Enter {0} number"
+    "PtB.H.012" : "Scan or Enter {0} number",
+    "PtB.I.019" : "Skn scan successful", // not generic from backend 
+    //codes for front end
+    "FRNT.PBI.01" : "Please scan or enter {0} number",
+    "FRNT.PBI.02" : "Exit {0}",
+    "FRNT.PBI.03" : "{0} number :",
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
 };
 
 
@@ -50602,6 +50625,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
+    getInvoiceType : function(data) {
+        if(_seatData.invoice_type) {
+            return _seatData.invoice_type;
+        }
+    },
+
     getScreenData: function() {
         var data = {};
 
@@ -50622,6 +50651,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
                 break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -50645,10 +50675,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
                 break;
             case appConstants.PUT_BACK_INVOICE:
                 data["HeaderMessg"] = this.getHeaderMessg();
                 data["PutBackScreenId"] = this.getScreenId();
+                data["InvoiceType"] = this.getInvoiceType();
             break;
             case appConstants.PUT_BACK_TOTE_CLOSE:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -51552,6 +51584,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         data["type"] = type;
         data["session"] = localStorage.getItem("session");
         return data;
+    },
+
+    frntStringTransform : function(messgCode, stringArg) {
+        var message_args = [];
+        message_args = stringArg?stringArg:[];
+        message_args.unshift(serverMessages[messgCode]?serverMessages[messgCode]:"");
+        return _.apply(null, message_args);
     },
     logError: function(data) {
         $.ajax({

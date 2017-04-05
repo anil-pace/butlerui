@@ -285,7 +285,9 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
+    /*Code for pick front container flow*/
+    "PkF.H.015":"Place container in MSU slot and confirm"
 };
 
 

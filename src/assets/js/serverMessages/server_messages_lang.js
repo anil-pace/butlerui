@@ -429,5 +429,6 @@ function server_messages_list() {
     _("Place container in MSU slot and confirm");
     /*Put front unmarked containers */
     _("Place {0} boxes with {1} items from bin {2}");
+    _("Place {0} boxes from bin {2}");
     _("Place");
 }

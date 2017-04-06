@@ -100,7 +100,7 @@ var navData = {
             "type": 'passive'
         },{
             "screen_id": "put_front_scan_rack_for_unmarked_entity",
-            "code": "Common.000",
+            "code": "Common.001",
             "message": "Scan slot",
             "showImage": true,
             "level": 2,

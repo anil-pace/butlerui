@@ -427,4 +427,6 @@ function server_messages_list() {
     _("Are you sure you want to exit from {0} {1} and stage all bins");
     /* Code for pick front container flow*/
     _("Place container in MSU slot and confirm");
+    /*Put front unmarked containers */
+    _("Place {0} boxes with {1} items from bin {2}");
 }

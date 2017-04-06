@@ -94,15 +94,15 @@ var navData = {
         [{
             "screen_id": "put_front_place_unmarked_entity_in_rack",
             "code": "Common.000",
-            "message": "Place {5} boxes in slot from bin {1}",
-            "showImage": false,
+            "message": "Place",
+            "showImage": true,
             "level": 1,
             "type": 'passive'
         },{
             "screen_id": "put_front_scan_rack_for_unmarked_entity",
             "code": "Common.000",
-            "message": "Scan slot to confirm",
-            "showImage": false,
+            "message": "Scan slot",
+            "showImage": true,
             "level": 2,
             "type": 'passive'
         }]

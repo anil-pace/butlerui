@@ -213,6 +213,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[2];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
                     _NavData = navConfig.putFront[3];
+                else if(_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
+                    _NavData = navConfig.putFront[4];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -2002,6 +2004,42 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;                               
+            case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
+            case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();

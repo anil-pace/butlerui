@@ -42260,7 +42260,8 @@ var KQ = React.createClass({displayName: "KQ",
               this._enableDecrement = false;
               _scanDetails.kq_allowed = false;
 
-          }else{
+          }
+          else{
               this._appendClassDown = 'downArrow enable';
               this._enableDecrement = true;
             }
@@ -42284,7 +42285,7 @@ var KQ = React.createClass({displayName: "KQ",
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
                 }
-            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                   this._enableDecrement = false;
@@ -42315,7 +42316,7 @@ var KQ = React.createClass({displayName: "KQ",
 
   handleTotalQty : function(){
 
-    if(_scanDetails.total_qty != 0 ){
+    if(_scanDetails.total_qty != 0 || mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
         this._qtyComponent = (
           React.createElement("div", {id: "textbox"}, 
             React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null,"keyboard")}), 
@@ -44127,6 +44128,54 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
+      if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          //need to check this case, if we need flexible bins here?
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+                React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
+                      React.createElement("div", {className: "text"}, _("CURRENT BIN"))
+                ), 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+                )
+              )
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+      case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+      if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          //need to check this case, if we need flexible bins here?
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
+                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+                React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
+                      React.createElement("div", {className: "text"}, _("CURRENT BIN"))
+                ), 
+                React.createElement("div", {className: "main-container"}, 
+                  React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
+                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
+                )
+
+              )
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
@@ -45367,7 +45416,22 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
-        }]        
+        }],
+        [{
+            "screen_id": "put_front_place_unmarked_entity_in_rack",
+            "code": "Common.000",
+            "message": "Place",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "put_front_scan_rack_for_unmarked_entity",
+            "code": "Common.001",
+            "message": "Scan slot",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }]
     ],
     "pickFront": [
         [{
@@ -45669,6 +45733,8 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
+	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
+	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_damaged_item",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
@@ -47040,6 +47106,8 @@ var serverMessages = {
     "PtF.H.009" : "Scan excess item",
     "PtF.H.010" : "Scan tote which has excess item",
     "PtF.H.011" : "Take out the tote from bin {0} and scan entity",
+    "PtF.H.012" : "Place {0} boxes from bin {2}",
+    "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -47283,7 +47351,9 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
+    /*Code for pick front container flow*/
+    "PkF.H.015":"Place container in MSU slot and confirm"
 };
 
 
@@ -49022,6 +49092,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[2];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
                     _NavData = navConfig.putFront[3];
+                else if(_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
+                    _NavData = navConfig.putFront[4];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -50811,6 +50883,42 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;                               
+            case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
+            case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();

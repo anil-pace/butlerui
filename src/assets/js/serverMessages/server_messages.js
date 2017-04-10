@@ -244,6 +244,7 @@ var serverMessages = {
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
+    "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
     "PkF001" : "Item Missing/Bad Barcode",

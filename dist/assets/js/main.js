@@ -39148,14 +39148,17 @@ var Header = React.createClass({displayName: "Header",
         this.setState(getState());
     },
     getExceptionMenu:function(){
-        var x = "";
+        var x = "",
+        screenId =  mainstore.getScreenId();
         for( var prop in appConstants ) {
         if( appConstants.hasOwnProperty( prop ) ) {
-             if( appConstants[ prop ] == mainstore.getScreenId() )
+             if( appConstants[ prop ] == screenId ){
                  x = prop;
+                break;
+            }
         }
      }
-        if(x.search("EXCEPTION") != -1 )
+        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY)
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
@@ -45878,8 +45881,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	INTERFACE_IP : "https://192.168.8.109"
 };
 module.exports = configConstants;
 

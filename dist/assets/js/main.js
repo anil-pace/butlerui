@@ -45883,29 +45883,20 @@ var appConstants = {
 	EXIT_INVOICE : "EXIT_INVOICE",
 	DECLINE_CANCEL_INVOICE : "DECLINE_CANCEL_INVOICE",
 	CONFIRM_EXIT_INVOICE : "CONFIRM_EXIT_INVOICE",
-<<<<<<< HEAD
-	PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote"
-
-=======
+	PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
 	/*Constants for order details*/
 	VOLUME_UNIT:"vol_unit",
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
 	ENTITY_DAMAGED:"entity_damaged"
->>>>>>> develop
 };
 
 module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-<<<<<<< HEAD
-	WEBSOCKET_IP : "ws://192.168.12.168:8888/ws",
-	INTERFACE_IP : "https://192.168.12.168:5000"
-=======
 	WEBSOCKET_IP : "wss://localhost/wss",
 	INTERFACE_IP : "https://localhost"
->>>>>>> develop
 };
 module.exports = configConstants;
 

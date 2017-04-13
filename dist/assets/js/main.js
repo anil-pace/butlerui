@@ -40736,6 +40736,22 @@ var PickBack = React.createClass({displayName: "PickBack",
             );
         break; 
 
+      case appConstants.PICK_BACK_REPRINT_TOTE:
+          this.getExceptionAction(screen_id);
+          this._navigation = '';
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                   React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData})
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break; 
+          
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
@@ -43574,7 +43590,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(Button1, {disabled: !this.state.StageActive, text: _("Stage"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
           React.createElement(Button1, {disabled: !this.state.StageAllActive, text: _("Stage All"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
           ), 
-          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) && (!(screen_id===appConstants.PUT_BACK_STAGE && this.state.ToteId))?
           React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: utils.frntStringTransform("FRNT.PBI.02",invoiceStringArgExitBtn), module: appConstants.PUT_BACK, action: appConstants.EXIT_INVOICE, color: "black"})
           ):""
@@ -45877,6 +45893,7 @@ var appConstants = {
 	EXIT_INVOICE : "EXIT_INVOICE",
 	DECLINE_CANCEL_INVOICE : "DECLINE_CANCEL_INVOICE",
 	CONFIRM_EXIT_INVOICE : "CONFIRM_EXIT_INVOICE",
+	PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
 	/*Constants for order details*/
 	VOLUME_UNIT:"vol_unit",
 	VOLUME:"volume",
@@ -45888,12 +45905,17 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
+<<<<<<< HEAD
+	WEBSOCKET_IP : "ws://192.168.12.168:8888/ws",
+	INTERFACE_IP : "https://192.168.12.168:5000"
+=======
 	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
 	INTERFACE_IP : "https://192.168.3.106:5000"
 	// WEBSOCKET_IP : "ws://10.212.134.202:8888/ws",
 	// INTERFACE_IP : "https://10.212.134.202:5000"
 	// WEBSOCKET_IP : "wss://192.168.8.109/wss",
 	// INTERFACE_IP : "https://192.168.8.109"
+>>>>>>> develop
 };
 module.exports = configConstants;
 
@@ -47337,6 +47359,7 @@ var serverMessages = {
     "PpB.H.001" : "Scan tote and place it in the slot",
     "PpB.H.002" : "Scan slot to confirm",
     "PpB.H.005" : "Release MTU",
+    "Ppb.H.006" : "Scan or Enter the tote barcode to reprint",
     "PpB.I.001" : "Tote scan successful.",
     "PpB.I.002" : "Slot barcode scan successful",
     "PpB.I.003" : "Exception cancelled",
@@ -50712,6 +50735,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
                 data["InvoiceType"] = this.getInvoiceType();
+                data["ToteId"] = this.getToteId();
                 break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -51134,6 +51158,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
             case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
             case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+            case appConstants.PICK_BACK_REPRINT_TOTE:
                 data["PickBackNavData"] = this.getNavData();
                 data["PickBackNotification"] = this.getNotificationData();
                 data["PickBackBinData"] = this.getBinData();
@@ -51144,6 +51169,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackSelectedBin"] = this.getSelectedBin();
                 break;
+
+
             case appConstants.AUDIT_WAITING_FOR_MSU:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();

@@ -425,6 +425,9 @@ function server_messages_list() {
     _("Exit {0}");
     _("{0} number :");
     _("Are you sure you want to exit from {0} {1} and stage all bins");
+    _("Scan or Enter the tote barcode to reprint");
+    /* Code for pick front container flow*/
+    _("Place container in MSU slot and confirm");
     /*Put front unmarked containers */
     _("Place {0} boxes with {1} items from bin {2}");
     _("Place {0} boxes from bin {2}");

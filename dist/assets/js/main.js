@@ -44200,85 +44200,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
           );      
         break; 
-
-      // case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-      //     this._navigation = '';
-      //     if(this.state.PutFrontExceptionScreen == "good"){
-      //     this._component = (
-      //         <div className='grid-container exception'>
-      //           <Exception data={this.state.PutFrontExceptionData}/>
-      //           <div className="exception-right">
-      //             <div className="main-container">
-      //               <div className = "kq-exception">
-      //                 <div className="kq-header">{_("Good Quantity")}</div>
-      //                 <KQ scanDetailsGood = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
-      //               </div>
-      //             </div>
-      //             <div className = "finish-damaged-barcode">
-      //               <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
-      //             </div>
-      //           </div>
-      //           <div className = 'cancel-scan'>
-      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //           </div>
-      //         </div>
-      //       );
-      //     }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-      //       var btnComp;
-      //       /**
-      //        * { T2714: confirm button disabled if missing/unscannable quantity is zero }
-      //        */
-      //       this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
-      //       if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
-      //          btnComp = ( <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM} /> );
-      //       }else{
-      //         btnComp = ( <Button1 disabled = {this._disableConfirm} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );
-      //       }
-      //       this._component = (
-      //         <div className='grid-container exception'>
-      //           <Exception data={this.state.PutFrontExceptionData}/>
-      //           <div className="exception-right">
-      //             <div className="main-container">
-      //               <div className = "kq-exception">
-      //                 <div className="kq-header">{_("Missing Quantity")}</div>
-      //                 <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
-      //               </div>
-      //               <div className = "kq-exception">
-      //                 <div className="kq-header">{_("Unscannable Quantity")}</div>
-      //                 <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
-      //               </div>
-      //             </div>
-      //             <div className = "finish-damaged-barcode">
-      //              {btnComp} 
-      //             </div>
-      //           </div>
-      //           <div className = 'cancel-scan'>
-      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //           </div>
-      //         </div>
-      //       );
-      //     }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing_confirm"){
-      //       this._component = (
-      //         <div className='grid-container exception'>
-      //           <Exception data={this.state.PutFrontExceptionData}/>
-      //           <div className="exception-right">
-      //             <div className="main-container exception2">
-      //               <div className = "kq-exception">
-      //                 <div className="kq-header">{_("Please put unscannable entities in exception area.")}</div>
-      //               </div>
-      //             </div>
-      //             <div className = "finish-damaged-barcode">
-      //               <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
-      //             </div>
-      //           </div>
-      //           <div className = 'cancel-scan'>
-      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //           </div>
-      //         </div>
-      //       );
-      //     }
-      //   break; 
-
+      
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
     
       this._navigation = '';
@@ -44303,15 +44225,27 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
         }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-             var btnComp;
+             var btnComp, UnscannableKQ;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
+             On line 293 we are doing shpw/hide for Unscannable quantity KQ based on the UnmarkedContainer value
              */
             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM}) );
             }else{
               btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
+            }
+            if(!this.state.UnmarkedContainer)
+            {
+              UnscannableKQ=(React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
+                    ));
+            }
+            else
+            {
+              UnscannableKQ=(React.createElement("div", null));
             }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -44322,12 +44256,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                       React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
                       React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
                     ), 
-          
-                    React.createElement("div", {className: !this.state.UnmarkedContainer?"kq-exception":"kq-exception hide-unscannable"}, 
-
-                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
-                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
-                    )
+                          UnscannableKQ
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                    btnComp
@@ -45959,8 +45888,12 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.13.85:8888/ws",
-	INTERFACE_IP : "https://192.168.13.85:5000"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
+	// WEBSOCKET_IP : "ws://10.212.134.202:8888/ws",
+	// INTERFACE_IP : "https://10.212.134.202:5000"
+	// WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	// INTERFACE_IP : "https://192.168.8.109"
 };
 module.exports = configConstants;
 
@@ -50045,7 +49978,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
-        _unmarkedContainer=data.unmarked_container!=undefined? data.unmarked_container:false;
+        _unmarkedContainer= (data.unmarked_container)? data.unmarked_container:false;
         this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;

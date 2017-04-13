@@ -269,7 +269,7 @@ var PutFront = React.createClass({
               </div>
             );
         }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-             var btnComp;
+             var btnComp, UnscannableKQ;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
              On line 293 we are doing shpw/hide for Unscannable quantity KQ based on the UnmarkedContainer value
@@ -280,6 +280,17 @@ var PutFront = React.createClass({
             }else{
               btnComp = ( <Button1 disabled = {this._disableConfirm} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );
             }
+            if(!this.state.UnmarkedContainer)
+            {
+              UnscannableKQ=(<div className="kq-exception">
+                      <div className="kq-header">{_("Unscannable Quantity")}</div>
+                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
+                    </div>);
+            }
+            else
+            {
+              UnscannableKQ=(<div></div>);
+            }
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
@@ -289,12 +300,7 @@ var PutFront = React.createClass({
                       <div className="kq-header">{_("Missing Quantity")}</div>
                       <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
                     </div>
-          
-                    <div className={!this.state.UnmarkedContainer?"kq-exception":"kq-exception hide-unscannable"}>
-
-                      <div className="kq-header">{_("Unscannable Quantity")}</div>
-                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
-                    </div>
+                          {UnscannableKQ} 
                   </div>
                   <div className = "finish-damaged-barcode">
                    {btnComp} 

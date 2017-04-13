@@ -1084,7 +1084,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
-        _unmarkedContainer=data.unmarked_container != undefined? data.unmarked_container:false;
+        _unmarkedContainer= (data.unmarked_container)? data.unmarked_container:false;
         this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;

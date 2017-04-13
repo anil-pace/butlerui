@@ -1,3 +1,4 @@
+
 var resourceConstants = {
 	BIN : 'Bin',
 	SELECTED : 'Selected',

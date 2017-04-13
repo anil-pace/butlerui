@@ -218,7 +218,7 @@ var PutBack = React.createClass({
       }else{
         this._component = this.getExceptionComponent();
       }
-      break; 
+      break;
       case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
       this._navigation = '';
       
@@ -258,17 +258,60 @@ var PutBack = React.createClass({
           </div>
           );
       break; 
-      case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
-      this._navigation = '';
-      if(this.state.PutBackExceptionScreen == "oversized")
-        this._component = (
-          <div className='grid-container exception'>
-          <Exception data={this.state.PutBackExceptionData}/>
-          <div className="exception-right">
-          <ExceptionHeader data={this.state.PutBackServerNavData} />
-          <div className="main-container exception1">
-          <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
+       case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
+          this._navigation = '';
+          if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <div className="main-container exception1">
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
 
+                     <TabularData  data = {this.state.PutBackExceptionProductDetails}/>
+
+                    <KQ scanDetails = {this.state.PutBackKQDetails} />
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
+            this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Please put damaged entities in exception area.")}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break; 
+       case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
+          this._navigation = '';
+          if(this.state.PutBackExceptionScreen == "oversized")
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutBackExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <div className="main-container exception1">
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
           <TabularData  data = {this.state.PutBackExceptionProductDetails}/>
 
           <KQ scanDetails = {this.state.PutBackKQDetails} />

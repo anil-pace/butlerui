@@ -213,6 +213,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[2];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
                     _NavData = navConfig.putFront[3];
+                else if(_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
+                    _NavData = navConfig.putFront[4];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -405,8 +407,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.box_serials;
     },
     getOrderDetails: function() {
+        var orderDetailsinOrder={};
+        var orderDetails = _seatData['order_details'];
+        /*Performing this action to reorder the object*/
+        if (orderDetails){
+            if(orderDetails.order_id){
+                orderDetailsinOrder.order_id = orderDetails.order_id;
+            }
+            if(orderDetails.rem_qty){
+                orderDetailsinOrder.rem_qty = orderDetails.rem_qty;
+            }
+            if(orderDetails.volume){
+                orderDetailsinOrder.volume = orderDetails.volume;
+            }
+            if(orderDetails.vol_unit){
+                orderDetailsinOrder.vol_unit = orderDetails.vol_unit;
+            }
+        }
+            return orderDetailsinOrder;
+    },
+    getOrderID: function() {
         if (_seatData.hasOwnProperty('order_details'))
-            return _seatData.order_details;
+            return {
+                order_id : _seatData.order_details.order_id || ""
+            };
     },
 
     getChecklistDetails: function() {
@@ -1074,6 +1098,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _pickFrontExceptionScreen = "box_serial";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)
             _putBackExceptionScreen = "damaged";
+        else if (_screenId == appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS)
+            _putBackExceptionScreen = "entity_damaged";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS)
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
@@ -1437,6 +1463,38 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _getReleaseActiveStatus:function(){
         return (_seatData && _seatData.release_mtu ? true:false);
     },
+    _getDamagedItemsData: function() {
+        var data = {};
+        data["header"] = [];
+        data["footer"] = [];
+        data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Damaged Quantity"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        data["image_url"] = null;
+        var self=this;
+        if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
+
+            var product_details,product_sku,quantity,total_damaged = 0;
+            _seatData.physically_damaged_items.map(function(value, index){
+                    value.product_info.map(function(product_details, index){
+                        if(product_details[0].product_sku){
+                            product_sku=product_details[0].product_sku;
+                            quantity = value.qty;  
+                            total_damaged += quantity     
+                            data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                        }
+                    });
+            });                            
+            data["footer"].push(new this.tableCol(_("Total: ")+total_damaged+_(" items"), "header", false, "small", false, true, true, false));
+        } else {
+            data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+        }
+        return data;
+    },
     _getExcessItemsData: function() {
         var data = {};
         data["header"] = [];
@@ -1471,6 +1529,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     _getExcessExceptionFlag:function(){
         if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
+            return false;
+        }
+        return true;
+    },
+    _getDamagedExceptionFlag:function(){
+        if (_seatData.physically_damaged_items != undefined && _seatData.physically_damaged_items.length !== 0) {
             return false;
         }
         return true;
@@ -1802,6 +1866,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackNotification"] = this.getNotificationData();
                 data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
                 break;
+            case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackKQDetails"] = this.getScanDetails();
@@ -1940,6 +2005,42 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;                               
+            case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
+            case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -1957,6 +2058,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontKQQuantity"] = this.getScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                break;
+            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 break;
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -2032,6 +2141,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
                 data["PickFrontPackingCancelStatus"] =  this.getPickFrontPackingCancelStatus();
+                data["PickFrontBoxOrderDetails"]= this.getOrderID();
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -2095,6 +2205,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                 data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
                 data["PickFrontScreenId"] = this.getScreenId();

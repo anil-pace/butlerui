@@ -1751,6 +1751,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
                 data["InvoiceType"] = this.getInvoiceType();
+                data["ToteId"] = this.getToteId();
                 break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -2118,6 +2119,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
             case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
             case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+            case appConstants.PICK_BACK_REPRINT_TOTE:
                 data["PickBackNavData"] = this.getNavData();
                 data["PickBackNotification"] = this.getNotificationData();
                 data["PickBackBinData"] = this.getBinData();
@@ -2128,6 +2130,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackSelectedBin"] = this.getSelectedBin();
                 break;
+
+
             case appConstants.AUDIT_WAITING_FOR_MSU:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();

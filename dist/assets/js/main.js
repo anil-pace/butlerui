@@ -44216,9 +44216,10 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
           );      
         break; 
-
+      
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
+    
+      this._navigation = '';
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -44239,17 +44240,28 @@ var PutFront = React.createClass({displayName: "PutFront",
                 )
               )
             );
-          }
-          else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-            var btnComp;
+        }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+             var btnComp, UnscannableKQ;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
+             On line 293 we are doing shpw/hide for Unscannable quantity KQ based on the UnmarkedContainer value
              */
             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM}) );
             }else{
               btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
+            }
+            if(!this.state.UnmarkedContainer)
+            {
+              UnscannableKQ=(React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
+                    ));
+            }
+            else
+            {
+              UnscannableKQ=(React.createElement("div", null));
             }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -44260,10 +44272,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                       React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
                       React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
                     ), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
-                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
-                    )
+                          UnscannableKQ
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                    btnComp
@@ -44294,7 +44303,8 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
           }
-        break; 
+          
+      break;
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
            if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
               this._component = (
@@ -45895,8 +45905,17 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
+<<<<<<< HEAD
 	WEBSOCKET_IP : "ws://192.168.12.168:8888/ws",
 	INTERFACE_IP : "https://192.168.12.168:5000"
+=======
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
+	// WEBSOCKET_IP : "ws://10.212.134.202:8888/ws",
+	// INTERFACE_IP : "https://10.212.134.202:5000"
+	// WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	// INTERFACE_IP : "https://192.168.8.109"
+>>>>>>> develop
 };
 module.exports = configConstants;
 
@@ -47325,6 +47344,7 @@ var serverMessages = {
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
+    "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
     "PkF001" : "Item Missing/Bad Barcode",
@@ -47369,9 +47389,9 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
-    /*Code for pick front container flow*/
-    "PkF.H.015":"Place container in MSU slot and confirm"
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
+  
+    
 };
 
 
@@ -49981,6 +50001,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        _unmarkedContainer= (data.unmarked_container)? data.unmarked_container:false;
         this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
@@ -50198,7 +50219,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
     },
-
+ getUnmarkedContainerFlag:function(){
+        return _unmarkedContainer;
+    },
     setAuditExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _auditExceptionScreen = data;
@@ -50947,6 +50970,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                data["UnmarkedContainer"]=this.getUnmarkedContainerFlag();
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
                 data["PutFrontScreenId"] = this.getScreenId();

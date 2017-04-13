@@ -610,7 +610,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _scanDetails;
     },
     cancelScanDetails:function(){
-        return _seatData.cancel_scan_enabled || false;
+        return _seatData.cancel_scan_enabled ;
     },
 
     productDetails: function() {

@@ -41042,7 +41042,8 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
                   
       case appConstants.PICK_FRONT_PPTL_PRESS:
-         var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
+         var cancelScanFlag = this.state.PickFrontCancelScan;
+         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
          var cancelButton;
          var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
          if(this.state.PickFrontExceptionStatus == false){
@@ -41054,10 +41055,10 @@ var PickFront = React.createClass({displayName: "PickFront",
           var editButton ='';
         }
         if(!cancelScanDisabled){
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
+          cancelButton = (React.createElement("div", null, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
          }
          else{
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}));
+          cancelButton = (React.createElement("div", null));
          }
          var binComponent ="";
           if (this.state.OrigBinUse){
@@ -41076,8 +41077,9 @@ var PickFront = React.createClass({displayName: "PickFront",
                 this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
                 React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                  cancelButton, 
                    (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''
+                  
                 )
               )
             );
@@ -41387,7 +41389,8 @@ var PickFront = React.createClass({displayName: "PickFront",
         }
       break;
         case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
-        var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
+         var cancelScanFlag = this.state.PickFrontCancelScan;
+         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
          var cancelButton;
          
          if(this.state.PickFrontExceptionStatus == false){
@@ -41413,7 +41416,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                 ))
           }
-           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='';
+           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus;
         if(btnId){
           btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
           action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;
@@ -45881,8 +45884,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "wss://172.104.40.84/wss",
+	INTERFACE_IP : "https://172.104.40.84"
 };
 module.exports = configConstants;
 
@@ -49492,7 +49495,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _scanDetails;
     },
     cancelScanDetails:function(){
-        return _seatData.cancel_scan_enabled || false;
+        return _seatData.cancel_scan_enabled ;
     },
 
     productDetails: function() {

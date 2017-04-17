@@ -221,7 +221,6 @@ var PutFront = React.createClass({
         }
         break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-         console.log(this.state.PutFrontDamagedQuantity);
           var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
           confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
           _button = (<div className = "staging-action">                          

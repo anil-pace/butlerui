@@ -221,10 +221,24 @@ var PutFront = React.createClass({
         }
         break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button;
+         console.log(this.state.PutFrontDamagedQuantity);
+          var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
+          confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
           _button = (<div className = "staging-action">                          
-                          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+                          <Button1 disabled = {confirmDisabled} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.UNMARKED_DAMAGED} color={"orange"} />
                     </div>);
+          if(isUnmarked){
+            unmarkedContainer = (                           
+                         <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} action={"DAMAGED"} />
+                    )
+            kqHeadMessage = _("Damaged Quantity");
+          }
+          else{
+            unmarkedContainer = (<div>
+               <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
+            </div>)
+            kqHeadMessage = _("Scan damaged entity");
+          }
           this._component = (
               <div className='grid-container exception'>
                 <Modal />
@@ -232,10 +246,13 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Scan damaged entity")}</div>
-                      <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
-                      {_button}
+                      <div className="kq-header">{kqHeadMessage}</div>
+                     {unmarkedContainer}
+                      
                     </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                  {_button}
                   </div>
                 </div>
                  <div className = 'cancel-scan'>

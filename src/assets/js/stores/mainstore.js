@@ -1247,6 +1247,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setKQQuanity: function(data) {
         _KQQty = data;
     },
+    getDamagedQuantity:function(){
+        return _damagedQuantity;
+    },
     setGoodQuanity: function(data) {
         _goodQuantity = data;
     },
@@ -1539,6 +1542,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return true;
     },
+    _getUnmarkedContainerFlag:function(){
+        return _seatData.unmarked_container;
+    },
     _getBinFullStatus:function(){
         return (_seatData && _seatData.bin_full_allowed ? true:false);
     },
@@ -1680,6 +1686,34 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["action"] = "confirm_quantity_update";
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = _KQQty;
+            this.showSpinner();
+            utils.postDataToInterface(data, _seatData.seat_name);
+        }
+    },
+    validateUnmarkedDamagedData:function(){
+        var _allowedQuantity;
+        _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
+        if (_damagedQuantity > _allowedQuantity) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = resourceConstants.CLIENTCODE_012;
+                data["level"] = "error";
+                data["details"] = [_allowedQuantity];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_allowedQuantity];
+                _seatData.notification_list[0].level = "error";
+            }
+            _damagedQuantity = 0;
+         
+        } else {
+            var data = {};
+            data["event_name"] = "put_front_exception";
+            data["event_data"] = {};
+            data["event_data"]["action"] = "confirm_quantity_update";
+            data["event_data"]["event"] = _seatData.exception_type;
+            data["event_data"]["quantity"] = _damagedQuantity;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
@@ -2064,7 +2098,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["isUnmarkedContainer"] =  this._getUnmarkedContainerFlag();
                 break;
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -2466,6 +2502,10 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.validateAndSetPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.VALIDATE_UNMARKED_DAMAGED_DATA:
+            mainstore.validateUnmarkedDamagedData();
             mainstore.emitChange();
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:

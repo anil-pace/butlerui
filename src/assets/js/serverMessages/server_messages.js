@@ -244,6 +244,7 @@ var serverMessages = {
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
+    "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
     "PkF001" : "Item Missing/Bad Barcode",
@@ -258,6 +259,7 @@ var serverMessages = {
     "PpB.H.001" : "Scan tote and place it in the slot",
     "PpB.H.002" : "Scan slot to confirm",
     "PpB.H.005" : "Release MTU",
+    "Ppb.H.006" : "Scan or Enter the tote barcode to reprint",
     "PpB.I.001" : "Tote scan successful.",
     "PpB.I.002" : "Slot barcode scan successful",
     "PpB.I.003" : "Exception cancelled",
@@ -287,9 +289,9 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
-    /*Code for pick front container flow*/
-    "PkF.H.015":"Place container in MSU slot and confirm"
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
+  
+    
 };
 
 

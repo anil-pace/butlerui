@@ -281,43 +281,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-
     console.log(data);
-    if(data.state_data){
-        data.state_data = {
-        "seat_name": "front_2",
-        "screen_id": "put_front_physically_damaged_items",
-        "screen_version": "1",
-        "notification_list": [],
-        "scan_allowed": false,
-        "docked": [],
-        "unmarked_container":true,
-        "group_info": {
-            "1": "center"
-        },
-        "time_stamp": "1492409520",
-        "header_msge_list": [{
-            "level": "info",
-            "code": "PtF.H.005",
-            "details": [],
-            "description": "Enter Good Quantity to be put in slot"
-        }],
-        "exception_type": "damaged_or_missing",
-        "logout_allowed": false,
-        "exception_allowed": [{
-            "exception_id": "PtF001",
-            "exception_name": "Entity Damaged/Unscannable",
-            "event": "damaged_or_missing"
-        }],
-        "mode": "put",
-        "is_idle": false,
-        "seat_type": "front",
-        "bin_coordinate_plotting": false,
-        "put_quantity": 10,
-        "api_version": "1",
-        "roll_cage_flow": false
-    }
-    }
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

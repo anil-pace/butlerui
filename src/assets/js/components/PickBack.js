@@ -154,6 +154,22 @@ var PickBack = React.createClass({
             );
         break; 
 
+      case appConstants.PICK_BACK_REPRINT_TOTE:
+          this.getExceptionAction(screen_id);
+          this._navigation = '';
+          this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickBackExceptionData}/>
+                <div className="exception-right">
+                   <ExceptionHeader data={this.state.PickBackServerNavData} />
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break; 
+          
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)

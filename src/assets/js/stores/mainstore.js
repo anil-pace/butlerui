@@ -213,6 +213,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[2];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
                     _NavData = navConfig.putFront[3];
+                else if(_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
+                    _NavData = navConfig.putFront[4];
                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
                     _NavData = navConfig.utility[0];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -608,7 +610,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _scanDetails;
     },
     cancelScanDetails:function(){
-        return _seatData.cancel_scan_enabled || false;
+        return _seatData.cancel_scan_enabled ;
     },
 
     productDetails: function() {
@@ -1082,6 +1084,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        _unmarkedContainer= (data.unmarked_container)? data.unmarked_container:false;
         this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
@@ -1299,7 +1302,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
     },
-
+ getUnmarkedContainerFlag:function(){
+        return _unmarkedContainer;
+    },
     setAuditExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _auditExceptionScreen = data;
@@ -1813,6 +1818,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
                 data["InvoiceType"] = this.getInvoiceType();
+                data["ToteId"] = this.getToteId();
                 break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -2002,6 +2008,42 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;                               
+            case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
+            case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] =  this.getDrawerFlag(); 
+                data["SlotType"] =  this.getSlotType(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();           
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -2011,6 +2053,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                data["UnmarkedContainer"]=this.getUnmarkedContainerFlag();
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -2198,6 +2241,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
             case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
             case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+            case appConstants.PICK_BACK_REPRINT_TOTE:
                 data["PickBackNavData"] = this.getNavData();
                 data["PickBackNotification"] = this.getNotificationData();
                 data["PickBackBinData"] = this.getBinData();
@@ -2208,6 +2252,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackSelectedBin"] = this.getSelectedBin();
                 break;
+
+
             case appConstants.AUDIT_WAITING_FOR_MSU:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();

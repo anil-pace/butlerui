@@ -42,6 +42,8 @@ var serverMessages = {
     "PtF.H.009" : "Scan excess item",
     "PtF.H.010" : "Scan tote which has excess item",
     "PtF.H.011" : "Take out the tote from bin {0} and scan entity",
+    "PtF.H.012" : "Place {0} boxes from bin {2}",
+    "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -242,6 +244,7 @@ var serverMessages = {
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
+    "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
     "PkF001" : "Item Missing/Bad Barcode",
@@ -256,6 +259,7 @@ var serverMessages = {
     "PpB.H.001" : "Scan tote and place it in the slot",
     "PpB.H.002" : "Scan slot to confirm",
     "PpB.H.005" : "Release MTU",
+    "Ppb.H.006" : "Scan or Enter the tote barcode to reprint",
     "PpB.I.001" : "Tote scan successful.",
     "PpB.I.002" : "Slot barcode scan successful",
     "PpB.I.003" : "Exception cancelled",
@@ -286,6 +290,8 @@ var serverMessages = {
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
     "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
+  
+    
 };
 
 

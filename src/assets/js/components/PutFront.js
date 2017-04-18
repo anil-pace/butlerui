@@ -172,6 +172,54 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+      case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
+      if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          //need to check this case, if we need flexible bins here?
+          this._component = (
+              <div className='grid-container'>
+                <Modal />
+                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+                <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
+                    <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
+                      <div className="text">{_("CURRENT BIN")}</div>
+                </div>
+                <div className='main-container'>
+                  <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+                </div>
+              </div>
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+      case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+      if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          //need to check this case, if we need flexible bins here?
+          this._component = (
+              <div className='grid-container'>
+                <Modal />
+                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+                <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
+                    <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
+                      <div className="text">{_("CURRENT BIN")}</div>
+                </div>
+                <div className='main-container'>
+                  <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
+                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
+                </div>
+
+              </div>
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
           var _button;
           _button = (<div className = "staging-action">                          
@@ -196,9 +244,10 @@ var PutFront = React.createClass({
               </div>
           );      
         break; 
-
+      
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
+    
+      this._navigation = '';
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               <div className='grid-container exception'>
@@ -219,17 +268,28 @@ var PutFront = React.createClass({
                 </div>
               </div>
             );
-          }
-          else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-            var btnComp;
+        }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+             var btnComp, UnscannableKQ;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
+             On line 293 we are doing shpw/hide for Unscannable quantity KQ based on the UnmarkedContainer value
              */
             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM} /> );
             }else{
               btnComp = ( <Button1 disabled = {this._disableConfirm} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );
+            }
+            if(!this.state.UnmarkedContainer)
+            {
+              UnscannableKQ=(<div className="kq-exception">
+                      <div className="kq-header">{_("Unscannable Quantity")}</div>
+                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
+                    </div>);
+            }
+            else
+            {
+              UnscannableKQ=(<div></div>);
             }
             this._component = (
               <div className='grid-container exception'>
@@ -240,10 +300,7 @@ var PutFront = React.createClass({
                       <div className="kq-header">{_("Missing Quantity")}</div>
                       <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
                     </div>
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Unscannable Quantity")}</div>
-                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
-                    </div>
+                          {UnscannableKQ} 
                   </div>
                   <div className = "finish-damaged-barcode">
                    {btnComp} 
@@ -274,7 +331,8 @@ var PutFront = React.createClass({
               </div>
             );
           }
-        break; 
+          
+      break;
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
            if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
               this._component = (

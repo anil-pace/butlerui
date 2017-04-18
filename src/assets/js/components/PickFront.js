@@ -229,7 +229,8 @@ var PickFront = React.createClass({
       break;
                   
       case appConstants.PICK_FRONT_PPTL_PRESS:
-         var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
+         var cancelScanFlag = this.state.PickFrontCancelScan;
+         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
          var cancelButton;
          var BinFull = ( <Button1 disabled = {false} text = {_("Bin full")} module ={appConstants.PICK_FRONT} action={appConstants.BIN_FULL} color={"black"} /> );
          if(this.state.PickFrontExceptionStatus == false){
@@ -241,10 +242,10 @@ var PickFront = React.createClass({
           var editButton ='';
         }
         if(!cancelScanDisabled){
-          cancelButton = (<div className = 'cancel-scan'><Button1  disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
+          cancelButton = (<div ><Button1  disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
          }
          else{
-          cancelButton = (<div className = 'cancel-scan'></div>);
+          cancelButton = (<div ></div>);
          }
          var binComponent ="";
           if (this.state.OrigBinUse){
@@ -263,8 +264,9 @@ var PickFront = React.createClass({
                 {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
                 <div className = 'actions'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                  {cancelButton}
                    {(this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''}
+                  
                 </div>
               </div>
             );
@@ -574,7 +576,8 @@ var PickFront = React.createClass({
         }
       break;
         case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
-        var cancelScanDisabled = this.state.PickFrontCancelScan ? false : true;
+         var cancelScanFlag = this.state.PickFrontCancelScan;
+         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
          var cancelButton;
          
          if(this.state.PickFrontExceptionStatus == false){
@@ -600,7 +603,7 @@ var PickFront = React.createClass({
                   <Bins binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_PPTL_PRESS}/>
                 </div>)
           }
-           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='';
+           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus;
         if(btnId){
           btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
           action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;

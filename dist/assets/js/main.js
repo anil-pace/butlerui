@@ -44379,7 +44379,26 @@ var PutFront = React.createClass({displayName: "PutFront",
            }
           
         break;
+      case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
+        this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please scan bin which has excess item"))
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+          );      
+        break; 
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+          
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
@@ -44409,7 +44428,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+                      React.createElement("div", {className: "kq-header"}, _("Scan excess items")), 
                       React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
                       _button
                     )
@@ -45789,6 +45808,7 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
+	PUT_FRONT_EXCESS_ITEMS_PPSBIN:"put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
@@ -45938,8 +45958,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://localhost:8888/ws",
+	INTERFACE_IP : "https://localhost:5000"
 };
 module.exports = configConstants;
 

@@ -2107,6 +2107,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 data["isUnmarkedContainer"] =  this._getUnmarkedContainerFlag();
                 break;
+           case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();

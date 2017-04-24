@@ -45480,7 +45480,7 @@ var navData = {
         [{
             "screen_id": "put_front_waiting_undock",
             "code": "Common.000",
-            "message": "Undock Roll Cage",
+            "message": "Undock Roll Cage if no items remaining",
             "showImage": false,
             "level": 1,
             "type": 'active'
@@ -47181,7 +47181,7 @@ var serverMessages = {
     "PtF.H.004" : "Scan Entity From Bin {0}",
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
-    "PtF.H.007" : "Undock Roll Cage",
+    "PtF.H.007" : "Undock Roll Cage if no items remaining",
     "PtF.H.008" : "Place the tote back in bin {0} and press PPTL",
     "PtF.H.009" : "Scan excess item",
     "PtF.H.010" : "Scan tote which has excess item",

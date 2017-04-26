@@ -380,7 +380,7 @@ function server_messages_list() {
     _("Seat Type");
     _("Good Quantity Cannot be Equal to the Total Quantity");
     /*Roll-cage*/
-    _("Undock Roll Cage");
+    _("Undock Roll Cage if no items remaining");
     _("Gently push roll cage away from the frame");
     /*Pre-put */
     _("Scan tote and place it in the slot");

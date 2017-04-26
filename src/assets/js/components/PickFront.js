@@ -293,6 +293,7 @@ var PickFront = React.createClass({
           _button = (<div className = "staging-action">                          
                           <Button1 disabled = {this.state.PickFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS} color={"orange"} />
                     </div>);
+
           this._component = (
               <div className='grid-container exception'>
                 <Modal />

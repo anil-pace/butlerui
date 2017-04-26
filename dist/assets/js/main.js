@@ -36821,6 +36821,11 @@ var commonActions = {
       actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
     });
    },
+   validateUnmarkedDamagedData:function(){
+    AppDispatcher.handleAction({
+      actionType: appConstants.VALIDATE_UNMARKED_DAMAGED_DATA
+    });
+   },
    getPeriPheralData : function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.PERIPHERAL_DATA,
@@ -38468,7 +38473,10 @@ switch (module) {
                                 data["event_data"]["action"] ="finish_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                                 
+                                break; 
+                            case appConstants.UNMARKED_DAMAGED:
+                                ActionCreators.validateUnmarkedDamagedData();
+                                break;                                
                             case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PUT_FRONT, "cancel_exception");
                                 break;
@@ -41122,6 +41130,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           _button = (React.createElement("div", {className: "staging-action"}, 
                           React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, color: "orange"})
                     ));
+
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
@@ -42496,11 +42505,11 @@ var KQ = React.createClass({displayName: "KQ",
           }          
                       
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ));
                 return true;
             }
-            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
@@ -42559,7 +42568,7 @@ var KQ = React.createClass({displayName: "KQ",
                     CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ) );
                      return true;
                 }
-                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
@@ -42679,7 +42688,7 @@ var KQ = React.createClass({displayName: "KQ",
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
                          return true;
                     }
-                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
+                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                        if(action != undefined){
                             switch(action){
                                 case "GOOD":
@@ -44199,10 +44208,23 @@ var PutFront = React.createClass({displayName: "PutFront",
         }
         break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button;
+          var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
+          confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
           _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+                          React.createElement(Button1, {disabled: confirmDisabled, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.UNMARKED_DAMAGED, color: "orange"})
                     ));
+          if(isUnmarked){
+            unmarkedContainer = (                           
+                         React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, action: "DAMAGED"})
+                    )
+            kqHeadMessage = _("Damaged Quantity");
+          }
+          else{
+            unmarkedContainer = (React.createElement("div", null, 
+               React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"})
+            ))
+            kqHeadMessage = _("Scan damaged entity");
+          }
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
@@ -44210,10 +44232,13 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-                      React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
-                      _button
+                      React.createElement("div", {className: "kq-header"}, kqHeadMessage), 
+                     unmarkedContainer
+                      
                     )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                  _button
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
@@ -44354,7 +44379,26 @@ var PutFront = React.createClass({displayName: "PutFront",
            }
           
         break;
+      case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
+        this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please scan bin which has excess item"))
+                    )
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+          );      
+        break; 
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+          
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
@@ -44384,7 +44428,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+                      React.createElement("div", {className: "kq-header"}, _("Scan excess items")), 
                       React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
                       _button
                     )
@@ -45436,7 +45480,7 @@ var navData = {
         [{
             "screen_id": "put_front_waiting_undock",
             "code": "Common.000",
-            "message": "Undock Roll Cage",
+            "message": "Undock Roll Cage if no items remaining",
             "showImage": false,
             "level": 1,
             "type": 'active'
@@ -45764,6 +45808,7 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
+	PUT_FRONT_EXCESS_ITEMS_PPSBIN:"put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
@@ -45807,6 +45852,7 @@ var appConstants = {
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
+	UNMARKED_DAMAGED:"UNMARKED_DAMAGED",
 	EDIT_DETAILS:"EDIT_DETAILS",
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
@@ -45867,6 +45913,7 @@ var appConstants = {
 	CANCEL_PPTL : 'CANCEL_PPTL',
 	IDLE_LOGOUT_TIME : 300000, //in millisec
 	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN',
+	VALIDATE_UNMARKED_DAMAGED_DATA:"VALIDATE_UNMARKED_DAMAGED_DATA",
 	PUT_FRONT_WAITING_UNDOCK : 'put_front_waiting_undock',
 	PRE_PUT_STAGE : "pre_put_stage",
 	PRE_PUT_SCAN : "pre_put_scan",
@@ -47127,14 +47174,17 @@ var serverMessages = {
     "PtB.E.018" : "Expecting tote closure.",  
     "PtB.E.019" : "Tote not present in database.",
     "PtB.E.020" : "Tote matched .",
-    "PtB.E.021" : "Entity already scanned.Confirm exception",  
+    "PtB.E.021" : "Entity already scanned.Confirm exception", 
+    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.", 
+    "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
+    "PtF.E.021" : "Bin Already Scanned",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
     "PtF.H.004" : "Scan Entity From Bin {0}",
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
-    "PtF.H.007" : "Undock Roll Cage",
+    "PtF.H.007" : "Undock Roll Cage if no items remaining",
     "PtF.H.008" : "Place the tote back in bin {0} and press PPTL",
     "PtF.H.009" : "Scan excess item",
     "PtF.H.010" : "Scan tote which has excess item",
@@ -50162,6 +50212,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setKQQuanity: function(data) {
         _KQQty = data;
     },
+    getDamagedQuantity:function(){
+        return _damagedQuantity;
+    },
     setGoodQuanity: function(data) {
         _goodQuantity = data;
     },
@@ -50456,6 +50509,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return true;
     },
+    _getUnmarkedContainerFlag:function(){
+        return _seatData.unmarked_container;
+    },
     _getBinFullStatus:function(){
         return (_seatData && _seatData.bin_full_allowed ? true:false);
     },
@@ -50597,6 +50653,34 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["action"] = "confirm_quantity_update";
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = _KQQty;
+            this.showSpinner();
+            utils.postDataToInterface(data, _seatData.seat_name);
+        }
+    },
+    validateUnmarkedDamagedData:function(){
+        var _allowedQuantity;
+        _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
+        if (_damagedQuantity > _allowedQuantity) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = resourceConstants.CLIENTCODE_012;
+                data["level"] = "error";
+                data["details"] = [_allowedQuantity];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_allowedQuantity];
+                _seatData.notification_list[0].level = "error";
+            }
+            _damagedQuantity = 0;
+         
+        } else {
+            var data = {};
+            data["event_name"] = "put_front_exception";
+            data["event_data"] = {};
+            data["event_data"]["action"] = "confirm_quantity_update";
+            data["event_data"]["event"] = _seatData.exception_type;
+            data["event_data"]["quantity"] = _damagedQuantity;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
@@ -50983,8 +51067,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["isUnmarkedContainer"] =  this._getUnmarkedContainerFlag();
                 break;
+           case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -51390,6 +51477,10 @@ AppDispatcher.register(function(payload) {
             mainstore.validateAndSetPutFrontExceptionScreen(action.data);
             mainstore.emitChange();
             break;
+        case appConstants.VALIDATE_UNMARKED_DAMAGED_DATA:
+            mainstore.validateUnmarkedDamagedData();
+            mainstore.emitChange();
+            break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
             mainstore.setPutBackExceptionScreen(action.data);
             mainstore.emitChange();
@@ -51728,7 +51819,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

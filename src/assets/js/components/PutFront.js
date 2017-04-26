@@ -221,10 +221,23 @@ var PutFront = React.createClass({
         }
         break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button;
+          var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
+          confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
           _button = (<div className = "staging-action">                          
-                          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+                          <Button1 disabled = {confirmDisabled} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.UNMARKED_DAMAGED} color={"orange"} />
                     </div>);
+          if(isUnmarked){
+            unmarkedContainer = (                           
+                         <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} action={"DAMAGED"} />
+                    )
+            kqHeadMessage = _("Damaged Quantity");
+          }
+          else{
+            unmarkedContainer = (<div>
+               <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
+            </div>)
+            kqHeadMessage = _("Scan damaged entity");
+          }
           this._component = (
               <div className='grid-container exception'>
                 <Modal />
@@ -232,10 +245,13 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Scan damaged entity")}</div>
-                      <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
-                      {_button}
+                      <div className="kq-header">{kqHeadMessage}</div>
+                     {unmarkedContainer}
+                      
                     </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                  {_button}
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
@@ -376,7 +392,26 @@ var PutFront = React.createClass({
            }
           
         break;
+      case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
+        this._component = (
+              <div className='grid-container exception'>
+                <Modal />
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Please scan bin which has excess item")}</div>
+                    </div>
+                  </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                </div>
+              </div>
+          );      
+        break; 
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+          
           this._component = (
               <div className='grid-container exception'>
                 <Modal />
@@ -406,7 +441,7 @@ var PutFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Scan excess item quantity")}</div>
+                      <div className="kq-header">{_("Scan excess items")}</div>
                       <TabularData data={this.state.PutFrontExcessItems}  className='limit-height' />
                       {_button}
                     </div>

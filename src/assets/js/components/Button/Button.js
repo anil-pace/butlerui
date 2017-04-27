@@ -133,6 +133,10 @@ switch (module) {
                                 data["event_data"]["barcode"] = this.props.barcode;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                             case appConstants.WAREHOUSEFULL_EXCEPTION:
+                              data["event_name"] = "warehousefull_exception";
+                              ActionCreators.postDataToInterface(data);
+                             break;   
                             case appConstants.CANCEL_EXCEPTION:
                                 ActionCreators.enableException(false);
                                 break;

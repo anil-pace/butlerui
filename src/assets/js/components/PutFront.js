@@ -157,7 +157,7 @@ var PutFront = React.createClass({
           _button = (<div className = "staging-action">                          
                           <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.EMPTY_ROLLCAGE_UNDOCK} color={"orange"} />
                     </div>);
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData}/>);
            this._component = (
             <div className='grid-container'>
             {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}

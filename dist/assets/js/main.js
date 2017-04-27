@@ -51016,6 +51016,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontItemUid"] = this.getItemUid();
                 break; 
                   case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
+                  data["PutFrontScreenId"] = this.getScreenId();
                   data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();

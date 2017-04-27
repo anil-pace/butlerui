@@ -108,7 +108,7 @@ var navData = {
         }],
         [{
             "screen_id": "put_front_exception_warehouse_full",
-            "code": "Common.000",
+            "code": "PtF.H.015",
             "message": "Warehouse Full",
             "showImage": false,
             "level": 1,

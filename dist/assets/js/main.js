@@ -44148,7 +44148,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           _button = (React.createElement("div", {className: "staging-action"}, 
                           React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.EMPTY_ROLLCAGE_UNDOCK, color: "orange"})
                     ));
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData}));
            this._component = (
             React.createElement("div", {className: "grid-container"}, 
             this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
@@ -51014,6 +51014,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
+                break; 
+                  case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
+                  data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
+                data["BinMapDetails"] =  this._getBinMapDetails();  
+                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();  
                 break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
                 data["PutFrontScreenId"] = this.getScreenId();

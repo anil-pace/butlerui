@@ -211,6 +211,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[0];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
                     _NavData = navConfig.putFront[2];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL)
+                    _NavData = navConfig.putFront[5];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
                     _NavData = navConfig.putFront[3];
                 else if(_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
@@ -1539,6 +1541,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return true;
     },
+     _getWareHouseExceptionFlag:function(){
+        if (_seatData.exception_type === "warehousefull_exception") {
+            return false;
+        }
+        return true;
+    },
     _getDamagedExceptionFlag:function(){
         if (_seatData.physically_damaged_items != undefined && _seatData.physically_damaged_items.length !== 0) {
             return false;
@@ -2080,7 +2088,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break; 
                   case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
                   data["PutFrontScreenId"] = this.getScreenId();
-                  data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                  data["PutFrontExceptionFlag"] = this._getWareHouseExceptionFlag();
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["SplitScreenFlag"] = this._getSplitScreenFlag(); 

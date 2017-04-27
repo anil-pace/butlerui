@@ -44138,6 +44138,22 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._component = this.getExceptionComponent();
         }
         break;
+
+        case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
+         var _button;
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.EMPTY_ROLLCAGE_UNDOCK, color: "orange"})
+                    ));
+          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+           this._component = (
+            React.createElement("div", {className: "grid-container"}, 
+            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+                      React.createElement("div", {className: "kq-header"}, _("Empty the rollcage to undock")), 
+                      _button
+                      )
+                    );
+        break;
+
       case appConstants.PUT_FRONT_PPTL_PRESS:
          if(this.state.PutFrontExceptionStatus == false){
            if (this.state.OrigBinUse){
@@ -44208,23 +44224,10 @@ var PutFront = React.createClass({displayName: "PutFront",
         }
         break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
-          confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
+          var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: confirmDisabled, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.UNMARKED_DAMAGED, color: "orange"})
+                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
                     ));
-          if(isUnmarked){
-            unmarkedContainer = (                           
-                         React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, action: "DAMAGED"})
-                    )
-            kqHeadMessage = _("Damaged Quantity");
-          }
-          else{
-            unmarkedContainer = (React.createElement("div", null, 
-               React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"})
-            ))
-            kqHeadMessage = _("Scan damaged entity");
-          }
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
@@ -44232,13 +44235,10 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, kqHeadMessage), 
-                     unmarkedContainer
-                      
+                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+                      React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
+                      _button
                     )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                  _button
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
@@ -44247,10 +44247,9 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
           );      
         break; 
-      
+
       case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-    
-      this._navigation = '';
+          this._navigation = '';
           if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -44271,28 +44270,17 @@ var PutFront = React.createClass({displayName: "PutFront",
                 )
               )
             );
-        }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-             var btnComp, UnscannableKQ;
+          }
+          else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+            var btnComp;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
-             On line 293 we are doing shpw/hide for Unscannable quantity KQ based on the UnmarkedContainer value
              */
             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM}) );
             }else{
               btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
-            }
-            if(!this.state.UnmarkedContainer)
-            {
-              UnscannableKQ=(React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
-                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
-                    ));
-            }
-            else
-            {
-              UnscannableKQ=(React.createElement("div", null));
             }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
@@ -44303,7 +44291,10 @@ var PutFront = React.createClass({displayName: "PutFront",
                       React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
                       React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
                     ), 
-                          UnscannableKQ
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
+                    )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                    btnComp
@@ -44334,8 +44325,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
           }
-          
-      break;
+        break; 
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
            if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
               this._component = (
@@ -44379,26 +44369,7 @@ var PutFront = React.createClass({displayName: "PutFront",
            }
           
         break;
-      case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
-        this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please scan bin which has excess item"))
-                    )
-                  )
-                ), 
-                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-          );      
-        break; 
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
-          
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
@@ -44428,7 +44399,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan excess items")), 
+                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
                       React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
                       _button
                     )
@@ -45808,11 +45779,10 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
-	PUT_FRONT_EXCESS_ITEMS_PPSBIN:"put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
-	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_unscannable_item",
+	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_damaged_item",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
@@ -45837,6 +45807,7 @@ var appConstants = {
 	LOAD_MODAL:'load_modal',
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
+	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
 	PICK_FRONT_CONTAINER_SCAN:"pick_front_container_scan",
@@ -45852,11 +45823,11 @@ var appConstants = {
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
-	UNMARKED_DAMAGED:"UNMARKED_DAMAGED",
 	EDIT_DETAILS:"EDIT_DETAILS",
 	PICK_BACK_BIN:"pick_back_bin",
 	PICK_BACK_SCAN:"pick_back_scan",
 	SEND_EXCESS_ITEMS_BIN:"SEND_EXCESS_ITEMS_BIN",
+	EMPTY_ROLLCAGE_UNDOCK:"EMPTY_ROLLCAGE_UNDOCK",
 	CONFIRM_PHYSICALLY_DAMAGED_ITEMS:"CONFIRM_PHYSICALLY_DAMAGED_ITEMS",
 	AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:"audit_loose_item_damage_exception",
 	AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:"audit_box_damage_exception",
@@ -45913,7 +45884,6 @@ var appConstants = {
 	CANCEL_PPTL : 'CANCEL_PPTL',
 	IDLE_LOGOUT_TIME : 300000, //in millisec
 	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN',
-	VALIDATE_UNMARKED_DAMAGED_DATA:"VALIDATE_UNMARKED_DAMAGED_DATA",
 	PUT_FRONT_WAITING_UNDOCK : 'put_front_waiting_undock',
 	PRE_PUT_STAGE : "pre_put_stage",
 	PRE_PUT_SCAN : "pre_put_scan",
@@ -45946,7 +45916,6 @@ var appConstants = {
 	EXIT_INVOICE : "EXIT_INVOICE",
 	DECLINE_CANCEL_INVOICE : "DECLINE_CANCEL_INVOICE",
 	CONFIRM_EXIT_INVOICE : "CONFIRM_EXIT_INVOICE",
-	PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
 	/*Constants for order details*/
 	VOLUME_UNIT:"vol_unit",
 	VOLUME:"volume",
@@ -45958,8 +45927,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	INTERFACE_IP : "https://192.168.8.109"
 };
 module.exports = configConstants;
 

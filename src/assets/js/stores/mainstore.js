@@ -1611,7 +1611,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = {};
             data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
@@ -1656,7 +1656,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = {};
             data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             
             mainstore.setPutFrontExceptionScreen(screen);

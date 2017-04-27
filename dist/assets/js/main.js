@@ -45804,7 +45804,7 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
-	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
+	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_unscannable_or_missing",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
@@ -45844,7 +45844,7 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	PICK_FRONT_NO_FREE_BIN : 'pick_front_no_free_bin',
-	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
+	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_unscannable",
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
@@ -45958,8 +45958,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.13.85:8888/ws",
+	INTERFACE_IP : "https://192.168.13.85:5000"
 };
 module.exports = configConstants;
 
@@ -47216,7 +47216,7 @@ var serverMessages = {
     "PtB.I.007" : "PPTL press successful",
     "PtB.I.008" : "Excess item in tote recorded. Now press PPTL",
     "PtB.I.009" : "Excess item in tote recorded.",
-    "PtB.I.010" : "{0} unscannable entities recorded. WMS notified",
+    "PtB.I.010" : "{0} Unscannable entities recorded. WMS notified",
     "PtB.I.011" : "{0} extra entities recorded in bin. WMS notified",
     "PtB.I.012" : "{0} oversized entities recorded.WMS notified",
     "PtB.I.013" : "Exception cancelled",
@@ -50575,7 +50575,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = {};
             data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
@@ -50620,7 +50620,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = {};
             data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             
             mainstore.setPutFrontExceptionScreen(screen);

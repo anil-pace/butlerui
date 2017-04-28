@@ -169,7 +169,6 @@ var PutFront = React.createClass({
                     );
         break;
 
-                  
       case appConstants.PUT_FRONT_PPTL_PRESS:
          if(this.state.PutFrontExceptionStatus == false){
            if (this.state.OrigBinUse){

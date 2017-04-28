@@ -44153,7 +44153,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           React.createElement("div", {className: "grid-container"}, 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
           React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Empty the rollcage to undock"))
+          React.createElement("div", {className: "kq-header gor-info-text"}, _("Empty the rollcage to undock"))
           ), 
           _button
           )

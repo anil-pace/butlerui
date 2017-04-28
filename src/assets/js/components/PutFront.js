@@ -162,7 +162,7 @@ var PutFront = React.createClass({
           <div className='grid-container'>
           {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
           <div className = "kq-exception">
-          <div className="kq-header">{_("Empty the rollcage to undock")}</div>
+          <div className='kq-header gor-info-text'>{_("Empty the rollcage to undock")}</div>
           </div>
           {_button}
           </div>

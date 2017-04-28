@@ -2091,10 +2091,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                   data["PutFrontExceptionFlag"] = this._getWareHouseExceptionFlag();
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
-                data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
-                data["BinMapDetails"] =  this._getBinMapDetails();  
-                data["BinMapGroupDetails"] =  this.getSelectedBinGroup();  
-                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();   
                  data["DockedGroup"] = this._getDockedGroup();  
                 break;                
             case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:

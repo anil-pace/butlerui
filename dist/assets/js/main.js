@@ -44153,7 +44153,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           React.createElement("div", {className: "grid-container"}, 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
           React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header gor-info-text"}, _("Empty the rollcage to undock"))
+          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
           ), 
           _button
           )
@@ -45941,8 +45941,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "ws://192.168.13.85:8888/ws",
+	INTERFACE_IP : "https://192.168.13.85:5000"
 };
 module.exports = configConstants;
 

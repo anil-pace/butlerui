@@ -44016,7 +44016,7 @@ var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
-   return mainstore.getScreenData();
+ return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({displayName: "PutFront",
@@ -44035,7 +44035,7 @@ var PutFront = React.createClass({displayName: "PutFront",
   onChange: function(){ 
     this.setState(getStateData());
   },
- 
+  
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
@@ -44045,428 +44045,428 @@ var PutFront = React.createClass({displayName: "PutFront",
   },
 
   getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
-                React.createElement("div", {className: "exception-right"}), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-            );
+    var _rightComponent = '';
+    this._navigation = '';
+    return (
+      React.createElement("div", {className: "grid-container exception"}, 
+      React.createElement(Modal, null), 
+      React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
+      React.createElement("div", {className: "exception-right"}), 
+      React.createElement("div", {className: "cancel-scan"}, 
+      React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+      )
+      )
+      );
   },
   
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
-        if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, showSpinner: this.state.MobileFlag}));
-          this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                 this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup}):React.createElement(Spinner, null)
-                 )
-              )
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
-
-        break;
-      case appConstants.PUT_FRONT_SCAN:
-         if(this.state.PutFrontExceptionStatus == false){
-           if (this.state.OrigBinUse){
-            binComponent = ( React.createElement("div", null, 
-                            React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}), 
-                  React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                  ))
-
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                ))
-          }
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-          this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-                binComponent
-              )
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
-      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, showSpinner: this.state.MobileFlag}));
+        this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement("div", {className: "main-container"}, 
+          this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup}):React.createElement(Spinner, null)
+          )
+          )
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+
+      break;
+      case appConstants.PUT_FRONT_SCAN:
+      if(this.state.PutFrontExceptionStatus == false){
+       if (this.state.OrigBinUse){
+        binComponent = ( React.createElement("div", null, 
+          React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}), 
+          React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+          ))
+
+      }else{
+        binComponent =(React.createElement("div", {className: "main-container"}, 
+          React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
+          React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+          ))
+      }
+      this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+      this._component = (
+        React.createElement("div", {className: "grid-container"}, 
+        React.createElement(Modal, null), 
+        this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+        binComponent
+        )
+        );
+    }else{
+      this._component = this.getExceptionComponent();
+    }
+    break;
+    case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
+    if(this.state.PutFrontExceptionStatus == false){
+      this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           //need to check this case, if we need flexible bins here?
           this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-                React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
-                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
-                      React.createElement("div", {className: "text"}, _("CURRENT BIN"))
-                ), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
-                )
+            React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
+            React.createElement("div", {className: "text"}, _("CURRENT BIN"))
+            ), 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
+            React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
+            React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
+            )
 
-              )
+            )
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_FRONT_WAITING_UNDOCK:
+        case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.UNDOCK_PUSH}));
           this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                 React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup})
-                 )
-              )
+            React.createElement("div", {className: "grid-container"}, 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup})
+            )
+            )
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-         var _button;
-          _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.EMPTY_ROLLCAGE_UNDOCK, color: "orange"})
-                    ));
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-           this._component = (
-            React.createElement("div", {className: "grid-container"}, 
-            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Empty the rollcage to undock"))
-                      ), 
-                      _button
-                      )
-                    );
+        var _button;
+        _button = (React.createElement("div", {className: "staging-action"}, 
+          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.EMPTY_ROLLCAGE_UNDOCK, color: "orange"})
+          ));
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+          React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "kq-header"}, _("Empty the rollcage to undock"))
+          ), 
+          _button
+          )
+          );
         break;
 
-      case appConstants.PUT_FRONT_PPTL_PRESS:
-         if(this.state.PutFrontExceptionStatus == false){
-           if (this.state.OrigBinUse){
-            binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
-                ))
-          }
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-          this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-                binComponent
-              )
-            );
-           }else{
-          this._component = this.getExceptionComponent();
+        case appConstants.PUT_FRONT_PPTL_PRESS:
+        if(this.state.PutFrontExceptionStatus == false){
+         if (this.state.OrigBinUse){
+          binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
+        }else{
+          binComponent =(React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
+            ))
         }
-        break;
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+          binComponent
+          )
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
       case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           //need to check this case, if we need flexible bins here?
           this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-                React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
-                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
-                      React.createElement("div", {className: "text"}, _("CURRENT BIN"))
-                ), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                )
-              )
+            React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
+            React.createElement("div", {className: "text"}, _("CURRENT BIN"))
+            ), 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
+            React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+            )
+            )
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
-      if(this.state.PutFrontExceptionStatus == false){
+        case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+        if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           //need to check this case, if we need flexible bins here?
           this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-                React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
-                    React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
-                      React.createElement("div", {className: "text"}, _("CURRENT BIN"))
-                ), 
-                React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
-                )
+            React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
+            React.createElement("div", {className: "text"}, _("CURRENT BIN"))
+            ), 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
+            React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
+            React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
+            )
 
-              )
+            )
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button;
-          _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
-                    ));
-          this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-                      React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
-                      _button
-                    )
-                  )
-                ), 
-                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
+        case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+        var _button;
+        _button = (React.createElement("div", {className: "staging-action"}, 
+          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+          ));
+        this._component = (
+          React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
+          React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+          React.createElement("div", {className: "exception-right"}, 
+          React.createElement("div", {className: "main-container"}, 
+          React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+          React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
+          _button
+          )
+          )
+          ), 
+          React.createElement("div", {className: "cancel-scan"}, 
+          React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+          )
+          )
           );      
         break; 
 
-      case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-          this._navigation = '';
-          if(this.state.PutFrontExceptionScreen == "good"){
+        case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
+        this._navigation = '';
+        if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Good Quantity")), 
-                      React.createElement(KQ, {scanDetailsGood: this.state.PutFrontGoodQuantity, id: 'good_keyboard', action: "GOOD"})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
+            React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+            React.createElement("div", {className: "exception-right"}, 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement("div", {className: "kq-exception"}, 
+            React.createElement("div", {className: "kq-header"}, _("Good Quantity")), 
+            React.createElement(KQ, {scanDetailsGood: this.state.PutFrontGoodQuantity, id: 'good_keyboard', action: "GOOD"})
+            )
+            ), 
+            React.createElement("div", {className: "finish-damaged-barcode"}, 
+            React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+            )
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
+            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+            )
+            )
             );
-          }
-          else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-            var btnComp;
+        }
+        else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+          var btnComp;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
              */
-            this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
-            if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
+             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
+             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM}) );
-            }else{
+             }else{
               btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
             }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
-                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
-                    ), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
-                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                   btnComp
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+              React.createElement("div", {className: "exception-right"}, 
+              React.createElement("div", {className: "main-container"}, 
+              React.createElement("div", {className: "kq-exception"}, 
+              React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
+              React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
+              ), 
+              React.createElement("div", {className: "kq-exception"}, 
+              React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
+              React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
               )
-            );
+              ), 
+              React.createElement("div", {className: "finish-damaged-barcode"}, 
+              btnComp
+              )
+              ), 
+              React.createElement("div", {className: "cancel-scan"}, 
+              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+              )
+              )
+              );
           }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing_confirm"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+              React.createElement("div", {className: "exception-right"}, 
+              React.createElement("div", {className: "main-container exception2"}, 
+              React.createElement("div", {className: "kq-exception"}, 
+              React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
               )
-            );
+              ), 
+              React.createElement("div", {className: "finish-damaged-barcode"}, 
+              React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+              )
+              ), 
+              React.createElement("div", {className: "cancel-scan"}, 
+              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+              )
+              )
+              );
           }
-        break; 
-      case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
-           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
-              this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Take the Items out from the Slot"))
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+          break; 
+          case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
+          if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Space Available For")), 
-                      React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+              React.createElement("div", {className: "exception-right"}, 
+              React.createElement("div", {className: "main-container exception2"}, 
+              React.createElement("div", {className: "kq-exception"}, 
+              React.createElement("div", {className: "kq-header"}, _("Take the Items out from the Slot"))
               )
-            );
-           }
-          
-        break;
-      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
-          this._component = (
+              ), 
+              React.createElement("div", {className: "finish-damaged-barcode"}, 
+              React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
+              )
+              ), 
+              React.createElement("div", {className: "cancel-scan"}, 
+              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+              )
+              )
+              );
+          }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please scan tote which has excess item"))
-                    )
-                  )
-                ), 
-                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+              React.createElement("div", {className: "exception-right"}, 
+              React.createElement("div", {className: "main-container"}, 
+              React.createElement("div", {className: "kq-exception"}, 
+              React.createElement("div", {className: "kq-header"}, _("Space Available For")), 
+              React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
               )
-          );      
-        break;         
-      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+              ), 
+              React.createElement("div", {className: "finish-damaged-barcode"}, 
+              React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
+              )
+              ), 
+              React.createElement("div", {className: "cancel-scan"}, 
+              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+              )
+              )
+              );
+          }
+          
+          break;
+          case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+          this._component = (
+            React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+            React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+            React.createElement("div", {className: "exception-right"}, 
+            React.createElement("div", {className: "main-container exception2"}, 
+            React.createElement("div", {className: "kq-exception"}, 
+            React.createElement("div", {className: "kq-header"}, _("Please scan tote which has excess item"))
+            )
+            )
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
+            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+            )
+            )
+            );      
+          break;         
+          case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
-                    ));
+            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+            ));
           this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
-                      React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
-                      _button
-                    )
-                  )
-                ), 
-                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-          );      
-        break; 
-      case appConstants.PPTL_MANAGEMENT:
-      case appConstants.SCANNER_MANAGEMENT:
+            React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+            React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+            React.createElement("div", {className: "exception-right"}, 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement("div", {className: "kq-exception"}, 
+            React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+            React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
+            _button
+            )
+            )
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
+            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+            )
+            )
+            );      
+          break; 
+          case appConstants.PPTL_MANAGEMENT:
+          case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
             _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
-                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
-                      ))
+              React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+              React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+              ))
           }
           else{
             _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
-              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
-                  React.createElement("div", {className: "row scannerHeader"}, 
-                    React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
-                    ), 
-                    React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
-                    )
-                  ), 
-                  React.createElement(TabularData, {data: this.state.utility}), 
-                  _button, 
-                  React.createElement(Modal, null)
-              )
+            React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+            React.createElement("div", {className: "row scannerHeader"}, 
+            React.createElement("div", {className: "col-md-6"}, 
+            React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
+            ), 
+            React.createElement("div", {className: "col-md-6"}, 
+            React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
+            )
+            ), 
+            React.createElement(TabularData, {data: this.state.utility}), 
+            _button, 
+            React.createElement(Modal, null)
+            )
             );
-        break;  
+          break;  
 
-      default:
-        return true; 
-    }
-  },
+          default:
+          return true; 
+        }
+      },
 
-  render: function(data){
-    this.getNotificationComponent();
-    this.getScreenComponent(this.state.PutFrontScreenId);
-    return (
-      React.createElement("div", {className: "main"}, 
-        React.createElement(Header, null), 
-        this._navigation, 
-        this._component, 
-        this._notification
-      ) 
-     
-    );
-  }
+      render: function(data){
+        this.getNotificationComponent();
+        this.getScreenComponent(this.state.PutFrontScreenId);
+        return (
+          React.createElement("div", {className: "main"}, 
+          React.createElement(Header, null), 
+          this._navigation, 
+          this._component, 
+          this._notification
+          ) 
+          
+          );
+      }
 
-});
+    });
 
 module.exports = PutFront;
 

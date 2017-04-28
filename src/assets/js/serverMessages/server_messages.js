@@ -47,7 +47,7 @@ var serverMessages = {
     "PtF.H.011" : "Take out the tote from bin {0} and scan entity",
     "PtF.H.012" : "Place {0} boxes from bin {2}",
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
-    "PtF.H.015" : "Warehouse Full",
+    "PtF.H.016" : "Warehouse Full",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",

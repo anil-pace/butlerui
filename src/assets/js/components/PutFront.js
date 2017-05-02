@@ -25,7 +25,7 @@ var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
-   return mainstore.getScreenData();
+ return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({
@@ -44,7 +44,7 @@ var PutFront = React.createClass({
   onChange: function(){ 
     this.setState(getStateData());
   },
- 
+  
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
@@ -54,454 +54,427 @@ var PutFront = React.createClass({
   },
 
   getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              <div className='grid-container exception'>
-                <Modal />
-                <Exception data={this.state.PutFrontExceptionData} action={true}/>
-                <div className="exception-right"></div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
-                </div>
-              </div>
-            );
+    var _rightComponent = '';
+    this._navigation = '';
+    return (
+      <div className='grid-container exception'>
+      <Modal />
+      <Exception data={this.state.PutFrontExceptionData} action={true}/>
+      <div className="exception-right"></div>
+      <div className = 'cancel-scan'>
+      <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
+      </div>
+      </div>
+      );
   },
   
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
-        if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
-          this._component = (
-              <div className='grid-container'>
-                 <div className='main-container'>
-                 {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
-                 </div>
-              </div>
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
-
-        break;
-      case appConstants.PUT_FRONT_SCAN:
-         if(this.state.PutFrontExceptionStatus == false){
-           if (this.state.OrigBinUse){
-            binComponent = ( <div>
-                            <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>
-                  <WrapperSplitRoll scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
-                  </div>)
-
-          }else{
-            binComponent =(<div className='main-container'>
-                  <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
-                </div>)
-          }
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-          this._component = (
-              <div className='grid-container'>
-                <Modal />
-                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-                {binComponent}
-              </div>
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
-      case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+        this._component = (
+          <div className='grid-container'>
+          <div className='main-container'>
+          {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
+          </div>
+          </div>
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+
+      break;
+      case appConstants.PUT_FRONT_SCAN:
+      if(this.state.PutFrontExceptionStatus == false){
+       if (this.state.OrigBinUse){
+        binComponent = ( <div>
+          <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>
+          <WrapperSplitRoll scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+          </div>)
+
+      }else{
+        binComponent =(<div className='main-container'>
+          <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+          <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+          </div>)
+      }
+      this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+      this._component = (
+        <div className='grid-container'>
+        <Modal />
+        {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+        {binComponent}
+        </div>
+        );
+    }else{
+      this._component = this.getExceptionComponent();
+    }
+    break;
+    case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
+    if(this.state.PutFrontExceptionStatus == false){
+      this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           //need to check this case, if we need flexible bins here?
           this._component = (
-              <div className='grid-container'>
-                <Modal />
-                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-                <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
-                    <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
-                      <div className="text">{_("CURRENT BIN")}</div>
-                </div>
-                <div className='main-container'>
-                  <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
-                </div>
+            <div className='grid-container'>
+            <Modal />
+            {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+            <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
+            <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
+            <div className="text">{_("CURRENT BIN")}</div>
+            </div>
+            <div className='main-container'>
+            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
+            <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+            </div>
+            <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
+            </div>
 
-              </div>
+            </div>
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_FRONT_WAITING_UNDOCK:
+        case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.UNDOCK_PUSH}/>);
           this._component = (
-              <div className='grid-container'>
-                 <div className='main-container'>
-                 <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
-                 </div>
-              </div>
+            <div className='grid-container'>
+            <div className='main-container'>
+            <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
+            </div>
+            </div>
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_FRONT_PPTL_PRESS:
-         if(this.state.PutFrontExceptionStatus == false){
-           if (this.state.OrigBinUse){
-            binComponent = (<BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>);
-          }else{
-            binComponent =(<div className='main-container'>
-                  <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
-                </div>)
-          }
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-          this._component = (
-              <div className='grid-container'>
-                <Modal />
-                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-                {binComponent}
-              </div>
-            );
-           }else{
-          this._component = this.getExceptionComponent();
-        }
+
+        case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
+        var _button;
+        _button = (<div className = "staging-action">                          
+          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.EMPTY_ROLLCAGE_UNDOCK} color={"orange"} />
+          </div>);
+        this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._component = (
+          <div className='grid-container'>
+          {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+          <div className = "kq-exception">
+          <div className="gor-info-text">{_("Empty the rollcage to undock")}</div>
+          </div>
+          {_button}
+          </div>
+          );
         break;
+
+        case appConstants.PUT_FRONT_PPTL_PRESS:
+        if(this.state.PutFrontExceptionStatus == false){
+         if (this.state.OrigBinUse){
+          binComponent = (<BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>);
+        }else{
+          binComponent =(<div className='main-container'>
+            <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+            </div>)
+        }
+        this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._component = (
+          <div className='grid-container'>
+          <Modal />
+          {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+          {binComponent}
+          </div>
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
       case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           //need to check this case, if we need flexible bins here?
           this._component = (
-              <div className='grid-container'>
-                <Modal />
-                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-                <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
-                    <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
-                      <div className="text">{_("CURRENT BIN")}</div>
-                </div>
-                <div className='main-container'>
-                  <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
-                </div>
-              </div>
+            <div className='grid-container'>
+            <Modal />
+            {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+            <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
+            <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
+            <div className="text">{_("CURRENT BIN")}</div>
+            </div>
+            <div className='main-container'>
+            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
+            <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+            </div>
+            </div>
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
-      if(this.state.PutFrontExceptionStatus == false){
+        case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+        if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           //need to check this case, if we need flexible bins here?
           this._component = (
-              <div className='grid-container'>
-                <Modal />
-                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-                <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
-                    <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
-                      <div className="text">{_("CURRENT BIN")}</div>
-                </div>
-                <div className='main-container'>
-                  <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
-                  <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
-                </div>
+            <div className='grid-container'>
+            <Modal />
+            {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+            <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
+            <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
+            <div className="text">{_("CURRENT BIN")}</div>
+            </div>
+            <div className='main-container'>
+            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
+            <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+            </div>
+            <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {_("Cancel")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
+            </div>
 
-              </div>
+            </div>
             );
-           }else{
+        }else{
           this._component = this.getExceptionComponent();
         }
         break;
-      case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
-          confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
-          _button = (<div className = "staging-action">                          
-                          <Button1 disabled = {confirmDisabled} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.UNMARKED_DAMAGED} color={"orange"} />
-                    </div>);
-          if(isUnmarked){
-            unmarkedContainer = (                           
-                         <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} action={"DAMAGED"} />
-                    )
-            kqHeadMessage = _("Damaged Quantity");
-          }
-          else{
-            unmarkedContainer = (<div>
-               <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
-            </div>)
-            kqHeadMessage = _("Scan damaged entity");
-          }
-          this._component = (
-              <div className='grid-container exception'>
-                <Modal />
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{kqHeadMessage}</div>
-                     {unmarkedContainer}
-                      
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                  {_button}
-                  </div>
-                </div>
-                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
-                </div>
-              </div>
+        case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+        var _button;
+        _button = (<div className = "staging-action">                          
+          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+          </div>);
+        this._component = (
+          <div className='grid-container exception'>
+          <Modal />
+          <Exception data={this.state.PutFrontExceptionData}/>
+          <div className="exception-right">
+          <div className="main-container">
+          <div className = "kq-exception">
+          <div className="kq-header">{_("Scan damaged entity")}</div>
+          <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
+          {_button}
+          </div>
+          </div>
+          </div>
+          <div className = 'cancel-scan'>
+          <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+          </div>
+          </div>
           );      
         break; 
-      
-      case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-    
-      this._navigation = '';
-          if(this.state.PutFrontExceptionScreen == "good"){
+
+        case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
+        this._navigation = '';
+        if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Good Quantity")}</div>
-                      <KQ scanDetailsGood = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
+            <div className='grid-container exception'>
+            <Exception data={this.state.PutFrontExceptionData}/>
+            <div className="exception-right">
+            <div className="main-container">
+            <div className = "kq-exception">
+            <div className="kq-header">{_("Good Quantity")}</div>
+            <KQ scanDetailsGood = {this.state.PutFrontGoodQuantity} id={'good_keyboard'} action={"GOOD"} />
+            </div>
+            </div>
+            <div className = "finish-damaged-barcode">
+            <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_MISSING_AND_DAMAGED_QTY} />  
+            </div>
+            </div>
+            <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+            </div>
+            </div>
             );
-        }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-             var btnComp, UnscannableKQ;
+        }
+        else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+          var btnComp;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
-             On line 293 we are doing shpw/hide for Unscannable quantity KQ based on the UnmarkedContainer value
              */
-            this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
-            if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
+             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
+             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM} /> );
-            }else{
+             }else{
               btnComp = ( <Button1 disabled = {this._disableConfirm} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} /> );
-            }
-            if(!this.state.UnmarkedContainer)
-            {
-              UnscannableKQ=(<div className="kq-exception">
-                      <div className="kq-header">{_("Unscannable Quantity")}</div>
-                      <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
-                    </div>);
-            }
-            else
-            {
-              UnscannableKQ=(<div></div>);
             }
             this._component = (
               <div className='grid-container exception'>
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Missing Quantity")}</div>
-                      <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
-                    </div>
-                          {UnscannableKQ} 
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                   {btnComp} 
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
+              <Exception data={this.state.PutFrontExceptionData}/>
+              <div className="exception-right">
+              <div className="main-container">
+              <div className = "kq-exception">
+              <div className="kq-header">{_("Missing Quantity")}</div>
+              <KQExceptionMissing scanDetailsMissing = {this.state.PutFrontMissingQuantity} id={'missing_keyboard'} action={"MISSING"} />
               </div>
-            );
+              <div className = "kq-exception">
+              <div className="kq-header">{_("Unscannable Quantity")}</div>
+              <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} id={'damaged_keyboard'} action={"DAMAGED"} />
+              </div>
+              </div>
+              <div className = "finish-damaged-barcode">
+              {btnComp} 
+              </div>
+              </div>
+              <div className = 'cancel-scan'>
+              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+              </div>
+              </div>
+              );
           }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing_confirm"){
             this._component = (
               <div className='grid-container exception'>
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Please put unscannable entities in exception area.")}</div>
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
+              <Exception data={this.state.PutFrontExceptionData}/>
+              <div className="exception-right">
+              <div className="main-container exception2">
+              <div className = "kq-exception">
+              <div className="kq-header">{_("Please put unscannable entities in exception area.")}</div>
               </div>
-            );
+              </div>
+              <div className = "finish-damaged-barcode">
+              <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
+              </div>
+              </div>
+              <div className = 'cancel-scan'>
+              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+              </div>
+              </div>
+              );
           }
-          
-      break;
-      case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
-           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
-              this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Take the Items out from the Slot")}</div>
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_REVISED_QUANTITY} />  
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+          break; 
+          case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
+          if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               <div className='grid-container exception'>
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Space Available For")}</div>
-                      <KQ scanDetailsGood = {this.state.PutFrontKQQuantity}  />
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER} />  
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
+              <Exception data={this.state.PutFrontExceptionData}/>
+              <div className="exception-right">
+              <div className="main-container exception2">
+              <div className = "kq-exception">
+              <div className="kq-header">{_("Take the Items out from the Slot")}</div>
               </div>
-            );
-           }
-          
-        break;
-      case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
-        this._component = (
+              </div>
+              <div className = "finish-damaged-barcode">
+              <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_REVISED_QUANTITY} />  
+              </div>
+              </div>
+              <div className = 'cancel-scan'>
+              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+              </div>
+              </div>
+              );
+          }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+            this._component = (
               <div className='grid-container exception'>
-                <Modal />
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Please scan bin which has excess item")}</div>
-                    </div>
-                  </div>
-                </div>
-                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
-                </div>
+              <Exception data={this.state.PutFrontExceptionData}/>
+              <div className="exception-right">
+              <div className="main-container">
+              <div className = "kq-exception">
+              <div className="kq-header">{_("Space Available For")}</div>
+              <KQ scanDetailsGood = {this.state.PutFrontKQQuantity}  />
               </div>
-          );      
-        break; 
-      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+              </div>
+              <div className = "finish-damaged-barcode">
+              <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER} />  
+              </div>
+              </div>
+              <div className = 'cancel-scan'>
+              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+              </div>
+              </div>
+              );
+          }
           
+          break;
+          case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
-              <div className='grid-container exception'>
-                <Modal />
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Please scan tote which has excess item")}</div>
-                    </div>
-                  </div>
-                </div>
-                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
-                </div>
-              </div>
-          );      
-        break;         
-      case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+            <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.PutFrontExceptionData}/>
+            <div className="exception-right">
+            <div className="main-container exception2">
+            <div className = "kq-exception">
+            <div className="kq-header">{_("Please scan tote which has excess item")}</div>
+            </div>
+            </div>
+            </div>
+            <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+            </div>
+            </div>
+            );      
+          break;         
+          case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (<div className = "staging-action">                          
-                          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
-                    </div>);
+            <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+            </div>);
           this._component = (
-              <div className='grid-container exception'>
-                <Modal />
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Scan excess items")}</div>
-                      <TabularData data={this.state.PutFrontExcessItems}  className='limit-height' />
-                      {_button}
-                    </div>
-                  </div>
-                </div>
-                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
-                </div>
-              </div>
-          );      
-        break; 
-      case appConstants.PPTL_MANAGEMENT:
-      case appConstants.SCANNER_MANAGEMENT:
+            <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.PutFrontExceptionData}/>
+            <div className="exception-right">
+            <div className="main-container">
+            <div className = "kq-exception">
+            <div className="kq-header">{_("Scan excess item quantity")}</div>
+            <TabularData data={this.state.PutFrontExcessItems}  className='limit-height' />
+            {_button}
+            </div>
+            </div>
+            </div>
+            <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+            </div>
+            </div>
+            );      
+          break; 
+          case appConstants.PPTL_MANAGEMENT:
+          case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
           var _button;
           if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
             _button = (<div className = 'staging-action' >                          
-                          <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
-                          <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
-                      </div>)
+              <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
+              <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
+              </div>)
           }
           else{
             _button = (<div className = 'staging-action' ><Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_PPTL} color={"black"} /></div>)
           }
           this._component = (
-              <div className='grid-container audit-reconcilation'>
-                  <div className="row scannerHeader">
-                    <div className="col-md-6">
-                      <div className="ppsMode"> PPS Mode : {this.state.PutFrontPpsMode.toUpperCase()} </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
-                    </div>
-                  </div>
-                  <TabularData data = {this.state.utility}/>                  
-                  {_button}                  
-                  <Modal /> 
-              </div>
+            <div className='grid-container audit-reconcilation'>
+            <div className="row scannerHeader">
+            <div className="col-md-6">
+            <div className="ppsMode"> PPS Mode : {this.state.PutFrontPpsMode.toUpperCase()} </div>
+            </div>
+            <div className="col-md-6">
+            <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
+            </div>
+            </div>
+            <TabularData data = {this.state.utility}/>                  
+            {_button}                  
+            <Modal /> 
+            </div>
             );
-        break;  
+          break;  
 
-      default:
-        return true; 
-    }
-  },
+          default:
+          return true; 
+        }
+      },
 
-  render: function(data){
-    this.getNotificationComponent();
-    this.getScreenComponent(this.state.PutFrontScreenId);
-    return (
-      <div className="main">
-        <Header />
-        {this._navigation}
-        {this._component}
-        {this._notification}
-      </div> 
-     
-    );
-  }
+      render: function(data){
+        this.getNotificationComponent();
+        this.getScreenComponent(this.state.PutFrontScreenId);
+        return (
+          <div className="main">
+          <Header />
+          {this._navigation}
+          {this._component}
+          {this._notification}
+          </div> 
+          
+          );
+      }
 
-});
+    });
 
 module.exports = PutFront;

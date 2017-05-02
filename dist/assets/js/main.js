@@ -44146,7 +44146,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
         var _button;
         _button = (React.createElement("div", {className: "staging-action"}, 
-          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.EMPTY_ROLLCAGE_UNDOCK, color: "orange"})
+          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
           ));
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (

@@ -51085,7 +51085,7 @@ validateUnmarkedDamagedData:function(){
                 data["PutFrontKQQuantity"] = this.getScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 break;
-            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY://raja
+            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontDamagedQuantity"] = this.getPhysicallyDamagedScanDetails();
                 data["PutFrontServerNavData"] = this.getServerNavData();

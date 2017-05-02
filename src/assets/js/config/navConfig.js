@@ -105,7 +105,15 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
-        }]
+        }],
+        [{
+            "screen_id": "put_front_exception_warehouse_full",
+            "code": "PtF.H.015",
+            "message": "Warehouse Full",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+         }]
     ],
     "pickFront": [
         [{

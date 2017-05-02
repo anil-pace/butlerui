@@ -164,7 +164,10 @@ switch (module) {
                                 data["event_data"]["action"] ="finish_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                                 
+                                break; 
+                            case appConstants.UNMARKED_DAMAGED:
+                                ActionCreators.validateUnmarkedDamagedData();
+                                break;                                
                             case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PUT_FRONT, "cancel_exception");
                                 break;

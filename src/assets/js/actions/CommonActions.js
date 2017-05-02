@@ -255,6 +255,11 @@ var commonActions = {
       actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
     });
    },
+   validateUnmarkedDamagedData:function(){
+    AppDispatcher.handleAction({
+      actionType: appConstants.VALIDATE_UNMARKED_DAMAGED_DATA
+    });
+   },
    getPeriPheralData : function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.PERIPHERAL_DATA,

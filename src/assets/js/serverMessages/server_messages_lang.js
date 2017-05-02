@@ -380,7 +380,7 @@ function server_messages_list() {
     _("Seat Type");
     _("Good Quantity Cannot be Equal to the Total Quantity");
     /*Roll-cage*/
-    _("Undock Roll Cage");
+    _("Undock Roll Cage if no items remaining");
     _("Gently push roll cage away from the frame");
     /*Pre-put */
     _("Scan tote and place it in the slot");
@@ -425,6 +425,7 @@ function server_messages_list() {
     _("Exit {0}");
     _("{0} number :");
     _("Are you sure you want to exit from {0} {1} and stage all bins");
+    _("Scan or Enter the tote barcode to reprint");
     /* Code for pick front container flow*/
     _("Place container in MSU slot and confirm");
     /*Put front unmarked containers */

@@ -610,7 +610,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _scanDetails;
     },
     cancelScanDetails:function(){
-        return _seatData.cancel_scan_enabled || false;
+        return _seatData.cancel_scan_enabled ;
     },
 
     productDetails: function() {
@@ -1084,6 +1084,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
+        _unmarkedContainer= (data.unmarked_container)? data.unmarked_container:false;
         this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
@@ -1247,6 +1248,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setKQQuanity: function(data) {
         _KQQty = data;
     },
+    getDamagedQuantity:function(){
+        return _damagedQuantity;
+    },
     setGoodQuanity: function(data) {
         _goodQuantity = data;
     },
@@ -1301,7 +1305,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getPutBackExceptionScreen: function(data){
         return _putBackExceptionScreen;
     },
-
+ getUnmarkedContainerFlag:function(){
+        return _unmarkedContainer;
+    },
     setAuditExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _auditExceptionScreen = data;
@@ -1539,6 +1545,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return true;
     },
+    _getUnmarkedContainerFlag:function(){
+        return _seatData.unmarked_container;
+    },
     _getBinFullStatus:function(){
         return (_seatData && _seatData.bin_full_allowed ? true:false);
     },
@@ -1684,6 +1693,34 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
+    validateUnmarkedDamagedData:function(){
+        var _allowedQuantity;
+        _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
+        if (_damagedQuantity > _allowedQuantity) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = resourceConstants.CLIENTCODE_012;
+                data["level"] = "error";
+                data["details"] = [_allowedQuantity];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_allowedQuantity];
+                _seatData.notification_list[0].level = "error";
+            }
+            _damagedQuantity = 0;
+         
+        } else {
+            var data = {};
+            data["event_name"] = "put_front_exception";
+            data["event_data"] = {};
+            data["event_data"]["action"] = "confirm_quantity_update";
+            data["event_data"]["event"] = _seatData.exception_type;
+            data["event_data"]["quantity"] = _damagedQuantity;
+            this.showSpinner();
+            utils.postDataToInterface(data, _seatData.seat_name);
+        }
+    },
     getToteException: function() {
         if (_seatData.hasOwnProperty('exception_msg')) {
             return _seatData.exception_msg[0];
@@ -1815,6 +1852,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionStatus"] = this.getExceptionStatus();
                 data["InvoiceRequired"] = this.getInvoiceStatus();
                 data["InvoiceType"] = this.getInvoiceType();
+                data["ToteId"] = this.getToteId();
                 break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -2049,6 +2087,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                data["UnmarkedContainer"]=this.getUnmarkedContainerFlag();
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -2064,8 +2103,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["isUnmarkedContainer"] =  this._getUnmarkedContainerFlag();
                 break;
+           case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -2236,6 +2278,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
             case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
             case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+            case appConstants.PICK_BACK_REPRINT_TOTE:
                 data["PickBackNavData"] = this.getNavData();
                 data["PickBackNotification"] = this.getNotificationData();
                 data["PickBackBinData"] = this.getBinData();
@@ -2246,6 +2289,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackSelectedBin"] = this.getSelectedBin();
                 break;
+
+
             case appConstants.AUDIT_WAITING_FOR_MSU:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();
@@ -2466,6 +2511,10 @@ AppDispatcher.register(function(payload) {
             break;
         case appConstants.VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.validateAndSetPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
+        case appConstants.VALIDATE_UNMARKED_DAMAGED_DATA:
+            mainstore.validateUnmarkedDamagedData();
             mainstore.emitChange();
             break;
          case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:

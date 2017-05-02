@@ -30,14 +30,17 @@ var serverMessages = {
     "PtB.E.018" : "Expecting tote closure.",  
     "PtB.E.019" : "Tote not present in database.",
     "PtB.E.020" : "Tote matched .",
-    "PtB.E.021" : "Entity already scanned.Confirm exception",  
+    "PtB.E.021" : "Entity already scanned.Confirm exception", 
+    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.", 
+    "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
+    "PtF.E.021" : "Bin Already Scanned",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
     "PtF.H.004" : "Scan Entity From Bin {0}",
     "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
-    "PtF.H.007" : "Undock Roll Cage",
+    "PtF.H.007" : "Undock Roll Cage if no items remaining",
     "PtF.H.008" : "Place the tote back in bin {0} and press PPTL",
     "PtF.H.009" : "Scan excess item",
     "PtF.H.010" : "Scan tote which has excess item",
@@ -244,6 +247,7 @@ var serverMessages = {
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
     "PtF001" : "Entity Missing / Unscannable",
+    "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
     "PkF001" : "Item Missing/Bad Barcode",
@@ -258,6 +262,7 @@ var serverMessages = {
     "PpB.H.001" : "Scan tote and place it in the slot",
     "PpB.H.002" : "Scan slot to confirm",
     "PpB.H.005" : "Release MTU",
+    "Ppb.H.006" : "Scan or Enter the tote barcode to reprint",
     "PpB.I.001" : "Tote scan successful.",
     "PpB.I.002" : "Slot barcode scan successful",
     "PpB.I.003" : "Exception cancelled",
@@ -287,9 +292,9 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
-    /*Code for pick front container flow*/
-    "PkF.H.015":"Place container in MSU slot and confirm"
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
+  
+    
 };
 
 

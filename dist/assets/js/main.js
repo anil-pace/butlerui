@@ -45789,7 +45789,7 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
-	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_damaged_or_missing",
+	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_unscannable_or_missing",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
@@ -45829,7 +45829,7 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	PICK_FRONT_NO_FREE_BIN : 'pick_front_no_free_bin',
-	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_damaged",
+	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_unscannable",
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
@@ -47200,7 +47200,7 @@ var serverMessages = {
     "PtB.I.007" : "PPTL press successful",
     "PtB.I.008" : "Excess item in tote recorded. Now press PPTL",
     "PtB.I.009" : "Excess item in tote recorded.",
-    "PtB.I.010" : "{0} unscannable entities recorded. WMS notified",
+    "PtB.I.010" : "{0} Unscannable entities recorded. WMS notified",
     "PtB.I.011" : "{0} extra entities recorded in bin. WMS notified",
     "PtB.I.012" : "{0} oversized entities recorded.WMS notified",
     "PtB.I.013" : "Exception cancelled",
@@ -50010,6 +50010,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
+        getPhysicallyDamagedScanDetails: function() {
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _seatData["unmarked_container"] ? _damagedQuantity : _seatData['physically_damaged_items'].length,
+                    "total_qty": 0,
+                    "kq_allowed": true
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
     hideSpinner:function(){
         _showSpinner = false;
     },
@@ -50567,7 +50581,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = {};
             data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
@@ -50612,7 +50626,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = {};
             data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             
             mainstore.setPutFrontExceptionScreen(screen);
@@ -50649,34 +50663,44 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             utils.postDataToInterface(data, _seatData.seat_name);
         }
     },
-    validateUnmarkedDamagedData:function(){
-        var _allowedQuantity;
-        _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
-        if (_damagedQuantity > _allowedQuantity) {
-            if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = resourceConstants.CLIENTCODE_012;
-                data["level"] = "error";
-                data["details"] = [_allowedQuantity];
-                _seatData.notification_list[0] = data;
-            } else {
-                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
-                _seatData.notification_list[0].details = [_allowedQuantity];
-                _seatData.notification_list[0].level = "error";
-            }
-            _damagedQuantity = 0;
-         
-        } else {
-            var data = {};
-            data["event_name"] = "put_front_exception";
-            data["event_data"] = {};
-            data["event_data"]["action"] = "confirm_quantity_update";
-            data["event_data"]["event"] = _seatData.exception_type;
-            data["event_data"]["quantity"] = _damagedQuantity;
-            this.showSpinner();
-            utils.postDataToInterface(data, _seatData.seat_name);
-        }
-    },
+validateUnmarkedDamagedData:function(){
+       var _allowedQuantity;
+       _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
+       if (_damagedQuantity > _allowedQuantity) {
+           if (_seatData.notification_list.length == 0) {
+               var data = {};
+               data["code"] = resourceConstants.CLIENTCODE_012;
+               data["level"] = "error";
+               data["details"] = [_allowedQuantity];
+               _seatData.notification_list[0] = data;
+           } else {
+               _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+               _seatData.notification_list[0].details = [_allowedQuantity];
+               _seatData.notification_list[0].level = "error";
+           }
+           _damagedQuantity = 0;
+        
+       } else {
+           var data = {};
+           if(_seatData.unmarked_container){
+           data["event_name"] = "put_front_exception";
+           data["event_data"] = {};
+           data["event_data"]["action"] = "confirm_quantity_update";
+           data["event_data"]["event"] = _seatData.exception_type;
+           data["event_data"]["quantity"] = _damagedQuantity;
+           }
+           else
+           {
+           data["event_name"] = "put_front_exception";
+           data["event_data"] = {};
+           data["event_data"]["action"] = "finish_exception";
+           data["event_data"]["event"] = _seatData.exception_type;
+           }
+           
+           this.showSpinner();
+           utils.postDataToInterface(data, _seatData.seat_name);
+       }
+   },
     getToteException: function() {
         if (_seatData.hasOwnProperty('exception_msg')) {
             return _seatData.exception_msg[0];
@@ -51064,11 +51088,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontDamagedQuantity"] = this.getPhysicallyDamagedScanDetails();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontDamagedItems"] = this._getDamagedItemsData();
-                data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                
                 data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
                 data["isUnmarkedContainer"] =  this._getUnmarkedContainerFlag();
                 break;

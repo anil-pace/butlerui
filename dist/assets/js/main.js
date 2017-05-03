@@ -44230,108 +44230,133 @@ var PutFront = React.createClass({displayName: "PutFront",
         }
         break;
         case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-        var _button;
-        _button = (React.createElement("div", {className: "staging-action"}, 
-          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
-          ));
-        this._component = (
-          React.createElement("div", {className: "grid-container exception"}, 
-          React.createElement(Modal, null), 
-          React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-          React.createElement("div", {className: "exception-right"}, 
-          React.createElement("div", {className: "main-container"}, 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-          React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"}), 
-          _button
-          )
-          )
-          ), 
-          React.createElement("div", {className: "cancel-scan"}, 
-          React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-          )
-          )
+          var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
+          confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: confirmDisabled, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.UNMARKED_DAMAGED, color: "orange"})
+                    ));
+          if(isUnmarked){
+            unmarkedContainer = (                           
+                         React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, action: "DAMAGED"})
+                    )
+            kqHeadMessage = _("Damaged Quantity");
+          }
+          else{
+            unmarkedContainer = (React.createElement("div", null, 
+               React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"})
+            ))
+            kqHeadMessage = _("Scan damaged entity");
+          }
+          this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, kqHeadMessage), 
+                     unmarkedContainer
+                      
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                  _button
+                  )
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
           );      
-        break; 
+        break;
 
         case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-        this._navigation = '';
-        if(this.state.PutFrontExceptionScreen == "good"){
+         this._navigation = '';
+          if(this.state.PutFrontExceptionScreen == "good"){
           this._component = (
-            React.createElement("div", {className: "grid-container exception"}, 
-            React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-            React.createElement("div", {className: "exception-right"}, 
-            React.createElement("div", {className: "main-container"}, 
-            React.createElement("div", {className: "kq-exception"}, 
-            React.createElement("div", {className: "kq-header"}, _("Good Quantity")), 
-            React.createElement(KQ, {scanDetailsGood: this.state.PutFrontGoodQuantity, id: 'good_keyboard', action: "GOOD"})
-            )
-            ), 
-            React.createElement("div", {className: "finish-damaged-barcode"}, 
-            React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
-            )
-            ), 
-            React.createElement("div", {className: "cancel-scan"}, 
-            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-            )
-            )
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Good Quantity")), 
+                      React.createElement(KQ, {scanDetailsGood: this.state.PutFrontGoodQuantity, id: 'good_keyboard', action: "GOOD"})
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
             );
-        }
-        else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
-          var btnComp;
+        }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing"){
+             var btnComp, UnscannableKQ;
             /**
              * { T2714: confirm button disabled if missing/unscannable quantity is zero }
+             On line 293 we are doing shpw/hide for Unscannable quantity KQ based on the UnmarkedContainer value
              */
-             this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
-             if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
+            this._disableConfirm = (this.state.PutFrontMissingQuantity.current_qty > 0 || this.state.PutFrontDamagedQuantity.current_qty > 0 )? false : true;
+            if(this.state.PutFrontDamagedQuantity.current_qty > 0 ){
                btnComp = ( React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM}) );
-             }else{
+            }else{
               btnComp = ( React.createElement(Button1, {disabled: this._disableConfirm, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}) );
+            }
+            if(!this.state.UnmarkedContainer)
+            {
+              UnscannableKQ=(React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
+                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
+                    ));
+            }
+            else
+            {
+              UnscannableKQ=(React.createElement("div", null));
             }
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-              React.createElement("div", {className: "exception-right"}, 
-              React.createElement("div", {className: "main-container"}, 
-              React.createElement("div", {className: "kq-exception"}, 
-              React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
-              React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
-              ), 
-              React.createElement("div", {className: "kq-exception"}, 
-              React.createElement("div", {className: "kq-header"}, _("Unscannable Quantity")), 
-              React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, id: 'damaged_keyboard', action: "DAMAGED"})
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
+                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PutFrontMissingQuantity, id: 'missing_keyboard', action: "MISSING"})
+                    ), 
+                          UnscannableKQ
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                   btnComp
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
               )
-              ), 
-              React.createElement("div", {className: "finish-damaged-barcode"}, 
-              btnComp
-              )
-              ), 
-              React.createElement("div", {className: "cancel-scan"}, 
-              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-              )
-              )
-              );
+            );
           }else if(this.state.PutFrontExceptionScreen == "damaged_or_missing_confirm"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-              React.createElement("div", {className: "exception-right"}, 
-              React.createElement("div", {className: "main-container exception2"}, 
-              React.createElement("div", {className: "kq-exception"}, 
-              React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
               )
-              ), 
-              React.createElement("div", {className: "finish-damaged-barcode"}, 
-              React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-              )
-              ), 
-              React.createElement("div", {className: "cancel-scan"}, 
-              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-              )
-              )
-              );
+            );
           }
-          break; 
+          
+      break;
           case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
@@ -45943,8 +45968,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	INTERFACE_IP : "https://192.168.8.109"
 };
 module.exports = configConstants;
 
@@ -47287,6 +47312,7 @@ var serverMessages = {
     "CLIENTCODE_409" : "Back seat not supported for this mode",
     "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
+    "CLIENTCODE_403" : "Session timed out",
     "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012":"No Items To Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
@@ -51614,7 +51640,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503" || evt.data == "CLIENTCODE_403"){
                     var msgCode = evt.data;
                     CommonActions.showErrorMessage(serverMessages[msgCode]);
                     sessionStorage.setItem('sessionData', null);
@@ -51744,8 +51770,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             CommonActions.hideSpinner();
         }).fail(function(jqXhr) { console.log(jqXhr);
             CommonActions.hideSpinner();
-            if(jqXhr.status == 401){
-                var msgCode = "CLIENTCODE_401";
+            if(jqXhr.status == 401 || jqXhr.status == 403 ){
+                var msgCode = (jqXhr.status == 401)? "CLIENTCODE_401":"CLIENTCODE_403";
                 CommonActions.showErrorMessage(serverMessages[msgCode]);
                 sessionStorage.setItem('sessionData', null);
                 CommonActions.loginSeat(false);

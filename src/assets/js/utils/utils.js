@@ -48,7 +48,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 clearTimeout(utils.connectToWebSocket)
             };
             ws.onmessage = function(evt) { 
-                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503"){
+                 if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503" || evt.data == "CLIENTCODE_403"){
                     var msgCode = evt.data;
                     CommonActions.showErrorMessage(serverMessages[msgCode]);
                     sessionStorage.setItem('sessionData', null);
@@ -178,8 +178,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             CommonActions.hideSpinner();
         }).fail(function(jqXhr) { console.log(jqXhr);
             CommonActions.hideSpinner();
-            if(jqXhr.status == 401){
-                var msgCode = "CLIENTCODE_401";
+            if(jqXhr.status == 401 || jqXhr.status == 403 ){
+                var msgCode = (jqXhr.status == 401)? "CLIENTCODE_401":"CLIENTCODE_403";
                 CommonActions.showErrorMessage(serverMessages[msgCode]);
                 sessionStorage.setItem('sessionData', null);
                 CommonActions.loginSeat(false);

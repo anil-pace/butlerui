@@ -119,7 +119,7 @@ var PutFront = React.createClass({
             <div className='grid-container'>
             <Modal />
             {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-            <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
+            <div className={"single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':'')+(this.state.SplitScreenFlag?'':' fix-top')}>
             <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
             <div className="text">{_("CURRENT BIN")}</div>
             </div>
@@ -198,7 +198,7 @@ var PutFront = React.createClass({
             <div className='grid-container'>
             <Modal />
             {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-            <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
+            <div className={"single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':' fix-top')}>
             <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
             <div className="text">{_("CURRENT BIN")}</div>
             </div>

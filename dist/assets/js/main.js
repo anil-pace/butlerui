@@ -44110,7 +44110,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "grid-container"}, 
             React.createElement(Modal, null), 
             this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':'')+(this.state.SplitScreenFlag?'':' fix-top')}, 
             React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
             ), 
@@ -44189,7 +44189,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "grid-container"}, 
             React.createElement(Modal, null), 
             this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':' fix-top')}, 
             React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
             ), 
@@ -45970,6 +45970,7 @@ module.exports = appConstants;
 var configConstants = {
 	WEBSOCKET_IP : "wss://localhost/wss",
 	INTERFACE_IP : "https://localhost"
+
 };
 module.exports = configConstants;
 

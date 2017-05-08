@@ -197,7 +197,7 @@ var PickFront = React.createClass({
         var BinFull = ( <Button1 disabled = {false} text = {_("Bin full")} module ={appConstants.PICK_FRONT} action={appConstants.BIN_FULL} color={"black"} /> );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (<div>
+            binComponent = (<div style={{position:"absoulte",top:'8%',marginLeft:'15%'}}>
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                             </div>)
@@ -213,6 +213,7 @@ var PickFront = React.createClass({
                 <Modal />  
                        
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+
                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
                 <div className = 'actions'>
@@ -527,7 +528,7 @@ var PickFront = React.createClass({
         var BinFull = ( <Button1 disabled = {false} text = {_("Bin full")} module ={appConstants.PICK_FRONT} action={appConstants.BIN_FULL} color={"black"} /> );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (<div>
+            binComponent = (<div style={{position:"absoulte",top:'8%',marginLeft:'15%'}}>
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                             

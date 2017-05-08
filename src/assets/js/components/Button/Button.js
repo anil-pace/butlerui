@@ -133,6 +133,10 @@ switch (module) {
                                 data["event_data"]["barcode"] = this.props.barcode;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                             case appConstants.WAREHOUSEFULL_EXCEPTION:
+                              data["event_name"] = "warehousefull_exception";
+                              ActionCreators.postDataToInterface(data);
+                             break;   
                             case appConstants.CANCEL_EXCEPTION:
                                 ActionCreators.enableException(false);
                                 break;
@@ -164,7 +168,10 @@ switch (module) {
                                 data["event_data"]["action"] ="finish_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                                 
+                                break; 
+                            case appConstants.UNMARKED_DAMAGED:
+                                ActionCreators.validateUnmarkedDamagedData();
+                                break;                                
                             case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PUT_FRONT, "cancel_exception");
                                 break;

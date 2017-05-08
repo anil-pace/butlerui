@@ -97,14 +97,17 @@ var Header = React.createClass({
         this.setState(getState());
     },
     getExceptionMenu:function(){
-        var x = "";
+        var x = "",
+        screenId =  mainstore.getScreenId();
         for( var prop in appConstants ) {
         if( appConstants.hasOwnProperty( prop ) ) {
-             if( appConstants[ prop ] == mainstore.getScreenId() )
+             if( appConstants[ prop ] == screenId ){
                  x = prop;
+                break;
+            }
         }
      }
-        if(x.search("EXCEPTION") != -1 )
+        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY)
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (<div className="actionItem" onClick = {this.enableException} >

@@ -123,7 +123,7 @@ var PutBack = React.createClass({
           <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
           <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
           </div>
-          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?
+          {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) && (!(screen_id===appConstants.PUT_BACK_STAGE && this.state.ToteId))?
           <div className = 'cancel-scan'>
             <Button1 disabled = {false} text = {utils.frntStringTransform("FRNT.PBI.02",invoiceStringArgExitBtn)} module ={appConstants.PUT_BACK} action={appConstants.EXIT_INVOICE} color={"black"}/>
           </div>:""}

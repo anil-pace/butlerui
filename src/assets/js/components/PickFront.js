@@ -197,7 +197,7 @@ var PickFront = React.createClass({
         var BinFull = ( <Button1 disabled = {false} text = {_("Bin full")} module ={appConstants.PICK_FRONT} action={appConstants.BIN_FULL} color={"black"} /> );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (<div style={{position:"absoulte",top:'8%',marginLeft:'15%'}}>
+            binComponent = (<div className="binsFlexWrapperContainer">
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                             </div>)
@@ -531,7 +531,7 @@ var PickFront = React.createClass({
         var BinFull = ( <Button1 disabled = {false} text = {_("Bin full")} module ={appConstants.PICK_FRONT} action={appConstants.BIN_FULL} color={"black"} /> );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (<div style={{position:"absoulte",top:'8%',marginLeft:'15%'}}>
+            binComponent = (<div className="binsFlexWrapperContainer">
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId = {appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType = {this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails} productDetails={this.state.PickFrontProductDetails} itemUid={this.state.PickFrontItemUid}/>
                             

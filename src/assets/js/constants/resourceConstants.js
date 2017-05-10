@@ -5,6 +5,7 @@ var resourceConstants = {
 	UNSELECTED:"Unselected",
 	SYS_IDLE : 'System is Idle',
 	UNDOCK_PUSH : 'Gently push roll cage away from the frame',
+	WRONG_UNDOCK : 'Dock roll cage back to proceed the operation',
 	CURR_SLOT: 'CURRENT SLOT',
 	VIEW_MORE: 'View More',
 	TBL_HEADER: 'Box Serial Numbers',

@@ -5,7 +5,7 @@ Change source code file text as mentioned in localeplanet lib
 
 Run the command: 
  
- xgettext --from-code=UTF-8 src/assets/js/serverMessages/*.js -L JavaScript -j --package-name=butler_interface_kerry --package-version=1.1 -o src/assets/js/utils/vendor/i18n/chinese.po
+ xgettext --from-code=UTF-8 src/assets/js/serverMessages/*.js -L JavaScript -j -o src/assets/js/utils/vendor/i18n/english.po
 
 Open Po edit and open the chinese.po file and you can see the text extracted from the files
 

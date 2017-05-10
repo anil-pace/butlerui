@@ -41043,7 +41043,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", {style: {position:"absoulte",top:'8%',marginLeft:'15%'}}, 
+            binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
                             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                             ))
@@ -41377,7 +41377,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", {style: {position:"absoulte",top:'8%',marginLeft:'15%'}}, 
+            binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
                             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                             
@@ -43646,7 +43646,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
-          binComponent = (React.createElement("div", {style: {position:"absoulte",top:'8%',marginLeft:'15%'}}, 
+          binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
             React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType}), 
             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
             ));
@@ -44085,7 +44085,7 @@ var PutFront = React.createClass({displayName: "PutFront",
       case appConstants.PUT_FRONT_SCAN:
       if(this.state.PutFrontExceptionStatus == false){
        if (this.state.OrigBinUse){
-        binComponent = ( React.createElement("div", null, 
+        binComponent = ( React.createElement("div", {className: "binsFlexWrapperContainer"}, 
           React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}), 
           React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
           ))
@@ -45054,15 +45054,12 @@ var SplitPPS = React.createClass({displayName: "SplitPPS",
 							));
 					}
 					else if(wrongUndock.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {style: {border:'1px solid red'}, key: k, className: "spriteIcons"}, 
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "wrongUndock left spriteIcons"})
 							));
 					}
 					else{
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
-							/*This need to be removed*/
-							React.createElement("span", {className: "wrongUndock left spriteIcons"})
-						));
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
 					}
 					
 				}
@@ -45077,7 +45074,7 @@ var SplitPPS = React.createClass({displayName: "SplitPPS",
 							React.createElement("span", {className: "undock right spriteIcons"})
 							));
 					}else if(wrongUndock.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {style: {border:'1px solid red'}, key: k, className: "spriteIcons"}, 
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "wrongUndock right spriteIcons"})
 							));
 					}

@@ -225,6 +225,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.utility[1];
                      _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
+                else if(_seatData.screen_id===appConstants.PUT_FRONT_WRONG_UNDOCK){
+                    _NavData = navConfig.putFront[6];
+                }
                 else
                     _NavData = navConfig.putFront[1];
                 break;
@@ -1479,6 +1482,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _getUndockAwaitedGroup:function(){
             return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
     },
+    _getWrongUndockGroup:function(){
+            return (_seatData && _seatData.wrong_undock ? Object.keys(_seatData.wrong_undock):[]) ;
+    },
     _getOrigBinUse:function(){
         return (_seatData && _seatData.bin_coordinate_plotting ? true:false);
     },
@@ -2061,7 +2067,19 @@ validateUnmarkedDamagedData:function(){
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-                break; 
+                break;
+                case appConstants.PUT_FRONT_WRONG_UNDOCK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] =  this._getBinMapDetails();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["WrongUndock"] = this._getWrongUndockGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PUT_FRONT_PPTL_PRESS:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();

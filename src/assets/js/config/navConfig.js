@@ -113,6 +113,14 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_wrong_undock",
+            "code": "PtF.H.017",
+            "message": "Wrong Undock",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [

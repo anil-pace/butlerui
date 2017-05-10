@@ -2,12 +2,13 @@ var React = require('react');
 var mainstore = require('../stores/mainstore');
 var SystemIdleHeader = require('./SystemIdleHeader');
 var SplitPPS = require('./SplitPPS');
-function getState(){
-		return {
-	      dockedGroup :mainstore._getDockedGroup(),
-    	  undockAwaited:mainstore._getUndockAwaitedGroup(),
-        groupInfo : mainstore._getBinMapDetails()
-  		}
+function getState() {
+    return {
+        dockedGroup: mainstore._getDockedGroup(),
+        undockAwaited: mainstore._getUndockAwaitedGroup(),
+        wrongUndock: mainstore._getWrongUndockGroup(),
+        groupInfo: mainstore._getBinMapDetails()
+    }
 }
 
 var MobileSystemIdle = React.createClass({
@@ -32,7 +33,7 @@ var MobileSystemIdle = React.createClass({
 		return (
 			<div ref="myRef">
 					<SystemIdleHeader />
-					<SplitPPS groupInfo = {this.state.groupInfo} undockAwaited = {this.state.undockAwaited} docked = {this.state.dockedGroup}/>
+					<SplitPPS groupInfo = {this.state.groupInfo} wrongUndock={this.state.wrongUndock} undockAwaited = {this.state.undockAwaited} docked = {this.state.dockedGroup}/>
 			</div>
 		)
 	}

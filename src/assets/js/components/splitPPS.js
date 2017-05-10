@@ -5,21 +5,29 @@ var SplitPPS = React.createClass({
 	
 	processData: function(){
 		var data =  Object.assign({},(this.props.groupInfo || {}));
-		var leftCol = [],dockedGroup = this.props.docked,
-		undockAwaited = this.props.undockAwaited,
+		var leftCol = [],dockedGroup = this.props.docked||[],
+		undockAwaited = this.props.undockAwaited||[],
+		wrongUndock=this.props.wrongUndock||[]
 		rightCol=[];
+
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
 				
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+
 					if(dockedGroup.indexOf(k) >= 0){
-						leftCol.push(<li key={k} className={"spriteIcons"}>
+						leftCol.push(<li  key={k} className={"spriteIcons"}>
 							<span className="docked spriteIcons"></span>
 							</li>);
 					}
 					else if(undockAwaited.indexOf(k) >= 0){
 						leftCol.push(<li key={k} className={"spriteIcons"}>
 							<span className="undock left spriteIcons"></span>
+							</li>);
+					}
+					else if(wrongUndock.indexOf(k) >= 0){
+						leftCol.push(<li key={k} className={"spriteIcons"}>
+							<span  className="wrongUndock left spriteIcons"></span>
 							</li>);
 					}
 					else{
@@ -36,6 +44,10 @@ var SplitPPS = React.createClass({
 					else if(undockAwaited.indexOf(k) >= 0){
 						rightCol.push(<li key={k} className={"spriteIcons"}>
 							<span className="undock right spriteIcons"></span>
+							</li>);
+					}else if(wrongUndock.indexOf(k) >= 0){
+						rightCol.push(<li key={k} className={"spriteIcons"}>
+							<span  className="wrongUndock right spriteIcons"></span>
 							</li>);
 					}
 					else{

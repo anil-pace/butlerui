@@ -48,6 +48,7 @@ var serverMessages = {
     "PtF.H.012" : "Place {0} boxes from bin {2}",
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
+    "PtF.H.017" : "Wrong Undock",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",

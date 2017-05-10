@@ -1,33 +1,30 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the butler_interface_kerry package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: butler_interface_kerry 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-04 12:03+0530\n"
-"PO-Revision-Date: 2016-04-04 12:04+0530\n"
+"POT-Creation-Date: 2016-11-28 17:32+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
-
 
 msgid "Scan item / Stage pps bin"
-msgstr "掃描貨物/放置好 pps箱筒儲藏箱"
+msgstr "掃描品項／暫存 PPS 儲料箱"
 
 msgid "Scan Tote to associate with Bin"
-msgstr "掃描提袋以與儲藏箱相連"
+msgstr "掃描揀貨箱以和儲料箱建立關聯"
 
 msgid "Press PpsBin Button Or Scan a Tote"
-msgstr "按下PpsBin按鍵或掃描提袋"
-
-msgid "user Name"
-msgstr "使用者名稱"
+msgstr "按下 PpsBin 按鈕或掃描揀貨箱"
 
 msgid "Password"
 msgstr "密碼"
@@ -36,1171 +33,1027 @@ msgid "User Name"
 msgstr "使用者名稱"
 
 msgid "Are you sure you want to close Tote"
-msgstr "您確定要關閉提袋嗎"
+msgstr "您確定要關閉揀貨箱？"
 
 msgid "Details"
-msgstr "細節"
+msgstr "詳細資訊"
 
 msgid "Scan {0} items"
-msgstr "掃描{0}項物品"
+msgstr "掃描 {0} 件品項"
 
 msgid "Scan box barcode"
-msgstr "掃描貨盒條碼"
+msgstr "掃描箱盒條碼"
 
 msgid "Press PpsBin {0} to remove items"
-msgstr "按下PpsBin {0}移除物品"
+msgstr "按下 PpsBin {0} 以移除品項"
 
 msgid "Tote is already scanned.Expecting pptl scan."
-msgstr "提袋已掃描。準備掃描pptl。"
+msgstr "已掃描揀貨箱。須掃描 pptl。"
 
 msgid "Totes are not required.Please don't scan tote barcode"
-msgstr "無需提袋。請勿掃描提袋條碼"
+msgstr "無須揀貨箱。請勿掃描揀貨箱條碼"
 
 msgid "Wrong PPS bin scanned"
-msgstr "掃描錯誤的PPS儲藏箱"
+msgstr "掃描了錯誤的 PPS 儲料箱"
 
 msgid "Please scan the tote first and then scan pptl barcode"
-msgstr "請先掃描提袋再掃描pptl條碼"
+msgstr "請先掃描揀貨箱，再掃描 pptl 條碼"
 
 msgid "Tote scanned.Expecting pptl scan."
-msgstr "已掃描提袋。準備掃描pptl。"
+msgstr "已掃描揀貨箱。須掃描 pptl。"
 
 msgid "Pptl scan not allowed. Totes are not required"
-msgstr "不法掃描pptl。"
+msgstr "不允許掃描 Pptl。無須揀貨箱"
 
 msgid "Tote didn't get associated"
-msgstr "不需要提袋"
+msgstr "揀貨箱未建立關聯"
 
 msgid "After scannning tote barcode, please scan pptl barcode"
-msgstr "提袋未連接"
+msgstr "掃描揀貨箱條碼後，請掃描 pptl 條碼"
 
-msgid "Wrong Ppsbin button pressed.Please press those buttons having color blue"
-msgstr "掃描提袋條碼之後，請掃描pptl條碼"
+msgid "Wrong Ppsbin button pressed.Please press those buttons having colorblue"
+msgstr "按錯 Ppsbin 按鈕。請按下藍色的按鈕。"
 
 msgid "Please complete pickback for pending bin and then proceed"
-msgstr "按錯Ppsbin按鍵。請按下藍色按鍵"
+msgstr "請完成待處理儲料箱的回收，再繼續進行"
 
 msgid "No totes associated. Pease keep totes in the Bin and then scan"
-msgstr "請完成待處理的大儲藏箱的回撿然後再開始"
+msgstr "沒有已建立關聯的揀貨箱。請將揀貨箱留在儲料箱中，再進行掃描"
 
 msgid "Documents printed Successfully"
-msgstr "提袋未連接。"
+msgstr "文件列印成功"
 
 msgid "No tote scanned"
-msgstr "請將提袋留在儲藏箱內然後掃描"
+msgstr "沒有已掃描的揀貨箱"
 
 msgid "Tote cancelled"
-msgstr "文件打印成功"
+msgstr "已取消的揀貨箱"
 
 msgid "Tote already associated with ppsbin"
-msgstr "未掃描提袋"
+msgstr "已和 ppsbin 建立關聯的揀貨箱"
 
 msgid "Incorrect tote barcode scanned. Please try again"
-msgstr "取消提袋"
+msgstr "掃描了錯誤的揀貨箱條碼。請再試一次"
 
 msgid "Please press PPTL button which does not have any totes associated"
-msgstr "提袋已與ppsbin相連"
+msgstr "請按下尚未和任何揀貨箱建立關聯的 PPTL 按鈕"
 
 msgid "Tote assigned successfully to ppsbin {0}"
-msgstr "掃描錯誤的提袋條碼。"
+msgstr "揀貨箱已成功指派給 ppsbin {0}"
 
 msgid "Bin {0} items removed successfully"
-msgstr "請重試"
+msgstr "成功移除儲料箱 {0} 的品項"
 
 msgid "Totes are not required"
-msgstr "請按下不與提袋相連的PPTL按鍵"
+msgstr "無須揀貨箱"
 
 msgid "Wrong Barcode scanned"
-msgstr "成功地將提袋分配給ppsbin {0}"
+msgstr "掃描了錯誤的條碼"
 
 msgid "Tote could not be reserved as already reserved"
-msgstr "成功地移除儲藏箱內{0}個項物品"
+msgstr "由於揀貨箱已經保留，故無法保留"
 
 msgid "Exception invalid as totes are not required with this PPS"
-msgstr "不需要提袋"
+msgstr "由於此 PPS 無須揀貨箱，故例外處理無效"
 
 msgid "Override tote not possible"
-msgstr "掃描錯誤的條碼"
+msgstr "無法撤銷揀貨箱"
 
 msgid "Scanning pptl barcode not allowed"
-msgstr "無法如已存提袋一樣保存"
+msgstr "不允許掃描 pptl 條碼"
 
 msgid "Please press those buttons having color blink_blue"
-msgstr "此PPS並不需要提袋，特此無效"
+msgstr "請按下blink_blue的按鈕"
 
 msgid "Unhandled event ocurred"
-msgstr "無法覆蓋提袋"
+msgstr "發生未處理的事件"
 
 msgid "Barcode didn't match with current tote barcode"
-msgstr "不允許掃描pptl條碼"
+msgstr "條碼與目前的揀貨箱條碼不符"
 
 msgid "Testing configuration {0} and {1}"
-msgstr "請按下藍色閃光按鍵"
+msgstr "正在測試配置 {0} 和 {1}"
 
 msgid "Processing. Please wait and scan later"
-msgstr "發生無法處理的事件"
+msgstr "處理中。請稍候，並於稍後掃描"
 
 msgid "Waiting for rack"
-msgstr "條碼與現存提袋條碼不匹配"
+msgstr "等候料架"
 
 msgid "Current PPS mode does not support back seat. Please logout."
-msgstr "測試組態{0}及{1}"
+msgstr "目前的 PPS 模式不支援後排。請登出。"
 
 msgid "Scan items and place in bin {0}"
-msgstr "處理中。"
+msgstr "掃描品項並放入儲料箱 {0}"
 
 msgid "Stage Bin or Scan Entity"
-msgstr "請等待並且稍後掃描"
+msgstr "暫存儲料箱或掃描實體"
 
 msgid "Place Entity in Bin and Press PPTL"
-msgstr "等待上架"
+msgstr "將實體放入儲料箱中並按下 PPTL"
 
 msgid "Are You Sure You Want to Close Tote?"
-msgstr "目前PPS模式並不支持後座。"
+msgstr "您確定要關閉揀貨箱？"
 
 msgid "Scan Tote or Stage PPS Bin"
-msgstr "請退出。"
+msgstr "掃描揀貨箱或暫存 PPS 儲料箱"
 
 msgid "Item Not Expected in Tote"
-msgstr "掃描物品並且放入儲藏箱{0}"
+msgstr "揀貨箱中未預期的品項"
 
 msgid "Tote already opened. Scan some other tote"
-msgstr "放置儲藏箱或掃描物項"
+msgstr "揀貨箱已開啟。掃描其他揀貨箱"
 
 msgid "Tote already closed. Scan some other tote"
-msgstr "將物項放入箱內並按PPTL"
+msgstr "揀貨箱已關閉。掃描其他揀貨箱"
 
 msgid "No matching tote found"
-msgstr "您確定要關閉提袋嗎？"
+msgstr "查無符合的揀貨箱"
 
 msgid "Wrong entity scanned. Please scan tote"
-msgstr "掃描提袋或放置PPS箱"
+msgstr "掃描了錯誤的實體。請掃描揀貨箱"
 
 msgid "No entities added yet. Scan entities and then press PPTL"
-msgstr "提袋內無預期物品"
+msgstr "尚未新增實體。掃描實體，接著按下 PPTL"
 
 msgid "Wrong entity scanned. Please scan Container/Item."
-msgstr "提袋已開。"
+msgstr "掃描了錯誤的實體。請掃描貨櫃／品項。"
 
 msgid "Cannot cancel scan. No scanned box found"
-msgstr "掃描其他提袋"
+msgstr "無法取消掃描。查無已掃描的箱盒"
 
 msgid "Entity scan not expected. Waiting for PPTL press"
-msgstr "提袋已關閉。"
+msgstr "無須掃描實體。等候按下 PPTL"
 
 msgid "Bin selected for put. Cannot be staged"
-msgstr "掃描其他提袋"
+msgstr "選為須放置的儲料箱。無法暫存"
 
 msgid "SKU not present in database. Put into IRT bin."
-msgstr "未發現匹配提袋"
+msgstr "SKU 未顯示在資料庫中。放入 IRT 儲料箱。"
 
-msgid "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL"
-msgstr "掃描錯誤的物項。"
+msgid "Entities cannot be accommodated! Remove all entities from bin {0}and press PPTL"
+msgstr "容納不下實體！移除儲料箱 {0} 中的所有實體，然後按下 PPTL"
 
 msgid "No free bins. Please scan later"
-msgstr "請掃描提袋"
+msgstr "無可用的儲料箱。請稍後掃描"
 
 msgid "Wrong PPTL pressed. Please try another"
-msgstr "未添加物項。"
+msgstr "按錯 PPTL。請試另一個按鈕"
 
 msgid "Please put entities in exception area and confirm"
-msgstr "掃描物項後按下PPTL"
+msgstr "請將實體放入例外處理區，然後確認"
 
 msgid "Wrong bin chosen.Try selecting another bin"
-msgstr "掃描錯誤的物項。"
+msgstr "選擇了錯誤的儲料箱。請嘗試選擇另一個儲料箱"
 
 msgid "Please scan same SKU to complete this exception"
-msgstr "請掃描容器/物品。"
+msgstr "請掃描相同的 SKU，以完成此例外處理"
 
 msgid "Entity scan not expected."
-msgstr "無法取消掃描。"
+msgstr "無須掃描實體。"
 
 msgid "Tote not present in database."
-msgstr "未發現已掃描貨盒"
+msgstr "揀貨箱未顯示在資料庫中。"
 
-msgid "Tote has been opened.Scan all items in tote and then scan tote again to close it"
-msgstr "無需掃描物項。"
+msgid "Tote has been opened.Scan all items in tote and then scan tote againto close it"
+msgstr "揀貨箱已開啟。請掃描揀貨箱中所有品項，接著再次掃描揀貨箱，以關閉揀貨箱。"
 
-msgid "PPS is in paused mode. Cannot process new entity. Try after some time"
-msgstr "等待按下PPTL"
+msgid "PPS is in paused mode. Cannot process new entity. Try after sometime"
+msgstr "PPS 為暫停模式。無法處理新的實體。請稍後嘗試"
 
 msgid "Cancel scan successful."
-msgstr "選定放物品的儲藏箱。"
+msgstr "成功取消掃描。"
 
 msgid "Tote close successful."
-msgstr "無法放置"
+msgstr "揀貨箱成功關閉。"
 
 msgid "Tote not closed."
-msgstr "庫存單位未出現在資料庫內。"
+msgstr "揀貨箱未關閉。"
 
 msgid "Entity scan successful."
-msgstr "放入紅外儲物箱。"
+msgstr "實體掃描成功。"
 
 msgid "PPTL press successful"
-msgstr "無法容納物項！"
+msgstr "成功按下 PPTL"
 
 msgid "Data capture valid"
-msgstr "自箱筒{0}移除所有物項並按下PPTL"
+msgstr "資料擷取有效"
 
 msgid "Excess item in tote recorded. Now press PPTL"
-msgstr "無未用儲物箱。"
+msgstr "已記錄揀貨箱中多餘的品項。現在請按 PPTL"
 
 msgid "Invalid item in tote recorded."
-msgstr "請稍後掃描"
+msgstr "已記錄揀貨箱中無效的品項。"
 
 msgid "{0} unscannable entities recorded. WMS notified"
-msgstr "按錯PPTL鍵。"
+msgstr "已記錄 {0} 件無法掃描的實體。已通知 WMS"
 
 msgid "{0} extra entities recorded in bin. WMS notified"
-msgstr "請重試"
+msgstr "已記錄儲料箱中多出 {0} 件實體。已通知 WMS"
 
 msgid "{0} oversized entities recorded.WMS notified"
-msgstr "請將物項放在例外區域並確定"
+msgstr "已記錄 {0} 件尺寸過大的實體。已通知 WMS"
 
 msgid "Exception cancelled"
-msgstr "選擇錯誤儲物箱。試選擇另一個儲物箱"
+msgstr "取消例外處理"
 
 msgid "Box with same serial number already exists in the warehouse"
-msgstr "請掃描相同的SKU以結束此特殊情況。"
+msgstr "倉庫中已存在相同序號的箱盒"
 
 msgid "Entity already scanned.Waiting for PPTL press"
-msgstr "無需掃描物項。"
+msgstr "實體已掃描。等候按下 PPTL"
 
 msgid "No bins available to stage"
-msgstr "提袋未出現在資料庫內。"
+msgstr "無儲料箱可暫存"
 
 msgid "Bin already staged. Ignoring event"
-msgstr "提袋已開。掃描提袋內的所有項目然後再次掃描提袋以將其關閉"
+msgstr "儲料箱已經暫存。忽略事件"
 
 msgid "Bin empty. Cannot be staged"
-msgstr "PPS處於暫停模式下。"
+msgstr "儲料箱未放置物品。無法暫存"
 
 msgid "Scan Box/Items from Slot"
-msgstr "無法處理新的物項。"
+msgstr "掃描儲位中的箱盒／品項"
 
 msgid "Scan Remaining Item In Box"
-msgstr "稍後再試"
+msgstr "掃描箱盒內剩餘的品項"
 
 msgid "Last Box Scan Completed! Scan Remaining Box/Items"
-msgstr "取消掃描成功。"
+msgstr "已完成最後箱盒掃描！掃描剩餘的箱盒／品項"
 
 msgid "Status To Reconcile"
-msgstr "提袋關閉成功。"
+msgstr "須調和的狀態"
 
-msgid "This box belongs to some other SKU in the slot.Put it back.Scan next box."
-msgstr "提袋未關閉。"
+msgid "This box belongs to some other SKU in the slot.Put it back.Scan nextbox."
+msgstr "此箱盒屬於儲位中的另一個 SKU。請將它放回。掃描下一個箱盒。"
 
-msgid "This box does not belong to this slot. Remove the box and put in exception area."
-msgstr "物項掃描成功。"
+msgid "This box does not belong to this slot. Remove the box and put inexception area."
+msgstr "此箱不屬於此儲位。搬移箱盒，放入例外處理區。"
 
 msgid "Waiting for MSU"
-msgstr "成功按下PPTL鍵"
+msgstr "等候 MSU"
 
 msgid "Wrong Barcode"
-msgstr "掌握有效數據"
+msgstr "錯誤的條碼"
 
 msgid "Box Scan successful"
-msgstr "已記錄提袋內的多餘物品。"
+msgstr "箱盒掃描成功"
 
 msgid "Item Scan successful"
-msgstr "現在按下PPTL鍵"
+msgstr "品項掃描成功"
 
 msgid "Item scan successful"
-msgstr "已記錄提袋內的無效項目。"
+msgstr "品項掃描成功"
 
 msgid "Data capture failed at item {0}"
-msgstr "已記錄{0}個無法掃描物項。"
+msgstr "品項 {0} 的資料擷取失敗"
 
 msgid "Bin {0} selected"
-msgstr "已通知倉庫管理系統"
+msgstr "已選擇儲料箱 {0}"
 
 msgid "Bin {0} unselected"
-msgstr "儲藏箱已記錄{0}個多餘物項。"
+msgstr "未選擇儲料箱 {0}"
 
 msgid "Connection is closed. Connecting..."
-msgstr "已通知倉庫管理系統"
+msgstr "連線關閉。連線中..."
 
 msgid "Extra item found please put back item in Exception bin"
-msgstr "已記錄{0}個尺寸過大物項。已通知倉庫管理係統"
+msgstr "發現多餘的品項。請將品項放回例外處理箱"
 
 msgid "Enter Unscannable Entity Quantity"
-msgstr "取消特殊情況"
+msgstr "輸入無法掃描的實體數量"
 
 msgid "Scan Oversized Entity Quantity"
-msgstr "倉庫已存有具備相同序列號的儲藏箱"
+msgstr "掃描尺寸過大的實體數量"
 
 msgid "Please Select The Bin With Excess Entity"
-msgstr "物項已掃描。等待按下PPTL鍵"
+msgstr "請選擇實體過多的儲量箱"
 
 msgid "Enter Quantity of Excess Entities"
-msgstr "無可用箱筒可供放置"
+msgstr "輸入多餘實體的數量"
 
 msgid "Place Entity in Slot and Scan More"
-msgstr "箱筒已放置。"
+msgstr "將實體放入儲位中，然後掃描更多實體"
 
 msgid "Scan Slot to Confirm"
-msgstr "忽略的事件"
+msgstr "掃描儲位以進行確認"
 
 msgid "Wait for MSU"
-msgstr "儲藏箱清空。"
+msgstr "等候 MSU"
 
 msgid "Scan Entity From Bin {0}"
-msgstr "無法放置"
+msgstr "掃描儲料箱 {0} 中的實體"
 
 msgid "Enter Good Quantity to be Put into Slot"
-msgstr "從凹槽處掃描貨盒/物品"
+msgstr "輸入將放入儲位的良好數量"
 
 msgid "Put Back Entities in the PPS Bin"
-msgstr "掃描貨盒內的剩餘物品"
+msgstr "將實體放回 PPS 儲料箱"
 
 msgid "Confirm MSU Release"
-msgstr "已掃描完最後一個貨盒！"
+msgstr "確認 MSU 釋放"
 
 msgid "Scan Slot"
-msgstr "掃描剩餘的貨盒/物品"
+msgstr "掃描儲位"
 
 msgid "Scan {0} Items"
-msgstr "狀態調整"
+msgstr "掃描 {0} 件品項"
 
 msgid "Cancel audit successful.Audit Restarted"
-msgstr "此貨盒屬於凹槽內的一些其他庫存單位。將其放回。掃描下一個貨盒。"
+msgstr "成功取消稽核。已重新開始稽核"
 
 msgid "Scan Box"
-msgstr "此貨盒不屬於這個凹槽。"
+msgstr "掃描箱盒"
 
 msgid "Scan {0} Items and Place in Bin {1}"
-msgstr "移除貨盒並且放在特殊區域內。"
+msgstr "掃描{0} 件品項並放入儲料箱 {1}"
 
 msgid "Press PPTL to confirm"
-msgstr "等待调制解调器共享单元"
+msgstr "按下 PPTL 以確認"
 
 msgid "Scan Tote to Associate with Bin"
-msgstr "錯誤條碼"
+msgstr "掃描揀貨箱以和儲料箱建立關聯"
 
 msgid "Press PPTL or Scan a Tote"
-msgstr "貨盒掃描成功"
+msgstr "按下 PPTL 或掃描揀貨箱"
 
 msgid "Press PPTL to Remove Entities"
-msgstr "項目掃描成功"
+msgstr "按下 PPTL 以移除實體"
 
 msgid "Press bin PPTL"
-msgstr "項目掃描成功"
+msgstr "按下儲料箱 PPTL"
 
 msgid "Press PPTL for bin {0} to confirm"
-msgstr "未捕捉在項目{0}處的資料"
+msgstr "按下儲料箱 {0} 的 PPTL 以確認"
 
 msgid "Press print button to proceed"
-msgstr "箱筒{0}選定"
+msgstr "按下列印按鈕以繼續"
 
 msgid "Select Bin to skip print"
-msgstr "箱筒{0}未選定"
+msgstr "選擇須跳過列印的儲料箱"
 
 msgid "Select Bin which does not require tote"
-msgstr "連接關閉。"
+msgstr "選擇無需揀貨箱的儲料箱"
 
 msgid "Select Bin to disassociate tote"
-msgstr "正在連接…"
+msgstr "選擇儲料箱以解除和揀貨箱的關聯"
 
 msgid "Pick complete. Waiting for next rack."
-msgstr "發現多餘物品請將物品放回特殊儲物箱內"
+msgstr "揀貨完畢。等候下一個料架。"
 
 msgid "Location scan successful"
-msgstr "輸入無法掃描物項數量"
-
-msgid "Box scan successful"
-msgstr "掃描尺寸過大物項數量"
-
-msgid "Cancel scan successful"
-msgstr "請選擇含有多餘物項的儲物箱"
-
-msgid "Expecting MSU release confirmation from GUI, got invalid event."
-msgstr "輸入超出物項的數量"
-
-msgid "Data capture failed at item"
-msgstr "將物項放在凹槽內並再次進行掃描"
-
-msgid "Wrong slot location scanned. Please try again"
-msgstr "掃描凹槽以確認"
-
-msgid "Wrong box scanned. Please try again"
-msgstr "等待调制解调器共享单元"
-
-msgid "Scan a box first"
-msgstr "從箱筒{0}掃描物項"
-
-msgid "Wrong PPTL pressed. Please press correct PPTL"
-msgstr "輸入放在凹槽內的合格物品數量"
-
-msgid "Picked quantity more than expected. Put extra items back in MSU"
-msgstr "將物項放回PPS儲藏箱內"
-
-msgid "Wrong item quantity update"
-msgstr "確認调制解调器共享单元公佈"
-
-msgid "Wrong item scanned. Please scan correct item"
-msgstr "掃描凹槽"
-
-msgid "Waiting for MSU. Please wait and scan later"
-msgstr "掃描{0}個項目"
-
-msgid "System Error. Scanned entity details not available at this time"
-msgstr "成功取消審計。審計重新開始"
-
-msgid "No PPS bins empty. Please empty them from Pickback"
-msgstr "掃描貨盒"
-
-msgid "PPS mode change requested:scan not allowed"
-msgstr "掃描{0}個項目並且放入Bin {1}"
-
-msgid "PPS mode change requested:auto staging all bins"
-msgstr "按下PPTL鍵以確認"
-
-msgid "Barcode didn't match the current tote barcode"
-msgstr "掃描提袋以與儲藏箱相連"
-
-msgid "System not configured for totes"
-msgstr "按下PPTL鍵或掃描提袋"
-
-msgid "Invalid Exception for this configuration"
-msgstr "按下PPTL鍵以移除物項"
-
-msgid "No tote associated. Please keep a tote in bin and scan"
-msgstr "按下PPTL箱"
-
-msgid "Wrong PPTL pressed"
-msgstr "按下箱筒{0}的PPTL以確認"
-
-msgid "Totes are anyway not required.Please proceed further"
-msgstr "按下打印鍵以進行"
-
-msgid "Tote scan cancelled"
-msgstr "選擇儲物箱以略過打印"
-
-msgid "Documents printed successfully"
-msgstr "選擇不需要提袋的箱筒"
-
-msgid "Order removed successfully from bin {0}"
-msgstr "選擇箱筒以與提袋解除關聯"
-
-msgid "Tote assigned successfully to bin"
-msgstr "完成撿選。"
-
-msgid "Tote association failed. Repeat scan operation"
-msgstr "等待下一個貨架。"
-
-msgid "Tote associated with another bin"
 msgstr "位置掃描成功"
 
+msgid "Box scan successful"
+msgstr "箱盒掃描成功"
+
+msgid "Cancel scan successful"
+msgstr "成功取消掃描"
+
+msgid "Expecting MSU release confirmation from GUI, got invalid event."
+msgstr "必須是 GUI 的 MSU 釋放確認，出現無效的事件。"
+
+msgid "Data capture failed at item"
+msgstr "品項資料擷取失敗"
+
+msgid "Wrong slot location scanned. Please try again"
+msgstr "掃描了錯誤的儲位位置。請再試一次"
+
+msgid "Wrong box scanned. Please try again"
+msgstr "掃描了錯誤的箱盒。請再試一次"
+
+msgid "Scan a box first"
+msgstr "請先掃描箱盒"
+
+msgid "Wrong PPTL pressed. Please press correct PPTL"
+msgstr "按錯 PPTL。請按下正確的 PPTL"
+
+msgid "Picked quantity more than expected. Put extra items back in MSU"
+msgstr "已揀貨數量超過預期數量。請將多餘的品項放回 MSU"
+
+msgid "Wrong item quantity update"
+msgstr "錯誤的品項數量更新"
+
+msgid "Wrong item scanned. Please scan correct item"
+msgstr "掃描了錯誤的品項。請掃描正確的品項"
+
+msgid "Waiting for MSU. Please wait and scan later"
+msgstr "等候 MSU。請稍候，並於稍後掃描"
+
+msgid "System Error. Scanned entity details not available at this time"
+msgstr "系統錯誤。掃描的實體詳細資訊此次無法使用"
+
+msgid "No PPS bins empty. Please empty them from Pickback"
+msgstr "沒有空的 PPS 儲料箱。請自回收區清空儲料箱"
+
+msgid "PPS mode change requested:scan not allowed"
+msgstr "須變更 PPS 模式：不予許掃描"
+
+msgid "PPS mode change requested:auto staging all bins"
+msgstr "須變更 PPS 模式：自動暫存所有儲料箱"
+
+msgid "Barcode didn't match the current tote barcode"
+msgstr "條碼與目前的揀貨箱條碼不符"
+
+msgid "System not configured for totes"
+msgstr "未針對揀貨箱配置系統"
+
+msgid "Invalid Exception for this configuration"
+msgstr "此配置下例外無效"
+
+msgid "No tote associated. Please keep a tote in bin and scan"
+msgstr "無已建立關聯的揀貨箱。請將揀貨箱留在儲料箱中，並掃描之"
+
+msgid "Wrong PPTL pressed"
+msgstr "按錯 PPTL"
+
+msgid "Totes are anyway not required.Please proceed further"
+msgstr "無需揀貨箱。請繼續下一步"
+
+msgid "Tote scan cancelled"
+msgstr "已取消揀貨箱掃描"
+
+msgid "Documents printed successfully"
+msgstr "文件列印成功"
+
+msgid "Order removed successfully from bin {0}"
+msgstr "成功將訂單自儲料箱 {0} 中移除"
+
+msgid "Tote assigned successfully to bin"
+msgstr "揀貨箱已成功指派給儲料箱"
+
+msgid "Tote association failed. Repeat scan operation"
+msgstr "揀貨箱關聯失敗。請重複掃描作業"
+
+msgid "Tote associated with another bin"
+msgstr "揀貨箱已和另一個儲料箱建立關聯"
+
 msgid "Please scan PPTL barcode"
-msgstr "貨盒掃描成功"
+msgstr "請掃描 PPTL 條碼"
 
 msgid "Tote disassociated from Bin"
-msgstr "取消掃描成功"
+msgstr "揀貨箱已解除和儲料箱的關聯"
 
 msgid "Please complete process for pending bin and then proceed"
-msgstr "來自圖形用戶界面的调制解调器共享单元發布指令，得到無效結果。"
+msgstr "請完成待處理儲料箱的程序，再繼續進行"
 
 msgid "Tote already reserved"
-msgstr "物品資料捕捉失敗"
+msgstr "揀貨箱已經保留"
 
 msgid "Wrong barcode scanned"
-msgstr "掃描錯誤的凹槽位置。"
+msgstr "掃描了錯誤的條碼"
 
 msgid "Please scan the tote first and then scan PPTL barcode"
-msgstr "請重試"
+msgstr "請先掃描揀貨箱，再掃描 PPTL 條碼"
 
-msgid "Override Tote Exception' cannot be raised for bins with totes associated"
-msgstr "掃描錯誤的貨盒。"
+msgid "Override Tote Exception' cannot be raised for bins with totesassociated"
+msgstr "和揀貨箱關聯的儲料箱無法解除揀貨箱例外"
 
 msgid "PPTL scan not allowed. System not configured for tote"
-msgstr "請重試"
+msgstr "不允許 PPTL 掃描。未針對揀貨箱配置系統"
 
 msgid "PPTL scan not allowed"
-msgstr "先掃描貨盒"
+msgstr "不允許 PPTL 掃描"
 
 msgid "Tote scan expected"
-msgstr "按下錯誤的PPTL。"
+msgstr "必須掃描揀貨箱"
 
 msgid "Entity scanned is not from bin {0}. Replace and scan from bin {1}"
-msgstr "請按下正確的PPTL"
+msgstr "掃描的實體並非來自儲料箱 {0}。取代並從儲料箱 {1} 中掃描"
 
 msgid "Wrong entity scanned"
-msgstr "撿選數量超過預期。"
+msgstr "掃描了錯誤的實體"
 
 msgid "Waiting for MSU scan. Please scan entity later."
-msgstr "將多餘物品放回圓形用戶界面內"
+msgstr "等候 MSU 掃描。請稍後掃描實體。"
 
 msgid "Expected quantity exceeded."
-msgstr "錯誤項目數量更新"
-
-msgid "Wrong scan! Entity scan expected but slot barcode scanned."
-msgstr "掃描錯誤的項目。"
-
-msgid "Actual put quantity not equal to the sum of Good and Expection quantity."
-msgstr "請掃描正確的項目"
-
-msgid "Actual put quantity less than than revised quantity."
-msgstr "等待圓形用戶界面。"
-
-msgid "Wrong slot scanned"
-msgstr "請等待並且稍後掃描"
-
-msgid "Entity scan successful"
-msgstr "系統錯誤。"
-
-msgid "Slot scan successful"
-msgstr "此時不可掃描物項細節"
-
-msgid "Damaged and missing entity recorded."
-msgstr "沒有空的PPS箱筒。"
-
-msgid "Space unavailable recorded."
-msgstr "請從回收處處清空它們"
-
-msgid "Please put entity in exception area and confirm"
-msgstr "要求改變PPS模式，不允許掃描"
-
-msgid "Entity not expected in tote. Please put entity in exception area and confirm"
-msgstr "按要求改變PPS模式，放置所有箱筒"
-
-msgid "{0} excess entities found in tote. Please put entities in exception area and confirm"
-msgstr "條碼與當前提袋條碼匹配"
-
-msgid "Cancelled excess entity in tote"
-msgstr "無法對於提袋進行系統設定"
-
-msgid "Cancelled invalid entity in tote"
-msgstr "對此組態的例外無效"
-
-msgid "Invalid entity in tote recorded"
-msgstr "並未連接提袋。"
-
-msgid "Wrong enitity scanned. Expecting scan from bin {0}"
-msgstr "請將提袋留在箱筒內並且掃描"
-
-msgid "PPTL Management"
-msgstr "按下錯誤的PPTL"
-
-msgid "Scanner Management"
-msgstr "無論如何都不需要提袋。請繼續進行"
-
-msgid "Entity Oversized"
-msgstr "提袋掃描取消"
-
-msgid "Entity Unscannable"
-msgstr "文件打印成功"
-
-msgid "Extra Entities in Bin"
-msgstr "成功從儲藏箱{0}移除訂單"
-
-msgid "Entity Missing / Unscannable"
-msgstr "成功地將提袋分配到儲藏箱"
-
-msgid "Space Not Available"
-msgstr "提袋連接失敗。"
-
-msgid "Mising Box"
-msgstr "重覆掃描操作"
-
-msgid "Disassociate Tote"
-msgstr "提袋與另一個箱筒相連"
-
-msgid "Overide Tote Required"
-msgstr "請掃描PPTL條碼"
-
-msgid "Reprint"
-msgstr "將提袋與箱筒解除關聯"
-
-msgid "Skip Print"
-msgstr "請完成對於待處理儲藏箱的程序然後再進行"
-
-msgid "Peripheral added successfully"
-msgstr "提袋已保存"
-
-msgid "Peripheral not added"
-msgstr "掃描錯誤條碼"
-
-msgid "Scan Box or Items"
-msgstr "請先掃描提袋然後再掃描PPTL條碼"
-
-msgid "Check Count"
-msgstr "與提袋相連的箱筒無法建立跨載提袋例外"
-
-msgid "You cannot enter value more than 9999"
-msgstr "不允許PPTL掃描。"
-
-msgid "You cannot enter 0"
-msgstr "無法對於提袋進行系統設定"
-
-msgid "Place extra entity in Exception area."
-msgstr "不允許PPTL掃描"
-
-msgid "Sum of missing, good and damaged should be equal to {0}"
-msgstr "等待提袋掃描"
-
-msgid "Quantity should be less than or equal to {0}"
-msgstr "所掃描物項並非來自於箱筒{0}。"
-
-msgid "You are not allowed to keyed in the quantity from the numpad. Force Scan is required."
-msgstr "更換並且掃描箱筒{1}"
-
-msgid "Waiting for Bins to be Cleared at Pick Back"
-msgstr "掃描錯誤的物項"
-
-msgid "Peripheral deleted successfully"
-msgstr "等待调制解调器共享单元掃描。"
-
-msgid "Peripheral not deleted successfully"
-msgstr "請稍後掃描物項。"
-
-msgid "Cancel Exception"
 msgstr "超出預期數量。"
 
-msgid "Cancel Scan"
-msgstr "錯誤掃描！"
+msgid "Wrong scan! Entity scan expected but slot barcode scanned."
+msgstr "掃描錯誤！預期掃描實體，但掃描了儲位條碼。"
 
-msgid "Finish"
-msgstr "預期項目掃描但是已掃描凹槽條碼。"
+msgid "Actual put quantity not equal to the sum of Good and Expectionquantity."
+msgstr "實際放置數量與良好及預期數量的總和不一致。"
 
-msgid "Back"
-msgstr "實際放置數量不等於合格產品及特殊物品數量的總和。"
+msgid "Actual put quantity less than than revised quantity."
+msgstr "實際放置數量少於修改的數量。"
 
-msgid "OK"
-msgstr "實際放置數量少於修改後的數量。"
+msgid "Wrong slot scanned"
+msgstr "掃描了錯誤的儲位"
 
-msgid "FINISH"
-msgstr "掃描錯誤的凹槽"
+msgid "Entity scan successful"
+msgstr "實體掃描成功"
 
-msgid "Print"
-msgstr "物項掃描成功"
+msgid "Slot scan successful"
+msgstr "儲位掃描成功"
 
-msgid "Skip Printing"
-msgstr "凹槽掃描成功"
+msgid "Damaged and missing entity recorded."
+msgstr "已記錄損壞和遺失的實體。"
 
-msgid "Dis-associate Tote"
-msgstr "已記錄損壞及遺失物項。"
+msgid "Space unavailable recorded."
+msgstr "已記錄無法使用的空間。"
 
-msgid "Override"
-msgstr "已記錄空間不可用。"
+msgid "Please put entity in exception area and confirm"
+msgstr "請將實體放入例外處理區，然後確認"
 
-msgid "Add Scanner"
-msgstr "請將物項放在特殊區域裡並且確認"
+msgid "Entity not expected in tote. Please put entity in exception area andconfirm"
+msgstr "揀貨箱中非預期的實體。請將實體放入例外處理區，然後確認"
 
-msgid "Edit Details"
-msgstr "提袋內未出現物項。"
+msgid "{0} excess entities found in tote. Please put entities in exceptionarea and confirm"
+msgstr "揀貨箱中找到 {0} 件多餘的實體。請將實體放入例外處理區，然後確認"
 
-msgid "NEXT"
-msgstr "請將物項放在特殊區域裡並且確認"
+msgid "Cancelled excess entity in tote"
+msgstr "取消揀貨箱中多餘的實體"
 
-msgid "CONFIRM"
-msgstr "在提袋內發現{0}個多餘物項。"
+msgid "Cancelled invalid entity in tote"
+msgstr "取消揀貨箱中無效的實體"
 
-msgid "Stage"
-msgstr "請將物項放在特殊區域裡並且確認"
+msgid "Invalid entity in tote recorded"
+msgstr "已記錄揀貨箱中無效的實體"
 
-msgid "Stage All"
-msgstr "取消提袋內的多餘物項"
+msgid "Wrong enitity scanned. Expecting scan from bin {0}"
+msgstr "掃描了錯誤的實體。必須是從儲料箱 {0} 中掃描"
 
-msgid "BACK"
-msgstr "取消提袋內的無效物項"
+msgid "PPTL Management"
+msgstr "PPTL 管理"
 
-msgid "CLOSE"
-msgstr "已記錄提袋內的無效物項"
-
-msgid "Cancel"
-msgstr "掃描錯誤的物項。"
-
-msgid "Confirm"
-msgstr "從箱筒{0}進行預期掃描"
-
-msgid "TOTE"
-msgstr "PPTL管理"
-
-msgid "Clear All"
+msgid "Scanner Management"
 msgstr "掃描器管理"
 
-msgid "Submit"
-msgstr "物項尺寸過大"
+msgid "Entity Oversized"
+msgstr "尺寸過大的實體"
 
-msgid "Exceptions"
-msgstr "無法掃描物項"
+msgid "Entity Unscannable"
+msgstr "無法掃描的實體"
 
-msgid "Bin"
-msgstr "箱筒內的多餘物項"
+msgid "Extra Entities in Bin"
+msgstr "儲料箱中多餘的實體"
 
-msgid "Selected"
-msgstr "物項遺失/無法掃描"
+msgid "Entity Missing / Unscannable"
+msgstr "遺失／無法掃描的實體"
 
-msgid "Unselected"
-msgstr "空間不可用"
+msgid "Space Not Available"
+msgstr "無法使用的空間"
 
-msgid "System is Idle"
-msgstr "遺失貨盒"
+msgid "Mising Box"
+msgstr "遺失的箱盒"
 
-msgid "CURRENT SLOT"
-msgstr "解除關聯提袋"
+msgid "Disassociate Tote"
+msgstr "解除關聯揀貨箱"
 
-msgid "Box Serial Numbers"
-msgstr "跨載所需提袋"
+msgid "Overide Tote Required"
+msgstr "須撤銷揀貨箱"
 
-msgid "No Items To Reconcile"
-msgstr "重印"
+msgid "Reprint"
+msgstr "重新列印"
 
-msgid "List Of Items To Reconcile"
-msgstr "略過打印"
+msgid "Skip Print"
+msgstr "跳過列印"
 
-msgid "View More"
-msgstr "外圍設備添加成功"
+msgid "Peripheral added successfully"
+msgstr "成功新增周邊設備"
 
-msgid "Product Information"
-msgstr "未增入外圍設備"
+msgid "Peripheral not added"
+msgstr "未新增周邊設備"
 
-msgid "Bin Info"
-msgstr "掃描貨盒或物品"
+msgid "Scan Box or Items"
+msgstr "掃描箱盒或品項"
 
-msgid "Associate tote with bin"
-msgstr "檢查數目"
+msgid "Check Count"
+msgstr "檢查計數"
 
-msgid "Extra Entity Found"
-msgstr "您不能輸入超過9999的數值"
+msgid "You cannot enter value more than 9999"
+msgstr "不可輸入超過 9999 的數值"
 
-msgid "Perform Action"
-msgstr "您不能輸入0"
+msgid "You cannot enter 0"
+msgstr "不可輸入 0"
 
-msgid "Input Extra Details"
-msgstr "請將多餘物項放在特殊區域內。"
+msgid "Place extra entity in Exception area."
+msgstr "請將多餘的實體放至例外處理區。"
 
-msgid "Expected"
-msgstr "遺失物品、合格物品以及損壞物品的總和應等於{0}"
+msgid "Sum of missing, good and damaged should be equal to {0}"
+msgstr "遺失、良好和損壞的總和應等於 {0}"
 
-msgid "Actual"
-msgstr "數量應小於或等於{0}"
+msgid "Quantity should be less than or equal to {0}"
+msgstr "數量應小於或等於 {0}"
 
-msgid "Bin ID"
-msgstr "不允許從數字板處輸入數量。"
+msgid "You are not allowed to keyed in the quantity from the numpad. ForceScan is required."
+msgstr "不得使用數字鍵盤輸入數量。必須透過掃描。"
 
-msgid "Barcode"
-msgstr "需要進行強制掃描。"
+msgid "Waiting for Bins to be Cleared at Pick Back"
+msgstr "等候儲料箱於回收區清空"
 
-msgid "Peripheral ID"
-msgstr "在回收處等待儲物箱清除"
+msgid "Peripheral deleted successfully"
+msgstr "成功刪除周邊設備"
 
-msgid "Actions"
-msgstr "刪除週邊成功"
+msgid "Peripheral not deleted successfully"
+msgstr "未成功刪除周邊設備"
 
-msgid "Scanner ID"
-msgstr "刪除外圍設備不成功"
+msgid "Cancel Exception"
+msgstr "取消例外處理"
 
-msgid "Delete"
-msgstr "取消例外"
-
-msgid "Product SKU"
+msgid "Cancel Scan"
 msgstr "取消掃描"
 
-msgid "Expected Quantity"
+msgid "Finish"
 msgstr "完成"
 
-msgid "Actual Quantity"
+msgid "Back"
 msgstr "返回"
 
-msgid "Missing"
-msgstr "好"
+msgid "OK"
+msgstr "確定"
 
-msgid "Extra"
+msgid "FINISH"
 msgstr "完成"
 
-msgid "Barcode Damage"
-msgstr "打印"
+msgid "Print"
+msgstr "列印"
 
-msgid "Item in Box Serial Numbers"
-msgstr "略過打印"
+msgid "Skip Printing"
+msgstr "跳過列印"
 
-msgid "Loose Items"
-msgstr "與提袋解除關聯"
+msgid "Dis-associate Tote"
+msgstr "解除關聯揀貨箱"
 
-msgid "Loose Items Serial Numbers"
-msgstr "跨載"
+msgid "Override"
+msgstr "撤銷"
 
-msgid "Product Details"
-msgstr "增加掃描器"
+msgid "Add Scanner"
+msgstr "新增掃描器"
 
-msgid "Product Name"
-msgstr "編輯細節"
+msgid "Edit Details"
+msgstr "編輯詳細資訊"
 
-msgid "Product Desc"
-msgstr "下一步"
+msgid "NEXT"
+msgstr "下一個"
 
-msgid "Product Type"
+msgid "CONFIRM"
 msgstr "確認"
 
-msgid "Item Missing/Unscannable"
-msgstr "放置"
+msgid "Stage"
+msgstr "暫存"
 
-msgid "Missing Box"
-msgstr "全部放置"
+msgid "Stage All"
+msgstr "暫存全部"
 
-msgid "Override Tote Required"
+msgid "BACK"
 msgstr "返回"
 
-msgid "Items In Box Unscannable"
+msgid "CLOSE"
 msgstr "關閉"
 
-msgid "Box Unscannable"
+msgid "Cancel"
 msgstr "取消"
 
-msgid "Loose Items Unscannable"
+msgid "Confirm"
 msgstr "確認"
 
-msgid "Please put unscannable entities in exception area."
-msgstr "提袋"
+msgid "TOTE"
+msgstr "揀貨箱"
 
-msgid "Please put oversized entities in exception area."
-msgstr "全部清除"
+msgid "Clear All"
+msgstr "清除全部"
 
-msgid "Take the Items out from the Slot"
-msgstr "遞交"
+msgid "Submit"
+msgstr "送出"
 
-msgid "Tote already associated with bin {0}"
+msgid "Exceptions"
 msgstr "例外"
 
-msgid "Entity Scan not expected. Press PPTL"
-msgstr "儲物箱"
+msgid "Bin"
+msgstr "儲料箱"
 
-msgid "Override Tote Exception cannot be raised for bins with totes associated"
-msgstr "選定"
+msgid "Selected"
+msgstr "已選擇"
 
-msgid "Excess item in tote recorded."
-msgstr "未選定"
+msgid "Unselected"
+msgstr "未選擇"
 
-msgid "PPTL press not expected"
+msgid "System is Idle"
 msgstr "系統閒置"
 
-msgid "Scan not expected"
-msgstr "當前凹槽"
+msgid "CURRENT SLOT"
+msgstr "目前的儲位"
 
-msgid "Pptl press not expected."
-msgstr "貨盒序列號"
+msgid "Box Serial Numbers"
+msgstr "箱盒序號"
 
-msgid "Scan not expected."
-msgstr "無項目需調解"
+msgid "No Items To Reconcile"
+msgstr "無品項須調和"
 
-msgid "Wrong scan.Expecting item scan."
-msgstr "需調解的項目列表"
+msgid "List Of Items To Reconcile"
+msgstr "須調和品項清單"
 
-msgid "Wrong scan.Expecting container scan."
-msgstr "觀看更多"
+msgid "View More"
+msgstr "檢視更多"
 
-msgid "Wrong scan.Expecting location scan."
+msgid "Product Information"
 msgstr "產品資訊"
 
-msgid "Exception"
-msgstr "儲物箱資訊"
+msgid "Bin Info"
+msgstr "儲料箱資訊"
 
-msgid "Logout"
-msgstr "將提袋與儲物箱相連"
+msgid "Associate tote with bin"
+msgstr "將揀貨箱和儲料箱建立關聯"
 
-msgid "Utility"
-msgstr "發現多餘物品"
+msgid "Extra Entity Found"
+msgstr "發現多餘的實體"
 
-msgid "EXCEPTION"
-msgstr "動作執行"
+msgid "Perform Action"
+msgstr "執行動作"
 
-msgid "Good Quantity"
-msgstr "輸入額外細節"
+msgid "Input Extra Details"
+msgstr "輸入額外詳細資訊"
 
-msgid "Missing Quantity"
+msgid "Expected"
 msgstr "預期"
 
-msgid "Unscannable Quantity"
+msgid "Actual"
 msgstr "實際"
 
-msgid "Remove Item"
-msgstr "箱筒識別碼"
+msgid "Bin ID"
+msgstr "儲料箱 ID"
 
-msgid "Item Missing/Bad Barcode"
+msgid "Barcode"
 msgstr "條碼"
 
-msgid "Sum of missing and good quantity should be equal to {0}"
-msgstr "週邊識別碼"
+msgid "Peripheral ID"
+msgstr "周邊設備 ID"
 
-msgid "Login"
+msgid "Actions"
 msgstr "動作"
 
-msgid "Scan Excess Entity Quantity"
-msgstr "掃描器識別碼"
+msgid "Scanner ID"
+msgstr "掃描器 ID"
 
-msgid "Enter Username"
+msgid "Delete"
 msgstr "刪除"
 
-msgid "Enter Password"
-msgstr "產品庫存量單位"
+msgid "Product SKU"
+msgstr "產品 SKU"
 
-msgid "Invalid credentials"
+msgid "Expected Quantity"
 msgstr "預期數量"
 
-msgid "Login not allowed. You're already logged in"
+msgid "Actual Quantity"
 msgstr "實際數量"
 
-msgid "Place Item in slot and scan more"
+msgid "Missing"
 msgstr "遺失"
 
-msgid "PPTL"
-msgstr "額外"
+msgid "Extra"
+msgstr "多餘"
 
-msgid "Scan Slot Barcode"
-msgstr "條碼損壞"
+msgid "Barcode Damage"
+msgstr "條碼毀損"
 
-msgid "Unexpected Item"
-msgstr "貨盒序列號排列的物品"
+msgid "Item in Box Serial Numbers"
+msgstr "箱盒內品項的序號"
 
-msgid "Stage Bin or Scan Item"
-msgstr "散裝物品"
+msgid "Loose Items"
+msgstr "散裝品項"
 
-msgid "Scan & Confirm"
-msgstr "散裝物品序列號"
+msgid "Loose Items Serial Numbers"
+msgstr "散裝品項的序號"
 
-msgid "Scan Item From Bin"
-msgstr "產品細節"
+msgid "Product Details"
+msgstr "產品詳細資訊"
 
-msgid "Scan Tote"
+msgid "Product Name"
 msgstr "產品名稱"
 
-msgid "Scan MSU Barcode"
-msgstr "產品說明"
+msgid "Product Desc"
+msgstr "產品描述"
 
-msgid "Scan Items"
-msgstr "產品類型"
+msgid "Product Type"
+msgstr "產品種類"
 
-msgid "Status"
-msgstr "物品遺失/無法掃描"
+msgid "Item Missing/Unscannable"
+msgstr "遺失／無法掃描的品項"
 
-msgid "Could not connect to PPS.Please try again."
-msgstr "遺失貨盒"
+msgid "Missing Box"
+msgstr "遺失的箱盒"
 
-msgid "product_sku"
-msgstr "需要跨載提袋"
+msgid "Override Tote Required"
+msgstr "須撤銷揀貨箱"
 
-msgid "type."
-msgstr "無法掃描貨盒內的物品"
+msgid "Items In Box Unscannable"
+msgstr "箱盒內品項無法掃描"
 
-msgid "quantity"
-msgstr "無法掃描貨盒"
+msgid "Box Unscannable"
+msgstr "箱盒無法掃描"
 
-msgid "item"
-msgstr "無法掃描散裝物品"
+msgid "Loose Items Unscannable"
+msgstr "散裝品項無法掃描"
 
-msgid "box"
-msgstr "請將無法掃描的物項放在特殊區域裡。"
+msgid "Please put unscannable entities in exception area."
+msgstr "請將無法掃描的實體放至例外處理區。"
 
-msgid "SKU not present in Database.Put in exception area"
-msgstr "請將尺寸過大的物項放在特殊區域裡。"
+msgid "Please put oversized entities in exception area."
+msgstr "請將尺寸過大的實體放至例外處理區。"
 
-msgid "Please put extra entities in exception area."
-msgstr "將物品從凹槽內取出"
+msgid "Take the Items out from the Slot"
+msgstr "將品項從儲位中取出"
 
-msgid "Space Available For"
-msgstr "提袋已與箱筒{0}斷開連接"
+msgid "Tote already associated with bin {0}"
+msgstr "揀貨箱已經和儲料箱 {0} 建立關聯"
 
-msgid "Tote Details"
-msgstr "無需掃描物項。"
+msgid "Entity Scan not expected. Press PPTL"
+msgstr "無須是實體掃描。按下 PPTL"
 
-msgid "CURRENT BIN"
-msgstr "按下PPTL"
+msgid "Override Tote Exception cannot be raised for bins with totesassociated"
+msgstr "和揀貨箱關聯的儲料箱無法解除揀貨箱例外"
 
-msgid "Bad Barcode Quantity"
-msgstr "與提袋相連的箱筒無法收齊特殊跨載提袋"
+msgid "Excess item in tote recorded."
+msgstr "已記錄揀貨箱中多餘的品項。"
 
-msgid "Enter Scanner Id"
-msgstr "已記錄提袋內的多餘物品。"
+msgid "PPTL press not expected"
+msgstr "不需要按下 PPTL"
 
-msgid "Back seat not supported for this mode"
-msgstr "無需按下PPTL"
+msgid "Scan not expected"
+msgstr "不需要掃描"
 
-msgid "Bad Data"
-msgstr "無需掃描"
+msgid "Pptl press not expected."
+msgstr "不需要按下 Pptl。"
 
-msgid "Peripheral already added"
-msgstr "無需按下pptl。"
+msgid "Scan not expected."
+msgstr "不需要掃描。"
 
-msgid "Scan Bin Barcode"
-msgstr "無需掃描。"
+msgid "Wrong scan.Expecting item scan."
+msgstr "掃描錯誤。必須掃描品項。"
 
-msgid "Update"
-msgstr "錯誤掃描。掃描預期物品。"
+msgid "Wrong scan.Expecting container scan."
+msgstr "掃描錯誤。必須掃描貨櫃。"
 
-msgid "Japanese"
-msgstr "錯誤掃描。掃描預期容器。"
+msgid "Wrong scan.Expecting location scan."
+msgstr "掃描錯誤。必須掃描位置。"
 
-msgid "English"
-msgstr "錯誤掃描。掃描預期位置。"
-
-msgid "Scan item / Stage PPS Bin"
+msgid "Exception"
 msgstr "例外"
 
-msgid "Scan {0} Items and Place in Bin {0}"
-msgstr "退出系統"
+msgid "Logout"
+msgstr "登出"
 
-msgid "Entity already scanned.Confirm exception"
+msgid "Utility"
 msgstr "效用"
 
-msgid "type"
+msgid "EXCEPTION"
 msgstr "例外"
 
-msgid "Close current tote first"
-msgstr "正常數量"
+msgid "Good Quantity"
+msgstr "良好數量"
 
-msgid "Exception Finished"
+msgid "Missing Quantity"
 msgstr "遺失數量"
 
-msgid "PPS Mode"
+msgid "Unscannable Quantity"
 msgstr "無法掃描數量"
 
-msgid "Seat Type"
-msgstr "移除物品"
+msgid "Remove Item"
+msgstr "移除項目"
 
-msgid "Good Quantity Cannot be Equal to the Total Quantity"
-msgstr "物品遺失/壞條碼"
+msgid "Item Missing/Bad Barcode"
+msgstr "品項遺失／錯誤條碼"
 
-msgid ""
-msgstr "遺失以及合格品數量的總和應等於{0}"
+msgid "Sum of missing and good quantity should be equal to {0}"
+msgstr "遺失和良好數量的總和應等於 {0}"
 
-msgid ""
+msgid "Login"
 msgstr "登入"
 
-msgid ""
-msgstr "掃描超出物項數量"
+msgid "Scan Excess Entity Quantity"
+msgstr "掃描多餘實體數量"
 
-msgid ""
+msgid "Enter Username"
 msgstr "輸入使用者名稱"
 
-msgid ""
+msgid "Enter Password"
 msgstr "輸入密碼"
 
-msgid ""
-msgstr "無效憑證"
+msgid "Invalid credentials"
+msgstr "無效的認證"
 
-msgid ""
-msgstr "登入未獲允許。"
+msgid "Login not allowed. You're already logged in"
+msgstr "不允許登入。您已經登入"
 
-msgid ""
-msgstr "您已登入"
+msgid "Place Item in slot and scan more"
+msgstr "請將品項放入儲位，然後掃描更多品項"
 
-msgid ""
-msgstr "將項目放在凹槽內並且再進行掃描"
-
-msgid ""
+msgid "PPTL"
 msgstr "PPTL"
 
-msgid ""
-msgstr "掃描凹槽條碼"
+msgid "Scan Slot Barcode"
+msgstr "掃描儲位條碼"
 
-msgid ""
-msgstr "非預期項目"
+msgid "Unexpected Item"
+msgstr "未預期的品項"
 
-msgid ""
-msgstr "放置儲藏箱或掃描物品"
+msgid "Stage Bin or Scan Item"
+msgstr "暫存儲料箱或掃描品項"
 
-msgid ""
-msgstr "掃描並且確認"
+msgid "Scan & Confirm"
+msgstr "掃描並確認"
 
-msgid ""
-msgstr "掃描儲物箱中的物品"
+msgid "Scan Item From Bin"
+msgstr "掃描儲料箱中的品項"
 
-msgid ""
-msgstr "掃描提袋"
+msgid "Scan Tote"
+msgstr "掃描揀貨箱"
 
-msgid ""
-msgstr "掃描调制解调器共享单元條碼"
+msgid "Scan MSU Barcode"
+msgstr "掃描 MSU 條碼"
 
-msgid ""
-msgstr "掃描物品"
+msgid "Scan Items"
+msgstr "掃描品項"
 
-msgid ""
+msgid "Status"
 msgstr "狀態"
 
-msgid ""
-msgstr "無法連線至PPS。請再試一次。"
+msgid "Could not connect to PPS.Please try again."
+msgstr "無法連線至 PPS。請再試一次。"
 
-msgid ""
-msgstr "產品庫存量單位"
+msgid "product_sku"
+msgstr "product_sku"
 
-msgid ""
-msgstr "類型。"
+msgid "type."
+msgstr "種類。"
 
-msgid ""
+msgid "quantity"
 msgstr "數量"
 
-msgid ""
-msgstr "物品"
+msgid "item"
+msgstr "品項"
 
-msgid ""
-msgstr "貨盒"
+msgid "box"
+msgstr "箱盒"
 
-msgid ""
-msgstr "產品庫存量單位未出現在資料庫內。放在特殊區域內"
+msgid "SKU not present in Database.Put in exception area"
+msgstr "SKU 未顯示在資料庫中。請放至例外處理區"
 
-msgid ""
-msgstr "請將多餘物品放在例外區域裡。"
+msgid "Please put extra entities in exception area."
+msgstr "請將多餘的實體放至例外處理區。"
 
-msgid ""
-msgstr "可用空間給"
+msgid "Space Available For"
+msgstr "空間適用於"
 
-msgid ""
-msgstr "提袋細節"
+msgid "Tote Details"
+msgstr "揀貨箱詳細資訊"
 
-msgid ""
-msgstr "當前儲物箱"
+msgid "CURRENT BIN"
+msgstr "目前的儲料箱"
 
-msgid ""
-msgstr "壞條碼數量"
+msgid "Bad Barcode Quantity"
+msgstr "錯誤的條碼數量"
 
-msgid ""
-msgstr "輸入掃描器識別碼"
+msgid "Enter Scanner Id"
+msgstr "輸入掃描器 Id"
 
-msgid ""
-msgstr "此模式不支援後座"
+msgid "Back seat not supported for this mode"
+msgstr "後排不支援此模式"
 
-msgid ""
-msgstr "資料損壞"
+msgid "Bad Data"
+msgstr "錯誤資料"
 
-msgid ""
-msgstr "週邊區域已添加"
+msgid "Peripheral already added"
+msgstr "已新增周邊設備"
 
-msgid ""
-msgstr "掃描箱筒條碼"
+msgid "Scan Bin Barcode"
+msgstr "掃描儲料箱條碼"
 
-msgid ""
+msgid "Update"
 msgstr "更新"
 
-msgid ""
+msgid "Japanese"
 msgstr "日文"
 
-msgid ""
+msgid "English"
 msgstr "英文"
 
-msgid ""
-msgstr "掃描項目/ 放置PPS儲物箱"
+msgid "Scan item / Stage PPS Bin"
+msgstr "掃描品項／暫存 PPS 儲料箱"
 
-msgid ""
-msgstr "掃描{0}個物品並且放入Bin {0}儲物箱"
+msgid "Scan {0} Items and Place in Bin {0}"
+msgstr "掃描{0} 件品項並放入儲料箱 {0}"
 
-msgid ""
-msgstr "已掃描物品。確認特殊情況"
+msgid "Entity already scanned.Confirm exception"
+msgstr "實體已掃描。確認例外"
 
-msgid ""
-msgstr "類型"
+msgid "type"
+msgstr "種類"
 
-msgid ""
-msgstr "先關閉當前提袋"
+msgid "Close current tote first"
+msgstr "請先關閉目前的揀貨箱"
 
-msgid ""
-msgstr "完成確認"
+msgid "Exception Finished"
+msgstr "完成的例外處理"
 
-msgid ""
-msgstr "PPS模式"
+msgid "PPS Mode"
+msgstr "PPS 模式"
 
-msgid ""
-msgstr "座位類型"
+msgid "Seat Type"
+msgstr "座位種類"
 
-msgid ""
-msgstr "合格物品數量不能等於總數量"
+msgid "Good Quantity Cannot be Equal to the Total Quantity"
+msgstr "良好數量不可等於總數量"

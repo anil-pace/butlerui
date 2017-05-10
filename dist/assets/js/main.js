@@ -41043,7 +41043,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", null, 
+            binComponent = (React.createElement("div", {style: {position:"absoulte",top:'8%',marginLeft:'15%'}}, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
                             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                             ))
@@ -41059,6 +41059,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement(Modal, null), 
                        
                 React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+
                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
                 React.createElement("div", {className: "actions"}, 
@@ -41376,7 +41377,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
         var binComponent="";
         if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", null, 
+            binComponent = (React.createElement("div", {style: {position:"absoulte",top:'8%',marginLeft:'15%'}}, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
                             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
                             
@@ -43645,7 +43646,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
-          binComponent = (React.createElement("div", null, 
+          binComponent = (React.createElement("div", {style: {position:"absoulte",top:'8%',marginLeft:'15%'}}, 
             React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType}), 
             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
             ));

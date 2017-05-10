@@ -88,7 +88,7 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_SCAN:
       if(this.state.PutFrontExceptionStatus == false){
        if (this.state.OrigBinUse){
-        binComponent = ( <div>
+        binComponent = ( <div className="binsFlexWrapperContainer">
           <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>
           <WrapperSplitRoll scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
           </div>)

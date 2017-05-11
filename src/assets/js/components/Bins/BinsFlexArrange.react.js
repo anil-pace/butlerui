@@ -5,20 +5,13 @@ var PutBackStore = require('../../stores/PutBackStore');
 var Bins = React.createClass({
 
     getInitialState: function(){
-        return { 
-            aBins:[],
-            lastHBin:{},
-            lastVBin:{},
-            totalHeight:0,
-            totalWidth:0,
-            htmlBins:[]
-        };
+        return this._sortBins(this.props.binsData.ppsbin_list,false);
     },
     componentWillReceiveProps: function() {
-        this._sortBins(this.props.binsData.ppsbin_list);
+        this._sortBins(this.props.binsData.ppsbin_list,true);
     },
 
-      _sortBins:function (aBins){
+      _sortBins:function (aBins,shouldSetState){
          if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
             //no bins found
             return;
@@ -46,11 +39,20 @@ var Bins = React.createClass({
                 return oBinPrev;
             }
         });
-        this.setState({
-            aBins:aBins,
-            lastHBin:lastHBin,
-            lastVBin: lastVBin,
-        });
+        if(shouldSetState){
+            this.setState({
+                aBins:aBins,
+                lastHBin:lastHBin,
+                lastVBin: lastVBin,
+            });
+        }
+        else{
+            return{
+                 aBins:aBins,
+                lastHBin:lastHBin,
+                lastVBin: lastVBin
+            }
+        }
     },
 
     _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {

@@ -281,10 +281,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    //console.log(data);
-    if(data.state_data){
-        data.state_data=JSON.parse('{"seat_name":"front_5","api_version":"1","screen_id":"put_front_exception_warehouse_full","screen_version":"1","notification_list":[],"wrong_undock":[],"docked":[],"group_info":{"1":"left","2":"right"},"time_stamp":"1494487308","header_msge_list":[{"level":"info","code":"PtF.H.016","details":[],"description":"Warehouse Full"}],"exception_type":"warehousefull_exception","logout_allowed":false,"exception_allowed":[],"mode":"put","undock_awaited":{"1":"left"},"seat_type":"front","bin_coordinate_plotting":true,"is_idle":false,"ppsbin_list":[{"breadth":"200","direction":"left","bin_info":[],"ppsbin_id":"6","orig_coordinate":[0,200],"length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,5],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"left","bin_info":[{"product_sku":"2001","serial":"AEee111113","type":"container","quantity":10}],"ppsbin_id":"1","orig_coordinate":[0,0],"length":"200","selected_state":false,"ppsbin_state":"error","ppsbin_count":"1","coordinate":[1,5],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"left","bin_info":[],"ppsbin_id":"7","orig_coordinate":[200,200],"length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,4],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"left","bin_info":[],"ppsbin_id":"2","orig_coordinate":[200,0],"length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,4],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"10","orig_coordinate":[800,200],"length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"5","orig_coordinate":[800,0],"length":"200","selected_state":true,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,1],"group_id":"1","totes_associated":false}],"roll_cage_flow":true}');
-    }
+    console.log(data);
+
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

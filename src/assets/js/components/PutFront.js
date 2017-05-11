@@ -170,7 +170,7 @@ var PutFront = React.createClass({
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
         var _button;
         _button = (<div className = "staging-action">                          
-          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.EMPTY_ROLLCAGE_UNDOCK} color={"orange"} />
+          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.WAREHOUSEFULL_EXCEPTION} color={"orange"} />
           </div>);
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (

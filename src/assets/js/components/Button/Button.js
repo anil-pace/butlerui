@@ -134,7 +134,9 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 break;
                              case appConstants.WAREHOUSEFULL_EXCEPTION:
-                              data["event_name"] = "warehousefull_exception";
+                                data["event_name"] = "put_front_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
                               ActionCreators.postDataToInterface(data);
                              break;   
                             case appConstants.CANCEL_EXCEPTION:

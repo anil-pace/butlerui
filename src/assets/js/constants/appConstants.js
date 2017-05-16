@@ -202,7 +202,8 @@ var appConstants = {
 	VOLUME_UNIT:"vol_unit",
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
-	ENTITY_DAMAGED:"entity_damaged"
+	ENTITY_DAMAGED:"entity_damaged",
+    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote"
 };
 
 module.exports = appConstants;

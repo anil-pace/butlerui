@@ -424,6 +424,24 @@ var PutFront = React.createClass({
           }
           
           break;
+          case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
+            this._component = (
+                  <div className='grid-container exception'>
+                    <Modal />
+                    <Exception data={this.state.PutFrontExceptionData}/>
+                    <div className="exception-right">
+                      <div className="main-container exception2">
+                        <div className = "kq-exception">
+                          <div className="kq-header">{_("Please scan bin which has excess item")}</div>
+                        </div>
+                      </div>
+                    </div>
+                     <div className = 'cancel-scan'>
+                       <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                    </div>
+                  </div>
+              );      
+            break; 
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
             <div className='grid-container exception'>

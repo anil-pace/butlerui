@@ -39174,7 +39174,7 @@ var Header = React.createClass({displayName: "Header",
             }
         }
      }
-        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY)
+        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS|| screenId===appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN)
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
@@ -44421,6 +44421,24 @@ var PutFront = React.createClass({displayName: "PutFront",
           }
           
           break;
+          case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
+            this._component = (
+                  React.createElement("div", {className: "grid-container exception"}, 
+                    React.createElement(Modal, null), 
+                    React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                    React.createElement("div", {className: "exception-right"}, 
+                      React.createElement("div", {className: "main-container exception2"}, 
+                        React.createElement("div", {className: "kq-exception"}, 
+                          React.createElement("div", {className: "kq-header"}, _("Please scan bin which has excess item"))
+                        )
+                      )
+                    ), 
+                     React.createElement("div", {className: "cancel-scan"}, 
+                       React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                    )
+                  )
+              );      
+            break; 
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
             React.createElement("div", {className: "grid-container exception"}, 
@@ -45859,6 +45877,7 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
+    PUT_FRONT_EXCESS_ITEMS_PPSBIN: "put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
@@ -46004,7 +46023,8 @@ var appConstants = {
 	VOLUME_UNIT:"vol_unit",
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
-	ENTITY_DAMAGED:"entity_damaged"
+	ENTITY_DAMAGED:"entity_damaged",
+    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote"
 };
 
 module.exports = appConstants;

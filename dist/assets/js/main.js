@@ -51593,7 +51593,7 @@ AppDispatcher.register(function(payload) {
         case appConstants.POST_DATA_TO_INTERFACE:
             mainstore.showSpinner();
             mainstore.postDataToInterface(action.data);
-            if(payload.action.data.event_name === appConstants.BOX_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST)
+            if(payload.action.data.event_name === appConstants.BIN_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST)
                 mainstore.hideSpinner();
             mainstore.emit(CHANGE_EVENT);
             break;

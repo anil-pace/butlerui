@@ -271,7 +271,7 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(null, appConstants.DISCARD_PACKING_BOX);
                                 break; 
-                            case appConstants.CANCEL_BIN_FULL:
+                            case appConstants.CANCEL_BIN_FULL_REQUEST:
                                 data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);

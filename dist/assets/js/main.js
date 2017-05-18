@@ -38582,7 +38582,7 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(null, appConstants.DISCARD_PACKING_BOX);
                                 break; 
-                            case appConstants.CANCEL_BIN_FULL:
+                            case appConstants.CANCEL_BIN_FULL_REQUEST:
                                 data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
@@ -39822,7 +39822,7 @@ function loadComponent(modalType,modalData){
             React.createElement("div", {className: "modal-footer removeBorder"}, 
               React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                 React.createElement("div", {className: "row removeBorder"}, 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL_REQUEST})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BIN_FULL}))
                 )
               )

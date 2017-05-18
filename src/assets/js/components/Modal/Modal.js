@@ -248,6 +248,25 @@ function loadComponent(modalType,modalData){
           ));
       title = _("Box Full");
       break;
+       case appConstants.BIN_FULL:
+      component = [];
+      component.push((
+          <div>
+            <div className="row">
+              <p>{_("Last item scan will be cancelled. Do you want to continue?")}</p>
+            </div>
+            <div className="modal-footer removeBorder">
+              <div className="buttonContainer center-block chklstButtonContainer">
+                <div className="row removeBorder">
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_BIN_FULL_REQUEST}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Continue")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_BIN_FULL_REQUEST}/></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          ));
+      title = _("Bin Full");
+      break;
     case appConstants.DISCARD_PACKING_BOX:
       component = [];
       component.push((

@@ -254,9 +254,10 @@ switch (module) {
                                 this.removeTextField();
                                 break;
                             case appConstants.BIN_FULL:
-                                data["event_name"] = "bin_full";
-                                data["event_data"] = mainstore._getSelectedPpsBin();
-                                ActionCreators.postDataToInterface(data);   
+                                data["event_name"] = appConstants.BIN_FULL_REQUEST;
+                                data["event_data"] = null
+                                ActionCreators.postDataToInterface(data); 
+                                 this.showModal(null, appConstants.BIN_FULL);  
                                 break; 
                             case appConstants.BOX_FULL:
                                 data["event_name"] = appConstants.BOX_FULL_REQUEST;
@@ -270,6 +271,18 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(null, appConstants.DISCARD_PACKING_BOX);
                                 break; 
+                            case appConstants.CANCEL_BIN_FULL_REQUEST:
+                                data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break;   
+                            case appConstants.CONFIRM_BIN_FULL_REQUEST:
+                                data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break; 
                             case appConstants.CANCEL_BOX_FULL:
                                 data["event_name"] = appConstants.CANCEL_BOX_FULL_REQUEST;
                                 data["event_data"]= null;

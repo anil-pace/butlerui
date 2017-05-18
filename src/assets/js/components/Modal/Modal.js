@@ -259,7 +259,7 @@ function loadComponent(modalType,modalData){
               <div className="buttonContainer center-block chklstButtonContainer">
                 <div className="row removeBorder">
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_BIN_FULL_REQUEST}/></div>
-                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Continue")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_BIN_FULL}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Continue")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_BIN_FULL_REQUEST}/></div>
                 </div>
               </div>
             </div>

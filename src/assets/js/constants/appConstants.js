@@ -177,7 +177,7 @@ var appConstants = {
 	BIN_FULL : "bin_full",
 	BIN_FULL_REQUEST:"bin_full_request",
 	CANCEL_BIN_FULL_REQUEST:"bin_full_cancel",
-	CONFIRM_BIN_FULL:"bin_full_confirmed",
+	CONFIRM_BIN_FULL_REQUEST:"bin_full_confirmed",
 	CANCEL_LAST_SCAN : "cancel_last_scan",
 	PICK_FRONT_PACKING_BOX:"pick_front_packing_box",
 	PICK_FRONT_PACKING_CONTAINER_SCAN:"pick_front_packing_container_scan",

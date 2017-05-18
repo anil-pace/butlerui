@@ -277,8 +277,8 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();
                             break;   
-                            case appConstants.CONFIRM_BIN_FULL:
-                                data["event_name"] = appConstants.CONFIRM_BIN_FULL;
+                            case appConstants.CONFIRM_BIN_FULL_REQUEST:
+                                data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();

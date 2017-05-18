@@ -38588,8 +38588,8 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();
                             break;   
-                            case appConstants.CONFIRM_BIN_FULL:
-                                data["event_name"] = appConstants.CONFIRM_BIN_FULL;
+                            case appConstants.CONFIRM_BIN_FULL_REQUEST:
+                                data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();
@@ -39823,7 +39823,7 @@ function loadComponent(modalType,modalData){
               React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                 React.createElement("div", {className: "row removeBorder"}, 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL_REQUEST})), 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BIN_FULL}))
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BIN_FULL_REQUEST}))
                 )
               )
             )
@@ -46029,7 +46029,7 @@ var appConstants = {
 	BIN_FULL : "bin_full",
 	BIN_FULL_REQUEST:"bin_full_request",
 	CANCEL_BIN_FULL_REQUEST:"bin_full_cancel",
-	CONFIRM_BIN_FULL:"bin_full_confirmed",
+	CONFIRM_BIN_FULL_REQUEST:"bin_full_confirmed",
 	CANCEL_LAST_SCAN : "cancel_last_scan",
 	PICK_FRONT_PACKING_BOX:"pick_front_packing_box",
 	PICK_FRONT_PACKING_CONTAINER_SCAN:"pick_front_packing_container_scan",

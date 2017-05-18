@@ -38565,9 +38565,10 @@ switch (module) {
                                 this.removeTextField();
                                 break;
                             case appConstants.BIN_FULL:
-                                data["event_name"] = "bin_full";
-                                data["event_data"] = mainstore._getSelectedPpsBin();
-                                ActionCreators.postDataToInterface(data);   
+                                data["event_name"] = appConstants.BIN_FULL_REQUEST;
+                                data["event_data"] = null
+                                ActionCreators.postDataToInterface(data); 
+                                 this.showModal(null, appConstants.BIN_FULL);  
                                 break; 
                             case appConstants.BOX_FULL:
                                 data["event_name"] = appConstants.BOX_FULL_REQUEST;
@@ -38581,6 +38582,18 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(null, appConstants.DISCARD_PACKING_BOX);
                                 break; 
+                            case appConstants.CANCEL_BIN_FULL:
+                                data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break;   
+                            case appConstants.CONFIRM_BIN_FULL:
+                                data["event_name"] = appConstants.CONFIRM_BIN_FULL;
+                                data["event_data"]= null;
+                                ActionCreators.postDataToInterface(data);
+                            closeModalBox();
+                            break; 
                             case appConstants.CANCEL_BOX_FULL:
                                 data["event_name"] = appConstants.CANCEL_BOX_FULL_REQUEST;
                                 data["event_data"]= null;
@@ -39798,6 +39811,25 @@ function loadComponent(modalType,modalData){
           )
           ));
       title = _("Box Full");
+      break;
+       case appConstants.BIN_FULL:
+      component = [];
+      component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("p", null, _("Last item scan will be cancelled. Do you want to continue?"))
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BIN_FULL}))
+                )
+              )
+            )
+          )
+          ));
+      title = _("Bin Full");
       break;
     case appConstants.DISCARD_PACKING_BOX:
       component = [];
@@ -45995,6 +46027,9 @@ var appConstants = {
 	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
 	BIN_FULL : "bin_full",
+	BIN_FULL_REQUEST:"bin_full_request",
+	CANCEL_BIN_FULL_REQUEST:"bin_full_cancel",
+	CONFIRM_BIN_FULL:"bin_full_confirmed",
 	CANCEL_LAST_SCAN : "cancel_last_scan",
 	PICK_FRONT_PACKING_BOX:"pick_front_packing_box",
 	PICK_FRONT_PACKING_CONTAINER_SCAN:"pick_front_packing_container_scan",

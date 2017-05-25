@@ -46066,8 +46066,8 @@ module.exports = appConstants;
 
 },{}],298:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.9.62/wss",
-	INTERFACE_IP : "https://192.168.9.62"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 
 };
 module.exports = configConstants;

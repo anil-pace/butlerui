@@ -47544,7 +47544,7 @@ var serverMessages = {
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
     "PtB.H.012" : "Scan or Enter {0} number",
-    "PtB.I.019" : "Skn scan successful", // not generic from backend 
+    "PtB.I.019" : "STN scan successful", // not generic from backend 
     //codes for front end
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",

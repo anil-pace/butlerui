@@ -26,10 +26,13 @@
             flex-flow: column;
             flex-grow: 1;
             align-items: center;
-            justify-content: center;
+            
             .finish-damaged-barcode {
                 //padding-top: 5em;
                 padding-top: 4em;
+                &.padding{
+                padding:0px;
+                }
             }
         }
         &.exception {
@@ -124,6 +127,10 @@
                     margin-right: 20px;
                 }
             }
+            &.displayBlocked{
+                display:block;
+                flex-basis:55vh;
+            }
              &.exception2 {
                 flex-basis: 15vh;
                 flex-grow: 0;
@@ -145,6 +152,23 @@
                  padding:10.5px;
                 }
             }
+            .test
+            {
+            width: 69%;
+            margin-left: auto;
+            margin-right: auto;
+            }    
+            
+            .exception-qty-title{
+                height: 50px;
+                font-family: SourceSansPro;
+                font-size: 40px;
+                text-align: left;
+                color: #4d5055;
+                display:inline;
+                width:53%;
+                float:left
+    }
         }
         .kq-exception {
                 display: flex;

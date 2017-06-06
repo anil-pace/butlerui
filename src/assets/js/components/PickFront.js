@@ -5,6 +5,7 @@ var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
+var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -314,6 +315,63 @@ var PickFront = React.createClass({
               </div>
           );      
         break; 
+
+            case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+          this._component = (
+              <div className='grid-container exception'>
+                <Modal />
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Scan damaged entity")}</div>
+                               <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+
+                  <div className="main-container exception1 displayBlocked">
+
+                    <div className="test">
+                    <hr/>
+                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <NumericIndicator/>
+                    </div>
+              
+                     <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <NumericIndicator/>
+                    </div>
+
+                    <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <NumericIndicator/>
+                    </div>
+
+                    <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <NumericIndicator/>
+                   <hr/>
+                    </div>
+
+                  </div>
+                  <div className = "finish-damaged-barcode padding">
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
+                  </div>
+                </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                 <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                </div>
+              </div>
+          );      
+        break; 
+
+
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           /**

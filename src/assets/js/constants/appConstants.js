@@ -63,6 +63,7 @@ var appConstants = {
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_unscannable_item",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
+	PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"pick_front_missing_or_unscannable_damaged_item",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",

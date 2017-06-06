@@ -17,6 +17,7 @@ var TabularData = require('./TabularData');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
+var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation");
@@ -266,15 +267,37 @@ var PutBack = React.createClass({
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
-                  <div className="main-container exception1">
-                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
 
-                     <TabularData  data = {this.state.PutBackExceptionProductDetails}/>
+                  <div className="main-container exception1 displayBlocked">
 
-                    <KQ scanDetails = {this.state.PutBackKQDetails} />
+                    <div className="test">
+                    <hr/>
+                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <NumericIndicator props = {"good_quntity"}/>
+                    </div>
+              
+                     <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <NumericIndicator props = {"Missing_quntity"} />
+                    </div>
+
+                    <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <NumericIndicator  props = {"Unscannable_quntity"}/>
+                    </div>
+
+                    <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <NumericIndicator props = {"Damaged_quntity"}/>
+                   <hr/>
+                    </div>
+
                   </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
+                  <div className = "finish-damaged-barcode padding">
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

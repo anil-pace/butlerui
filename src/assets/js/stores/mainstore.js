@@ -26,6 +26,7 @@ var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _s
     _putFrontExceptionScreen = "good",
     _pickFrontExceptionScreen = "good",
     _missingQuantity = 0,
+    _unscannableQuantity=0,
     showModal = false,
     _scanAllowed = true,
     _clearNotification = false,
@@ -1276,8 +1277,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setMissingQuanity: function(data) {
         _missingQuantity = data;
     },
+    setUnscannableQuanity:function(data){
+        _unscannableQuantity = data;
+    },
     setDamagedQuanity: function(data) {
         _damagedQuantity = data;
+    },
+    getExeptionQuanity:function (){
+   var data={
+    GoodQuanity:_goodQuantity,
+    MissingQuanity:_missingQuantity,
+    DamagedQuanity:_damagedQuantity,
+    Unscannable:_unscannableQuantity
+}
+return data;
     },
     getkQQuanity: function() {
         if (_seatData.hasOwnProperty('Current_box_details')) {
@@ -2565,6 +2578,10 @@ AppDispatcher.register(function(payload) {
             mainstore.setMissingQuanity(action.data);
             mainstore.emitChange();
             break;
+        case appConstants.UPDATE_UNSCANNABLE_QUANTITY:
+            mainstore.setUnscannableQuanity(action.data);
+            mainstore.emitChange();
+            break;    
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
             mainstore.setPutFrontExceptionScreen(action.data);
             mainstore.emitChange();

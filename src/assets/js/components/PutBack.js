@@ -297,7 +297,8 @@ var PutBack = React.createClass({
 
                   </div>
                   <div className = "finish-damaged-barcode padding">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
+                    <Button1 disabled = {false} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
+               
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
@@ -305,18 +306,18 @@ var PutBack = React.createClass({
                 </div>
               </div>
             );
-          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
+          else if(this.state.PutBackExceptionScreen === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please put damaged entities in exception area.")}</div>
+                      <div className="kq-header">{_("Please put entitites which has issues in exception area")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />  
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

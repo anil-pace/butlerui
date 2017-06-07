@@ -106,7 +106,7 @@ changeValueDecrement : function(event){
 
 updateStore: function(event, qty) { console.log(_keypress);
  var total_entered= _updatedQtyGood +_updatedQtyMissing + _updatedQtyDamaged +_updatedQtyUnscannble;
- if (this._enableIncrement === true && _keypress == false) {
+ if (this._enableIncrement === true && _keypress == true) {
   if((parseInt(total_entered) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") || parseInt(total_entered) >= 0 ){
   }
 
@@ -203,15 +203,12 @@ if(this.state.value==0)
   },
 decrementValue: function(event){
     var self = this;
-    var interval;
     if (this._enableDecrement === true) {
         _keypress = true;
         if( event.type == "mousedown" ){
             this.changeValueDecrement(event);
         }
-        if(interval == undefined){
-            _keypress = false
-        }
+        
         self.updateStore();
     }
 

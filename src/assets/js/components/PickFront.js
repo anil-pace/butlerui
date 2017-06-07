@@ -354,8 +354,8 @@ var PickFront = React.createClass({
 
                   </div>
                   <div className = "finish-damaged-barcode padding">
-                    <Button1 disabled = {false} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
-               
+                    <Button1 disabled = {false} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
+              
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

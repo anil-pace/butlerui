@@ -251,13 +251,13 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 break;
 ///////Raja
-                            case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
-                                //ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                                data["event_name"] = "pick_front_exception";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["ExceptionQuantityUpdate"] = mainstore.getExeptionQuanity();
-                                ActionCreators.postDataToInterface(data);
-                                break;
+                            // case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
+                            //     //ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
+                            //     data["event_name"] = "pick_front_exception";
+                            //     data["event_data"]["event"] = mainstore.getExceptionType();
+                            //     data["event_data"]["ExceptionQuantityUpdate"] = mainstore.getExeptionQuanity();
+                            //     ActionCreators.postDataToInterface(data);
+                            //     break;
 
                                case appConstants.FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";

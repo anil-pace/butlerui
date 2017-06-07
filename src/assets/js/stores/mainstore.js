@@ -1621,6 +1621,7 @@ return data;
             flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
             details = _seatData.pick_quantity;
         }
+
         else{
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
@@ -1645,8 +1646,22 @@ return data;
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
                 data["event_name"] = "put_front_exception";
+            else if(_seatData.screen_id ==PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
+            {
+            data["event_name"] = "pick_front_exception";
+            data["event_data"] = {};
+            data["event_data"]["action"] = "confirm_quantity_update";
+            data["event_data"]["event"] = _seatData.exception_type;
+            data["event_data"]["quantity"] = {};
+            data["event_data"]["quantity"]["good"] = _goodQuantity;
+            data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
+            data["event_data"]["quantity"]["missing"] = _missingQuantity;
+            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            this.showSpinner();
+            utils.postDataToInterface(data, _seatData.seat_name);
+            }
             else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-                data["event_name"] = "pick_front_exception";
+            data["event_name"] = "pick_front_exception";
             data["event_data"] = {};
             data["event_data"]["action"] = "confirm_quantity_update";
             data["event_data"]["event"] = _seatData.exception_type;

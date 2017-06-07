@@ -1650,7 +1650,7 @@ return data;
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
                 data["event_name"] = "put_front_exception";
-            else if(_seatData.screen_id ==PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
+            else if(_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
             {
             data["event_name"] = "pick_front_exception";
             data["event_data"] = {};

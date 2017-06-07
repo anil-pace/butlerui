@@ -361,7 +361,10 @@ var PickFront = React.createClass({
                 </div>
               </div>
             );
-          else if(this.state.PickFrontExceptionScreen === appConstants.PICK_FRONT_IRT_BIN_CONFIRM)
+      
+        break; 
+
+        case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
@@ -380,7 +383,7 @@ var PickFront = React.createClass({
                 </div>
               </div>
             );
-        break; 
+        break;
 
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';

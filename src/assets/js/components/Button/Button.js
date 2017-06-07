@@ -260,6 +260,13 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 break;
 
+                               case appConstants.FINISH_EXCEPTION_ENTITY:
+                                  data["event_name"] = "pick_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;   
+////
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);

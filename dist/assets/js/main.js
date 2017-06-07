@@ -38568,6 +38568,23 @@ switch (module) {
                                  data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+///////Raja
+                            case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
+                                //ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["ExceptionQuantityUpdate"] = mainstore.getExeptionQuanity();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+
+                               case appConstants.FINISH_EXCEPTION_ENTITY:
+                                  data["event_name"] = "pick_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;   
+////
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);
@@ -41211,62 +41228,75 @@ var PickFront = React.createClass({displayName: "PickFront",
               )
           );      
         break; 
-
+///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-          this._component = (
+           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-                               React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
 
                   React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
                     React.createElement("div", {className: "test"}, 
                     React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
-                  React.createElement(NumericIndicator, null)
+                  React.createElement(NumericIndicator, {props: "good_quntity"})
                     ), 
               
                      React.createElement("div", {className: "test"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
-                  React.createElement(NumericIndicator, null)
+                  React.createElement(NumericIndicator, {props: "Missing_quntity"})
                     ), 
 
                     React.createElement("div", {className: "test"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
-                  React.createElement(NumericIndicator, null)
+                  React.createElement(NumericIndicator, {props: "Unscannable_quntity"})
                     ), 
 
                     React.createElement("div", {className: "test"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
-                  React.createElement(NumericIndicator, null), 
+                  React.createElement(NumericIndicator, {props: "Damaged_quntity"}), 
                    React.createElement("hr", null)
                     )
 
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode padding"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
-                  )
-                )
-                      
-                    )
+                    React.createElement(Button1, {disabled: false, text: _("Validate and Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
+               
                   )
                 ), 
-                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
-          );      
+            );
+      
         break; 
 
+        case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put entitites which has issues in exception area"))
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.FINISH_EXCEPTION_ENTITY})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break;
 
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';

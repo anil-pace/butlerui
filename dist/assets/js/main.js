@@ -40916,6 +40916,7 @@ var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var ExceptionHeader = require('./ExceptionHeader');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var NumericIndicator = require('./ProductDetails/NumericIndicator');
@@ -41230,12 +41231,12 @@ var PickFront = React.createClass({displayName: "PickFront",
         break; 
 ///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-           
+          
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
 
                   React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
@@ -41636,7 +41637,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
 module.exports = PickFront;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":298,"../stores/PickFrontStore":313,"../stores/mainstore":317,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./BoxSerial.js":240,"./Button/Button":241,"./CurrentSlot":243,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Modal/Modal1":253,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./OrderDetails/OrderDetails.js":261,"./PrdtDetails/ProductDetails.js":265,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/NumericIndicator":272,"./ProductDetails/Wrapper":275,"./ProductDetails/WrapperSplitRoll":276,"./Rack/MsuRack.js":281,"./Spinner/LoaderButler":286,"./TabularData":295,"react":230}],265:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":298,"../stores/PickFrontStore":313,"../stores/mainstore":317,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./BoxSerial.js":240,"./Button/Button":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Modal/Modal1":253,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./OrderDetails/OrderDetails.js":261,"./PrdtDetails/ProductDetails.js":265,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/NumericIndicator":272,"./ProductDetails/Wrapper":275,"./ProductDetails/WrapperSplitRoll":276,"./Rack/MsuRack.js":281,"./Spinner/LoaderButler":286,"./TabularData":295,"react":230}],265:[function(require,module,exports){
 var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
@@ -47773,6 +47774,7 @@ var serverMessages = {
     "PkB.H.006" : "Select Bin to skip print",
     "PkB.H.007" : "Select Bin which does not require tote",
     "PkB.H.008" : "Select Bin to disassociate tote",
+
     "PtB.I.001" : "Tote has been opened.Scan all items in tote and then scan tote again to close it",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new entity. Try after some time",
     "PtB.I.003" : "Cancel scan successful.",
@@ -47994,6 +47996,7 @@ var serverMessages = {
     "PkF.H.011":"Place box in MSU slot and confirm",
     "PkF.H.010":"Scan a packing box and keep in bin {0}",
     "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
+    "PkF.H.015":"Enter Quantity",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
@@ -51853,7 +51856,7 @@ validateUnmarkedDamagedData:function(){
                 break;
 
                 case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-                data["PickFrontScreenId"] = this.getScreenId();
+                  data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
@@ -51863,6 +51866,7 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
 
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();

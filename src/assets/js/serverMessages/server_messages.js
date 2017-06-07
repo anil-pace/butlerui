@@ -65,6 +65,7 @@ var serverMessages = {
     "PkB.H.006" : "Select Bin to skip print",
     "PkB.H.007" : "Select Bin which does not require tote",
     "PkB.H.008" : "Select Bin to disassociate tote",
+
     "PtB.I.001" : "Tote has been opened.Scan all items in tote and then scan tote again to close it",
     "PtB.I.002" : "PPS is in paused mode. Cannot process new entity. Try after some time",
     "PtB.I.003" : "Cancel scan successful.",
@@ -286,6 +287,7 @@ var serverMessages = {
     "PkF.H.011":"Place box in MSU slot and confirm",
     "PkF.H.010":"Scan a packing box and keep in bin {0}",
     "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
+    "PkF.H.015":"Enter Quantity",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",

@@ -2322,7 +2322,7 @@ validateUnmarkedDamagedData:function(){
                 break;
 
                 case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-                data["PickFrontScreenId"] = this.getScreenId();
+                  data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
@@ -2332,6 +2332,7 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
 
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();

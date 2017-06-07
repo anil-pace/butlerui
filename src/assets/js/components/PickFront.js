@@ -3,6 +3,7 @@ var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var ExceptionHeader = require('./ExceptionHeader');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var NumericIndicator = require('./ProductDetails/NumericIndicator');
@@ -317,12 +318,12 @@ var PickFront = React.createClass({
         break; 
 ///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-           
+          
            this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader data={this.state.PickFrontServerNavData} />
+                  <ExceptionHeader data={this.state.PutBackServerNavData} />
 
                   <div className="main-container exception1 displayBlocked">
 

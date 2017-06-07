@@ -38571,8 +38571,7 @@ switch (module) {
 ///////Raja
                             case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
                                 //ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_name"] = "pick_front_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["ExceptionQuantityUpdate"] = mainstore.getExeptionQuanity();
                                 ActionCreators.postDataToInterface(data);
@@ -50819,10 +50818,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getExeptionQuanity:function (){
    var data={
-    GoodQuanity:_goodQuantity,
-    MissingQuanity:_missingQuantity,
-    DamagedQuanity:_damagedQuantity,
-    Unscannable:_unscannableQuantity
+    good:_goodQuantity,
+    missing:_missingQuantity,
+    damaged:_damagedQuantity,
+    unscannable:_unscannableQuantity
 }
 return data;
     },
@@ -51867,7 +51866,7 @@ validateUnmarkedDamagedData:function(){
 
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PickFrontNavData"] = this.getNavData();
-                data["PickFrontScreenId"] = this.getScreenId();
+               data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();

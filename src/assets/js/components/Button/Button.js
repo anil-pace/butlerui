@@ -253,8 +253,7 @@ switch (module) {
 ///////Raja
                             case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
                                 //ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_name"] = "pick_front_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["ExceptionQuantityUpdate"] = mainstore.getExeptionQuanity();
                                 ActionCreators.postDataToInterface(data);

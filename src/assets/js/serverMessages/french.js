@@ -328,7 +328,7 @@ var french = {
 	"Wrong slot location scanned. Please try again": "Emplacement de carte scann\u00e9 incorrect. Veuillez r\u00e9essayer",
 	"Wrong slot scanned": "Carte scann\u00e9e fausse",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "Vous n'\u00eates pas autoris\u00e9 \u00e0 entrer la quantit\u00e9 \u00e0 partir du pav\u00e9 num\u00e9rique. Force Scan est exig\u00e9",
-	"You cannot enter 0": "Vous ne pouvez pas entrer 0",
+	"Please enter a quantity greater than 0": "Vous ne pouvez pas entrer 0",
 	"You cannot enter value more than 9999": "Vous ne pouvez pas entrer de valeur sup\u00e9rieure \u00e0 9999",
 	"box": "bo\u00eete",
 	"item": "\u00e9l\u00e9ment",

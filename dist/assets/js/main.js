@@ -51154,6 +51154,10 @@ return data;
             flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
             details = _seatData.pick_quantity;
         }
+         else if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
+            details = _seatData.pick_quantity;
+        }
 
         else{
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;

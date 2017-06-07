@@ -377,7 +377,7 @@ var PickFront = React.createClass({
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.FINISH_EXCEPTION_ENTITY} />  
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FINISH_EXCEPTION_ENTITY} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

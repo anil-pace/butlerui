@@ -294,6 +294,76 @@ var PutFront = React.createClass({
           );      
         break;
 
+        ///Raja
+            case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+          
+           this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutFrontServerNavData} />
+
+                  <div className="main-container exception1 displayBlocked">
+
+                    <div className="test">
+                    <hr/>
+                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <NumericIndicator props = {"good_quntity"}/>
+                    </div>
+              
+                     <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <NumericIndicator props = {"Missing_quntity"} />
+                    </div>
+
+                    <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <NumericIndicator  props = {"Unscannable_quntity"}/>
+                    </div>
+
+                    <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <NumericIndicator props = {"Damaged_quntity"}/>
+                   <hr/>
+                    </div>
+
+                  </div>
+                  <div className = "finish-damaged-barcode padding">
+                    <Button1 disabled = {false} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
+              
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break; 
+
+          case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+            this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PutFrontExceptionData}/>
+                <div className="exception-right">
+                  <div className="main-container exception2">
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Please put entitites which has issues in exception area")}</div>
+                    </div>
+                  </div>
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break;
+
         case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
          this._navigation = '';
           if(this.state.PutFrontExceptionScreen == "good"){

@@ -188,6 +188,13 @@ switch (module) {
                             case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PUT_FRONT, "cancel_exception");
                                 break;
+                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
+                                    data["event_name"] = "put_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;  
+
                             case appConstants.CLOSE_CANCEL_EXCEPTION:
                                closeModalBox(); 
                                break;                                                               
@@ -259,7 +266,7 @@ switch (module) {
                             //     ActionCreators.postDataToInterface(data);
                             //     break;
 
-                               case appConstants.FINISH_EXCEPTION_ENTITY:
+                               case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
                                   data["event_data"]["event"] = mainstore.getExceptionType();

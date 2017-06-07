@@ -38506,6 +38506,13 @@ switch (module) {
                             case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PUT_FRONT, "cancel_exception");
                                 break;
+                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
+                                    data["event_name"] = "put_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;  
+
                             case appConstants.CLOSE_CANCEL_EXCEPTION:
                                closeModalBox(); 
                                break;                                                               
@@ -38577,7 +38584,7 @@ switch (module) {
                             //     ActionCreators.postDataToInterface(data);
                             //     break;
 
-                               case appConstants.FINISH_EXCEPTION_ENTITY:
+                               case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
@@ -41289,7 +41296,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.FINISH_EXCEPTION_ENTITY})
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -44770,6 +44777,76 @@ var PutFront = React.createClass({displayName: "PutFront",
           );      
         break;
 
+        ///Raja
+            case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+          
+           this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement(ExceptionHeader, {data: this.state.PutFrontServerNavData}), 
+
+                  React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
+
+                    React.createElement("div", {className: "test"}, 
+                    React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                  React.createElement(NumericIndicator, {props: "good_quntity"})
+                    ), 
+              
+                     React.createElement("div", {className: "test"}, 
+                     React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                  React.createElement(NumericIndicator, {props: "Missing_quntity"})
+                    ), 
+
+                    React.createElement("div", {className: "test"}, 
+                     React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement(NumericIndicator, {props: "Unscannable_quntity"})
+                    ), 
+
+                    React.createElement("div", {className: "test"}, 
+                     React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                  React.createElement(NumericIndicator, {props: "Damaged_quntity"}), 
+                   React.createElement("hr", null)
+                    )
+
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+              
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break; 
+
+          case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put entitites which has issues in exception area"))
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+        break;
+
         case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
          this._navigation = '';
           if(this.state.PutFrontExceptionScreen == "good"){
@@ -46363,6 +46440,7 @@ var appConstants = {
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_unscannable_item",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"pick_front_missing_or_unscannable_damaged_item",
+	PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"put_front_unscannable_or_missing_or_damaged",
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
@@ -46388,6 +46466,7 @@ var appConstants = {
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
 	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",
+
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
 	PICK_FRONT_CONTAINER_SCAN:"pick_front_container_scan",
@@ -46517,8 +46596,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.8.113:8888/ws",
-	INTERFACE_IP : "https://192.168.8.113:5000"
+	WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	INTERFACE_IP : "https://192.168.8.109"
 
 };
 module.exports = configConstants;
@@ -51144,6 +51223,8 @@ return data;
         })
         return groupId ;
     },
+
+ //raja   
     validateAndSendDataToServer: function() {
         var flag = false;
         var details;
@@ -51180,9 +51261,9 @@ return data;
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
                 data["event_name"] = "put_front_exception";
-            else if(_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
+            else if(_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||_seatData.screen_id ==appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
             {
-            data["event_name"] = "pick_front_exception";
+            data["event_name"]=  _seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ?  "pick_front_exception":"put_front_exception"
             data["event_data"] = {};
             data["event_data"]["action"] = "confirm_quantity_update";
             data["event_data"]["event"] = _seatData.exception_type;
@@ -51195,6 +51276,7 @@ return data;
             utils.postDataToInterface(data, _seatData.seat_name);
             }
             else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
+            {
             data["event_name"] = "pick_front_exception";
             data["event_data"] = {};
             data["event_data"]["action"] = "confirm_quantity_update";
@@ -51205,6 +51287,7 @@ return data;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
+        }
         }
 
     },
@@ -51710,6 +51793,19 @@ validateUnmarkedDamagedData:function(){
                 data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
                 data["UnmarkedContainer"]=this.getUnmarkedContainerFlag();
                 break;
+//raja
+                case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                data["UnmarkedContainer"]=this.getUnmarkedContainerFlag();
+                break;
+
             case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -51879,7 +51975,7 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-
+//raja
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PickFrontNavData"] = this.getNavData();
                data["PickFrontScreenId"] = this.getScreenId();
@@ -51891,6 +51987,8 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
                 break;
+
+
 
 
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:

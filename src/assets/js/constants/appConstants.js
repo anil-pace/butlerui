@@ -64,6 +64,7 @@ var appConstants = {
 	PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"pick_front_missing_or_unscannable_item",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"pick_front_missing_or_unscannable_damaged_item",
+	PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"put_front_unscannable_or_missing_or_damaged",
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
@@ -89,6 +90,7 @@ var appConstants = {
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
 	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",
+
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
 	PICK_FRONT_CONTAINER_SCAN:"pick_front_container_scan",

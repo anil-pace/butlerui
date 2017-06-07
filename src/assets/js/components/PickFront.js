@@ -323,7 +323,7 @@ var PickFront = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
-                  <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <ExceptionHeader data={this.state.PickFrontServerNavData} />
 
                   <div className="main-container exception1 displayBlocked">
 

@@ -317,6 +317,7 @@ var PickFront = React.createClass({
         break; 
 ///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+           
            this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>

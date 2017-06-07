@@ -41230,6 +41230,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         break; 
 ///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+           
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
@@ -46519,8 +46520,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "ws://192.168.8.113:8888/ws",
+	INTERFACE_IP : "https://192.168.8.113:5000"
 
 };
 module.exports = configConstants;
@@ -51850,6 +51851,29 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
                 break;
+
+                case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+
+                case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+
+
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                  data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();

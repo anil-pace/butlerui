@@ -2320,6 +2320,29 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
                 break;
+
+                case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+
+                case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+
+
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                  data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();

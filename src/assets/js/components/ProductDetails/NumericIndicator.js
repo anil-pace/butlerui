@@ -13,11 +13,9 @@ function generateExcessNotification () {
 };
 
 var NumericIndicator = React.createClass({
- _appendClassDown : '',
- _appendClassUp : '',
+ _appendClassUp : 'gor-plus-sign enable',
  _qtyComponent : null,
- _appendClassDown: '',
- _appendClassUp: '',
+ _appendClassDown: 'gor-minus-sign enable',
  virtualKeyboard: null,
  _id : 'keyboard',
  _enableIncrement : true,
@@ -150,6 +148,59 @@ mainstore.setShowModal(false);
          self.updateStore();
      }
  },
+
+  checkKqAllowed : function(){
+if(this.state.value==0)
+{
+  this._appendClassDown = 'gor-minus-sign disable';
+                  this._enableDecrement = false;
+                }else{
+                  this._appendClassDown = 'gor-minus-sign  enable';
+                  this._enableDecrement = true;
+                }
+
+    // if(this.props.props=="good_quntity")
+    // {
+    //         if(_updatedQtyGood == 0){
+    //               this._appendClassDown = 'gor-minus-sign disable';
+    //               this._enableDecrement = false;
+    //             }else{
+    //               this._appendClassDown = 'gor-minus-sign  enable';
+    //               this._enableDecrement = true;
+    //             }
+    // }
+    //   else if(this.props.props=="Missing_quntity")
+    // {
+    //         if(_updatedQtyMissing == 0){
+    //               this._appendClassDown = 'gor-minus-sign disable';
+    //               this._enableDecrement = false;
+    //             }else{
+    //               this._appendClassDown = 'gor-minus-sign  enable';
+    //               this._enableDecrement = true;
+    //             }
+    // }
+    //    else if(this.props.props=="Unscannable_quntity")
+    // {
+    //         if(_updatedQtyUnscannble == 0){
+    //               this._appendClassDown = 'gor-minus-sign disable';
+    //               this._enableDecrement = false;
+    //             }else{
+    //               this._appendClassDown = 'gor-minus-sign  enable';
+    //               this._enableDecrement = true;
+    //             }
+    // }
+    //     else if(this.props.props=="Damaged_quntity")
+    // {
+    //         if(_updatedQtyDamaged == 0){
+    //               this._appendClassDown = 'gor-minus-sign disable';
+    //               this._enableDecrement = false;
+    //             }else{
+    //               this._appendClassDown = 'gor-minus-sign  enable';
+    //               this._enableDecrement = true;
+    //             }
+    // }
+    
+  },
 decrementValue: function(event){
     var self = this;
     var interval;
@@ -248,13 +299,13 @@ componentDidMount(){
         
     },
     render: function(data) {
-        console.log(this.state.value);
+        this.checkKqAllowed();
         return (
             <div className = "indicator-wrapper" >       
             <div>
-            <span className="gor-minus-sign" action={this.props.action} onClick={this.decrementValue} onMouseDown = {this.decrementValue} ></span>
+            <span  className = {this._appendClassDown}  action={this.props.action} onClick={this.decrementValue} onMouseDown = {this.decrementValue} ></span>
             <input id="keyboard" value={this.state.value} type="text" name="quantity" className={"gor-quantity-text xyz_"+this.props.props}/>
-            <span className="gor-plus-sign" action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} ></span>
+            <span  className = {this._appendClassUp}  action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} ></span>
             </div>
             </div>
             )

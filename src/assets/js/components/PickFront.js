@@ -316,7 +316,6 @@ var PickFront = React.createClass({
               </div>
           );      
         break; 
-///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
           var buttonActivateFlag=mainstore.getExeptionQuanity();
            this._component = (

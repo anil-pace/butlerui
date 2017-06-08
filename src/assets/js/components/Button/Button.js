@@ -93,12 +93,7 @@ switch (module) {
                                 ActionCreators.changePutBackExceptionScreen("damaged_confirm");
                                 break;
                             case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
-                                //ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["ExceptionQuantityUpdate"] = mainstore.getExeptionQuanity();
-                                ActionCreators.postDataToInterface(data);
+                                ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
                                 break;
                             case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
                                 ActionCreators.changePutBackExceptionScreen("oversized_confirm");
@@ -260,15 +255,12 @@ switch (module) {
                                  data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
-///////Raja
-
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
                                 break;   
-////
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);

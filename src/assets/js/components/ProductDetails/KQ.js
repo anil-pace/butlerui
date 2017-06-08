@@ -292,7 +292,6 @@ var KQ = React.createClass({
          * { T2766- Removed disabled attribute when true }
          */
         $('#'+id).removeAttr("disabled");
-         
           setTimeout(function(){ $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {

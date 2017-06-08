@@ -295,8 +295,6 @@ var PutFront = React.createClass({
               </div>
           );      
         break;
-
-        ///Raja
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
              var buttonActivateFlag=mainstore.getExeptionQuanity();
             var UnscannableNI;

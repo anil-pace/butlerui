@@ -154,7 +154,7 @@ var PutBack = React.createClass({
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
-          binComponent = (<div>
+           binComponent = (<div className="binsFlexWrapperContainer">
             <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>
             <WrapperSplitRoll scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
             </div>);

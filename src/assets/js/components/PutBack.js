@@ -17,7 +17,6 @@ var TabularData = require('./TabularData');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
-var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation");
@@ -155,7 +154,7 @@ var PutBack = React.createClass({
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
-          binComponent = (<div className="binsFlexWrapperContainer">
+          binComponent = (<div>
             <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>
             <WrapperSplitRoll scanDetails={this.state.PutBackScanDetails} productDetails={this.state.PutBackProductDetails} itemUid={this.state.PutBackItemUid} />
             </div>);
@@ -260,8 +259,6 @@ var PutBack = React.createClass({
           );
       break; 
        case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
-           var buttonActivateFlag=mainstore.getExeptionQuanity();
-
           this._navigation = '';
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
@@ -269,38 +266,15 @@ var PutBack = React.createClass({
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
+                  <div className="main-container exception1">
+                    <Img srcURL= {this.state.PutBackExceptionProductDetails.image_url}/>
 
-                  <div className="main-container exception1 displayBlocked">
+                     <TabularData  data = {this.state.PutBackExceptionProductDetails}/>
 
-                    <div className="test">
-                    <hr/>
-                  <div className="exception-qty-title">{_("Good quantity")}</div>
-                  <NumericIndicator props = {"good_quntity"}/>
-                    </div>
-              
-                     <div className="test">
-                     <hr/>
-                  <div className="exception-qty-title">{_("Missing quantity")}</div>
-                  <NumericIndicator props = {"Missing_quntity"} />
-                    </div>
-
-                    <div className="test">
-                     <hr/>
-                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
-                  <NumericIndicator  props = {"Unscannable_quntity"}/>
-                    </div>
-
-                    <div className="test">
-                     <hr/>
-                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
-                  <NumericIndicator props = {"Damaged_quntity"}/>
-                   <hr/>
-                    </div>
-
+                    <KQ scanDetails = {this.state.PutBackKQDetails} />
                   </div>
-                  <div className = "finish-damaged-barcode padding">
-                    <Button1 disabled = {buttonActivateFlag} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
-               
+                  <div className = "finish-damaged-barcode">
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
@@ -308,18 +282,18 @@ var PutBack = React.createClass({
                 </div>
               </div>
             );
-          else if(this.state.PutBackExceptionScreen === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
+          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please put entitites which has issues in exception area")}</div>
+                      <div className="kq-header">{_("Please put damaged entities in exception area.")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY} />  
+                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />  
                   </div>
                 </div>
                 <div className = 'cancel-scan'>

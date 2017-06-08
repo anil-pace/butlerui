@@ -43920,7 +43920,6 @@ var TabularData = require('./TabularData');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
-var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var Img = require('./PrdtDetails/ProductImage.js');
 var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation");
@@ -44058,7 +44057,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
-          binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+          binComponent = (React.createElement("div", null, 
             React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType}), 
             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
             ));
@@ -44163,8 +44162,6 @@ var PutBack = React.createClass({displayName: "PutBack",
           );
       break; 
        case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
-           var buttonActivateFlag=mainstore.getExeptionQuanity();
-
           this._navigation = '';
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
@@ -44172,38 +44169,15 @@ var PutBack = React.createClass({displayName: "PutBack",
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
 
-                  React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
+                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
 
-                    React.createElement("div", {className: "test"}, 
-                    React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
-                  React.createElement(NumericIndicator, {props: "good_quntity"})
-                    ), 
-              
-                     React.createElement("div", {className: "test"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
-                  React.createElement(NumericIndicator, {props: "Missing_quntity"})
-                    ), 
-
-                    React.createElement("div", {className: "test"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
-                  React.createElement(NumericIndicator, {props: "Unscannable_quntity"})
-                    ), 
-
-                    React.createElement("div", {className: "test"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
-                  React.createElement(NumericIndicator, {props: "Damaged_quntity"}), 
-                   React.createElement("hr", null)
-                    )
-
+                    React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
-                  React.createElement("div", {className: "finish-damaged-barcode padding"}, 
-                    React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-               
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -44211,18 +44185,18 @@ var PutBack = React.createClass({displayName: "PutBack",
                 )
               )
             );
-          else if(this.state.PutBackExceptionScreen === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
+          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put entitites which has issues in exception area"))
+                      React.createElement("div", {className: "kq-header"}, _("Please put damaged entities in exception area."))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY})
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -44431,7 +44405,7 @@ render: function(data){
 
 module.exports = PutBack;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":298,"../constants/svgConstants":301,"../serverMessages/server_messages":309,"../stores/PutBackStore":314,"../stores/mainstore":317,"../utils/utils.js":318,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ":269,"./ProductDetails/NumericIndicator":272,"./ProductDetails/Wrapper":275,"./ProductDetails/WrapperSplitRoll":276,"./Reconcile":285,"./SystemIdle":290,"./TabularData":295,"./mtuNavigation":296,"react":230}],278:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":298,"../constants/svgConstants":301,"../serverMessages/server_messages":309,"../stores/PutBackStore":314,"../stores/mainstore":317,"../utils/utils.js":318,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ":269,"./ProductDetails/Wrapper":275,"./ProductDetails/WrapperSplitRoll":276,"./Reconcile":285,"./SystemIdle":290,"./TabularData":295,"./mtuNavigation":296,"react":230}],278:[function(require,module,exports){
 
 var React = require('react');
 var PutFrontStore = require('../stores/PutFrontStore');

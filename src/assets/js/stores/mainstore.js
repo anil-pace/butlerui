@@ -1640,13 +1640,13 @@ return data;
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
             }
-if(_seatData.screen_id !== appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id !== appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
+if(_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
 {
-            _putFrontExceptionScreen = "good";
+_putFrontExceptionScreen = "good";
             _goodQuantity = 0;
             _damagedQuantity = 0;
             _missingQuantity = 0;
-        }
+}
 
         } else {
             var data = {};
@@ -1663,6 +1663,10 @@ if(_seatData.screen_id !== appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_E
             data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
             data["event_data"]["quantity"]["missing"] = _missingQuantity;
             data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+            _goodQuantity = 0;
+            _damagedQuantity = 0;
+            _missingQuantity = 0;
+            _unscannableQuantity=0;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
             }

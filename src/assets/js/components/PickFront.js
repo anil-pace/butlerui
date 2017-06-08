@@ -318,7 +318,7 @@ var PickFront = React.createClass({
         break; 
 ///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-          
+          var buttonActivateFlag=mainstore.getExeptionQuanity();
            this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
@@ -354,7 +354,7 @@ var PickFront = React.createClass({
 
                   </div>
                   <div className = "finish-damaged-barcode padding">
-                    <Button1 disabled = {false} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
+                    <Button1 disabled = {buttonActivateFlag} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
               
                   </div>
                 </div>

@@ -41237,7 +41237,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         break; 
 ///Raja
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-          
+          var buttonActivateFlag=mainstore.getExeptionQuanity();
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
@@ -41273,7 +41273,7 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode padding"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Validate and Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+                    React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
               
                   )
                 ), 
@@ -43535,6 +43535,7 @@ updateStore: function(event, qty) { console.log(_keypress);
   switch(this.props.props){
     case "good_quntity":
     CommonActions.updateGoodQuantity(parseInt(_updatedQtyGood));
+    CommonActions.updateKQQuantity(parseInt(_updatedQtyGood));
     break;
     case "Missing_quntity":
     CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
@@ -43579,47 +43580,6 @@ if(this.state.value==0)
                   this._appendClassDown = 'gor-minus-sign  enable';
                   this._enableDecrement = true;
                 }
-
-    // if(this.props.props=="good_quntity")
-    // {
-    //         if(_updatedQtyGood == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
-    //   else if(this.props.props=="Missing_quntity")
-    // {
-    //         if(_updatedQtyMissing == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
-    //    else if(this.props.props=="Unscannable_quntity")
-    // {
-    //         if(_updatedQtyUnscannble == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
-    //     else if(this.props.props=="Damaged_quntity")
-    // {
-    //         if(_updatedQtyDamaged == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
     
   },
 decrementValue: function(event){
@@ -44214,6 +44174,8 @@ var PutBack = React.createClass({displayName: "PutBack",
           );
       break; 
        case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
+           var buttonActivateFlag=mainstore.getExeptionQuanity();
+
           this._navigation = '';
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
@@ -44251,7 +44213,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode padding"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
+                    React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
                
                   )
                 ), 
@@ -44779,7 +44741,19 @@ var PutFront = React.createClass({displayName: "PutFront",
 
         ///Raja
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-          
+            var UnscannableNI;
+            if(!this.state.UnmarkedContainer)
+            {
+              UnscannableNI=( React.createElement("div", {className: "test"}, 
+                     React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement(NumericIndicator, {props: "Unscannable_quntity"})
+                    ));
+            }
+            else
+            {
+              UnscannableNI=(React.createElement("div", null));
+            }
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
@@ -44800,11 +44774,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement(NumericIndicator, {props: "Missing_quntity"})
                     ), 
 
-                    React.createElement("div", {className: "test"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
-                  React.createElement(NumericIndicator, {props: "Unscannable_quntity"})
-                    ), 
+                    UnscannableNI, 
 
                     React.createElement("div", {className: "test"}, 
                      React.createElement("hr", null), 
@@ -50893,12 +50863,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _damagedQuantity = data;
     },
     getExeptionQuanity:function (){
-   var data={
-    good:_goodQuantity,
-    missing:_missingQuantity,
-    damaged:_damagedQuantity,
-    unscannable:_unscannableQuantity
-}
+var data= (_goodQuantity!==0 || _missingQuantity!==0 || _damagedQuantity!==0 || _unscannableQuantity!==0) ?  false:true; 
 return data;
     },
     getkQQuanity: function() {
@@ -51977,8 +51942,9 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
 //raja
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PutBackKQDetails"] = this.getScanDetails();
                 data["PickFrontNavData"] = this.getNavData();
-               data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();

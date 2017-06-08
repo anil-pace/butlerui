@@ -296,7 +296,19 @@ var PutFront = React.createClass({
 
         ///Raja
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-          
+            var UnscannableNI;
+            if(!this.state.UnmarkedContainer)
+            {
+              UnscannableNI=( <div className="test">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <NumericIndicator  props = {"Unscannable_quntity"}/>
+                    </div>);
+            }
+            else
+            {
+              UnscannableNI=(<div></div>);
+            }
            this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
@@ -317,11 +329,7 @@ var PutFront = React.createClass({
                   <NumericIndicator props = {"Missing_quntity"} />
                     </div>
 
-                    <div className="test">
-                     <hr/>
-                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
-                  <NumericIndicator  props = {"Unscannable_quntity"}/>
-                    </div>
+                    {UnscannableNI} 
 
                     <div className="test">
                      <hr/>

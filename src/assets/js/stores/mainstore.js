@@ -1284,12 +1284,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _damagedQuantity = data;
     },
     getExeptionQuanity:function (){
-   var data={
-    good:_goodQuantity,
-    missing:_missingQuantity,
-    damaged:_damagedQuantity,
-    unscannable:_unscannableQuantity
-}
+var data= (_goodQuantity!==0 || _missingQuantity!==0 || _damagedQuantity!==0 || _unscannableQuantity!==0) ?  false:true; 
 return data;
     },
     getkQQuanity: function() {
@@ -2368,8 +2363,9 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
 //raja
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PutBackKQDetails"] = this.getScanDetails();
                 data["PickFrontNavData"] = this.getNavData();
-               data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScreenId"] = this.getScreenId();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();

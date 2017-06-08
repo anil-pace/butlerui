@@ -114,6 +114,7 @@ updateStore: function(event, qty) { console.log(_keypress);
   switch(this.props.props){
     case "good_quntity":
     CommonActions.updateGoodQuantity(parseInt(_updatedQtyGood));
+    CommonActions.updateKQQuantity(parseInt(_updatedQtyGood));
     break;
     case "Missing_quntity":
     CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
@@ -158,47 +159,6 @@ if(this.state.value==0)
                   this._appendClassDown = 'gor-minus-sign  enable';
                   this._enableDecrement = true;
                 }
-
-    // if(this.props.props=="good_quntity")
-    // {
-    //         if(_updatedQtyGood == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
-    //   else if(this.props.props=="Missing_quntity")
-    // {
-    //         if(_updatedQtyMissing == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
-    //    else if(this.props.props=="Unscannable_quntity")
-    // {
-    //         if(_updatedQtyUnscannble == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
-    //     else if(this.props.props=="Damaged_quntity")
-    // {
-    //         if(_updatedQtyDamaged == 0){
-    //               this._appendClassDown = 'gor-minus-sign disable';
-    //               this._enableDecrement = false;
-    //             }else{
-    //               this._appendClassDown = 'gor-minus-sign  enable';
-    //               this._enableDecrement = true;
-    //             }
-    // }
     
   },
 decrementValue: function(event){

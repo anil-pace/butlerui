@@ -49,6 +49,9 @@ switch (module) {
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendDataToServer();
+                                break;    
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;

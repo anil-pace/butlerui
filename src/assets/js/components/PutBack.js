@@ -299,7 +299,7 @@ var PutBack = React.createClass({
 
                   </div>
                   <div className = "finish-damaged-barcode padding">
-                    <Button1 disabled = {buttonActivateFlag} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
+                    <Button1 disabled = {buttonActivateFlag} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
                
                   </div>
                 </div>

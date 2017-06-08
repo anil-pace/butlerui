@@ -38367,6 +38367,9 @@ switch (module) {
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendDataToServer();
+                                break;    
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
@@ -43551,7 +43554,6 @@ incrementValue: function(event){
     var total_entered= parseInt(this._updatedQtyGood) +parseInt(this._updatedQtyMissing) + parseInt(this._updatedQtyDamaged) +parseInt(this._updatedQtyUnscannble);
     if(parseInt(total_entered)>=9999) {
         generateExcessNotification();
-        this.disableIncrement(false);
     }
     else {
         var self = this;
@@ -43587,9 +43589,8 @@ decrementValue: function(event){
         self.updateStore();
     }
 
-},  
+}, 
 componentDidMount(){
-        //var self = this;
         (function(self){
             $(".xyz_"+self.props.props).keyboard({
                 layout: 'custom',
@@ -43617,7 +43618,6 @@ componentDidMount(){
                         CommonActions.generateNotification(data);
                     }
                     else if(parseInt(keypressed.last.val) > 9999){
-                        self.disableIncrement(false);
                         generateExcessNotification();
                         $('.ui-keyboard-preview').val(9999);
                     }else{
@@ -43631,37 +43631,37 @@ componentDidMount(){
 
                     if(self.props.props=="good_quntity")
                     {
-                        this._updatedQtyGood=e.target.value
-                        CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
+                        self._updatedQtyGood=e.target.value
+                        CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
                         self.setState({
-                            value : this._updatedQtyGood
+                            value : self._updatedQtyGood
                         })
 
                     }
                     else if(self.props.props=="Missing_quntity")
                     {
-                        this._updatedQtyMissing=e.target.value
-                        CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
+                        self._updatedQtyMissing=e.target.value
+                        CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
                         self.setState({
-                            value : this._updatedQtyMissing
+                            value : self._updatedQtyMissing
                         })
 
                     }
                     else if(self.props.props=="Unscannable_quntity")
                     {
-                        this._updatedQtyUnscannble=e.target.value
-                        CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
+                        self._updatedQtyUnscannble=e.target.value
+                        CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
                         self.setState({
-                            value : this._updatedQtyUnscannble
+                            value : self._updatedQtyUnscannble
                         })
 
                     }
                     else if(self.props.props=="Damaged_quntity")
                     {
-                        this._updatedQtyDamaged=e.target.value
-                        CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
+                        self._updatedQtyDamaged=e.target.value
+                        CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));
                         self.setState({
-                            value : this._updatedQtyDamaged
+                            value : self._updatedQtyDamaged
                         })
 
                     }                
@@ -44207,7 +44207,7 @@ var PutBack = React.createClass({displayName: "PutBack",
 
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode padding"}, 
-                    React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
+                    React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
                
                   )
                 ), 
@@ -46564,8 +46564,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
-	INTERFACE_IP : "https://192.168.3.106:5000"
+	WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	INTERFACE_IP : "https://192.168.8.109"
 
 };
 module.exports = configConstants;

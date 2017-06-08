@@ -48005,7 +48005,7 @@ var serverMessages = {
     "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
-    "PkF001" : "Item Missing/Bad Barcode",
+    "PkF001" : "Issues with entity",
     "PkF005" : "Missing Box",
     "PkB007" : "Disassociate Tote",
     "PkB008" : "Override Tote Required",

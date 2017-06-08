@@ -41065,6 +41065,8 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+        var cancelScanFlag = this.state.PickFrontCancelScan;
+         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
         if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
@@ -41095,7 +41097,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
                 React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                   React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton, 
                    (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''
                 )
@@ -51341,6 +51343,7 @@ validateUnmarkedDamagedData:function(){
                 data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
                 data["PickFrontButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
                 break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
                 data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();

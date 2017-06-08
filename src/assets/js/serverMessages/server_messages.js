@@ -243,7 +243,7 @@ var serverMessages = {
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
-    "PtF.I.004" : "Damaged and missing entity recorded.",
+    "PtF.I.004" : "Exception with entity reported",
     "PtF.I.005" : "Space unavailable recorded.",
     "PtF.I.006" : "Cancel scan successful",
     "PtF.I.007" : "Exception entry successful",    

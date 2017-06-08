@@ -258,6 +258,7 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 break;
 ///////Raja
+
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";

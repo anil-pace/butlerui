@@ -1314,13 +1314,11 @@ return data;
             "description": "",
             "level": "info"
         }];
-        //_seatData.notification_list[0].code = null;
     },
 
     setPutBackExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
-        //_seatData.notification_list[0].code = null;
         _seatData["notification_list"] =  [{
             "details": [],
             "code": null,
@@ -1338,7 +1336,6 @@ return data;
     setAuditExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _auditExceptionScreen = data;
-        //_seatData.notification_list[0].code = null;
         _seatData["notification_list"] =  [{
             "details": [],
             "code": null,
@@ -1643,10 +1640,14 @@ return data;
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
             }
+if(_seatData.screen_id !== appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id !== appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
+{
             _putFrontExceptionScreen = "good";
             _goodQuantity = 0;
             _damagedQuantity = 0;
             _missingQuantity = 0;
+        }
+
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)

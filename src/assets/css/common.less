@@ -26,14 +26,42 @@
             flex-flow: column;
             flex-grow: 1;
             align-items: center;
+
+                .gor-exception-align{
+                margin-top:auto;
+                margin-bottom:auto;
+                        .gor-exceptionConfirm-text {
+                            width: 829px;
+                            height: 124px;
+                            font-family: SourceSansPro;
+                            font-size: 56px;
+                            line-height: 1.11;
+                            text-align: center;
+                            color: #f36f36;
+                            margin-top:auto;
+                            margin-bottom:auto;
+                        } 
+                        .finish-damaged-barcode {
+                            padding-top: 4em;
+                                &.padding{
+                                    padding:0px;
+                            }
+                            &.align-button{
+                                margin-right:auto;
+                                margin-left:auto;
+                                    width: 25%
+                }
+                        }
+
+                }
             
             .finish-damaged-barcode {
-                //padding-top: 5em;
                 padding-top: 4em;
                 &.padding{
                 padding:0px;
                 }
             }
+
         }
         &.exception {
             border-top: 1px solid #d1d1d1;
@@ -186,6 +214,7 @@
                         margin-top:auto;
                         margin-bottom:auto;
                     }  
+                     
          
             }
           

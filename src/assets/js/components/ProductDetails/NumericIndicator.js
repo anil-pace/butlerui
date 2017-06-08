@@ -3,7 +3,7 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
 var resourceConstants = require('../../constants/resourceConstants');
-var  _updatedQtyGood = 0, _updatedQtyMissing = 0,_updatedQtyDamaged=0,_updatedQtyUnscannble=0, _scanDetails = {},_keypress = false;
+var  _scanDetails = {},_keypress = false;
 function generateExcessNotification () {
     var data={};
     data["code"] = resourceConstants.CLIENTCODE_008;
@@ -13,23 +13,26 @@ function generateExcessNotification () {
 };
 
 var NumericIndicator = React.createClass({
- _appendClassUp : 'gor-plus-sign enable',
- _qtyComponent : null,
- _appendClassDown: 'gor-minus-sign enable',
- virtualKeyboard: null,
- _id : 'keyboard',
- _enableIncrement : true,
- _enableDecrement : true,
+   _appendClassUp : 'gor-plus-sign enable',
+   _qtyComponent : null,
+   _appendClassDown: 'gor-minus-sign enable',
+   virtualKeyboard: null,
+   _id : 'keyboard',
+   _enableIncrement : true,
+   _enableDecrement : true,
+   _updatedQtyGood:0,
+   _updatedQtyDamaged:0,
+   _updatedQtyUnscannble:0,
+   _updatedQtyMissing:0,
 
- getInitialState: function() {
+
+   getInitialState: function() {
     return {value: 0};
 },
 self:this,
 
-
-
 changeValueIncrement : function(event){
-    var qty_entered=_updatedQtyGood+_updatedQtyDamaged;
+    var qty_entered=this._updatedQtyGood+this._updatedQtyDamaged;
     if( parseInt(qty_entered) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
     {
         return false;
@@ -37,33 +40,33 @@ changeValueIncrement : function(event){
 
     if(this.props.props=="good_quntity")
     {
-        _updatedQtyGood++;
+        this._updatedQtyGood++;
         this.setState({
-            value : _updatedQtyGood
+            value : this._updatedQtyGood
         })
     }
     else if(this.props.props=="Missing_quntity")
     {
-        _updatedQtyMissing++;
+        this._updatedQtyMissing++;
 
         this.setState({
-            value : _updatedQtyMissing
+            value :this. _updatedQtyMissing
         })
     }
     else if(this.props.props=="Unscannable_quntity")
     {
-        _updatedQtyUnscannble++;
+        this._updatedQtyUnscannble++;
 
         this.setState({
-            value : _updatedQtyUnscannble
+            value : this._updatedQtyUnscannble
         })
     }
     else if(this.props.props=="Damaged_quntity")
     {
-        _updatedQtyDamaged++;
+        this._updatedQtyDamaged++;
 
         this.setState({
-            value : _updatedQtyDamaged
+            value : this._updatedQtyDamaged
         })
     }
 },
@@ -72,68 +75,65 @@ changeValueDecrement : function(event){
 
     if(this.props.props=="good_quntity")
     {
-        _updatedQtyGood--;
+        this._updatedQtyGood--;
         this.setState({
-            value : _updatedQtyGood
+            value : this._updatedQtyGood
         })
     }
     else if(this.props.props=="Missing_quntity")
     {
-        _updatedQtyMissing--;
+        this._updatedQtyMissing--;
 
         this.setState({
-            value : _updatedQtyMissing
+            value : this._updatedQtyMissing
         })
     }
     else if(this.props.props=="Unscannable_quntity")
     {
-        _updatedQtyUnscannble--;
+        this._updatedQtyUnscannble--;
 
         this.setState({
-            value : _updatedQtyUnscannble
+            value : this._updatedQtyUnscannble
         })
     }
     else if(this.props.props=="Damaged_quntity")
     {
-        _updatedQtyDamaged--;
+        this._updatedQtyDamaged--;
 
         this.setState({
-            value : _updatedQtyDamaged
+            value : this._updatedQtyDamaged
         })
     }
 
 },
 
 updateStore: function(event, qty) { console.log(_keypress);
- var total_entered= _updatedQtyGood +_updatedQtyMissing + _updatedQtyDamaged +_updatedQtyUnscannble;
- if (this._enableIncrement === true && _keypress == true) {
-  if((parseInt(total_entered) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") || parseInt(total_entered) >= 0 ){
-  }
+   var total_entered= this._updatedQtyGood +this._updatedQtyMissing + this._updatedQtyDamaged +this._updatedQtyUnscannble;
+   if (this._enableIncrement === true && _keypress == true) {
 
-  var data = {};
-  switch(this.props.props){
-    case "good_quntity":
-    CommonActions.updateGoodQuantity(parseInt(_updatedQtyGood));
-    CommonActions.updateKQQuantity(parseInt(_updatedQtyGood));
-    break;
-    case "Missing_quntity":
-    CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
-    break;
-    case "Damaged_quntity":
-    CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged));
-    break;
-    case "Unscannable_quntity":
-    CommonActions.updateUnscannableQuantity(parseInt(_updatedQtyUnscannble));
-    break;
-    default:
-}
-return true;
-mainstore.setShowModal(false);
+      var data = {};
+      switch(this.props.props){
+        case "good_quntity":
+        CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
+        break;
+        case "Missing_quntity":
+        CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
+        break;
+        case "Damaged_quntity":
+        CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
+        break;
+        case "Unscannable_quntity":
+        CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
+        break;
+        default:
+    }
+    return true;
+    mainstore.setShowModal(false);
 
 }
 },
-   incrementValue: function(event){
-    var total_entered= parseInt(_updatedQtyGood) +parseInt(_updatedQtyMissing) + parseInt(_updatedQtyDamaged) +parseInt(_updatedQtyUnscannble);
+incrementValue: function(event){
+    var total_entered= parseInt(this._updatedQtyGood) +parseInt(this._updatedQtyMissing) + parseInt(this._updatedQtyDamaged) +parseInt(this._updatedQtyUnscannble);
     if(parseInt(total_entered)>=9999) {
         generateExcessNotification();
         this.disableIncrement(false);
@@ -145,22 +145,22 @@ mainstore.setShowModal(false);
             if( event.type == "mousedown"){
                 this.changeValueIncrement(event);
             }
-         }
-         self.updateStore();
-     }
- },
+        }
+        self.updateStore();
+    }
+},
 
-  checkKqAllowed : function(){
-if(this.state.value==0)
-{
-  this._appendClassDown = 'gor-minus-sign disable';
-                  this._enableDecrement = false;
-                }else{
-                  this._appendClassDown = 'gor-minus-sign  enable';
-                  this._enableDecrement = true;
-                }
-    
-  },
+checkKqAllowed : function(){
+    if(this.state.value<=0)
+    {
+      this._appendClassDown = 'gor-minus-sign disable';
+      this._enableDecrement = false;
+  }else{
+      this._appendClassDown = 'gor-minus-sign  enable';
+      this._enableDecrement = true;
+  }
+
+},
 decrementValue: function(event){
     var self = this;
     if (this._enableDecrement === true) {
@@ -216,37 +216,37 @@ componentDidMount(){
 
                     if(self.props.props=="good_quntity")
                     {
-                        _updatedQtyGood=e.target.value
-                        CommonActions.updateGoodQuantity(parseInt(_updatedQtyGood));
+                        this._updatedQtyGood=e.target.value
+                        CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
                         self.setState({
-                            value : _updatedQtyGood
+                            value : this._updatedQtyGood
                         })
 
                     }
                     else if(self.props.props=="Missing_quntity")
                     {
-                        _updatedQtyMissing=e.target.value
-                        CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
+                        this._updatedQtyMissing=e.target.value
+                        CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
                         self.setState({
-                            value : _updatedQtyMissing
+                            value : this._updatedQtyMissing
                         })
 
                     }
                     else if(self.props.props=="Unscannable_quntity")
                     {
-                        _updatedQtyUnscannble=e.target.value
-                        CommonActions.updateUnscannableQuantity(parseInt(_updatedQtyUnscannble));
+                        this._updatedQtyUnscannble=e.target.value
+                        CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
                         self.setState({
-                            value : _updatedQtyUnscannble
+                            value : this._updatedQtyUnscannble
                         })
 
                     }
                     else if(self.props.props=="Damaged_quntity")
                     {
-                        _updatedQtyDamaged=e.target.value
-                        CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged));
+                        this._updatedQtyDamaged=e.target.value
+                        CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
                         self.setState({
-                            value : _updatedQtyDamaged
+                            value : this._updatedQtyDamaged
                         })
 
                     }                

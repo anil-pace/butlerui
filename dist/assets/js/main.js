@@ -38576,14 +38576,6 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 break;
 ///////Raja
-                            // case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
-                            //     //ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                            //     data["event_name"] = "pick_front_exception";
-                            //     data["event_data"]["event"] = mainstore.getExceptionType();
-                            //     data["event_data"]["ExceptionQuantityUpdate"] = mainstore.getExeptionQuanity();
-                            //     ActionCreators.postDataToInterface(data);
-                            //     break;
-
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
@@ -41290,15 +41282,16 @@ var PickFront = React.createClass({displayName: "PickFront",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "gor-info-text"}, _("Please put entitites which has issues in exception area"))
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
+                   
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
                   )
-                ), 
+                  )
+             
+                
+              ), 
                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
@@ -43424,7 +43417,7 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
 var resourceConstants = require('../../constants/resourceConstants');
-var  _updatedQtyGood = 0, _updatedQtyMissing = 0,_updatedQtyDamaged=0,_updatedQtyUnscannble=0, _scanDetails = {},_keypress = false;
+var  _scanDetails = {},_keypress = false;
 function generateExcessNotification () {
     var data={};
     data["code"] = resourceConstants.CLIENTCODE_008;
@@ -43434,23 +43427,26 @@ function generateExcessNotification () {
 };
 
 var NumericIndicator = React.createClass({displayName: "NumericIndicator",
- _appendClassUp : 'gor-plus-sign enable',
- _qtyComponent : null,
- _appendClassDown: 'gor-minus-sign enable',
- virtualKeyboard: null,
- _id : 'keyboard',
- _enableIncrement : true,
- _enableDecrement : true,
+   _appendClassUp : 'gor-plus-sign enable',
+   _qtyComponent : null,
+   _appendClassDown: 'gor-minus-sign enable',
+   virtualKeyboard: null,
+   _id : 'keyboard',
+   _enableIncrement : true,
+   _enableDecrement : true,
+   _updatedQtyGood:0,
+   _updatedQtyDamaged:0,
+   _updatedQtyUnscannble:0,
+   _updatedQtyMissing:0,
 
- getInitialState: function() {
+
+   getInitialState: function() {
     return {value: 0};
 },
 self:this,
 
-
-
 changeValueIncrement : function(event){
-    var qty_entered=_updatedQtyGood+_updatedQtyDamaged;
+    var qty_entered=this._updatedQtyGood+this._updatedQtyDamaged;
     if( parseInt(qty_entered) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
     {
         return false;
@@ -43458,33 +43454,33 @@ changeValueIncrement : function(event){
 
     if(this.props.props=="good_quntity")
     {
-        _updatedQtyGood++;
+        this._updatedQtyGood++;
         this.setState({
-            value : _updatedQtyGood
+            value : this._updatedQtyGood
         })
     }
     else if(this.props.props=="Missing_quntity")
     {
-        _updatedQtyMissing++;
+        this._updatedQtyMissing++;
 
         this.setState({
-            value : _updatedQtyMissing
+            value :this. _updatedQtyMissing
         })
     }
     else if(this.props.props=="Unscannable_quntity")
     {
-        _updatedQtyUnscannble++;
+        this._updatedQtyUnscannble++;
 
         this.setState({
-            value : _updatedQtyUnscannble
+            value : this._updatedQtyUnscannble
         })
     }
     else if(this.props.props=="Damaged_quntity")
     {
-        _updatedQtyDamaged++;
+        this._updatedQtyDamaged++;
 
         this.setState({
-            value : _updatedQtyDamaged
+            value : this._updatedQtyDamaged
         })
     }
 },
@@ -43493,68 +43489,65 @@ changeValueDecrement : function(event){
 
     if(this.props.props=="good_quntity")
     {
-        _updatedQtyGood--;
+        this._updatedQtyGood--;
         this.setState({
-            value : _updatedQtyGood
+            value : this._updatedQtyGood
         })
     }
     else if(this.props.props=="Missing_quntity")
     {
-        _updatedQtyMissing--;
+        this._updatedQtyMissing--;
 
         this.setState({
-            value : _updatedQtyMissing
+            value : this._updatedQtyMissing
         })
     }
     else if(this.props.props=="Unscannable_quntity")
     {
-        _updatedQtyUnscannble--;
+        this._updatedQtyUnscannble--;
 
         this.setState({
-            value : _updatedQtyUnscannble
+            value : this._updatedQtyUnscannble
         })
     }
     else if(this.props.props=="Damaged_quntity")
     {
-        _updatedQtyDamaged--;
+        this._updatedQtyDamaged--;
 
         this.setState({
-            value : _updatedQtyDamaged
+            value : this._updatedQtyDamaged
         })
     }
 
 },
 
 updateStore: function(event, qty) { console.log(_keypress);
- var total_entered= _updatedQtyGood +_updatedQtyMissing + _updatedQtyDamaged +_updatedQtyUnscannble;
- if (this._enableIncrement === true && _keypress == true) {
-  if((parseInt(total_entered) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") || parseInt(total_entered) >= 0 ){
-  }
+   var total_entered= this._updatedQtyGood +this._updatedQtyMissing + this._updatedQtyDamaged +this._updatedQtyUnscannble;
+   if (this._enableIncrement === true && _keypress == true) {
 
-  var data = {};
-  switch(this.props.props){
-    case "good_quntity":
-    CommonActions.updateGoodQuantity(parseInt(_updatedQtyGood));
-    CommonActions.updateKQQuantity(parseInt(_updatedQtyGood));
-    break;
-    case "Missing_quntity":
-    CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
-    break;
-    case "Damaged_quntity":
-    CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged));
-    break;
-    case "Unscannable_quntity":
-    CommonActions.updateUnscannableQuantity(parseInt(_updatedQtyUnscannble));
-    break;
-    default:
-}
-return true;
-mainstore.setShowModal(false);
+      var data = {};
+      switch(this.props.props){
+        case "good_quntity":
+        CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
+        break;
+        case "Missing_quntity":
+        CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
+        break;
+        case "Damaged_quntity":
+        CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
+        break;
+        case "Unscannable_quntity":
+        CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
+        break;
+        default:
+    }
+    return true;
+    mainstore.setShowModal(false);
 
 }
 },
-   incrementValue: function(event){
-    var total_entered= parseInt(_updatedQtyGood) +parseInt(_updatedQtyMissing) + parseInt(_updatedQtyDamaged) +parseInt(_updatedQtyUnscannble);
+incrementValue: function(event){
+    var total_entered= parseInt(this._updatedQtyGood) +parseInt(this._updatedQtyMissing) + parseInt(this._updatedQtyDamaged) +parseInt(this._updatedQtyUnscannble);
     if(parseInt(total_entered)>=9999) {
         generateExcessNotification();
         this.disableIncrement(false);
@@ -43566,22 +43559,22 @@ mainstore.setShowModal(false);
             if( event.type == "mousedown"){
                 this.changeValueIncrement(event);
             }
-         }
-         self.updateStore();
-     }
- },
+        }
+        self.updateStore();
+    }
+},
 
-  checkKqAllowed : function(){
-if(this.state.value==0)
-{
-  this._appendClassDown = 'gor-minus-sign disable';
-                  this._enableDecrement = false;
-                }else{
-                  this._appendClassDown = 'gor-minus-sign  enable';
-                  this._enableDecrement = true;
-                }
-    
-  },
+checkKqAllowed : function(){
+    if(this.state.value<=0)
+    {
+      this._appendClassDown = 'gor-minus-sign disable';
+      this._enableDecrement = false;
+  }else{
+      this._appendClassDown = 'gor-minus-sign  enable';
+      this._enableDecrement = true;
+  }
+
+},
 decrementValue: function(event){
     var self = this;
     if (this._enableDecrement === true) {
@@ -43637,37 +43630,37 @@ componentDidMount(){
 
                     if(self.props.props=="good_quntity")
                     {
-                        _updatedQtyGood=e.target.value
-                        CommonActions.updateGoodQuantity(parseInt(_updatedQtyGood));
+                        this._updatedQtyGood=e.target.value
+                        CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
                         self.setState({
-                            value : _updatedQtyGood
+                            value : this._updatedQtyGood
                         })
 
                     }
                     else if(self.props.props=="Missing_quntity")
                     {
-                        _updatedQtyMissing=e.target.value
-                        CommonActions.updateMissingQuantity(parseInt(_updatedQtyMissing));
+                        this._updatedQtyMissing=e.target.value
+                        CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
                         self.setState({
-                            value : _updatedQtyMissing
+                            value : this._updatedQtyMissing
                         })
 
                     }
                     else if(self.props.props=="Unscannable_quntity")
                     {
-                        _updatedQtyUnscannble=e.target.value
-                        CommonActions.updateUnscannableQuantity(parseInt(_updatedQtyUnscannble));
+                        this._updatedQtyUnscannble=e.target.value
+                        CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
                         self.setState({
-                            value : _updatedQtyUnscannble
+                            value : this._updatedQtyUnscannble
                         })
 
                     }
                     else if(self.props.props=="Damaged_quntity")
                     {
-                        _updatedQtyDamaged=e.target.value
-                        CommonActions.updateDamagedQuantity(parseInt(_updatedQtyDamaged));
+                        this._updatedQtyDamaged=e.target.value
+                        CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
                         self.setState({
-                            value : _updatedQtyDamaged
+                            value : this._updatedQtyDamaged
                         })
 
                     }                
@@ -44804,16 +44797,17 @@ var PutFront = React.createClass({displayName: "PutFront",
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                    React.createElement("div", {className: "gor-info-text"}, _("Please put entitites which has issues in exception area"))
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
+                   
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
+                  )
+             
+                
+              ), 
+              React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
@@ -50896,13 +50890,11 @@ return data;
             "description": "",
             "level": "info"
         }];
-        //_seatData.notification_list[0].code = null;
     },
 
     setPutBackExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _putBackExceptionScreen = data;
-        //_seatData.notification_list[0].code = null;
         _seatData["notification_list"] =  [{
             "details": [],
             "code": null,
@@ -50920,7 +50912,6 @@ return data;
     setAuditExceptionScreen: function(data){
         _seatData.scan_allowed = false;
         _auditExceptionScreen = data;
-        //_seatData.notification_list[0].code = null;
         _seatData["notification_list"] =  [{
             "details": [],
             "code": null,
@@ -51225,10 +51216,14 @@ return data;
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
             }
+if(_seatData.screen_id !== appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id !== appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
+{
             _putFrontExceptionScreen = "good";
             _goodQuantity = 0;
             _damagedQuantity = 0;
             _missingQuantity = 0;
+        }
+
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)

@@ -359,16 +359,17 @@ var PutFront = React.createClass({
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                    <div className="gor-info-text">{_("Please put entitites which has issues in exception area")}</div>
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
+                   
+                  <div className = "finish-damaged-barcode align-button">
                     <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
                   </div>
-                </div>
-                <div className = 'cancel-scan'>
+                  </div>
+             
+                
+              </div>
+              <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
                 </div>
               </div>

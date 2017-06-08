@@ -17,6 +17,7 @@ var Rack = require('./Rack/MsuRack.js');
 var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
+var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
@@ -353,14 +354,14 @@ var PutFront = React.createClass({
             );
         break; 
 
-          case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+          case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
             this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please put entitites which has issues in exception area")}</div>
+                    <div className="gor-info-text">{_("Please put entitites which has issues in exception area")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">

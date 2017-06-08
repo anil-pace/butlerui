@@ -41292,7 +41292,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put entitites which has issues in exception area"))
+                      React.createElement("div", {className: "gor-info-text"}, _("Please put entitites which has issues in exception area"))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -44462,6 +44462,7 @@ var Rack = require('./Rack/MsuRack.js');
 var Modal = require('./Modal/Modal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
+var ExceptionHeader = require('./ExceptionHeader');
 var KQ = require('./ProductDetails/KQ');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
@@ -44798,14 +44799,14 @@ var PutFront = React.createClass({displayName: "PutFront",
             );
         break; 
 
-          case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+          case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put entitites which has issues in exception area"))
+                    React.createElement("div", {className: "gor-info-text"}, _("Please put entitites which has issues in exception area"))
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -45062,7 +45063,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
 module.exports = PutFront;
 
-},{"../constants/appConstants":298,"../constants/resourceConstants":300,"../stores/PutFrontStore":315,"../stores/mainstore":317,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/NumericIndicator":272,"./ProductDetails/Wrapper":275,"./ProductDetails/WrapperSplitRoll":276,"./Rack/MsuRack.js":281,"./Spinner/LoaderButler":286,"./SplitPPS":289,"./TabularData":295,"react":230}],279:[function(require,module,exports){
+},{"../constants/appConstants":298,"../constants/resourceConstants":300,"../stores/PutFrontStore":315,"../stores/mainstore":317,"./BinMap":235,"./Bins/Bins.react":237,"./Bins/BinsFlexArrange.react":239,"./Button/Button":241,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./ProductDetails/KQ":269,"./ProductDetails/KQExceptionDamaged":270,"./ProductDetails/KQExceptionMissing":271,"./ProductDetails/NumericIndicator":272,"./ProductDetails/Wrapper":275,"./ProductDetails/WrapperSplitRoll":276,"./Rack/MsuRack.js":281,"./Spinner/LoaderButler":286,"./SplitPPS":289,"./TabularData":295,"react":230}],279:[function(require,module,exports){
 var React = require('react');
 var DrawerSlot = require('./DrawerSlot');
 
@@ -46402,7 +46403,7 @@ var appConstants = {
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:"put_front_unscannable_or_missing",
-	PUT_FRONT_EXpassCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
+	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
     PUT_FRONT_EXCESS_ITEMS_PPSBIN: "put_front_excess_items_ppsbin",
@@ -46481,7 +46482,7 @@ var appConstants = {
 	UPDATE_KQ_QUANTITY:"UPDATE_KQ_QUANTITY",
 	UPDATE_MISSING_QUANTITY:"UPDATE_MISSING_QUANTITY",
 	UPDATE_UNSCANNABLE_QUANTITY:"UPDATE_UNSCANNABLE_QUANTITY",
-	"PUT_FRONT_ITEMS_TO_IRT_BIN":"put_front_items_to_irt_bin",
+	PUT_FRONT_ITEMS_TO_IRT_BIN:"put_front_items_to_irt_bin",
 	UPDATE_GOOD_QUANTITY:"UPDATE_GOOD_QUANTITY",
 	UPDATE_DAMAGED_QUANTITY:"UPDATE_DAMAGED_QUANTITY",
 	CANCEL_TOTE :'CANCEL_TOTE',
@@ -46568,8 +46569,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
 
 };
 module.exports = configConstants;
@@ -47794,7 +47795,7 @@ var serverMessages = {
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
     "PtF.H.004" : "Scan Entity From Bin {0}",
-    "PtF.H.005" : "Enter Good Quantity to be Put into Slot",
+    "PtF.H.005" : "Enter Quantity",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PtF.H.007" : "Undock Roll Cage if no items remaining",
     "PtF.H.008" : "Place the tote back in bin {0} and press PPTL",
@@ -47925,7 +47926,7 @@ var serverMessages = {
     "CLIENTCODE_007" : "Peripheral not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
     "CLIENTCODE_009" : "You cannot enter 0",
-    "CLIENTCODE_010" : "Sum of missing, good and damaged should be equal to {0}",
+    "CLIENTCODE_010" : "Sum of good and exception quantity should be equal to {0}",
     "CLIENTCODE_011" : "Sum of missing and good quantity should be equal to {0}",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
     "CLIENTCODE_013" : "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.",
@@ -48006,7 +48007,7 @@ var serverMessages = {
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
-    "PtF001" : "Entity Missing / Unscannable",
+    "PtF001" : "Issues with entity",
     "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
@@ -51203,6 +51204,10 @@ return data;
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
             details = _seatData.pick_quantity;
         }
+         else if(_seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity+_unscannableQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
 
         else{
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
@@ -51740,6 +51745,15 @@ validateUnmarkedDamagedData:function(){
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 break; 
+                
+                case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+
+                break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontExceptionFlag"] = this._getWareHouseExceptionFlag();
@@ -51942,6 +51956,7 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
 //raja
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutBackKQDetails"] = this.getScanDetails();

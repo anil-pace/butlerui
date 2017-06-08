@@ -373,7 +373,7 @@ var PickFront = React.createClass({
                 <div className="exception-right">
                   <div className="main-container exception2">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Please put entitites which has issues in exception area")}</div>
+                      <div className="gor-info-text">{_("Please put entitites which has issues in exception area")}</div>
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">

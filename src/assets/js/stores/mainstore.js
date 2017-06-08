@@ -1622,6 +1622,10 @@ return data;
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
             details = _seatData.pick_quantity;
         }
+         else if(_seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity+_unscannableQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
 
         else{
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
@@ -2159,6 +2163,15 @@ validateUnmarkedDamagedData:function(){
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 break; 
+                
+                case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+
+                break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontExceptionFlag"] = this._getWareHouseExceptionFlag();
@@ -2361,6 +2374,7 @@ validateUnmarkedDamagedData:function(){
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
 //raja
                 case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutBackKQDetails"] = this.getScanDetails();

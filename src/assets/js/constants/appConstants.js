@@ -90,7 +90,10 @@ var appConstants = {
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
 	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",
-
+	GOOD_QUANTITY:"good_quntity",
+	MISSING_QUNTITY:"Missing_quntity",
+	UNSCANNABLE_QUNTITY:"Unscannable_quntity",
+	DAMAGED_QUANTITY:"Damaged_quntity",
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
 	PICK_FRONT_CONTAINER_SCAN:"pick_front_container_scan",

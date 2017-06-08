@@ -38,14 +38,14 @@ changeValueIncrement : function(event){
         return false;
     }
 
-    if(this.props.props=="good_quntity")
+    if(this.props.props===appConstants.GOOD_QUANTITY)
     {
         this._updatedQtyGood++;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.props=="Missing_quntity")
+    else if(this.props.props===appConstants.MISSING_QUNTITY)
     {
         this._updatedQtyMissing++;
 
@@ -53,7 +53,7 @@ changeValueIncrement : function(event){
             value :this. _updatedQtyMissing
         })
     }
-    else if(this.props.props=="Unscannable_quntity")
+    else if(this.props.props===appConstants.UNSCANNABLE_QUNTITY)
     {
         this._updatedQtyUnscannble++;
 
@@ -61,7 +61,7 @@ changeValueIncrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.props=="Damaged_quntity")
+    else if(this.props.props===appConstants.DAMAGED_QUANTITY)
     {
         this._updatedQtyDamaged++;
 
@@ -73,14 +73,14 @@ changeValueIncrement : function(event){
 
 changeValueDecrement : function(event){
 
-    if(this.props.props=="good_quntity")
+    if(this.props.props===appConstants.GOOD_QUANTITY)
     {
         this._updatedQtyGood--;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.props=="Missing_quntity")
+    else if(this.props.props===appConstants.MISSING_QUNTITY)
     {
         this._updatedQtyMissing--;
 
@@ -88,7 +88,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyMissing
         })
     }
-    else if(this.props.props=="Unscannable_quntity")
+    else if(this.props.props===appConstants.UNSCANNABLE_QUNTITY)
     {
         this._updatedQtyUnscannble--;
 
@@ -96,7 +96,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.props=="Damaged_quntity")
+    else if(this.props.props===appConstants.DAMAGED_QUANTITY)
     {
         this._updatedQtyDamaged--;
 
@@ -211,7 +211,7 @@ componentDidMount(){
                 },
                 accepted: function(e, keypressed, el) {
 
-                    if(self.props.props=="good_quntity")
+                    if(self.props.props===appConstants.GOOD_QUANTITY)
                     {
                         self._updatedQtyGood=e.target.value
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
@@ -220,7 +220,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props=="Missing_quntity")
+                    else if(self.props.props===appConstants.MISSING_QUNTITY)
                     {
                         self._updatedQtyMissing=e.target.value
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
@@ -229,7 +229,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props=="Unscannable_quntity")
+                    else if(self.props.props===appConstants.UNSCANNABLE_QUNTITY)
                     {
                         self._updatedQtyUnscannble=e.target.value
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
@@ -238,7 +238,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props=="Damaged_quntity")
+                    else if(self.props.props===appConstants.DAMAGED_QUANTITY)
                     {
                         self._updatedQtyDamaged=e.target.value
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));

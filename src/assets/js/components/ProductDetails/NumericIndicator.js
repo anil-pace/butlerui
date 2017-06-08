@@ -32,11 +32,6 @@ var NumericIndicator = React.createClass({
 self:this,
 
 changeValueIncrement : function(event){
-    var qty_entered=this._updatedQtyGood+this._updatedQtyDamaged;
-    if( parseInt(qty_entered) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
-    {
-        return false;
-    }
 
     if(this.props.props===appConstants.GOOD_QUANTITY)
     {
@@ -45,7 +40,7 @@ changeValueIncrement : function(event){
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.props===appConstants.MISSING_QUNTITY)
+    else if(this.props.props===appConstants.MISSING_QUANTITY)
     {
         this._updatedQtyMissing++;
 
@@ -53,7 +48,7 @@ changeValueIncrement : function(event){
             value :this. _updatedQtyMissing
         })
     }
-    else if(this.props.props===appConstants.UNSCANNABLE_QUNTITY)
+    else if(this.props.props===appConstants.UNSCANNABLE_QUANTITY)
     {
         this._updatedQtyUnscannble++;
 
@@ -80,7 +75,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.props===appConstants.MISSING_QUNTITY)
+    else if(this.props.props===appConstants.MISSING_QUANTITY)
     {
         this._updatedQtyMissing--;
 
@@ -88,7 +83,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyMissing
         })
     }
-    else if(this.props.props===appConstants.UNSCANNABLE_QUNTITY)
+    else if(this.props.props===appConstants.UNSCANNABLE_QUANTITY)
     {
         this._updatedQtyUnscannble--;
 
@@ -220,7 +215,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props===appConstants.MISSING_QUNTITY)
+                    else if(self.props.props===appConstants.MISSING_QUANTITY)
                     {
                         self._updatedQtyMissing=e.target.value
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
@@ -229,7 +224,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props===appConstants.UNSCANNABLE_QUNTITY)
+                    else if(self.props.props===appConstants.UNSCANNABLE_QUANTITY)
                     {
                         self._updatedQtyUnscannble=e.target.value
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));

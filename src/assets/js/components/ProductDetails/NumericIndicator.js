@@ -108,16 +108,16 @@ updateStore: function(event, qty) { console.log(_keypress);
 
       var data = {};
       switch(this.props.props){
-        case "good_quntity":
+        case appConstants.GOOD_QUANTITY:
         CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
         break;
-        case "Missing_quntity":
+        case appConstants.MISSING_QUANTITY:
         CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
         break;
-        case "Damaged_quntity":
+        case appConstants.DAMAGED_QUANTITY:
         CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
         break;
-        case "Unscannable_quntity":
+        case appConstants.UNSCANNABLE_QUANTITY:
         CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
         break;
         default:

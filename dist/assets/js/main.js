@@ -43526,16 +43526,16 @@ updateStore: function(event, qty) { console.log(_keypress);
 
       var data = {};
       switch(this.props.props){
-        case "good_quntity":
+        case appConstants.GOOD_QUANTITY:
         CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
         break;
-        case "Missing_quntity":
+        case appConstants.MISSING_QUANTITY:
         CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
         break;
-        case "Damaged_quntity":
+        case appConstants.DAMAGED_QUANTITY:
         CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
         break;
-        case "Unscannable_quntity":
+        case appConstants.UNSCANNABLE_QUANTITY:
         CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
         break;
         default:
@@ -46404,8 +46404,8 @@ var appConstants = {
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
 	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",
 	GOOD_QUANTITY:"good_quntity",
-	MISSING_QUNTITY:"Missing_quntity",
-	UNSCANNABLE_QUNTITY:"Unscannable_quntity",
+	MISSING_QUANTITY:"Missing_quntity",
+	UNSCANNABLE_QUANTITY:"Unscannable_quntity",
 	DAMAGED_QUANTITY:"Damaged_quntity",
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",

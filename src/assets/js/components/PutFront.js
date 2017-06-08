@@ -7,6 +7,7 @@ var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
 var BinsFlex = require("./Bins/BinsFlexArrange.react");
+var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var Button1 = require("./Button/Button");
 var Wrapper = require('./ProductDetails/Wrapper');
 var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll');
@@ -296,6 +297,7 @@ var PutFront = React.createClass({
 
         ///Raja
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+             var buttonActivateFlag=mainstore.getExeptionQuanity();
             var UnscannableNI;
             if(!this.state.UnmarkedContainer)
             {
@@ -340,7 +342,7 @@ var PutFront = React.createClass({
 
                   </div>
                   <div className = "finish-damaged-barcode padding">
-                    <Button1 disabled = {false} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
+                    <Button1 disabled = {buttonActivateFlag} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
               
                   </div>
                 </div>

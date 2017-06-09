@@ -43565,10 +43565,10 @@ checkKqAllowed : function(){
 
    if(this.state.value>=9999)
     {
-      this._appendClassDown = 'gor-plus-sign disable';
+      this._appendClassUp = 'gor-plus-sign disable';
       this._enableIncrement = false;
   }else{
-      this._appendClassDown = 'gor-pius-sign  enable';
+      this._appendClassUp = 'gor-pius-sign  enable';
       this._enableIncrement = true;
   }
 

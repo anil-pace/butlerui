@@ -4,13 +4,7 @@ var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var  _scanDetails = {},_keypress = false;
-function generateExcessNotification () {
-    var data={};
-    data["code"] = resourceConstants.CLIENTCODE_008;
-    data["level"] = 'error';
-    CommonActions.generateNotification(data);
-    return;
-};
+
 
 var NumericIndicator = React.createClass({
    _appendClassUp : 'gor-plus-sign enable',
@@ -30,6 +24,14 @@ var NumericIndicator = React.createClass({
     return {value: 0};
 },
 self:this,
+
+generateExcessNotification: function () {
+    var data={};
+    data["code"] = resourceConstants.CLIENTCODE_008;
+    data["level"] = 'error';
+    CommonActions.generateNotification(data);
+    return;
+},
 
 changeValueIncrement : function(event){
 
@@ -129,7 +131,7 @@ updateStore: function(event, qty) {
 incrementValue: function(event){
     var total_entered= parseInt(this._updatedQtyGood) +parseInt(this._updatedQtyMissing) + parseInt(this._updatedQtyDamaged) +parseInt(this._updatedQtyUnscannble);
     if(parseInt(total_entered)>=9999) {
-        generateExcessNotification();
+        this.generateExcessNotification();
     }
     else {
         var self = this;
@@ -149,7 +151,7 @@ checkKqAllowed : function(){
       this._appendClassDown = 'gor-minus-sign disable';
       this._enableDecrement = false;
   }else{
-      this._appendClassDown = 'gor-minus-sign  enable';
+      this._appendClassDown = 'gor-minus-sign enable';
       this._enableDecrement = true;
   }
 
@@ -158,7 +160,7 @@ checkKqAllowed : function(){
       this._appendClassUp = 'gor-plus-sign disable';
       this._enableIncrement = false;
   }else{
-      this._appendClassUp = 'gor-pius-sign  enable';
+      this._appendClassUp = 'gor-plus-sign enable';
       this._enableIncrement = true;
   }
 
@@ -203,7 +205,7 @@ componentDidMount(){
                         CommonActions.generateNotification(data);
                     }
                     else if(parseInt(keypressed.last.val) > 9999){
-                        generateExcessNotification();
+                        self.generateExcessNotification();
                         $('.ui-keyboard-preview').val(9999);
                     }else{
                         data["code"] = null;

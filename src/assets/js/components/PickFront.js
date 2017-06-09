@@ -3,8 +3,10 @@ var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var ExceptionHeader = require('./ExceptionHeader');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
+var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -316,6 +318,77 @@ var PickFront = React.createClass({
               </div>
           );      
         break; 
+            case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+          var buttonActivateFlag=mainstore.getExeptionQuanity();
+           this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                  <ExceptionHeader data={this.state.PickFrontServerNavData} />
+
+                  <div className="main-container exception1 displayBlocked">
+
+                    <div className="gor-NI-wrapper">
+                    <hr/>
+                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <NumericIndicator execType = {appConstants.GOOD_QUANTITY}/>
+                    </div>
+              
+                     <div className="gor-NI-wrapper">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <NumericIndicator execType = {appConstants.MISSING_QUANTITY} />
+                    </div>
+
+                    <div className="gor-NI-wrapper">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <NumericIndicator  execType = {appConstants.UNSCANNABLE_QUANTITY}/>
+                    </div>
+
+                    <div className="gor-NI-wrapper">
+                     <hr/>
+                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <NumericIndicator execType = {appConstants.DAMAGED_QUANTITY}/>
+                   <hr/>
+                    </div>
+
+                  </div>
+                  <div className = "finish-damaged-barcode padding">
+                    <Button1 disabled = {buttonActivateFlag} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
+              
+                  </div>
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+      
+        break; 
+
+        case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+            this._component = (
+              <div className='grid-container exception'>
+                <Exception data={this.state.PickFrontExceptionData}/>
+                <div className="exception-right">
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
+                   
+                  <div className = "finish-damaged-barcode align-button">
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FINISH_EXCEPTION_ENTITY} />  
+                  </div>
+                  </div>
+             
+                
+              </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break;
+
       case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
           this._navigation = '';
           /**

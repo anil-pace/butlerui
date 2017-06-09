@@ -49,6 +49,9 @@ switch (module) {
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                                ActionCreators.validateAndSendDataToServer();
+                                break;    
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
@@ -66,6 +69,12 @@ switch (module) {
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
                                 break;
+                              case appConstants.FINISH_EXCEPTION_ENTITY:
+                                  data["event_name"] = "put_back_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;   
                             case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="extra_items_bin_select";
@@ -177,6 +186,13 @@ switch (module) {
                             case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PUT_FRONT, "cancel_exception");
                                 break;
+                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
+                                    data["event_name"] = "put_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;  
+
                             case appConstants.CLOSE_CANCEL_EXCEPTION:
                                closeModalBox(); 
                                break;                                                               
@@ -239,6 +255,12 @@ switch (module) {
                                  data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                               case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
+                                  data["event_name"] = "pick_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;   
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);

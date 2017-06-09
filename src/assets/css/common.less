@@ -27,10 +27,41 @@
             flex-grow: 1;
             align-items: center;
             justify-content: center;
+                .gor-exception-align{
+                margin-top:auto;
+                margin-bottom:auto;
+                        .gor-exceptionConfirm-text {
+                            width: 829px;
+                            height: 124px;
+                            font-family: SourceSansPro;
+                            font-size: 56px;
+                            line-height: 1.11;
+                            text-align: center;
+                            color: #f36f36;
+                            margin-top:auto;
+                            margin-bottom:auto;
+                        } 
+                        .finish-damaged-barcode {
+                            padding-top: 4em;
+                                &.padding{
+                                    padding:0px;
+                            }
+                            &.align-button{
+                                margin-right:auto;
+                                margin-left:auto;
+                                    width: 25%
+                }
+                        }
+
+                }
+            
             .finish-damaged-barcode {
-                //padding-top: 5em;
                 padding-top: 4em;
+                &.padding{
+                padding:0px;
+                }
             }
+
         }
         &.exception {
             border-top: 1px solid #d1d1d1;
@@ -124,6 +155,10 @@
                     margin-right: 20px;
                 }
             }
+            &.displayBlocked{
+                display:block;
+                flex-basis:55vh;
+            }
              &.exception2 {
                 flex-basis: 15vh;
                 flex-grow: 0;
@@ -145,6 +180,23 @@
                  padding:10.5px;
                 }
             }
+            .gor-NI-wrapper
+            {
+            width: 69%;
+            margin-left: auto;
+            margin-right: auto;
+            }    
+            
+            .exception-qty-title{
+                height: 50px;
+                font-family: SourceSansPro;
+                font-size: 40px;
+                text-align: left;
+                color: #4d5055;
+                display:inline;
+                width:53%;
+                float:left
+    }
         }
         .kq-exception {
                 display: flex;
@@ -162,6 +214,7 @@
                         margin-top:auto;
                         margin-bottom:auto;
                     }  
+                     
          
             }
           

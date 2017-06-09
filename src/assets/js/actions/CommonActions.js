@@ -196,6 +196,13 @@ var commonActions = {
     });
   },
 
+    updateUnscannableQuantity:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.UPDATE_UNSCANNABLE_QUANTITY,
+      data:data
+    });
+  },
+
   updateGoodQuantity:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_GOOD_QUANTITY,

@@ -106,7 +106,7 @@ changeValueDecrement : function(event){
 
 updateStore: function(event, qty) {
    var total_entered= this._updatedQtyGood +this._updatedQtyMissing + this._updatedQtyDamaged +this._updatedQtyUnscannble;
-   if (this._enableIncrement === true && _keypress == true) {
+   if (this._enableIncrement === true && _keypress === true) {
 
       var data = {};
       switch(this.props.execType){
@@ -198,7 +198,7 @@ componentDidMount(){
                 },
                 change : function(e, keypressed, el){
                     var data ={}
-                    if(_scanDetails.kq_allowed == false){
+                    if(_scanDetails.kq_allowed === false){
                         $('.ui-keyboard-preview').val("");
                         data["code"] = resourceConstants.CLIENTCODE_013;
                         data["level"] = 'error'

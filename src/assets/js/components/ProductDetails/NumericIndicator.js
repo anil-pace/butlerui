@@ -33,14 +33,14 @@ self:this,
 
 changeValueIncrement : function(event){
 
-    if(this.props.props===appConstants.GOOD_QUANTITY)
+    if(this.props.execType===appConstants.GOOD_QUANTITY)
     {
         this._updatedQtyGood++;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.props===appConstants.MISSING_QUANTITY)
+    else if(this.props.execType===appConstants.MISSING_QUANTITY)
     {
         this._updatedQtyMissing++;
 
@@ -48,7 +48,7 @@ changeValueIncrement : function(event){
             value :this. _updatedQtyMissing
         })
     }
-    else if(this.props.props===appConstants.UNSCANNABLE_QUANTITY)
+    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY)
     {
         this._updatedQtyUnscannble++;
 
@@ -56,7 +56,7 @@ changeValueIncrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.props===appConstants.DAMAGED_QUANTITY)
+    else if(this.props.execType===appConstants.DAMAGED_QUANTITY)
     {
         this._updatedQtyDamaged++;
 
@@ -68,14 +68,14 @@ changeValueIncrement : function(event){
 
 changeValueDecrement : function(event){
 
-    if(this.props.props===appConstants.GOOD_QUANTITY)
+    if(this.props.execType===appConstants.GOOD_QUANTITY)
     {
         this._updatedQtyGood--;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.props===appConstants.MISSING_QUANTITY)
+    else if(this.props.execType===appConstants.MISSING_QUANTITY)
     {
         this._updatedQtyMissing--;
 
@@ -83,7 +83,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyMissing
         })
     }
-    else if(this.props.props===appConstants.UNSCANNABLE_QUANTITY)
+    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY)
     {
         this._updatedQtyUnscannble--;
 
@@ -91,7 +91,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.props===appConstants.DAMAGED_QUANTITY)
+    else if(this.props.execType===appConstants.DAMAGED_QUANTITY)
     {
         this._updatedQtyDamaged--;
 
@@ -102,12 +102,12 @@ changeValueDecrement : function(event){
 
 },
 
-updateStore: function(event, qty) { console.log(_keypress);
+updateStore: function(event, qty) {
    var total_entered= this._updatedQtyGood +this._updatedQtyMissing + this._updatedQtyDamaged +this._updatedQtyUnscannble;
    if (this._enableIncrement === true && _keypress == true) {
 
       var data = {};
-      switch(this.props.props){
+      switch(this.props.execType){
         case appConstants.GOOD_QUANTITY:
         CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
         break;
@@ -123,7 +123,6 @@ updateStore: function(event, qty) { console.log(_keypress);
         default:
     }
     return true;
-    mainstore.setShowModal(false);
 
 }
 },
@@ -134,9 +133,9 @@ incrementValue: function(event){
     }
     else {
         var self = this;
-        if (this._enableIncrement === true) {
+        if (this._enableIncrement) {
             _keypress = true;
-            if( event.type == "mousedown"){
+            if( event.type === "mousedown"){
                 this.changeValueIncrement(event);
             }
         }
@@ -154,12 +153,21 @@ checkKqAllowed : function(){
       this._enableDecrement = true;
   }
 
+   if(this.state.value>=9999)
+    {
+      this._appendClassDown = 'gor-plus-sign disable';
+      this._enableIncrement = false;
+  }else{
+      this._appendClassDown = 'gor-pius-sign  enable';
+      this._enableIncrement = true;
+  }
+
 },
 decrementValue: function(event){
     var self = this;
-    if (this._enableDecrement === true) {
+    if (this._enableDecrement) {
         _keypress = true;
-        if( event.type == "mousedown" ){
+        if( event.type === "mousedown" ){
             this.changeValueDecrement(event);
         }
         
@@ -169,7 +177,7 @@ decrementValue: function(event){
 }, 
 componentDidMount(){
         (function(self){
-            $(".xyz_"+self.props.props).keyboard({
+            $(".gor_"+self.props.execType).keyboard({
                 layout: 'custom',
                 customLayout: {
                     'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
@@ -206,7 +214,7 @@ componentDidMount(){
                 },
                 accepted: function(e, keypressed, el) {
 
-                    if(self.props.props===appConstants.GOOD_QUANTITY)
+                    if(self.props.execType===appConstants.GOOD_QUANTITY)
                     {
                         self._updatedQtyGood=e.target.value
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
@@ -215,7 +223,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props===appConstants.MISSING_QUANTITY)
+                    else if(self.props.execType===appConstants.MISSING_QUANTITY)
                     {
                         self._updatedQtyMissing=e.target.value
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
@@ -224,7 +232,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props===appConstants.UNSCANNABLE_QUANTITY)
+                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY)
                     {
                         self._updatedQtyUnscannble=e.target.value
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
@@ -233,7 +241,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.props===appConstants.DAMAGED_QUANTITY)
+                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY)
                     {
                         self._updatedQtyDamaged=e.target.value
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));
@@ -253,7 +261,7 @@ componentDidMount(){
             <div className = "indicator-wrapper" >       
             <div>
             <span  className = {this._appendClassDown}  action={this.props.action} onClick={this.decrementValue} onMouseDown = {this.decrementValue} ></span>
-            <input id="keyboard" value={this.state.value} type="text" name="quantity" className={"gor-quantity-text xyz_"+this.props.props}/>
+            <input id="keyboard" value={this.state.value} type="text" name="quantity" className={"gor-quantity-text gor_"+this.props.execType}/>
             <span  className = {this._appendClassUp}  action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} ></span>
             </div>
             </div>

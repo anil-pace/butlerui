@@ -303,7 +303,7 @@ var PutFront = React.createClass({
               UnscannableNI=( <div className="gor-NI-wrapper">
                      <hr/>
                   <div className="exception-qty-title">{_("Unscannable quantity")}</div>
-                  <NumericIndicator  props = {"Unscannable_quntity"}/>
+                  <NumericIndicator  execType = {appConstants.UNSCANNABLE_QUANTITY}/>
                     </div>);
             }
             else
@@ -321,13 +321,13 @@ var PutFront = React.createClass({
                     <div className="gor-NI-wrapper">
                     <hr/>
                   <div className="exception-qty-title">{_("Good quantity")}</div>
-                  <NumericIndicator props = {"good_quntity"}/>
+                  <NumericIndicator execType = {appConstants.GOOD_QUANTITY}/>
                     </div>
               
                      <div className="gor-NI-wrapper">
                      <hr/>
                   <div className="exception-qty-title">{_("Missing quantity")}</div>
-                  <NumericIndicator props = {"Missing_quntity"} />
+                  <NumericIndicator execType = {appConstants.MISSING_QUANTITY} />
                     </div>
 
                     {UnscannableNI} 
@@ -335,7 +335,7 @@ var PutFront = React.createClass({
                     <div className="gor-NI-wrapper">
                      <hr/>
                   <div className="exception-qty-title">{_("Damaged quantity")}</div>
-                  <NumericIndicator props = {"Damaged_quntity"}/>
+                  <NumericIndicator execType = {appConstants.DAMAGED_QUANTITY}/>
                    <hr/>
                     </div>
 

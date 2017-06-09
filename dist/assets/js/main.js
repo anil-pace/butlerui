@@ -41233,25 +41233,25 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                   React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-                    React.createElement("div", {className: "test"}, 
+                    React.createElement("div", {className: "gor-NI-wrapper"}, 
                     React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
                   React.createElement(NumericIndicator, {props: "good_quntity"})
                     ), 
               
-                     React.createElement("div", {className: "test"}, 
+                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
                   React.createElement(NumericIndicator, {props: "Missing_quntity"})
                     ), 
 
-                    React.createElement("div", {className: "test"}, 
+                    React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
                   React.createElement(NumericIndicator, {props: "Unscannable_quntity"})
                     ), 
 
-                    React.createElement("div", {className: "test"}, 
+                    React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
                   React.createElement(NumericIndicator, {props: "Damaged_quntity"}), 
@@ -44698,7 +44698,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             var UnscannableNI;
             if(!this.state.UnmarkedContainer)
             {
-              UnscannableNI=( React.createElement("div", {className: "test"}, 
+              UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
                   React.createElement(NumericIndicator, {props: "Unscannable_quntity"})
@@ -44716,13 +44716,13 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                   React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-                    React.createElement("div", {className: "test"}, 
+                    React.createElement("div", {className: "gor-NI-wrapper"}, 
                     React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
                   React.createElement(NumericIndicator, {props: "good_quntity"})
                     ), 
               
-                     React.createElement("div", {className: "test"}, 
+                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
                   React.createElement(NumericIndicator, {props: "Missing_quntity"})
@@ -44730,7 +44730,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     UnscannableNI, 
 
-                    React.createElement("div", {className: "test"}, 
+                    React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
                   React.createElement(NumericIndicator, {props: "Damaged_quntity"}), 

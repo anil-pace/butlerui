@@ -326,25 +326,25 @@ var PickFront = React.createClass({
 
                   <div className="main-container exception1 displayBlocked">
 
-                    <div className="test">
+                    <div className="gor-NI-wrapper">
                     <hr/>
                   <div className="exception-qty-title">{_("Good quantity")}</div>
                   <NumericIndicator props = {"good_quntity"}/>
                     </div>
               
-                     <div className="test">
+                     <div className="gor-NI-wrapper">
                      <hr/>
                   <div className="exception-qty-title">{_("Missing quantity")}</div>
                   <NumericIndicator props = {"Missing_quntity"} />
                     </div>
 
-                    <div className="test">
+                    <div className="gor-NI-wrapper">
                      <hr/>
                   <div className="exception-qty-title">{_("Unscannable quantity")}</div>
                   <NumericIndicator  props = {"Unscannable_quntity"}/>
                     </div>
 
-                    <div className="test">
+                    <div className="gor-NI-wrapper">
                      <hr/>
                   <div className="exception-qty-title">{_("Damaged quantity")}</div>
                   <NumericIndicator props = {"Damaged_quntity"}/>

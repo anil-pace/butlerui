@@ -189,6 +189,8 @@ var PickFront = React.createClass({
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+        var cancelScanFlag = this.state.PickFrontCancelScan;
+         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
         if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (<Navigation navData ={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
@@ -219,7 +221,7 @@ var PickFront = React.createClass({
                {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='frontFlow'/>}
                 {binComponent}
                 <div className = 'actions'>
-                   <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
+                   <Button1 disabled = {cancelScanDisabled} text = {_("Cancel Scan")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN} color={"black"}/>
                    {editButton}
                    {(this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''}
                 </div>

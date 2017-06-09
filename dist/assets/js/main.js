@@ -41096,6 +41096,8 @@ var PickFront = React.createClass({displayName: "PickFront",
       break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+        var cancelScanFlag = this.state.PickFrontCancelScan;
+         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
         if(this.state.PickFrontExceptionStatus == false){
          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
@@ -41126,7 +41128,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
                 binComponent, 
                 React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
+                   React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
                    editButton, 
                    (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''
                 )
@@ -46991,7 +46993,7 @@ var french = {
 	"Wrong slot location scanned. Please try again": "Emplacement de carte scann\u00e9 incorrect. Veuillez r\u00e9essayer",
 	"Wrong slot scanned": "Carte scann\u00e9e fausse",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "Vous n'\u00eates pas autoris\u00e9 \u00e0 entrer la quantit\u00e9 \u00e0 partir du pav\u00e9 num\u00e9rique. Force Scan est exig\u00e9",
-	"You cannot enter 0": "Vous ne pouvez pas entrer 0",
+	"Please enter a quantity greater than 0": "Vous ne pouvez pas entrer 0",
 	"You cannot enter value more than 9999": "Vous ne pouvez pas entrer de valeur sup\u00e9rieure \u00e0 9999",
 	"box": "bo\u00eete",
 	"item": "\u00e9l\u00e9ment",
@@ -47344,7 +47346,7 @@ var german = {
 	"Wrong slot location scanned. Please try again": "Falscher Einschubstandort gescannt. Bitte versuchen Sie es erneut.",
 	"Wrong slot scanned": "Falscher Einschub gescannt.",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "Sie d\u00fcrfen die Menge nicht \u00fcber den Nummernblock eingeben. Ein forcierter Scan ist erforderlich.",
-	"You cannot enter 0": "Sie k\u00f6nnen keine 0 eingeben.",
+	"Please enter a quantity greater than 0": "Sie k\u00f6nnen keine 0 eingeben.",
 	"You cannot enter value more than 9999": "Sie k\u00f6nnen keinen Wert h\u00f6her als 9999 eingeben.",
 	"box": "Schachtel.",
 	"item": "Artikel.",
@@ -47694,7 +47696,7 @@ var japanese = {
    "Wrong slot location scanned. Please try again": "\u30b9\u30ed\u30c3\u30c8\u9055\u3044\u3002\u6b63\u3057\u3044\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong slot scanned": "\u9055\u3046\u30b9\u30ed\u30c3\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u3066\u3044\u307e\u3059",
    "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "\u30ad\u30fc\u30d1\u30c3\u30c9\u3067\u306e\u6570\u5b57\u5165\u529b\u304c\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
-   "You cannot enter 0": "0 \u306f\u5165\u529b\u4e0d\u53ef",
+   "Please enter a quantity greater than 0": "0 \u306f\u5165\u529b\u4e0d\u53ef",
    "You cannot enter value more than 9999": "9999 \u4ee5\u4e0a\u306f\u5165\u529b\u4e0d\u53ef",
    "box": "\u30dc\u30c3\u30af\u30b9",
    "item": "\u5546\u54c1",
@@ -47880,7 +47882,7 @@ var serverMessages = {
     "CLIENTCODE_006" : "Peripheral added successfully",
     "CLIENTCODE_007" : "Peripheral not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
-    "CLIENTCODE_009" : "You cannot enter 0",
+    "CLIENTCODE_009" : "Please enter a quantity greater than 0",
     "CLIENTCODE_010" : "Sum of good and exception quantity should be equal to {0}",
     "CLIENTCODE_011" : "Sum of missing and good quantity should be equal to {0}",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",
@@ -48351,7 +48353,7 @@ var spanish = {
 	"Wrong slot location scanned. Please try again": "Ubicaci\u00f3n de vacante mal escaneada. Por favor, int\u00e9ntelo de nuevo",
 	"Wrong slot scanned": "Se ha escaneado la vacante equivocada",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "No se le permite ingresar la cantidad desde el teclado num\u00e9rico. El Escaneo Forzado es necesario.",
-	"You cannot enter 0": "No puede entrar 0",
+	"Please enter a quantity greater than 0": "No puede entrar 0",
 	"You cannot enter value more than 9999": "Usted no puede entrar un valor mayor de 9999",
 	"box": "caja",
 	"item": "art\u00edculo",
@@ -51860,6 +51862,7 @@ getScreenData: function() {
             data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+            data["PickFrontCancelScan"] = this.cancelScanDetails();
             break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
             data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();

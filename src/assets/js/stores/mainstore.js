@@ -2323,6 +2323,7 @@ getScreenData: function() {
             data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+            data["PickFrontCancelScan"] = this.cancelScanDetails();
             break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
             data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();

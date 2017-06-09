@@ -168,7 +168,7 @@ var serverMessages = {
     "CLIENTCODE_006" : "Peripheral added successfully",
     "CLIENTCODE_007" : "Peripheral not added",
     "CLIENTCODE_008" : "You cannot enter value more than 9999",
-    "CLIENTCODE_009" : "You cannot enter 0",
+    "CLIENTCODE_009" : "Please enter a quantity greater than 0",
     "CLIENTCODE_010" : "Sum of good and exception quantity should be equal to {0}",
     "CLIENTCODE_011" : "Sum of missing and good quantity should be equal to {0}",
     "CLIENTCODE_012"  : "Quantity should be less than or equal to {0}",

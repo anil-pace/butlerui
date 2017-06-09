@@ -334,7 +334,7 @@ var german = {
 	"Wrong slot location scanned. Please try again": "Falscher Einschubstandort gescannt. Bitte versuchen Sie es erneut.",
 	"Wrong slot scanned": "Falscher Einschub gescannt.",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "Sie d\u00fcrfen die Menge nicht \u00fcber den Nummernblock eingeben. Ein forcierter Scan ist erforderlich.",
-	"You cannot enter 0": "Sie k\u00f6nnen keine 0 eingeben.",
+	"Please enter a quantity greater than 0": "Sie k\u00f6nnen keine 0 eingeben.",
 	"You cannot enter value more than 9999": "Sie k\u00f6nnen keinen Wert h\u00f6her als 9999 eingeben.",
 	"box": "Schachtel.",
 	"item": "Artikel.",

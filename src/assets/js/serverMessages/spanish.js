@@ -331,7 +331,7 @@ var spanish = {
 	"Wrong slot location scanned. Please try again": "Ubicaci\u00f3n de vacante mal escaneada. Por favor, int\u00e9ntelo de nuevo",
 	"Wrong slot scanned": "Se ha escaneado la vacante equivocada",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "No se le permite ingresar la cantidad desde el teclado num\u00e9rico. El Escaneo Forzado es necesario.",
-	"You cannot enter 0": "No puede entrar 0",
+	"Please enter a quantity greater than 0": "No puede entrar 0",
 	"You cannot enter value more than 9999": "Usted no puede entrar un valor mayor de 9999",
 	"box": "caja",
 	"item": "art\u00edculo",

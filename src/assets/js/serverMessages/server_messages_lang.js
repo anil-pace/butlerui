@@ -219,7 +219,7 @@ function server_messages_list() {
     _("Scan Box or Items");
     _("Check Count");
     _("You cannot enter value more than 9999");
-    _("You cannot enter 0");
+    _("Please enter a quantity greater than 0");
     _("Place extra entity in Exception area.");
     _("Sum of missing, good and damaged should be equal to {0}");
     _("Sum of missing, good and damaged should be equal to {0}");

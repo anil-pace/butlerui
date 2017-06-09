@@ -330,7 +330,7 @@ var japanese = {
    "Wrong slot location scanned. Please try again": "\u30b9\u30ed\u30c3\u30c8\u9055\u3044\u3002\u6b63\u3057\u3044\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong slot scanned": "\u9055\u3046\u30b9\u30ed\u30c3\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u3066\u3044\u307e\u3059",
    "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "\u30ad\u30fc\u30d1\u30c3\u30c9\u3067\u306e\u6570\u5b57\u5165\u529b\u304c\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
-   "You cannot enter 0": "0 \u306f\u5165\u529b\u4e0d\u53ef",
+   "Please enter a quantity greater than 0": "0 \u306f\u5165\u529b\u4e0d\u53ef",
    "You cannot enter value more than 9999": "9999 \u4ee5\u4e0a\u306f\u5165\u529b\u4e0d\u53ef",
    "box": "\u30dc\u30c3\u30af\u30b9",
    "item": "\u5546\u54c1",

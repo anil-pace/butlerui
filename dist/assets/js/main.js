@@ -38571,6 +38571,7 @@ switch (module) {
                             case appConstants.SEND_MISSING_BOX_EXCEPTION:
                                  data["event_name"] = "pick_front_exception";
                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
@@ -41374,7 +41375,8 @@ var PickFront = React.createClass({displayName: "PickFront",
               )
             );
            }
-        break;      
+        break;  
+  //raja          
         case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "box_serial"){
@@ -41386,7 +41388,8 @@ var PickFront = React.createClass({displayName: "PickFront",
                      React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
                       React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
-                    )
+                    ), 
+                    React.createElement(KQ, {scanDetails: this.state.PickFrontDamagedQuantity, action: "UNSCANNABLE"})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
@@ -44279,6 +44282,48 @@ var PutBack = React.createClass({displayName: "PutBack",
       );
      break; 
      case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
+      // this._navigation = '';
+      //     if(this.state.PickFrontExceptionScreen == "box_serial"){
+      //     this._component = (
+      //         <div className='grid-container exception'>
+      //           <Exception data={this.state.PutBackExceptionData}/>
+      //           <div className="exception-right">
+      //             <div className="main-container">
+      //                <div className = "kq-exception">
+      //                 <div className="kq-header">{_("Missing Boxes")}</div>
+      //                 <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
+      //               </div>
+      //               <KQ scanDetails = {this.state.PutBackDamagedQuantity} action={"UNSCANNABLE"} />
+      //             </div>
+      //             <div className = "finish-damaged-barcode">
+      //               <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_FROM_USER} />  
+      //             </div>
+      //           </div>
+      //           <div className = 'cancel-scan'>
+      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+      //           </div>
+      //         </div>
+      //       );
+      //     }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
+      //         this._component = (
+      //         <div className='grid-container exception'>
+      //           <Exception data={this.state.PutBackExceptionData}/>
+      //           <div className="exception-right">
+      //             <div className="main-container exception2">
+      //               <div className = "kq-exception">
+      //                 <div className="kq-header">{"Are You sure Given Boxes are not present in Slot ? "}</div>
+      //               </div>
+      //             </div>
+      //             <div className = "finish-damaged-barcode"> 
+      //               <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
+      //             </div>
+      //           </div>
+      //           <div className = 'cancel-scan'>
+      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+      //           </div>
+      //         </div>
+      //       );
+      //      }
      this._navigation = '';
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
@@ -46536,8 +46581,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.8.109/wss",
+	INTERFACE_IP : "https://192.168.8.109"
 
 };
 module.exports = configConstants;
@@ -51527,6 +51572,7 @@ getScreenData: function() {
             data["PutBackExceptionData"] = this.getExceptionData();
             data["PutBackNotification"] = this.getNotificationData();
             data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
+            data["PutBackDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
@@ -51958,6 +52004,7 @@ getScreenData: function() {
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
             data["PickFrontBoxDetails"] = this.getBoxDetails();
+            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:

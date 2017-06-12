@@ -1978,6 +1978,7 @@ getScreenData: function() {
             data["PutBackExceptionData"] = this.getExceptionData();
             data["PutBackNotification"] = this.getNotificationData();
             data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
+            data["PutBackDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
@@ -2409,6 +2410,7 @@ getScreenData: function() {
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
             data["PickFrontBoxDetails"] = this.getBoxDetails();
+            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:

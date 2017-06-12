@@ -253,6 +253,7 @@ switch (module) {
                             case appConstants.SEND_MISSING_BOX_EXCEPTION:
                                  data["event_name"] = "pick_front_exception";
                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:

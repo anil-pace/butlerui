@@ -1805,7 +1805,7 @@ sendUnscannableDatatoServer:function(){
          data["event_data"]["quantity"] = {};
          data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
     utils.postDataToInterface(data, _seatData.seat_name);
-}
+},
 
 getToteException: function() {
     if (_seatData.hasOwnProperty('exception_msg')) {

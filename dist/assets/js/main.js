@@ -36822,7 +36822,11 @@ var commonActions = {
       actionType: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER
     });
    },
-
+    sendUnscannableDatatoServer:function(){
+     AppDispatcher.handleAction({
+      actionType: appConstants.SEND_UNSCANNABLE_DATA_TO_SERVER
+    });
+   },
    validateAndSendSpaceUnavailableDataToServer:function(){
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
@@ -38568,12 +38572,9 @@ switch (module) {
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
                                 break;
-                            case appConstants.SEND_MISSING_BOX_EXCEPTION:
-                                 data["event_name"] = "pick_front_exception";
-                                 data["event_data"]["event"] = mainstore.getExceptionType();
-                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
-                                ActionCreators.postDataToInterface(data);
-                                break;
+                             case appConstants.SEND_MISSING_BOX_EXCEPTION:
+                                ActionCreators.sendUnscannableDatatoServer();
+                                break;   
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
@@ -46541,6 +46542,7 @@ var appConstants = {
 	IDLE_LOGOUT_TIME : 300000, //in millisec
 	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN',
 	VALIDATE_UNMARKED_DAMAGED_DATA:"VALIDATE_UNMARKED_DAMAGED_DATA",
+	SEND_UNSCANNABLE_DATA_TO_SERVER:"sendUnscannableDatatoServer",
 	PUT_FRONT_WAITING_UNDOCK : 'put_front_waiting_undock',
 	PUT_FRONT_WRONG_UNDOCK : 'put_front_wrong_undock',
 	PRE_PUT_STAGE : "pre_put_stage",
@@ -51400,6 +51402,16 @@ validateUnmarkedDamagedData:function(){
      utils.postDataToInterface(data, _seatData.seat_name);
  }
 },
+sendUnscannableDatatoServer:function(){
+    var data = {};
+         data["event_name"] = "pick_front_exception";
+         data["event_data"] = {};
+         data["event_data"]["event"] = _seatData.exception_type;
+         data["event_data"]["quantity"] = {};
+         data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
+    utils.postDataToInterface(data, _seatData.seat_name);
+},
+
 getToteException: function() {
     if (_seatData.hasOwnProperty('exception_msg')) {
         return _seatData.exception_msg[0];
@@ -52287,6 +52299,10 @@ AppDispatcher.register(function(payload) {
         break;
         case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
         mainstore.validateAndSendDataToServer();
+        mainstore.emitChange();
+        break;
+        case appConstants.SEND_UNSCANNABLE_DATA_TO_SERVER:
+        mainstore.sendUnscannableDatatoServer();
         mainstore.emitChange();
         break;
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:

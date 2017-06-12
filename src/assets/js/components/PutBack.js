@@ -374,48 +374,6 @@ var PutBack = React.createClass({
       );
      break; 
      case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
-      // this._navigation = '';
-      //     if(this.state.PickFrontExceptionScreen == "box_serial"){
-      //     this._component = (
-      //         <div className='grid-container exception'>
-      //           <Exception data={this.state.PutBackExceptionData}/>
-      //           <div className="exception-right">
-      //             <div className="main-container">
-      //                <div className = "kq-exception">
-      //                 <div className="kq-header">{_("Missing Boxes")}</div>
-      //                 <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
-      //               </div>
-      //               <KQ scanDetails = {this.state.PutBackDamagedQuantity} action={"UNSCANNABLE"} />
-      //             </div>
-      //             <div className = "finish-damaged-barcode">
-      //               <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_FROM_USER} />  
-      //             </div>
-      //           </div>
-      //           <div className = 'cancel-scan'>
-      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //           </div>
-      //         </div>
-      //       );
-      //     }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
-      //         this._component = (
-      //         <div className='grid-container exception'>
-      //           <Exception data={this.state.PutBackExceptionData}/>
-      //           <div className="exception-right">
-      //             <div className="main-container exception2">
-      //               <div className = "kq-exception">
-      //                 <div className="kq-header">{"Are You sure Given Boxes are not present in Slot ? "}</div>
-      //               </div>
-      //             </div>
-      //             <div className = "finish-damaged-barcode"> 
-      //               <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
-      //             </div>
-      //           </div>
-      //           <div className = 'cancel-scan'>
-      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //           </div>
-      //         </div>
-      //       );
-      //      }
      this._navigation = '';
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (

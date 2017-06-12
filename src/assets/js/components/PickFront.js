@@ -408,7 +408,7 @@ var PickFront = React.createClass({
                     </div>
                     <div className = "kq-exception">
                       <div className="kq-header">{_("Missing Quantity")}</div>
-                      <KQExceptionMissing scanDetailsMissing = {this.state.PickFrontMissingQuantity}  action={"MISSING"} />
+                      <KQExceptionMissing scanDetailsMissing = {this.state.PickFrontMissingQuantity} action={"MISSING"} />
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
@@ -472,7 +472,7 @@ var PickFront = React.createClass({
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "box_serial"){
           this._component = (
-             <div className='grid-container exception'>
+              <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container">

@@ -41382,7 +41382,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "box_serial"){
           this._component = (
-             React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
@@ -42722,7 +42722,7 @@ var KQ = React.createClass({displayName: "KQ",
                     CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ) );
                      return true;
                 }
-                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
+                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
                 if(this.props.action != undefined){
                     switch(this.props.action){
                         case "GOOD":
@@ -42819,7 +42819,7 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED &&  mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
                      mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
@@ -42827,9 +42827,7 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(_updatedQtyDamaged );
-                }
-
-                else{
+                }else{
                     data["code"] = null;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
@@ -44292,48 +44290,6 @@ var PutBack = React.createClass({displayName: "PutBack",
       );
      break; 
      case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
-      // this._navigation = '';
-      //     if(this.state.PickFrontExceptionScreen == "box_serial"){
-      //     this._component = (
-      //         <div className='grid-container exception'>
-      //           <Exception data={this.state.PutBackExceptionData}/>
-      //           <div className="exception-right">
-      //             <div className="main-container">
-      //                <div className = "kq-exception">
-      //                 <div className="kq-header">{_("Missing Boxes")}</div>
-      //                 <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
-      //               </div>
-      //               <KQ scanDetails = {this.state.PutBackDamagedQuantity} action={"UNSCANNABLE"} />
-      //             </div>
-      //             <div className = "finish-damaged-barcode">
-      //               <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CONFIRM_FROM_USER} />  
-      //             </div>
-      //           </div>
-      //           <div className = 'cancel-scan'>
-      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //           </div>
-      //         </div>
-      //       );
-      //     }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
-      //         this._component = (
-      //         <div className='grid-container exception'>
-      //           <Exception data={this.state.PutBackExceptionData}/>
-      //           <div className="exception-right">
-      //             <div className="main-container exception2">
-      //               <div className = "kq-exception">
-      //                 <div className="kq-header">{"Are You sure Given Boxes are not present in Slot ? "}</div>
-      //               </div>
-      //             </div>
-      //             <div className = "finish-damaged-barcode"> 
-      //               <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_MISSING_BOX_EXCEPTION} /> 
-      //             </div>
-      //           </div>
-      //           <div className = 'cancel-scan'>
-      //              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //           </div>
-      //         </div>
-      //       );
-      //      }
      this._navigation = '';
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
@@ -51584,7 +51540,6 @@ getScreenData: function() {
             data["PutBackExceptionData"] = this.getExceptionData();
             data["PutBackNotification"] = this.getNotificationData();
             data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
-            data["PutBackDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:

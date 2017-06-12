@@ -1979,7 +1979,6 @@ getScreenData: function() {
             data["PutBackExceptionData"] = this.getExceptionData();
             data["PutBackNotification"] = this.getNotificationData();
             data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
-            data["PutBackDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:

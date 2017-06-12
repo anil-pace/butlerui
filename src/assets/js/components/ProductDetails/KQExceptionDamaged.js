@@ -109,7 +109,7 @@ var KQ = React.createClass({
           }          
                       
             var data = {};
-            if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
                 CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ));
                 return true;
             }
@@ -275,7 +275,7 @@ var KQ = React.createClass({
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
+               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED &&  mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
                      mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
@@ -421,6 +421,7 @@ var KQ = React.createClass({
 
     },
     render: function(data) {
+
          _updatedQtyDamaged  = parseInt(this.props.scanDetailsDamaged.current_qty);
         _scanDetails = this.props.scanDetailsDamaged;
         console.log(_updatedQtyDamaged);

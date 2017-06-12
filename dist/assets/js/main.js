@@ -41382,7 +41382,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "box_serial"){
           this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
+             React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
@@ -41390,7 +41390,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                       React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
                       React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
                     ), 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")), 
                      React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, type: appConstants.UNSCANNABLE, action: appConstants.UNSCANNABLE})
+                 )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})

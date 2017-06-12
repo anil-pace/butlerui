@@ -254,7 +254,7 @@ switch (module) {
                                 //ActionCreators.sendUnscannableDatatoServer();
                                 data["event_name"] = "pick_front_exception";
                                 data["event_data"] = {};
-                                data["event_data"]["event"] = _seatData.exception_type;
+                                data["event_data"]["event"] = mainstore.exception_type;
                                 data["event_data"]["quantity"] = {};
                                 data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
 

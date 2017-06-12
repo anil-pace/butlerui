@@ -251,7 +251,6 @@ switch (module) {
                                 ActionCreators.validateAndSendDataToServer();
                                 break;
                              case appConstants.SEND_MISSING_BOX_EXCEPTION:
-                                //ActionCreators.sendUnscannableDatatoServer();
                                 data["event_name"] = "pick_front_exception";
                                 data["event_data"] = {};
                                 data["event_data"]["event"] = mainstore.getExceptionType();

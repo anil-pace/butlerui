@@ -93,6 +93,7 @@ var appConstants = {
 	GOOD_QUANTITY:"good_quntity",
 	MISSING_QUANTITY:"Missing_quntity",
 	UNSCANNABLE_QUANTITY:"Unscannable_quntity",
+	UNSCANNABLE:"UNSCANNABLE",
 	DAMAGED_QUANTITY:"Damaged_quntity",
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
@@ -174,7 +175,6 @@ var appConstants = {
 	IDLE_LOGOUT_TIME : 300000, //in millisec
 	VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:'VALIDATE_PUT_FRONT_EXCEPTION_SCREEN',
 	VALIDATE_UNMARKED_DAMAGED_DATA:"VALIDATE_UNMARKED_DAMAGED_DATA",
-	SEND_UNSCANNABLE_DATA_TO_SERVER:"sendUnscannableDatatoServer",
 	PUT_FRONT_WAITING_UNDOCK : 'put_front_waiting_undock',
 	PUT_FRONT_WRONG_UNDOCK : 'put_front_wrong_undock',
 	PRE_PUT_STAGE : "pre_put_stage",

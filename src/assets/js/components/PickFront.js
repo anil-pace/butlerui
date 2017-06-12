@@ -467,8 +467,7 @@ var PickFront = React.createClass({
               </div>
             );
            }
-        break;  
-  //raja          
+        break;          
         case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "box_serial"){
@@ -481,7 +480,7 @@ var PickFront = React.createClass({
                       <div className="kq-header">{_("Missing Boxes")}</div>
                       <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
                     </div>
-                     <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} type={"unscannable"} action={"UNSCANNABLE"} />
+                     <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} type={appConstants.UNSCANNABLE} action={appConstants.UNSCANNABLE} />
                   </div>
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  

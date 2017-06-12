@@ -1797,15 +1797,6 @@ validateUnmarkedDamagedData:function(){
      utils.postDataToInterface(data, _seatData.seat_name);
  }
 },
-sendUnscannableDatatoServer:function(){
-    var data = {};
-         data["event_name"] = "pick_front_exception";
-         data["event_data"] = {};
-         data["event_data"]["event"] = _seatData.exception_type;
-         data["event_data"]["quantity"] = {};
-         data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
-    utils.postDataToInterface(data, _seatData.seat_name);
-},
 
 getToteException: function() {
     if (_seatData.hasOwnProperty('exception_msg')) {
@@ -2694,10 +2685,6 @@ AppDispatcher.register(function(payload) {
         break;
         case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
         mainstore.validateAndSendDataToServer();
-        mainstore.emitChange();
-        break;
-        case appConstants.SEND_UNSCANNABLE_DATA_TO_SERVER:
-        mainstore.sendUnscannableDatatoServer();
         mainstore.emitChange();
         break;
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:

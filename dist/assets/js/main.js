@@ -47991,7 +47991,7 @@ var serverMessages = {
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
     "PkF001" : "Issues with entity",
-    "PkF005" : "Missing Box",
+    "PkF005" : "Missing/Unscannable Box",
     "PkB007" : "Disassociate Tote",
     "PkB008" : "Override Tote Required",
     "PkB009" : "Reprint",

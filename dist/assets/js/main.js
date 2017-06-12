@@ -41390,7 +41390,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                       React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
                       React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
                     ), 
-                     React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, action: "UNSCANNABLE"})
+                     React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, type: "unscannable", action: "UNSCANNABLE"})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
@@ -42967,8 +42967,9 @@ var KQ = React.createClass({displayName: "KQ",
 
     },
     render: function(data) {
-
-         _updatedQtyDamaged  = parseInt(this.props.scanDetailsDamaged.current_qty);
+        var typeValue="";
+        typeValue=this.props.type;
+         _updatedQtyDamaged  = typeValue==="unscannable"?_updatedQtyDamaged:parseInt(this.props.scanDetailsDamaged.current_qty);
         _scanDetails = this.props.scanDetailsDamaged;
         console.log(_updatedQtyDamaged);
         this.checkKqAllowed();

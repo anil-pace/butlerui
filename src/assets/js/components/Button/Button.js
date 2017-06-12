@@ -251,7 +251,14 @@ switch (module) {
                                 ActionCreators.validateAndSendDataToServer();
                                 break;
                              case appConstants.SEND_MISSING_BOX_EXCEPTION:
-                                ActionCreators.sendUnscannableDatatoServer();
+                                //ActionCreators.sendUnscannableDatatoServer();
+                                data["event_name"] = "pick_front_exception";
+                                data["event_data"] = {};
+                                data["event_data"]["event"] = _seatData.exception_type;
+                                data["event_data"]["quantity"] = {};
+                                data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
+
+                                ActionCreators.postDataToInterface(data);
                                 break;   
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";

@@ -177,6 +177,7 @@ var serverMessages = {
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
     "CLIENTCODE_017" : "Good Quantity Cannot be Equal to the Total Quantity",
+    "CLIENTCODE_018" : "Sum of good, missing and damaged should be equal to {0}",
     "CLIENTCODE_409_PERIPHERAL" : "Peripheral already added",
     "CLIENTCODE_400" : "Bad Data",
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",

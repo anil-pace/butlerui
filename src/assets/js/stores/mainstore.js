@@ -1634,7 +1634,7 @@ validateAndSendDataToServer: function() {
             data["details"] = [details];
             _seatData.notification_list[0] = data;
         } else {
-            _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+            _seatData.notification_list[0].code = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
             _seatData.notification_list[0].details = [details];
             _seatData.notification_list[0].level = "error";
         }

@@ -223,12 +223,6 @@ var commonActions = {
       data:data
     });
   },
-  validatePutFrontExceptionScreen:function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.VALIDATE_PUT_FRONT_EXCEPTION_SCREEN,
-      data:data
-    });
-  },
 
   changeAuditExceptionScreen:function(data){
     AppDispatcher.handleAction({

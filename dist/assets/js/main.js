@@ -41312,17 +41312,17 @@ var PickFront = React.createClass({displayName: "PickFront",
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container"}, 
-                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
-                      React.createElement("div", {classNAME: "BoxSerial"})
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Good Quantity")), 
+                      React.createElement(KQ, {scanDetailsGood: this.state.PickFrontGoodQuantity, action: "GOOD"})
                     ), 
                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")), 
-                     React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, type: appConstants.UNSCANNABLE, action: appConstants.UNSCANNABLE})
-                 )
+                      React.createElement("div", {className: "kq-header"}, _("Missing Quantity")), 
+                      React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.PickFrontMissingQuantity, action: "MISSING"})
+                    )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
+                    React.createElement(Button1, {disabled: this._disableNext, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.GET_MISSING_AND_DAMAGED_QTY})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 

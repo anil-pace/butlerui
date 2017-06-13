@@ -42831,8 +42831,12 @@ var KQ = React.createClass({displayName: "KQ",
                     data["code"] = null;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
+                    if(mainstore.getScreenId()==appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
+                    {
                     $('.ui-keyboard-preview').val(parseInt(keypressed.last.val));
+                    }
                 }
+                
             },
             accepted: function(e, keypressed, el) {
                 if (e.target.value === '' ) {

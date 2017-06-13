@@ -44808,12 +44808,12 @@ var RackRow = React.createClass({displayName: "RackRow",
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type, slotType: slotType})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], noOfSlotsInRow: slotData.length, slotWidthDataLength: slot[1], key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type, slotType: slotType})
 					
 				);
 			else
 				return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type, slotType: slotType})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[2], slotWidthData: slot[0], noOfSlotsInRow: slotData.length, slotWidthDataLength: slot[1], slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type, slotType: slotType})
 					);
 		});
 		return (
@@ -44837,7 +44837,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		var slotIndexArrays = this.props.slotIndexArrays;
 		var totalRackHeight = this.props.totalRackHeight;
 		var noOfRows = this.props.noOfRows;
-		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
+		var calculateWidth = +this.props.slotWidthDataLength*this.props.noOfSlotsInRow;
 		var type = this.props.type;
 		var slotType = this.props.slotType;
 		//var calculateHeight = this.props.slotHeightData;

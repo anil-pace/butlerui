@@ -46603,6 +46603,7 @@ var resourceConstants = {
 	CLIENTCODE_015 : "CLIENTCODE_015",
 	CLIENTCODE_016 : 'CLIENTCODE_016',
 	CLIENTCODE_017 : 'CLIENTCODE_017',
+	CLIENTCODE_018 : "CLIENTCODE_018",
 	CLIENTCODE_409 : "CLIENTCODE_409",
 	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
 	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
@@ -47924,6 +47925,7 @@ var serverMessages = {
     "CLIENTCODE_015" : "Peripheral deleted successfully",
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
     "CLIENTCODE_017" : "Good Quantity Cannot be Equal to the Total Quantity",
+    "CLIENTCODE_018" : "Sum of good, missing and damaged should be equal to {0}",
     "CLIENTCODE_409_PERIPHERAL" : "Peripheral already added",
     "CLIENTCODE_400" : "Bad Data",
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",
@@ -51201,12 +51203,12 @@ validateAndSendDataToServer: function() {
     if (flag) {
         if (_seatData.notification_list.length == 0) {
             var data = {};
-            data["code"] = resourceConstants.CLIENTCODE_010;
+            data["code"] = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
             data["level"] = "error";
             data["details"] = [details];
             _seatData.notification_list[0] = data;
         } else {
-            _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+            _seatData.notification_list[0].code = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
             _seatData.notification_list[0].details = [details];
             _seatData.notification_list[0].level = "error";
         }

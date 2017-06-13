@@ -1621,12 +1621,12 @@ validateAndSendDataToServer: function() {
     if (flag) {
         if (_seatData.notification_list.length == 0) {
             var data = {};
-            data["code"] = resourceConstants.CLIENTCODE_010;
+            data["code"] = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
             data["level"] = "error";
             data["details"] = [details];
             _seatData.notification_list[0] = data;
         } else {
-            _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
+            _seatData.notification_list[0].code = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
             _seatData.notification_list[0].details = [details];
             _seatData.notification_list[0].level = "error";
         }
@@ -1728,6 +1728,7 @@ validateUnmarkedDamagedData:function(){
      utils.postDataToInterface(data, _seatData.seat_name);
  }
 },
+
 getToteException: function() {
     if (_seatData.hasOwnProperty('exception_msg')) {
         return _seatData.exception_msg[0];
@@ -2319,6 +2320,7 @@ getScreenData: function() {
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
             data["PickFrontBoxDetails"] = this.getBoxDetails();
+            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:

@@ -90,6 +90,7 @@ var appConstants = {
 	GOOD_QUANTITY:"good_quntity",
 	MISSING_QUANTITY:"Missing_quntity",
 	UNSCANNABLE_QUANTITY:"Unscannable_quntity",
+	UNSCANNABLE:"UNSCANNABLE",
 	DAMAGED_QUANTITY:"Damaged_quntity",
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",

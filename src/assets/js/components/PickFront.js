@@ -400,6 +400,10 @@ var PickFront = React.createClass({
                       <div className="kq-header">{_("Missing Boxes")}</div>
                       <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
                     </div>
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Unscannable Boxes")}</div>
+                     <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} type={appConstants.UNSCANNABLE} action={appConstants.UNSCANNABLE} />
+                 </div>
                   </div>
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  

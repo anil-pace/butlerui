@@ -282,6 +282,7 @@ var KQ = React.createClass({
                     data["code"] = null;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
+                    $('.ui-keyboard-preview').val(parseInt(keypressed.last.val));
                 }
             },
             accepted: function(e, keypressed, el) {
@@ -289,15 +290,14 @@ var KQ = React.createClass({
                     CommonActions.resetNumpadVal(parseInt(_updatedQtyDamaged ));
                 } else  {  
                     var data = {};
-                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
-                        CommonActions.updateKQQuantity(parseInt(e.target.value));                                             
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));                         
                          return true;
-                    }
-                    else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
+                    }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)//PICK_FRONT_EXCEPTION_MISSING_BOX
                     {
-                       CommonActions.updateKQQuantity(parseInt(keypressed.last.val)); 
-                       _updatedQtyDamaged=keypressed.last.val;
-                       return true;
+                        _updatedQtyDamaged=parseInt(e.target.value);
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));        
+                        return true;
                     }
 
                     if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){

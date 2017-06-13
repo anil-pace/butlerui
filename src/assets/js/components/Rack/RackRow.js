@@ -28,12 +28,12 @@ var RackRow = React.createClass({
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} selectedSlot={true} slotHeightData={slot[2]} slotWidthData={slot[0]} slotWidthDataLength={slot[0].length} key={index} slotIndexArrays={slotIndexArray} rackRange={rackRange} type={type} slotType={slotType} />
+					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} selectedSlot={true} slotHeightData={slot[2]} slotWidthData={slot[0]} noOfSlotsInRow={slotData.length} slotWidthDataLength={slot[1]} key={index} slotIndexArrays={slotIndexArray} rackRange={rackRange} type={type} slotType={slotType} />
 					
 				);
 			else
 				return(
-					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} slotHeightData={slot[2]} slotWidthData={slot[0]} slotWidthDataLength={slot[0].length} slotIndexArrays={slotIndexArray} key={index} rackRange={rackRange} type={type} slotType={slotType} />
+					<RackSlot totalRackHeight={totalRackHeight} noOfRows={noOfRows} slotHeightData={slot[2]} slotWidthData={slot[0]} noOfSlotsInRow={slotData.length} slotWidthDataLength={slot[1]} slotIndexArrays={slotIndexArray} key={index} rackRange={rackRange} type={type} slotType={slotType} />
 					);
 		});
 		return (

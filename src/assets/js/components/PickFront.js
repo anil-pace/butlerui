@@ -397,7 +397,7 @@ var PickFront = React.createClass({
             this._disableNext = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontGoodQuantity.current_qty > 0 )? false : true;          
             this._disableConfirm = (this.state.PickFrontMissingQuantity.current_qty > 0 || this.state.PickFrontDamagedQuantity.current_qty > 0 )? false : true;      
           if(this.state.PickFrontExceptionScreen == "good"){
-          this._component = (
+        this._component = (
               <div className='grid-container exception'>
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
@@ -467,7 +467,7 @@ var PickFront = React.createClass({
               </div>
             );
            }
-        break;      
+        break;          
         case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
           this._navigation = '';
           if(this.state.PickFrontExceptionScreen == "box_serial"){
@@ -480,6 +480,10 @@ var PickFront = React.createClass({
                       <div className="kq-header">{_("Missing Boxes")}</div>
                       <BoxSerial boxData = {this.state.PickFrontBoxDetails} />
                     </div>
+                    <div className = "kq-exception">
+                      <div className="kq-header">{_("Unscannable Boxes")}</div>
+                     <KQExceptionDamaged scanDetailsDamaged = {this.state.PickFrontDamagedQuantity} type={appConstants.UNSCANNABLE} action={appConstants.UNSCANNABLE} />
+                 </div>
                   </div>
                   <div className = "finish-damaged-barcode">
                     <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />  

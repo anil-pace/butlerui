@@ -1797,6 +1797,7 @@ validateUnmarkedDamagedData:function(){
      utils.postDataToInterface(data, _seatData.seat_name);
  }
 },
+
 getToteException: function() {
     if (_seatData.hasOwnProperty('exception_msg')) {
         return _seatData.exception_msg[0];
@@ -2409,6 +2410,7 @@ getScreenData: function() {
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
             data["PickFrontBoxDetails"] = this.getBoxDetails();
+            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
             break;
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:

@@ -250,11 +250,15 @@ switch (module) {
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
                                 break;
-                            case appConstants.SEND_MISSING_BOX_EXCEPTION:
-                                 data["event_name"] = "pick_front_exception";
-                                 data["event_data"]["event"] = mainstore.getExceptionType();
+                             case appConstants.SEND_MISSING_BOX_EXCEPTION:
+                                data["event_name"] = "pick_front_exception";
+                                data["event_data"] = {};
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = {};
+                                data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
+
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;   
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";

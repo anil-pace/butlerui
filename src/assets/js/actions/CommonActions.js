@@ -256,7 +256,6 @@ var commonActions = {
       actionType: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER
     });
    },
-
    validateAndSendSpaceUnavailableDataToServer:function(){
      AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER

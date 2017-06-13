@@ -1,5 +1,5 @@
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.9.126/ws",
+	WEBSOCKET_IP : "wss://192.168.9.126/wss",
 	INTERFACE_IP : "https://192.168.9.126"
 
 };

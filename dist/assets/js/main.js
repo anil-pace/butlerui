@@ -46536,7 +46536,7 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.9.126/ws",
+	WEBSOCKET_IP : "wss://192.168.9.126/wss",
 	INTERFACE_IP : "https://192.168.9.126"
 
 };
@@ -51180,7 +51180,7 @@ validateAndSendDataToServer: function() {
     if (flag) {
         if (_seatData.notification_list.length == 0) {
             var data = {};
-            data["code"] = resourceConstants.CLIENTCODE_010;
+            data["code"] = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
             data["level"] = "error";
             data["details"] = [details];
             _seatData.notification_list[0] = data;

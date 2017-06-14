@@ -110,7 +110,17 @@ var PutFront = React.createClass({
         </div>
         );
     }else{
-      this._component = this.getExceptionComponent();
+      var _rightComponent = '';
+        this._navigation = '';
+      this._component =(
+          <div className='grid-container exception'>
+              <Exception data={this.state.PutFrontExceptionData} action={true}/>
+              <div className="exception-right"></div>
+              <div className = 'cancel-scan'>
+              <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+              </div>
+              </div>
+        );
     }
     break;
     case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
@@ -312,6 +322,7 @@ var PutFront = React.createClass({
             }
            this._component = (
               <div className='grid-container exception'>
+              <Modal />
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutFrontServerNavData} />
@@ -346,7 +357,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
               </div>
             );
@@ -355,6 +366,7 @@ var PutFront = React.createClass({
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
             this._component = (
               <div className='grid-container exception'>
+              <Modal />
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
                    <div className="gor-exception-align">
@@ -368,7 +380,7 @@ var PutFront = React.createClass({
                 
               </div>
               <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
               </div>
             );

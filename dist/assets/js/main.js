@@ -38634,7 +38634,7 @@ switch (module) {
                                 data["event_data"]["action"] ="physically_damaged";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                    
+                                break;                      
                             default:
                                 return true;
                         }
@@ -39205,7 +39205,7 @@ var Header = React.createClass({displayName: "Header",
             }
         }
      }
-        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS|| screenId===appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN)
+        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS|| screenId===appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN || screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM || screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
@@ -41218,6 +41218,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           var buttonActivateFlag=mainstore.getExeptionQuanity();
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
@@ -41256,7 +41257,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -41266,6 +41267,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
@@ -41279,7 +41281,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 
               ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -44349,7 +44351,17 @@ var PutFront = React.createClass({displayName: "PutFront",
         )
         );
     }else{
-      this._component = this.getExceptionComponent();
+      var _rightComponent = '';
+        this._navigation = '';
+      this._component =(
+          React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
+              React.createElement("div", {className: "exception-right"}), 
+              React.createElement("div", {className: "cancel-scan"}, 
+              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+              )
+              )
+        );
     }
     break;
     case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
@@ -44551,6 +44563,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             }
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutFrontServerNavData}), 
@@ -44585,7 +44598,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -44594,6 +44607,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
@@ -44607,7 +44621,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 
               ), 
               React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -45099,12 +45113,12 @@ var RackRow = React.createClass({displayName: "RackRow",
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type, slotType: slotType})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], noOfSlotsInRow: slotData.length, slotWidthDataLength: slot[1], key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type, slotType: slotType})
 					
 				);
 			else
 				return(
-					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[2], slotWidthData: slot[0], slotWidthDataLength: slot[0].length, slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type, slotType: slotType})
+					React.createElement(RackSlot, {totalRackHeight: totalRackHeight, noOfRows: noOfRows, slotHeightData: slot[2], slotWidthData: slot[0], noOfSlotsInRow: slotData.length, slotWidthDataLength: slot[1], slotIndexArrays: slotIndexArray, key: index, rackRange: rackRange, type: type, slotType: slotType})
 					);
 		});
 		return (
@@ -45128,7 +45142,7 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 		var slotIndexArrays = this.props.slotIndexArrays;
 		var totalRackHeight = this.props.totalRackHeight;
 		var noOfRows = this.props.noOfRows;
-		var calculateWidth = 100/*/this.props.slotWidthDataLength*/; 
+		var calculateWidth = +this.props.slotWidthDataLength*this.props.noOfSlotsInRow;
 		var type = this.props.type;
 		var slotType = this.props.slotType;
 		//var calculateHeight = this.props.slotHeightData;
@@ -49544,24 +49558,24 @@ getNavData: function() {
             _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
         }
         else if(_seatData.screen_id === appConstants.PICK_FRONT_PACKING_BOX){
-           _NavData = navConfig.pickFront[3];
-           _NavData[0].type = 'active';
-       } 
+         _NavData = navConfig.pickFront[3];
+         _NavData[0].type = 'active';
+     } 
 
-       else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN){
-         _NavData = navConfig.pickFront[4];
-         _NavData[1].type = 'active';
-     }
-     else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN){
-         _NavData = navConfig.pickFront[5];
-         _NavData[2].type = 'active';
-     }
-     else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS){
-         _NavData = navConfig.pickFront[6];
-         _NavData[2].type = 'active';
-     }
-     else if(_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM){
-        _NavData = navConfig.pickFront[7];
+     else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN){
+       _NavData = navConfig.pickFront[4];
+       _NavData[1].type = 'active';
+   }
+   else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN){
+       _NavData = navConfig.pickFront[5];
+       _NavData[2].type = 'active';
+   }
+   else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS){
+       _NavData = navConfig.pickFront[6];
+       _NavData[2].type = 'active';
+   }
+   else if(_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM){
+    _NavData = navConfig.pickFront[7];
                     //_NavData[2].type = 'active';
                 }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
@@ -50259,7 +50273,7 @@ getNavData: function() {
         }
         value[0].display_data.map(
             function(data_locale, index1){
-               if(data_locale.locale == locale){
+             if(data_locale.locale == locale){
                 if(data_locale.display_name != 'product_local_image_url' ){
                   product_info_locale[data_locale.display_name] = keyValue;
               }
@@ -50381,6 +50395,7 @@ setCurrentSeat: function(data) {
         _putFrontExceptionScreen = "good";
         _goodQuantity = 0;
         _damagedQuantity = 0;
+        _unscannableQuantity=0;
         _missingQuantity = 0;
         _activeException = null;
         _showSpinner = false;
@@ -50893,15 +50908,29 @@ getSelectedBinGroup:function(){
     return groupId ;
 },
 validateAndSendDataToServer: function() {
-    var flag = false;
+    var flag = false,type=false;
     var details;
      if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
-        flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
-        details = _seatData.pick_quantity;
+        if(_goodQuantity===_seatData.pick_quantity && _unscannableQuantity===0)
+        {
+            flag=type=true;
+        }
+        else
+        {
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
+            details = _seatData.pick_quantity;
+        }
     }
     else if(_seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
-        flag = (_goodQuantity + _missingQuantity + _damagedQuantity+_unscannableQuantity) != _seatData.put_quantity;
-        details = _seatData.put_quantity;
+        if(_goodQuantity==_seatData.put_quantity)
+        {
+            flag=type=true;
+        }
+        else
+        {
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity+_unscannableQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
     }
 
     else{
@@ -50911,12 +50940,12 @@ validateAndSendDataToServer: function() {
     if (flag) {
         if (_seatData.notification_list.length == 0) {
             var data = {};
-            data["code"] = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
+            data["code"] =(type)?resourceConstants.CLIENTCODE_017:((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010);
             data["level"] = "error";
             data["details"] = [details];
             _seatData.notification_list[0] = data;
         } else {
-            _seatData.notification_list[0].code = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
+            _seatData.notification_list[0].code = (type)?resourceConstants.CLIENTCODE_017:((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010);
             _seatData.notification_list[0].details = [details];
             _seatData.notification_list[0].level = "error";
         }
@@ -50981,42 +51010,42 @@ validateAndSendSpaceUnavailableDataToServer: function() {
     }
 },
 validateUnmarkedDamagedData:function(){
- var _allowedQuantity;
- _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
- if (_damagedQuantity > _allowedQuantity) {
-     if (_seatData.notification_list.length == 0) {
-         var data = {};
-         data["code"] = resourceConstants.CLIENTCODE_012;
-         data["level"] = "error";
-         data["details"] = [_allowedQuantity];
-         _seatData.notification_list[0] = data;
-     } else {
-         _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
-         _seatData.notification_list[0].details = [_allowedQuantity];
-         _seatData.notification_list[0].level = "error";
-     }
-     _damagedQuantity = 0;
-     
- } else {
-     var data = {};
-     if(_seatData.unmarked_container){
-         data["event_name"] = "put_front_exception";
-         data["event_data"] = {};
-         data["event_data"]["action"] = "confirm_quantity_update";
-         data["event_data"]["event"] = _seatData.exception_type;
-         data["event_data"]["quantity"] = _damagedQuantity;
-     }
-     else
-     {
-         data["event_name"] = "put_front_exception";
-         data["event_data"] = {};
-         data["event_data"]["action"] = "finish_exception";
-         data["event_data"]["event"] = _seatData.exception_type;
-     }
-     
-     this.showSpinner();
-     utils.postDataToInterface(data, _seatData.seat_name);
- }
+   var _allowedQuantity;
+   _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
+   if (_damagedQuantity > _allowedQuantity) {
+       if (_seatData.notification_list.length == 0) {
+           var data = {};
+           data["code"] = resourceConstants.CLIENTCODE_012;
+           data["level"] = "error";
+           data["details"] = [_allowedQuantity];
+           _seatData.notification_list[0] = data;
+       } else {
+           _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+           _seatData.notification_list[0].details = [_allowedQuantity];
+           _seatData.notification_list[0].level = "error";
+       }
+       _damagedQuantity = 0;
+
+   } else {
+       var data = {};
+       if(_seatData.unmarked_container){
+           data["event_name"] = "put_front_exception";
+           data["event_data"] = {};
+           data["event_data"]["action"] = "confirm_quantity_update";
+           data["event_data"]["event"] = _seatData.exception_type;
+           data["event_data"]["quantity"] = _damagedQuantity;
+       }
+       else
+       {
+           data["event_name"] = "put_front_exception";
+           data["event_data"] = {};
+           data["event_data"]["action"] = "finish_exception";
+           data["event_data"]["event"] = _seatData.exception_type;
+       }
+
+       this.showSpinner();
+       utils.postDataToInterface(data, _seatData.seat_name);
+   }
 },
 
 getToteException: function() {
@@ -51037,8 +51066,8 @@ getSlotType: function(){
     } 
 },
 getPeripheralData: function(data) {
-   _seatData.scan_allowed = false;
-   utils.getPeripheralData(data, _seatData.seat_name);
+ _seatData.scan_allowed = false;
+ utils.getPeripheralData(data, _seatData.seat_name);
 },
 updateSeatData: function(data, type, status, method) {
     _peripheralScreen = true;
@@ -51091,7 +51120,7 @@ convert_textbox : function(action, index){
     _binId = index;
 },
 update_peripheral : function(data, method, index){
- utils.updatePeripherals(data, method, _seatName); 
+   utils.updatePeripherals(data, method, _seatName); 
 },
 generateNotification : function(data){
     if(_seatData.notification_list.length > 0){

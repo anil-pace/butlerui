@@ -322,6 +322,7 @@ var PickFront = React.createClass({
           var buttonActivateFlag=mainstore.getExeptionQuanity();
            this._component = (
               <div className='grid-container exception'>
+              <Modal />
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PickFrontServerNavData} />
@@ -360,7 +361,7 @@ var PickFront = React.createClass({
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
               </div>
             );
@@ -370,6 +371,7 @@ var PickFront = React.createClass({
         case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
             this._component = (
               <div className='grid-container exception'>
+              <Modal />
                 <Exception data={this.state.PickFrontExceptionData}/>
                 <div className="exception-right">
                    <div className="gor-exception-align">
@@ -383,7 +385,7 @@ var PickFront = React.createClass({
                 
               </div>
                 <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
               </div>
             );

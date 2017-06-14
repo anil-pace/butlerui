@@ -39219,7 +39219,7 @@ var Header = React.createClass({displayName: "Header",
             }
         }
      }
-        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS|| screenId===appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN)
+        if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS|| screenId===appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN || screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM || screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
             this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 

@@ -38648,7 +38648,7 @@ switch (module) {
                                 data["event_data"]["action"] ="physically_damaged";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                    
+                                break;                      
                             default:
                                 return true;
                         }
@@ -41232,6 +41232,7 @@ var PickFront = React.createClass({displayName: "PickFront",
           var buttonActivateFlag=mainstore.getExeptionQuanity();
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
@@ -41270,7 +41271,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -41280,6 +41281,7 @@ var PickFront = React.createClass({displayName: "PickFront",
         case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
@@ -41293,7 +41295,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 
               ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -44542,7 +44544,17 @@ var PutFront = React.createClass({displayName: "PutFront",
         )
         );
     }else{
-      this._component = this.getExceptionComponent();
+      var _rightComponent = '';
+        this._navigation = '';
+      this._component =(
+          React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
+              React.createElement("div", {className: "exception-right"}), 
+              React.createElement("div", {className: "cancel-scan"}, 
+              React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+              )
+              )
+        );
     }
     break;
     case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
@@ -44744,6 +44756,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             }
            this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutFrontServerNavData}), 
@@ -44778,7 +44791,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -44787,6 +44800,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
@@ -44800,7 +44814,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 
               ), 
               React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -46559,8 +46573,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.9.126/wss",
+	INTERFACE_IP : "https://192.168.9.126"
 
 };
 module.exports = configConstants;
@@ -50665,6 +50679,7 @@ setCurrentSeat: function(data) {
         _putFrontExceptionScreen = "good";
         _goodQuantity = 0;
         _damagedQuantity = 0;
+        _unscannableQuantity=0;
         _missingQuantity = 0;
         _activeException = null;
         _showSpinner = false;

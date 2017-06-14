@@ -1091,6 +1091,7 @@ setCurrentSeat: function(data) {
         _putFrontExceptionScreen = "good";
         _goodQuantity = 0;
         _damagedQuantity = 0;
+        _unscannableQuantity=0;
         _missingQuantity = 0;
         _activeException = null;
         _showSpinner = false;

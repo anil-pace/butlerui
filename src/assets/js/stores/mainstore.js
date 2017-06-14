@@ -254,24 +254,24 @@ getNavData: function() {
             _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
         }
         else if(_seatData.screen_id === appConstants.PICK_FRONT_PACKING_BOX){
-           _NavData = navConfig.pickFront[3];
-           _NavData[0].type = 'active';
-       } 
+         _NavData = navConfig.pickFront[3];
+         _NavData[0].type = 'active';
+     } 
 
-       else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN){
-         _NavData = navConfig.pickFront[4];
-         _NavData[1].type = 'active';
-     }
-     else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN){
-         _NavData = navConfig.pickFront[5];
-         _NavData[2].type = 'active';
-     }
-     else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS){
-         _NavData = navConfig.pickFront[6];
-         _NavData[2].type = 'active';
-     }
-     else if(_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM){
-        _NavData = navConfig.pickFront[7];
+     else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN){
+       _NavData = navConfig.pickFront[4];
+       _NavData[1].type = 'active';
+   }
+   else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN){
+       _NavData = navConfig.pickFront[5];
+       _NavData[2].type = 'active';
+   }
+   else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS){
+       _NavData = navConfig.pickFront[6];
+       _NavData[2].type = 'active';
+   }
+   else if(_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM){
+    _NavData = navConfig.pickFront[7];
                     //_NavData[2].type = 'active';
                 }
                 else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
@@ -969,7 +969,7 @@ getNavData: function() {
         }
         value[0].display_data.map(
             function(data_locale, index1){
-               if(data_locale.locale == locale){
+             if(data_locale.locale == locale){
                 if(data_locale.display_name != 'product_local_image_url' ){
                   product_info_locale[data_locale.display_name] = keyValue;
               }
@@ -1607,19 +1607,33 @@ getSelectedBinGroup:function(){
     return groupId ;
 },
 validateAndSendDataToServer: function() {
-    var flag = false;
+    var flag = false,type=false;
     var details;
     if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
         flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
         details = _seatData.pick_quantity;
     }
     else if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
-        flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
-        details = _seatData.pick_quantity;
+        if(_goodQuantity===_seatData.pick_quantity && _unscannableQuantity===0)
+        {
+            flag=type=true;
+        }
+        else
+        {
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
+            details = _seatData.pick_quantity;
+        }
     }
     else if(_seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
-        flag = (_goodQuantity + _missingQuantity + _damagedQuantity+_unscannableQuantity) != _seatData.put_quantity;
-        details = _seatData.put_quantity;
+        if(_goodQuantity==_seatData.put_quantity)
+        {
+            flag=type=true;
+        }
+        else
+        {
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity+_unscannableQuantity) != _seatData.put_quantity;
+            details = _seatData.put_quantity;
+        }
     }
 
     else{
@@ -1629,12 +1643,12 @@ validateAndSendDataToServer: function() {
     if (flag) {
         if (_seatData.notification_list.length == 0) {
             var data = {};
-            data["code"] = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
+            data["code"] =(type)?resourceConstants.CLIENTCODE_017:((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010);
             data["level"] = "error";
             data["details"] = [details];
             _seatData.notification_list[0] = data;
         } else {
-            _seatData.notification_list[0].code = (_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010;
+            _seatData.notification_list[0].code = (type)?resourceConstants.CLIENTCODE_017:((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010);
             _seatData.notification_list[0].details = [details];
             _seatData.notification_list[0].level = "error";
         }
@@ -1760,42 +1774,42 @@ validateAndSendSpaceUnavailableDataToServer: function() {
     }
 },
 validateUnmarkedDamagedData:function(){
- var _allowedQuantity;
- _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
- if (_damagedQuantity > _allowedQuantity) {
-     if (_seatData.notification_list.length == 0) {
-         var data = {};
-         data["code"] = resourceConstants.CLIENTCODE_012;
-         data["level"] = "error";
-         data["details"] = [_allowedQuantity];
-         _seatData.notification_list[0] = data;
-     } else {
-         _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
-         _seatData.notification_list[0].details = [_allowedQuantity];
-         _seatData.notification_list[0].level = "error";
-     }
-     _damagedQuantity = 0;
-     
- } else {
-     var data = {};
-     if(_seatData.unmarked_container){
-         data["event_name"] = "put_front_exception";
-         data["event_data"] = {};
-         data["event_data"]["action"] = "confirm_quantity_update";
-         data["event_data"]["event"] = _seatData.exception_type;
-         data["event_data"]["quantity"] = _damagedQuantity;
-     }
-     else
-     {
-         data["event_name"] = "put_front_exception";
-         data["event_data"] = {};
-         data["event_data"]["action"] = "finish_exception";
-         data["event_data"]["event"] = _seatData.exception_type;
-     }
-     
-     this.showSpinner();
-     utils.postDataToInterface(data, _seatData.seat_name);
- }
+   var _allowedQuantity;
+   _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
+   if (_damagedQuantity > _allowedQuantity) {
+       if (_seatData.notification_list.length == 0) {
+           var data = {};
+           data["code"] = resourceConstants.CLIENTCODE_012;
+           data["level"] = "error";
+           data["details"] = [_allowedQuantity];
+           _seatData.notification_list[0] = data;
+       } else {
+           _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+           _seatData.notification_list[0].details = [_allowedQuantity];
+           _seatData.notification_list[0].level = "error";
+       }
+       _damagedQuantity = 0;
+
+   } else {
+       var data = {};
+       if(_seatData.unmarked_container){
+           data["event_name"] = "put_front_exception";
+           data["event_data"] = {};
+           data["event_data"]["action"] = "confirm_quantity_update";
+           data["event_data"]["event"] = _seatData.exception_type;
+           data["event_data"]["quantity"] = _damagedQuantity;
+       }
+       else
+       {
+           data["event_name"] = "put_front_exception";
+           data["event_data"] = {};
+           data["event_data"]["action"] = "finish_exception";
+           data["event_data"]["event"] = _seatData.exception_type;
+       }
+
+       this.showSpinner();
+       utils.postDataToInterface(data, _seatData.seat_name);
+   }
 },
 
 getToteException: function() {
@@ -1816,8 +1830,8 @@ getSlotType: function(){
     } 
 },
 getPeripheralData: function(data) {
-   _seatData.scan_allowed = false;
-   utils.getPeripheralData(data, _seatData.seat_name);
+ _seatData.scan_allowed = false;
+ utils.getPeripheralData(data, _seatData.seat_name);
 },
 updateSeatData: function(data, type, status, method) {
     _peripheralScreen = true;
@@ -1870,7 +1884,7 @@ convert_textbox : function(action, index){
     _binId = index;
 },
 update_peripheral : function(data, method, index){
- utils.updatePeripherals(data, method, _seatName); 
+   utils.updatePeripherals(data, method, _seatName); 
 },
 generateNotification : function(data){
     if(_seatData.notification_list.length > 0){

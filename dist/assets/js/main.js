@@ -38547,9 +38547,6 @@ switch (module) {
                             case appConstants.CONFIRM_FROM_USER:
                                 ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
                                 break;
-                             case appConstants.PLACE_ITEM_BACK:
-                                ActionCreators.changePickFrontExceptionScreen("pick_front_quantity");
-                                break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
                                 break;
@@ -46143,7 +46140,6 @@ var appConstants = {
 	PICK_FRONT_EXCEPTION_MISSING_BOX:"pick_front_no_containers_found",
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
-	PLACE_ITEM_BACK:"PLACE_ITEM_BACK",
 	CONFIRM_FROM_USER:"CONFIRM_FROM_USER",
 	RESET_NUMPAD :'RESET_NUMPAD',
 	CANCEL_FINISH_AUDIT:"CANCEL_FINISH_AUDIT",
@@ -46195,7 +46191,6 @@ var appConstants = {
 	BARCODE_SCAN : 'BARCODE_SCAN',
 	GET_SERVER_MESSAGES :'GET_SERVER_MESSAGES',
 	SET_SERVER_MESSAGES : 'SET_SERVER_MESSAGES',
-	GET_MISSING_AND_DAMAGED_QTY:"GET_MISSING_AND_DAMAGED_QTY",
 	CHANGE_PUT_FRONT_EXCEPTION_SCREEN:"CHANGE_PUT_FRONT_EXCEPTION_SCREEN",
 	CHANGE_LANGUAGE :'CHANGE_LANGUAGE',
 	SET_LANGUAGE :'SET_LANGUAGE',

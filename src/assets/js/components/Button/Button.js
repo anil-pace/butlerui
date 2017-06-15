@@ -236,9 +236,6 @@ switch (module) {
                             case appConstants.CONFIRM_FROM_USER:
                                 ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
                                 break;
-                             case appConstants.PLACE_ITEM_BACK:
-                                ActionCreators.changePickFrontExceptionScreen("pick_front_quantity");
-                                break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
                                 break;

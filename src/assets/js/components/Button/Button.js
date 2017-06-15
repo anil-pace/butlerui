@@ -151,17 +151,11 @@ switch (module) {
                             case appConstants.CANCEL_EXCEPTION:
                                 ActionCreators.enableException(false);
                                 break;
-                            case appConstants.GET_MISSING_AND_DAMAGED_QTY:
-                                ActionCreators.changePutFrontExceptionScreen("damaged_or_missing");
-                                break;
                             case appConstants.GET_REVISED_QUANTITY:
                                  ActionCreators.changePutFrontExceptionScreen("revised_quantity");
                                 break;
                             case appConstants.MOVE_TO_DAMAGED_CONFIRM:
                                 ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
-                                break;
-                            case appConstants.VALIDATE_AND_MOVE_TO_DAMAGED_CONFIRM:
-                                ActionCreators.validatePutFrontExceptionScreen("damaged_or_missing_confirm");
                                 break;
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
@@ -238,14 +232,9 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 
                                 break;
-                            case appConstants.GET_MISSING_AND_DAMAGED_QTY:
-                                ActionCreators.changePickFrontExceptionScreen("damaged_or_missing");
-                                break;
+                           
                             case appConstants.CONFIRM_FROM_USER:
                                 ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
-                                break;
-                             case appConstants.PLACE_ITEM_BACK:
-                                ActionCreators.changePickFrontExceptionScreen("pick_front_quantity");
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();

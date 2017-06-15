@@ -148,23 +148,6 @@ var KQ = React.createClass({
                 CommonActions.updateKQQuantity(parseInt(_updatedQty));
                 return true;
             }
-            if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                if(this.props.action != undefined){
-                    switch(this.props.action){
-                        case "GOOD":
-                            CommonActions.updateGoodQuantity(parseInt(_updatedQty));
-                        break;
-                        case "MISSING":
-                            CommonActions.updateMissingQuantity(parseInt(_updatedQty));
-                        break;
-                        case "DAMAGED":
-                            CommonActions.updateDamagedQuantity(parseInt(_updatedQty));
-                        break;
-                        default:
-                    }
-                }
-                return true;
-            }
 
             if (mainstore.getCurrentSeat() == "audit_front") {
 
@@ -216,23 +199,6 @@ var KQ = React.createClass({
                  if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                     CommonActions.updateKQQuantity(parseInt(_updatedQty) );
                      return true;
-                }
-                if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                if(this.props.action != undefined){
-                    switch(this.props.action){
-                        case "GOOD":
-                            CommonActions.updateGoodQuantity(parseInt(_updatedQty) );
-                        break;
-                        case "MISSING":
-                            CommonActions.updateMissingQuantity(parseInt(_updatedQty) );
-                        break;
-                        case "DAMAGED":
-                            CommonActions.updateDamagedQuantity(parseInt(_updatedQty) );
-                        break;
-                        default:
-                    }
-                }
-                return true;
                 }
                 if (mainstore.getCurrentSeat() == "audit_front") {
                     data = {
@@ -324,7 +290,7 @@ var KQ = React.createClass({
                     self.disableIncrement(false);
                     generateExcessNotification();
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED && mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
+               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
                     data["code"] = resourceConstants.CLIENTCODE_009;
@@ -349,23 +315,7 @@ var KQ = React.createClass({
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
                          return true;
                     }
-                    if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED ){
-                       if(action != undefined){
-                            switch(action){
-                                case "GOOD":
-                                    CommonActions.updateGoodQuantity(parseInt(e.target.value));
-                                break;
-                                case "MISSING":
-                                    CommonActions.updateMissingQuantity(parseInt(e.target.value));
-                                break;
-                                case "DAMAGED":
-                                    CommonActions.updateDamagedQuantity(parseInt(e.target.value));
-                                break;
-                                default:
-                            }
-                        }
-                        return true;
-                    }
+                    
                     if (mainstore.getCurrentSeat() == "audit_front") {
                         data = {
                             "event_name": "audit_actions",
@@ -459,7 +409,7 @@ var KQ = React.createClass({
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
                 }
-            }else if(mainstore.getScreenId() == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
+            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                   this._enableDecrement = false;

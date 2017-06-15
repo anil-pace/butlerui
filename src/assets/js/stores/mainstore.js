@@ -1110,12 +1110,8 @@ setCurrentSeat: function(data) {
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
         }
-        if (_screenId == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            _putFrontExceptionScreen = "good";
-        else if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
+        if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
             _putFrontExceptionScreen = "take_item_from_bin";
-        else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            _pickFrontExceptionScreen = "good";
         else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
             _pickFrontExceptionScreen = "box_serial";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)
@@ -1610,11 +1606,7 @@ getSelectedBinGroup:function(){
 validateAndSendDataToServer: function() {
     var flag = false,type=false;
     var details;
-    if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
-        flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
-        details = _seatData.pick_quantity;
-    }
-    else if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
+     if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
         if(_goodQuantity===_seatData.pick_quantity && _unscannableQuantity===0)
         {
             flag=type=true;
@@ -1663,9 +1655,7 @@ validateAndSendDataToServer: function() {
 
     } else {
         var data = {};
-        if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            data["event_name"] = "put_front_exception";
-        else if(_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||_seatData.screen_id ==appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
+        if(_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||_seatData.screen_id ==appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
         {
             data["event_name"]=  _seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ?  "pick_front_exception":"put_front_exception"
             data["event_data"] = {};
@@ -1683,68 +1673,9 @@ validateAndSendDataToServer: function() {
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
-        else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-        {
-            data["event_name"] = "pick_front_exception";
-            data["event_data"] = {};
-            data["event_data"]["action"] = "confirm_quantity_update";
-            data["event_data"]["event"] = _seatData.exception_type;
-            data["event_data"]["quantity"] = {};
-            data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
-            data["event_data"]["quantity"]["missing"] = _missingQuantity;
-            this.showSpinner();
-            utils.postDataToInterface(data, _seatData.seat_name);
-        }
     }
 
 },
-validateAndSetPutFrontExceptionScreen: function(screen) {
-    var flag = false;
-    var details;
-    if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED){
-        flag = (_goodQuantity  + _missingQuantity) != _seatData.pick_quantity;
-        details = _seatData.pick_quantity;
-    }
-    else{
-        flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
-        details = _seatData.put_quantity;
-    }
-    if (flag) {
-        if (_seatData.notification_list.length == 0) {
-            var data = {};
-            data["code"] = resourceConstants.CLIENTCODE_010;
-            data["level"] = "error";
-            data["details"] = [details];
-            _seatData.notification_list[0] = data;
-        } else {
-            _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_010;
-            _seatData.notification_list[0].details = [details];
-            _seatData.notification_list[0].level = "error";
-        }
-        _putFrontExceptionScreen = "good";
-        _goodQuantity = 0;
-        _damagedQuantity = 0;
-        _missingQuantity = 0;
-    } else {
-        var data = {};
-        if (_seatData.screen_id == appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            data["event_name"] = "put_front_exception";
-        else if (_seatData.screen_id == appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED)
-            data["event_name"] = "pick_front_exception";
-        data["event_data"] = {};
-        data["event_data"]["action"] = "confirm_quantity_update";
-        data["event_data"]["event"] = _seatData.exception_type;
-        data["event_data"]["quantity"] = {};
-        data["event_data"]["quantity"]["good"] = _goodQuantity;
-        data["event_data"]["quantity"]["unscannable"] = _damagedQuantity;
-        data["event_data"]["quantity"]["missing"] = _missingQuantity;
-        
-        mainstore.setPutFrontExceptionScreen(screen);
-    }
-
-},
-
 
 validateAndSendSpaceUnavailableDataToServer: function() {
     var _allowedQuantity;
@@ -2200,17 +2131,6 @@ getScreenData: function() {
             data["BinMapDetails"] =  this._getBinMapDetails();  
             data["BinMapGroupDetails"] =  this.getSelectedBinGroup();   
             break;                
-            case appConstants.PUT_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontGoodQuantity"] = this.getGoodScanDetails();
-            data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
-            data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
-            data["UnmarkedContainer"]=this.getUnmarkedContainerFlag();
-            break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
             data["PutFrontScreenId"] = this.getScreenId();
             data["PutFrontServerNavData"] = this.getServerNavData();
@@ -2373,16 +2293,6 @@ getScreenData: function() {
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             break;    
-            case appConstants.PICK_FRONT_EXCEPTION_GOOD_MISSING_DAMAGED:
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
-            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
-            data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-            break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
             data["PickFrontScreenId"] = this.getScreenId();
@@ -2675,10 +2585,6 @@ AppDispatcher.register(function(payload) {
         break;    
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
         mainstore.setPutFrontExceptionScreen(action.data);
-        mainstore.emitChange();
-        break;
-        case appConstants.VALIDATE_PUT_FRONT_EXCEPTION_SCREEN:
-        mainstore.validateAndSetPutFrontExceptionScreen(action.data);
         mainstore.emitChange();
         break;
         case appConstants.VALIDATE_UNMARKED_DAMAGED_DATA:

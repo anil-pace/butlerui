@@ -37361,11 +37361,11 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
                 React.createElement("div", {className: "bin selected binError " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected binError " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37379,19 +37379,19 @@ var Bin = React.createClass({displayName: "Bin",
                 return (React.createElement("div", {
                     className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + compData['pps_blink_state'] ? 'blink1 ' : '', 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                    style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                             style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
@@ -37404,30 +37404,30 @@ var Bin = React.createClass({displayName: "Bin",
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 if (compData["totes_associated"] == true || compData["totes_associated"] == "true") {
                     return (React.createElement("div", {className: "bin excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                                 style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
                         React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                             style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 } else {
                     return (React.createElement("div", {
                         className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                         onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                        style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
                         React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                             style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 }
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                             style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
@@ -37447,21 +37447,21 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                             style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
             return (
                 React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
@@ -37469,28 +37469,28 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {
                     className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                    style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "staged")
             return (
                 React.createElement("div", {className: "bin staged " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "completed")
             return (
                 React.createElement("div", {className: "bin completed " + (compData['pps_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
@@ -37498,10 +37498,10 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin use selected-staging " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
@@ -37515,12 +37515,12 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             return (
                 React.createElement("div", {className: "bin  selected blink1", 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected blink", 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
@@ -37536,12 +37536,12 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             return (
                 React.createElement("div", {className: "bin selected " + compData['pps_blink_state'] ? 'blink1' : ' ' + binClass, 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + compData['ppsbin_blink_state'] ? 'blink' : ' ' + binClass, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37554,11 +37554,11 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37566,14 +37566,14 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37581,13 +37581,13 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37595,13 +37595,13 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37609,13 +37609,13 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37623,10 +37623,10 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37635,11 +37635,11 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37653,12 +37653,12 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {
                     className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                    style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {
                         className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + ((compData['ppsbin_blink_state'] ? 'blink' : '')), 
-                        style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                        style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37666,23 +37666,23 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
@@ -37694,14 +37694,14 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37717,11 +37717,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}, 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
@@ -37735,12 +37735,12 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : "0"), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     tote, 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37752,11 +37752,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : "-"), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     tote, 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37769,11 +37769,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37786,11 +37786,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37913,16 +37913,16 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                 React.createElement("div", {
                     className: "pptl "+(compData['pps_blink_state'] ? 'selected blink ' : 'no-excess-item'), 
-                    style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                    style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
             ));
         }
         else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
                 React.createElement("div", {className: "bin selected binError "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected binError "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}, 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
@@ -37936,11 +37936,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : '-'), 
                     React.createElement("div", {className: "pptl "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37957,11 +37957,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin selected "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}, 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
@@ -37975,12 +37975,12 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, "-"), 
                     tote, 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -37992,11 +37992,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : "-"), 
                     tote, 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38010,19 +38010,19 @@ var Bin = React.createClass({displayName: "Bin",
                 return (React.createElement("div", {
                     className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                    style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                             style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
@@ -38035,30 +38035,30 @@ var Bin = React.createClass({displayName: "Bin",
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 if (compData["totes_associated"] == true || compData["totes_associated"] == "true") {
                     return (React.createElement("div", {className: "bin excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                                 style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
                         React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                             style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 } else {
                     return (React.createElement("div", {
                         className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                         onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                        style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
                         React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                             style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 }
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                             style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
@@ -38071,29 +38071,29 @@ var Bin = React.createClass({displayName: "Bin",
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
                     className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
-                    style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}, 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                             style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
             return (
                 React.createElement("div", {className: "bin no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
@@ -38101,28 +38101,28 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {
                     className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                    style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "staged")
             return (
                 React.createElement("div", {className: "bin staged " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "completed")
             return (
                 React.createElement("div", {className: "bin completed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
@@ -38130,10 +38130,10 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin use selected-staging " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
@@ -38147,12 +38147,12 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             return (
                 React.createElement("div", {className: "bin  selected blink1", 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected blink", 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
@@ -38168,12 +38168,12 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '') + binClass, 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '') + binClass, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38186,11 +38186,11 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38198,14 +38198,14 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38213,13 +38213,13 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38227,13 +38227,13 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38241,13 +38241,13 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38255,10 +38255,10 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38267,11 +38267,11 @@ var Bin = React.createClass({displayName: "Bin",
 
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38288,12 +38288,12 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {
                     className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                    style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {
                         className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                        style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                        style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38301,23 +38301,23 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
@@ -38332,14 +38332,14 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38352,11 +38352,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -38369,11 +38369,11 @@ var Bin = React.createClass({displayName: "Bin",
             }
             return (
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
-                     style: compData["ppsbin_light_color"] ? {borderColor: compData["ppsbin_light_color"]} : {}}, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: compData["ppsbin_light_color"]} : {}}, compData.ppsbin_id)
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
@@ -46511,17 +46511,24 @@ var appConstants = {
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
 	ENTITY_DAMAGED:"entity_damaged",
-    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote"
+    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
+	BIN_LIGHT_COLOR:{
+		"red":"#FF0000",
+		"blue":"#4CAF50",
+		"green":"#0390FF",
+		"pink":"#FF1BA5",
+		"white":"#FFFFFF",
+	}
 };
 
 module.exports = appConstants;
 
 },{}],301:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.9.38/wss",
-	// WEBSOCKET_IP : "ws://192.168.14.34:8888/ws",
-	// INTERFACE_IP : "https://192.168.14.34:5000",
-	INTERFACE_IP : "https://192.168.9.38"
+	// WEBSOCKET_IP : "wss://192.168.9.38/wss",
+	WEBSOCKET_IP : "ws://192.168.14.34:8888/ws",
+	INTERFACE_IP : "https://192.168.14.34:5000",
+	// INTERFACE_IP : "https://192.168.9.38"
 
 };
 module.exports = configConstants;

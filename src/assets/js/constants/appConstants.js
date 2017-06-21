@@ -214,8 +214,8 @@ var appConstants = {
     PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
 	BIN_LIGHT_COLOR:{
 		"red":"#FF0000",
-		"blue":"#4CAF50",
-		"green":"#0390FF",
+		"blue":"#0390FF",
+		"green":"#4CAF50",
 		"pink":"#FF1BA5",
 		"white":"#FFFFFF",
 	}

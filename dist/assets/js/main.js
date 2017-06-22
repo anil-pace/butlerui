@@ -46514,8 +46514,8 @@ var appConstants = {
     PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
 	BIN_LIGHT_COLOR:{
 		"red":"#FF0000",
-		"blue":"#4CAF50",
-		"green":"#0390FF",
+		"blue":"#0390FF",
+		"green":"#4CAF50",
 		"pink":"#FF1BA5",
 		"white":"#FFFFFF",
 	}
@@ -46525,10 +46525,8 @@ module.exports = appConstants;
 
 },{}],301:[function(require,module,exports){
 var configConstants = {
-	// WEBSOCKET_IP : "wss://192.168.9.38/wss",
-	WEBSOCKET_IP : "ws://192.168.14.34:8888/ws",
-	INTERFACE_IP : "https://192.168.14.34:5000",
-	// INTERFACE_IP : "https://192.168.9.38"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 
 };
 module.exports = configConstants;

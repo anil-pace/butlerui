@@ -37759,6 +37759,22 @@ var Bin = React.createClass({displayName: "Bin",
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
+        }else if (this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
         }
         else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
             var tote = '';
@@ -44689,6 +44705,28 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._component = this.getExceptionComponent();
       }
       break;
+
+        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        if(this.state.PutFrontExceptionStatus == false){
+         if (this.state.OrigBinUse){
+          binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
+        }else{
+          binComponent =(React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
+            ))
+        }
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+          binComponent
+          )
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
       case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
@@ -46056,6 +46094,13 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],[{
+            "screen_id": "put_front_bin_warehouse_full",
+            "code": "PtF.H.016",
+            "message": "Warehouse Full",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [
@@ -46357,6 +46402,7 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
     PUT_FRONT_EXCESS_ITEMS_PPSBIN: "put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
+	PUT_FRONT_BIN_WAREHOUSE_FULL: "put_front_bin_warehouse_full",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
@@ -47764,6 +47810,9 @@ var serverMessages = {
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
     "PtF.H.017" : "Wrong Undock",
+    "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
+    "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
+    "PtF.E.022" : "Entities cannot be accommodated! Remove all entities from bin and press PPTL.",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -49757,6 +49806,8 @@ getNavData: function() {
             _NavData = navConfig.putFront[5];
         else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
             _NavData = navConfig.putFront[3];
+        else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
+            _NavData = navConfig.putFront[7];
         else if(_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
             _NavData = navConfig.putFront[4];
         else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
@@ -51617,7 +51668,19 @@ getScreenData: function() {
             data["PutFrontExceptionData"] = this.getExceptionData();
             data["PutFrontNotification"] = this.getNotificationData();
             data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            break;                               
+            break;
+            case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+            data["PutFrontNavData"] = this.getNavData();
+            data["PutFrontServerNavData"] = this.getServerNavData();
+            data["PutFrontScreenId"] = this.getScreenId();
+            data["PutFrontBinData"] = this.getBinData();
+            data["BinMapDetails"] =  this._getBinMapDetails();
+            data["SplitScreenFlag"] = this._getSplitScreenFlag();
+            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
+            data["PutFrontExceptionData"] = this.getExceptionData();
+            data["PutFrontNotification"] = this.getNotificationData();
+            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+            break;
             case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();

@@ -121,6 +121,13 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],[{
+            "screen_id": "put_front_bin_warehouse_full",
+            "code": "PtF.H.016",
+            "message": "Warehouse Full",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [

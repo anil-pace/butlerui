@@ -2292,6 +2292,26 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
                 break;
+                case appConstants.PICK_FRONT_BIN_PRINTOUT:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();

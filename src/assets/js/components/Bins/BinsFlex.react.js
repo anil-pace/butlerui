@@ -473,6 +473,17 @@ var Bin = React.createClass({
                          style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
+        }else if ((compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT)) {
+
+            return (
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                </div>
+            );
         }
         else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
             var tote = '';

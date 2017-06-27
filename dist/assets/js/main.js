@@ -37775,6 +37775,22 @@ var Bin = React.createClass({displayName: "Bin",
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
+        }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
         }
         else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
             var tote = '';
@@ -38355,6 +38371,17 @@ var Bin = React.createClass({displayName: "Bin",
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
+        }else if ((compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT)) {
+
+            return (
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );

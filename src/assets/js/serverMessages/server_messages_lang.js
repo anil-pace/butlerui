@@ -435,5 +435,6 @@ function server_messages_list() {
     _("Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining");
     _("Press PPTL to confirm no Items Remaining in Bin {0}");
     _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
+    _("Take Printout and Press PPTL");
 
 }

@@ -277,6 +277,13 @@ var navData = {
             "showImage": true,
             "level": null,
             "type": 'passive'
+        }],[{
+            "screen_id": "pick_front_bin_printout",
+            "code": "PkF.H.016",
+            "message": "Take Printout and Press PPTL",
+            "showImage": false,
+            "level": 1,
+            "type": 'passive'
         }]
 
     ],

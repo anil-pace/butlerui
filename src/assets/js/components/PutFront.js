@@ -217,6 +217,28 @@ var PutFront = React.createClass({
         this._component = this.getExceptionComponent();
       }
       break;
+
+        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        if(this.state.PutFrontExceptionStatus == false){
+         if (this.state.OrigBinUse){
+          binComponent = (<BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>);
+        }else{
+          binComponent =(<div className='main-container'>
+            <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
+            </div>)
+        }
+        this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        this._component = (
+          <div className='grid-container'>
+          <Modal />
+          {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+          {binComponent}
+          </div>
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
       case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);

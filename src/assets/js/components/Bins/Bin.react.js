@@ -6,15 +6,15 @@ var MainStore = require('../../stores/mainstore');
 
 var Bin = React.createClass({
 
-    _toggleBinSelection:function(bin_id,e){
+    _toggleBinSelection: function (bin_id, e) {
         ActionCreators.toggleBinSelection(bin_id);
         e.stopPropagation();
         return false;
     },
-    pressPptl : function(bin_id, binState){
+    pressPptl: function (bin_id, binState) {
         var data = {
-            "event_name":"",
-            "event_data":{}
+            "event_name": "",
+            "event_data": {}
         };
         data["event_name"] = "process_ppsbin_event";
         data["event_data"]["ppsbin_id"] = bin_id;
@@ -22,333 +22,500 @@ var Bin = React.createClass({
         data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
         ActionCreators.postDataToInterface(data);
     },
-    showModal: function(data,type,e) {
-         ActionCreators.showModal({
-            data:data,
-            type:type
-         });
-         $('.modal').modal();
-         e.stopPropagation();
-         return false;
-    },   
-    render: function() {
+    showModal: function (data, type, e) {
+        ActionCreators.showModal({
+            data: data,
+            type: type
+        });
+        $('.modal').modal();
+        e.stopPropagation();
+        return false;
+    },
+    render: function () {
         var compData = this.props.binData;
-        if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
+        if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);
-            return (<div className = {compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}>
-                    {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className={compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"} >{compData.ppsbin_id}</div>
+                    <span className="bin-icon tote-icon"></span>
                 </div>);
+            return (<div
+                className={compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "bin selected blink1" : "bin no-excess-item"}>
+                {tote}
+                <div className="item-count">{compData.ppsbin_count}</div>
+                <div
+                    className={compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "pptl selected blink" : "pptl no-excess-item"}>{compData.ppsbin_id}</div>
+            </div>);
         }
-        else if((this.props.screenId == appConstants.PUT_BACK_STAGE  || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error'){
+        else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
-                <div className = "bin selected binError">
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected binError" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                <div className={"bin selected binError " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected binError " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
-                return (<div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" >{compData.ppsbin_id}</div>
+                    <span className="bin-icon tote-icon"></span>
                 </div>);
-            }else{
-            return (<div className = "bin no-excess-item">
+            if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
+                return (<div
+                    className={"bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + compData['pps_blink_state'] ? 'blink1 ' : ''}
+                    onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
+                    style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl no-excess-item" >{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected "+(compData['pps_blink_state'] ? 'blink ' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>);
-        }
-        }
-         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
-            var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
-                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
-                   return (<div className = "bin excess-item">
+            } else {
+                return (<div className={"bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                             style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl excess-item" >{compData.ppsbin_id}</div>
-                </div>);
-                }else{
-                return (<div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" >{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>);
             }
-            }else{
-            return (<div className = "bin no-excess-item">
-                    {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl no-excess-item" >{compData.ppsbin_id}</div>
-                </div>);
         }
-        }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE){
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
+            if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
+                if (compData["totes_associated"] == true || compData["totes_associated"] == "true") {
+                    return (<div className={"bin excess-item " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                                 style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                        {tote}
+                        <div className="item-count">{compData.ppsbin_count}</div>
+                        <div className={"pptl excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                             style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                     </div>);
-            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
-                return (<div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
+                } else {
+                    return (<div
+                        className={"bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : '')}
+                        onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
+                        style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                        {tote}
+                        <div className="item-count">{compData.ppsbin_count}</div>
+                        <div className={"pptl selected "+(compData['pps_blink_state'] ? 'blink ' : '')}
+                             style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                    </div>);
+                }
+            } else {
+                return (<div className={"bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                             style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl excess-item" >{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>);
-            }else{
-            return (<div className = "bin no-excess-item">
+            }
+        }
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE) {
+            var tote = '';
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error') {
+                return (<div
+                    className={"bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : ''}
+                    onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl no-excess-item" >{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl excess-item "+(compData['pps_blink_state'] ? 'blink ' : '')}>{compData.ppsbin_id}</div>
                 </div>);
+            } else {
+                return (<div className={"bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                             style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    {tote}
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                </div>);
+            }
         }
-        }
-        else if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
             return (
-                <div className = "bin no-excess-item" >
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                <div className={"bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error' )
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
-                <div className = {(compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item"} onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)} >
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                <div
+                    className={"bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : ''}
+                    onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
+                    style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_state == "staged" )
+        else if (compData.ppsbin_state == "staged")
             return (
-                <div className = "bin staged" >
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                <div className={"bin staged " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_state == "completed" )
+        else if (compData.ppsbin_state == "completed")
             return (
-                <div className = "bin completed" >
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl completed">{compData.ppsbin_id}</div>
+                <div className={"bin completed " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
 
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        else if (compData.ppsbin_count > 0 && (compData["selected_for_staging"] != undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                <div className = "bin use selected-staging" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                <div className={"bin use selected-staging " + (compData['pps_blink_state'] ? 'blink1' : '')}
+                     onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
 
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )){
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )) {
             var tote = '';
             var binClass = 'bin ';
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
             return (
-                <div className = "bin  selected blink1">
+                <div className={"bin  selected blink1"}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected blink" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className="pptl selected blink"
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
 
         }
-        
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
+
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))) {
             var tote = '', binClass = '';
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
             return (
-                <div className = {"bin selected"+binClass}>
+                <div className={"bin selected " + compData['pps_blink_state'] ? 'blink1' : ' ' + binClass}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className={"pptl selected"+binClass} onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + compData['ppsbin_blink_state'] ? 'blink' : ' ' + binClass}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) ){
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN )) {
             var tote = '';
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (<div className="tote">                        
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
             return (
-                <div className = "bin">
+                <div className={"bin " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
 
             return (
-                <div className = "bin selected">
-                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                 </span>   
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon"
+                       onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
+                 </span>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                <div className = "bin selected">
-                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                 </span>   
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" >{compData.ppsbin_id}</div>
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon"
+                       onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
+                 </span>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
 
             return (
-                <div className = "bin selected">
-                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                 </span>   
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" >{compData.ppsbin_id}</div>
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon"
+                       onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
+                 </span>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                <div className = "bin selected">
-                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
-                 </span>   
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected">{compData.ppsbin_id}</div>
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                 <span className="glyphicon glyphicon-info-sign info-icon grey-icon"
+                       onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
+                 </span>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete')) ){
+        else if ((compData.selected_state == false || compData.selected_state == "false") && ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete'))) {
 
             return (
-                <div className = "bin pick_processed">  
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl pick_processed" >{compData.ppsbin_id}</div>
+                <div className={"bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        
-        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN ){
+
+        else if ((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN) {
 
             return (
-                <div className = "bin selected">
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected" onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )){
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);  
-            }                     
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
+            }
             return (
-                <div className = {compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}>
+                <div
+                    className={(compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                    style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className={compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}>{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div
+                        className={(compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + ((compData['ppsbin_blink_state'] ? 'blink' : ''))}
+                        style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                <div className = "bin use" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")} >
+                <div className={"bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <span className="glyphicon glyphicon-info-sign info-icon"
+                          onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
                     </span>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error' )
+        else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
-                <div className = "bin selected" onClick={this._toggleBinSelection.bind(this,compData.ppsbin_id)}>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl selected">{compData.ppsbin_id}</div>
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}
+                     onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) ){
+        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);  
-            }                     
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
+            }
             return (
-                <div className = "bin use" >
+                <div className={"bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                   <span className="glyphicon glyphicon-info-sign info-icon" onClick={this.showModal.bind(this,compData.bin_info,"bin-info")}  >
+                    <span className="glyphicon glyphicon-info-sign info-icon"
+                          onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
                     </span>
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
-    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty"){
-            var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);  
-            }            
+        else if ((this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state === true && compData.ppsbin_count > 0) {
+            let tote = '';
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"/>
+                    <span className="glyphicon glyphicon-info-sign info-icon"
+                          onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
+                        </span>
+                </div>);
+            }
             return (
-                <div className = "bin empty">
+                <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }
+        else if (this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state === true) {
+            var tote = '';
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"/>
+                </div>);
+            }
+            return (
+                <div className={"bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    {tote}
+                    <div className={"pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }
+        else if (this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"/>
+                </div>);
+            }
+            return (
+                <div className={"bin " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    {tote}
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"/>
+                </div>);
+            }
+            return (
+                <div className={"bin " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    {tote}
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"/>
+                </div>);
+            }
+            return (
+                <div className={"bin " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    {tote}
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                </div>
+            );
+        }
+        else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
+            var tote = '';
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
+            }
+            return (
+                <div className={"bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    {tote}
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
         }
         else {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (<div className="tote">
-                        <span className="bin-icon tote-icon"></span>
-                    </div>);  
-            }                        
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (<div className="tote">
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
+            }
             return (
-                <div className = "bin empty">
-                {tote}
-                    <div className ="item-count">{compData.ppsbin_count}</div>
-                    <div className="pptl">{compData.ppsbin_id}</div>
+                <div className={"bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
+                     style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    {tote}
+                    <div className="item-count">{compData.ppsbin_count}</div>
+                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
-                );
+            );
         }
-        
+
     }
 });
 

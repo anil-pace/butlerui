@@ -57,12 +57,14 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
     PUT_FRONT_EXCESS_ITEMS_PPSBIN: "put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
+	PUT_FRONT_BIN_WAREHOUSE_FULL: "put_front_bin_warehouse_full",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"pick_front_missing_or_unscannable_damaged_item",
 	PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"put_front_unscannable_or_missing_or_damaged",
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
+	PICK_FRONT_BIN_PRINTOUT:"pick_front_bin_printout",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",
@@ -211,7 +213,14 @@ var appConstants = {
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
 	ENTITY_DAMAGED:"entity_damaged",
-    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote"
+    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
+	BIN_LIGHT_COLOR:{
+		"red":"#FF0000",
+		"blue":"#0390FF",
+		"green":"#4CAF50",
+		"pink":"#FF1BA5",
+		"white":"#FFFFFF",
+	}
 };
 
 module.exports = appConstants;

@@ -37317,15 +37317,15 @@ var MainStore = require('../../stores/mainstore');
 
 var Bin = React.createClass({displayName: "Bin",
 
-    _toggleBinSelection:function(bin_id,e){
+    _toggleBinSelection: function (bin_id, e) {
         ActionCreators.toggleBinSelection(bin_id);
         e.stopPropagation();
         return false;
     },
-    pressPptl : function(bin_id, binState){
+    pressPptl: function (bin_id, binState) {
         var data = {
-            "event_name":"",
-            "event_data":{}
+            "event_name": "",
+            "event_data": {}
         };
         data["event_name"] = "process_ppsbin_event";
         data["event_data"]["ppsbin_id"] = bin_id;
@@ -37333,333 +37333,500 @@ var Bin = React.createClass({displayName: "Bin",
         data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
         ActionCreators.postDataToInterface(data);
     },
-    showModal: function(data,type,e) {
-         ActionCreators.showModal({
-            data:data,
-            type:type
-         });
-         $('.modal').modal();
-         e.stopPropagation();
-         return false;
-    },   
-    render: function() {
+    showModal: function (data, type, e) {
+        ActionCreators.showModal({
+            data: data,
+            type: type
+        });
+        $('.modal').modal();
+        e.stopPropagation();
+        return false;
+    },
+    render: function () {
         var compData = this.props.binData;
-        if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
+        if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
-            return (React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
+                    React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
+            return (React.createElement("div", {
+                className: compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "bin selected blink1" : "bin no-excess-item"}, 
+                tote, 
+                React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                React.createElement("div", {
+                    className: compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "pptl selected blink" : "pptl no-excess-item"}, compData.ppsbin_id)
+            ));
         }
-        else if((this.props.screenId == appConstants.PUT_BACK_STAGE  || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error'){
+        else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
-                React.createElement("div", {className: "bin selected binError"}, 
+                React.createElement("div", {className: "bin selected binError " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected binError", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected binError " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
-                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
-            }else{
-            return (React.createElement("div", {className: "bin no-excess-item"}, 
+            if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
+                return (React.createElement("div", {
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
-        }
-        }
-         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
-            var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
-                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
-                   return (React.createElement("div", {className: "bin excess-item"}, 
+            } else {
+                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
-                ));
-                }else{
-                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
-            }else{
-            return (React.createElement("div", {className: "bin no-excess-item"}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
-                ));
         }
-        }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE){
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
+                if (compData["totes_associated"] == true || compData["totes_associated"] == "true") {
+                    return (React.createElement("div", {className: "bin excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
-            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
-                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                } else {
+                    return (React.createElement("div", {
+                        className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                        onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                    ));
+                }
+            } else {
+                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
-            }else{
-            return (React.createElement("div", {className: "bin no-excess-item"}, 
+            }
+        }
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE) {
+            var tote = '';
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error') {
+                return (React.createElement("div", {
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink ' : '')}, compData.ppsbin_id)
                 ));
+            } else {
+                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                ));
+            }
         }
-        }
-        else if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
             return (
-                React.createElement("div", {className: "bin no-excess-item"}, 
+                React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error' )
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                React.createElement("div", {
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_state == "staged" )
+        else if (compData.ppsbin_state == "staged")
             return (
-                React.createElement("div", {className: "bin staged"}, 
+                React.createElement("div", {className: "bin staged " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_state == "completed" )
+        else if (compData.ppsbin_state == "completed")
             return (
-                React.createElement("div", {className: "bin completed"}, 
+                React.createElement("div", {className: "bin completed " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl completed"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        else if (compData.ppsbin_count > 0 && (compData["selected_for_staging"] != undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                React.createElement("div", {className: "bin use selected-staging " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )){
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )) {
             var tote = '';
             var binClass = 'bin ';
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
             return (
-                React.createElement("div", {className: "bin  selected blink1"}, 
+                React.createElement("div", {className: "bin  selected blink1", 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected blink", 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
         }
-        
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
+
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))) {
             var tote = '', binClass = '';
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
             return (
-                React.createElement("div", {className: "bin selected"+binClass}, 
+                React.createElement("div", {className: "bin selected " + compData['pps_blink_state'] ? 'blink1' : ' ' + binClass, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"+binClass, onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + compData['ppsbin_blink_state'] ? 'blink' : ' ' + binClass, 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) ){
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN )) {
             var tote = '';
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
             return (
-                React.createElement("div", {className: "bin"}, 
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete')) ){
+        else if ((compData.selected_state == false || compData.selected_state == "false") && ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete'))) {
 
             return (
-                React.createElement("div", {className: "bin pick_processed"}, 
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl pick_processed"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        
-        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN ){
+
+        else if ((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )){
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }                     
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
             return (
-                React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
+                React.createElement("div", {
+                    className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {
+                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + ((compData['ppsbin_blink_state'] ? 'blink' : '')), 
+                        style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error' )
+        else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) ){
+        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }                     
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin use"}, 
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                   React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty"){
-            var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }            
+        else if ((this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state === true && compData.ppsbin_count > 0) {
+            let tote = '';
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
+                        )
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin empty"}, 
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if (this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state === true) {
+            var tote = '';
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if (this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
+        }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
+        }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
+        }
+        else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
+            var tote = '';
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
         else {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }                        
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin empty"}, 
-                tote, 
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
-                );
+            );
         }
-        
+
     }
 });
 
@@ -37739,15 +37906,15 @@ var appConstants = require('../../constants/appConstants');
 var MainStore = require('../../stores/mainstore');
 
 var Bin = React.createClass({displayName: "Bin",
-    _toggleBinSelection:function(bin_id,e){
+    _toggleBinSelection: function (bin_id, e) {
         ActionCreators.toggleBinSelection(bin_id);
         e.stopPropagation();
         return false;
     },
-    pressPptl : function(bin_id, binState){
+    pressPptl: function (bin_id, binState) {
         var data = {
-            "event_name":"",
-            "event_data":{}
+            "event_name": "",
+            "event_data": {}
         };
         data["event_name"] = "process_ppsbin_event";
         data["event_data"]["ppsbin_id"] = bin_id;
@@ -37755,399 +37922,505 @@ var Bin = React.createClass({displayName: "Bin",
         data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
         ActionCreators.postDataToInterface(data);
     },
-    showModal: function(data,type,e) {
-         ActionCreators.showModal({
-            data:data, 
-            type:type
-         });
-         $('.modal').modal();
-         e.stopPropagation();
-         return false;
-    },   
-    render: function() {
+    showModal: function (data, type, e) {
+        ActionCreators.showModal({
+            data: data,
+            type: type
+        });
+        $('.modal').modal();
+        e.stopPropagation();
+        return false;
+    },
+    render: function () {
         var compData = this.props.binData;
-        if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT){
+        if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
-            return (React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"bin selected blink1":"bin no-excess-item"}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")?"pptl selected blink":"pptl no-excess-item"}, compData.ppsbin_id)
+                    React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
+            return (React.createElement("div", {
+                className: "bin "+(compData['pps_blink_state'] ? 'selected blink1 ' : 'no-excess-item')}, 
+                tote, 
+                React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                React.createElement("div", {
+                    className: "pptl "+(compData['pps_blink_state'] ? 'selected blink ' : 'no-excess-item'), 
+                    style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+            ));
         }
-        else if((this.props.screenId == appConstants.PUT_BACK_STAGE  || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error'){
+        else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
-                React.createElement("div", {className: "bin selected binError"}, 
+                React.createElement("div", {className: "bin selected binError "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected binError", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected binError "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
         }
-        else if((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE )){
+        else if ((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE )) {
             var tote = '';
-            if(compData.totes_associated == true){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));    
+            if (compData.totes_associated == true) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
             }
             return (
-                React.createElement("div", {className: "bin"}, 
+                React.createElement("div", {className: "bin "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count>0?compData.ppsbin_count:'-'), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : '-'), 
+                    React.createElement("div", {className: "pptl "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
 
-        else if((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state == true && compData.ppsbin_count>0){
+        else if ((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state == true && compData.ppsbin_count > 0) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                         )
-                    ));  
-            }  
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: "bin selected "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
-        }        
-        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state == true){
+        }
+        else if (this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state == true) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }  
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin pick_processed"}, 
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, "-"), 
                     tote, 
-                    React.createElement("div", {className: "pptl pick_processed", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        }        
-        else if(this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS){
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }  
-            return (
-                React.createElement("div", {className: "bin"}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count>0?compData.ppsbin_count:"-"), 
-                    tote, 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
-                )
-            );
-        }        
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING){
-            var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
-                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
-                ));
-            }else{
-            return (React.createElement("div", {className: "bin no-excess-item"}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
-                ));
         }
-        }
-         else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE){
-            var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+        else if (this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) {
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
-            if(compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error'){
-                if(compData["totes_associated"] == true || compData["totes_associated"]=="true"){
-                   return (React.createElement("div", {className: "bin excess-item"}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
-                ));
-                }else{
-                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin selected excess-select": "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
-            }else{
-            return (React.createElement("div", {className: "bin no-excess-item"}, 
+            return (
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : "-"), 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
-                ));
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
         }
-        }
-        else if(this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE){
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) {
             var tote = '';
-            if( compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
+                return (React.createElement("div", {
+                    className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                ));
+            } else {
+                return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                ));
+            }
+        }
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE) {
+            var tote = '';
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
+                if (compData["totes_associated"] == true || compData["totes_associated"] == "true") {
+                    return (React.createElement("div", {className: "bin excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
-            if(compData["totes_associated"] !=undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error' ){
-                return (React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true )?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                } else {
+                    return (React.createElement("div", {
+                        className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                        onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                             style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                    ));
+                }
+            } else {
+                return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl excess-item"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
-            }else{
-            return (React.createElement("div", {className: "bin no-excess-item"}, 
+            }
+        }
+        else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE) {
+            var tote = '';
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error') {
+                return (React.createElement("div", {
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl no-excess-item"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
+            } else {
+                return (React.createElement("div", {className: "bin no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                ));
+            }
         }
-        }
-        else if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0 )
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
             return (
-                React.createElement("div", {className: "bin no-excess-item"}, 
+                React.createElement("div", {className: "bin no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else  if(this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error' )
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true)?"bin excess-item excess-select":"bin excess-item", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                React.createElement("div", {
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_state == "staged" )
+        else if (compData.ppsbin_state == "staged")
             return (
-                React.createElement("div", {className: "bin staged"}, 
+                React.createElement("div", {className: "bin staged " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_state == "completed" )
+        else if (compData.ppsbin_state == "completed")
             return (
-                React.createElement("div", {className: "bin completed"}, 
+                React.createElement("div", {className: "bin completed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl completed"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
-        else if(compData.ppsbin_count > 0 && (compData["selected_for_staging"]!=undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        else if (compData.ppsbin_count > 0 && (compData["selected_for_staging"] != undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use selected-staging", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                React.createElement("div", {className: "bin use selected-staging " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] !=undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )){
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )) {
             var tote = '';
             var binClass = 'bin ';
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
             return (
-                React.createElement("div", {className: "bin  selected blink1"}, 
+                React.createElement("div", {className: "bin  selected blink1", 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected blink", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected blink", 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
         }
-        
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] !=undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))){
+
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))) {
             var tote = '', binClass = '';
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
             return (
-                React.createElement("div", {className: "bin selected"+binClass}, 
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '') + binClass, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"+binClass, onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '') + binClass, 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
 
-        else if((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) ){
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN )) {
             var tote = '';
-            if((compData.totes_associated == true || compData.totes_associated == "true"))
+            if ((compData.totes_associated == true || compData.totes_associated == "true"))
                 tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
             return (
-                React.createElement("div", {className: "bin"}, 
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-         else if((compData.selected_state == true || compData.selected_state == "true") &&  (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
+                       onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == false || compData.selected_state == "false") &&  ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete')) ){
+        else if ((compData.selected_state == false || compData.selected_state == "false") && ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete'))) {
 
             return (
-                React.createElement("div", {className: "bin pick_processed"}, 
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl pick_processed"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        
-        else if((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN ){
+
+        else if ((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN) {
 
             return (
-                React.createElement("div", {className: "bin selected"}, 
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected", onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )){
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                         )
-                    ));  
-            }  
+                ));
+            }
             return (
-                React.createElement("div", {className: compData.ppsbin_count > 0 ? "bin selected" :"bin empty"}, 
+                React.createElement("div", {
+                    className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: compData.ppsbin_count > 0 ? "pptl selected" :"pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {
+                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                        style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error' )
+        else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin selected", onClick: this._toggleBinSelection.bind(this,compData.ppsbin_id)}, 
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        else if(compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) ){
+        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"}), 
-                        React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                         )
-                    ));  
-            }  
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin use"}, 
-                   tote, 
-                   React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", onClick: this.showModal.bind(this,compData.bin_info,"bin-info")}
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
+        }else if ((compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT)) {
+
+            return (
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
-    	else if(compData.ppsbin_count == 0 || compData.ppsbin_state == "empty"){
+        else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }         
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin empty"}, 
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
         else {
             var tote = '';
-            if((compData.totes_associated == true) || (compData.totes_associated == "true")){
-              tote = (React.createElement("div", {className: "tote"}, 
-                        React.createElement("span", {className: "bin-icon tote-icon"})
-                    ));  
-            }            
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
             return (
-                React.createElement("div", {className: "bin empty"}, 
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl"}, compData.ppsbin_id)
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
-                );
+            );
         }
-        
+
     }
 });
 
@@ -40927,624 +41200,759 @@ var OrderDetails = require('./OrderDetails/OrderDetails.js');
 
 var checkListOpen = false;
 
-function getStateData(){
-      var screenData = mainstore.getScreenData();
-      var splitPPSData ={
-        groupInfo : mainstore._getBinMapDetails()
+function getStateData() {
+    var screenData = mainstore.getScreenData();
+    var splitPPSData = {
+        groupInfo: mainstore._getBinMapDetails()
     }
-      return Object.assign({},screenData,splitPPSData);
+    return Object.assign({}, screenData, splitPPSData);
 };
 
 var PickFront = React.createClass({displayName: "PickFront",
-  _notification:'',
-  _component:'',
-  _navigation:'',
-  getInitialState: function(){
-    return getStateData();
-  },
-  componentWillMount: function(){   
-    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
-        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }
-    mainstore.addChangeListener(this.onChange);
-  },
-  componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
-  },
-  onChange: function(){ 
-	this.setState(getStateData());
-   if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
-        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }
-  },
-  getNotificationComponent:function(){
-    if(this.state.PickFrontNotification != undefined)
-      this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
-  },
-  showModal:function(data,index,manual){
-    if(manual==true)
-      checkListOpen = false;
-    var data ={
-      'checklist_data' : data,
-      "checklist_index" : index,
-      "product_details" : this.state.PickFrontProductDetails
-    };
-    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
-    if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
-      checkListOpen = true;
-      setTimeout((function(){CommonActions.showModal({
-              data:data,
-              type:'pick_checklist'
-      });
-      $('.modal').modal();
-      //$('.modal').data('bs.modal').escape(); // reset keyboard
-      $('.modal').data('bs.modal').options.backdrop = 'static';
-      return false;
-      }),0)
+    _notification: '',
+    _component: '',
+    _navigation: '',
+    getInitialState: function () {
+        return getStateData();
+    },
+    componentWillMount: function () {
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+            this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
+        }
+        mainstore.addChangeListener(this.onChange);
+    },
+    componentWillUnmount: function () {
+        mainstore.removeChangeListener(this.onChange);
+    },
+    onChange: function () {
+        this.setState(getStateData());
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+            this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
+        }
+    },
+    getNotificationComponent: function () {
+        if (this.state.PickFrontNotification != undefined)
+            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, 
+                                               navMessagesJson: this.props.navMessagesJson})
+        else
+            this._notification = "";
+    },
+    showModal: function (data, index, manual) {
+        if (manual == true)
+            checkListOpen = false;
+        var data = {
+            'checklist_data': data,
+            "checklist_index": index,
+            "product_details": this.state.PickFrontProductDetails
+        };
+        console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
+        if (this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false) {
+            checkListOpen = true;
+            setTimeout((function () {
+                CommonActions.showModal({
+                    data: data,
+                    type: 'pick_checklist'
+                });
+                $('.modal').modal();
+                //$('.modal').data('bs.modal').escape(); // reset keyboard
+                $('.modal').data('bs.modal').options.backdrop = 'static';
+                return false;
+            }), 0)
 
-      
 
-    }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
-      setTimeout((function (){
-          $( ".modal" ).modal('hide');
-          
-            $('.modal').data('bs.modal').escape(); // reset keyboard
-            $('.modal').data('bs.modal').options.backdrop = true;
-            $('button.close', $('.modal')).show();
-          
-      }), 0)
-      checkListOpen = false;
-   
-    }
-    
+        }
+        else if (this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) {
+            setTimeout((function () {
+                $(".modal").modal('hide');
 
-  },
-  getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              React.createElement("div", {className: "grid-container exception"}, 
+                $('.modal').data('bs.modal').escape(); // reset keyboard
+                $('.modal').data('bs.modal').options.backdrop = true;
+                $('button.close', $('.modal')).show();
+
+            }), 0)
+            checkListOpen = false;
+
+        }
+
+
+    },
+    getExceptionComponent: function () {
+        var _rightComponent = '';
+        this._navigation = '';
+        return (
+            React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
+                             action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
-              )
-            );
-  },
-  getScreenComponent : function(screen_id){
-    switch(screen_id){
-     
-      case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-       if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
-                 )
-              )
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-      case appConstants.PICK_FRONT_LOCATION_CONFIRM:
-      case appConstants.PICK_FRONT_LOCATION_SCAN:
-         var locationBtnEnable = this.state.PickFrontLocationButtonEnable ? false : true;
-        var locationButton = (React.createElement(Button1, {disabled: locationBtnEnable, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_LOCATION, color: "orange"}));
-         if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails})
-                 ), 
-                 locationButton
-              )
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+            )
+        );
+    },
+    getScreenComponent: function (screen_id) {
+        switch (screen_id) {
 
-      case appConstants.PICK_FRONT_ITEM_SCAN:
-       if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails}), 
-                     React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+            case appConstants.PICK_FRONT_WAITING_FOR_MSU:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Spinner, null)
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_LOCATION_CONFIRM:
+            case appConstants.PICK_FRONT_LOCATION_SCAN:
+                var locationBtnEnable = this.state.PickFrontLocationButtonEnable ? false : true;
+                var locationButton = (
+                    React.createElement(Button1, {disabled: locationBtnEnable, text: _("Confirm"), module: appConstants.PICK_FRONT, 
+                             action: appConstants.CONFIRM_LOCATION, color: "orange"}));
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails})
+                            ), 
+                            locationButton
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+            case appConstants.PICK_FRONT_ITEM_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails}), 
+                                React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
 
 
-       case appConstants.PICK_FRONT_CONTAINER_SCAN:
-        if(this.state.PickFrontExceptionStatus == false){
-           this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
-                    React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+            case appConstants.PICK_FRONT_CONTAINER_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
+                                React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
 
-      case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        var cancelScanFlag = this.state.PickFrontCancelScan;
-         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
-        if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
-        var binComponent="";
-        if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
-                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                            ))
-          }else{
-            binComponent = (React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                ));
-          }
+            case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
+                                            action: appConstants.BIN_FULL, color: "black"}) );
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                      screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
+                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
+                                              itemUid: this.state.PickFrontItemUid})
+                        ))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
+                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
+                                     itemUid: this.state.PickFrontItemUid})
+                        ));
+                    }
 
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                       
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
 
-               this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
-                React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                   editButton, 
-                   (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''
-                )
-              
-              )
-            );
-        }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-                  
-      case appConstants.PICK_FRONT_PPTL_PRESS:
-         var cancelScanFlag = this.state.PickFrontCancelScan;
-         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
-         var cancelButton;
-         var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
-         if(this.state.PickFrontExceptionStatus == false){
-          
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        if(!cancelScanDisabled){
-          cancelButton = (React.createElement("div", null, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
-         }
-         else{
-          cancelButton = (React.createElement("div", null));
-         }
-         var binComponent ="";
-          if (this.state.OrigBinUse){
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
 
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS, seatType: this.state.SeatType}))
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                ))
-          }
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-               
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
-                React.createElement("div", {className: "actions"}, 
-                  cancelButton, 
-                   (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''
-                  
-                )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-      case appConstants.PICK_FRONT_NO_FREE_BIN:
-         if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-         this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+                                React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
+                                         color: "black"}), 
+                                editButton, 
+                                (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
+                            )
+
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+            case appConstants.PICK_FRONT_PPTL_PRESS:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
+                var cancelButton;
+                var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
+                                        action: appConstants.BIN_FULL, color: "black"}) );
+                if (this.state.PickFrontExceptionStatus == false) {
+
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    if (!cancelScanDisabled) {
+                        cancelButton = (
+                            React.createElement("div", null, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, 
+                                           action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
+                    }
+                    else {
+                        cancelButton = (React.createElement("div", null));
+                    }
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS, 
+                                                  seatType: this.state.SeatType}))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                        ))
+                    }
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+                                cancelButton, 
+                                (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
+
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_NO_FREE_BIN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Spinner, null)
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button;
-          _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, color: "orange"})
-                    ));
-
-          this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-                      React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height"}), 
-                      _button
-                    )
-                  )
-                ), 
-                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-          );      
-        break; 
-            case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-          var buttonActivateFlag=mainstore.getExeptionQuanity();
-           this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
-
-                  React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
-
-                    React.createElement("div", {className: "gor-NI-wrapper"}, 
-                    React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
-                    ), 
-              
-                     React.createElement("div", {className: "gor-NI-wrapper"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
-                    ), 
-
-                    React.createElement("div", {className: "gor-NI-wrapper"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
-                    ), 
-
-                    React.createElement("div", {className: "gor-NI-wrapper"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
-                   React.createElement("hr", null)
-                    )
-
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode padding"}, 
-                    React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-              
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-            );
-      
-        break; 
-
-        case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                   React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
-                   
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
-                  )
-                  )
-             
-                
-              ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-            );
-        break;    
-        case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
-          this._navigation = '';
-          if(this.state.PickFrontExceptionScreen == "box_serial"){
-          this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
-                      React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
-                    ), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")), 
-                     React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, type: appConstants.UNSCANNABLE, action: appConstants.UNSCANNABLE})
-                 )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
-              this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Are You sure Given Boxes are not present in Slot ? ")
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.SEND_MISSING_BOX_EXCEPTION})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-           }
-          break;
-
-      case appConstants.PPTL_MANAGEMENT:
-      case appConstants.SCANNER_MANAGEMENT:
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
-          var _button;
-          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-          _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
-                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
-                      ))
-          }
-          else{
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
-          }
-          this._component = (
-              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
-                  React.createElement("div", {className: "row scannerHeader"}, 
-                    React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
-                    ), 
-                    React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickFrontSeatType.toUpperCase())
-                    )
-                  ), 
-                  React.createElement(TabularData, {data: this.state.utility}), 
-                  _button, 
-                  React.createElement(Modal, null)
-              )
-            );
-        break;  
-
-        case appConstants.PICK_FRONT_PACKING_BOX:
-         if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        
-          var binComponent ="";
-          if (this.state.OrigBinUse){
-
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PACKING_BOX, seatType: this.state.SeatType}))
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PACKING_BOX})
-                ))
-          }
-        this._component = (
-              
-              React.createElement("div", {className: "grid-container"}, 
-              React.createElement(Modal, null), 
-                 React.createElement("div", {className: "main-container"}, 
-                    binComponent, 
-                     
-                     React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
-                 )
-                 
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
-        case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
-          if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-         var _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PICK_FRONT, status: true, action: appConstants.CANCEL_BOX_FULL, color: "black"}), 
-                          React.createElement(Button1, {disabled: false, text: _("Box Full"), module: appConstants.PICK_FRONT, status: true, action: appConstants.BOX_FULL, color: "black"})
-                      ));
-        this._component = (
-              
-              React.createElement("div", {className: "grid-container"}, 
-              React.createElement(Modal, null), 
-
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails}), 
-                     React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
-                     React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
-                 )
-                 
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
-        case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
-           if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
-        var binComponent="";
-        if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
-                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                            
-                            ))
-          }else{
-            binComponent = (React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-
+                var _button;
+                _button = (React.createElement("div", {className: "staging-action"}, 
+                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
+                             color: "orange"})
                 ));
-          }
-        var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='',
-        cancelButtonStatus = this.state.PickFrontPackingCancelStatus;
-        if(btnId){
-          btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
-          action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;
-          actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
-          actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, action: action, color: "black"}))
-        }
-        if(cancelButtonStatus){
-          cancelButton =  React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
-        }
-        this._component = (
-              React.createElement("div", {className: "grid-container gor-pck-itm-scn"}, 
-                React.createElement(Modal, null), 
-                       
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails}), 
-               this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
-                React.createElement("div", {className: "actions"}, 
-                   
-                  cancelButton, 
-                   actionBtn, 
-                   editButton, 
-                   this.state.PickFrontBinFullStatus && BinFull
-                )
-               
-              )
-              
-            );
-        }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-        case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
-         var cancelScanFlag = this.state.PickFrontCancelScan;
-         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
-         var cancelButton;
-         
-         if(this.state.PickFrontExceptionStatus == false){
-          
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        if(!cancelScanDisabled){
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
-         }
-         else{
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}));
-         }
-         var binComponent ="";
-          if (this.state.OrigBinUse){
 
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS, seatType: this.state.SeatType}))
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                ))
-          }
-           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus;
-        if(btnId){
-          btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
-          action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;
-          actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
-          actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, action: action, color: "black"}))
-        }
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-               
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement("div", {className: "kq-exception"}, 
+                                    React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height"}), 
+                                    _button
+                                )
+                            )
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
+                    )
+                );
+                break;
+            case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                var buttonActivateFlag = mainstore.getExeptionQuanity();
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
 
-               cancelButton, 
-                actionBtn
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
+                            React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-      default:
-        return true;
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
+                                ), 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
+                                ), 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
+                                ), 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
+                                    React.createElement("hr", null)
+                                )
+
+                            ), 
+                            React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", 
+                                         module: appConstants.PICK_FRONT, 
+                                         action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+
+                            )
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
+                    )
+                );
+
+                break;
+
+            case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement("div", {className: "gor-exception-align"}, 
+                                React.createElement("div", {
+                                    className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
+
+                                React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", 
+                                             module: appConstants.PICK_FRONT, 
+                                             action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
+                                )
+                            )
+
+
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
+                    )
+                );
+                break;
+            case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
+                this._navigation = '';
+                if (this.state.PickFrontExceptionScreen == "box_serial") {
+                    this._component = (
+                        React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                            React.createElement("div", {className: "exception-right"}, 
+                                React.createElement("div", {className: "main-container"}, 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
+                                        React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
+                                    ), 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")), 
+                                        React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, 
+                                                            type: appConstants.UNSCANNABLE, 
+                                                            action: appConstants.UNSCANNABLE})
+                                    )
+                                ), 
+                                React.createElement("div", {className: "finish-damaged-barcode"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", 
+                                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
+                                )
+                            ), 
+                            React.createElement("div", {className: "cancel-scan"}, 
+                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
+                                         action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                            )
+                        )
+                    );
+                } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
+                    this._component = (
+                        React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                            React.createElement("div", {className: "exception-right"}, 
+                                React.createElement("div", {className: "main-container exception2"}, 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {
+                                            className: "kq-header"}, "Are You sure Given Boxes are not present in Slot ? ")
+                                    )
+                                ), 
+                                React.createElement("div", {className: "finish-damaged-barcode"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", 
+                                             module: appConstants.PICK_FRONT, 
+                                             action: appConstants.SEND_MISSING_BOX_EXCEPTION})
+                                )
+                            ), 
+                            React.createElement("div", {className: "cancel-scan"}, 
+                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
+                                         action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                            )
+                        )
+                    );
+                }
+                break;
+
+            case appConstants.PPTL_MANAGEMENT:
+            case appConstants.SCANNER_MANAGEMENT:
+                this._navigation = (
+                    React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, 
+                                navMessagesJson: this.props.navMessagesJson}))
+                var _button;
+                if (this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT) {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                 status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                        React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                 status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                    ))
+                }
+                else {
+                    _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), 
+                                                                        module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                                                        status: true, action: appConstants.CANCEL_PPTL, 
+                                                                        color: "black"})))
+                }
+                this._component = (
+                    React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                        React.createElement("div", {className: "row scannerHeader"}, 
+                            React.createElement("div", {className: "col-md-6"}, 
+                                React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                            ), 
+                            React.createElement("div", {className: "col-md-6"}, 
+                                React.createElement("div", {className: "seatType"}, " Seat Type" + ' ' +
+                                    ": ", this.state.PickFrontSeatType.toUpperCase())
+                            )
+                        ), 
+                        React.createElement(TabularData, {data: this.state.utility}), 
+                        _button, 
+                        React.createElement(Modal, null)
+                    )
+                );
+                break;
+
+            case appConstants.PICK_FRONT_PACKING_BOX:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PACKING_BOX, 
+                                                  seatType: this.state.SeatType}))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: appConstants.PICK_FRONT_PACKING_BOX})
+                        ))
+                    }
+                    this._component = (
+
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
+                                binComponent, 
+
+                                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
+                            )
+
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    var _button = (React.createElement("div", {className: "staging-action"}, 
+                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PICK_FRONT, status: true, 
+                                 action: appConstants.CANCEL_BOX_FULL, color: "black"}), 
+                        React.createElement(Button1, {disabled: false, text: _("Box Full"), module: appConstants.PICK_FRONT, status: true, 
+                                 action: appConstants.BOX_FULL, color: "black"})
+                    ));
+                    this._component = (
+
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails}), 
+                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
+                                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
+                            )
+
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
+                                            action: appConstants.BIN_FULL, color: "black"}) );
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                      screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
+                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
+                                              itemUid: this.state.PickFrontItemUid})
+
+                        ))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
+                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
+                                     itemUid: this.state.PickFrontItemUid})
+
+                        ));
+                    }
+                    var btnId = this.state.PickFrontPackingButtonType, btnName, actionBtn, action, actionBtnStatus,
+                        cancelButton = '',
+                        cancelButtonStatus = this.state.PickFrontPackingCancelStatus;
+                    if (btnId) {
+                        btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
+                        action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
+                        actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
+                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, 
+                                              action: action, color: "black"}))
+                    }
+                    if (cancelButtonStatus) {
+                        cancelButton =
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.CANCEL_SCAN, color: "black"})
+                    }
+                    this._component = (
+                        React.createElement("div", {className: "grid-container gor-pck-itm-scn"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                            React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails}), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+
+                                cancelButton, 
+                                actionBtn, 
+                                editButton, 
+                                this.state.PickFrontBinFullStatus && BinFull
+                            )
+
+                        )
+
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
+                var cancelButton;
+
+                if (this.state.PickFrontExceptionStatus == false) {
+
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    if (!cancelScanDisabled) {
+                        cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), 
+                                                                              module: appConstants.PICK_FRONT, 
+                                                                              action: appConstants.CANCEL_SCAN, 
+                                                                              color: "black"}), " ", editButton));
+                    }
+                    else {
+                        cancelButton = (React.createElement("div", {className: "cancel-scan"}));
+                    }
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS, 
+                                                  seatType: this.state.SeatType}))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                        ))
+                    }
+                    var btnId = this.state.PickFrontPackingButtonType, btnName, actionBtn, action, actionBtnStatus;
+                    if (btnId) {
+                        btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
+                        action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
+                        actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
+                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, 
+                                              action: action, color: "black"}))
+                    }
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+
+                            cancelButton, 
+                            actionBtn
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_BIN_PRINTOUT:
+                if (!this.state.PickFrontExceptionStatus) {
+                    if (this.state.OrigBinUse) {
+                        binComponent = (
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_BIN_PRINTOUT, 
+                                      seatType: this.state.SeatType}));
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_BIN_PRINTOUT})
+                        ))
+                    }
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "putFrontFlow"}), 
+                            binComponent
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+            default:
+                return true;
+        }
+    },
+
+    render: function (data) {
+
+        this.getNotificationComponent();
+        this.getScreenComponent(this.state.PickFrontScreenId);
+
+        return (
+            React.createElement("div", {className: "main"}, 
+                React.createElement(Header, null), 
+                this._navigation, 
+                this._component, 
+                this._notification
+            )
+        )
     }
-  },
-  
-  render: function(data){ 
-	  
-    this.getNotificationComponent();
-    this.getScreenComponent(this.state.PickFrontScreenId);
-	
-	return (
-		React.createElement("div", {className: "main"}, 
-			React.createElement(Header, null), 
-			this._navigation, 
-			this._component, 
-      this._notification
-	  )   
-	  )
-  }
 });
 
 module.exports = PickFront;
@@ -44459,6 +44867,28 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._component = this.getExceptionComponent();
       }
       break;
+
+        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        if(this.state.PutFrontExceptionStatus == false){
+         if (this.state.OrigBinUse){
+          binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
+        }else{
+          binComponent =(React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
+            ))
+        }
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+          binComponent
+          )
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
       case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
       if(this.state.PutFrontExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
@@ -45826,6 +46256,13 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],[{
+            "screen_id": "put_front_bin_warehouse_full",
+            "code": "PtF.H.016",
+            "message": "Warehouse Full",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [
@@ -45974,6 +46411,13 @@ var navData = {
             "message": "Scan Slot Barcode",
             "showImage": true,
             "level": null,
+            "type": 'passive'
+        }],[{
+            "screen_id": "pick_front_bin_printout",
+            "code": "PkF.H.016",
+            "message": "Take Printout and Press PPTL",
+            "showImage": false,
+            "level": 1,
             "type": 'passive'
         }]
 
@@ -46127,12 +46571,14 @@ var appConstants = {
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
     PUT_FRONT_EXCESS_ITEMS_PPSBIN: "put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
+	PUT_FRONT_BIN_WAREHOUSE_FULL: "put_front_bin_warehouse_full",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"pick_front_missing_or_unscannable_damaged_item",
 	PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"put_front_unscannable_or_missing_or_damaged",
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
+	PICK_FRONT_BIN_PRINTOUT:"pick_front_bin_printout",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",
@@ -46281,15 +46727,22 @@ var appConstants = {
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
 	ENTITY_DAMAGED:"entity_damaged",
-    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote"
+    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
+	BIN_LIGHT_COLOR:{
+		"red":"#FF0000",
+		"blue":"#0390FF",
+		"green":"#4CAF50",
+		"pink":"#FF1BA5",
+		"white":"#FFFFFF",
+	}
 };
 
 module.exports = appConstants;
 
 },{}],301:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.103/wss",
-	INTERFACE_IP : "https://192.168.8.103"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 
 };
 module.exports = configConstants;
@@ -47527,6 +47980,9 @@ var serverMessages = {
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
     "PtF.H.017" : "Wrong Undock",
+    "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
+    "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
+    "PtF.E.022" : "Entities cannot be accommodated! Remove all entities from bin and press PPTL.",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -47767,6 +48223,7 @@ var serverMessages = {
     "PkF.H.010":"Scan a packing box and keep in bin {0}",
     "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
     "PkF.H.015":"Enter Quantity",
+    "PkF.H.016":"Take Printout and Press PPTL",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
@@ -49319,24 +49776,25 @@ var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
 var CHANGE_EVENT = 'change';
-var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId, _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
-_logoutStatus,
-_activeException = null,
-_enableException = false,
-popupVisible = false,
-_showSpinner = true,
-_goodQuantity = 0,
-_damagedQuantity = 0,
-_putFrontExceptionScreen = "good",
-_pickFrontExceptionScreen = "good",
-_missingQuantity = 0,
-_unscannableQuantity=0,
-showModal = false,
-_scanAllowed = true,
-_clearNotification = false,
-_enableButton = true,
-_putBackExceptionScreen,
-_finishAuditFlag = true;
+var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _seatName, _utility, _pptlEvent, _binId,
+    _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty = 0,
+    _logoutStatus,
+    _activeException = null,
+    _enableException = false,
+    popupVisible = false,
+    _showSpinner = true,
+    _goodQuantity = 0,
+    _damagedQuantity = 0,
+    _putFrontExceptionScreen = "good",
+    _pickFrontExceptionScreen = "good",
+    _missingQuantity = 0,
+    _unscannableQuantity = 0,
+    showModal = false,
+    _scanAllowed = true,
+    _clearNotification = false,
+    _enableButton = true,
+    _putBackExceptionScreen,
+    _finishAuditFlag = true;
 
 var modalContent = {
     data: "",
@@ -49344,23 +49802,23 @@ var modalContent = {
 };
 
 /*
-* This function enables the logout due to inactivity feature - Krishna.
-*/
-var idleLogout = function() {
+ * This function enables the logout due to inactivity feature - Krishna.
+ */
+var idleLogout = function () {
     var t;
-    window.addEventListener('load', resetTimer,false);
-    window.addEventListener('mousemove', resetTimer,false);
-    window.addEventListener('mousedown', resetTimer,false);
-    window.addEventListener('onclick', resetTimer,false);
-    window.addEventListener('scroll', resetTimer,false);
-    window.addEventListener('keypress', resetTimer,false);
+    window.addEventListener('load', resetTimer, false);
+    window.addEventListener('mousemove', resetTimer, false);
+    window.addEventListener('mousedown', resetTimer, false);
+    window.addEventListener('onclick', resetTimer, false);
+    window.addEventListener('scroll', resetTimer, false);
+    window.addEventListener('keypress', resetTimer, false);
 
     function logout() {
-        if(mainstore.getLogoutState()){
+        if (mainstore.getLogoutState()) {
             console.log("Logging out since user has been idle past the time threshold")
             CommonActions.logoutSession(true);
         }
-        
+
     }
 
     function resetTimer() {
@@ -49376,45 +49834,45 @@ function setPopUpVisible(status) {
 };
 var mainstore = objectAssign({}, EventEmitter.prototype, {
 
-    emitChange: function() {
+    emitChange: function () {
         this.emit(CHANGE_EVENT);
     },
-    addChangeListener: function(cb) {
+    addChangeListener: function (cb) {
         this.on(CHANGE_EVENT, cb);
     },
-    removeChangeListener: function(cb) {
+    removeChangeListener: function (cb) {
         this.removeListener(CHANGE_EVENT, cb);
     },
-    getPopUpVisible: function(data) {
+    getPopUpVisible: function (data) {
         return popupVisible;
     },
-    showSpinner: function() {
+    showSpinner: function () {
         _showSpinner = true;
     },
-    setLogoutState: function() {
+    setLogoutState: function () {
         _logoutStatus = _seatData.logout_allowed;
     },
-    getSpinnerState: function() {
+    getSpinnerState: function () {
         return _showSpinner;
     },
 
-    getLogoutState: function() {
+    getLogoutState: function () {
         if (_seatData && _seatData.hasOwnProperty("logout_allowed"))
             return _seatData.logout_allowed;
     },
-    getScanAllowedStatus : function(){
-        if(_seatData.hasOwnProperty("scan_allowed")){
+    getScanAllowedStatus: function () {
+        if (_seatData.hasOwnProperty("scan_allowed")) {
             _scanAllowed = _seatData.scan_allowed;
             return _scanAllowed;
-        }else{
+        } else {
             _scanAllowed = true;
             return _scanAllowed;
         }
     },
 
-    toggleBinSelection: function(bin_id) {
+    toggleBinSelection: function (bin_id) {
         var flag = false;
-        _seatData["ppsbin_list"].map(function(value, index) {
+        _seatData["ppsbin_list"].map(function (value, index) {
             if (value.ppsbin_id == bin_id) {
                 if (value["selected_for_staging"] != undefined) {
                     flag = !value["selected_for_staging"];
@@ -49432,701 +49890,706 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         });
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
-            if(flag == true){
+            if (flag == true) {
                 _enableButton = false;
             }
-            else{
+            else {
                 _enableButton = true;
             }
             _seatData.notification_list[0].details[0] = bin_id;
             _seatData.notification_list[0].level = "info";
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
-        }else{
-          var notification_list = {
-            "code" :  (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002,
-            "level" : "info",
-            "details" :[bin_id],
-            "description" : ""
+        } else {
+            var notification_list = {
+                "code": (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002,
+                "level": "info",
+                "details": [bin_id],
+                "description": ""
+            }
+            _seatData.notification_list[0] = notification_list;
         }
-        _seatData.notification_list[0] = notification_list;
-    }
-},
+    },
 
-getEnableButton : function(){
-    return _enableButton;
-},
+    getEnableButton: function () {
+        return _enableButton;
+    },
 
-setEnableButtonIntialState : function(){
-    _enableButton=true;
-},
+    setEnableButtonIntialState: function () {
+        _enableButton = true;
+    },
 
-enableButton : function(){
-    var currentState=this.getEnableButton();
-    this.setEnableButtonIntialState();
-    return currentState;
-},
+    enableButton: function () {
+        var currentState = this.getEnableButton();
+        this.setEnableButtonIntialState();
+        return currentState;
+    },
 
-getStageActiveStatus: function() {
-    if (_seatData.hasOwnProperty('ppsbin_list')) {
-        var flag = false;
-        _seatData["ppsbin_list"].map(function(value, index) {
-            if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true)
-                flag = true;
-        });
-        return flag;
-    }
-},
+    getStageActiveStatus: function () {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var flag = false;
+            _seatData["ppsbin_list"].map(function (value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true)
+                    flag = true;
+            });
+            return flag;
+        }
+    },
 
-getStageAllActiveStatus: function() {
-    if (_seatData.hasOwnProperty('ppsbin_list')) {
-        var flag = false;
-        _seatData["ppsbin_list"].map(function(value, index) {
-            if (value.ppsbin_count > 0 && value.ppsbin_state != "staged")
-                flag = true;
-        });
-        return flag;
-    }
-},
+    getStageAllActiveStatus: function () {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var flag = false;
+            _seatData["ppsbin_list"].map(function (value, index) {
+                if (value.ppsbin_count > 0 && value.ppsbin_state != "staged")
+                    flag = true;
+            });
+            return flag;
+        }
+    },
 
-getPutQuantity: function() {
-    if (_seatData.hasOwnProperty("put_quantity"))
-        return _seatData.put_quantity;
-},
-setShowModal:function(data){
-    showModal = false;
-},
-getNavData: function() {
-    switch (_currentSeat) {
-        case appConstants.PUT_BACK:
-        if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
-            _NavData = navConfig.putBack[0];
-        else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
-            _NavData = navConfig.utility[0];
-            _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-        }
-        else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-            _NavData = navConfig.utility[1];
-            _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-        }
-        else
-            _NavData = navConfig.putBack[1];
-        break;
-        case appConstants.PUT_FRONT:
-        if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
-            _NavData = navConfig.putFront[0];
-        else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
-            _NavData = navConfig.putFront[2];
-        else if (_seatData.screen_id === appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL)
-            _NavData = navConfig.putFront[5];
-        else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
-            _NavData = navConfig.putFront[3];
-        else if(_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
-            _NavData = navConfig.putFront[4];
-        else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
-            _NavData = navConfig.utility[0];
-            _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-        }
-        else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-            _NavData = navConfig.utility[1];
-            _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-        }
-        else if(_seatData.screen_id===appConstants.PUT_FRONT_WRONG_UNDOCK){
-            _NavData = navConfig.putFront[6];
-        }
-        else
-            _NavData = navConfig.putFront[1];
-        break;
-        case appConstants.PICK_BACK:
-        if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
-            _NavData = navConfig.utility[0];
-            _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-        }
-        else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-            _NavData = navConfig.utility[1];
-            _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-        }
-        else 
-            _NavData = navConfig.pickBack;
-        break;
-        case appConstants.PICK_FRONT:
-        if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
-            _NavData = navConfig.pickFront[0];
-        else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
-            _NavData = navConfig.pickFront[2];
-        else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
-            _NavData = navConfig.utility[0];
-            _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-        }
-        else if(_seatData.screen_id === appConstants.PICK_FRONT_PACKING_BOX){
-         _NavData = navConfig.pickFront[3];
-         _NavData[0].type = 'active';
-     } 
-
-     else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN){
-       _NavData = navConfig.pickFront[4];
-       _NavData[1].type = 'active';
-   }
-   else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN){
-       _NavData = navConfig.pickFront[5];
-       _NavData[2].type = 'active';
-   }
-   else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS){
-       _NavData = navConfig.pickFront[6];
-       _NavData[2].type = 'active';
-   }
-   else if(_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM){
-    _NavData = navConfig.pickFront[7];
-                    //_NavData[2].type = 'active';
-                }
-                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
-                    _NavData = navConfig.utility[1];
-                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-                }
-                
-                else
-                    _NavData = navConfig.pickFront[1];
-                break;
-                case appConstants.AUDIT:
-                if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
-                    _NavData = navConfig.audit[0];
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+    getPutQuantity: function () {
+        if (_seatData.hasOwnProperty("put_quantity"))
+            return _seatData.put_quantity;
+    },
+    setShowModal: function (data) {
+        showModal = false;
+    },
+    getNavData: function () {
+        switch (_currentSeat) {
+            case appConstants.PUT_BACK:
+                if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
+                    _NavData = navConfig.putBack[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
                     _NavData = navConfig.utility[0];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
-                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                    _NavData = navConfig.utility[1];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
+                else
+                    _NavData = navConfig.putBack[1];
+                break;
+            case appConstants.PUT_FRONT:
+                if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
+                    _NavData = navConfig.putFront[0];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
+                    _NavData = navConfig.putFront[2];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL)
+                    _NavData = navConfig.putFront[5];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
+                    _NavData = navConfig.putFront[3];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
+                    _NavData = navConfig.putFront[7];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
+                    _NavData = navConfig.putFront[4];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                    _NavData = navConfig.utility[1];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WRONG_UNDOCK) {
+                    _NavData = navConfig.putFront[6];
+                }
+                else
+                    _NavData = navConfig.putFront[1];
+                break;
+            case appConstants.PICK_BACK:
+                if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                    _NavData = navConfig.utility[1];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
+                else
+                    _NavData = navConfig.pickBack;
+                break;
+            case appConstants.PICK_FRONT:
+                if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
+                    _NavData = navConfig.pickFront[0];
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
+                    _NavData = navConfig.pickFront[2];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_BOX) {
+                    _NavData = navConfig.pickFront[3];
+                    _NavData[0].type = 'active';
+                }
+
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN) {
+                    _NavData = navConfig.pickFront[4];
+                    _NavData[1].type = 'active';
+                }
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN) {
+                    _NavData = navConfig.pickFront[5];
+                    _NavData[2].type = 'active';
+                }
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS) {
+                    _NavData = navConfig.pickFront[6];
+                    _NavData[2].type = 'active';
+                }
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM) {
+                    _NavData = navConfig.pickFront[7];
+                    //_NavData[2].type = 'active';
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                    _NavData = navConfig.utility[1];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                }
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_BIN_PRINTOUT) {
+                    _NavData = navConfig.pickFront[8];
+                }
+
+                else
+                    _NavData = navConfig.pickFront[1];
+                break;
+            case appConstants.AUDIT:
+                if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
+                    _NavData = navConfig.audit[0];
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                    _NavData = navConfig.utility[0];
+                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                }
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
                     _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
                 else
                     _NavData = navConfig.audit[1];
                 break;
-                case appConstants.PRE_PUT:
-                if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE){
+            case appConstants.PRE_PUT:
+                if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE) {
                     _NavData = navConfig.prePut[1];
                 }
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT){
+                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
                     _NavData = navConfig.utility[0];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
                 }
-                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT){
+                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
                     _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-                }                
-                else{
+                }
+                else {
                     _NavData = navConfig.prePut[0];
                 }
                 break;
 
-                default:
-                //return true; 
-            }
-            _NavData.map(function(data, index) {
-                if (data.screen_id instanceof Array) {
-                    if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-                        _NavData[index].type = 'active';
-                    } else {
-                        _NavData[index].type = 'passive';
-                    }
-                } else if (_seatData.screen_id == data.screen_id) {
+            default:
+            //return true;
+        }
+        _NavData.map(function (data, index) {
+            if (data.screen_id instanceof Array) {
+                if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
                     _NavData[index].type = 'active';
                 } else {
                     _NavData[index].type = 'passive';
                 }
-            });
-            return _NavData;
-        },
-
-        getModalStatus: function() {
-            var data = {};
-            data["showModal"] = "";
-            data["message"] = "";
-            if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0  && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
-                showModal = false;
-                return {
-                    "showModal": true,
-                    "message": _("Place extra entity in Exception area.")
-                }
-            } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0  && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
-                showModal = false;
-                console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
-                return {
-                    "showModal": true,
-                    "message": _("Place extra entity in Exception area.")
-                }
-            } 
-            else{
-                return data;
+            } else if (_seatData.screen_id == data.screen_id) {
+                _NavData[index].type = 'active';
+            } else {
+                _NavData[index].type = 'passive';
             }
-        },
+        });
+        return _NavData;
+    },
 
-        getBoxSerialData: function() {
-            var data = {};
-            data["header"] = [];
-            data["tableRows"] = [];
-            var self = this;
-            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+    getModalStatus: function () {
+        var data = {};
+        data["showModal"] = "";
+        data["message"] = "";
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && (_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) {
+            showModal = false;
+            return {
+                "showModal": true,
+                "message": _("Place extra entity in Exception area.")
+            }
+        } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
+            showModal = false;
+            console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
+            return {
+                "showModal": true,
+                "message": _("Place extra entity in Exception area.")
+            }
+        }
+        else {
+            return data;
+        }
+    },
+
+    getBoxSerialData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Action"), "header", false, "small", false, false, true, false, true));
+        _finishAuditFlag = true;
+        var d = [];
+        _seatData.Box_qty_list.map(function (value, index) {
+            d = [];
+            if (value.Scan_status != "close") {
+                d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
+                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+                data["tableRows"].push(d);
+            } else {
+                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+                data["tableRows"].push(d);
+            }
+
+            if (value.Scan_status == "open") {
+                _finishAuditFlag = false;
+            }
+        });
+
+        _seatData.Extra_box_list.map(function (value, index) {
+            d = [];
+            d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Action"), "header", false, "small", false, false, true, false, true));
-            _finishAuditFlag = true;
-            var d = [];
-            _seatData.Box_qty_list.map(function(value, index) {
-                d = [];
-                if (value.Scan_status != "close") {
-                    d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
-                    if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                        d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                    d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-                    d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
-                    data["tableRows"].push(d);
-                } else {
-                    d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
-                    if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                        d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
-                    d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
-                    d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
-                    data["tableRows"].push(d);
-                }
+            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
+            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+            data["tableRows"].push(d);
+            if (value.Scan_status == "open") {
+                _finishAuditFlag = false;
+            }
+        });
 
-                if (value.Scan_status == "open") {
-                    _finishAuditFlag = false;
+        return data;
+
+    },
+
+
+    getBoxDetails: function () {
+        if (_seatData.hasOwnProperty('box_serials'))
+            return _seatData.box_serials;
+    },
+    getOrderDetails: function () {
+        var orderDetailsinOrder = {};
+        var orderDetails = _seatData['order_details'];
+        /*Performing this action to reorder the object*/
+        if (orderDetails) {
+            if (orderDetails.order_id) {
+                orderDetailsinOrder.order_id = orderDetails.order_id;
+            }
+            if (orderDetails.rem_qty) {
+                orderDetailsinOrder.rem_qty = orderDetails.rem_qty;
+            }
+            if (orderDetails.volume) {
+                orderDetailsinOrder.volume = orderDetails.volume;
+            }
+            if (orderDetails.vol_unit) {
+                orderDetailsinOrder.vol_unit = orderDetails.vol_unit;
+            }
+        }
+        return orderDetailsinOrder;
+    },
+    getOrderID: function () {
+        if (_seatData.hasOwnProperty('order_details'))
+            return {
+                order_id: _seatData.order_details.order_id || ""
+            };
+    },
+
+    getChecklistDetails: function () {
+        if (_seatData.hasOwnProperty('checklist_details')) {
+            if (_seatData.checklist_details.pick_checklist.length > 0) {
+                return _seatData.checklist_details.pick_checklist;
+            } else {
+                return [];
+            }
+
+        } else {
+            return [];
+        }
+    },
+
+    getChecklistCompleteDetails: function () {
+        if (_seatData.hasOwnProperty('checklist_details')) {
+            return _seatData.checklist_details;
+        }
+    },
+
+    getChecklistIndex: function () {
+        if (_seatData.hasOwnProperty('checklist_details')) {
+            if (_seatData.checklist_details.checklist_index != null) {
+                return _seatData.checklist_details.checklist_index;
+            } else {
+                return null;
+            }
+
+        } else {
+            return null;
+        }
+    },
+
+    getChecklistOverlayStatus: function () {
+        if (_seatData.hasOwnProperty('checklist_details')) {
+            return _seatData.checklist_details.display_checklist_overlay;
+        } else {
+            return null;
+        }
+    },
+
+    getServerNavData: function () {
+        if (_seatData.header_msge_list.length > 0) {
+            _serverNavData = _seatData.header_msge_list[0];
+            return _serverNavData;
+        } else {
+            return null;
+        }
+    },
+
+    getNotificationData: function () {
+        if (_clearNotification == true && _seatData.hasOwnProperty('notification_list')) {
+            var notification_list = [{
+                "details": [],
+                "code": null,
+                "description": '',
+                "level": "info"
+            }]
+            _seatData.notification_list = notification_list;
+            _clearNotification = false;
+        }
+        return _seatData.notification_list[0];
+    },
+    getLocationButtonStatus: function () {
+        return _seatData.button_press_allowed;
+
+    },
+    clearNotifications: function () {
+        _clearNotification = true;
+    },
+    getBinData: function () {
+        var binData = {};
+        binData["structure"] = _seatData.structure;
+        binData["ppsbin_list"] = _seatData.ppsbin_list;
+        return binData;
+    },
+    getPickFrontButtonType: function () {
+        return _seatData.button_press_id || null;
+
+    },
+    getPickFrontButtonStatus: function () {
+        return _seatData.button_press_allowed;
+    },
+    getPickFrontPackingCancelStatus: function () {
+        return _seatData.cancel_scan_allowed;
+    },
+
+    stageOneBin: function () {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var data = {};
+            _seatData.ppsbin_list.map(function (value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data["event_name"] = "stage_ppsbin";
+                    data["event_data"] = {};
+                    data["event_data"]["ppsbin_id"] = value.ppsbin_id;
                 }
             });
 
-            _seatData.Extra_box_list.map(function(value, index) {
-                d = [];
-                d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
-                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-               // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-           d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-           d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
-           data["tableRows"].push(d);
-           if (value.Scan_status == "open") {
-            _finishAuditFlag = false;
+            utils.postDataToInterface(data, _seatData.seat_name);
         }
-    });
+    },
+
+    getSelectedBin: function () {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var data = null;
+            _seatData.ppsbin_list.map(function (value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data = value.ppsbin_id;
+                }
+            });
 
             return data;
+        } else
+            return null;
+    },
 
-        },
-
-
-        getBoxDetails: function() {
-            if (_seatData.hasOwnProperty('box_serials'))
-                return _seatData.box_serials;
-        },
-        getOrderDetails: function() {
-            var orderDetailsinOrder={};
-            var orderDetails = _seatData['order_details'];
-            /*Performing this action to reorder the object*/
-            if (orderDetails){
-                if(orderDetails.order_id){
-                    orderDetailsinOrder.order_id = orderDetails.order_id;
+    getCurrentState: function () {
+        if (_seatData.hasOwnProperty('ppsbin_list')) {
+            var data = null;
+            _seatData.ppsbin_list.map(function (value, index) {
+                if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
+                    data = value.ppsbin_state;
                 }
-                if(orderDetails.rem_qty){
-                    orderDetailsinOrder.rem_qty = orderDetails.rem_qty;
-                }
-                if(orderDetails.volume){
-                    orderDetailsinOrder.volume = orderDetails.volume;
-                }
-                if(orderDetails.vol_unit){
-                    orderDetailsinOrder.vol_unit = orderDetails.vol_unit;
-                }
-            }
-            return orderDetailsinOrder;
-        },
-        getOrderID: function() {
-            if (_seatData.hasOwnProperty('order_details'))
-                return {
-                    order_id : _seatData.order_details.order_id || ""
-                };
-            },
+            });
 
-            getChecklistDetails: function() {
-                if (_seatData.hasOwnProperty('checklist_details')) {
-                    if (_seatData.checklist_details.pick_checklist.length > 0) {
-                        return _seatData.checklist_details.pick_checklist;
-                    } else {
-                        return [];
-                    }
+            return data;
+        } else
+            return null;
+    },
 
-                } else {
-                    return [];
-                }
-            },
-
-            getChecklistCompleteDetails:function(){
-                if (_seatData.hasOwnProperty('checklist_details')) {
-                    return _seatData.checklist_details;
-                }
-            },
-
-            getChecklistIndex: function() {
-                if (_seatData.hasOwnProperty('checklist_details')) {
-                    if (_seatData.checklist_details.checklist_index != null) {
-                        return _seatData.checklist_details.checklist_index;
-                    } else {
-                        return null;
-                    }
-
-                } else {
-                    return null;
-                }
-            },
-
-            getChecklistOverlayStatus: function() {
-                if (_seatData.hasOwnProperty('checklist_details')) {
-                    return _seatData.checklist_details.display_checklist_overlay;
-                } else {
-                    return null;
-                }
-            },
-
-            getServerNavData: function() {
-                if (_seatData.header_msge_list.length > 0) {
-                    _serverNavData = _seatData.header_msge_list[0];
-                    return _serverNavData;
-                } else {
-                    return null;
-                }
-            },
-
-            getNotificationData: function() {
-                if(_clearNotification == true && _seatData.hasOwnProperty('notification_list')){
-                    var notification_list = [{
-                        "details" : [],
-                        "code" : null,
-                        "description" : '',
-                        "level" : "info"
-                    }]
-                    _seatData.notification_list = notification_list;
-                    _clearNotification = false;
-                }
-                return _seatData.notification_list[0];
-            },
-            getLocationButtonStatus:function(){
-                return _seatData.button_press_allowed;
-
-            },
-            clearNotifications : function(){
-                _clearNotification = true;
-            },
-            getBinData: function() {
-                var binData = {};
-                binData["structure"] = _seatData.structure;
-                binData["ppsbin_list"] = _seatData.ppsbin_list;
-                return binData;
-            },
-            getPickFrontButtonType:function(){
-                return _seatData.button_press_id || null;
-                
-            },
-            getPickFrontButtonStatus:function(){
-                return _seatData.button_press_allowed;
-            },
-            getPickFrontPackingCancelStatus:function(){
-                return _seatData.cancel_scan_allowed;
-            },
-
-            stageOneBin: function() {
-                if (_seatData.hasOwnProperty('ppsbin_list')) {
-                    var data = {};
-                    _seatData.ppsbin_list.map(function(value, index) {
-                        if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
-                            data["event_name"] = "stage_ppsbin";
-                            data["event_data"] = {};
-                            data["event_data"]["ppsbin_id"] = value.ppsbin_id;
-                        }
-                    });
-
-                    utils.postDataToInterface(data, _seatData.seat_name);
-                }
-            },
-
-            getSelectedBin: function() {
-                if (_seatData.hasOwnProperty('ppsbin_list')) {
-                    var data = null;
-                    _seatData.ppsbin_list.map(function(value, index) {
-                        if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
-                            data = value.ppsbin_id;
-                        }
-                    });
-
-                    return data;
-                } else
-                return null;
-            },
-
-            getCurrentState: function() {
-                if (_seatData.hasOwnProperty('ppsbin_list')) {
-                    var data = null;
-                    _seatData.ppsbin_list.map(function(value, index) {
-                        if (value["selected_for_staging"] != undefined && value["selected_for_staging"] == true) {
-                            data = value.ppsbin_state;
-                        }
-                    });
-
-                    return data;
-                } else
-                return null;
-            },
-
-            stageAllBin: function() {
-                var data = {};
-                data["event_name"] = "stage_all";
-                data["event_data"] = '';
-                utils.postDataToInterface(data, _seatData.seat_name);
-            },
+    stageAllBin: function () {
+        var data = {};
+        data["event_name"] = "stage_all";
+        data["event_data"] = '';
+        utils.postDataToInterface(data, _seatData.seat_name);
+    },
 
 
-            getExceptionData: function() {
-                var data = {};
-                data["activeException"] = this.getActiveException();
-                data["list"] = [];
-                data["header"] = "Exceptions";
-                var bSelected = false;
-                var bDisabled = false;
-                _seatData.exception_allowed.map(function(value, index) {
+    getExceptionData: function () {
+        var data = {};
+        data["activeException"] = this.getActiveException();
+        data["list"] = [];
+        data["header"] = "Exceptions";
+        var bSelected = false;
+        var bDisabled = false;
+        _seatData.exception_allowed.map(function (value, index) {
             //all exception items should be enabled and unselected first hence putting disabled = false 
             bDisabled = false;
             bSelected = false;
-            if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) || 
-                value.exception_name === data["activeException"]){
-                bSelected = true;                
+            if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) ||
+                value.exception_name === data["activeException"]) {
+                bSelected = true;
+            }
+
+            if (_seatData["exception_type"] != undefined && !bSelected) {
+                bDisabled = true;
+            }
+
+            data["list"].push({
+                "text": value.exception_name,
+                "selected": bSelected,
+                "exception_id": value.exception_id,
+                "details": [],
+                "disabled": bDisabled,
+                "event": value["event"] != undefined ? value["event"] : ""
+            });
+        })
+        return data;
+    },
+    getExceptionAllowed: function () {
+        return _seatData.exception_allowed;
+    },
+
+    scanDetails: function () {
+        _scanDetails = _seatData.scan_details;
+        return _scanDetails;
+    },
+    cancelScanDetails: function () {
+        return _seatData.cancel_scan_enabled;
+    },
+
+    productDetails: function () {
+        _prodDetails = _seatData.product_info;
+        return _prodDetails;
+    },
+
+    getItemUid: function () {
+        return _seatData.item_uid;
+    },
+
+    getRackDetails: function () {
+        if (_seatData.hasOwnProperty('rack_details')) {
+            return _seatData.rack_details;
         }
+    },
 
-        if(_seatData["exception_type"] != undefined && !bSelected )  {
-            bDisabled = true;
-        }
-
-        data["list"].push({
-            "text": value.exception_name,
-            "selected": bSelected,
-            "exception_id" : value.exception_id,
-            "details" : [],
-            "disabled" : bDisabled,
-            "event": value["event"] != undefined ? value["event"] : ""
-        });            
-    })
-                return data;
-            },
-            getExceptionAllowed: function() {
-                return _seatData.exception_allowed;
-            },
-
-            scanDetails: function() {
-                _scanDetails = _seatData.scan_details;
-                return _scanDetails;
-            },
-            cancelScanDetails:function(){
-                return _seatData.cancel_scan_enabled ;
-            },
-
-            productDetails: function() {
-                _prodDetails = _seatData.product_info;
-                return _prodDetails;
-            },
-
-            getItemUid: function() {
-                return _seatData.item_uid;
-            },
-
-            getRackDetails: function() {
-                if (_seatData.hasOwnProperty('rack_details')) {
-                    return _seatData.rack_details;
-                }
-            },
-
-            getCurrentSelectedBin: function() {
-                var binData = {};
-                binData["structure"] = [1, 1];
-                binData["ppsbin_list"] = [];
-                _seatData.ppsbin_list.map(function(value, index) {
-                    if (value.selected_state == true)
-                        binData["ppsbin_list"].push(value);
-                })
-                return binData;
-            },
-            tableCol: function(text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox,totalWidth, id, management) {
-                this.text = text;
-                this.status = status;
-                this.selected = selected;
-                this.size = size;
-                this.border = border;
-                this.grow = grow;
-                this.bold = bold;
-                this.disabled = disabled;
-                this.centerAlign = centerAlign;
-                this.type = type;
-                this.buttonType = buttonType;
-                this.buttonStatus = buttonStatus;
-                this.borderBottom = borderBottom;
-                this.mode = mode,
-                this.text_decoration = text_decoration,
-                this.color = color,
-                this.actionButton = actionButton,
-                this.textbox = textbox,
-                this.id = id,
-                this.management = management,
-                this.totalWidth = totalWidth
-            },
-            getPptlData: function() {
-                if (_seatData.hasOwnProperty('utility')) {
-                    var data = {};
-                    data["header"] = [];
-                    if(appConstants.PPTL_MANAGEMENT == _seatData.screen_id){
-                        data["header"].push(new this.tableCol(_("Bin ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
-                        data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
-                        data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
-                        data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral" )); 
-                        data["tableRows"] = [];
-                        var self = this;
-                        _seatData.utility.map(function(value, index) {
-                            var barcode = '';
-                            var peripheralId = '';
-                            if(value.hasOwnProperty('barcode')){
-                                barcode = value.barcode;
-                            }
-                            if(value.hasOwnProperty('peripheral_id')){
-                                peripheralId = value.peripheral_id;
-                            }
-                            var buttonText = _('Update');
-                            var deletButton = 'Delete';
-                            if(barcode == '' && peripheralId  == ''){
-                                buttonText = _('Add');
-                                deletButton = '';
-                            }
-                            var textBox = false;
-                            if((_action == _('Update') || _action == _('Add')) && _binId == value.pps_bin_id){
-                                textBox = true;
-                                buttonText = _('Finish');
-                            }
-                            data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
-                                new self.tableCol(barcode, "enabled", false, "small", true, false, false, false,  false, 'barcodePptl', true, false, "peripheral", false, null, false, true,  textBox,true, value.pps_bin_id), 
-                                new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false,true,  textBox, true, value.pps_bin_id),
-                                new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true,  false, true, value.pps_bin_id)]); 
-
-                        });
-                    }else{
-                        data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '',  false, null, "scanner-id"));
-                        data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, false, true, false, true, true, true, false, "peripheral",false, null, false, '', false, null, "scanner-action")); 
-                        data["tableRows"] = [];
-                        var self = this;
-                        _seatData.utility.map(function(value, index) {
-                            data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true ,false, null, null, "scanner-id"),
-                                new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false, null, value.peripheral_id, "scanner-action")]); 
-
-                        }); 
-                    }
-                    return data;
-                }
-            },
-            getReconcileData: function() {
-                if (_seatData.hasOwnProperty('reconciliation')) {
-                    var data = {};
-                    data["header"] = [];
-                    data["header"].push(new this.tableCol(_("Tote Details"), "header", false, "small", false, true, true, false));
-                    data["tableRows"] = [];
-                    var self = this;
-                    data["tableRows"].push([new this.tableCol(_("Product SKU"), "enabled", false, "small", false, true, true, false), new this.tableCol(_("Expected Quantity"), "enabled", false, "small", true, false, true, false, true), new this.tableCol(_("Actual Quantity"), "enabled", false, "small", true, false, true, false, true)]);
-                    _seatData.reconciliation.map(function(value, index) {
-                        data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
-
-                    });
-                    return data;
-                }
-            },
-
-            getCurrentBoxSerialData: function() {
-                return _seatData.Current_box_details;
-            },
-
-            getCancelScanStatus: function() {
-                return _seatData.Cancel_scan;
-            },
-
-            getReconcileBoxSerialData: function() {
-                var data = {};
-                data["header"] = [];
+    getCurrentSelectedBin: function () {
+        var binData = {};
+        binData["structure"] = [1, 1];
+        binData["ppsbin_list"] = [];
+        _seatData.ppsbin_list.map(function (value, index) {
+            if (value.selected_state == true)
+                binData["ppsbin_list"].push(value);
+        })
+        return binData;
+    },
+    tableCol: function (text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management) {
+        this.text = text;
+        this.status = status;
+        this.selected = selected;
+        this.size = size;
+        this.border = border;
+        this.grow = grow;
+        this.bold = bold;
+        this.disabled = disabled;
+        this.centerAlign = centerAlign;
+        this.type = type;
+        this.buttonType = buttonType;
+        this.buttonStatus = buttonStatus;
+        this.borderBottom = borderBottom;
+        this.mode = mode,
+            this.text_decoration = text_decoration,
+            this.color = color,
+            this.actionButton = actionButton,
+            this.textbox = textbox,
+            this.id = id,
+            this.management = management,
+            this.totalWidth = totalWidth
+    },
+    getPptlData: function () {
+        if (_seatData.hasOwnProperty('utility')) {
+            var data = {};
+            data["header"] = [];
+            if (appConstants.PPTL_MANAGEMENT == _seatData.screen_id) {
+                data["header"].push(new this.tableCol(_("Bin ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Barcode"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Peripheral ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, true, true, false, true, true, true, false, "peripheral"));
                 data["tableRows"] = [];
                 var self = this;
-                var noScanMissing = 0;
-                var missingDamagedBoxSerials = '';
-                var extraBoxSerials = '';
-                var countMissingDamagedBoxSerials = 0;
-                _seatData.Box_qty_list.map(function(value, index) {
-                    if (value.Scan_status == "no_scan") {
-                        missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
-                        countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
+                _seatData.utility.map(function (value, index) {
+                    var barcode = '';
+                    var peripheralId = '';
+                    if (value.hasOwnProperty('barcode')) {
+                        barcode = value.barcode;
                     }
-                });
-                missingDamagedBoxSerials = missingDamagedBoxSerials.replace(/,([^,]*)$/,'$1');
-                _seatData.Extra_box_list.map(function(value, index) {
-                    extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
-                });
-                if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0 || _seatData["box_barcode_damage"] > 0) {
-                    data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
-                    data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
-                    data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-                    data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
-                }
-                if (missingDamagedBoxSerials != 0)
-                    data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(Math.max(countMissingDamagedBoxSerials - _seatData["box_barcode_damage"], 0), "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
-                        ]);
-                else if((_seatData["box_barcode_damage"]!=undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/ ){
-                    data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
-                        ]);
-                }
-                if (_seatData.Extra_box_list.length != 0)
-                    data["tableRows"].push([new self.tableCol(extraBoxSerials, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
-                        ]);
-                return data;
-            },
+                    if (value.hasOwnProperty('peripheral_id')) {
+                        peripheralId = value.peripheral_id;
+                    }
+                    var buttonText = _('Update');
+                    var deletButton = 'Delete';
+                    if (barcode == '' && peripheralId == '') {
+                        buttonText = _('Add');
+                        deletButton = '';
+                    }
+                    var textBox = false;
+                    if ((_action == _('Update') || _action == _('Add')) && _binId == value.pps_bin_id) {
+                        textBox = true;
+                        buttonText = _('Finish');
+                    }
+                    data["tableRows"].push([new self.tableCol(value.pps_bin_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral"),
+                        new self.tableCol(barcode, "enabled", false, "small", true, false, false, false, false, 'barcodePptl', true, false, "peripheral", false, null, false, true, textBox, true, value.pps_bin_id),
+                        new self.tableCol(peripheralId, "enabled", false, "small", true, false, false, false, false, 'peripheralId', true, false, "peripheral", false, null, false, true, textBox, true, value.pps_bin_id),
+                        new self.tableCol(buttonText, "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false, true, value.pps_bin_id)]);
 
-            getItemInBoxReconcileData: function() {
-                var data = {};
-                data["header"] = [];
+                });
+            } else {
+                data["header"].push(new this.tableCol(_("Scanner ID"), "header", false, "small", false, true, true, false, false, true, true, false, "peripheral", false, null, false, '', false, null, "scanner-id"));
+                data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, false, true, false, true, true, true, false, "peripheral", false, null, false, '', false, null, "scanner-action"));
                 data["tableRows"] = [];
                 var self = this;
-                _seatData.Box_qty_list.map(function(value, index) {
-                    if (value.Scan_status == "close") {
-                        var barcodeDamagedQty = 0;
-                        _seatData.item_in_box_barcode_damage.map(function(val, ind) {
-                            if (value.Box_serial == val.Box_serial)
-                                barcodeDamagedQty = val.Damage_qty;
-                        });
-                        if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || barcodeDamagedQty != 0)
-                            data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty - barcodeDamagedQty, 0), "enabled", false, "large", true, false, false, false, true),
-                                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                                new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
-                                ]);
-                    }
-                });
-                if (data["tableRows"].length > 0) {
-                    data["header"].push(new this.tableCol(_("Item in Box Serial Numbers"), "header", false, "small", false, true, true, false));
-                    data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
-                    data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-                    data["header"].push(new this.tableCol(_("Barcode Damage"), "header", false, "small", false, false, true, false, true));
-                }
-                return data;
-            },
+                _seatData.utility.map(function (value, index) {
+                    data["tableRows"].push([new self.tableCol(value.peripheral_id, "enabled", false, "small", false, false, false, false, false, true, true, false, "peripheral", false, null, false, true, false, null, null, "scanner-id"),
+                        new self.tableCol(_("Delete"), "enabled", false, "small", true, false, false, false, true, true, true, false, "peripheral", true, "blue", true, true, false, null, value.peripheral_id, "scanner-action")]);
 
-            getLooseItemsData: function() {
-                var data = {};
-                var disabledStatus;
+                });
+            }
+            return data;
+        }
+    },
+    getReconcileData: function () {
+        if (_seatData.hasOwnProperty('reconciliation')) {
+            var data = {};
+            data["header"] = [];
+            data["header"].push(new this.tableCol(_("Tote Details"), "header", false, "small", false, true, true, false));
+            data["tableRows"] = [];
+            var self = this;
+            data["tableRows"].push([new this.tableCol(_("Product SKU"), "enabled", false, "small", false, true, true, false), new this.tableCol(_("Expected Quantity"), "enabled", false, "small", true, false, true, false, true), new this.tableCol(_("Actual Quantity"), "enabled", false, "small", true, false, true, false, true)]);
+            _seatData.reconciliation.map(function (value, index) {
+                data["tableRows"].push([new self.tableCol(value.product_sku, "enabled", false, "large", false, true, false, false), new self.tableCol(value.expected_quantity, "enabled", false, "large", true, false, false, false, true), new self.tableCol(value.actual_quantity, "enabled", false, "large", true, false, false, false, true)]);
+
+            });
+            return data;
+        }
+    },
+
+    getCurrentBoxSerialData: function () {
+        return _seatData.Current_box_details;
+    },
+
+    getCancelScanStatus: function () {
+        return _seatData.Cancel_scan;
+    },
+
+    getReconcileBoxSerialData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        var noScanMissing = 0;
+        var missingDamagedBoxSerials = '';
+        var extraBoxSerials = '';
+        var countMissingDamagedBoxSerials = 0;
+        _seatData.Box_qty_list.map(function (value, index) {
+            if (value.Scan_status == "no_scan") {
+                missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
+                countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
+            }
+        });
+        missingDamagedBoxSerials = missingDamagedBoxSerials.replace(/,([^,]*)$/, '$1');
+        _seatData.Extra_box_list.map(function (value, index) {
+            extraBoxSerials = extraBoxSerials + value.Box_serial + " ";
+        });
+        if (missingDamagedBoxSerials != 0 || _seatData.Extra_box_list.length != 0 || _seatData["box_barcode_damage"] > 0) {
+            data["header"].push(new this.tableCol(_("Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
+        }
+        if (missingDamagedBoxSerials != 0)
+            data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(Math.max(countMissingDamagedBoxSerials - _seatData["box_barcode_damage"], 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+            ]);
+        else if ((_seatData["box_barcode_damage"] != undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/) {
+            data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+            ]);
+        }
+        if (_seatData.Extra_box_list.length != 0)
+            data["tableRows"].push([new self.tableCol(extraBoxSerials, "enabled", false, "large", false, true, false, false),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+            ]);
+        return data;
+    },
+
+    getItemInBoxReconcileData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        _seatData.Box_qty_list.map(function (value, index) {
+            if (value.Scan_status == "close") {
+                var barcodeDamagedQty = 0;
+                _seatData.item_in_box_barcode_damage.map(function (val, ind) {
+                    if (value.Box_serial == val.Box_serial)
+                        barcodeDamagedQty = val.Damage_qty;
+                });
+                if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || barcodeDamagedQty != 0)
+                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty - barcodeDamagedQty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
+                    ]);
+            }
+        });
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol(_("Item in Box Serial Numbers"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Barcode Damage"), "header", false, "small", false, false, true, false, true));
+        }
+        return data;
+    },
+
+    getLooseItemsData: function () {
+        var data = {};
+        var disabledStatus;
         //if (_seatData.Current_box_details.length > 0) {
-            disabledStatus = false;
+        disabledStatus = false;
         //}
         data["header"] = [];
         data["header"].push(new this.tableCol(_("Loose Items"), "header", false, "small", false, true, true, false));
@@ -50136,12 +50599,12 @@ getNavData: function() {
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Sku_Item_List.map(function(value, index) {
+        _seatData.Sku_Item_List.map(function (value, index) {
             d = [];
             var itemQtyList = [];
             var itemList = value.Item_Qty_List;
-            if(itemList){
-                for(var i =0,listLen = itemList.length ; i < listLen ; i++){
+            if (itemList) {
+                for (var i = 0, listLen = itemList.length; i < listLen; i++) {
                     itemQtyList.push(itemList[i].Actual_Qty)
                 }
             }
@@ -50152,77 +50615,77 @@ getNavData: function() {
             data["tableRows"].push(d);
         });
 
-        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+        _seatData.extra_loose_sku_item_list.map(function (value, index) {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-               // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-           d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
-           data["tableRows"].push(d);
-       });
+            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+            data["tableRows"].push(d);
+        });
         return data;
     },
 
-    getFinishAuditFlag: function() {
+    getFinishAuditFlag: function () {
         return _finishAuditFlag;
     },
 
-    getReconcileLooseItemsData: function() {
+    getReconcileLooseItemsData: function () {
         var data = {};
         data["header"] = [];
         data["tableRows"] = [];
         var self = this;
         var totalLooseItemsMissing = 0;
         var extraLooseItemsMissing = 0;
-        var c = 0 ;
-        _seatData.Loose_sku_list.map(function(value, index) {
+        var c = 0;
+        _seatData.Loose_sku_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-                c=c+1;
+                c = c + 1;
         })
-        _seatData.extra_loose_sku_item_list.map(function(value, index) {
+        _seatData.extra_loose_sku_item_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-                c=c+1;
+                c = c + 1;
         })
         /*_seatData.Loose_sku_list.map(function(value, index) {
-            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
-                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
-            ]);
+         if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+         data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+         new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+         new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+         new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+         ]);
 
-        });*/
-         /*if (data["tableRows"].length > 0)
+         });*/
+        /*if (data["tableRows"].length > 0)
          data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
-                new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
-                ]);*/
+         new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
+         ]);*/
         /*_seatData.extra_loose_sku_item_list.map(function(value, index) {
-            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
-                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
-            ]);
+         if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+         data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+         new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+         new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
+         new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
+         ]);
 
-        });*/
+         });*/
 
-        _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function(value, index) {
+        _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                     new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
-                    ]);
+                    new self.tableCol(index == ((c % 2 == 0 ? c / 2 : ((c + 1) / 2)) - 1) ? _seatData.loose_item_barcode_damage : "", "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
+                ]);
 
         });
-        if(_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0){
+        if (_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0) {
             data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
-                ]);
+                new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
+            ]);
         }
-        
+
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
@@ -50233,8 +50696,7 @@ getNavData: function() {
     },
 
 
-
-    getToteId: function() {
+    getToteId: function () {
         if (_seatData.hasOwnProperty('tote_id')) {
             return _seatData.tote_id;
         } else {
@@ -50243,7 +50705,7 @@ getNavData: function() {
     },
 
 
-    getItemDetailsData: function() {
+    getItemDetailsData: function () {
         var data = {};
         data["header"] = [];
         data["header"].push(new this.tableCol(_("Product Details"), "header", false, "small", false, true, true, false));
@@ -50255,153 +50717,153 @@ getNavData: function() {
             var product_info_locale = {};
             var language_locale = sessionStorage.getItem('localeData');
             var locale;
-            if(language_locale == 'null' || language_locale == null){
-              locale = 'en-US';
-          }else{
-              locale = JSON.parse(language_locale)["data"]["locale"]; 
-          } 
-          _seatData.product_info.map(function(value, index){
-              var keyValue;
-              
-              for (var key in value[0]) { 
-                if(key != 'display_data' && key != 'product_local_image_url' ){
-                  keyValue = value[0][key] + ' ';
-              }else if(key != 'display_data' && key == 'product_local_image_url' ){
-                data["image_url"] = value[0][key];
+            if (language_locale == 'null' || language_locale == null) {
+                locale = 'en-US';
+            } else {
+                locale = JSON.parse(language_locale)["data"]["locale"];
             }
+            _seatData.product_info.map(function (value, index) {
+                var keyValue;
 
+                for (var key in value[0]) {
+                    if (key != 'display_data' && key != 'product_local_image_url') {
+                        keyValue = value[0][key] + ' ';
+                    } else if (key != 'display_data' && key == 'product_local_image_url') {
+                        data["image_url"] = value[0][key];
+                    }
+
+                }
+                value[0].display_data.map(
+                    function (data_locale, index1) {
+                        if (data_locale.locale == locale) {
+                            if (data_locale.display_name != 'product_local_image_url') {
+                                product_info_locale[data_locale.display_name] = keyValue;
+                            }
+                        }
+                    }
+                )
+            });
+            for (var key in product_info_locale) {
+                if (product_info_locale.hasOwnProperty(key)) {
+                    data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
+                }
+            }
+        } else {
+            data["tableRows"].push([new self.tableCol(_("Product Name"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol(_("Product Desc"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol(_("Product SKU"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["tableRows"].push([new self.tableCol(_("Product Type"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false)
+            ]);
         }
-        value[0].display_data.map(
-            function(data_locale, index1){
-             if(data_locale.locale == locale){
-                if(data_locale.display_name != 'product_local_image_url' ){
-                  product_info_locale[data_locale.display_name] = keyValue;
-              }
-          }                    
-      }
-      )              
-    });
-          for (var key in product_info_locale) {
-            if (product_info_locale.hasOwnProperty(key)) {
-                data["tableRows"].push([new self.tableCol(key, "enabled", false, "small", false, true, false, false), new self.tableCol(product_info_locale[key], "enabled", false, "small", false, true, false, false)]);
-            }
+
+        return data;
+    },
+
+
+    getScanDetails: function () {
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": this.getkQQuanity(),
+                    "total_qty": 0,
+                    "kq_allowed": this.kQstatus()
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
         }
-    } else {
-        data["tableRows"].push([new self.tableCol(_("Product Name"), "enabled", false, "small", false, true, false, false),
-            new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-        data["tableRows"].push([new self.tableCol(_("Product Desc"), "enabled", false, "small", false, true, false, false),
-            new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-        data["tableRows"].push([new self.tableCol(_("Product SKU"), "enabled", false, "small", false, true, false, false),
-            new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-        data["tableRows"].push([new self.tableCol(_("Product Type"), "enabled", false, "small", false, true, false, false),
-            new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
-    }
+    },
+    kQstatus: function () {
+        if (_seatData.hasOwnProperty('enable_kq')) {
+            return _seatData.enable_kq;
+        } else {
+            return true;
+        }
+    },
+    getGoodScanDetails: function () {
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _goodQuantity,
+                    "total_qty": 0,
+                    "kq_allowed": true
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
 
-    return data;
-},
+    getMissingScanDetails: function () {
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _missingQuantity,
+                    "total_qty": 0,
+                    "kq_allowed": true
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
 
-
-getScanDetails: function() {
-    if (_seatData["scan_details"] == undefined) {
-        var data = {
-            "scan_details": {
-                "current_qty": this.getkQQuanity(),
-                "total_qty": 0,
-                "kq_allowed": this.kQstatus()
-            }
-        };
-        return data.scan_details;
-    } else {
-        return _seatData["scan_details"];
-    }
-},
-kQstatus: function() {
-    if (_seatData.hasOwnProperty('enable_kq')) {
-        return _seatData.enable_kq;
-    } else {
-        return true;
-    }
-},
-getGoodScanDetails: function() {
-    if (_seatData["scan_details"] == undefined) {
-        var data = {
-            "scan_details": {
-                "current_qty": _goodQuantity,
-                "total_qty": 0,
-                "kq_allowed": true
-            }
-        };
-        return data.scan_details;
-    } else {
-        return _seatData["scan_details"];
-    }
-},
-
-getMissingScanDetails: function() {
-    if (_seatData["scan_details"] == undefined) {
-        var data = {
-            "scan_details": {
-                "current_qty": _missingQuantity,
-                "total_qty": 0,
-                "kq_allowed": true
-            }
-        };
-        return data.scan_details;
-    } else {
-        return _seatData["scan_details"];
-    }
-},
-
-getDamagedScanDetails: function() {
-    if (_seatData["scan_details"] == undefined) {
-        var data = {
-            "scan_details": {
-                "current_qty": _damagedQuantity,
-                "total_qty": 0,
-                "kq_allowed": true
-            }
-        };
-        return data.scan_details;
-    } else {
-        return _seatData["scan_details"];
-    }
-},
-getPhysicallyDamagedScanDetails: function() {
-    if (_seatData["scan_details"] == undefined) {
-        var data = {
-            "scan_details": {
-                "current_qty": _seatData["unmarked_container"] ? _damagedQuantity : _seatData['physically_damaged_items'].length,
-                "total_qty": 0,
-                "kq_allowed": true
-            }
-        };
-        return data.scan_details;
-    } else {
-        return _seatData["scan_details"];
-    }
-},
-hideSpinner:function(){
-    _showSpinner = false;
-},
-setCurrentSeat: function(data) {
+    getDamagedScanDetails: function () {
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _damagedQuantity,
+                    "total_qty": 0,
+                    "kq_allowed": true
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
+    getPhysicallyDamagedScanDetails: function () {
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _seatData["unmarked_container"] ? _damagedQuantity : _seatData['physically_damaged_items'].length,
+                    "total_qty": 0,
+                    "kq_allowed": true
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
+    hideSpinner: function () {
+        _showSpinner = false;
+    },
+    setCurrentSeat: function (data) {
         //showModal = false;
         _action = undefined;
-        _binId= undefined;
+        _binId = undefined;
         _enableException = false;
         _putFrontExceptionScreen = "good";
         _goodQuantity = 0;
         _damagedQuantity = 0;
-        _unscannableQuantity=0;
+        _unscannableQuantity = 0;
         _missingQuantity = 0;
         _activeException = null;
         _showSpinner = false;
         _enableException = false;
         _seatData = data;
-        _KQQty = _seatData.hasOwnProperty("quantity")?_seatData["quantity"]:0;
+        _KQQty = _seatData.hasOwnProperty("quantity") ? _seatData["quantity"] : 0;
         _seatName = data.seat_name;
         _seatMode = data.mode;
         _seatType = data.seat_type;
@@ -50409,7 +50871,7 @@ setCurrentSeat: function(data) {
         _itemUid = data["item_uid"] != undefined ? data["item_uid"] : "";
         _exceptionType = data["exception_type"] != undefined ? data["exception_type"] : "";
         _screenId = data.screen_id;
-        _unmarkedContainer= (data.unmarked_container)? data.unmarked_container:false;
+        _unmarkedContainer = (data.unmarked_container) ? data.unmarked_container : false;
         this.setServerMessages();
         if (_seatData.hasOwnProperty('utility')) {
             _utility = _seatData.utility;
@@ -50428,244 +50890,244 @@ setCurrentSeat: function(data) {
             _putBackExceptionScreen = "extra_quantity";
         else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
             _auditExceptionScreen = "first_screen";
-        if((_seatData["last_finished_box"]!=undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"]!=undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"]-_seatData["Current_box_details"][0]["Expected_qty"])>0))
+        if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"] != undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"] - _seatData["Current_box_details"][0]["Expected_qty"]) > 0))
             showModal = true;
         else
-            showModal=false;
+            showModal = false;
 
-         /* $('.modal').hide();
+        /* $('.modal').hide();
          $('.modal-backdrop').remove();*/
 
-     },
-     getModalContent: function() {
+    },
+    getModalContent: function () {
         return modalContent.data;
     },
-    getSystemIdleState: function() {
+    getSystemIdleState: function () {
         if (_seatData != undefined && _peripheralScreen == false) {
             return _seatData.is_idle;
-        } else if(_seatData != undefined && _peripheralScreen == true){
+        } else if (_seatData != undefined && _peripheralScreen == true) {
             return false;
-        }else {
+        } else {
             return null;
         }
     },
 
-    getItemUid: function() {
+    getItemUid: function () {
         return _itemUid;
     },
-    getExceptionType: function() {
+    getExceptionType: function () {
         return _exceptionType;
     },
-    getModalType: function() {
+    getModalType: function () {
         return modalContent.type;
     },
-    setModalContent: function(data) {
+    setModalContent: function (data) {
         modalContent = data;
     },
 
-    getPPTLEvent: function() {
+    getPPTLEvent: function () {
         switch (_currentSeat) {
             case appConstants.PUT_BACK:
-            _pptlEvent = 'secondary_button_press';
-            break;
+                _pptlEvent = 'secondary_button_press';
+                break;
             case appConstants.PUT_FRONT:
-            _pptlEvent = 'primary_button_press';
-            break;
+                _pptlEvent = 'primary_button_press';
+                break;
             case appConstants.PICK_BACK:
-            _pptlEvent = 'secondary_button_press';
-            break;
+                _pptlEvent = 'secondary_button_press';
+                break;
             case appConstants.PICK_FRONT:
-            _pptlEvent = 'primary_button_press';
-            break;
+                _pptlEvent = 'primary_button_press';
+                break;
             default:
-                //return true; 
+            //return true;
+        }
+        return _pptlEvent;
+    },
+    getCurrentSeat: function () {
+        return _currentSeat;
+    },
+    setServerMessages: function (data) {
+        _messageJson = serverMessages;
+    },
+    getServerMessages: function () {
+        return _messageJson;
+    },
+    changeLanguage: function (data) {
+        var locale_data = {
+            "data": {
+                "locale": data
             }
-            return _pptlEvent;
-        },
-        getCurrentSeat: function() {
-            return _currentSeat;
-        },
-        setServerMessages: function(data) {
-            _messageJson = serverMessages;
-        },
-        getServerMessages: function() {
-            return _messageJson;
-        },
-        changeLanguage: function(data) {
-            var locale_data ={
-                "data" :{
-                    "locale" : data
-                }
-            };
-            switch (data) {
-                case "ja-JP":
+        };
+        switch (data) {
+            case "ja-JP":
                 _.setTranslation(japanese);
                 break;
-                case "zh-ZH":
+            case "zh-ZH":
                 _.setTranslation(chinese);
                 break;
-                case "en-US":
+            case "en-US":
                 _.setTranslation(english);
                 break;
-                case "de-DE":
+            case "de-DE":
                 _.setTranslation(german);
                 break;
-                case "fr-FR":
+            case "fr-FR":
                 _.setTranslation(french);
                 break;
-                case "es-ES":
+            case "es-ES":
                 _.setTranslation(spanish);
                 break;
-                default:
+            default:
                 return true;
-            }
-            sessionStorage.setItem('localeData', JSON.stringify(locale_data));
-        },
-        postDataToInterface: function(data) {
-            showModal = false;
-            utils.postDataToInterface(data, _seatName);
-        },
-        logError: function(data) {
-            utils.logError(data);
-        },
-        getScreenId: function() {
-            return _screenId;
-        },
-        getPpsMode: function(){
-            return _seatMode;
-        },
-        getSeatType: function(){
-            return _seatType;
-        },
-        enableException: function(data) {
-            _KQQty = 0;
+        }
+        sessionStorage.setItem('localeData', JSON.stringify(locale_data));
+    },
+    postDataToInterface: function (data) {
+        showModal = false;
+        utils.postDataToInterface(data, _seatName);
+    },
+    logError: function (data) {
+        utils.logError(data);
+    },
+    getScreenId: function () {
+        return _screenId;
+    },
+    getPpsMode: function () {
+        return _seatMode;
+    },
+    getSeatType: function () {
+        return _seatType;
+    },
+    enableException: function (data) {
+        _KQQty = 0;
+        _activeException = null;
+        if (data == true) {
+            _seatData["scan_allowed"] = false;
+        } else {
+            _seatData["scan_allowed"] = true;
+        }
+
+        _enableException = data;
+    },
+    getExceptionStatus: function () {
+        return _enableException;
+    },
+
+    setActiveException: function (data) {
+        if (!data) {
             _activeException = null;
-            if(data == true){
-                _seatData["scan_allowed"] = false;    
-            }else{
-                _seatData["scan_allowed"] = true;
+        } else {
+            _activeException = data;
+        }
+    },
+    getActiveException: function () {
+        if (!_activeException) {
+            return null;
+        } else {
+            return _activeException;
+        }
+    },
+    setKQQuanity: function (data) {
+        _KQQty = data;
+    },
+    getDamagedQuantity: function () {
+        return _damagedQuantity;
+    },
+    setGoodQuanity: function (data) {
+        _goodQuantity = data;
+    },
+    setMissingQuanity: function (data) {
+        _missingQuantity = data;
+    },
+    setUnscannableQuanity: function (data) {
+        _unscannableQuantity = data;
+    },
+    setDamagedQuanity: function (data) {
+        _damagedQuantity = data;
+    },
+    getExeptionQuanity: function () {
+        var data = (_goodQuantity !== 0 || _missingQuantity !== 0 || _damagedQuantity !== 0 || _unscannableQuantity !== 0) ? false : true;
+        return data;
+    },
+    getkQQuanity: function () {
+        if (_seatData.hasOwnProperty('Current_box_details')) {
+            if (_seatData.Current_box_details.length > 0) {
+                _KQQty = _seatData.Current_box_details[0].Actual_qty;
             }
-            
-            _enableException = data;
-        },
-        getExceptionStatus: function() {
-            return _enableException;
-        },
+            return _KQQty;
+        } else {
+            return _KQQty;
+        }
+    },
 
-        setActiveException: function(data) {
-            if (!data){
-                _activeException = null;
-            }else{
-                _activeException = data;    
-            }
-        },
-        getActiveException: function() {
-            if (!_activeException){
-                return null;
-            }else{
-                return _activeException;    
-            }
-        },
-        setKQQuanity: function(data) {
-            _KQQty = data;
-        },
-        getDamagedQuantity:function(){
-            return _damagedQuantity;
-        },
-        setGoodQuanity: function(data) {
-            _goodQuantity = data;
-        },
-        setMissingQuanity: function(data) {
-            _missingQuantity = data;
-        },
-        setUnscannableQuanity:function(data){
-            _unscannableQuantity = data;
-        },
-        setDamagedQuanity: function(data) {
-            _damagedQuantity = data;
-        },
-        getExeptionQuanity:function (){
-            var data= (_goodQuantity!==0 || _missingQuantity!==0 || _damagedQuantity!==0 || _unscannableQuantity!==0) ?  false:true; 
-            return data;
-        },
-        getkQQuanity: function() {
-            if (_seatData.hasOwnProperty('Current_box_details')) {
-                if (_seatData.Current_box_details.length > 0) {
-                    _KQQty = _seatData.Current_box_details[0].Actual_qty;
-                }
-                return _KQQty;
-            } else {
-                return _KQQty;
-            }
-        },
+    getToteDetails: function () {
+        if (_seatData.hasOwnProperty('tote_details')) {
+            return _seatData.tote_details
+        } else {
+            return null;
+        }
+    },
 
-        getToteDetails: function() {
-            if (_seatData.hasOwnProperty('tote_details')) {
-                return _seatData.tote_details
-            } else {
-                return null;
-            }
-        },
+    setPutFrontExceptionScreen: function (data) {
+        _putFrontExceptionScreen = data;
+        _seatData["notification_list"] = [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
 
-        setPutFrontExceptionScreen: function(data) {
-            _putFrontExceptionScreen = data;
-            _seatData["notification_list"] =  [{
-                "details": [],
-                "code": null,
-                "description": "",
-                "level": "info"
-            }];
-        },
+    setPutBackExceptionScreen: function (data) {
+        _seatData.scan_allowed = false;
+        _putBackExceptionScreen = data;
+        _seatData["notification_list"] = [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
 
-        setPutBackExceptionScreen: function(data){
-            _seatData.scan_allowed = false;
-            _putBackExceptionScreen = data;
-            _seatData["notification_list"] =  [{
-                "details": [],
-                "code": null,
-                "description": "",
-                "level": "info"
-            }];
-        },
+    getPutBackExceptionScreen: function (data) {
+        return _putBackExceptionScreen;
+    },
+    getUnmarkedContainerFlag: function () {
+        return _unmarkedContainer;
+    },
+    setAuditExceptionScreen: function (data) {
+        _seatData.scan_allowed = false;
+        _auditExceptionScreen = data;
+        _seatData["notification_list"] = [{
+            "details": [],
+            "code": null,
+            "description": "",
+            "level": "info"
+        }];
+    },
 
-        getPutBackExceptionScreen: function(data){
-            return _putBackExceptionScreen;
-        },
-        getUnmarkedContainerFlag:function(){
-            return _unmarkedContainer;
-        },
-        setAuditExceptionScreen: function(data){
-            _seatData.scan_allowed = false;
-            _auditExceptionScreen = data;
-            _seatData["notification_list"] =  [{
-                "details": [],
-                "code": null,
-                "description": "",
-                "level": "info"
-            }];
-        },
+    getAuditExceptionScreen: function (data) {
+        return _auditExceptionScreen;
+    },
 
-        getAuditExceptionScreen: function(data){
-            return _auditExceptionScreen;
-        },
-
-        setPickFrontExceptionScreen: function(data) {
+    setPickFrontExceptionScreen: function (data) {
         //_seatData.notification_list[0].code = null;
-        _seatData["notification_list"] =  [{
+        _seatData["notification_list"] = [{
             "details": [],
             "code": null,
             "description": "",
             "level": "info"
         }];
         if (data == "pick_front_quantity") {
-            if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
+            if ((_goodQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
                 if (_seatData.notification_list.length == 0) {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
                     data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
-                    
+
                 } else {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
                     _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
@@ -50676,490 +51138,481 @@ setCurrentSeat: function(data) {
                 _missingQuantity = 0;
 
                 _pickFrontExceptionScreen = "good";
-                
+
             } else {
                 _pickFrontExceptionScreen = data;
             }
         } else if (data == "damaged_or_missing") {
-            if(_goodQuantity === _seatData["pick_quantity"]){
-              if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = resourceConstants.CLIENTCODE_017;
-                data["level"] = "error";
-                data["details"] = [_seatData["pick_quantity"]];
-                _seatData.notification_list[0] = data;
-                
-            } else {
-                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_017;
-                _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
-                _seatData.notification_list[0].level = "error";
-            }
-            _goodQuantity = 0;
-            _damagedQuantity = 0;
-            _missingQuantity = 0;
+            if (_goodQuantity === _seatData["pick_quantity"]) {
+                if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = resourceConstants.CLIENTCODE_017;
+                    data["level"] = "error";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
 
-            _pickFrontExceptionScreen = "good";
-        }
-        else if ((_goodQuantity  + _missingQuantity) != _seatData["pick_quantity"]) {
-            if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = resourceConstants.CLIENTCODE_011;
-                data["level"] = "error";
-                data["details"] = [_seatData["pick_quantity"]];
-                _seatData.notification_list[0] = data;
-                
-            } else {
-                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
-                _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
-                _seatData.notification_list[0].level = "error";
-            }
-            _goodQuantity = 0;
-            _damagedQuantity = 0;
-            _missingQuantity = 0;
+                } else {
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_017;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0].level = "error";
+                }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
 
-            _pickFrontExceptionScreen = "good";
-            
+                _pickFrontExceptionScreen = "good";
+            }
+            else if ((_goodQuantity + _missingQuantity) != _seatData["pick_quantity"]) {
+                if (_seatData.notification_list.length == 0) {
+                    var data = {};
+                    data["code"] = resourceConstants.CLIENTCODE_011;
+                    data["level"] = "error";
+                    data["details"] = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0] = data;
+
+                } else {
+                    _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
+                    _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
+                    _seatData.notification_list[0].level = "error";
+                }
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+
+                _pickFrontExceptionScreen = "good";
+
+            } else {
+                _pickFrontExceptionScreen = data;
+            }
         } else {
             _pickFrontExceptionScreen = data;
         }
-    } else {
-        _pickFrontExceptionScreen = data;
-    }
-},
+    },
 
-getPutFrontExceptionScreen: function() {
-    return _putFrontExceptionScreen;
-},
+    getPutFrontExceptionScreen: function () {
+        return _putFrontExceptionScreen;
+    },
 
-getPickFrontExceptionScreen: function() {
-    return _pickFrontExceptionScreen;
-},
+    getPickFrontExceptionScreen: function () {
+        return _pickFrontExceptionScreen;
+    },
 
-getCurrentSlot: function() {
-    if (_seatData.hasOwnProperty('rack_details')) {
-        return _seatData.rack_details.slot_barcodes;
-    } else {
-        return null;
-    }
-},
-_getBinMapDetails:function(){
-    return _seatData ? _seatData.group_info : null;
-},
-_getMtuDetails:function(){
-    var nSlots, mtuList, currentSlotId, selectedSlotId;
-    nSlots = 0;
-    selectedSlotId = 0;
-    mtuList = [];
-    if(_seatData && _seatData.group_info){
-        nSlots = Object.keys(_seatData.group_info).length;
-    }
-    if(_seatData && _seatData.active_group){
-        selectedSlotId = _seatData.active_group - 1;
-    }
-    for(currentSlotId = 0; currentSlotId < nSlots; currentSlotId++){
-        mtuList.push((currentSlotId === selectedSlotId)?true:false);
-    }
-    return mtuList;
-},
-_getSplitScreenFlag:function(){
-    if(_seatData.hasOwnProperty('group_info')){
-        var navData=_seatData.group_info|| {};
-        for(var key in navData){
-            if(navData[key]!=resourceConstants.BIN_GROUP_CENTER)
-            {
-                return true;
+    getCurrentSlot: function () {
+        if (_seatData.hasOwnProperty('rack_details')) {
+            return _seatData.rack_details.slot_barcodes;
+        } else {
+            return null;
+        }
+    },
+    _getBinMapDetails: function () {
+        return _seatData ? _seatData.group_info : null;
+    },
+    _getMtuDetails: function () {
+        var nSlots, mtuList, currentSlotId, selectedSlotId;
+        nSlots = 0;
+        selectedSlotId = 0;
+        mtuList = [];
+        if (_seatData && _seatData.group_info) {
+            nSlots = Object.keys(_seatData.group_info).length;
+        }
+        if (_seatData && _seatData.active_group) {
+            selectedSlotId = _seatData.active_group - 1;
+        }
+        for (currentSlotId = 0; currentSlotId < nSlots; currentSlotId++) {
+            mtuList.push((currentSlotId === selectedSlotId) ? true : false);
+        }
+        return mtuList;
+    },
+    _getSplitScreenFlag: function () {
+        if (_seatData.hasOwnProperty('group_info')) {
+            var navData = _seatData.group_info || {};
+            for (var key in navData) {
+                if (navData[key] != resourceConstants.BIN_GROUP_CENTER) {
+                    return true;
+                }
             }
         }
-    }
-    return false;
-},
-_getMobileFlag:function(){
-    var bIsMobile = false;
-    if(_seatData)
-    {
-      bIsMobile = _seatData.roll_cage_flow && _currentSeat==appConstants.PUT_FRONT;
-  }
-  return bIsMobile;
-},
-_getDockedGroup:function(){
-    return (_seatData && _seatData.docked ? Object.keys(_seatData.docked):[]);
-    
-},
-_getUndockAwaitedGroup:function(){
-    return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited):[]) ;
-},
-_getWrongUndockGroup:function(){
-    return (_seatData && _seatData.wrong_undock ? Object.keys(_seatData.wrong_undock):[]) ;
-},
-_getOrigBinUse:function(){
-    return (_seatData && _seatData.bin_coordinate_plotting ? true:false);
-},
-_getReleaseActiveStatus:function(){
-    return (_seatData && _seatData.release_mtu ? true:false);
-},
-_getDamagedItemsData: function() {
-    var data = {};
-    data["header"] = [];
-    data["footer"] = [];
-    data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
-    data["header"].push(new this.tableCol(_("Damaged Quantity"), "header", false, "small", false, true, true, false));
-    data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
-    data["tableRows"] = [];
-    data["image_url"] = null;
-    var self=this;
-    if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
-
-        var product_details,product_sku,quantity,total_damaged = 0;
-        _seatData.physically_damaged_items.map(function(value, index){
-            value.product_info.map(function(product_details, index){
-                if(product_details[0].product_sku){
-                    product_sku=product_details[0].product_sku;
-                    quantity = value.qty;  
-                    total_damaged += quantity     
-                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
-                }
-            });
-        });                            
-        data["footer"].push(new this.tableCol(_("Total: ")+total_damaged+_(" items"), "header", false, "small", false, true, true, false));
-    } else {
-        data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
-            new self.tableCol("-", "enabled", false, "small", false, true, false, false)
-            ]);
-        data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
-    }
-    return data;
-},
-_getExcessItemsData: function() {
-    var data = {};
-    data["header"] = [];
-    data["footer"] = [];
-    data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
-    data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
-    data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
-    data["tableRows"] = [];
-    data["image_url"] = null;
-    var self=this;
-    if (_seatData.excess_items && Object.keys(_seatData.excess_items).length > 0) {
-
-        var product_details,product_sku,quantity,total_excess = 0;
-        _seatData.excess_items.map(function(value, index){
-            value.product_info.map(function(product_details, index){
-                if(product_details[0].product_sku){
-                    product_sku=product_details[0].product_sku;
-                    quantity = value.qty;  
-                    total_excess += quantity     
-                    data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
-                }
-            });
-        });                            
-        data["footer"].push(new this.tableCol(_("Total: ")+total_excess+_(" items"), "header", false, "small", false, true, true, false));
-    } else {
-        data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
-            new self.tableCol("-", "enabled", false, "small", false, true, false, false)
-            ]);
-        data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
-    }
-    return data;
-},
-_getExcessExceptionFlag:function(){
-    if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
         return false;
-    }
-    return true;
-},
-_getWareHouseExceptionFlag:function(){
-    if (_seatData.exception_type === "warehousefull_exception") {
-        return false;
-    }
-    return true;
-},
-_getDamagedExceptionFlag:function(){
-    if (_seatData.physically_damaged_items != undefined && _seatData.physically_damaged_items.length !== 0) {
-        return false;
-    }
-    return true;
-},
-_getUnmarkedContainerFlag:function(){
-    return _seatData.unmarked_container;
-},
-_getBinFullStatus:function(){
-    return (_seatData && _seatData.bin_full_allowed ? true:false);
-},
-_getSelectedPpsBin:function(){
-    var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
-    var bId = null;
-    ppsbin_list.forEach(function(bin){
-        if(bin["selected_state"]){
-            bId = bin["ppsbin_id"];
+    },
+    _getMobileFlag: function () {
+        var bIsMobile = false;
+        if (_seatData) {
+            bIsMobile = _seatData.roll_cage_flow && _currentSeat == appConstants.PUT_FRONT;
         }
-    })
-    return bId ;
-},
+        return bIsMobile;
+    },
+    _getDockedGroup: function () {
+        return (_seatData && _seatData.docked ? Object.keys(_seatData.docked) : []);
 
-getSelectedBinGroup:function(){
-    var ppsbin_list = _seatData &&  _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
-    var groupId = null;
-    ppsbin_list.forEach(function(el){
-        if(el["selected_state"]){
-            groupId = el["group_id"];
+    },
+    _getUndockAwaitedGroup: function () {
+        return (_seatData && _seatData.undock_awaited ? Object.keys(_seatData.undock_awaited) : []);
+    },
+    _getWrongUndockGroup: function () {
+        return (_seatData && _seatData.wrong_undock ? Object.keys(_seatData.wrong_undock) : []);
+    },
+    _getOrigBinUse: function () {
+        return (_seatData && _seatData.bin_coordinate_plotting ? true : false);
+    },
+    _getReleaseActiveStatus: function () {
+        return (_seatData && _seatData.release_mtu ? true : false);
+    },
+    _getDamagedItemsData: function () {
+        var data = {};
+        data["header"] = [];
+        data["footer"] = [];
+        data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Damaged Quantity"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        data["image_url"] = null;
+        var self = this;
+        if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
+
+            var product_details, product_sku, quantity, total_damaged = 0;
+            _seatData.physically_damaged_items.map(function (value, index) {
+                value.product_info.map(function (product_details, index) {
+                    if (product_details[0].product_sku) {
+                        product_sku = product_details[0].product_sku;
+                        quantity = value.qty;
+                        total_damaged += quantity
+                        data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                    }
+                });
+            });
+            data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
+        } else {
+            data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+        }
+        return data;
+    },
+    _getExcessItemsData: function () {
+        var data = {};
+        data["header"] = [];
+        data["footer"] = [];
+        data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        data["image_url"] = null;
+        var self = this;
+        if (_seatData.excess_items && Object.keys(_seatData.excess_items).length > 0) {
+
+            var product_details, product_sku, quantity, total_excess = 0;
+            _seatData.excess_items.map(function (value, index) {
+                value.product_info.map(function (product_details, index) {
+                    if (product_details[0].product_sku) {
+                        product_sku = product_details[0].product_sku;
+                        quantity = value.qty;
+                        total_excess += quantity
+                        data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                    }
+                });
+            });
+            data["footer"].push(new this.tableCol(_("Total: ") + total_excess + _(" items"), "header", false, "small", false, true, true, false));
+        } else {
+            data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+        }
+        return data;
+    },
+    _getExcessExceptionFlag: function () {
+        if (_seatData.excess_items != undefined && Object.keys(_seatData.excess_items).length > 0) {
             return false;
         }
-    })
-    return groupId ;
-},
-validateAndSendDataToServer: function() {
-    var flag = false,type=false;
-    var details;
-     if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
-        if(_goodQuantity===_seatData.pick_quantity && _unscannableQuantity===0)
-        {
-            flag=type=true;
+        return true;
+    },
+    _getWareHouseExceptionFlag: function () {
+        if (_seatData.exception_type === "warehousefull_exception") {
+            return false;
         }
-        else
-        {
-            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
-            details = _seatData.pick_quantity;
+        return true;
+    },
+    _getDamagedExceptionFlag: function () {
+        if (_seatData.physically_damaged_items != undefined && _seatData.physically_damaged_items.length !== 0) {
+            return false;
         }
-    }
-    else if(_seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY){
-        if(_goodQuantity==_seatData.put_quantity)
-        {
-            flag=type=true;
+        return true;
+    },
+    _getUnmarkedContainerFlag: function () {
+        return _seatData.unmarked_container;
+    },
+    _getBinFullStatus: function () {
+        return (_seatData && _seatData.bin_full_allowed ? true : false);
+    },
+    _getSelectedPpsBin: function () {
+        var ppsbin_list = _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var bId = null;
+        ppsbin_list.forEach(function (bin) {
+            if (bin["selected_state"]) {
+                bId = bin["ppsbin_id"];
+            }
+        })
+        return bId;
+    },
+
+    getSelectedBinGroup: function () {
+        var ppsbin_list = _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
+        var groupId = null;
+        ppsbin_list.forEach(function (el) {
+            if (el["selected_state"]) {
+                groupId = el["group_id"];
+                return false;
+            }
+        })
+        return groupId;
+    },
+    validateAndSendDataToServer: function () {
+        var flag = false, type = false;
+        var details;
+        if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+            if (_goodQuantity === _seatData.pick_quantity && _unscannableQuantity === 0) {
+                flag = type = true;
+            }
+            else {
+                flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.pick_quantity;
+                details = _seatData.pick_quantity;
+            }
         }
-        else
-        {
-            flag = (_goodQuantity + _missingQuantity + _damagedQuantity+_unscannableQuantity) != _seatData.put_quantity;
+        else if (_seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+            if (_goodQuantity == _seatData.put_quantity) {
+                flag = type = true;
+            }
+            else {
+                flag = (_goodQuantity + _missingQuantity + _damagedQuantity + _unscannableQuantity) != _seatData.put_quantity;
+                details = _seatData.put_quantity;
+            }
+        }
+
+        else {
+            flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
         }
-    }
+        if (flag) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
+                data["level"] = "error";
+                data["details"] = [details];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
+                _seatData.notification_list[0].details = [details];
+                _seatData.notification_list[0].level = "error";
+            }
+            if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+                _putFrontExceptionScreen = "good";
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+            }
 
-    else{
-        flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
-        details = _seatData.put_quantity;
-    }
-    if (flag) {
-        if (_seatData.notification_list.length == 0) {
-            var data = {};
-            data["code"] =(type)?resourceConstants.CLIENTCODE_017:((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010);
-            data["level"] = "error";
-            data["details"] = [details];
-            _seatData.notification_list[0] = data;
         } else {
-            _seatData.notification_list[0].code = (type)?resourceConstants.CLIENTCODE_017:((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)? resourceConstants.CLIENTCODE_018:resourceConstants.CLIENTCODE_010);
-            _seatData.notification_list[0].details = [details];
-            _seatData.notification_list[0].level = "error";
-        }
-        if(_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
-        {
-            _putFrontExceptionScreen = "good";
-            _goodQuantity = 0;
-            _damagedQuantity = 0;
-            _missingQuantity = 0;
+            var data = {};
+            if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+                data["event_name"] = _seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ? "pick_front_exception" : "put_front_exception"
+                data["event_data"] = {};
+                data["event_data"]["action"] = "confirm_quantity_update";
+                data["event_data"]["event"] = _seatData.exception_type;
+                data["event_data"]["quantity"] = {};
+                data["event_data"]["quantity"]["good"] = _goodQuantity;
+                data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
+                data["event_data"]["quantity"]["missing"] = _missingQuantity;
+                data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+                _goodQuantity = 0;
+                _damagedQuantity = 0;
+                _missingQuantity = 0;
+                _unscannableQuantity = 0;
+                this.showSpinner();
+                utils.postDataToInterface(data, _seatData.seat_name);
+            }
         }
 
-    } else {
-        var data = {};
-        if(_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||_seatData.screen_id ==appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY)
-        {
-            data["event_name"]=  _seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ?  "pick_front_exception":"put_front_exception"
+    },
+
+    validateAndSendSpaceUnavailableDataToServer: function () {
+        var _allowedQuantity;
+        _allowedQuantity = _seatData.put_quantity > 0 ? _seatData.put_quantity - 1 : 0;
+        if ((_KQQty) > _allowedQuantity) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = resourceConstants.CLIENTCODE_012;
+                data["level"] = "error";
+                data["details"] = [_allowedQuantity];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_allowedQuantity];
+                _seatData.notification_list[0].level = "error";
+            }
+            _goodQuantity = 0;
+
+        } else {
+            var data = {};
+            data["event_name"] = "put_front_exception";
             data["event_data"] = {};
             data["event_data"]["action"] = "confirm_quantity_update";
             data["event_data"]["event"] = _seatData.exception_type;
-            data["event_data"]["quantity"] = {};
-            data["event_data"]["quantity"]["good"] = _goodQuantity;
-            data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
-            data["event_data"]["quantity"]["missing"] = _missingQuantity;
-            data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
-            _goodQuantity = 0;
-            _damagedQuantity = 0;
-            _missingQuantity = 0;
-            _unscannableQuantity=0;
+            data["event_data"]["quantity"] = _KQQty;
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
-    }
+    },
+    validateUnmarkedDamagedData: function () {
+        var _allowedQuantity;
+        _allowedQuantity = _seatData.put_quantity ? _seatData.put_quantity : 0;
+        if (_damagedQuantity > _allowedQuantity) {
+            if (_seatData.notification_list.length == 0) {
+                var data = {};
+                data["code"] = resourceConstants.CLIENTCODE_012;
+                data["level"] = "error";
+                data["details"] = [_allowedQuantity];
+                _seatData.notification_list[0] = data;
+            } else {
+                _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+                _seatData.notification_list[0].details = [_allowedQuantity];
+                _seatData.notification_list[0].level = "error";
+            }
+            _damagedQuantity = 0;
 
-},
-
-validateAndSendSpaceUnavailableDataToServer: function() {
-    var _allowedQuantity;
-    _allowedQuantity=_seatData.put_quantity>0?_seatData.put_quantity-1:0;
-    if ((_KQQty) > _allowedQuantity) {
-        if (_seatData.notification_list.length == 0) {
-            var data = {};
-            data["code"] = resourceConstants.CLIENTCODE_012;
-            data["level"] = "error";
-            data["details"] = [_allowedQuantity];
-            _seatData.notification_list[0] = data;
         } else {
-            _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
-            _seatData.notification_list[0].details = [_allowedQuantity];
-            _seatData.notification_list[0].level = "error";
+            var data = {};
+            if (_seatData.unmarked_container) {
+                data["event_name"] = "put_front_exception";
+                data["event_data"] = {};
+                data["event_data"]["action"] = "confirm_quantity_update";
+                data["event_data"]["event"] = _seatData.exception_type;
+                data["event_data"]["quantity"] = _damagedQuantity;
+            }
+            else {
+                data["event_name"] = "put_front_exception";
+                data["event_data"] = {};
+                data["event_data"]["action"] = "finish_exception";
+                data["event_data"]["event"] = _seatData.exception_type;
+            }
+
+            this.showSpinner();
+            utils.postDataToInterface(data, _seatData.seat_name);
         }
-        _goodQuantity = 0;
-        
-    } else {
+    },
+
+    getToteException: function () {
+        if (_seatData.hasOwnProperty('exception_msg')) {
+            return _seatData.exception_msg[0];
+        } else {
+            return null;
+        }
+    },
+    getDrawerFlag: function () {
+        if (_seatData.rack_details) {
+            return _seatData.rack_details.slot_type === "drawer" ? true : false;
+        }
+    },
+    getSlotType: function () {
+        if (_seatData.rack_details) {
+            return _seatData.rack_details.slot_type ? _seatData.rack_details.slot_type : "none";
+        }
+    },
+    getPeripheralData: function (data) {
+        _seatData.scan_allowed = false;
+        utils.getPeripheralData(data, _seatData.seat_name);
+    },
+    updateSeatData: function (data, type, status, method) {
+        _peripheralScreen = true;
+        var dataNotification = {};
+
+        if (type === 'pptl') {
+            _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
+        } else if (type === 'barcode_scanner') {
+            _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        }
+        if (status == "success") {
+            if (method == "POST")
+                dataNotification["code"] = resourceConstants.CLIENTCODE_006;
+            else
+                dataNotification["code"] = resourceConstants.CLIENTCODE_015;
+            dataNotification["level"] = "info";
+            this.generateNotification(dataNotification);
+        }
+        else if (status == "fail") {
+            if (method == "POST")
+                dataNotification["code"] = resourceConstants.CLIENTCODE_007;
+            else
+                dataNotification["code"] = resourceConstants.CLIENTCODE_016;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        } else if (status == "409") {
+            dataNotification["code"] = resourceConstants.CLIENTCODE_409_PERIPHERAL;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        } else if (status == "400") {
+            dataNotification["code"] = resourceConstants.CLIENTCODE_400;
+            dataNotification["level"] = "error";
+            this.generateNotification(dataNotification);
+        }
+        else {
+            if (_seatData.notification_list.length > 0) {
+                _seatData.notification_list[0]["code"] = null;
+                _seatData.notification_list[0].description = "";
+            }
+        }
+        _seatData["utility"] = data;
+        this.setCurrentSeat(_seatData);
+        console.log(_seatData);
+    },
+    getUtility: function () {
+        return _utility;
+    },
+    convert_textbox: function (action, index) {
+        _action = action;
+        _binId = index;
+    },
+    update_peripheral: function (data, method, index) {
+        utils.updatePeripherals(data, method, _seatName);
+    },
+    generateNotification: function (data) {
+        if (_seatData.notification_list.length > 0) {
+            _seatData.notification_list[0]["code"] = data.code;
+            _seatData.notification_list[0].level = data.level;
+        } else {
+            var notification_list = {
+                "code": data.code,
+                "level": data.level,
+                "details": [],
+                "description": ""
+            }
+            _seatData.notification_list[0] = notification_list;
+        }
+    },
+    getHeaderMessg: function (data) {
+        if (_seatData && _seatData.header_msge_list) {
+            return _seatData.header_msge_list[0];
+        }
+    },
+
+    getInvoiceStatus: function (data) {
+        if (_seatData.invoice_required) {
+            var invoiceData = {invoiceFlag: true, invoiceId: _seatData.invoice_id};
+            return invoiceData;
+        }
+        else {
+            return null;
+        }
+    },
+
+    getInvoiceType: function (data) {
+        if (_seatData.invoice_type) {
+            return _seatData.invoice_type;
+        }
+    },
+
+    getScreenData: function () {
         var data = {};
-        data["event_name"] = "put_front_exception";
-        data["event_data"] = {};
-        data["event_data"]["action"] = "confirm_quantity_update";
-        data["event_data"]["event"] = _seatData.exception_type;
-        data["event_data"]["quantity"] = _KQQty;
-        this.showSpinner();
-        utils.postDataToInterface(data, _seatData.seat_name);
-    }
-},
-validateUnmarkedDamagedData:function(){
-   var _allowedQuantity;
-   _allowedQuantity=_seatData.put_quantity?_seatData.put_quantity:0;
-   if (_damagedQuantity > _allowedQuantity) {
-       if (_seatData.notification_list.length == 0) {
-           var data = {};
-           data["code"] = resourceConstants.CLIENTCODE_012;
-           data["level"] = "error";
-           data["details"] = [_allowedQuantity];
-           _seatData.notification_list[0] = data;
-       } else {
-           _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
-           _seatData.notification_list[0].details = [_allowedQuantity];
-           _seatData.notification_list[0].level = "error";
-       }
-       _damagedQuantity = 0;
-
-   } else {
-       var data = {};
-       if(_seatData.unmarked_container){
-           data["event_name"] = "put_front_exception";
-           data["event_data"] = {};
-           data["event_data"]["action"] = "confirm_quantity_update";
-           data["event_data"]["event"] = _seatData.exception_type;
-           data["event_data"]["quantity"] = _damagedQuantity;
-       }
-       else
-       {
-           data["event_name"] = "put_front_exception";
-           data["event_data"] = {};
-           data["event_data"]["action"] = "finish_exception";
-           data["event_data"]["event"] = _seatData.exception_type;
-       }
-
-       this.showSpinner();
-       utils.postDataToInterface(data, _seatData.seat_name);
-   }
-},
-
-getToteException: function() {
-    if (_seatData.hasOwnProperty('exception_msg')) {
-        return _seatData.exception_msg[0];
-    } else {
-        return null;
-    }
-},
-getDrawerFlag: function(){
-    if (_seatData.rack_details) {
-        return _seatData.rack_details.slot_type === "drawer" ? true : false;
-    } 
-},
-getSlotType: function(){
-    if (_seatData.rack_details) {
-        return _seatData.rack_details.slot_type ? _seatData.rack_details.slot_type : "none";
-    } 
-},
-getPeripheralData: function(data) {
- _seatData.scan_allowed = false;
- utils.getPeripheralData(data, _seatData.seat_name);
-},
-updateSeatData: function(data, type, status, method) {
-    _peripheralScreen = true;
-    var dataNotification = {};
-
-    if (type === 'pptl') {
-        _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
-    } else if (type === 'barcode_scanner') {
-        _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
-    } 
-    if(status == "success"){
-        if(method == "POST")
-            dataNotification["code"]= resourceConstants.CLIENTCODE_006;
-        else
-            dataNotification["code"]= resourceConstants.CLIENTCODE_015;
-        dataNotification["level"] = "info";
-        this.generateNotification(dataNotification);
-    }
-    else if(status == "fail"){
-        if(method == "POST")
-            dataNotification["code"]= resourceConstants.CLIENTCODE_007;
-        else
-            dataNotification["code"]= resourceConstants.CLIENTCODE_016;
-        dataNotification["level"] = "error";
-        this.generateNotification(dataNotification);
-    }else if(status == "409"){
-        dataNotification["code"]= resourceConstants.CLIENTCODE_409_PERIPHERAL;
-        dataNotification["level"] = "error";
-        this.generateNotification(dataNotification);
-    }else if(status == "400"){
-        dataNotification["code"]= resourceConstants.CLIENTCODE_400;
-        dataNotification["level"] = "error";
-        this.generateNotification(dataNotification);
-    }
-    else {
-        if(_seatData.notification_list.length > 0){
-            _seatData.notification_list[0]["code"] = null;
-            _seatData.notification_list[0].description = "";
-        }
-    }
-    _seatData["utility"] = data;
-    this.setCurrentSeat(_seatData);
-    console.log(_seatData);
-},
-getUtility: function() {
-    return _utility;
-},
-convert_textbox : function(action, index){
-    _action = action;
-    _binId = index;
-},
-update_peripheral : function(data, method, index){
-   utils.updatePeripherals(data, method, _seatName); 
-},
-generateNotification : function(data){
-    if(_seatData.notification_list.length > 0){
-        _seatData.notification_list[0]["code"] = data.code;
-        _seatData.notification_list[0].level = data.level;
-    }else{
-        var notification_list = {
-            "code" : data.code,
-            "level" : data.level,
-            "details" :[],
-            "description" : ""
-        }
-        _seatData.notification_list[0] = notification_list;
-    }    
-},
-getHeaderMessg : function(data) {
-    if(_seatData && _seatData.header_msge_list) {
-        return _seatData.header_msge_list[0];
-    }
-},
-
-getInvoiceStatus : function(data) {
-    if(_seatData.invoice_required) {
-        var invoiceData = {invoiceFlag:true, invoiceId:_seatData.invoice_id};
-        return invoiceData;
-    }
-    else {
-        return null;
-    }
-},
-
-getInvoiceType : function(data) {
-    if(_seatData.invoice_type) {
-        return _seatData.invoice_type;
-    }
-},
-
-getScreenData: function() {
-    var data = {};
 
         //since OrigBinUse Flag is needed in all the screens.
         data["OrigBinUse"] = this._getOrigBinUse();
@@ -51168,570 +51621,600 @@ getScreenData: function() {
 
             case appConstants.PUT_BACK_STAGE:
             case appConstants.PUT_BACK_SCAN_TOTE:
-            data["PutBackBinData"] = this.getBinData();
-            data["PutBackScreenId"] = this.getScreenId();
-            data["StageActive"] = this.getStageActiveStatus();
-            data["StageAllActive"] = this.getStageAllActiveStatus();
-            data["PutBackNavData"] = this.getNavData();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            data["PutBackExceptionStatus"] = this.getExceptionStatus();
-            data["InvoiceRequired"] = this.getInvoiceStatus();
-            data["InvoiceType"] = this.getInvoiceType();
-            data["ToteId"] = this.getToteId();
-            break;
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["StageActive"] = this.getStageActiveStatus();
+                data["StageAllActive"] = this.getStageAllActiveStatus();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
+                data["ToteId"] = this.getToteId();
+                break;
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackNavData"] = this.getNavData();
-            data["PutBackItemUid"] = this.getItemUid();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            data["PutBackExceptionStatus"] = this.getExceptionStatus();
-            data["PutBackToteException"] = this.getToteException();
-            break;
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackItemUid"] = this.getItemUid();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackToteException"] = this.getToteException();
+                break;
             case appConstants.PUT_BACK_SCAN:
-            data["PutBackBinData"] = this.getBinData();
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackScanDetails"] = this.scanDetails();
-            data["PutBackProductDetails"] = this.productDetails();
-            data["PutBackItemUid"] = this.getItemUid();
-            data["PutBackNavData"] = this.getNavData();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            data["PutBackExceptionStatus"] = this.getExceptionStatus();
-            data["InvoiceRequired"] = this.getInvoiceStatus();
-            data["InvoiceType"] = this.getInvoiceType();
-            break;
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackScanDetails"] = this.scanDetails();
+                data["PutBackProductDetails"] = this.productDetails();
+                data["PutBackItemUid"] = this.getItemUid();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
+                break;
             case appConstants.PUT_BACK_INVOICE:
-            data["HeaderMessg"] = this.getHeaderMessg();
-            data["PutBackScreenId"] = this.getScreenId();
-            data["InvoiceType"] = this.getInvoiceType();
-            break;
+                data["HeaderMessg"] = this.getHeaderMessg();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["InvoiceType"] = this.getInvoiceType();
+                break;
             case appConstants.PUT_BACK_TOTE_CLOSE:
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackReconciliation"] = this.getReconcileData();
-            data["PutBackToteId"] = this.getToteId();
-            data["PutBackNavData"] = this.getNavData();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            data["PutBackExceptionStatus"] = this.getExceptionStatus();
-            break;
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackReconciliation"] = this.getReconcileData();
+                data["PutBackToteId"] = this.getToteId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
             case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackKQDetails"] = this.getScanDetails();
-            data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
-            break;
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
+                break;
             case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackKQDetails"] = this.getScanDetails();
-            data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
-            break;
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
+                break;
             case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackBinData"] = this.getBinData();
-            data["PutBackNextButtonState"] = this.enableButton();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            break;
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackNextButtonState"] = this.enableButton();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                break;
             case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            break;
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                break;
             case appConstants.PRE_PUT_STAGE:
-            data["PrePutBinData"] = this.getBinData();
-            data["PrePutScreenId"] = this.getScreenId();
-            data["ReleaseActive"] = this._getReleaseActiveStatus();
-            data["MtuDetails"] =  this._getMtuDetails();   
-            data["PrePutNavData"] = this.getNavData();
-            data["PrePutServerNavData"] = this.getServerNavData();
-            data["PrePutExceptionData"] = this.getExceptionData();
-            data["PrePutNotification"] = this.getNotificationData();
-            data["PrePutExceptionStatus"] = this.getExceptionStatus();
-            break;
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] = this._getMtuDetails();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PRE_PUT_SCAN:
-            data["PrePutBinData"] = this.getBinData();
-            data["PrePutScreenId"] = this.getScreenId();
-            data["ReleaseActive"] = this._getReleaseActiveStatus();
-            data["MtuDetails"] =  this._getMtuDetails();   
-            data["PrePutNavData"] = this.getNavData();
-            data["PrePutToteid"] = this.getToteId();
-            data["PrePutServerNavData"] = this.getServerNavData();
-            data["PrePutExceptionData"] = this.getExceptionData();
-            data["PrePutNotification"] = this.getNotificationData();
-            data["PrePutExceptionStatus"] = this.getExceptionStatus();
-            break;               
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] = this._getMtuDetails();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutToteid"] = this.getToteId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PRE_PUT_RELEASE:
-            data["PrePutBinData"] = this.getBinData();
-            data["PrePutScreenId"] = this.getScreenId();
-            data["MtuDetails"] =  this._getMtuDetails();   
-            data["PrePutNavData"] = this.getNavData();
-            data["PrePutServerNavData"] = this.getServerNavData();
-            data["PrePutExceptionData"] = this.getExceptionData();
-            data["PrePutNotification"] = this.getNotificationData();
-            data["PrePutExceptionStatus"] = this.getExceptionStatus();
-            break;      
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["MtuDetails"] = this._getMtuDetails();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
-            data["PrePutScreenId"] = this.getScreenId();
-            data["PrePutServerNavData"] = this.getServerNavData();
-            data["PrePutExceptionData"] = this.getExceptionData();
-            data["PrePutNotification"] = this.getNotificationData();
-            break;                                   
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                break;
             case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
-            data["PrePutScreenId"] = this.getScreenId();
-            data["PrePutServerNavData"] = this.getServerNavData();
-            data["PrePutExceptionData"] = this.getExceptionData();
-            data["PrePutNotification"] = this.getNotificationData();
-            data["PrePutExcessItems"] = this._getExcessItemsData();
-            data["PrePutExceptionFlag"] = this._getExcessExceptionFlag();
-            break;                                   
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExcessItems"] = this._getExcessItemsData();
+                data["PrePutExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
             case appConstants.PUT_FRONT_WAITING_FOR_RACK:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["BinMapDetails"] =  this._getBinMapDetails();   
-            data["MobileFlag"]=this._getMobileFlag();
-            data["DockedGroup"] = this._getDockedGroup();  
-            data["UndockAwaited"] = this._getUndockAwaitedGroup();               
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            break;
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["MobileFlag"] = this._getMobileFlag();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PUT_FRONT_SCAN:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontBinData"] = this.getBinData();
-            data["BinMapDetails"] =  this._getBinMapDetails();               
-            data["SplitScreenFlag"] = this._getSplitScreenFlag();       
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
-            data["PutFrontScanDetails"] = this.scanDetails();
-            data["PutFrontProductDetails"] = this.productDetails();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PutFrontItemUid"] = this.getItemUid();
-            break;
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
             case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
-            data["PutFrontRackDetails"] = this.getRackDetails();
-            data["isDrawer"] =  this.getDrawerFlag(); 
-            data["SlotType"] =  this.getSlotType(); 
-            data["BinMapDetails"] =  this._getBinMapDetails();           
-            data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
-            data["PutFrontScanDetails"] = this.scanDetails();
-            data["PutFrontProductDetails"] = this.productDetails();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PutFrontItemUid"] = this.getItemUid();
-            break;
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["BinMapDetails"] =  this._getBinMapDetails();           
-            data["DockedGroup"] = this._getDockedGroup();  
-            data["UndockAwaited"] = this._getUndockAwaitedGroup();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            break;
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PUT_FRONT_WRONG_UNDOCK:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["BinMapDetails"] =  this._getBinMapDetails();
-            data["DockedGroup"] = this._getDockedGroup();
-            data["UndockAwaited"] = this._getUndockAwaitedGroup();
-            data["WrongUndock"] = this._getWrongUndockGroup();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            break;
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["WrongUndock"] = this._getWrongUndockGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PUT_FRONT_PPTL_PRESS:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontBinData"] = this.getBinData();
-            data["BinMapDetails"] =  this._getBinMapDetails();               
-            data["SplitScreenFlag"] = this._getSplitScreenFlag();       
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            break;                               
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
-            data["PutFrontRackDetails"] = this.getRackDetails();
-            data["isDrawer"] =  this.getDrawerFlag(); 
-            data["SlotType"] =  this.getSlotType(); 
-            data["BinMapDetails"] =  this._getBinMapDetails();           
-            data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
-            data["PutFrontScanDetails"] = this.scanDetails();
-            data["PutFrontProductDetails"] = this.productDetails();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PutFrontItemUid"] = this.getItemUid();
-            break;
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
             case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
-            data["PutFrontRackDetails"] = this.getRackDetails();
-            data["isDrawer"] =  this.getDrawerFlag(); 
-            data["SlotType"] =  this.getSlotType(); 
-            data["BinMapDetails"] =  this._getBinMapDetails();           
-            data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                              
-            data["PutFrontScanDetails"] = this.scanDetails();
-            data["PutFrontProductDetails"] = this.productDetails();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PutFrontItemUid"] = this.getItemUid();
-            break; 
-            
-            case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
 
-            break;
+            case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+
+                break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontExceptionFlag"] = this._getWareHouseExceptionFlag();
-            data["PutFrontNavData"] = this.getNavData();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
-            data["BinMapDetails"] =  this._getBinMapDetails();  
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();   
-            break;                
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontExceptionFlag"] = this._getWareHouseExceptionFlag();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontGoodQuantity"] = this.getGoodScanDetails();
-            data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
-            data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
-            data["UnmarkedContainer"]=this.getUnmarkedContainerFlag();
-            break;
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                data["UnmarkedContainer"] = this.getUnmarkedContainerFlag();
+                break;
 
             case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontKQQuantity"] = this.getScanDetails();
-            data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
-            break;
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontKQQuantity"] = this.getScanDetails();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                break;
             case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontDamagedQuantity"] = this.getPhysicallyDamagedScanDetails();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontDamagedItems"] = this._getDamagedItemsData();
-            
-            data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
-            data["isUnmarkedContainer"] =  this._getUnmarkedContainerFlag();
-            break;
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontDamagedQuantity"] = this.getPhysicallyDamagedScanDetails();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+
+                data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["isUnmarkedContainer"] = this._getUnmarkedContainerFlag();
+                break;
             case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
             case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            break;                                                   
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                break;
             case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
-            data["PutFrontScreenId"] = this.getScreenId();
-            data["PutFrontServerNavData"] = this.getServerNavData();
-            data["PutFrontExceptionData"] = this.getExceptionData();
-            data["PutFrontNotification"] = this.getNotificationData();
-            data["PutFrontExcessItems"] = this._getExcessItemsData();
-            data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
-            break;
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExcessItems"] = this._getExcessItemsData();
+                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-            break;
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                break;
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
             case appConstants.PICK_FRONT_LOCATION_SCAN:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontRackDetails"] = this.getRackDetails();
-            data["SlotType"] =  this.getSlotType(); 
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-            data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
-            break;
-            
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
+                break;
+
             case appConstants.PICK_FRONT_ITEM_SCAN:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontRackDetails"] = this.getRackDetails();
-            data["PickFrontProductDetails"] = this.productDetails();
-            data["isDrawer"] =  this.getDrawerFlag();
-            data["SlotType"] =  this.getSlotType();                  
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontBoxDetails"] = this.getBoxDetails();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-            data["BinMapDetails"] =  this._getBinMapDetails();                               
-            break;
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                break;
             case appConstants.PICK_FRONT_PACKING_BOX:
-            data["PickFrontBoxOrderDetails"]= this.getOrderDetails();
-            data["PickFrontBinData"] = this.getBinData();
-            
-            case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN: 
-            data["PickFrontBoxOrderDetails"]= this.getOrderDetails();
+                data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
+                data["PickFrontBinData"] = this.getBinData();
+
+            case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
+                data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontBoxDetails"] = this.getBoxDetails();
-            data["PickFrontRackDetails"] = this.getRackDetails();
-            data["SlotType"] =  this.getSlotType();                                  
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-            break;
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                break;
             case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
-            data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
-            data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
-            data["PickFrontPackingCancelStatus"] =  this.getPickFrontPackingCancelStatus();
-            data["PickFrontBoxOrderDetails"]= this.getOrderID();
+                data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
+                data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
+                data["PickFrontBoxOrderDetails"] = this.getOrderID();
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontScanDetails"] = this.scanDetails();
-            data["PickFrontChecklistDetails"] = this.getChecklistDetails();
-            data["PickFrontChecklistIndex"] = this.getChecklistIndex();
-            data["PickFrontSlotDetails"] = this.getCurrentSlot();
-            data["BinMapDetails"] =  this._getBinMapDetails();                               
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();
-            data["PickFrontBinData"] = this.getBinData();
-            data["PickFrontScanDetails"] = this.scanDetails();
-            data["PickFrontProductDetails"] = this.productDetails();
-            data["PickFrontItemUid"] = this.getItemUid();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-            data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
-            data["PickFrontButtonType"] = this.getPickFrontButtonType();
-            data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
-            data["PickFrontCancelScan"] = this.cancelScanDetails();
-            break;
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontItemUid"] = this.getItemUid();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
-            data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
-            data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
+                data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             case appConstants.PICK_FRONT_PPTL_PRESS:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontScanDetails"] = this.scanDetails();
-            data["PickFrontCancelScan"] = this.cancelScanDetails();
-            data["PickFrontChecklistDetails"] = this.getChecklistDetails();
-            data["PickFrontChecklistIndex"] = this.getChecklistIndex();
-            data["PickFrontSlotDetails"] = this.getCurrentSlot();
-            data["PickFrontBinData"] = this.getBinData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
-            data["BinMapDetails"] =  this._getBinMapDetails();                               
-            data["PickFrontButtonType"] = this.getPickFrontButtonType();
-            data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
-            data["SplitScreenFlag"] = this._getSplitScreenFlag(); 
-            data["BinMapGroupDetails"] =  this.getSelectedBinGroup();                     
-            break;
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                break;
+                case appConstants.PICK_FRONT_BIN_PRINTOUT:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontBinData"] = this.getBinData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            break;    
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
-            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
-            data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-            break;
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-            data["PutBackKQDetails"] = this.getScanDetails();
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
-            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
-            data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-            break;
-
-
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
 
 
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontDamagedItems"] = this._getDamagedItemsData();
-            data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
-            break;
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                break;
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-            data["PickFrontBoxDetails"] = this.getBoxDetails();
-            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            break;
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                break;
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:
-            data["PickBackNavData"] = this.getNavData();
-            data["PickBackNotification"] = this.getNotificationData();
-            data["PickBackBinData"] = this.getBinData();
-            data["PickBackScreenId"] = this.getScreenId();
-            data["PickBackServerNavData"] = this.getServerNavData();
-            data["PickBackToteDetails"] = this.getToteDetails();
-            data["PickBackExceptionStatus"] = this.getExceptionStatus();
-            data["PickBackExceptionData"] = this.getExceptionData();
-            break;
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                break;
             case appConstants.PICK_BACK_EXCEPTION_REPRINT:
             case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
             case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
             case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
             case appConstants.PICK_BACK_REPRINT_TOTE:
-            data["PickBackNavData"] = this.getNavData();
-            data["PickBackNotification"] = this.getNotificationData();
-            data["PickBackBinData"] = this.getBinData();
-            data["PickBackScreenId"] = this.getScreenId();
-            data["PickBackExceptionData"] = this.getExceptionData();
-            data["PickBackServerNavData"] = this.getServerNavData();
-            data["PickBackToteDetails"] = this.getToteDetails();
-            data["PickBackExceptionStatus"] = this.getExceptionStatus();
-            data["PickBackSelectedBin"] = this.getSelectedBin();
-            break;
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackSelectedBin"] = this.getSelectedBin();
+                break;
 
 
             case appConstants.AUDIT_WAITING_FOR_MSU:
-            data["AuditNavData"] = this.getNavData();
-            data["AuditNotification"] = this.getNotificationData();
-            data["AuditScreenId"] = this.getScreenId();
-            data["AuditServerNavData"] = this.getServerNavData();
-            data["AuditExceptionData"] = this.getExceptionData();
-            data["AuditExceptionStatus"] = this.getExceptionStatus();
-            data["AuditShowModal"] = this.getModalStatus();
-            break;
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                break;
             case appConstants.AUDIT_SCAN:
-            data["AuditNavData"] = this.getNavData();
-            data["AuditNotification"] = this.getNotificationData();
-            data["AuditScreenId"] = this.getScreenId();
-            data["AuditServerNavData"] = this.getServerNavData();
-            data["AuditExceptionData"] = this.getExceptionData();
-            data["AuditExceptionStatus"] = this.getExceptionStatus();
-            data["AuditShowModal"] = this.getModalStatus();
-            data["AuditCancelScanStatus"] = this.getCancelScanStatus();
-            data["AuditBoxSerialData"] = this.getBoxSerialData();
-            data["AuditLooseItemsData"] = this.getLooseItemsData();
-            data["AuditSlotDetails"] = this.getCurrentSlot();
-            data["AuditItemDetailsData"] = this.getItemDetailsData();
-            data["AuditScanDetails"] = this.getScanDetails();
-            data["AuditFinishFlag"] = this.getFinishAuditFlag();
-            break;
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                data["AuditCancelScanStatus"] = this.getCancelScanStatus();
+                data["AuditBoxSerialData"] = this.getBoxSerialData();
+                data["AuditLooseItemsData"] = this.getLooseItemsData();
+                data["AuditSlotDetails"] = this.getCurrentSlot();
+                data["AuditItemDetailsData"] = this.getItemDetailsData();
+                data["AuditScanDetails"] = this.getScanDetails();
+                data["AuditFinishFlag"] = this.getFinishAuditFlag();
+                break;
             case appConstants.AUDIT_RECONCILE:
-            data["AuditNavData"] = this.getNavData();
-            data["AuditNotification"] = this.getNotificationData();
-            data["AuditScreenId"] = this.getScreenId();
-            data["AuditServerNavData"] = this.getServerNavData();
-            data["AuditExceptionData"] = this.getExceptionData();
-            data["AuditExceptionStatus"] = this.getExceptionStatus();
-            data["AuditShowModal"] = this.getModalStatus();
-            data["AuditReconcileBoxSerialData"] = this.getReconcileBoxSerialData();
-            data["AuditReconcileLooseItemsData"] = this.getReconcileLooseItemsData();
-            data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
-            data["AuditSlotDetails"] = this.getCurrentSlot();
-            break;
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                data["AuditReconcileBoxSerialData"] = this.getReconcileBoxSerialData();
+                data["AuditReconcileLooseItemsData"] = this.getReconcileLooseItemsData();
+                data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
+                data["AuditSlotDetails"] = this.getCurrentSlot();
+                break;
             case appConstants.AUDIT_LOCATION_SCAN:
-            data["AuditNavData"] = this.getNavData();
-            data["AuditServerNavData"] = this.getServerNavData();
-            data["AuditScreenId"] = this.getScreenId();
-            data["AuditRackDetails"] = this.getRackDetails();
-            data["AuditExceptionData"] = this.getExceptionData();
-            data["AuditNotification"] = this.getNotificationData();
-            data["AuditExceptionStatus"] = this.getExceptionStatus();
-            data["AuditShowModal"] = this.getModalStatus();
-            break;
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditRackDetails"] = this.getRackDetails();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
-            data["AuditNavData"] = this.getNavData();
-            data["AuditNotification"] = this.getNotificationData();
-            data["AuditScreenId"] = this.getScreenId();
-            data["AuditServerNavData"] = this.getServerNavData();
-            data["AuditExceptionData"] = this.getExceptionData();
-            data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
                 //data["AuditShowModal"] = this.getModalStatus();
                 data["AuditKQDetails"] = this.getScanDetails();
                 data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
-                case appConstants.PPTL_MANAGEMENT:
-                case appConstants.SCANNER_MANAGEMENT:
+            case appConstants.PPTL_MANAGEMENT:
+            case appConstants.SCANNER_MANAGEMENT:
                 data["utility"] = this.getPptlData();
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -51789,162 +52272,160 @@ getScreenData: function() {
                 data["PrePutNotification"] = this.getNotificationData();
                 data["PrePutExceptionStatus"] = this.getExceptionStatus();
                 break;
-                default:
-            }
-            return data;
+            default:
         }
+        return data;
+    }
 
 
+});
 
-    });
-
-AppDispatcher.register(function(payload) {
+AppDispatcher.register(function (payload) {
     var action = payload.action;
     switch (action.actionType) {
 
         case appConstants.TOGGLE_BIN_SELECTION:
-        mainstore.toggleBinSelection(action.bin_id);
-        mainstore.emitChange();
-        break;
+            mainstore.toggleBinSelection(action.bin_id);
+            mainstore.emitChange();
+            break;
         case appConstants.STAGE_ONE_BIN:
-        mainstore.showSpinner();
-        mainstore.stageOneBin();
-        mainstore.emitChange();
-        break;
+            mainstore.showSpinner();
+            mainstore.stageOneBin();
+            mainstore.emitChange();
+            break;
 
         case appConstants.STAGE_ALL:
-        mainstore.showSpinner();
-        mainstore.stageAllBin();
-        mainstore.emitChange();
-        break;
+            mainstore.showSpinner();
+            mainstore.stageAllBin();
+            mainstore.emitChange();
+            break;
         case appConstants.WEBSOCKET_CONNECT:
-        utils.connectToWebSocket();
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            utils.connectToWebSocket();
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.SET_CURRENT_SEAT:
-        mainstore.setCurrentSeat(action.data);
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            mainstore.setCurrentSeat(action.data);
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.POPUP_VISIBLE:
-        setPopUpVisible(action.status);
-        break;
+            setPopUpVisible(action.status);
+            break;
         case appConstants.HIDE_SPINNER:
-        mainstore.hideSpinner();
-        break;
-        case appConstants.POST_DATA_TO_INTERFACE:
-        mainstore.showSpinner();
-        mainstore.postDataToInterface(action.data);
-        if(payload.action.data.event_name === appConstants.BIN_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST)
             mainstore.hideSpinner();
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            break;
+        case appConstants.POST_DATA_TO_INTERFACE:
+            mainstore.showSpinner();
+            mainstore.postDataToInterface(action.data);
+            if (payload.action.data.event_name === appConstants.BIN_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST || payload.action.data.event_name === appConstants.BOX_FULL_REQUEST)
+                mainstore.hideSpinner();
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.RESET_NUMPAD:
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.LOAD_MODAL:
-        mainstore.setModalContent(action.data);
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            mainstore.setModalContent(action.data);
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.SET_SERVER_MESSAGES:
-        mainstore.setServerMessages();
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            mainstore.setServerMessages();
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.CHANGE_LANGUAGE:
-        mainstore.changeLanguage(action.data);
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            mainstore.changeLanguage(action.data);
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.SET_LANGUAGE:
-        mainstore.emit(CHANGE_EVENT);
-        break;
+            mainstore.emit(CHANGE_EVENT);
+            break;
         case appConstants.LOG_ERROR:
-        mainstore.logError(action.data);
-        break;
+            mainstore.logError(action.data);
+            break;
         case appConstants.ENABLE_EXCEPTION:
-        mainstore.enableException(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.enableException(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.SET_ACTIVE_EXCEPTION:
-        mainstore.setActiveException(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setActiveException(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.UPDATE_KQ_QUANTITY:
-        mainstore.setKQQuanity(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setKQQuanity(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.UPDATE_GOOD_QUANTITY:
-        mainstore.setGoodQuanity(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setGoodQuanity(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.UPDATE_DAMAGED_QUANTITY:
-        mainstore.setDamagedQuanity(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setDamagedQuanity(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.UPDATE_MISSING_QUANTITY:
-        mainstore.setMissingQuanity(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setMissingQuanity(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.UPDATE_UNSCANNABLE_QUANTITY:
-        mainstore.setUnscannableQuanity(action.data);
-        mainstore.emitChange();
-        break;    
+            mainstore.setUnscannableQuanity(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN:
-        mainstore.setPutFrontExceptionScreen(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setPutFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.VALIDATE_UNMARKED_DAMAGED_DATA:
-        mainstore.validateUnmarkedDamagedData();
-        mainstore.emitChange();
-        break;
+            mainstore.validateUnmarkedDamagedData();
+            mainstore.emitChange();
+            break;
         case appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN:
-        mainstore.setPutBackExceptionScreen(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setPutBackExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN:
-        mainstore.setAuditExceptionScreen(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setAuditExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN:
-        mainstore.setPickFrontExceptionScreen(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.setPickFrontExceptionScreen(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-        mainstore.validateAndSendDataToServer();
-        mainstore.emitChange();
-        break;
+            mainstore.validateAndSendDataToServer();
+            mainstore.emitChange();
+            break;
         case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
-        mainstore.validateAndSendSpaceUnavailableDataToServer();
-        mainstore.emitChange();
-        break;
+            mainstore.validateAndSendSpaceUnavailableDataToServer();
+            mainstore.emitChange();
+            break;
         case appConstants.PERIPHERAL_DATA:
-        mainstore.getPeripheralData(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.getPeripheralData(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.UPDATE_SEAT_DATA:
-        mainstore.showSpinner();
-        mainstore.updateSeatData(action.data, action.type, action.status, action.method);
-        mainstore.emitChange();
-        break;
+            mainstore.showSpinner();
+            mainstore.updateSeatData(action.data, action.type, action.status, action.method);
+            mainstore.emitChange();
+            break;
         case appConstants.CONVERT_TEXTBOX:
-        mainstore.convert_textbox(action.data, action.index);
-        mainstore.emitChange();
-        break;
+            mainstore.convert_textbox(action.data, action.index);
+            mainstore.emitChange();
+            break;
         case appConstants.UPDATE_PERIPHERAL:
-        mainstore.showSpinner();
-        mainstore.update_peripheral(action.data, action.method, action.index);
-        mainstore.emitChange();
-        break;
+            mainstore.showSpinner();
+            mainstore.update_peripheral(action.data, action.method, action.index);
+            mainstore.emitChange();
+            break;
         case appConstants.GENERATE_NOTIFICATION:
-        mainstore.generateNotification(action.data);
-        mainstore.emitChange();
-        break;
+            mainstore.generateNotification(action.data);
+            mainstore.emitChange();
+            break;
         case appConstants.CLEAR_NOTIFICATIONS:
-        mainstore.clearNotifications();
-        mainstore.emitChange();        
+            mainstore.clearNotifications();
+            mainstore.emitChange();
         default:
-        return true;
+            return true;
     }
 });
-
 
 
 module.exports = mainstore;

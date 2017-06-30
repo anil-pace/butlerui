@@ -46741,8 +46741,8 @@ module.exports = appConstants;
 
 },{}],301:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.12.168:8888/ws",
+	INTERFACE_IP : "https://192.168.12.168:5000"
 
 };
 module.exports = configConstants;
@@ -48094,7 +48094,7 @@ var serverMessages = {
     "CLIENTCODE_409" : "Back seat not supported for this mode",
     "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
-    "CLIENTCODE_403" : "Session timed out",
+    "CLIENTCODE_403" : "PPS is Closed",
     "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012":"No Items To Reconcile",
     "CLIENTCODE_004" : "PPTL Management",

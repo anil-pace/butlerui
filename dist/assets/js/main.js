@@ -37373,7 +37373,7 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
@@ -37463,7 +37463,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37531,11 +37531,11 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin selected " + compData['pps_blink_state'] ? 'blink1' : ' ' + binClass, 
+                React.createElement("div", {className: "bin selected " + (compData['pps_blink_state'] ? 'blink1' : ' ') + binClass, 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected " + compData['ppsbin_blink_state'] ? 'blink' : ' ' + binClass, 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ' ') + binClass, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37653,7 +37653,7 @@ var Bin = React.createClass({displayName: "Bin",
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {
-                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + ((compData['ppsbin_blink_state'] ? 'blink' : '')), 
+                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38127,7 +38127,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 

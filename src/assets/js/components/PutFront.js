@@ -384,19 +384,25 @@ var PutFront = React.createClass({
               </div>
             );
         break; 
-
-        _button = (<div className = "staging-action">                          
-            <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
-            </div>);
-
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-          var selected_screen;
-          if(this.state.GetIRTScanStatus===true)
+          var selected_screen,exceptionType,text,textIRT;
+          exceptionType=mainstore.getExceptionType();
+          if(exceptionType==="unscannable_or_missing_or_damaged")
+          {
+          text=allresourceConstants.IRTBIN_MSUD;
+          textIRT=allresourceConstants.IRTBINSCAN_MSUD;
+
+          }else
+              {
+              text=allresourceConstants.IRTBIN_EXCESS;
+              textIRT=allresourceConstants.IRTBINSCAN_EXCESS
+              }
+          if(!this.state.GetIRTScanStatus)
           {
         selected_screen=(
   <div className="exception-right">
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
+                    <div className="gor-exceptionConfirm-text">{text}</div>
                    
                   <div className = "finish-damaged-barcode align-button">
                     <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
@@ -409,7 +415,7 @@ var PutFront = React.createClass({
          selected_screen=(
   <div className="exception-right">
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Please put entities with issues in IRT bin and scan the bin")}</div>
+                    <div className="gor-exceptionConfirm-text">{textIRT}</div>
                   </div>
               </div>
           );
@@ -509,7 +515,7 @@ var PutFront = React.createClass({
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (<div className = "staging-action">                          
-            <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+            <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Next")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
             </div>);
           this._component = (
             <div className='grid-container exception'>

@@ -385,12 +385,16 @@ var PutFront = React.createClass({
             );
         break; 
 
+        _button = (<div className = "staging-action">                          
+            <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+            </div>);
+
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-            this._component = (
-              <div className='grid-container exception'>
-              <Modal />
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
+          var selected_screen;
+          if(this.state.GetIRTScanStatus===true)
+          {
+        selected_screen=(
+  <div className="exception-right">
                    <div className="gor-exception-align">
                     <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
                    
@@ -398,9 +402,24 @@ var PutFront = React.createClass({
                     <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
                   </div>
                   </div>
-             
-                
               </div>
+          );
+      }else
+      {
+         selected_screen=(
+  <div className="exception-right">
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Please put entities with issues in IRT bin and scan the bin")}</div>
+                  </div>
+              </div>
+          );
+      }
+          
+            this._component = (
+              <div className='grid-container exception'>
+              <Modal />
+                <Exception data={this.state.PutFrontExceptionData}/>
+                  {selected_screen}
               <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>

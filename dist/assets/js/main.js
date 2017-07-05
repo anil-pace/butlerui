@@ -45031,12 +45031,16 @@ var PutFront = React.createClass({displayName: "PutFront",
             );
         break; 
 
+        _button = (React.createElement("div", {className: "staging-action"}, 
+            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+            ));
+
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
+          var selected_screen;
+          if(this.state.GetIRTScanStatus===true)
+          {
+        selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
                     React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
                    
@@ -45044,9 +45048,24 @@ var PutFront = React.createClass({displayName: "PutFront",
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
                   )
-             
-                
-              ), 
+              )
+          );
+      }else
+      {
+         selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entities with issues in IRT bin and scan the bin"))
+                  )
+              )
+          );
+      }
+          
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                  selected_screen, 
               React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
@@ -46737,8 +46756,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://192.168.9.113/wss",
+	INTERFACE_IP : "https://192.168.9.113"
 
 };
 module.exports = configConstants;
@@ -50175,6 +50194,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
     },
+    getIRTScanStatus: function () {
+        if (_seatData.hasOwnProperty('irt_scan_enabled'))
+            return _seatData.irt_scan_enabled;
+    },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
         var orderDetails = _seatData['order_details'];
@@ -51885,6 +51908,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
 
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:

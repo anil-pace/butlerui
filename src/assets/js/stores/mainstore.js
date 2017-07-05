@@ -418,6 +418,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
     },
+    getIRTScanStatus: function () {
+        if (_seatData.hasOwnProperty('irt_scan_enabled'))
+            return _seatData.irt_scan_enabled;
+    },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
         var orderDetails = _seatData['order_details'];
@@ -2128,6 +2132,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
 
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:

@@ -45031,24 +45031,13 @@ var PutFront = React.createClass({displayName: "PutFront",
             );
         break; 
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-          var selected_screen,exceptionType,text,textIRT;
-          exceptionType=mainstore.getExceptionType();
-          if(exceptionType==="unscannable_or_missing_or_damaged")
-          {
-          text=allresourceConstants.IRTBIN_MSUD;
-          textIRT=allresourceConstants.IRTBINSCAN_MSUD;
-
-          }else
-              {
-              text=allresourceConstants.IRTBIN_EXCESS;
-              textIRT=allresourceConstants.IRTBINSCAN_EXCESS
-              }
+          var selected_screen;
           if(!this.state.GetIRTScanStatus)
           {
         selected_screen=(
   React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, text), 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
                    
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
@@ -45061,7 +45050,7 @@ var PutFront = React.createClass({displayName: "PutFront",
          selected_screen=(
   React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, textIRT)
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
                   )
               )
           );
@@ -46762,11 +46751,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
-	INTERFACE_IP : "https://192.168.3.106:5000"
-
-	// WEBSOCKET_IP : "wss://192.168.9.113/wss",
-	// INTERFACE_IP : "https://192.168.9.113"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 
 };
 module.exports = configConstants;
@@ -46793,10 +46779,6 @@ var resourceConstants = {
 	order_id:"Order ID",
 	rem_qty:"Quantity",
 	volume:"Volume",
-	IRTBIN_MSUD:"Please put entitites which has issues in exception area",
-	IRTBINSCAN_MSUD:"Please put entities with issues in IRT bin and scan the bin",
-	IRTBIN_EXCESS:"Please put excess entitites in exception area",
-	IRTBINSCAN_EXCESS:"Please put excess entitites in IRT bin and scan the bin",
 	CLIENTCODE_001 : 'CLIENTCODE_001',
 	CLIENTCODE_002 : 'CLIENTCODE_002',
 	CLIENTCODE_004 : 'CLIENTCODE_004',

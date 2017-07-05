@@ -385,24 +385,13 @@ var PutFront = React.createClass({
             );
         break; 
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-          var selected_screen,exceptionType,text,textIRT;
-          exceptionType=mainstore.getExceptionType();
-          if(exceptionType==="unscannable_or_missing_or_damaged")
-          {
-          text=allresourceConstants.IRTBIN_MSUD;
-          textIRT=allresourceConstants.IRTBINSCAN_MSUD;
-
-          }else
-              {
-              text=allresourceConstants.IRTBIN_EXCESS;
-              textIRT=allresourceConstants.IRTBINSCAN_EXCESS
-              }
+          var selected_screen;
           if(!this.state.GetIRTScanStatus)
           {
         selected_screen=(
   <div className="exception-right">
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{text}</div>
+                    <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
                    
                   <div className = "finish-damaged-barcode align-button">
                     <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
@@ -415,7 +404,7 @@ var PutFront = React.createClass({
          selected_screen=(
   <div className="exception-right">
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{textIRT}</div>
+                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
                   </div>
               </div>
           );

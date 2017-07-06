@@ -233,7 +233,8 @@ var PutFront = React.createClass({
       }
       break;
 
-        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL || appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN :
+        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
 
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){

@@ -2089,6 +2089,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
+             case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+             break;
+
+
             case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();

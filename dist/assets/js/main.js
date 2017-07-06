@@ -44890,7 +44890,8 @@ var PutFront = React.createClass({displayName: "PutFront",
       }
       break;
 
-        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL || appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN :
+        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
 
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -46779,8 +46780,11 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
+	
+	// WEBSOCKET_IP : "wss://localhost/wss",
+	// INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -48019,8 +48023,9 @@ var serverMessages = {
     "PtF.H.017" : "Wrong Undock",
     "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
     "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
-    "PtF.H.020" : "Scan IRT Bin",
-    "PtF.E.022" : "Entities cannot be accommodated! Remove all entities from bin and press PPTL.",
+    "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
+    "PtF.H.021" : "Scan IRT Bin",
+    "PtF.E.022" : "Entities cannot be accommodated!",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -51889,6 +51894,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
+             case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+             break;
+
+
             case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();

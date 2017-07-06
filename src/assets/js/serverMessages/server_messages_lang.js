@@ -437,5 +437,7 @@ function server_messages_list() {
     _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
     _("Take Printout and Press PPTL");
     _("PPS is Closed");
+    _("Wrong Scan. IRT bin scan expected");
+    _("Scan IRT Bin");
 
 }

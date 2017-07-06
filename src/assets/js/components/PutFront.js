@@ -180,19 +180,20 @@ var PutFront = React.createClass({
         break;
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-        var _button,selected_screen;
-        _button = (<div className = "staging-action">                          
-          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.WAREHOUSEFULL_EXCEPTION} color={"orange"} />
-          </div>);
+        var selected_screen;
+        
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(!this.state.GetIRTScanStatus)
           {
           selected_screen= (
+            <div>
            <div className = "kq-exception">
           <div className="gor-info-text">{_("Please put exception entities in exception area")}</div>
           </div>
-          {_button}
-        );
+          <div className = "staging-action">                          
+          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.WAREHOUSEFULL_EXCEPTION} color={"orange"} />
+          </div>
+          </div>);
          }
          else
          {
@@ -208,7 +209,6 @@ var PutFront = React.createClass({
         {selected_screen}
           </div>
           );
-        }
         break;
 
         case appConstants.PUT_FRONT_PPTL_PRESS:

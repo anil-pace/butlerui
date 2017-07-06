@@ -46301,6 +46301,14 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_warehouse_full_irt_scan",
+            "code": "PtF.H.021",
+            "message": "Scan IRT Bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [
@@ -50024,6 +50032,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[3];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
                     _NavData = navConfig.putFront[7];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+                    _NavData = navConfig.putFront[8];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
                     _NavData = navConfig.putFront[4];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {

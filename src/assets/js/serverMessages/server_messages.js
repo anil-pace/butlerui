@@ -52,6 +52,7 @@ var serverMessages = {
     "PtF.H.017" : "Wrong Undock",
     "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
     "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
+    "PtF.H.020" : "Scan IRT Bin",
     "PtF.E.022" : "Entities cannot be accommodated! Remove all entities from bin and press PPTL.",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",

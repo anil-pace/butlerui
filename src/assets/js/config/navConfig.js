@@ -128,6 +128,14 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_warehouse_full_irt_scan",
+            "code": "PtF.H.021",
+            "message": "Scan IRT Bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [

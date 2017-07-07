@@ -448,20 +448,31 @@ var Bin = React.createClass({
                          style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-        }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
+        }else if (compData.selected_state && (this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL ||this.props.screenId === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)) {
+           var pptl;
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
                 tote = (<div className="tote">
                     <span className="bin-icon tote-icon"/>
                 </div>);
             }
+            if(this.props.screenId===appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+            {
+            pptl=(<div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>);
+            }
+            else
+            {
+             pptl=(<div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>);
+            }
+
             return (
                 <div className={"bin " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     <div className="item-count">{compData.ppsbin_count}</div>
                     {tote}
-                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
-                         onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
-                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                    {pptl}
                 </div>
             );
         }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {

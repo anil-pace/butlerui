@@ -2146,6 +2146,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontNotification"] = this.getNotificationData();
                 data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:

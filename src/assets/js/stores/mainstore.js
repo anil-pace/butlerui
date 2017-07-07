@@ -2080,6 +2080,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
             case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+            case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -2091,20 +2092,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
-             case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
-                data["PutFrontNavData"] = this.getNavData();
-                data["PutFrontServerNavData"] = this.getServerNavData();
-                data["PutFrontScreenId"] = this.getScreenId();
-                data["PutFrontBinData"] = this.getBinData();
-                data["BinMapDetails"] = this._getBinMapDetails();
-                data["SplitScreenFlag"] = this._getSplitScreenFlag();
-                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
-                data["PutFrontExceptionData"] = this.getExceptionData();
-                data["PutFrontNotification"] = this.getNotificationData();
-                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
-             break;
-
-
             case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
@@ -2159,6 +2146,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutFrontScreenId"] = this.getScreenId();

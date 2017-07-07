@@ -188,7 +188,7 @@ var PutFront = React.createClass({
           selected_screen= (
             <div>
            <div className = "kq-exception">
-          <div className="gor-info-text">{_("Please put exception entities in exception area")}</div>
+          <div className="gor-info-text">{_("Empty the rollcage to undock")}</div>
           </div>
           <div className = "staging-action">                          
           <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.WAREHOUSEFULL_EXCEPTION} color={"orange"} />
@@ -199,7 +199,7 @@ var PutFront = React.createClass({
          {
         selected_screen=  (
         <div className = "kq-exception">
-          <div className="gor-info-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
+          <div className="gor-info-text">{_("Please put remaining entities in IRT bin and scan the bin")}</div>
           </div>
           );
          }
@@ -210,7 +210,7 @@ var PutFront = React.createClass({
           </div>
           );
         break;
-
+        
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){

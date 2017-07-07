@@ -44845,7 +44845,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           selected_screen= (
             React.createElement("div", null, 
            React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Please put exception entities in exception area"))
+          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
           ), 
           React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
@@ -44856,7 +44856,7 @@ var PutFront = React.createClass({displayName: "PutFront",
          {
         selected_screen=  (
         React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Please put exception entities in IRT bin and scan the bin"))
+          React.createElement("div", {className: "gor-info-text"}, _("Please put remaining entities in IRT bin and scan the bin"))
           )
           );
          }
@@ -44867,7 +44867,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           )
           );
         break;
-
+        
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){

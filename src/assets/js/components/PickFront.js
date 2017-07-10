@@ -337,11 +337,25 @@ var PickFront = React.createClass({
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 var _button;
-                _button = (<div className="staging-action">
+                if(!this.state.GetIRTScanStatus)
+          {
+                    _button = (<div className="staging-action">
                     <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Confirm")}
                              module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
                              color={"orange"}/>
                 </div>);
+
+          }
+      else
+      {
+                    _button = (<div className="staging-action">
+                    <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Next")}
+                             module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+                             color={"orange"}/>
+                </div>);
+      }
+
+                
 
                 this._component = (
                     <div className='grid-container exception'>

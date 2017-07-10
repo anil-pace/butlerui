@@ -41514,11 +41514,25 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 var _button;
-                _button = (React.createElement("div", {className: "staging-action"}, 
+                if(!this.state.GetIRTScanStatus)
+          {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
                     React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
                              module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
                              color: "orange"})
                 ));
+
+          }
+      else
+      {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Next"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
+                             color: "orange"})
+                ));
+      }
+
+                
 
                 this._component = (
                     React.createElement("div", {className: "grid-container exception"}, 

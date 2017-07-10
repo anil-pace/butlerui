@@ -433,9 +433,6 @@ var PickFront = React.createClass({
                 selected_screen=(
                    <div className="gor-exception-align">
                     <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
-                  <div className = "finish-damaged-barcode align-button">
-                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
-                  </div>
                   </div>
           );
               }

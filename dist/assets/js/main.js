@@ -41609,10 +41609,7 @@ var PickFront = React.createClass({displayName: "PickFront",
               else{
                 selected_screen=(
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin")), 
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
-                  )
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
                   )
           );
               }

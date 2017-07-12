@@ -55,13 +55,6 @@ switch (module) {
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
-                            // case appConstants.SEND_KQ_QTY: raja
-                            //     data["event_name"] = "put_back_exception";
-                            //     data["event_data"]["action"] ="confirm_quantity_update";
-                            //     data["event_data"]["event"] = mainstore.getExceptionType();
-                            //     data["event_data"]["quantity"] = mainstore.getkQQuanity();
-                            //     ActionCreators.postDataToInterface(data);
-                            //     break;
                             case appConstants.FINISH_DAMAGED_ENTITY_DATA:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
@@ -70,17 +63,16 @@ switch (module) {
                                 ActionCreators.postDataToInterface(data);
                                 break;    
                             case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
-                                    data["event_name"] = "put_back_exception";
-                                  data["event_data"]["action"] ="confirm_irt_bin";
-                                  data["event_data"]["event"] = mainstore.getExceptionType();
-                                  ActionCreators.postDataToInterface(data);
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="finish_exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
                                 break; 
-//raja
                             case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                             case appConstants.FINISH_EXCEPTION_EXTRA_ITEM:
                                   data["event_name"] = "put_back_exception";
-                                  data["event_data"]["action"] ="finish_exception";
+                                  data["event_data"]["action"] ="confirm_button_press";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
                                 break;

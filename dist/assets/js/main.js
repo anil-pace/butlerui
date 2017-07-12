@@ -38650,20 +38650,28 @@ switch (module) {
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
-                            case appConstants.SEND_KQ_QTY:
+                            case appConstants.FINISH_DAMAGED_ENTITY_DATA:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;    
+                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="finish_exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break; 
                             case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
+                            case appConstants.FINISH_EXCEPTION_EXTRA_ITEM:
                                   data["event_name"] = "put_back_exception";
-                                  data["event_data"]["action"] ="finish_exception";
+                                  data["event_data"]["action"] ="confirm_button_press";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
                                 break;
+
                               case appConstants.FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "put_back_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
@@ -38684,15 +38692,15 @@ switch (module) {
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                            case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen("damaged_confirm");
-                                break;
-                            case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                                break;
-                            case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen("oversized_confirm");
-                                break;
+                            // case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:raja
+                            //     ActionCreators.changePutBackExceptionScreen("damaged_confirm");
+                            //     break;
+                            // case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
+                            //     ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
+                            //     break;
+                            // case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:raja
+                            //     ActionCreators.changePutBackExceptionScreen("oversized_confirm");
+                            //     break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
                                 data["event_name"] = "confirm_close_tote";
@@ -44403,7 +44411,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
           React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_DAMAGED_ENTITY_DATA})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44411,25 +44419,25 @@ var PutBack = React.createClass({displayName: "PutBack",
           )
           )
           );
-      else if(this.state.PutBackExceptionScreen == "damaged_confirm")
-        this._component = (
-          React.createElement("div", {className: "grid-container exception"}, 
-          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-          React.createElement("div", {className: "exception-right"}, 
-          React.createElement("div", {className: "main-container exception2"}, 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
-          )
-          ), 
-          React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
-          )
-          ), 
-          React.createElement("div", {className: "cancel-scan"}, 
-          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-          )
-          )
-          );
+      // else if(this.state.PutBackExceptionScreen == "damaged_confirm")raja
+      //   this._component = (
+      //     <div className='grid-container exception'>
+      //     <Exception data={this.state.PutBackExceptionData}/>
+      //     <div className="exception-right">
+      //     <div className="main-container exception2">
+      //     <div className = "kq-exception">
+      //     <div className="kq-header">{_("Please put unscannable entities in exception area.")}</div>
+      //     </div>
+      //     </div>
+      //     <div className = "finish-damaged-barcode">
+      //     <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
+      //     </div>
+      //     </div>
+      //     <div className = 'cancel-scan'>
+      //     <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+      //     </div>
+      //     </div>
+      //     );
       break; 
        case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
           this._navigation = '';
@@ -44447,26 +44455,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put damaged entities in exception area."))
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -44490,26 +44479,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
           ), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
-          )
-          ), 
-          React.createElement("div", {className: "cancel-scan"}, 
-          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-          )
-          )
-          );
-      else if(this.state.PutBackExceptionScreen == "oversized_confirm")
-        this._component = (
-          React.createElement("div", {className: "grid-container exception"}, 
-          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-          React.createElement("div", {className: "exception-right"}, 
-          React.createElement("div", {className: "main-container exception2"}, 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Please put oversized entities in exception area."))
-          )
-          ), 
-          React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44560,26 +44530,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
         ), 
         React.createElement("div", {className: "finish-damaged-barcode"}, 
-        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY_1})
-        )
-        ), 
-        React.createElement("div", {className: "cancel-scan"}, 
-        React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-        )
-        )
-        );
-    else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
-      this._component = (
-        React.createElement("div", {className: "grid-container exception"}, 
-        React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-        React.createElement("div", {className: "exception-right"}, 
-        React.createElement("div", {className: "main-container exception2"}, 
-        React.createElement("div", {className: "kq-exception"}, 
-        React.createElement("div", {className: "kq-header"}, _("Please put extra entities in exception area."))
-        )
-        ), 
-        React.createElement("div", {className: "finish-damaged-barcode"}, 
-        React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_EXTRA_ITEM})
         )
         ), 
         React.createElement("div", {className: "cancel-scan"}, 
@@ -44588,6 +44539,66 @@ var PutBack = React.createClass({displayName: "PutBack",
         )
         );
     break; 
+
+         case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+          var selected_screen;
+          var messageIRTenable,messageIRTdisable;
+          if(this.state.GetExceptionType==appConstants.PHYSICALLY_DAMAGED)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in exception area")));
+          }
+          else if(this.state.GetExceptionType==appConstants.EXTRA_ITEMS)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in exception area.")));
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_SCANNABLE)
+          {
+               messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in exception area")));
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_OVERSIZED)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in exception area")));
+          }
+
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    messageIRTdisable, 
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
+                  )
+                  )
+              )
+          );
+      }else
+      {
+         selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    messageIRTenable
+                  )
+              )
+          );
+      }
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                  selected_screen, 
+              React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+            );
+        break;
+
+
     case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
     this._navigation = '';
     this._component = (
@@ -44605,6 +44616,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       )
       );
     break;
+
     case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
     this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
     
@@ -46624,6 +46636,12 @@ var appConstants = {
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
+	PHYSICALLY_DAMAGED:"physically_damaged",
+	EXTRA_ITEMS:"extra_items",
+	ITEM_SCANNABLE:"item_unscannable",
+	ITEM_OVERSIZED:"item_oversized",
+	FINISH_DAMAGED_ENTITY_DATA:"FINISH_DAMAGED_ENTITY_DATA",
+	FINISH_EXCEPTION_EXTRA_ITEML:"FINISH_EXCEPTION_EXTRA_ITEM",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
@@ -46678,6 +46696,7 @@ var appConstants = {
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
+	PUT_BACK_EXCEPTION_ENITY_IRT_BIN:"put_back_transfer_to_irt_bin",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
 	PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:"put_front_warehouse_full_irt_scan",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
@@ -46800,8 +46819,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
 };
 module.exports = configConstants;
 
@@ -50243,6 +50262,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('irt_scan_enabled'))
             return _seatData.irt_scan_enabled;
     },
+    getExceptionType:function () {
+        if (_seatData.hasOwnProperty('exception_type'))
+            return _seatData.exception_type;
+    },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
         var orderDetails = _seatData['order_details'];
@@ -51771,6 +51794,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 break;
+
+            case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                data["GetExceptionType"] = this.getExceptionType();
+            break;    
             case appConstants.PRE_PUT_STAGE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();

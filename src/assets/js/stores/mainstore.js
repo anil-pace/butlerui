@@ -1956,11 +1956,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
             case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
-                data["PutFrontScreenId"] = this.getScreenId();
-                data["PutFrontNavData"] = this.getNavData();
-                data["PutFrontServerNavData"] = this.getServerNavData();
-                data["PutFrontExceptionData"] = this.getExceptionData();
-                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
                 data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 data["GetExceptionType"] = this.getExceptionType();
             break;    

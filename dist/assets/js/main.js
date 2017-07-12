@@ -46800,8 +46800,10 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
+	// WEBSOCKET_IP : "wss://localhost/wss",
+	// INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -48251,6 +48253,7 @@ var serverMessages = {
     "PtF003" : "Excess quantity",
     "PkF001" : "Issues with entity",
     "PkF005" : "Missing/Unscannable Box",
+    "PkF006" : "Entity Damaged",
     "PkB007" : "Disassociate Tote",
     "PkB008" : "Override Tote Required",
     "PkB009" : "Reprint",

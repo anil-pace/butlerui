@@ -439,5 +439,6 @@ function server_messages_list() {
     _("PPS is Closed");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
+    _("Entity Damaged");
 
 }

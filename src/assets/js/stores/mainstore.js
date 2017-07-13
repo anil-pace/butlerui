@@ -2341,6 +2341,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+
                 break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutBackKQDetails"] = this.getScanDetails();
@@ -2363,6 +2365,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontDamagedItems"] = this._getDamagedItemsData();
                 data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
                 data["PickFrontScreenId"] = this.getScreenId();

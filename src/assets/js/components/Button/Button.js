@@ -247,7 +247,14 @@ switch (module) {
                                 data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
 
                                 ActionCreators.postDataToInterface(data);
-                                break;   
+                                break; 
+
+                             case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
+                                    data["event_name"] = "pick_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;      
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";

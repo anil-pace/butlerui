@@ -252,7 +252,7 @@ function server_messages_list() {
     _("Clear All");
     _("Submit");
     _("Exceptions");
-
+    _("Next");
     _("Bin");
     _("Selected");
     _("Unselected");
@@ -264,7 +264,8 @@ function server_messages_list() {
     _("User Name");
     _("Password");
     _("View More");
-
+    _("Please put exception entities in exception area");
+    _("Please put exception entities in IRT bin and scan the bin");
     _("Product Information");
     _("Bin Info");
     _("Associate tote with bin");
@@ -444,6 +445,7 @@ function server_messages_list() {
     _("Entity Damaged");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
+    _("Entity Damaged");
     _("Warehouse Full Remove all entities from bin & press PPTL");
     _("Enter Quantity");
     _("Exception with entity reported");

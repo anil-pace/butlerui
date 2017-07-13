@@ -337,11 +337,25 @@ var PickFront = React.createClass({
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 var _button;
-                _button = (<div className="staging-action">
+                if(!this.state.GetIRTScanStatus)
+          {
+                    _button = (<div className="staging-action">
                     <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Confirm")}
                              module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
                              color={"orange"}/>
                 </div>);
+
+          }
+      else
+      {
+                    _button = (<div className="staging-action">
+                    <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Next")}
+                             module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+                             color={"orange"}/>
+                </div>);
+      }
+
+                
 
                 this._component = (
                     <div className='grid-container exception'>
@@ -417,27 +431,34 @@ var PickFront = React.createClass({
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+            var selected_screen;
+          if(!this.state.GetIRTScanStatus)
+          {
+                  selected_screen=(
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>     
+                  <div className = "finish-damaged-barcode align-button">
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FINISH_EXCEPTION_ENTITY} />  
+                  </div>
+                  </div>
+          );
+              }
+              else{
+                selected_screen=(
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
+                  </div>
+          );
+              }
                 this._component = (
                     <div className='grid-container exception'>
                         <Modal />
                         <Exception data={this.state.PickFrontExceptionData}/>
                         <div className="exception-right">
-                            <div className="gor-exception-align">
-                                <div
-                                    className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
-
-                                <div className="finish-damaged-barcode align-button">
-                                    <Button1 disabled={false} text={_("Confirm")} color={"orange"}
-                                             module={appConstants.PICK_FRONT}
-                                             action={appConstants.PICK_FINISH_EXCEPTION_ENTITY}/>
-                                </div>
-                            </div>
-
-
+                        {selected_screen}
                         </div>
                         <div className='cancel-scan'>
-                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
-                                     action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                         </div>
                     </div>
                 );

@@ -437,6 +437,11 @@ function server_messages_list() {
     _("Entities cannot be accommodated!");
     _("Take Printout and Press PPTL");
     _("PPS is Closed");
+    _("Place box in MSU slot and confirm");
+    _("Wrong Undock");
+    _("Dock roll cage back to proceed the operation");
+    _("Excess quantity");
+    _("Entity Damaged");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
     _("Warehouse Full Remove all entities from bin & press PPTL");

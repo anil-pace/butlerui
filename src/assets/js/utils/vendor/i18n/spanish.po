@@ -1,5 +1,3 @@
-
- 
 msgid "Scan item / Stage pps bin"
 msgstr "Escanee el artículo / Organice el recipiente pps "
  
@@ -1043,3 +1041,175 @@ msgstr "Tipo de Asiento"
  
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
 msgstr "La Cantidad Correcta no Puede ser Igual a la Cantidad Total"
+
+
+msgid " items" 
+msgstr	"artículos 
+
+msgid "Are you sure you want to exit from {0} invoice and stage all bins" 
+msgstr	"Está seguro de que quiere salir de {0} la factura y montar todos los contenedores
+
+msgid "Are you sure you want to exit from {0} {1} and stage all bins" 
+msgstr	"Está seguro de que quiere salir de {0} {1} y montar todos los contenedores
+
+msgid "Enter excess item quantity" 
+msgstr	"Entre la cantidad de artículos excedentes
+
+msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL." 
+msgstr	"Entidades no se pueden caber!  Elimine todas las entidades del contenedor y pulse PPTL.
+
+msgid "Exception entry successful" 
+msgstr	"La entrada a excepción con éxito
+
+msgid "Exception finished" 
+msgstr	"La excepción ha sido terminada
+
+msgid "Exit {0}" 
+msgstr	"Salir {0}
+
+msgid "Extra" 
+msgstr	"Extra
+
+msgid "Gently push roll cage away from the frame" 
+msgstr	"Mueva la jaula de seguridad cuidadosamente lejos del marco
+
+msgid "Invalid Slot scanned" 
+msgstr	"Una vacante no válida ha sido escaneada
+
+msgid "Invalid tote scanned" 
+msgstr	 "Un bolso no válido ha sido escaneado
+
+msgid "Invoice number: {0}" 
+msgstr	"Número de la factura : {0}
+
+msgid "OK" 
+msgstr	"OK
+
+msgid "PPS is Closed" 
+msgstr	"PPS ses ha sido Cerrado 
+
+msgid "PPTL" 
+msgstr	"PPTL
+
+msgid "Place" 
+msgstr	"Colocar
+
+msgid "Place container in MSU slot and confirm" 
+msgstr	"Coloque el contenedor en la ranura de  MSU y confirmar
+
+msgid "Place the tote back in bin {0} and press pptl" 
+msgstr	"Coloque el bolso  nuevamente en el contenedor  {0} y pulse pptl
+
+msgid "Place {0} boxes from bin {2}" 
+msgstr	"Coloque {0} cajones del contenedor {2}
+
+msgid "Place {0} boxes with {1} items from bin {2}" 
+msgstr	"Coloque {0} cajones con {1} artículos del contenedor {2}
+
+msgid "Please Scan tote which has excess item" 
+msgstr	"Por favor escanee el bolso que haya sobrepasado el límite de artículos
+
+msgid "Please enter a quantity greater than 0" 
+msgstr	"Por favor entre una cantidad más de 0
+
+msgid "Please scan or enter {0} number" 
+msgstr	"Por favor escanee o entre {0} número
+
+msgid "Press PPTL to confirm no Items Remaining in Bin {0}" 
+msgstr	"Pulse PPTL para confirmar que ningún artículo se quede en Contenedor {0}
+
+msgid "Press bin PPTL to remove entities" 
+msgstr	"Pulse contenedor PPTL  para eliminar entidades
+
+msgid "Release MTU" 
+msgstr	"Suelte MTU
+
+msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining" 
+msgstr	"Elimine bolso del contenedor  {0} y pulse PPTL para confirmar no queda ningún artículo 
+
+msgid "STN scan successful" 
+msgstr	"STN escaneado con éxito’
+
+msgid "Scan Tote first and then scan rack" 
+msgstr	"Escanee bolso primero y luego escanee estante
+
+msgid "Scan excess item" 
+msgstr	"Escanee articulo excedente
+
+msgid "Scan or Enter the tote barcode to reprint" 
+msgstr	"Escanee o Entre código de barra del bolso para reimprimir
+
+msgid "Scan or Enter {0} number" 
+msgstr	"Escanee o entre {0} numero
+
+msgid "Scan slot to confirm" 
+msgstr	"Escanee vacante para confirmar
+
+msgid "Scan tote and place it in the slot" 
+msgstr	"Escanee el bolso y colóquelo en la vacante
+
+msgid "Scan tote first and then scan item" 
+msgstr	"Escanee primero el bolso y luego escanee artículo
+
+msgid "Scan tote which has excess item" 
+msgstr	"Escanee el bolso que haya sobrepasado el límite de artículos
+
+msgid "Slot barcode scan successful" 
+msgstr	"Código de barra de la vacante escaneado con éxito
+
+msgid "Take Printout and Press PPTL" 
+msgstr	"Seleccione la opción de imprimir  y pulse PPTL
+
+msgid "Take out the tote from bin {0} and scan entity" 
+msgstr	"Saque el bolso del contenedor {0} y escanee entidad
+
+msgid "Total " 
+msgstr	"Total  
+
+msgid "Tote already associated with slot.Scan empty slot" 
+msgstr	"El bolso ya ha sido asociado con la vacante. Escanee la vacante vacía
+
+msgid "Tote already scanned" 
+msgstr	"El Bolso ya ha sido escaneado
+
+msgid "Tote scan cancelled." 
+msgstr	"El escaneo de bolso ha sido anulado
+
+msgid "Tote scan successful." 
+msgstr	"El escaneo de bolso escaneado con éxito
+
+msgid "Tote scanned is not idle" 
+msgstr	"El escaneo de bolso no está ocupado
+
+msgid "Tote scanned is not opened" 
+msgstr	"El escaneo de bolso no está abierto
+
+msgid "Undock Roll Cage if no items remaining" 
+msgstr	"Desacople la jaula de seguridad si no queda ningún artículo
+
+msgid "Unexpected entity scanned" 
+msgstr	"Una Entidad inesperada ha sido escaneada
+
+msgid "Wrong ppsbin button pressed" 
+msgstr	"Un botón ppsbin ha sido pulsado incorrectamente
+
+msgid "product_sku" 
+msgstr	"Producto_sku
+
+msgid "{0} number :"	
+msgstr "{0} numero  :"
+
+msgid "Place box in MSU slot and confirm"
+msgstr "Coloque la caja en la ranura MSU y confirme"
+
+msgid "Wrong Undock"
+msgstr "Undock equivocado"
+
+msgid "Dock roll cage back to proceed the operation"
+msgstr "Retirar la jaula de rodillos para continuar la operación"
+
+msgid "Excess quantity"
+msgstr "Cantidad excesiva"
+
+msgid "Entity Damaged"
+msgstr "Entidad dañada"

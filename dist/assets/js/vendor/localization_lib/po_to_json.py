@@ -32,11 +32,11 @@ for srcfile in args:
 	
 	po = polib.pofile(srcfile, autodetect_encoding=False, encoding="utf-8", wrapwidth=-1)
 	for entry in po:
-		if entry.obsolete or entry.msgstr == '' or entry.msgstr == entry.msgid:
+		if entry.obsolete  or entry.msgstr == entry.msgid:
 			continue
 			
 		xlate_map[entry.msgid] = entry.msgstr;
-			
+		print("converting: %s" % (entry.msgid))		
 	dest = open(destfile, "w")
 	
 	dest.write(json.dumps(xlate_map, sort_keys = True));

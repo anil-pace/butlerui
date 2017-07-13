@@ -37373,7 +37373,7 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
@@ -37435,7 +37435,7 @@ var Bin = React.createClass({displayName: "Bin",
                 ));
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37463,7 +37463,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -37531,11 +37531,11 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin selected " + compData['pps_blink_state'] ? 'blink1' : ' ' + binClass, 
+                React.createElement("div", {className: "bin selected " + (compData['pps_blink_state'] ? 'blink1' : ' ') + binClass, 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
-                    React.createElement("div", {className: "pptl selected " + compData['ppsbin_blink_state'] ? 'blink' : ' ' + binClass, 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ' ') + binClass, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37653,7 +37653,7 @@ var Bin = React.createClass({displayName: "Bin",
                     tote, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     React.createElement("div", {
-                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + ((compData['ppsbin_blink_state'] ? 'blink' : '')), 
+                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38138,7 +38138,7 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + compData['pps_blink_state'] ? 'blink1 ' : '', 
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
@@ -44873,7 +44873,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           selected_screen= (
             React.createElement("div", null, 
            React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Please put exception entities in exception area"))
+          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
           ), 
           React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
@@ -44884,7 +44884,7 @@ var PutFront = React.createClass({displayName: "PutFront",
          {
         selected_screen=  (
         React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Please put exception entities in IRT bin and scan the bin"))
+          React.createElement("div", {className: "gor-info-text"}, _("Please put remaining entities in IRT bin and scan the bin"))
           )
           );
          }
@@ -44895,7 +44895,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           )
           );
         break;
-
+        
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -44918,7 +44918,8 @@ var PutFront = React.createClass({displayName: "PutFront",
       }
       break;
 
-        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL || appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN :
+        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
 
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -46325,6 +46326,14 @@ var navData = {
             "screen_id": "put_front_bin_warehouse_full",
             "code": "PtF.H.016",
             "message": "Warehouse Full",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_warehouse_full_irt_scan",
+            "code": "PtF.H.021",
+            "message": "Scan IRT Bin",
             "showImage": false,
             "level": 1,
             "type": 'active'
@@ -48048,8 +48057,9 @@ var serverMessages = {
     "PtF.H.017" : "Wrong Undock",
     "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
     "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
-    "PtF.H.020" : "Scan IRT Bin",
-    "PtF.E.022" : "Entities cannot be accommodated! Remove all entities from bin and press PPTL.",
+    "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
+    "PtF.H.021" : "Scan IRT Bin",
+    "PtF.E.022" : "Entities cannot be accommodated!",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -48312,6 +48322,7 @@ module.exports = serverMessages;
 
 },{}],310:[function(require,module,exports){
 var spanish = {
+	" items": "art\u00edculo",
 	"Actions": "Acciones",
 	"Actual": "Real",
 	"Actual Quantity": "Cantidad Real",
@@ -48321,6 +48332,8 @@ var spanish = {
 	"After scannning tote barcode, please scan pptl barcode": "Despu\u00e9s de escanear el c\u00f3digo de barras de la bolsa, por favor, escanee el c\u00f3digo de barras pptl",
 	"Are You Sure You Want to Close Tote?": "\u00bfEst\u00e1 seguro que desea cerrar la Bolsa?",
 	"Are you sure you want to close Tote": "Est\u00e1 seguro que desea cerrar la Bolsa",
+	"Are you sure you want to exit from {0} invoice and stage all bins": "Est\u00e1 seguro de que quiere salir de {0} la factura y montar todos los contenedore",
+	"Are you sure you want to exit from {0} {1} and stage all bins": "Est\u00e1 seguro de que quiere salir de {0} {1} y montar todos los contenedore",
 	"Associate tote with bin": "Asocie la bolsa con el recipiente",
 	"BACK": "ATR\u00c1S",
 	"Back": "Atr\u00e1s",
@@ -48374,6 +48387,7 @@ var spanish = {
 	"Details": "Detalles",
 	"Dis-associate Tote": "Desvincular Bolsa",
 	"Disassociate Tote": "Bolsa Desvinculada",
+	"Dock roll cage back to proceed the operation": "Retirar la jaula de rodillos para continuar la operaci\u00f3n",
 	"Documents printed Successfully": "Los documentos se imprimieron Exitosamente",
 	"Documents printed successfully": "Los documentos se imprimieron exitosamente",
 	"EXCEPTION": "EXCEPCI\u00d3N",
@@ -48385,7 +48399,10 @@ var spanish = {
 	"Enter Scanner Id": "Introducir la Identificaci\u00f3n del Esc\u00e1ner",
 	"Enter Unscannable Entity Quantity": "Especifique la Cantidad de Art\u00edculos no Escaneables",
 	"Enter Username": "Ingrese el Nombre de Usuario",
+	"Enter excess item quantity": "Entre la cantidad de art\u00edculos excedente",
+	"Entities cannot be accommodated! Remove all entities from bin and press PPTL.": "Entidades no se pueden caber!  Elimine todas las entidades del contenedor y pulse PPTL",
 	"Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL": "\u00a1Los art\u00edculos no pueden ser acomodados! Retire todos los art\u00edculos del recipiente {0} y pulse PPTL",
+	"Entity Damaged": "Entidad da\u00f1ada",
 	"Entity Missing / Unscannable": "Art\u00edculo Faltante / No Escaneable",
 	"Entity Oversized": "Art\u00edculo Extra Grande",
 	"Entity Scan not expected. Press PPTL": "No se esperaba el escaneo del art\u00edculo. Pulse PPTL",
@@ -48401,27 +48418,36 @@ var spanish = {
 	"Exception": "Excepci\u00f3n",
 	"Exception Finished": "Excepci\u00f3n Terminada",
 	"Exception cancelled": "Excepci\u00f3n cancelada",
+	"Exception entry successful": "La entrada a excepci\u00f3n con \u00e9xit",
+	"Exception finished": "La excepci\u00f3n ha sido terminad",
 	"Exception invalid as totes are not required with this PPS": "Excepci\u00f3n no v\u00e1lida como ya que las bolsas no son necesarias con este PPS",
 	"Exceptions": "Excepciones",
 	"Excess item in tote recorded.": "Art\u00edculo sobrante registrado en la bolsa.",
 	"Excess item in tote recorded. Now press PPTL": "Art\u00edculo sobrante registrado en la bolsa. Ahora pulse PPTL",
+	"Excess quantity": "Cantidad excesiva",
+	"Exit {0}": "Salir {0",
 	"Expected": "Esperado",
 	"Expected Quantity": "Cantidad Esperada",
 	"Expected quantity exceeded.": "Cantidad esperada excedida.",
 	"Expecting MSU release confirmation from GUI, got invalid event.": "Esperando la confirmaci\u00f3n de liberaci\u00f3n MSU de GUI, tiene evento no v\u00e1lido.",
+	"Extra": "Extr",
 	"Extra Entities in Bin": "Art\u00edculos Extra en Recipiente",
 	"Extra Entity Found": "Art\u00edculo Extra Encontrado",
 	"Extra item found please put back item in Exception bin": "Art\u00edculo adicional encontrado, por favor, deuelv\u00e1lo al recipiente de excepci\u00f3n",
 	"FINISH": "TERMINAR",
 	"Finish": "Terminar",
+	"Gently push roll cage away from the frame": "Mueva la jaula de seguridad cuidadosamente lejos del marc",
 	"Good Quantity": "Cantidad Correcta",
 	"Good Quantity Cannot be Equal to the Total Quantity": "La Cantidad Correcta no Puede ser Igual a la Cantidad Total",
 	"Incorrect tote barcode scanned. Please try again": "Se escaneo un c\u00f3digo de barra de bolsa incorrecto. Por favor, int\u00e9ntelo de nuevo",
 	"Input Extra Details": "Detalles Adicionales de Entrada",
 	"Invalid Exception for this configuration": "Excepci\u00f3n no v\u00e1lida para esta configuraci\u00f3n",
+	"Invalid Slot scanned": "Una vacante no v\u00e1lida ha sido escanead",
 	"Invalid credentials": "Credenciales Inv\u00e1lidas",
 	"Invalid entity in tote recorded": "Art\u00edculo no v\u00e1lido registrado en la bolsa.",
 	"Invalid item in tote recorded.": "Art\u00edculo no v\u00e1lido registrado en la bolsa.",
+	"Invalid tote scanned": "Un bolso no v\u00e1lido ha sido escanead",
+	"Invoice number: {0}": "N\u00famero de la factura : {0",
 	"Item Missing/Bad Barcode": "Art\u00edculo Faltante/C\u00f3digo de Barra Equivocado",
 	"Item Missing/Unscannable": "Art\u00edculo faltante/No escaneable",
 	"Item Not Expected in Tote": "El Art\u00edculo no se Espera en la Bolsa",
@@ -48453,6 +48479,7 @@ var spanish = {
 	"No tote associated. Please keep a tote in bin and scan": "No hay bolsas asociadas. Por favor, mantenga una bolsa en el recipiente y escanee",
 	"No tote scanned": "No se escaneo ninguna bolsa",
 	"No totes associated. Pease keep totes in the Bin and then scan": "No hay bolsas asociadas. Por favor, mantenga las bolsas en el Recipiente y luego escanee",
+	"OK": "O",
 	"Order removed successfully from bin {0}": "Orden retirada con \u00e9xito del recipiente {0}",
 	"Overide Tote Required": "Bolsa Inv\u00e1lida Requerida",
 	"Override": "Reemplazar",
@@ -48461,9 +48488,11 @@ var spanish = {
 	"Override Tote Required": "Bolsa Invalidad Requerida",
 	"Override tote not possible": "No es posible invalidar la bolsa",
 	"PPS Mode": "Modo de PPS",
+	"PPS is Closed": "PPS ses ha sido Cerrad",
 	"PPS is in paused mode. Cannot process new entity. Try after some time": "PPS est\u00e1 en modo de pausa. No se puede procesar el nuevo art\u00edculo. Pruebe despu\u00e9s de un tiempo",
 	"PPS mode change requested:auto staging all bins": "Cambio de modo PPS solicitado: auto organizando todos los recipientes",
 	"PPS mode change requested:scan not allowed": "Solicit\u00f3 cambio de modo PPS: escaneo no permitido",
+	"PPTL": "PPT",
 	"PPTL Management": "Gesti\u00f3n PPTL",
 	"PPTL press not expected": "Pulsado de PPTL no esperado",
 	"PPTL press successful": "Presionado de PPTL exitoso",
@@ -48479,13 +48508,21 @@ var spanish = {
 	"Peripheral not deleted successfully": "Perif\u00e9rico no eliminado con \u00e9xito",
 	"Pick complete. Waiting for next rack.": "Selecci\u00f3n completa. A la espera del pr\u00f3ximo estante.",
 	"Picked quantity more than expected. Put extra items back in MSU": "Seleccion\u00f3 una cantidad mayor de la esperada. Devuelva los elementos sobrantes al MSU",
+	"Place": "Coloca",
 	"Place Entity in Bin and Press PPTL": "Ubique el Art\u00edculo en el Recipiente y Pulse  PPTL ",
 	"Place Entity in Slot and Scan More": "Ubique el Art\u00edculo en la Vacante y Escanee M\u00e1s",
 	"Place Item in slot and scan more": "Ubique el art\u00edculo en la vacante y escanee m\u00e1s",
+	"Place box in MSU slot and confirm": "Coloque la caja en la ranura MSU y confirme",
+	"Place container in MSU slot and confirm": "Coloque el contenedor en la ranura de  MSU y confirma",
 	"Place extra entity in Exception area.": "Ubique los art\u00edculos extra en la zona de Excepci\u00f3n.",
+	"Place the tote back in bin {0} and press pptl": "Coloque el bolso  nuevamente en el contenedor  {0} y pulse ppt",
+	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2",
+	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2",
+	"Please Scan tote which has excess item": "Por favor escanee el bolso que haya sobrepasado el l\u00edmite de art\u00edculo",
 	"Please Select The Bin With Excess Entity": "Por favor, Seleccione el Recipiente con Art\u00edculos Sobrantes",
 	"Please complete pickback for pending bin and then proceed": "Por favor complete pickback para el recipiente pendiente y luego proceda",
 	"Please complete process for pending bin and then proceed": "Por favor, complete el procesopara el recipiente pendiente y luego proceda",
+	"Please enter a quantity greater than 0": "Por favor entre una cantidad m\u00e1s de ",
 	"Please press PPTL button which does not have any totes associated": "Por favor, pulse el bot\u00f3n PPTL que no tiene ninguna bolsa asociada",
 	"Please press those buttons having color blink_blue": "Por favor, pulse los botones que parpadeen en azul",
 	"Please put entities in exception area and confirm": "Por favor, ponga los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
@@ -48494,6 +48531,7 @@ var spanish = {
 	"Please put oversized entities in exception area.": "Por favor, ponga los art\u00edculos extra grandes en la zona de excepci\u00f3n.",
 	"Please put unscannable entities in exception area.": "Por favor, ponga los art\u00edculos no escaneables en la zona de excepci\u00f3n.",
 	"Please scan PPTL barcode": "Por favor, escanee el c\u00f3digo de barras PPTL",
+	"Please scan or enter {0} number": "Por favor escanee o entre {0} n\u00famer",
 	"Please scan same SKU to complete this exception": "Por favor, escanee el mismo SKU para completar esta excepci\u00f3n",
 	"Please scan the tote first and then scan PPTL barcode": "Por favor, primero escanee la bolsa y luego escanee el c\u00f3digo de barras PPTL",
 	"Please scan the tote first and then scan pptl barcode": "Por favor, primero escanee la bolsa y luego escanee el c\u00f3digo de barras pptl",
@@ -48503,9 +48541,11 @@ var spanish = {
 	"Press PPTL or Scan a Tote": "Pulse PPTL o Escanee la Bolsa",
 	"Press PPTL to Remove Entities": "Prsione PPTL para Eliminar Art\u00edculos",
 	"Press PPTL to confirm": "Prensione PPTL para confirmar",
+	"Press PPTL to confirm no Items Remaining in Bin {0}": "Pulse PPTL para confirmar que ning\u00fan art\u00edculo se quede en Contenedor {0",
 	"Press PpsBin Button Or Scan a Tote": "Pulse el bot\u00f3n PpsBin o Escanee la Bolsa",
 	"Press PpsBin {0} to remove items": "Pulse PpsBin {0} para eliminar los art\u00edculos",
 	"Press bin PPTL": "Pulse Recipiente PPTL",
+	"Press bin PPTL to remove entities": "Pulse contenedor PPTL  para eliminar entidade",
 	"Press print button to proceed": "Pulse el bot\u00f3n Imprimir para proceder",
 	"Print": "Imprimir",
 	"Processing. Please wait and scan later": "Procesando. Por favor, espere y escanee m\u00e1s adelante",
@@ -48517,10 +48557,13 @@ var spanish = {
 	"Product Type": "Tipo de Producto",
 	"Put Back Entities in the PPS Bin": "Devuelva los Art\u00edculos al Recipiente PPS",
 	"Quantity should be less than or equal to {0}": "La cantidad debe ser menor o igual a {0}",
+	"Release MTU": "Suelte MT",
 	"Remove Item": "Elimine Art\u00edculo",
+	"Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining": "Elimine bolso del contenedor  {0} y pulse PPTL para confirmar no queda ning\u00fan art\u00edcul",
 	"Reprint": "Reimpresi\u00f3n",
 	"SKU not present in Database.Put in exception area": "SKU no est\u00e1 presente en la Base de Datos. Ubique en la zona de excepci\u00f3n",
 	"SKU not present in database. Put into IRT bin.": "SKU no est\u00e1 presente en la base de datos. Poner en el recipiente IRT.",
+	"STN scan successful": "STN escaneado con \u00e9xito",
 	"Scan & Confirm": "Escanee y Confirme",
 	"Scan Bin Barcode": "Escanear el C\u00f3digo de Barras del Recipiente",
 	"Scan Box": "Escanee la Caja",
@@ -48537,16 +48580,24 @@ var spanish = {
 	"Scan Slot Barcode": "Escanear el C\u00f3digo de Barras de la Vacante",
 	"Scan Slot to Confirm": "Confirme para Escanear Vacante",
 	"Scan Tote": "Escanee la Bolsa",
+	"Scan Tote first and then scan rack": "Escanee bolso primero y luego escanee estant",
 	"Scan Tote or Stage PPS Bin": "Escanee la Bolsa u Organice el recipiente PPS",
 	"Scan Tote to Associate with Bin": "Escaneee la Bolsa para Asociarla al Recipiente",
 	"Scan Tote to associate with Bin": "Escaneee la Bolsa para Asociarla al Recipiente",
 	"Scan a box first": "Escanee la caja primero",
 	"Scan box barcode": "Escanee el c\u00f3digo de barras de la caja",
+	"Scan excess item": "Escanee articulo excedent",
 	"Scan item / Stage PPS Bin": "Escanee el art\u00edculo / Organice el recipiente pps ",
 	"Scan item / Stage pps bin": "Escanee el art\u00edculo / Organice el recipiente pps ",
 	"Scan items and place in bin {0}": "Analice los elementos y coloque en el recipiente {0}",
 	"Scan not expected": "Escaneo no esperado",
 	"Scan not expected.": "Escaneo no esperado.",
+	"Scan or Enter the tote barcode to reprint": "Escanee o Entre c\u00f3digo de barra del bolso para reimprimi",
+	"Scan or Enter {0} number": "Escanee o entre {0} numer",
+	"Scan slot to confirm": "Escanee vacante para confirma",
+	"Scan tote and place it in the slot": "Escanee el bolso y col\u00f3quelo en la vacant",
+	"Scan tote first and then scan item": "Escanee primero el bolso y luego escanee art\u00edcul",
+	"Scan tote which has excess item": "Escanee el bolso que haya sobrepasado el l\u00edmite de art\u00edculo",
 	"Scan {0} Items": "Escanee {0} Art\u00edculos",
 	"Scan {0} Items and Place in Bin {0}": "Escanee {0} Art\u00edculos y ubiquelos en el Recipiente {0}",
 	"Scan {0} Items and Place in Bin {1}": "Escanee {0} Art\u00edculos y ubiquelos en el Recipiente {1}",
@@ -48561,6 +48612,7 @@ var spanish = {
 	"Selected": "Seleccionado",
 	"Skip Print": "Omitir Impresi\u00f3n",
 	"Skip Printing": "Omitir Impresi\u00f3n",
+	"Slot barcode scan successful": "C\u00f3digo de barra de la vacante escaneado con \u00e9xit",
 	"Slot scan successful": "Escaneo de la vacante exitoso",
 	"Space Available For": "Espacio Disponible Para",
 	"Space Not Available": "Espacio No Disponible",
@@ -48578,16 +48630,21 @@ var spanish = {
 	"System is Idle": "El sistema est\u00e1 inactivo",
 	"System not configured for totes": "Sistema no configurado para bolsas",
 	"TOTE": "BOLSA",
+	"Take Printout and Press PPTL": "Seleccione la opci\u00f3n de imprimir  y pulse PPT",
+	"Take out the tote from bin {0} and scan entity": "Saque el bolso del contenedor {0} y escanee entida",
 	"Take the Items out from the Slot": "Sacque los art\u00edculos de la Vacante",
 	"Testing configuration {0} and {1}": "Prueba de configuraci\u00f3n {0} y {1}",
 	"This box belongs to some other SKU in the slot.Put it back.Scan next box.": "Este cuadro pertenece a algunos otros SKU en el hueco. Devu\u00e9lvalo. Escanee la caja siguiente.",
 	"This box does not belong to this slot. Remove the box and put in exception area.": "Esta caja no pertenece a este hueco. Retire la caja y p\u00f3ngala en a zona de excepci\u00f3n.",
+	"Total ": "Tota",
 	"Tote Details": "Detalles de la Bolsa",
 	"Tote already associated with bin {0}": "La Bolsa ya ha sido desvinculada del recipiente {0}",
 	"Tote already associated with ppsbin": "La Bolsa ya ha sido asociada con la ppsbin",
+	"Tote already associated with slot.Scan empty slot": "El bolso ya ha sido asociado con la vacante. Escanee la vacante vac\u00ed",
 	"Tote already closed. Scan some other tote": "La Bolsa ya ha sido cerrada. Escanee alguna otra bolsa",
 	"Tote already opened. Scan some other tote": "Bolsa ya abierta. Escanee alguna otra bolsa",
 	"Tote already reserved": "Bolsa ya reservada",
+	"Tote already scanned": "El Bolso ya ha sido escanead",
 	"Tote assigned successfully to bin": "Bolsa asignada con \u00e9xito al recipiente",
 	"Tote assigned successfully to ppsbin {0}": "Bolsa asignada exitosamente a ppsbin {0} ",
 	"Tote associated with another bin": "Bolsa asociada con otro recipiente",
@@ -48602,12 +48659,18 @@ var spanish = {
 	"Tote not closed.": "La Bolsa no ha sido cerrada.",
 	"Tote not present in database.": "La bolsa no est\u00e1 presente en la base de datos.",
 	"Tote scan cancelled": "Escaneo de la bolsa cancelado",
+	"Tote scan cancelled.": "El escaneo de bolso ha sido anulad",
 	"Tote scan expected": "Escaneo de la bolsa esperado",
+	"Tote scan successful.": "El escaneo de bolso escaneado con \u00e9xit",
+	"Tote scanned is not idle": "El escaneo de bolso no est\u00e1 ocupad",
+	"Tote scanned is not opened": "El escaneo de bolso no est\u00e1 abiert",
 	"Tote scanned.Expecting pptl scan.": "La bolsa ya est\u00e1 escaneada. Esperando escaneo pptl.",
 	"Totes are anyway not required.Please proceed further": "Las bolsas de todas formas no son necesarias. Por favor, siga adelante",
 	"Totes are not required": "Las Bolsas no son necesarias",
 	"Totes are not required.Please don't scan tote barcode": "No se requieren bolsas. Por favor no escanee el c\u00f3digo de barras de la bolsa",
+	"Undock Roll Cage if no items remaining": "Desacople la jaula de seguridad si no queda ning\u00fan art\u00edcul",
 	"Unexpected Item": "Art\u00edculo Inesperado",
+	"Unexpected entity scanned": "Una Entidad inesperada ha sido escanead",
 	"Unhandled event ocurred": "Ocurri\u00f3 un evento no controlado",
 	"Unscannable Quantity": "Cantidad no Escaneable",
 	"Unselected": "No seleccionado",
@@ -48628,6 +48691,7 @@ var spanish = {
 	"Wrong PPTL pressed. Please press correct PPTL": "Se ha presionado el PPTL equivocado. Por favo,r presione PPTL correcto",
 	"Wrong PPTL pressed. Please try another": "Se ha presionado el PPTL equivocado. Por favor, intente con otro",
 	"Wrong Ppsbin button pressed.Please press those buttons having color blue": "Se ha pulsado el bot\u00f3n de Ppsbin equivocado. Por favor pulse los botones con color azul",
+	"Wrong Undock": "Undock equivocado",
 	"Wrong barcode scanned": "Se ha escaneado el c\u00f3digo de barras equivocado",
 	"Wrong bin chosen.Try selecting another bin": "Se ha escogido la papelera equivocada. Pruebe seleccionando otro recipiente",
 	"Wrong box scanned. Please try again": "Se escaneo la caja equivocada. Por favor, int\u00e9ntelo de nuevo",
@@ -48637,6 +48701,7 @@ var spanish = {
 	"Wrong entity scanned. Please scan tote": "Se escaneo el art\u00edculo equivocado. Por favor, escanee la bolsa",
 	"Wrong item quantity update": "Actualizaci\u00f3n equivocada de la cantidad de objetos",
 	"Wrong item scanned. Please scan correct item": "Se escaneo el art\u00edculo equivocado. Por favor, escanee el art\u00edculo correcto",
+	"Wrong ppsbin button pressed": "Un bot\u00f3n ppsbin ha sido pulsado incorrectament",
 	"Wrong scan! Entity scan expected but slot barcode scanned.": "\u00a1Escaneo equivocado! Escaneo del art\u00edculo esperado pero se ha escaneado el c\u00f3digo de barras de la ranura.",
 	"Wrong scan.Expecting container scan.": "Escaneo equivocado. Esperando el el escaneo del recipiente.",
 	"Wrong scan.Expecting item scan.": "Escaneo equivocado. Esperando el el escaneo del art\u00edculo.",
@@ -48644,16 +48709,18 @@ var spanish = {
 	"Wrong slot location scanned. Please try again": "Ubicaci\u00f3n de vacante mal escaneada. Por favor, int\u00e9ntelo de nuevo",
 	"Wrong slot scanned": "Se ha escaneado la vacante equivocada",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "No se le permite ingresar la cantidad desde el teclado num\u00e9rico. El Escaneo Forzado es necesario.",
-	"Please enter a quantity greater than 0": "No puede entrar 0",
+	"You cannot enter 0": "No puede entrar 0",
 	"You cannot enter value more than 9999": "Usted no puede entrar un valor mayor de 9999",
 	"box": "caja",
 	"item": "art\u00edculo",
+	"product_sku": "Producto_sk",
 	"quantity": "cantidad",
 	"type": "tipo",
 	"type.": "tipo.",
 	"user Name": "Nombre de usuario",
 	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} Art\u00edculos sobrantes encontrados en la bolsa. Por favor, ponga los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
 	"{0} extra entities recorded in bin. WMS notified": "{0} art\u00edculos sobrantes registrados en el recipiente. WMS notificado",
+	"{0} number :": "{0} numero  :",
 	"{0} oversized entities recorded.WMS notified": "{0} art\u00edculos extra grandes registrados. WMS notificado",
 	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado"
 }
@@ -50049,6 +50116,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[3];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
                     _NavData = navConfig.putFront[7];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+                    _NavData = navConfig.putFront[8];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
                     _NavData = navConfig.putFront[4];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
@@ -51908,6 +51977,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
             case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+            case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -51973,6 +52043,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutFrontScreenId"] = this.getScreenId();

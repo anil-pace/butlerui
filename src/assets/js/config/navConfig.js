@@ -47,7 +47,15 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
-        }]
+        },
+         [{
+            "screen_id": "put_back_warehouse_full_irt_scan",
+            "code": "PtF.H.015",
+            "message": "Put item into IRT bin and scan the bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],]
     ],
     "putFront": [
         [{

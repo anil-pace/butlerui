@@ -437,5 +437,9 @@ function server_messages_list() {
     _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
     _("Take Printout and Press PPTL");
     _("PPS is Closed");
-
+    _("Place box in MSU slot and confirm");
+    _("Wrong Undock");
+    _("Dock roll cage back to proceed the operation");
+    _("Excess quantity");
+    _("Entity Damaged");
 }

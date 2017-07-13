@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-05 14:10+0530\n"
+"POT-Creation-Date: 2017-07-13 14:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2013,4 +2013,45 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:434
 msgid "Place"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:435
+msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:436
+msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:437
+msgid ""
+"Entities cannot be accommodated! Remove all entities from bin and press PPTL."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:438
+msgid "Take Printout and Press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:439
+msgid "PPS is Closed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:440
+msgid "Place box in MSU slot and confirm"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:441
+msgid "Wrong Undock"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:442
+msgid "Dock roll cage back to proceed the operation"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:443
+msgid "Excess quantity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:444
+msgid "Entity Damaged"
 msgstr ""

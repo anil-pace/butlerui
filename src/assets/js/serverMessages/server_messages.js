@@ -257,6 +257,7 @@ var serverMessages = {
     "PtF003" : "Excess quantity",
     "PkF001" : "Issues with entity",
     "PkF005" : "Missing/Unscannable Box",
+    "PkF006" : "Entity Damaged",
     "PkB007" : "Disassociate Tote",
     "PkB008" : "Override Tote Required",
     "PkB009" : "Reprint",

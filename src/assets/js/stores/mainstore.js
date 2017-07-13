@@ -424,6 +424,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('irt_scan_enabled'))
             return _seatData.irt_scan_enabled;
     },
+    getExceptionType:function () {
+        if (_seatData.hasOwnProperty('exception_type'))
+            return _seatData.exception_type;
+    },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
         var orderDetails = _seatData['order_details'];
@@ -1952,6 +1956,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 break;
+
+            case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                data["GetExceptionType"] = this.getExceptionType();
+            break;    
             case appConstants.PRE_PUT_STAGE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();

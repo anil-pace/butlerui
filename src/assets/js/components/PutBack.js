@@ -230,26 +230,7 @@ var PutBack = React.createClass({
           <ExceptionHeader data={this.state.PutBackServerNavData} />
           <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
           <div className = "finish-damaged-barcode">
-          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM} />  
-          </div>
-          </div>
-          <div className = 'cancel-scan'>
-          <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-          </div>
-          </div>
-          );
-      else if(this.state.PutBackExceptionScreen == "damaged_confirm")
-        this._component = (
-          <div className='grid-container exception'>
-          <Exception data={this.state.PutBackExceptionData}/>
-          <div className="exception-right">
-          <div className="main-container exception2">
-          <div className = "kq-exception">
-          <div className="kq-header">{_("Please put unscannable entities in exception area.")}</div>
-          </div>
-          </div>
-          <div className = "finish-damaged-barcode">
-          <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
+          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_DAMAGED_ENTITY_DATA} />  
           </div>
           </div>
           <div className = 'cancel-scan'>
@@ -274,26 +255,7 @@ var PutBack = React.createClass({
                     <KQ scanDetails = {this.state.PutBackKQDetails} />
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM} />
-                  </div>
-                </div>
-                <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-                </div>
-              </div>
-            );
-          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
-            this._component = (
-              <div className='grid-container exception'>
-                <Exception data={this.state.PutBackExceptionData}/>
-                <div className="exception-right">
-                  <div className="main-container exception2">
-                    <div className = "kq-exception">
-                      <div className="kq-header">{_("Please put damaged entities in exception area.")}</div>
-                    </div>
-                  </div>
-                  <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />  
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
@@ -317,26 +279,7 @@ var PutBack = React.createClass({
           <KQ scanDetails = {this.state.PutBackKQDetails} />
           </div>
           <div className = "finish-damaged-barcode">
-          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM} />
-          </div>
-          </div>
-          <div className = 'cancel-scan'>
-          <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-          </div>
-          </div>
-          );
-      else if(this.state.PutBackExceptionScreen == "oversized_confirm")
-        this._component = (
-          <div className='grid-container exception'>
-          <Exception data={this.state.PutBackExceptionData}/>
-          <div className="exception-right">
-          <div className="main-container exception2">
-          <div className = "kq-exception">
-          <div className="kq-header">{_("Please put oversized entities in exception area.")}</div>
-          </div>
-          </div>
-          <div className = "finish-damaged-barcode">
-          <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />  
+          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />
           </div>
           </div>
           <div className = 'cancel-scan'>
@@ -387,26 +330,7 @@ var PutBack = React.createClass({
         <KQ scanDetails = {this.state.PutBackKQDetails} />
         </div>
         <div className = "finish-damaged-barcode">
-        <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY_1} />  
-        </div>
-        </div>
-        <div className = 'cancel-scan'>
-        <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-        </div>
-        </div>
-        );
-    else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
-      this._component = (
-        <div className='grid-container exception'>
-        <Exception data={this.state.PutBackExceptionData}/>
-        <div className="exception-right">
-        <div className="main-container exception2">
-        <div className = "kq-exception">
-        <div className="kq-header">{_("Please put extra entities in exception area.")}</div>
-        </div>
-        </div>
-        <div className = "finish-damaged-barcode">
-        <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />    
+        <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_EXTRA_ITEM} />  
         </div>
         </div>
         <div className = 'cancel-scan'>
@@ -415,6 +339,66 @@ var PutBack = React.createClass({
         </div>
         );
     break; 
+
+         case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+          var selected_screen;
+          var messageIRTenable,messageIRTdisable;
+          if(this.state.GetExceptionType==appConstants.PHYSICALLY_DAMAGED)
+          {
+              messageIRTenable=(<div className="gor-exceptionConfirm-text">{_("Please put damaged entities in IRT bin and scan the bin")}</div>);
+              messageIRTdisable=(<div className="gor-exceptionConfirm-text">{_("Please put damaged entities in exception area")}</div>);
+          }
+          else if(this.state.GetExceptionType==appConstants.EXTRA_ITEMS)
+          {
+              messageIRTenable=(<div className="gor-exceptionConfirm-text">{_("Please put extra entities in IRT bin and scan the bin")}</div>);
+              messageIRTdisable=(<div className="gor-exceptionConfirm-text">{_("Please put extra entities in exception area.")}</div>);
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_SCANNABLE)
+          {
+               messageIRTenable=(<div className="gor-exceptionConfirm-text">{_("Please put unscannable entities in IRT bin and scan the bin")}</div>);
+              messageIRTdisable=(<div className="gor-exceptionConfirm-text">{_("Please put unscannable entities in exception area")}</div>);
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_OVERSIZED)
+          {
+              messageIRTenable=(<div className="gor-exceptionConfirm-text">{_("Please put oversized entities in IRT bin and scan the bin")}</div>);
+              messageIRTdisable=(<div className="gor-exceptionConfirm-text">{_("Please put oversized entities in exception area")}</div>);
+          }
+
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  <div className="exception-right">
+                   <div className="gor-exception-align">
+                    {messageIRTdisable}
+                  <div className = "finish-damaged-barcode align-button">
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
+                  </div>
+                  </div>
+              </div>
+          );
+      }else
+      {
+         selected_screen=(
+  <div className="exception-right">
+                   <div className="gor-exception-align">
+                    {messageIRTenable}
+                  </div>
+              </div>
+          );
+      }
+            this._component = (
+              <div className='grid-container exception'>
+              <Modal />
+                <Exception data={this.state.PutBackExceptionData}/>
+                  {selected_screen}
+              <div className = 'cancel-scan'>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
+                </div>
+              </div>
+            );
+        break;
+
+
     case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
     this._navigation = '';
     this._component = (
@@ -432,6 +416,7 @@ var PutBack = React.createClass({
       </div>
       );
     break;
+
     case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
     this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
     

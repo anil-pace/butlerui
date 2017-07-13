@@ -83,6 +83,7 @@ function server_messages_list() {
     _("{0} unscannable entities recorded. WMS notified");
     _("{0} extra entities recorded in bin. WMS notified");
     _("{0} oversized entities recorded.WMS notified");
+    _("{0} Physically damaged entity recorded.WMS notified");
     _("Exception cancelled");
     _("Box with same serial number already exists in the warehouse");
     _("Entity already scanned.Waiting for PPTL press");
@@ -445,6 +446,14 @@ function server_messages_list() {
     _("Entity Damaged");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
+    _("Please put damaged entities in IRT bin and scan the bin");
+    _("Please put damaged entities in exception area");
+    _("Please put extra entities in IRT bin and scan the bin");
+    _("Please put extra entities in exception area");
+    _("Please put unscannable entities in IRT bin and scan the bin");
+    _("Please put unscannable entities in exception area");
+    _("Please put oversized entities in IRT bin and scan the bin");
+    _("Please put oversized entities in exception area");
     _("Entity Damaged");
     _("Warehouse Full Remove all entities from bin & press PPTL");
     _("Enter Quantity");

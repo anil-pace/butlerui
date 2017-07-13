@@ -55,20 +55,28 @@ switch (module) {
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
-                            case appConstants.SEND_KQ_QTY:
+                            case appConstants.FINISH_DAMAGED_ENTITY_DATA:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;    
+                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="finish_exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break; 
                             case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
+                            case appConstants.FINISH_EXCEPTION_EXTRA_ITEM:
                                   data["event_name"] = "put_back_exception";
-                                  data["event_data"]["action"] ="finish_exception";
+                                  data["event_data"]["action"] ="confirm_button_press";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
                                 break;
+
                               case appConstants.FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "put_back_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
@@ -88,15 +96,6 @@ switch (module) {
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen("damaged_confirm");
-                                break;
-                            case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                                break;
-                            case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen("oversized_confirm");
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:

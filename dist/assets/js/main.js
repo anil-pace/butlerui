@@ -38842,7 +38842,14 @@ switch (module) {
                                 data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
 
                                 ActionCreators.postDataToInterface(data);
-                                break;   
+                                break; 
+
+                             case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
+                                    data["event_name"] = "pick_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;      
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
@@ -41615,7 +41622,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                    React.createElement("div", {className: "gor-exception-align"}, 
                     React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
                   )
                   )
           );
@@ -46612,6 +46619,7 @@ var appConstants = {
 	SKIP_PRINTING:"SKIP_PRINTING",
 	DIS_ASSOCIATE_TOTE:"DIS_ASSOCIATE_TOTE",
 	OVERRIDE_TOTE:"OVERRIDE_TOTE",
+	PICK_FINISH_EXCEPTION_ENTITY:"PICK_FINISH_EXCEPTION_ENTITY",
 	PICK_BACK_EXCEPTION_REPRINT:"pick_back_reprint_required",
 	PICK_BACK_EXCEPTION_SKIP_PRINTING:"pick_back_skip_print",
 	PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:"pick_back_tote_deassociation",
@@ -46800,10 +46808,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
-	INTERFACE_IP : "https://192.168.3.106:5000"
-	// WEBSOCKET_IP : "wss://localhost/wss",
-	// INTERFACE_IP : "https://localhost"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 

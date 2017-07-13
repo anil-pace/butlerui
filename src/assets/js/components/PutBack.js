@@ -238,25 +238,6 @@ var PutBack = React.createClass({
           </div>
           </div>
           );
-      // else if(this.state.PutBackExceptionScreen == "damaged_confirm")raja
-      //   this._component = (
-      //     <div className='grid-container exception'>
-      //     <Exception data={this.state.PutBackExceptionData}/>
-      //     <div className="exception-right">
-      //     <div className="main-container exception2">
-      //     <div className = "kq-exception">
-      //     <div className="kq-header">{_("Please put unscannable entities in exception area.")}</div>
-      //     </div>
-      //     </div>
-      //     <div className = "finish-damaged-barcode">
-      //     <Button1 disabled = {false} text = {_("FINISH")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.SEND_KQ_QTY} />  
-      //     </div>
-      //     </div>
-      //     <div className = 'cancel-scan'>
-      //     <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-      //     </div>
-      //     </div>
-      //     );
       break; 
        case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
           this._navigation = '';

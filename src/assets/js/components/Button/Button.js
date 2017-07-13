@@ -97,15 +97,6 @@ switch (module) {
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                            // case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:raja
-                            //     ActionCreators.changePutBackExceptionScreen("damaged_confirm");
-                            //     break;
-                            // case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
-                            //     ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                            //     break;
-                            // case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:raja
-                            //     ActionCreators.changePutBackExceptionScreen("oversized_confirm");
-                            //     break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
                                 data["event_name"] = "confirm_close_tote";

@@ -253,7 +253,7 @@ function server_messages_list() {
     _("Clear All");
     _("Submit");
     _("Exceptions");
-
+    _("Next");
     _("Bin");
     _("Selected");
     _("Unselected");
@@ -265,7 +265,8 @@ function server_messages_list() {
     _("User Name");
     _("Password");
     _("View More");
-
+    _("Please put exception entities in exception area");
+    _("Please put exception entities in IRT bin and scan the bin");
     _("Product Information");
     _("Bin Info");
     _("Associate tote with bin");
@@ -435,9 +436,14 @@ function server_messages_list() {
     _("Place");
     _("Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining");
     _("Press PPTL to confirm no Items Remaining in Bin {0}");
-    _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
+    _("Entities cannot be accommodated!");
     _("Take Printout and Press PPTL");
     _("PPS is Closed");
+    _("Place box in MSU slot and confirm");
+    _("Wrong Undock");
+    _("Dock roll cage back to proceed the operation");
+    _("Excess quantity");
+    _("Entity Damaged");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
     _("Please put damaged entities in IRT bin and scan the bin");
@@ -448,5 +454,9 @@ function server_messages_list() {
     _("Please put unscannable entities in exception area");
     _("Please put oversized entities in IRT bin and scan the bin");
     _("Please put oversized entities in exception area");
+    _("Entity Damaged");
+    _("Warehouse Full Remove all entities from bin & press PPTL");
+    _("Enter Quantity");
+    _("Exception with entity reported");
 
 }

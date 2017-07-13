@@ -438,7 +438,7 @@ var PickFront = React.createClass({
                    <div className="gor-exception-align">
                     <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>     
                   <div className = "finish-damaged-barcode align-button">
-                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FINISH_EXCEPTION_ENTITY} />  
                   </div>
                   </div>
           );

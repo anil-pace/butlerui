@@ -1038,7 +1038,7 @@ msgstr "Excepción Terminada"
 msgid "PPS Mode"
 msgstr "Modo de PPS"
  
-msgid "Seat Type"
+msgid "Seat Type arsh"
 msgstr "Tipo de Asiento"
  
 msgid "Good Quantity Cannot be Equal to the Total Quantity"

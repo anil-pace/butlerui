@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-05 15:42+0530\n"
+"POT-Creation-Date: 2017-07-13 14:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1619,4 +1619,24 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:439
 msgid "PPS is Closed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:440
+msgid "Place box in MSU slot and confirm"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:441
+msgid "Wrong Undock"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:442
+msgid "Dock roll cage back to proceed the operation"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:443
+msgid "Excess quantity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:444
+msgid "Entity Damaged"
 msgstr ""

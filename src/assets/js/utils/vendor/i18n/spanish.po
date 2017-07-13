@@ -1198,3 +1198,18 @@ msgstr	"Producto_sku
 
 msgid "{0} number :"	
 msgstr "{0} numero  :"
+
+msgid "Place box in MSU slot and confirm"
+msgstr "Coloque la caja en la ranura MSU y confirme"
+
+msgid "Wrong Undock"
+msgstr "Undock equivocado"
+
+msgid "Dock roll cage back to proceed the operation"
+msgstr "Retirar la jaula de rodillos para continuar la operación"
+
+msgid "Excess quantity"
+msgstr "Cantidad excesiva"
+
+msgid "Entity Damaged"
+msgstr "Entidad dañada"

@@ -440,5 +440,13 @@ function server_messages_list() {
     _("PPS is Closed");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
+    _("Please put damaged entities in IRT bin and scan the bin");
+    _("Please put damaged entities in exception area");
+    _("Please put extra entities in IRT bin and scan the bin");
+    _("Please put extra entities in exception area");
+    _("Please put unscannable entities in IRT bin and scan the bin");
+    _("Please put unscannable entities in exception area");
+    _("Please put oversized entities in IRT bin and scan the bin");
+    _("Please put oversized entities in exception area");
 
 }

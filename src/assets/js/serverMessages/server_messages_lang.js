@@ -83,6 +83,7 @@ function server_messages_list() {
     _("{0} unscannable entities recorded. WMS notified");
     _("{0} extra entities recorded in bin. WMS notified");
     _("{0} oversized entities recorded.WMS notified");
+    _("{0} Physically damaged entity recorded.WMS notified");
     _("Exception cancelled");
     _("Box with same serial number already exists in the warehouse");
     _("Entity already scanned.Waiting for PPTL press");

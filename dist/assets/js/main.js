@@ -48096,6 +48096,7 @@ var serverMessages = {
     "PtB.I.016" : "Invalid entity in tote recorded",
     "PtB.I.017" : "PPS mode change requested:scan not allowed",
     "PtB.I.018" : "PPS mode change requested:auto staging all bins",
+    "PtB.I.020" : "{0} Physically damaged entity recorded.WMS notified",
     "PtB.W.001" : "Box with same serial number already exists in the warehouse",
     "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
     "PtB.W.003" : "No bins available to stage",

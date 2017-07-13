@@ -180,22 +180,37 @@ var PutFront = React.createClass({
         break;
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-        var _button;
-        _button = (<div className = "staging-action">                          
-          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.WAREHOUSEFULL_EXCEPTION} color={"orange"} />
-          </div>);
+        var selected_screen;
+        
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          if(!this.state.GetIRTScanStatus)
+          {
+          selected_screen= (
+            <div>
+           <div className = "kq-exception">
+          <div className="gor-info-text">{_("Empty the rollcage to undock")}</div>
+          </div>
+          <div className = "staging-action">                          
+          <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.WAREHOUSEFULL_EXCEPTION} color={"orange"} />
+          </div>
+          </div>);
+         }
+         else
+         {
+        selected_screen=  (
+        <div className = "kq-exception">
+          <div className="gor-info-text">{_("Please put remaining entities in IRT bin and scan the bin")}</div>
+          </div>
+          );
+         }
         this._component = (
           <div className='grid-container'>
           {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
-          <div className = "kq-exception">
-          <div className="gor-info-text">{_("Empty the rollcage to undock")}</div>
-          </div>
-          {_button}
+        {selected_screen}
           </div>
           );
         break;
-
+        
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -219,6 +234,8 @@ var PutFront = React.createClass({
       break;
 
         case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
+
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
           binComponent = (<BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>);
@@ -384,23 +401,37 @@ var PutFront = React.createClass({
               </div>
             );
         break; 
-
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-            this._component = (
-              <div className='grid-container exception'>
-              <Modal />
-                <Exception data={this.state.PutFrontExceptionData}/>
-                <div className="exception-right">
+          var selected_screen;
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  <div className="exception-right">
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
+                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>
                    
                   <div className = "finish-damaged-barcode align-button">
                     <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
                   </div>
                   </div>
-             
-                
               </div>
+          );
+      }else
+      {
+         selected_screen=(
+  <div className="exception-right">
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
+                  </div>
+              </div>
+          );
+      }
+          
+            this._component = (
+              <div className='grid-container exception'>
+              <Modal />
+                <Exception data={this.state.PutFrontExceptionData}/>
+                  {selected_screen}
               <div className = 'cancel-scan'>
                    <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
                 </div>
@@ -490,7 +521,7 @@ var PutFront = React.createClass({
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (<div className = "staging-action">                          
-            <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
+            <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Next")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
             </div>);
           this._component = (
             <div className='grid-container exception'>

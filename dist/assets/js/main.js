@@ -37665,20 +37665,31 @@ var Bin = React.createClass({displayName: "Bin",
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
+        }else if (compData.selected_state && (this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL ||this.props.screenId === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)) {
+           var pptl;
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
                 tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
+            if(this.props.screenId===appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+            {
+            pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
+            }
+            else
+            {
+             pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
+            }
+
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     tote, 
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                    pptl
                 )
             );
         }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {
@@ -44736,22 +44747,37 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-        var _button;
-        _button = (React.createElement("div", {className: "staging-action"}, 
-          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
-          ));
+        var selected_screen;
+        
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          if(!this.state.GetIRTScanStatus)
+          {
+          selected_screen= (
+            React.createElement("div", null, 
+           React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
+          ), 
+          React.createElement("div", {className: "staging-action"}, 
+          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
+          )
+          ));
+         }
+         else
+         {
+        selected_screen=  (
+        React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "gor-info-text"}, _("Please put remaining entities in IRT bin and scan the bin"))
+          )
+          );
+         }
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
-          ), 
-          _button
+        selected_screen
           )
           );
         break;
-
+        
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -44775,6 +44801,8 @@ var PutFront = React.createClass({displayName: "PutFront",
       break;
 
         case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
+
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
           binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
@@ -44940,23 +44968,37 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
         break; 
-
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
+          var selected_screen;
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
                    
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
                   )
-             
-                
-              ), 
+              )
+          );
+      }else
+      {
+         selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
+                  )
+              )
+          );
+      }
+          
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                  selected_screen, 
               React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
@@ -45046,7 +45088,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Next"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
             ));
           this._component = (
             React.createElement("div", {className: "grid-container exception"}, 
@@ -46259,6 +46301,14 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_warehouse_full_irt_scan",
+            "code": "PtF.H.021",
+            "message": "Scan IRT Bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "pickFront": [
@@ -46617,6 +46667,7 @@ var appConstants = {
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
+	PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:"put_front_warehouse_full_irt_scan",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
 	UNMARKED_DAMAGED:"UNMARKED_DAMAGED",
 	EDIT_DETAILS:"EDIT_DETAILS",
@@ -46739,7 +46790,6 @@ module.exports = appConstants;
 var configConstants = {
 	WEBSOCKET_IP : "wss://localhost/wss",
 	INTERFACE_IP : "https://localhost"
-
 };
 module.exports = configConstants;
 
@@ -47978,7 +48028,9 @@ var serverMessages = {
     "PtF.H.017" : "Wrong Undock",
     "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
     "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
-    "PtF.E.022" : "Entities cannot be accommodated! Remove all entities from bin and press PPTL.",
+    "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
+    "PtF.H.021" : "Scan IRT Bin",
+    "PtF.E.022" : "Entities cannot be accommodated!",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -48066,6 +48118,7 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.011": "Wrong Scan. IRT bin scan expected",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
@@ -50034,6 +50087,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[3];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
                     _NavData = navConfig.putFront[7];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+                    _NavData = navConfig.putFront[8];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
                     _NavData = navConfig.putFront[4];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
@@ -50232,6 +50287,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBoxDetails: function () {
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
+    },
+    getIRTScanStatus: function () {
+        if (_seatData.hasOwnProperty('irt_scan_enabled'))
+            return _seatData.irt_scan_enabled;
     },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
@@ -51889,6 +51948,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
             case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+            case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -51943,6 +52003,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
 
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
@@ -51953,6 +52014,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutFrontScreenId"] = this.getScreenId();

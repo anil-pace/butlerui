@@ -331,13 +331,13 @@ var PutFront = React.createClass({
 
                     <div className="gor-NI-wrapper">
                     <hr/>
-                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType = {appConstants.GOOD_QUANTITY}/>
                     </div>
               
                      <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType = {appConstants.MISSING_QUANTITY} />
                     </div>
 
@@ -345,7 +345,7 @@ var PutFront = React.createClass({
 
                     <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType = {appConstants.DAMAGED_QUANTITY}/>
                    <hr/>
                     </div>

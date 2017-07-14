@@ -206,7 +206,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
                 else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
-                    _NavData = navConfig.putBack[3];
+                    _NavData = navConfig.putBack[2];
                 else
                     _NavData = navConfig.putBack[1];
                 break;
@@ -1886,11 +1886,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["ToteId"] = this.getToteId();
                 break;
              case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
-              data["PutBackNavData"] = this.getNavData();
+                data["PutBackNavData"] = this.getNavData();
                 data["PutBackServerNavData"] = this.getServerNavData();
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackBinData"] = this.getBinData();
                 data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNotification"] = this.getNotificationData();
              break;       
 
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:

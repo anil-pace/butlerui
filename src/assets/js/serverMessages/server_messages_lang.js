@@ -458,5 +458,6 @@ function server_messages_list() {
     _("Warehouse Full Remove all entities from bin & press PPTL");
     _("Enter Quantity");
     _("Exception with entity reported");
+    _("Put entities in IRT and Scan IRT Bin");
 
 }

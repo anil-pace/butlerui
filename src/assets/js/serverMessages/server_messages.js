@@ -10,6 +10,7 @@ var serverMessages = {
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
     "PtB.H.010" : "Scan Excess Entity Quantity",
     "PtB.H.011" : "Please put entity in exception area and confirm",
+    "PtB.H.015" : "Put entities in IRT and Scan IRT Bin",
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",
     "PtB.E.003" : "Close current tote first",

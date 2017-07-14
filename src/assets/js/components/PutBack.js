@@ -134,7 +134,7 @@ var PutBack = React.createClass({
       }
       break;
 
-//--------
+
       case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
       this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
       this._component = (
@@ -145,7 +145,7 @@ var PutBack = React.createClass({
           </div>
           );         
       break;
-//--------
+
       case appConstants.PUT_BACK_INVOICE:
       var invoiceStringArg = [];
       invoiceStringArg[0] = this.state.InvoiceType;

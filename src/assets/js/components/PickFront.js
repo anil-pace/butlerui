@@ -331,25 +331,25 @@ var PickFront = React.createClass({
 
                     <div className="gor-NI-wrapper">
                     <hr/>
-                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType = {appConstants.GOOD_QUANTITY}/>
                     </div>
               
                      <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType = {appConstants.MISSING_QUANTITY} />
                     </div>
 
                     <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
                   <NumericIndicator  execType = {appConstants.UNSCANNABLE_QUANTITY}/>
                     </div>
 
                     <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType = {appConstants.DAMAGED_QUANTITY}/>
                    <hr/>
                     </div>
@@ -455,10 +455,10 @@ var PickFront = React.createClass({
               <div className='grid-container audit-reconcilation'>
                   <div className="row scannerHeader">
                     <div className="col-md-6">
-                      <div className="ppsMode"> PPS Mode : {this.state.PickFrontPpsMode.toUpperCase()} </div>
+                      <div className="ppsMode"> {_("PPS Mode")} : {this.state.PickFrontPpsMode.toUpperCase()} </div>
                     </div>
                     <div className="col-md-6">
-                      <div className="seatType"> Seat Type : {this.state.PickFrontSeatType.toUpperCase()}</div>
+                      <div className="seatType"> {_("Seat Type")} : {this.state.PickFrontSeatType.toUpperCase()}</div>
                     </div>
                   </div>
                   <TabularData data = {this.state.utility}/>

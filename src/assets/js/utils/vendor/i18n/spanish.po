@@ -1213,3 +1213,27 @@ msgstr "Cantidad excesiva"
 
 msgid "Entity Damaged"
 msgstr "Entidad dañada"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:445
+msgid "Issues with entity"
+msgstr "Problemas con la entidad"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:446
+msgid "Validate and Confirm"
+msgstr "Validar y confirmar"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:447
+msgid "Enter Quantity"
+msgstr "Introducir cantidad"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:448
+msgid "Are you sure you want to cancel the exception?"
+msgstr "¿Seguro que desea cancelar la excepción?"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:449
+msgid "Yes"
+msgstr "Sí"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:450
+msgid "No"
+msgstr ""

@@ -37174,10 +37174,10 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.AuditPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.AuditSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.AuditSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -40746,10 +40746,10 @@ var PickBack = React.createClass({displayName: "PickBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickBackPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PickBackPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickBackSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PickBackSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -41134,19 +41134,19 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                     ), 
               
                      React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                     ), 
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ), 
 
@@ -41258,10 +41258,10 @@ var PickFront = React.createClass({displayName: "PickFront",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickFrontSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PickFrontSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -41782,10 +41782,10 @@ var PrePut = React.createClass({displayName: "PrePut",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PrePutPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PrePutPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PrePutSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PrePutSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -44105,10 +44105,10 @@ var PutBack = React.createClass({displayName: "PutBack",
       React.createElement("div", {className: "grid-container audit-reconcilation"}, 
       React.createElement("div", {className: "row scannerHeader"}, 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
+      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutBackPpsMode.toUpperCase(), " ")
       ), 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
+      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutBackSeatType.toUpperCase())
       )
       ), 
       React.createElement(TabularData, {data: this.state.utility}), 
@@ -44654,10 +44654,10 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "grid-container audit-reconcilation"}, 
             React.createElement("div", {className: "row scannerHeader"}, 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
+            React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
             ), 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
+            React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutFrontSeatType.toUpperCase())
             )
             ), 
             React.createElement(TabularData, {data: this.state.utility}), 
@@ -46284,8 +46284,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "wss://192.168.9.164/wss",
+	INTERFACE_IP : "https://192.168.9.164"
 
 };
 module.exports = configConstants;
@@ -47977,7 +47977,7 @@ var spanish = {
 	"Place extra entity in Exception area.": "Ubique los art\u00edculos extra en la zona de Excepci\u00f3n.",
 	"Place the tote back in bin {0} and press pptl": "Coloque el bolso  nuevamente en el contenedor  {0} y pulse ppt",
 	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2",
-	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2",
+	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2}",
 	"Please Scan tote which has excess item": "Por favor escanee el bolso que haya sobrepasado el l\u00edmite de art\u00edculo",
 	"Please Select The Bin With Excess Entity": "Por favor, Seleccione el Recipiente con Art\u00edculos Sobrantes",
 	"Please complete pickback for pending bin and then proceed": "Por favor complete pickback para el recipiente pendiente y luego proceda",
@@ -50887,7 +50887,7 @@ _getExcessItemsData: function() {
     data["header"] = [];
     data["footer"] = [];
     data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
-    data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
+    data["header"].push(new this.tableCol(_("Excess quantity"), "header", false, "small", false, true, true, false));
     data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
     data["tableRows"] = [];
     data["image_url"] = null;

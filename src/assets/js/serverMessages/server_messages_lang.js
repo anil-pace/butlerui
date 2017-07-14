@@ -442,4 +442,10 @@ function server_messages_list() {
     _("Dock roll cage back to proceed the operation");
     _("Excess quantity");
     _("Entity Damaged");
+    _("Issues with entity");
+    _("Validate and Confirm");
+    _("Enter Quantity");
+    _("Are you sure you want to cancel the exception?");
+    _("Yes");
+    _("No")
 }

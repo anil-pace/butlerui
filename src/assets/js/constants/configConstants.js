@@ -3,4 +3,3 @@ var configConstants = {
 	INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
-	

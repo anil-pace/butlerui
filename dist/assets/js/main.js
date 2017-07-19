@@ -44980,7 +44980,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             {
               UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -46232,7 +46232,7 @@ var navData = {
         },{
             "screen_id": "put_front_scan_rack_for_unmarked_entity",
             "code": "Common.001",
-            "message": "Scan slot",
+            "message": "Scan Slot",
             "showImage": true,
             "level": 2,
             "type": 'passive'
@@ -48432,7 +48432,7 @@ var spanish = {
 	"Place container in MSU slot and confirm": "Coloque el contenedor en la ranura de  MSU y confirma",
 	"Place extra entity in Exception area.": "Ubique los art\u00edculos extra en la zona de Excepci\u00f3n.",
 	"Place the tote back in bin {0} and press pptl": "Coloque el bolso  nuevamente en el contenedor  {0} y pulse ppt",
-	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2",
+	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2}",
 	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2}",
 	"Please Scan tote which has excess item": "Por favor escanee el bolso que haya sobrepasado el l\u00edmite de art\u00edculo",
 	"Please Select The Bin With Excess Entity": "Por favor, Seleccione el Recipiente con Art\u00edculos Sobrantes",

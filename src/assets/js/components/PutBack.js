@@ -133,6 +133,19 @@ var PutBack = React.createClass({
         this._component = this.getExceptionComponent();
       }
       break;
+
+
+      case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
+      this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+      this._component = (
+          <div className='grid-container'>
+          <div className='main-container'>
+            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+            </div>
+          </div>
+          );         
+      break;
+
       case appConstants.PUT_BACK_INVOICE:
       var invoiceStringArg = [];
       invoiceStringArg[0] = this.state.InvoiceType;

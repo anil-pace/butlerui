@@ -44312,6 +44312,19 @@ var PutBack = React.createClass({displayName: "PutBack",
         this._component = this.getExceptionComponent();
       }
       break;
+
+
+      case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
+      this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
+      this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+            )
+          )
+          );         
+      break;
+
       case appConstants.PUT_BACK_INVOICE:
       var invoiceStringArg = [];
       invoiceStringArg[0] = this.state.InvoiceType;
@@ -46232,6 +46245,14 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],[
+         {
+            "screen_id": "put_back_warehouse_full_irt_scan",
+            "code": "PtF.H.015",
+            "message": "Put item into IRT bin and scan the bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "putFront": [
@@ -46624,6 +46645,7 @@ var appConstants = {
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
+	PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:"put_back_warehouse_full_irt_scan",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
 	PHYSICALLY_DAMAGED:"physically_damaged",
 	EXTRA_ITEMS:"extra_items",
@@ -48007,6 +48029,7 @@ var serverMessages = {
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
     "PtB.H.010" : "Scan Excess Entity Quantity",
     "PtB.H.011" : "Please put entity in exception area and confirm",
+    "PtB.H.015" : "Please put entities in IRT and Scan IRT Bin",
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",
     "PtB.E.003" : "Close current tote first",
@@ -48140,6 +48163,7 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.010": "Wrong Scan. Unrecognized barcode.",
     "Common.011": "Wrong Scan. IRT bin scan expected",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
@@ -50095,6 +50119,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
+                else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
+                    _NavData = navConfig.putBack[2];
                 else
                     _NavData = navConfig.putBack[1];
                 break;
@@ -51773,6 +51799,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["InvoiceType"] = this.getInvoiceType();
                 data["ToteId"] = this.getToteId();
                 break;
+             case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNotification"] = this.getNotificationData();
+             break;       
+
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackNavData"] = this.getNavData();

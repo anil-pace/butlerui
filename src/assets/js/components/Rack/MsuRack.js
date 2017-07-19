@@ -195,8 +195,13 @@ getOffset( el ) {
                 <div className="drawRack" id="rack" style={this.props.type=="small" ? drawRackStyle:{} }>
 					{eachRow.reverse()}
                     <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
-                    
+               
 				</div>
+                <div className="specialContainer">
+                <div className="orientation"></div>   
+                <div className="stackSize"></div> 
+                 <div className="fragile"></div> 
+                 </div>
                 {drawerCompartment}
                 </div>
 			);

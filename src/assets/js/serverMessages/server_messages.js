@@ -248,7 +248,7 @@ var serverMessages = {
     "PtF.I.005" : "Space unavailable recorded.",
     "PtF.I.006" : "Cancel scan successful",
     "PtF.I.007" : "Exception entry successful",   
-    "PtF.I.009" : "Entity entry successful"
+    "PtF.I.009" : "Entity entry successful",
     "PtF.I.010" : "Bin scan successful",
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",

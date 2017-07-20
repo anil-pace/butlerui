@@ -40923,624 +40923,780 @@ var OrderDetails = require('./OrderDetails/OrderDetails.js');
 
 var checkListOpen = false;
 
-function getStateData(){
-      var screenData = mainstore.getScreenData();
-      var splitPPSData ={
-        groupInfo : mainstore._getBinMapDetails()
+function getStateData() {
+    var screenData = mainstore.getScreenData();
+    var splitPPSData = {
+        groupInfo: mainstore._getBinMapDetails()
     }
-      return Object.assign({},screenData,splitPPSData);
+    return Object.assign({}, screenData, splitPPSData);
 };
 
 var PickFront = React.createClass({displayName: "PickFront",
-  _notification:'',
-  _component:'',
-  _navigation:'',
-  getInitialState: function(){
-    return getStateData();
-  },
-  componentWillMount: function(){   
-    if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
-        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }
-    mainstore.addChangeListener(this.onChange);
-  },
-  componentWillUnmount: function(){
-    mainstore.removeChangeListener(this.onChange);
-  },
-  onChange: function(){ 
-	this.setState(getStateData());
-   if(this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS){
-        this.showModal(this.state.PickFrontChecklistDetails,this.state.PickFrontChecklistIndex);
-    }
-  },
-  getNotificationComponent:function(){
-    if(this.state.PickFrontNotification != undefined)
-      this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
-  },
-  showModal:function(data,index,manual){
-    if(manual==true)
-      checkListOpen = false;
-    var data ={
-      'checklist_data' : data,
-      "checklist_index" : index,
-      "product_details" : this.state.PickFrontProductDetails
-    };
-    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
-    if(this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false){
-      checkListOpen = true;
-      setTimeout((function(){CommonActions.showModal({
-              data:data,
-              type:'pick_checklist'
-      });
-      $('.modal').modal();
-      //$('.modal').data('bs.modal').escape(); // reset keyboard
-      $('.modal').data('bs.modal').options.backdrop = 'static';
-      return false;
-      }),0)
+    _notification: '',
+    _component: '',
+    _navigation: '',
+    getInitialState: function () {
+        return getStateData();
+    },
+    componentWillMount: function () {
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+            this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
+        }
+        mainstore.addChangeListener(this.onChange);
+    },
+    componentWillUnmount: function () {
+        mainstore.removeChangeListener(this.onChange);
+    },
+    onChange: function () {
+        this.setState(getStateData());
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+            this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
+        }
+    },
+    getNotificationComponent: function () {
+        if (this.state.PickFrontNotification != undefined)
+            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, 
+                                               navMessagesJson: this.props.navMessagesJson})
+        else
+            this._notification = "";
+    },
+    showModal: function (data, index, manual) {
+        if (manual == true)
+            checkListOpen = false;
+        var data = {
+            'checklist_data': data,
+            "checklist_index": index,
+            "product_details": this.state.PickFrontProductDetails
+        };
+        console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
+        if (this.state.PickFrontChecklistOverlayStatus === true && checkListOpen == false) {
+            checkListOpen = true;
+            setTimeout((function () {
+                CommonActions.showModal({
+                    data: data,
+                    type: 'pick_checklist'
+                });
+                $('.modal').modal();
+                //$('.modal').data('bs.modal').escape(); // reset keyboard
+                $('.modal').data('bs.modal').options.backdrop = 'static';
+                return false;
+            }), 0)
 
-      
 
-    }
-    else if(this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) { 
-      setTimeout((function (){
-          $( ".modal" ).modal('hide');
-          
-            $('.modal').data('bs.modal').escape(); // reset keyboard
-            $('.modal').data('bs.modal').options.backdrop = true;
-            $('button.close', $('.modal')).show();
-          
-      }), 0)
-      checkListOpen = false;
-   
-    }
-    
+        }
+        else if (this.state.PickFrontChecklistOverlayStatus === false && checkListOpen == true) {
+            setTimeout((function () {
+                $(".modal").modal('hide');
 
-  },
-  getExceptionComponent:function(){
-      var _rightComponent = '';
-      this._navigation = '';
-      return (
-              React.createElement("div", {className: "grid-container exception"}, 
+                $('.modal').data('bs.modal').escape(); // reset keyboard
+                $('.modal').data('bs.modal').options.backdrop = true;
+                $('button.close', $('.modal')).show();
+
+            }), 0)
+            checkListOpen = false;
+
+        }
+
+
+    },
+    getExceptionComponent: function () {
+        var _rightComponent = '';
+        this._navigation = '';
+        return (
+            React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickFrontExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
+                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
+                             action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
-              )
-            );
-  },
-  getScreenComponent : function(screen_id){
-    switch(screen_id){
-     
-      case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-       if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
-                 )
-              )
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-      case appConstants.PICK_FRONT_LOCATION_CONFIRM:
-      case appConstants.PICK_FRONT_LOCATION_SCAN:
-         var locationBtnEnable = this.state.PickFrontLocationButtonEnable ? false : true;
-        var locationButton = (React.createElement(Button1, {disabled: locationBtnEnable, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_LOCATION, color: "orange"}));
-         if(this.state.PickFrontExceptionStatus == false){
-        this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails})
-                 ), 
-                 locationButton
-              )
-            );
-      }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+            )
+        );
+    },
+    getScreenComponent: function (screen_id) {
+        switch (screen_id) {
 
-      case appConstants.PICK_FRONT_ITEM_SCAN:
-       if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails}), 
-                     React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+            case appConstants.PICK_FRONT_WAITING_FOR_MSU:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Spinner, null)
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_LOCATION_CONFIRM:
+            case appConstants.PICK_FRONT_LOCATION_SCAN:
+                var locationBtnEnable = this.state.PickFrontLocationButtonEnable ? false : true;
+                var locationButton = (
+                    React.createElement(Button1, {disabled: locationBtnEnable, text: _("Confirm"), module: appConstants.PICK_FRONT, 
+                             action: appConstants.CONFIRM_LOCATION, color: "orange"}));
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails})
+                            ), 
+                            locationButton
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+            case appConstants.PICK_FRONT_ITEM_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails}), 
+                                React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
 
 
-       case appConstants.PICK_FRONT_CONTAINER_SCAN:
-        if(this.state.PickFrontExceptionStatus == false){
-           this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
-                    React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+            case appConstants.PICK_FRONT_CONTAINER_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
+                                React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
 
-      case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
-        var cancelScanFlag = this.state.PickFrontCancelScan;
-         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
-        if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
-        var binComponent="";
-        if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
-                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                            ))
-          }else{
-            binComponent = (React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                ));
-          }
+            case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
+                                            action: appConstants.BIN_FULL, color: "black"}) );
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                      screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
+                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
+                                              itemUid: this.state.PickFrontItemUid})
+                        ))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
+                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
+                                     itemUid: this.state.PickFrontItemUid})
+                        ));
+                    }
 
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-                       
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
 
-               this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
-                React.createElement("div", {className: "actions"}, 
-                   React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), 
-                   editButton, 
-                   (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''
-                )
-              
-              )
-            );
-        }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-                  
-      case appConstants.PICK_FRONT_PPTL_PRESS:
-         var cancelScanFlag = this.state.PickFrontCancelScan;
-         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
-         var cancelButton;
-         var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
-         if(this.state.PickFrontExceptionStatus == false){
-          
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        if(!cancelScanDisabled){
-          cancelButton = (React.createElement("div", null, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
-         }
-         else{
-          cancelButton = (React.createElement("div", null));
-         }
-         var binComponent ="";
-          if (this.state.OrigBinUse){
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
 
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS, seatType: this.state.SeatType}))
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                ))
-          }
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-               
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
-                React.createElement("div", {className: "actions"}, 
-                  cancelButton, 
-                   (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full")? BinFull:''
-                  
-                )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-      case appConstants.PICK_FRONT_NO_FREE_BIN:
-         if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-         this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Spinner, null)
-                 )
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+                                React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
+                                         color: "black"}), 
+                                editButton, 
+                                (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
+                            )
+
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+            case appConstants.PICK_FRONT_PPTL_PRESS:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
+                var cancelButton;
+                var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
+                                        action: appConstants.BIN_FULL, color: "black"}) );
+                if (this.state.PickFrontExceptionStatus == false) {
+
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    if (!cancelScanDisabled) {
+                        cancelButton = (
+                            React.createElement("div", null, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, 
+                                           action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
+                    }
+                    else {
+                        cancelButton = (React.createElement("div", null));
+                    }
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS, 
+                                                  seatType: this.state.SeatType}))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                        ))
+                    }
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+                                cancelButton, 
+                                (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
+
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_NO_FREE_BIN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Spinner, null)
+                            )
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
-          var _button;
-          _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, color: "orange"})
-                    ));
+                var _button;
+                if(!this.state.GetIRTScanStatus)
+          {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
+                             color: "orange"})
+                ));
 
-          this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-                      React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height"}), 
-                      _button
+          }
+      else
+      {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Next"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
+                             color: "orange"})
+                ));
+      }
+
+                
+
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement("div", {className: "kq-exception"}, 
+                                    React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height"}), 
+                                    _button
+                                )
+                            )
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
                     )
-                  )
-                ), 
-                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-          );      
-        break; 
+                );
+                break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-          var buttonActivateFlag=mainstore.getExeptionQuanity();
-           this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
+                var buttonActivateFlag = mainstore.getExeptionQuanity();
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
 
-                  React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
+                            React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-                    React.createElement("div", {className: "gor-NI-wrapper"}, 
-                    React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
-                    ), 
-              
-                     React.createElement("div", {className: "gor-NI-wrapper"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
-                    ), 
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
+                                ), 
 
-                    React.createElement("div", {className: "gor-NI-wrapper"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
-                    ), 
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
+                                ), 
 
-                    React.createElement("div", {className: "gor-NI-wrapper"}, 
-                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
-                  React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
-                   React.createElement("hr", null)
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
+                                ), 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
+                                    React.createElement("hr", null)
+                                )
+
+                            ), 
+                            React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", 
+                                         module: appConstants.PICK_FRONT, 
+                                         action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+
+                            )
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
                     )
+                );
 
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode padding"}, 
-                    React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-              
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-            );
-      
-        break; 
+                break;
 
-        case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
+            case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+            var selected_screen;
+          if(!this.state.GetIRTScanStatus)
+          {
+                  selected_screen=(
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
-                   
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
                   )
                   )
-             
-                
-              ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-            );
-        break;    
-        case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
-          this._navigation = '';
-          if(this.state.PickFrontExceptionScreen == "box_serial"){
-          this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container"}, 
-                     React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
-                      React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
-                    ), 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")), 
-                     React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, type: appConstants.UNSCANNABLE, action: appConstants.UNSCANNABLE})
-                 )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
+          );
+              }
+              else{
+                selected_screen=(
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
                   )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          }else if(this.state.PickFrontExceptionScreen == "confirm_from_user"){
-              this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, "Are You sure Given Boxes are not present in Slot ? ")
+          );
+              }
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                        selected_screen
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
                     )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.SEND_MISSING_BOX_EXCEPTION})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-           }
-          break;
+                );
+                break;
+            case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
+                this._navigation = '';
+                if (this.state.PickFrontExceptionScreen == "box_serial") {
+                    this._component = (
+                        React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                            React.createElement("div", {className: "exception-right"}, 
+                                React.createElement("div", {className: "main-container"}, 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
+                                        React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
+                                    ), 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")), 
+                                        React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, 
+                                                            type: appConstants.UNSCANNABLE, 
+                                                            action: appConstants.UNSCANNABLE})
+                                    )
+                                ), 
+                                React.createElement("div", {className: "finish-damaged-barcode"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", 
+                                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
+                                )
+                            ), 
+                            React.createElement("div", {className: "cancel-scan"}, 
+                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
+                                         action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                            )
+                        )
+                    );
+                } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
+                    this._component = (
+                        React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                            React.createElement("div", {className: "exception-right"}, 
+                                React.createElement("div", {className: "main-container exception2"}, 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {
+                                            className: "kq-header"}, "Are You sure Given Boxes are not present in Slot ? ")
+                                    )
+                                ), 
+                                React.createElement("div", {className: "finish-damaged-barcode"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", 
+                                             module: appConstants.PICK_FRONT, 
+                                             action: appConstants.SEND_MISSING_BOX_EXCEPTION})
+                                )
+                            ), 
+                            React.createElement("div", {className: "cancel-scan"}, 
+                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
+                                         action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                            )
+                        )
+                    );
+                }
+                break;
 
-      case appConstants.PPTL_MANAGEMENT:
-      case appConstants.SCANNER_MANAGEMENT:
-          this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
-          var _button;
-          if(this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-          _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
-                          React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
-                      ))
-          }
-          else{
-            _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
-          }
-          this._component = (
-              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
-                  React.createElement("div", {className: "row scannerHeader"}, 
-                    React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
-                    ), 
-                    React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickFrontSeatType.toUpperCase())
+            case appConstants.PPTL_MANAGEMENT:
+            case appConstants.SCANNER_MANAGEMENT:
+                this._navigation = (
+                    React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, 
+                                navMessagesJson: this.props.navMessagesJson}))
+                var _button;
+                if (this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT) {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                 status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                        React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                 status: true, action: appConstants.ADD_SCANNER, color: "orange"})
+                    ))
+                }
+                else {
+                    _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), 
+                                                                        module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                                                        status: true, action: appConstants.CANCEL_PPTL, 
+                                                                        color: "black"})))
+                }
+                this._component = (
+                    React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                        React.createElement("div", {className: "row scannerHeader"}, 
+                            React.createElement("div", {className: "col-md-6"}, 
+                                React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                            ), 
+                            React.createElement("div", {className: "col-md-6"}, 
+                                React.createElement("div", {className: "seatType"}, " Seat Type" + ' ' +
+                                    ": ", this.state.PickFrontSeatType.toUpperCase())
+                            )
+                        ), 
+                        React.createElement(TabularData, {data: this.state.utility}), 
+                        _button, 
+                        React.createElement(Modal, null)
                     )
-                  ), 
-                  React.createElement(TabularData, {data: this.state.utility}), 
-                  _button, 
-                  React.createElement(Modal, null)
-              )
-            );
-        break;  
+                );
+                break;
 
-        case appConstants.PICK_FRONT_PACKING_BOX:
-         if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        
-          var binComponent ="";
-          if (this.state.OrigBinUse){
+            case appConstants.PICK_FRONT_PACKING_BOX:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
 
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PACKING_BOX, seatType: this.state.SeatType}))
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PACKING_BOX})
-                ))
-          }
-        this._component = (
-              
-              React.createElement("div", {className: "grid-container"}, 
-              React.createElement(Modal, null), 
-                 React.createElement("div", {className: "main-container"}, 
-                    binComponent, 
-                     
-                     React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
-                 )
-                 
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
-        case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
-          if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-         var _button = (React.createElement("div", {className: "staging-action"}, 
-                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PICK_FRONT, status: true, action: appConstants.CANCEL_BOX_FULL, color: "black"}), 
-                          React.createElement(Button1, {disabled: false, text: _("Box Full"), module: appConstants.PICK_FRONT, status: true, action: appConstants.BOX_FULL, color: "black"})
-                      ));
-        this._component = (
-              
-              React.createElement("div", {className: "grid-container"}, 
-              React.createElement(Modal, null), 
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
 
-                 React.createElement("div", {className: "main-container"}, 
-                    React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PickFrontRackDetails}), 
-                     React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
-                     React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
-                 )
-                 
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
-        case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
-           if(this.state.PickFrontExceptionStatus == false){
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        var BinFull = ( React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, action: appConstants.BIN_FULL, color: "black"}) );
-        var binComponent="";
-        if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
-                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
-                            
-                            ))
-          }else{
-            binComponent = (React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
-                  React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, productDetails: this.state.PickFrontProductDetails, itemUid: this.state.PickFrontItemUid})
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PACKING_BOX, 
+                                                  seatType: this.state.SeatType}))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: appConstants.PICK_FRONT_PACKING_BOX})
+                        ))
+                    }
+                    this._component = (
 
-                ));
-          }
-        var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus,cancelButton='',
-        cancelButtonStatus = this.state.PickFrontPackingCancelStatus;
-        if(btnId){
-          btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
-          action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;
-          actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
-          actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, action: action, color: "black"}))
-        }
-        if(cancelButtonStatus){
-          cancelButton =  React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"})
-        }
-        this._component = (
-              React.createElement("div", {className: "grid-container gor-pck-itm-scn"}, 
-                React.createElement(Modal, null), 
-                       
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails}), 
-               this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
-                React.createElement("div", {className: "actions"}, 
-                   
-                  cancelButton, 
-                   actionBtn, 
-                   editButton, 
-                   this.state.PickFrontBinFullStatus && BinFull
-                )
-               
-              )
-              
-            );
-        }else{
-          this._component = this.getExceptionComponent();
-        }
-      break;
-        case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
-         var cancelScanFlag = this.state.PickFrontCancelScan;
-         var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
-         var cancelButton;
-         
-         if(this.state.PickFrontExceptionStatus == false){
-          
-         this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-        if(this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0){
-          var editButton = ( React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, action: appConstants.EDIT_DETAILS, color: "orange"}) );
-        }else{
-          var editButton ='';
-        }
-        if(!cancelScanDisabled){
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
-         }
-         else{
-          cancelButton = (React.createElement("div", {className: "cancel-scan"}));
-         }
-         var binComponent ="";
-          if (this.state.OrigBinUse){
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
+                                binComponent, 
 
-            binComponent=(React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS, seatType: this.state.SeatType}))
-          }else{
-            binComponent =(React.createElement("div", {className: "main-container"}, 
-                  React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                ))
-          }
-           var btnId = this.state.PickFrontPackingButtonType,btnName,actionBtn,action,actionBtnStatus;
-        if(btnId){
-          btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
-          action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX :appConstants.BOX_FULL;
-          actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
-          actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, action: action, color: "black"}))
-        }
-        this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                React.createElement(Modal, null), 
-               
-                React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
-                this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "frontFlow"}), 
-                binComponent, 
+                                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
+                            )
 
-               cancelButton, 
-                actionBtn
-              )
-            );
-         }else{
-          this._component = this.getExceptionComponent();
-        }
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    var _button = (React.createElement("div", {className: "staging-action"}, 
+                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PICK_FRONT, status: true, 
+                                 action: appConstants.CANCEL_BOX_FULL, color: "black"}), 
+                        React.createElement(Button1, {disabled: false, text: _("Box Full"), module: appConstants.PICK_FRONT, status: true, 
+                                 action: appConstants.BOX_FULL, color: "black"})
+                    ));
+                    this._component = (
 
-      default:
-        return true;
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails}), 
+                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
+                                React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
+                            )
+
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
+                                            action: appConstants.BIN_FULL, color: "black"}) );
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                      screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
+                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
+                                              itemUid: this.state.PickFrontItemUid})
+
+                        ))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
+                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
+                                     itemUid: this.state.PickFrontItemUid})
+
+                        ));
+                    }
+                    var btnId = this.state.PickFrontPackingButtonType, btnName, actionBtn, action, actionBtnStatus,
+                        cancelButton = '',
+                        cancelButtonStatus = this.state.PickFrontPackingCancelStatus;
+                    if (btnId) {
+                        btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
+                        action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
+                        actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
+                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, 
+                                              action: action, color: "black"}))
+                    }
+                    if (cancelButtonStatus) {
+                        cancelButton =
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.CANCEL_SCAN, color: "black"})
+                    }
+                    this._component = (
+                        React.createElement("div", {className: "grid-container gor-pck-itm-scn"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                            React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails}), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+
+                                cancelButton, 
+                                actionBtn, 
+                                editButton, 
+                                this.state.PickFrontBinFullStatus && BinFull
+                            )
+
+                        )
+
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
+                var cancelButton;
+
+                if (this.state.PickFrontExceptionStatus == false) {
+
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
+                        var editButton = (
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
+                                     action: appConstants.EDIT_DETAILS, color: "orange"}) );
+                    } else {
+                        var editButton = '';
+                    }
+                    if (!cancelScanDisabled) {
+                        cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), 
+                                                                              module: appConstants.PICK_FRONT, 
+                                                                              action: appConstants.CANCEL_SCAN, 
+                                                                              color: "black"}), " ", editButton));
+                    }
+                    else {
+                        cancelButton = (React.createElement("div", {className: "cancel-scan"}));
+                    }
+                    var binComponent = "";
+                    if (this.state.OrigBinUse) {
+
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS, 
+                                                  seatType: this.state.SeatType}))
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
+                        ))
+                    }
+                    var btnId = this.state.PickFrontPackingButtonType, btnName, actionBtn, action, actionBtnStatus;
+                    if (btnId) {
+                        btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
+                        action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
+                        actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
+                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, 
+                                              action: action, color: "black"}))
+                    }
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+
+                            cancelButton, 
+                            actionBtn
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+            case appConstants.PICK_FRONT_BIN_PRINTOUT:
+                if (!this.state.PickFrontExceptionStatus) {
+                    if (this.state.OrigBinUse) {
+                        binComponent = (
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_BIN_PRINTOUT, 
+                                      seatType: this.state.SeatType}));
+                    } else {
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_BIN_PRINTOUT})
+                        ))
+                    }
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                    this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            this.state.SplitScreenFlag &&
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "putFrontFlow"}), 
+                            binComponent
+                        )
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+            default:
+                return true;
+        }
+    },
+
+    render: function (data) {
+
+        this.getNotificationComponent();
+        this.getScreenComponent(this.state.PickFrontScreenId);
+
+        return (
+            React.createElement("div", {className: "main"}, 
+                React.createElement(Header, null), 
+                this._navigation, 
+                this._component, 
+                this._notification
+            )
+        )
     }
-  },
-  
-  render: function(data){ 
-	  
-    this.getNotificationComponent();
-    this.getScreenComponent(this.state.PickFrontScreenId);
-	
-	return (
-		React.createElement("div", {className: "main"}, 
-			React.createElement(Header, null), 
-			this._navigation, 
-			this._component, 
-      this._notification
-	  )   
-	  )
-  }
 });
 
 module.exports = PickFront;
@@ -42786,7 +42942,7 @@ var KQ = React.createClass({displayName: "KQ",
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() === appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
 
                 if(_updatedQtyDamaged  == 0){
                   this._appendClassDown = 'downArrow disable';
@@ -43866,6 +44022,19 @@ var PutBack = React.createClass({displayName: "PutBack",
         this._component = this.getExceptionComponent();
       }
       break;
+
+
+      case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
+      this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
+      this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+            )
+          )
+          );         
+      break;
+
       case appConstants.PUT_BACK_INVOICE:
       var invoiceStringArg = [];
       invoiceStringArg[0] = this.state.InvoiceType;
@@ -43963,26 +44132,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
           React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM})
-          )
-          ), 
-          React.createElement("div", {className: "cancel-scan"}, 
-          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-          )
-          )
-          );
-      else if(this.state.PutBackExceptionScreen == "damaged_confirm")
-        this._component = (
-          React.createElement("div", {className: "grid-container exception"}, 
-          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-          React.createElement("div", {className: "exception-right"}, 
-          React.createElement("div", {className: "main-container exception2"}, 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
-          )
-          ), 
-          React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_DAMAGED_ENTITY_DATA})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44007,26 +44157,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put damaged entities in exception area."))
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -44050,26 +44181,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
           ), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
-          )
-          ), 
-          React.createElement("div", {className: "cancel-scan"}, 
-          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-          )
-          )
-          );
-      else if(this.state.PutBackExceptionScreen == "oversized_confirm")
-        this._component = (
-          React.createElement("div", {className: "grid-container exception"}, 
-          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-          React.createElement("div", {className: "exception-right"}, 
-          React.createElement("div", {className: "main-container exception2"}, 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Please put oversized entities in exception area."))
-          )
-          ), 
-          React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44120,26 +44232,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
         ), 
         React.createElement("div", {className: "finish-damaged-barcode"}, 
-        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY_1})
-        )
-        ), 
-        React.createElement("div", {className: "cancel-scan"}, 
-        React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-        )
-        )
-        );
-    else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
-      this._component = (
-        React.createElement("div", {className: "grid-container exception"}, 
-        React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-        React.createElement("div", {className: "exception-right"}, 
-        React.createElement("div", {className: "main-container exception2"}, 
-        React.createElement("div", {className: "kq-exception"}, 
-        React.createElement("div", {className: "kq-header"}, _("Please put extra entities in exception area."))
-        )
-        ), 
-        React.createElement("div", {className: "finish-damaged-barcode"}, 
-        React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_EXTRA_ITEM})
         )
         ), 
         React.createElement("div", {className: "cancel-scan"}, 
@@ -44148,6 +44241,66 @@ var PutBack = React.createClass({displayName: "PutBack",
         )
         );
     break; 
+
+         case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+          var selected_screen;
+          var messageIRTenable,messageIRTdisable;
+          if(this.state.GetExceptionType==appConstants.PHYSICALLY_DAMAGED)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in exception area")));
+          }
+          else if(this.state.GetExceptionType==appConstants.EXTRA_ITEMS)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in exception area.")));
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_SCANNABLE)
+          {
+               messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in exception area")));
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_OVERSIZED)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in exception area")));
+          }
+
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    messageIRTdisable, 
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
+                  )
+                  )
+              )
+          );
+      }else
+      {
+         selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    messageIRTenable
+                  )
+              )
+          );
+      }
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                  selected_screen, 
+              React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+            );
+        break;
+
+
     case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
     this._navigation = '';
     this._component = (
@@ -44165,6 +44318,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       )
       );
     break;
+
     case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
     this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
     
@@ -44418,23 +44572,62 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-        var _button;
-        _button = (React.createElement("div", {className: "staging-action"}, 
-          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
-          ));
+        var selected_screen;
+        
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          if(!this.state.GetIRTScanStatus)
+          {
+          selected_screen= (
+            React.createElement("div", null, 
+           React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
+          ), 
+          React.createElement("div", {className: "staging-action"}, 
+          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
+          )
+          ));
+         }
+         else
+         {
+        selected_screen=  (
+        React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "gor-info-text"}, _("Please put remaining entities in IRT bin and scan the bin"))
+          )
+          );
+         }
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
-          ), 
-          _button
+        selected_screen
           )
           );
         break;
-
+        
         case appConstants.PUT_FRONT_PPTL_PRESS:
+        if(this.state.PutFrontExceptionStatus == false){
+         if (this.state.OrigBinUse){
+          binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
+        }else{
+          binComponent =(React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
+            ))
+        }
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+        this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+          binComponent
+          )
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
+
+        case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
+
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
           binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
@@ -44550,7 +44743,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             {
               UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -44569,13 +44762,13 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                     ), 
               
                      React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                     ), 
 
@@ -44583,7 +44776,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                    React.createElement("hr", null)
                     )
@@ -44600,23 +44793,37 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
         break; 
-
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
+          var selected_screen;
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
                    
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
                   )
-             
-                
-              ), 
+              )
+          );
+      }else
+      {
+         selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
+                  )
+              )
+          );
+      }
+          
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                  selected_screen, 
               React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
@@ -44706,7 +44913,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Next"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
             ));
           this._component = (
             React.createElement("div", {className: "grid-container exception"}, 
@@ -45748,6 +45955,14 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],[
+         {
+            "screen_id": "put_back_warehouse_full_irt_scan",
+            "code": "PtF.H.015",
+            "message": "Put item into IRT bin and scan the bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "putFront": [
@@ -45802,7 +46017,7 @@ var navData = {
         },{
             "screen_id": "put_front_scan_rack_for_unmarked_entity",
             "code": "Common.001",
-            "message": "Scan Slot",
+            "message": "Scan slot",
             "showImage": true,
             "level": 2,
             "type": 'passive'
@@ -45819,6 +46034,21 @@ var navData = {
             "screen_id": "put_front_wrong_undock",
             "code": "PtF.H.017",
             "message": "Wrong Undock",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],[{
+            "screen_id": "put_front_bin_warehouse_full",
+            "code": "PtF.H.016",
+            "message": "Warehouse Full",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_warehouse_full_irt_scan",
+            "code": "PtF.H.021",
+            "message": "Scan IRT Bin",
             "showImage": false,
             "level": 1,
             "type": 'active'
@@ -45971,6 +46201,13 @@ var navData = {
             "showImage": true,
             "level": null,
             "type": 'passive'
+        }],[{
+            "screen_id": "pick_front_bin_printout",
+            "code": "PkF.H.016",
+            "message": "Take Printout and Press PPTL",
+            "showImage": false,
+            "level": 1,
+            "type": 'passive'
         }]
 
     ],
@@ -46043,7 +46280,7 @@ var navData = {
         "screen_id": "pre_put_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Slot",
+        "message": "Scan slot",
         "showImage": true,
         "level": 2,
         "type": 'passive'
@@ -46106,6 +46343,7 @@ var appConstants = {
 	SKIP_PRINTING:"SKIP_PRINTING",
 	DIS_ASSOCIATE_TOTE:"DIS_ASSOCIATE_TOTE",
 	OVERRIDE_TOTE:"OVERRIDE_TOTE",
+	PICK_FINISH_EXCEPTION_ENTITY:"PICK_FINISH_EXCEPTION_ENTITY",
 	PICK_BACK_EXCEPTION_REPRINT:"pick_back_reprint_required",
 	PICK_BACK_EXCEPTION_SKIP_PRINTING:"pick_back_skip_print",
 	PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:"pick_back_tote_deassociation",
@@ -46117,18 +46355,27 @@ var appConstants = {
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
+	PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:"put_back_warehouse_full_irt_scan",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
+	PHYSICALLY_DAMAGED:"physically_damaged",
+	EXTRA_ITEMS:"extra_items",
+	ITEM_SCANNABLE:"item_unscannable",
+	ITEM_OVERSIZED:"item_oversized",
+	FINISH_DAMAGED_ENTITY_DATA:"FINISH_DAMAGED_ENTITY_DATA",
+	FINISH_EXCEPTION_EXTRA_ITEM:"FINISH_EXCEPTION_EXTRA_ITEM",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
     PUT_FRONT_EXCESS_ITEMS_PPSBIN: "put_front_excess_items_ppsbin",
 	PUT_FRONT_PPTL_PRESS: "put_front_pptl_press",
+	PUT_FRONT_BIN_WAREHOUSE_FULL: "put_front_bin_warehouse_full",
 	PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:"put_front_place_unmarked_entity_in_rack",
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"pick_front_missing_or_unscannable_damaged_item",
 	PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"put_front_unscannable_or_missing_or_damaged",
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
+	PICK_FRONT_BIN_PRINTOUT:"pick_front_bin_printout",
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",
@@ -46170,7 +46417,9 @@ var appConstants = {
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
+	PUT_BACK_EXCEPTION_ENITY_IRT_BIN:"put_back_transfer_to_irt_bin",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
+	PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:"put_front_warehouse_full_irt_scan",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
 	UNMARKED_DAMAGED:"UNMARKED_DAMAGED",
 	EDIT_DETAILS:"EDIT_DETAILS",
@@ -46199,6 +46448,7 @@ var appConstants = {
 	UPDATE_MISSING_QUANTITY:"UPDATE_MISSING_QUANTITY",
 	UPDATE_UNSCANNABLE_QUANTITY:"UPDATE_UNSCANNABLE_QUANTITY",
 	PUT_FRONT_ITEMS_TO_IRT_BIN:"put_front_items_to_irt_bin",
+	PUT_FINISH_EXCEPTION_ENTITY:"PUT_FINISH_EXCEPTION_ENTITY",
 	UPDATE_GOOD_QUANTITY:"UPDATE_GOOD_QUANTITY",
 	UPDATE_DAMAGED_QUANTITY:"UPDATE_DAMAGED_QUANTITY",
 	CANCEL_TOTE :'CANCEL_TOTE',
@@ -46277,15 +46527,22 @@ var appConstants = {
 	VOLUME:"volume",
 	/*Constants for Put back exception*/
 	ENTITY_DAMAGED:"entity_damaged",
-    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote"
+    PICK_BACK_REPRINT_TOTE : "pick_back_reprint_tote",
+	BIN_LIGHT_COLOR:{
+		"red":"#FF0000",
+		"blue":"#0390FF",
+		"green":"#4CAF50",
+		"pink":"#FF1BA5",
+		"white":"#FFFFFF",
+	}
 };
 
 module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "wss://localhost/wss",
+	INTERFACE_IP : "https://localhost"
 
 };
 module.exports = configConstants;
@@ -47721,7 +47978,8 @@ var serverMessages = {
     "PtF.I.005" : "Space unavailable recorded.",
     "PtF.I.006" : "Cancel scan successful",
     "PtF.I.007" : "Exception entry successful",   
-    "PtF.I.010" : "Bin scan successfull",
+    "PtF.I.009" : "Entity entry successful",
+    "PtF.I.010" : "Bin scan successful",
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
@@ -47810,6 +48068,7 @@ var spanish = {
 	"Bin Info": "Informaci\u00f3n del Recipiente",
 	"Bin already staged. Ignoring event": "El recipiente ya ha sido organizado. Haciendo caso omiso del evento",
 	"Bin empty. Cannot be staged": "Recipiente vac\u00edo. No se puede organizar",
+	"Bin scan successful": "Exploraci\u00f3n de compartimentos correctamente",
 	"Bin selected for put. Cannot be staged": "Recipiente seleccionado para colocar. No se puede organizar",
 	"Bin {0} items removed successfully": "Recipiente {0} se han quitado los art\u00edculos exitosamente",
 	"Bin {0} selected": "Recipiente {0} seleccionado ",
@@ -47870,6 +48129,7 @@ var spanish = {
 	"Entity Unscannable": "Art\u00edculo no escaneable",
 	"Entity already scanned.Confirm exception": "El art\u00edculo ya ha sido escaneado. Confirme la excepci\u00f3n",
 	"Entity already scanned.Waiting for PPTL press": "Art\u00edculo ya escaneado. A la espera de prensionar PPTL",
+	"Entity entry successful": "Entrada de entidad con \u00e9xito",
 	"Entity not expected in tote. Please put entity in exception area and confirm": "El Art\u00edculo no se espera en la bolsa Por favor, ubique los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
 	"Entity scan not expected.": "No se esperaba el escaneo del art\u00edculo.",
 	"Entity scan not expected. Waiting for PPTL press": "No se esperaba el escaneo del art\u00edculo. Esperando que pulse PPTL",
@@ -47992,6 +48252,7 @@ var spanish = {
 	"Please put oversized entities in exception area.": "Por favor, ponga los art\u00edculos extra grandes en la zona de excepci\u00f3n.",
 	"Please put unscannable entities in exception area.": "Por favor, ponga los art\u00edculos no escaneables en la zona de excepci\u00f3n.",
 	"Please scan PPTL barcode": "Por favor, escanee el c\u00f3digo de barras PPTL",
+	"Please scan bin which has excess item": "Por favor escanee el compartimiento que tenga el elemento excedente",
 	"Please scan or enter {0} number": "Por favor escanee o entre {0} n\u00famer",
 	"Please scan same SKU to complete this exception": "Por favor, escanee el mismo SKU para completar esta excepci\u00f3n",
 	"Please scan the tote first and then scan PPTL barcode": "Por favor, primero escanee la bolsa y luego escanee el c\u00f3digo de barras PPTL",
@@ -48085,6 +48346,7 @@ var spanish = {
 	"Status": "Estado",
 	"Status To Reconcile": "Estado Para Conciliar",
 	"Submit": "Enviar",
+	"Sum of good and exception quantity should be equal to {0}": "La suma de cantidad buena y de excepci\u00f3n debe ser igual a {0}",
 	"Sum of missing and good quantity should be equal to {0}": "La suma de la cantidad faltante y de la cantidad correcta deben ser iguales a {0}",
 	"Sum of missing, good and damaged should be equal to {0}": "La suma de faltantes, buenos y da\u00f1ado deben ser iguales a {0}",
 	"System Error. Scanned entity details not available at this time": "Error del Sistema. La informaci\u00f3n del art\u00edculo escaneado no est\u00e1 disponible en este momento",
@@ -48157,6 +48419,7 @@ var spanish = {
 	"Wrong bin chosen.Try selecting another bin": "Se ha escogido la papelera equivocada. Pruebe seleccionando otro recipiente",
 	"Wrong box scanned. Please try again": "Se escaneo la caja equivocada. Por favor, int\u00e9ntelo de nuevo",
 	"Wrong enitity scanned. Expecting scan from bin {0}": "Art\u00edculo equivocado escaneado. Esperando el escaneo desde el recipiente {0}",
+	"Wrong entity Scanned. Bin Scan Expected.": "Una entidad equivocada escaneada. Bin Scan esperado.",
 	"Wrong entity scanned": "Se escaneo el art\u00edculo equivocado",
 	"Wrong entity scanned. Please scan Container/Item.": "Se escaneo el art\u00edculo equivocado. Por favor, escanee el Recipiente/Art\u00edculo.",
 	"Wrong entity scanned. Please scan tote": "Se escaneo el art\u00edculo equivocado. Por favor, escanee la bolsa",

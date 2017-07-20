@@ -300,7 +300,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      
@@ -442,7 +442,7 @@ var PutFront = React.createClass({
                       </div>
                     </div>
                      <div className = 'cancel-scan'>
-                       <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                       <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                     </div>
                   </div>
               );      
@@ -460,7 +460,7 @@ var PutFront = React.createClass({
             </div>
             </div>
             <div className = 'cancel-scan'>
-            <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+            <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
             </div>
             </div>
             );      
@@ -484,7 +484,7 @@ var PutFront = React.createClass({
             </div>
             </div>
             <div className = 'cancel-scan'>
-            <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+            <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
             </div>
             </div>
             );      
@@ -506,10 +506,10 @@ var PutFront = React.createClass({
             <div className='grid-container audit-reconcilation'>
             <div className="row scannerHeader">
             <div className="col-md-6">
-            <div className="ppsMode"> PPS Mode : {this.state.PutFrontPpsMode.toUpperCase()} </div>
+            <div className="ppsMode"> {_("PPS Mode")} : {this.state.PutFrontPpsMode.toUpperCase()} </div>
             </div>
             <div className="col-md-6">
-            <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
+            <div className="seatType"> {_("Seat Type")} : {this.state.PutFrontSeatType.toUpperCase()}</div>
             </div>
             </div>
             <TabularData data = {this.state.utility}/>                  

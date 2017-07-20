@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 18:52+0530\n"
+"POT-Creation-Date: 2017-07-20 19:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1567,6 +1567,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:336
 #: src/assets/js/serverMessages/server_messages_lang.js:337
 #: src/assets/js/serverMessages/server_messages_lang.js:447
+#: src/assets/js/serverMessages/server_messages_lang.js:450
 msgid "Sum of missing and good quantity should be equal to {0}"
 msgstr ""
 
@@ -1994,21 +1995,58 @@ msgid "Entity Damaged"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:445
+#: src/assets/js/serverMessages/server_messages_lang.js:448
 msgid "Please scan bin which has excess item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:446
+#: src/assets/js/serverMessages/server_messages_lang.js:449
 msgid "Sum of good and exception quantity should be equal to {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:448
+#: src/assets/js/serverMessages/server_messages_lang.js:451
 msgid "Wrong entity Scanned. Bin Scan Expected."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:449
+#: src/assets/js/serverMessages/server_messages_lang.js:452
 msgid "Entity entry successful"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:450
+#: src/assets/js/serverMessages/server_messages_lang.js:453
 msgid "Bin scan successful"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:445
+msgid "Enter Quantity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:446
+msgid "Damaged Quantity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:447
+msgid "Issues with entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:454
+msgid "Validate and Confirm"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:455
+msgid "Scan damaged entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:456
+msgid "Are you sure you want to cancel the exception"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:457
+msgid "Yes"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:458
+msgid "No"
 msgstr ""

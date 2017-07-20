@@ -1234,3 +1234,36 @@ msgstr "Entrada de entidad con éxito"
 #: src/assets/js/serverMessages/server_messages_lang.js:450
 msgid "Bin scan successful"
 msgstr "Exploración de compartimentos correctamente"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:445
+msgid "Enter Quantity"
+msgstr "Introducir cantid"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:446
+msgid "Damaged Quantity"
+msgstr "Cantidad dañada"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:447
+msgid "Issues with entity"
+msgstr "Problemas con la entidad"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:454
+msgid "Validate and Confirm"
+msgstr "Validar y confirmar"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:455
+msgid "Scan damaged entity"
+msgstr "Analizar entidad dañada"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:456
+msgid "Are you sure you want to cancel the exception?"
+msgstr "¿Seguro que desea cancelar la excepción?"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:457
+msgid "Yes"
+msgstr "Sí"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:458
+msgid "No"
+msgstr "No"

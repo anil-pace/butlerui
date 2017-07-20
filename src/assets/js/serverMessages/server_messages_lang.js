@@ -442,4 +442,10 @@ function server_messages_list() {
     _("Dock roll cage back to proceed the operation");
     _("Excess quantity");
     _("Entity Damaged");
+    _("Please scan bin which has excess item");
+    _("Sum of good and exception quantity should be equal to {0}");
+    _("Sum of missing and good quantity should be equal to {0}");
+    _("Wrong entity Scanned. Bin Scan Expected.");
+    _("Entity entry successful");
+    _("Bin scan successful");
 }

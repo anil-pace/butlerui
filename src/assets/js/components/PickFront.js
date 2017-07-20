@@ -313,7 +313,7 @@ var PickFront = React.createClass({
                   </div>
                 </div>
                  <div className = 'cancel-scan'>
-                   <Button1 disabled = {false} text = {_("Cancel exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                   <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
           );      
@@ -331,25 +331,25 @@ var PickFront = React.createClass({
 
                     <div className="gor-NI-wrapper">
                     <hr/>
-                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType = {appConstants.GOOD_QUANTITY}/>
                     </div>
               
                      <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType = {appConstants.MISSING_QUANTITY} />
                     </div>
 
                     <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
                   <NumericIndicator  execType = {appConstants.UNSCANNABLE_QUANTITY}/>
                     </div>
 
                     <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType = {appConstants.DAMAGED_QUANTITY}/>
                    <hr/>
                     </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-13 14:57+0530\n"
+"POT-Creation-Date: 2017-07-20 18:52+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -705,6 +705,8 @@ msgid "Please scan the tote first and then scan PPTL barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:179
+#: src/assets/js/serverMessages/server_messages_lang.js:178
+#: src/assets/js/serverMessages/server_messages_lang.js:180
 msgid "Override Tote Exception cannot be raised for bins with totes associated"
 msgstr ""
 
@@ -1410,10 +1412,14 @@ msgid "Product Type"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:301
+#: src/assets/js/serverMessages/server_messages_lang.js:300
+#: src/assets/js/serverMessages/server_messages_lang.js:302
 msgid "Tote already associated with bin {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:302
+#: src/assets/js/serverMessages/server_messages_lang.js:301
+#: src/assets/js/serverMessages/server_messages_lang.js:303
 msgid "Entity Scan not expected. Press PPTL"
 msgstr ""
 
@@ -1477,36 +1483,6 @@ msgstr ""
 msgid "Take the Items out from the Slot"
 msgstr ""
 
-#: src/assets/js/serverMessages/server_messages_lang.js:300
-#: src/assets/js/serverMessages/server_messages_lang.js:302
-#: src/assets/js/serverMessages/server_messages_lang.js:301
-msgid "Tote already associated with bin {0}"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:301
-#: src/assets/js/serverMessages/server_messages_lang.js:303
-#: src/assets/js/serverMessages/server_messages_lang.js:302
-msgid "Entity Scan not expected. Press PPTL"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:178
-#: src/assets/js/serverMessages/server_messages_lang.js:180
-#: src/assets/js/serverMessages/server_messages_lang.js:179
-msgid "Override Tote Exception cannot be raised for bins with totes associated"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:82
-msgid "Excess item in tote recorded."
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:156
-msgid "PPTL press not expected"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:157
-msgid "Scan not expected"
-msgstr ""
-
 #: src/assets/js/serverMessages/server_messages_lang.js:320
 #: src/assets/js/serverMessages/server_messages_lang.js:319
 msgid "Pptl press not expected."
@@ -1533,11 +1509,13 @@ msgid "Wrong scan.Expecting location scan."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:324
+#: src/assets/js/serverMessages/server_messages_lang.js:325
 msgid "Scan Excess Entity Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:325
 #: src/assets/js/serverMessages/server_messages_lang.js:326
+#: src/assets/js/serverMessages/server_messages_lang.js:327
 msgid "Entity already scanned.Confirm exception"
 msgstr ""
 
@@ -1588,17 +1566,13 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:336
 #: src/assets/js/serverMessages/server_messages_lang.js:337
+#: src/assets/js/serverMessages/server_messages_lang.js:447
 msgid "Sum of missing and good quantity should be equal to {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:337
 #: src/assets/js/serverMessages/server_messages_lang.js:338
 msgid "Login"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:324
-#: src/assets/js/serverMessages/server_messages_lang.js:325
-msgid "Scan Excess Entity Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:338
@@ -1687,6 +1661,7 @@ msgid "product_sku"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:357
+#: src/assets/js/serverMessages/server_messages_lang.js:358
 msgid "type"
 msgstr ""
 
@@ -1726,6 +1701,7 @@ msgid "Tote Details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:365
+#: src/assets/js/serverMessages/server_messages_lang.js:366
 msgid "Close current tote first"
 msgstr ""
 
@@ -1778,28 +1754,8 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: src/assets/js/serverMessages/server_messages_lang.js:7
-msgid "Scan item / Stage PPS Bin"
-msgstr ""
-
 #: src/assets/js/serverMessages/server_messages_lang.js:125
 msgid "Scan {0} Items and Place in Bin {0}"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:326
-#: src/assets/js/serverMessages/server_messages_lang.js:327
-#: src/assets/js/serverMessages/server_messages_lang.js:325
-msgid "Entity already scanned.Confirm exception"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:358
-#: src/assets/js/serverMessages/server_messages_lang.js:357
-msgid "type"
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:366
-#: src/assets/js/serverMessages/server_messages_lang.js:365
-msgid "Close current tote first"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:379
@@ -2035,4 +1991,24 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:444
 msgid "Entity Damaged"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:445
+msgid "Please scan bin which has excess item"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:446
+msgid "Sum of good and exception quantity should be equal to {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:448
+msgid "Wrong entity Scanned. Bin Scan Expected."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:449
+msgid "Entity entry successful"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:450
+msgid "Bin scan successful"
 msgstr ""

@@ -101,7 +101,7 @@ var navData = {
         },{
             "screen_id": "put_front_scan_rack_for_unmarked_entity",
             "code": "Common.001",
-            "message": "Scan slot",
+            "message": "Scan Slot",
             "showImage": true,
             "level": 2,
             "type": 'passive'
@@ -342,7 +342,7 @@ var navData = {
         "screen_id": "pre_put_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan slot",
+        "message": "Scan Slot",
         "showImage": true,
         "level": 2,
         "type": 'passive'

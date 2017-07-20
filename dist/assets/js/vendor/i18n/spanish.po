@@ -1213,3 +1213,24 @@ msgstr "Cantidad excesiva"
 
 msgid "Entity Damaged"
 msgstr "Entidad dañada"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:445
+msgid "Please scan bin which has excess item"
+msgstr "Por favor escanee el compartimiento que tenga el elemento excedente"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:446
+msgid "Sum of good and exception quantity should be equal to {0}"
+msgstr "La suma de cantidad buena y de excepción debe ser igual a {0}"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:448
+msgid "Wrong entity Scanned. Bin Scan Expected."
+msgstr "Una entidad equivocada escaneada. Bin Scan esperado."
+
+#: src/assets/js/serverMessages/server_messages_lang.js:449
+msgid "Entity entry successful"
+msgstr "Entrada de entidad con éxito"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:450
+msgid "Bin scan successful"
+msgstr "Exploración de compartimentos correctamente"

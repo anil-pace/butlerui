@@ -163,7 +163,7 @@ var PrePut = React.createClass({
                 <div className="exception-right">
                   <div className="main-container">
                     <div className = "kq-exception">
-                      <div className="kq-header">{_("Scan excess item quantity")}</div>
+                      <div className="kq-header">{_("Scan excess item")}</div>
                       <TabularData data={this.state.PrePutExcessItems}  className='limit-height' />
                       {_button}
                     </div>

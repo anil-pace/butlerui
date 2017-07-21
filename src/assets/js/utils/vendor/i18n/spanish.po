@@ -1128,73 +1128,73 @@ msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
 msgstr	"Elimine bolso del contenedor  {0} y pulse PPTL para confirmar no queda ningún artículo 
 
 msgid "STN scan successful" 
-msgstr	"STN escaneado con éxito’
+msgstr	"STN escaneado con éxito"
 
 msgid "Scan Tote first and then scan rack" 
-msgstr	"Escanee bolso primero y luego escanee estante
+msgstr	"Escanee bolso primero y luego escanee estante"
 
 msgid "Scan excess item" 
-msgstr	"Escanee articulo excedente
+msgstr	"Escanee articulo excedente"
 
 msgid "Scan or Enter the tote barcode to reprint" 
-msgstr	"Escanee o Entre código de barra del bolso para reimprimir
+msgstr	"Escanee o Entre código de barra del bolso para reimprimir"
 
 msgid "Scan or Enter {0} number" 
-msgstr	"Escanee o entre {0} numero
+msgstr	"Escanee o entre {0} numero"
 
 msgid "Scan slot to confirm" 
-msgstr	"Escanee vacante para confirmar
+msgstr	"Escanee vacante para confirmar"
 
 msgid "Scan tote and place it in the slot" 
-msgstr	"Escanee el bolso y colóquelo en la vacante
+msgstr	"Escanee el bolso y colóquelo en la vacante"
 
 msgid "Scan tote first and then scan item" 
-msgstr	"Escanee primero el bolso y luego escanee artículo
+msgstr	"Escanee primero el bolso y luego escanee artículo"
 
 msgid "Scan tote which has excess item" 
-msgstr	"Escanee el bolso que haya sobrepasado el límite de artículos
+msgstr	"Escanee el bolso que haya sobrepasado el límite de artículos"
 
 msgid "Slot barcode scan successful" 
-msgstr	"Código de barra de la vacante escaneado con éxito
+msgstr	"Código de barra de la vacante escaneado con éxito"
 
 msgid "Take Printout and Press PPTL" 
-msgstr	"Seleccione la opción de imprimir  y pulse PPTL
+msgstr	"Seleccione la opción de imprimir  y pulse PPTL"
 
 msgid "Take out the tote from bin {0} and scan entity" 
-msgstr	"Saque el bolso del contenedor {0} y escanee entidad
+msgstr	"Saque el bolso del contenedor {0} y escanee entidad"
 
 msgid "Total " 
-msgstr	"Total  
+msgstr	"Total"
 
 msgid "Tote already associated with slot.Scan empty slot" 
-msgstr	"El bolso ya ha sido asociado con la vacante. Escanee la vacante vacía
+msgstr	"El bolso ya ha sido asociado con la vacante. Escanee la vacante vacía"
 
 msgid "Tote already scanned" 
-msgstr	"El Bolso ya ha sido escaneado
+msgstr	"El Bolso ya ha sido escaneado"
 
 msgid "Tote scan cancelled." 
-msgstr	"El escaneo de bolso ha sido anulado
+msgstr	"El escaneo de bolso ha sido anulado"
 
 msgid "Tote scan successful." 
-msgstr	"El escaneo de bolso escaneado con éxito
+msgstr	"El escaneo de bolso escaneado con éxito"
 
 msgid "Tote scanned is not idle" 
-msgstr	"El escaneo de bolso no está ocupado
+msgstr	"El escaneo de bolso no está ocupado"
 
 msgid "Tote scanned is not opened" 
-msgstr	"El escaneo de bolso no está abierto
+msgstr	"El escaneo de bolso no está abierto"
 
 msgid "Undock Roll Cage if no items remaining" 
-msgstr	"Desacople la jaula de seguridad si no queda ningún artículo
+msgstr	"Desacople la jaula de seguridad si no queda ningún artículo"
 
 msgid "Unexpected entity scanned" 
-msgstr	"Una Entidad inesperada ha sido escaneada
+msgstr	"Una Entidad inesperada ha sido escaneada"
 
 msgid "Wrong ppsbin button pressed" 
-msgstr	"Un botón ppsbin ha sido pulsado incorrectamente
+msgstr	"Un botón ppsbin ha sido pulsado incorrectamente"
 
 msgid "product_sku" 
-msgstr	"Producto_sku
+msgstr	"Producto_sku"
 
 msgid "{0} number :"	
 msgstr "{0} numero  :"
@@ -1267,3 +1267,20 @@ msgstr "Sí"
 #: src/assets/js/serverMessages/server_messages_lang.js:458
 msgid "No"
 msgstr "No"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:459
+msgid "Exception with entity reported"
+msgstr "Excepción con entidad informada"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:459
+msgid "Exception with entity reported"
+msgstr "Excepción con entidad informada"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:460
+msgid "Please put entities with issues, in exception area"
+msgstr "Por favor ponga entidades con problemas, en área de excepción"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:461
+msgid "Wrong Scan. Unrecognized barcode."
+msgstr "Escaneo incorrecto. Código de barras no reconocido."

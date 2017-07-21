@@ -136,6 +136,7 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.010": "Wrong Scan. Unrecognized barcode.",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",

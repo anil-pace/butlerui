@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 19:57+0530\n"
+"POT-Creation-Date: 2017-07-21 14:30+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2049,4 +2049,16 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:458
 msgid "No"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:459
+msgid "Exception with entity reported"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:460
+msgid "Please put entities with issues, in exception area"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:461
+msgid "Wrong Scan. Unrecognized barcode."
 msgstr ""

@@ -370,7 +370,7 @@ var PutFront = React.createClass({
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
+                    <div className="gor-exceptionConfirm-text">{_("Please put entities with issues, in exception area")}</div>
                    
                   <div className = "finish-damaged-barcode align-button">
                     <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
@@ -477,7 +477,7 @@ var PutFront = React.createClass({
             <div className="exception-right">
             <div className="main-container">
             <div className = "kq-exception">
-            <div className="kq-header">{_("Scan excess item quantity")}</div>
+            <div className="kq-header">{_("Scan excess item")}</div>
             <TabularData data={this.state.PutFrontExcessItems}  className='limit-height' />
             {_button}
             </div>

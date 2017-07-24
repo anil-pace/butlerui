@@ -44980,7 +44980,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             {
               UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -46232,7 +46232,7 @@ var navData = {
         },{
             "screen_id": "put_front_scan_rack_for_unmarked_entity",
             "code": "Common.001",
-            "message": "Scan Slot",
+            "message": "Scan slot",
             "showImage": true,
             "level": 2,
             "type": 'passive'
@@ -48086,7 +48086,7 @@ var serverMessages = {
     "CLIENTCODE_409" : "Back seat not supported for this mode",
     "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
-    "CLIENTCODE_403" : "Session timed out",
+    "CLIENTCODE_403" : "PPS is closed",
     "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012":"No Items To Reconcile",
     "CLIENTCODE_004" : "PPTL Management",

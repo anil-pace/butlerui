@@ -160,7 +160,7 @@ var serverMessages = {
     "CLIENTCODE_409" : "Back seat not supported for this mode",
     "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
-    "CLIENTCODE_403" : "Session timed out",
+    "CLIENTCODE_403" : "PPS is closed",
     "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012":"No Items To Reconcile",
     "CLIENTCODE_004" : "PPTL Management",

@@ -459,6 +459,11 @@ function server_messages_list() {
     _("Enter Quantity");
     _("Exception with entity reported");
     _("Please put entities in IRT and Scan IRT Bin");
+    _("Are you sure you want to cancel the exception?");
+    _("Yes");
+    _("No");
+    _("Exception with entity reported");
+    _("Please put entities with issues, in exception area");
     _("Wrong Scan. Unrecognized barcode.");
     _("PPS is closed");
 }

@@ -43232,7 +43232,7 @@ var KQ = React.createClass({displayName: "KQ",
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ||mainstore.getScreenId() ==appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
+            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() === appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
 
                 if(_updatedQtyDamaged  == 0){
                   this._appendClassDown = 'downArrow disable';
@@ -48533,7 +48533,7 @@ var spanish = {
 	"Place container in MSU slot and confirm": "Coloque el contenedor en la ranura de  MSU y confirma",
 	"Place extra entity in Exception area.": "Ubique los art\u00edculos extra en la zona de Excepci\u00f3n.",
 	"Place the tote back in bin {0} and press pptl": "Coloque el bolso  nuevamente en el contenedor  {0} y pulse ppt",
-	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2",
+	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2}",
 	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2",
 	"Please Scan tote which has excess item": "Por favor escanee el bolso que haya sobrepasado el l\u00edmite de art\u00edculo",
 	"Please Select The Bin With Excess Entity": "Por favor, Seleccione el Recipiente con Art\u00edculos Sobrantes",

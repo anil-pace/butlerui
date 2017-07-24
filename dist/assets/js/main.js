@@ -39340,14 +39340,15 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       CommonActions.changeLanguage(this.state.getCurrentLang);
     }
     virtualKeyBoard_login = $('#username, #password').keyboard({
-      layout: 'custom',
-      customLayout: {
-        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
-        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
-      },
+      // layout: 'custom',
+      // customLayout: {
+      //   'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
+      //   'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
+      // },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
       },
+      'lang' : ['sq'],
       reposition: true,
       alwaysOpen: false,
       initialFocus: true,      

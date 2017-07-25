@@ -57,7 +57,12 @@ var MsuRack = React.createClass({
         if(strEl && endEl){
         this.connect(strEl, endEl, "#6d6d6d", 3);
       }
+    
   }
+    var start = (document.querySelectorAll("#rack .activeSlot")[0]);
+    start = start ? start.parentNode : null;
+    var end  = (document.querySelectorAll(".specialContainer")[0]);
+    this.connect(start, end, "#6d6d6d", 3);
     },
     /*
         function to create line between 2 points
@@ -198,9 +203,16 @@ getOffset( el ) {
                
 				</div>
                 <div className="specialContainer">
-                <div className="orientation"></div>   
-                <div className="stackSize"></div> 
-                 <div className="fragile"></div> 
+                <div className="orientation BLHStackable"></div>   
+                <div className="stackSize">
+                        <span className="stackicons"></span>
+                        <span className="stackText">STACK MAX</span>
+                        <span className="stackCount">7</span>
+                </div> 
+                 <div className="fragile">
+                        <span className="fragileicons"></span>
+                        <span className="fragileText">FRAGILE</span>  
+                 </div> 
                  </div>
                 {drawerCompartment}
                 </div>

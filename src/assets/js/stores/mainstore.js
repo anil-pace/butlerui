@@ -651,6 +651,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.rack_details;
         }
     },
+     getSpecialHandlingDetails: function () {
+            return _seatData.special_handling;
+    },
 
     getCurrentSelectedBin: function () {
         var binData = {};
@@ -2057,6 +2060,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
+                data["PutFrontSpecialHandling"] = this.getSpecialHandlingDetails();
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
                 data["BinMapDetails"] = this._getBinMapDetails();

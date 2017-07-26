@@ -59,10 +59,12 @@ var MsuRack = React.createClass({
       }
     
   }
+  if(this.props.specialHandling){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
     this.connect(start, end, "#6d6d6d", 3);
+}
     },
     /*
         function to create line between 2 points
@@ -102,6 +104,8 @@ getOffset( el ) {
     };
 },
 	render: function(){
+        var orientationClass,stackText,stackCount,fragileClass,stackClass;
+        var specialHandling = this.props.specialHandling;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
         var rackDetails = this.props.rackData.rack_type_rec;
@@ -195,6 +199,11 @@ getOffset( el ) {
             }())
         }
 
+orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
+stackText=specialHandling.stacking?"STACK SIZE" : "DO NOT STACK";
+stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1]
+fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
+stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
 		return (
 				<div className="drawWrap" style={wrapStyle}>
                 <div className="drawRack" id="rack" style={this.props.type=="small" ? drawRackStyle:{} }>
@@ -203,13 +212,13 @@ getOffset( el ) {
                
 				</div>
                 <div className="specialContainer">
-                <div className="orientation BLHStackable"></div>   
-                <div className="stackSize">
+                <div className={orientationClass}></div>   
+                <div className={stackClass}>
                         <span className="stackicons"></span>
-                        <span className="stackText">STACK MAX</span>
-                        <span className="stackCount">7</span>
+                        <span className="stackText">{stackText}</span>
+                        <span className="stackCount">{stackCount}</span>
                 </div> 
-                 <div className="fragile">
+                 <div className={fragileClass}>
                         <span className="fragileicons"></span>
                         <span className="fragileText">FRAGILE</span>  
                  </div> 

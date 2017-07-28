@@ -59,7 +59,7 @@ var MsuRack = React.createClass({
       }
     
   }
-  if(this.props.specialHandling){
+  if(Object.keys(this.props.specialHandling).length>0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
@@ -198,12 +198,13 @@ getOffset( el ) {
                 )
             }())
         }
-
-orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
-stackText=specialHandling.stacking?"STACK SIZE" : "DO NOT STACK";
-stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1]
-fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
-stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
+        if(Object.keys(specialHandling).length>0){
+        orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
+        stackText=specialHandling.stacking?"STACK MAX" : "DO NOT STACK";
+        stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1]
+        fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
+        stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
+    }
 		return (
 				<div className="drawWrap" style={wrapStyle}>
                 <div className="drawRack" id="rack" style={this.props.type=="small" ? drawRackStyle:{} }>
@@ -211,6 +212,7 @@ stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
                     <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
                
 				</div>
+                {Object.keys(specialHandling).length>0?(
                 <div className="specialContainer">
                 <div className={orientationClass}></div>   
                 <div className={stackClass}>
@@ -223,6 +225,7 @@ stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
                         <span className="fragileText">FRAGILE</span>  
                  </div> 
                  </div>
+):""}
                 {drawerCompartment}
                 </div>
 			);

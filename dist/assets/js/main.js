@@ -45430,7 +45430,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
       }
     
   }
-  if(this.props.specialHandling){
+  if(Object.keys(this.props.specialHandling).length>0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
@@ -45569,12 +45569,13 @@ getOffset( el ) {
                 )
             }())
         }
-
-orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
-stackText=specialHandling.stacking?"STACK SIZE" : "DO NOT STACK";
-stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1]
-fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
-stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
+        if(Object.keys(specialHandling).length>0){
+        orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
+        stackText=specialHandling.stacking?"STACK MAX" : "DO NOT STACK";
+        stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1]
+        fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
+        stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
+    }
 		return (
 				React.createElement("div", {className: "drawWrap", style: wrapStyle}, 
                 React.createElement("div", {className: "drawRack", id: "rack", style: this.props.type=="small" ? drawRackStyle:{}}, 
@@ -45582,6 +45583,7 @@ stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
                     React.createElement("div", {className: "lastRow", style: this.props.type=="small" ?  lastSlot:{}})
                
 				), 
+                Object.keys(specialHandling).length>0?(
                 React.createElement("div", {className: "specialContainer"}, 
                 React.createElement("div", {className: orientationClass}), 
                 React.createElement("div", {className: stackClass}, 
@@ -45593,7 +45595,8 @@ stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
                         React.createElement("span", {className: "fragileicons"}), 
                         React.createElement("span", {className: "fragileText"}, "FRAGILE")
                  )
-                 ), 
+                 )
+):"", 
                 drawerCompartment
                 )
 			);
@@ -46857,8 +46860,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-	WEBSOCKET_IP : "wss://192.168.8.109/wss",
-	INTERFACE_IP : "https://192.168.8.109"
+	WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
 };
 module.exports = configConstants;
 
@@ -52935,16 +52938,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    //console.log(data);
-
+    
+    console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);
             break;
         case appConstants.PUT_FRONT:
-        if(data.state_data){
-            data.state_data=JSON.parse('{"seat_name":"front_2","special_handling":{"nestable_count":"4","nestable_direction":"LBH","fragile":"true","orientation_preference":"true","stacking":"LBH","stacking_count":[2,3,6]},"notification_list":[{"level":"info","code":"PtF.I.001","details":[],"description":"Entity scan successful"}],"scan_details":{"current_qty":"1","total_qty":"1","kq_allowed":true},"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["027.1.A.01","027.1.A.02"],"slot_type":"slot"},"exception_allowed":[{"exception_id":"PtF002","exception_name":"Space Unavailable To Put","event":"space_unavailable"}],"roll_cage_flow":false,"bin_coordinate_plotting":false,"screen_id":"put_front_place_items_in_rack","logout_allowed":false,"seat_type":"front","product_info":[[{"product_sku":"2003","display_data":[{"locale":"ja-JP","display_name":"製品SKU"},{"locale":"en-US","display_name":"Product SKU"}]}],[{"display_data":[{"locale":"en-US","display_name":"product_local_image_url"}],"product_local_image_url":null}],[{"display_data":[{"locale":"ja-JP","display_name":"製品バーコード"},{"locale":"en-US","display_name":"Product Barcodes"}],"product_barcodes":["2003"]}],[{"display_data":[{"locale":"ja-JP","display_name":"商品の寸法"},{"locale":"en-US","display_name":"Product Dimensions"}],"product_dimensions":[1,3,10]}]],"time_stamp":"1500610205","ppsbin_list":[{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"5","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,1],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"4","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,2],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"3","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,3],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"2","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,4],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"1","length":"200","selected_state":true,"ppsbin_state":"IN USE","ppsbin_count":"0","coordinate":[1,5],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"10","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"9","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,2],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"8","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,3],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"7","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,4],"group_id":"1","totes_associated":false},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"6","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,5],"group_id":"1","totes_associated":false}],"mode":"put","group_info":{"1":"center"},"scan_allowed":true,"item_uid":"85cdbc99-e90f-4432-9899-30b107a08638","structure":[2,5],"screen_version":"1","docked":[],"api_version":"1","is_idle":false,"header_msge_list":[{"level":"info","code":"PtF.H.002","details":[],"description":"Scan Slot to Confirm"}]}');
-        }
         console.log(data.state_data);
             CommonActions.setPutFrontData(data.state_data);
             break;

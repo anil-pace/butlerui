@@ -2060,7 +2060,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
-                data["PutFrontSpecialHandling"] = this.getSpecialHandlingDetails();
+                
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
                 data["BinMapDetails"] = this._getBinMapDetails();
@@ -2072,6 +2072,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
+                data["PutFrontSpecialHandling"] = this.getSpecialHandlingDetails();
                 break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();

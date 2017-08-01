@@ -98,10 +98,14 @@
 }
  .specialContainer  { 
     margin-left:50px;
+    overflow:auto;
+    display: table;
+    width: 330px;
         .orientation{
             width:350px;
             height:330px;
-            
+             display: table-row;
+            float:left;
             &.LBHStackable{
             background: url(../images/LBHStackable.gif) no-repeat;
             }
@@ -133,6 +137,8 @@
             font-weight: bold;
             color: #666666;
             box-sizing: border-box;
+            float:left;
+                display: table-row;
                 .stackicons{
                 width: 24px;
                 height: 38px;
@@ -147,10 +153,12 @@
         .fragile{
             width:350px;
             height:76px;
+            float:left;
             background-color: #ec6520;
             padding: 15px;
             box-sizing: border-box;
             text-align: center;
+             display: table-row;
 
             .fragileicons{
                 width: 24px;

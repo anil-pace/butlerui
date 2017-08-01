@@ -35,9 +35,14 @@ var MsuRack = React.createClass({
         },
     componentWillUnmount:function(){
         var lines = document.getElementsByClassName("drawerLine");
+        var directionLine = document.getElementsByClassName("LineDirection");
         if(lines.length){
             lines[0].remove();
         }
+        if(directionLine.length){
+            directionLine[0].remove();
+        }
+
     },
     /*
         Since performing DOM manipulations hence 
@@ -59,11 +64,11 @@ var MsuRack = React.createClass({
       }
     
   }
-  if(Object.keys(this.props.specialHandling).length>0){
+  if(Object.keys(this.props.specialHandling).length>0 && document.getElementsByClassName("drawerLineNormal").length===0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
-    this.connect(start, end, "#6d6d6d", 3);
+    this.connect(start, end, "#6d6d6d", 3,"normalflow");
 }
     },
     /*
@@ -72,7 +77,7 @@ var MsuRack = React.createClass({
         color (Hexadecimal color), thickness(Integer)
      */
     
-    connect:function(startEl, endEl, color, thickness) {
+    connect:function(startEl, endEl, color, thickness,flow) {
     var off1 = this.getOffset(startEl);
     var off2 = this.getOffset(endEl);
     // bottom right
@@ -89,8 +94,12 @@ var MsuRack = React.createClass({
     // angle
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
     // make hr
+if(flow==="normalflow"){
+ var htmlLine = "<div class='LineDirection' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+}else
+{
     var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-    
+  }  
     document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },
@@ -104,7 +113,7 @@ getOffset( el ) {
     };
 },
 	render: function(){
-        var orientationClass,stackText,stackCount,fragileClass,stackClass;
+        var orientationClass,stackText,stackCount,fragileClass,stackClass,nestable_count,nestable_direction;
         var specialHandling = this.props.specialHandling;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
@@ -198,12 +207,27 @@ getOffset( el ) {
                 )
             }())
         }
-        if(Object.keys(specialHandling).length>0){
+       if(Object.keys(specialHandling).length>0){
+        if(stackCount>1 && nestable_count>1){
+        orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.nestable_direction+"Stackable":"conrainerHide"
+        }
+        else if(stackCount>1){
         orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
-        stackText=specialHandling.stacking?"STACK MAX" : "DO NOT STACK";
-        stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1]
+
+        }else if(nestable_count>1){
+        orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.nestable_direction+"Nesting":"conrainerHide"
+
+        }
+        //orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
+        nestable_count=specialHandling.nestable_count;
+        nestable_direction=specialHandling.nestable_direction;
+        stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1];
+        stackText=nestable_count>1? "NEST MAX" : stackCount>1?"STACK MAX" : "DO NOT STACK";
         fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
-        stackClass=specialHandling.stacking?"stackSize":"conrainerHide";
+        stackClass=nestable_count>1? "stackSize" :stackCount>1?"stackSize":"conrainerHide";
+       
+
+
     }
 		return (
 				<div className="drawWrap" style={wrapStyle}>

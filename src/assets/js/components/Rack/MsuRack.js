@@ -1,6 +1,7 @@
 var React = require('react');
 var RackRow = require('./RackRow');
 var DrawerRow = require('./DrawerRow');
+//var img = require('../../../images/BHLStackable.gif');
 
 var drawRackStyle = {
     flexGrow:"1",
@@ -64,7 +65,7 @@ var MsuRack = React.createClass({
       }
     
   }
-  if(Object.keys(this.props.specialHandling).length>0 && document.getElementsByClassName("LineDirection").length===0){
+  if(this.props.specialHandling && document.getElementsByClassName("LineDirection").length===0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
@@ -164,8 +165,9 @@ getOffset( el ) {
                 "justify-content": "center",
                 "flex-grow": 1,
                 "flex-wrap": "nowrap",
-                "box-sizing": "border-box",
+                "box-sizing": "border-box",               
                 overflow: "hidden"
+
             }
 
         eachRow = rackDetails.map(function(row,index){
@@ -206,30 +208,33 @@ getOffset( el ) {
                 )
             }())
         }
-       if(Object.keys(specialHandling).length>0){
+       if(specialHandling){
         nestable_count=specialHandling.nestable_count;
         nestable_direction=specialHandling.nestable_direction;
         stackCount=specialHandling.stacking_count? specialHandling.stacking_count[specialHandling.stacking_count.length-1]:0;
          if(specialHandling.orientation_preference){
          if(nestable_count>1){
-        orientationClass="orientation " + specialHandling.nestable_direction+"Nesting";
+        orientation="orientation";
+        orientationClass = './assets/images/'+ specialHandling.nestable_direction+'Nesting.gif?q='+Math.random();
         }
         else if(stackCount>=1){
-        orientationClass=stackCount>1?"orientation " + specialHandling.stacking+"Stackable":"orientation " + specialHandling.stacking+"nonStackable";
+        orientation="orientation";  
+        orientationClass=stackCount>1?'./assets/images/'+ specialHandling.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + specialHandling.stacking+'nonStackable.gif?q='+Math.random();
+        //orientationClass = './assets/images/BHLStackable.gif?q='+Math.random();
         }
         else
         {
-           orientationClass="conrainerHide";
+           orientation="containerHide";
         }
     }
         else
         {
-            orientationClass="conrainerHide";
+            orientation="containerHide";
         }
         stackText=nestable_count>1? "NEST MAX" : stackCount>1?"STACK MAX" : "DO NOT STACK";
         stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
-        fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
-        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"conrainerHide";
+        fragileClass=specialHandling.fragile?"fragile":"containerHide";
+        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
         count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
     }
@@ -240,9 +245,9 @@ getOffset( el ) {
                     <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
                
 				</div>
-                {Object.keys(specialHandling).length>0?(
+                {specialHandling?(
                 <div className="specialContainer">
-                <div className={orientationClass}></div>   
+                <img className={orientation} src={orientationClass}></img>   
                 <div className={stackClass}>
                         <span className={stackicon}></span>
                         <span className="stackText">{stackText}</span>

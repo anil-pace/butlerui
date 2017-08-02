@@ -219,7 +219,7 @@ getOffset( el ) {
         }
         else if(stackCount>=1){
         orientation="orientation";  
-        orientationClass=stackCount>1?'./assets/images/'+ specialHandling.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + specialHandling.stacking+'nonStackable.gif?q='+Math.random();
+        orientationClass=stackCount>1?'./assets/images/'+ specialHandling.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + specialHandling.stacking+'nonStackable.svg';
         //orientationClass = './assets/images/BHLStackable.gif?q='+Math.random();
         }
         else

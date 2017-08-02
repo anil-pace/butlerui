@@ -45590,7 +45590,7 @@ getOffset( el ) {
         }
         else if(stackCount>=1){
         orientation="orientation";  
-        orientationClass=stackCount>1?'./assets/images/'+ specialHandling.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + specialHandling.stacking+'nonStackable.gif?q='+Math.random();
+        orientationClass=stackCount>1?'./assets/images/'+ specialHandling.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + specialHandling.stacking+'nonStackable.svg';
         //orientationClass = './assets/images/BHLStackable.gif?q='+Math.random();
         }
         else
@@ -46893,8 +46893,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+	INTERFACE_IP : "https://192.168.3.106:5000"
 };
 module.exports = configConstants;
 

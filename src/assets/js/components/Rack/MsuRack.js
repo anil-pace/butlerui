@@ -1,7 +1,6 @@
 var React = require('react');
 var RackRow = require('./RackRow');
 var DrawerRow = require('./DrawerRow');
-//var img = require('../../../images/BHLStackable.gif');
 
 var drawRackStyle = {
     flexGrow:"1",

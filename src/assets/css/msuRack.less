@@ -9,7 +9,7 @@
     border-top: 0.625vw solid #939598;
     margin-bottom: 20px;
     max-width: 22vw; //25vw;
-    width: 100%;
+    width: 420px;
 
     .rackRow{
          
@@ -100,7 +100,7 @@
     margin-left:50px;
     overflow:auto;
     display: table;
-    width: 330px;
+    width: 350px;
         .orientation{
             width:350px;
             height:330px;
@@ -124,14 +124,26 @@
             &.LHBStackable{
             background: url(../images/LHBStackable.gif) no-repeat;
             }
+             &.lNesting{
+            background: url(../images/lNesting.gif) no-repeat;
+            }
+            &.bNesting{
+            background: url(../images/bNesting.gif) no-repeat;
+            }
+            &.hNesting{
+            background: url(../images/hNesting.gif) no-repeat;
+            }
+            &.BHLnonStackable{
+            background: url(../images/BHLnonStackable.svg) no-repeat;
+            }
+
 
         }
         .stackSize{
             border: solid 2px #cccccc;
             width:350px;
             height:76px;
-            padding:15px;
-            text-align: center;
+            padding:13px;
             font-family: SourceSansPro;
             font-size: 28px;
             font-weight: bold;
@@ -140,11 +152,25 @@
             float:left;
                 display: table-row;
                 .stackicons{
-                width: 24px;
-                height: 38px;
+                width: 40px;
+                height: 50px;
                 display: inline-block;
-                background: url(../images/boi_icons.png) 5px -576px no-repeat;
+                background: url(../images/boi_icons.svg) no-repeat;;
                 float: left;
+                    &.nestingicon{
+                            background-position: -10px -608px;
+                    }
+                    &.stackingicon{
+                            background-position: -61px -608px;
+                    }
+                    &.nonstackingicon{
+                            background-position: -109px -608px;
+                    }
+                }
+
+                .stackText{
+                    display: inline-block;
+                    margin-left: 40px;
                 }
                 .stackCount{
                       float: right;
@@ -157,14 +183,15 @@
             background-color: #ec6520;
             padding: 15px;
             box-sizing: border-box;
-            text-align: center;
+            
              display: table-row;
 
             .fragileicons{
-                width: 24px;
-                height: 38px;
+                width: 44px;
+                height: 44px;
                 display: inline-block;
-                background: url(../images/boi_icons.png) 5px -576px no-repeat;
+                background: url(../images/boi_icons.svg);
+                background-position: -167px -608px;
                 float: left;
             }
             .fragileText{
@@ -173,6 +200,8 @@
                   font-weight: bold;
                   text-align: left;
                   color: #ffffff;
+                      display: inline-block;
+                    margin-left: 40px;
             }
         }
         .conrainerHide{
@@ -186,7 +215,7 @@
 .slot-icon{
     align-self: flex-start;
     margin-left: auto;
-    background: url(../images/boi_icons.png) no-repeat;
+    background: url(../images/boi_icons.svg) no-repeat;
     &.hanger-icon{
         background-position: -54px -576px;
         width: 40px;

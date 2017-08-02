@@ -64,7 +64,7 @@ var MsuRack = React.createClass({
       }
     
   }
-  if(Object.keys(this.props.specialHandling).length>0 && document.getElementsByClassName("drawerLineNormal").length===0){
+  if(Object.keys(this.props.specialHandling).length>0 && document.getElementsByClassName("LineDirection").length===0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
@@ -113,7 +113,7 @@ getOffset( el ) {
     };
 },
 	render: function(){
-        var orientationClass,stackText,stackCount,fragileClass,stackClass,nestable_count,nestable_direction;
+        var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
         var specialHandling = this.props.specialHandling;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
@@ -165,10 +165,9 @@ getOffset( el ) {
                 "flex-grow": 1,
                 "flex-wrap": "nowrap",
                 "box-sizing": "border-box",
-                width: "100%",
                 overflow: "hidden"
             }
-        
+
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow){
                 drawerSlotData = row[1];
@@ -208,25 +207,30 @@ getOffset( el ) {
             }())
         }
        if(Object.keys(specialHandling).length>0){
-        if(stackCount>1 && nestable_count>1){
-        orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.nestable_direction+"Stackable":"conrainerHide"
-        }
-        else if(stackCount>1){
-        orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
-
-        }else if(nestable_count>1){
-        orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.nestable_direction+"Nesting":"conrainerHide"
-
-        }
-        //orientationClass=specialHandling.orientation_preference?"orientation " + specialHandling.stacking+"Stackable":"conrainerHide"
         nestable_count=specialHandling.nestable_count;
         nestable_direction=specialHandling.nestable_direction;
-        stackCount=specialHandling.stacking_count[specialHandling.stacking_count.length-1];
+        stackCount=specialHandling.stacking_count? specialHandling.stacking_count[specialHandling.stacking_count.length-1]:0;
+         if(specialHandling.orientation_preference){
+         if(nestable_count>1){
+        orientationClass="orientation " + specialHandling.nestable_direction+"Nesting";
+        }
+        else if(stackCount>=1){
+        orientationClass=stackCount>1?"orientation " + specialHandling.stacking+"Stackable":"orientation " + specialHandling.stacking+"nonStackable";
+        }
+        else
+        {
+           orientationClass="conrainerHide";
+        }
+    }
+        else
+        {
+            orientationClass="conrainerHide";
+        }
         stackText=nestable_count>1? "NEST MAX" : stackCount>1?"STACK MAX" : "DO NOT STACK";
+        stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
         fragileClass=specialHandling.fragile?"fragile":"conrainerHide";
-        stackClass=nestable_count>1? "stackSize" :stackCount>1?"stackSize":"conrainerHide";
-       
-
+        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"conrainerHide";
+        count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
     }
 		return (
@@ -240,9 +244,9 @@ getOffset( el ) {
                 <div className="specialContainer">
                 <div className={orientationClass}></div>   
                 <div className={stackClass}>
-                        <span className="stackicons"></span>
+                        <span className={stackicon}></span>
                         <span className="stackText">{stackText}</span>
-                        <span className="stackCount">{stackCount}</span>
+                        <span className="stackCount">{count}</span>
                 </div> 
                  <div className={fragileClass}>
                         <span className="fragileicons"></span>

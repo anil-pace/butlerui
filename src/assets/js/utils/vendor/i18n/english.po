@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-19 19:46+0530\n"
+"POT-Creation-Date: 2017-08-03 14:54+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1989,6 +1989,7 @@ msgid "Excess quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:444
+#: src/assets/js/serverMessages/server_messages_lang.js:457
 msgid "Entity Damaged"
 msgstr ""
 
@@ -2014,4 +2015,28 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:450
 msgid "No"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:451
+msgid "Exception with entity reported"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:452
+msgid "Please put entities with issues, in exception area"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:453
+msgid "Wrong Scan. Unrecognized barcode."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:454
+msgid "PPS is closed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:455
+msgid "Scan damaged entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:456
+msgid "Damaged Quantity"
 msgstr ""

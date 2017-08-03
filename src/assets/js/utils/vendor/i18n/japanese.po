@@ -1611,3 +1611,15 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:423
 msgid "Please scan or enter {0} number"
 msgstr "シートタイプ"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:455
+msgid "Scan damaged entity"
+msgstr "不良品を スキャンして数を入力"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:456
+msgid "Damaged Quantity"
+msgstr "不良品数"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:457
+msgid "Entity Damaged"
+msgstr "不良品"

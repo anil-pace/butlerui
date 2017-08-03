@@ -465,7 +465,6 @@ function server_messages_list() {
     _("Exception with entity reported");
     _("Please put entities with issues, in exception area");
     _("Wrong Scan. Unrecognized barcode.");
-    _("PPS is closed");
     _("Scan damaged entity");
     _("Damaged Quantity");
     _("Entity Damaged");

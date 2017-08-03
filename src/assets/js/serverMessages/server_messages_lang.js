@@ -460,5 +460,6 @@ function server_messages_list() {
     _("Exception with entity reported");
     _("Please put entities in IRT and Scan IRT Bin");
     _("Wrong Scan. Unrecognized barcode.");
+    _("Length of {0} should not be greater than {1}");
 
 }

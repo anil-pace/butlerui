@@ -173,7 +173,7 @@ var PickFront = React.createClass({
                         <div className='grid-container'>
                             <div className='main-container'>
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
-                                      rackData={this.state.PickFrontRackDetails} specialHandling={this.state.PickFrontSpecialHandling}/>
+                                      rackData={this.state.PickFrontRackDetails} putDirection={this.state.PickFrontPickDirection}/>
                                 <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
                             </div>
                         </div>

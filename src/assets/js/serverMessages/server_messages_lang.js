@@ -461,4 +461,8 @@ function server_messages_list() {
     _("Please put entities in IRT and Scan IRT Bin");
     _("Wrong Scan. Unrecognized barcode.");
     _("PPS is closed");
+    _("NEST MAX");
+    _("STACK MAX");
+    _("DO NOT STACK");
+    _("FRAGILE");
 }

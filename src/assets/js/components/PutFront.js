@@ -136,7 +136,7 @@ var PutFront = React.createClass({
             <div className="text">{_("CURRENT BIN")}</div>
             </div>
             <div className='main-container'>
-            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails} specialHandling={this.state.PutFrontSpecialHandling}/>
+            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection}/>
             <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>
             <div className = 'cancel-scan'>

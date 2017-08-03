@@ -45431,7 +45431,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         strEl = strEl ? strEl.parentNode : null;
         var endEl  = document.querySelectorAll("#drSlot .activeSlot")[0];
         if(strEl && endEl){
-        this.connect(strEl, endEl, "#6d6d6d", 3);
+        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
       }
     
   }
@@ -45439,7 +45439,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
-    this.connect(start, end, "#6d6d6d", 3,"normalflow");
+    this.connect(start, end, "#6d6d6d", 3,"LineDirection");
 }
     },
     /*
@@ -45448,7 +45448,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         color (Hexadecimal color), thickness(Integer)
      */
     
-    connect:function(startEl, endEl, color, thickness,flow) {
+    connect:function(startEl, endEl, color, thickness,className) {
     var off1 = this.getOffset(startEl);
     var off2 = this.getOffset(endEl);
     // bottom right
@@ -45465,12 +45465,11 @@ var MsuRack = React.createClass({displayName: "MsuRack",
     // angle
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
     // make hr
-if(flow==="normalflow"){
- var htmlLine = "<div class='LineDirection' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-}else
-{
-    var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-  }  
+
+ var htmlLine = "<div class="+className+"style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+
+ //   var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+ 
     document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },

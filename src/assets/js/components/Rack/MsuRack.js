@@ -60,15 +60,15 @@ var MsuRack = React.createClass({
         strEl = strEl ? strEl.parentNode : null;
         var endEl  = document.querySelectorAll("#drSlot .activeSlot")[0];
         if(strEl && endEl){
-        this.connect(strEl, endEl, "#6d6d6d", 3);
+        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
       }
     
   }
-  if(this.props.specialHandling && document.getElementsByClassName("LineDirection").length===0){
+  if(this.props.putDirection && document.getElementsByClassName("LineDirection").length===0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
-    this.connect(start, end, "#6d6d6d", 3,"normalflow");
+    this.connect(start, end, "#6d6d6d", 3,"LineDirection");
 }
     },
     /*
@@ -77,7 +77,7 @@ var MsuRack = React.createClass({
         color (Hexadecimal color), thickness(Integer)
      */
     
-    connect:function(startEl, endEl, color, thickness,flow) {
+    connect:function(startEl, endEl, color, thickness,className) {
     var off1 = this.getOffset(startEl);
     var off2 = this.getOffset(endEl);
     // bottom right
@@ -94,12 +94,11 @@ var MsuRack = React.createClass({
     // angle
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
     // make hr
-if(flow==="normalflow"){
- var htmlLine = "<div class='LineDirection' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-}else
-{
-    var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-  }  
+
+ var htmlLine = "<div class="+className+"style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+
+ //   var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+ 
     document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },
@@ -114,7 +113,7 @@ getOffset( el ) {
 },
 	render: function(){
         var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
-        var specialHandling = this.props.specialHandling;
+        var putDirection = this.props.putDirection;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
         var rackDetails = this.props.rackData.rack_type_rec;
@@ -207,32 +206,26 @@ getOffset( el ) {
                 )
             }())
         }
-       if(specialHandling){
-        nestable_count=specialHandling.nestable_count;
-        nestable_direction=specialHandling.nestable_direction;
-        stackCount=specialHandling.stacking_count? specialHandling.stacking_count[specialHandling.stacking_count.length-1]:0;
-         if(specialHandling.orientation_preference){
-         if(nestable_count>1){
+       if(putDirection){
+        nestable_count=putDirection.nestable_count;
+        nestable_direction=putDirection.nestable_direction;
+        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
+         if(putDirection.orientation_preference && nestable_count>1){
         orientation="orientation";
-        orientationClass = './assets/images/'+ specialHandling.nestable_direction+'Nesting.gif?q='+Math.random();
+        orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
         }
-        else if(stackCount>=1){
+        else if(putDirection.orientation_preference && stackCount>=1){
         orientation="orientation";  
-        orientationClass=stackCount>1?'./assets/images/'+ specialHandling.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + specialHandling.stacking+'nonStackable.svg';
-        //orientationClass = './assets/images/BHLStackable.gif?q='+Math.random();
+        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
         }
         else
         {
            orientation="containerHide";
         }
-    }
-        else
-        {
-            orientation="containerHide";
-        }
-        stackText=nestable_count>1? "NEST MAX" : stackCount>1?"STACK MAX" : "DO NOT STACK";
+        }               
+        stackText=nestable_count>1? {_("NEST MAX")} : stackCount>1?{_("STACK MAX")} : {_("DO NOT STACK")};
         stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
-        fragileClass=specialHandling.fragile?"fragile":"containerHide";
+        fragileClass=putDirection.fragile?"fragile":"containerHide";
         stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
         count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
@@ -244,7 +237,7 @@ getOffset( el ) {
                     <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
                
 				</div>
-                {specialHandling?(
+                {putDirection?(
                 <div className="specialContainer">
                 <img className={orientation} src={orientationClass}></img>   
                 <div className={stackClass}>
@@ -254,7 +247,7 @@ getOffset( el ) {
                 </div> 
                  <div className={fragileClass}>
                         <span className="fragileicons"></span>
-                        <span className="fragileText">FRAGILE</span>  
+                        <span className="fragileText">{_("FRAGILE")}</span>  
                  </div> 
                  </div>
 ):""}

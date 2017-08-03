@@ -2073,6 +2073,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 data["PutFrontSpecialHandling"] = this.getSpecialHandlingDetails();
+                //raja
                 break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -2262,6 +2263,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontSpecialHandling"] = this.getSpecialHandlingDetails();
                 break;
             case appConstants.PICK_FRONT_PACKING_BOX:
                 data["PickFrontBoxOrderDetails"] = this.getOrderDetails();

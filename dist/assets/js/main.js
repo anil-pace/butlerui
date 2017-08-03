@@ -41356,7 +41356,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                         React.createElement("div", {className: "grid-container"}, 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
-                                      rackData: this.state.PickFrontRackDetails}), 
+                                      rackData: this.state.PickFrontRackDetails, specialHandling: this.state.PickFrontSpecialHandling}), 
                                 React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                             )
                         )
@@ -52048,6 +52048,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 data["PutFrontSpecialHandling"] = this.getSpecialHandlingDetails();
+                //raja
                 break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -52237,6 +52238,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontSpecialHandling"] = this.getSpecialHandlingDetails();
                 break;
             case appConstants.PICK_FRONT_PACKING_BOX:
                 data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
@@ -52972,7 +52974,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     
-    console.log(data);
+    //console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);
@@ -52984,6 +52986,10 @@ var putSeatData = function(data) {
             CommonActions.setPickBackData(data.state_data);
             break;
         case appConstants.PICK_FRONT:
+        if(data.state_data){
+        data.state_data=JSON.parse('{"seat_name":"front_1","notification_list":[],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["101.1.A.01","101.1.A.02"],"slot_type":"slot"},"exception_allowed":[{"exception_id":"PkF001","exception_name":"Item Missing/Bad Barcode","event":"missing_or_unscannable_damaged_item"}],"roll_cage_flow":false,"bin_coordinate_plotting":false,"screen_id":"pick_front_item_scan","logout_allowed":true,"seat_type":"front","product_info":[[{"display_data":[{"locale":"ja-JP","display_name":"商品の寸法"},{"locale":"en-US","display_name":"Product Dimensions"}],"product_dimensions":[1,3,10]}],[{"display_data":[{"locale":"en-US","display_name":"product_local_image_url"}],"product_local_image_url":null}],[{"display_data":[{"locale":"ja-JP","display_name":"製品バーコード"},{"locale":"en-US","display_name":"Product Barcodes"}],"product_barcodes":["5001"]}],[{"product_sku":"5001","display_data":[{"locale":"ja-JP","display_name":"製品SKU"},{"locale":"en-US","display_name":"Product SKU"}]}]],"time_stamp":"1501740485","api_version":"1","group_info":{"1":"center"},"is_idle":false,"special_handling":{"fragile":"true"},"button_press_allowed":false,"item_uid":"b0a5a65e-8824-4fa5-9e3d-5cc4f19019a8","button_press_id":"bin_full","screen_version":"1","docked":[],"mode":"pick","scan_allowed":true,"header_msge_list":[{"level":"info","code":"PkF.H.004","details":[2],"description":"Scan  2  items"}]}');
+          }
+           console.log(data);
             CommonActions.setPickFrontData(data.state_data);
             break;
         case appConstants.AUDIT:

@@ -2073,7 +2073,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
                 data["PutFrontSpecialHandling"] = this.getSpecialHandlingDetails();
-                //raja
                 break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();

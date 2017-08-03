@@ -48086,7 +48086,7 @@ var serverMessages = {
     "CLIENTCODE_409" : "Back seat not supported for this mode",
     "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
-    "CLIENTCODE_403" : "PPS is closed",
+    "CLIENTCODE_403" : "PPS is Closed",
     "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012":"No Items To Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
@@ -48225,9 +48225,7 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
-  
-    
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"    
 };
 
 

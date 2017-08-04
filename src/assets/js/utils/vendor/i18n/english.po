@@ -8,7 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
+"POT-Creation-Date: 2017-08-04 00:13+0530\n"
+=======
 "POT-Creation-Date: 2017-08-03 14:45+0530\n"
+>>>>>>> develop
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2070,5 +2074,22 @@ msgid "Wrong Scan. Unrecognized barcode."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:463
+msgid "PPS is closed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:464
+msgid "NEST MAX"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:465
+msgid "STACK MAX"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:466
+msgid "DO NOT STACK"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:467
+msgid "FRAGILE"
 msgid "Length of {0} should not be greater than {1}"
 msgstr ""

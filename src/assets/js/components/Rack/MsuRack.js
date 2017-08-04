@@ -35,9 +35,14 @@ var MsuRack = React.createClass({
         },
     componentWillUnmount:function(){
         var lines = document.getElementsByClassName("drawerLine");
+        var directionLine = document.getElementsByClassName("LineDirection");
         if(lines.length){
             lines[0].remove();
         }
+        if(directionLine.length){
+            directionLine[0].remove();
+        }
+
     },
     /*
         Since performing DOM manipulations hence 
@@ -55,9 +60,16 @@ var MsuRack = React.createClass({
         strEl = strEl ? strEl.parentNode : null;
         var endEl  = document.querySelectorAll("#drSlot .activeSlot")[0];
         if(strEl && endEl){
-        this.connect(strEl, endEl, "#6d6d6d", 3);
+        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
       }
+    
   }
+  if(this.props.putDirection && document.getElementsByClassName("LineDirection").length===0){
+    var start = (document.querySelectorAll("#rack .activeSlot")[0]);
+    start = start ? start.parentNode : null;
+    var end  = (document.querySelectorAll(".specialContainer")[0]);
+    this.connect(start, end, "#6d6d6d", 3,"LineDirection");
+}
     },
     /*
         function to create line between 2 points
@@ -65,7 +77,7 @@ var MsuRack = React.createClass({
         color (Hexadecimal color), thickness(Integer)
      */
     
-    connect:function(startEl, endEl, color, thickness) {
+    connect:function(startEl, endEl, color, thickness,className) {
     var off1 = this.getOffset(startEl);
     var off2 = this.getOffset(endEl);
     // bottom right
@@ -82,8 +94,8 @@ var MsuRack = React.createClass({
     // angle
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
     // make hr
-    var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-    
+
+ var htmlLine = "<div class="+className+" style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
     document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },
@@ -97,6 +109,8 @@ getOffset( el ) {
     };
 },
 	render: function(){
+        var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
+        var putDirection = this.props.putDirection;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
         var rackDetails = this.props.rackData.rack_type_rec;
@@ -146,11 +160,11 @@ getOffset( el ) {
                 "justify-content": "center",
                 "flex-grow": 1,
                 "flex-wrap": "nowrap",
-                "box-sizing": "border-box",
-                width: "100%",
+                "box-sizing": "border-box",               
                 overflow: "hidden"
+
             }
-        
+
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow){
                 drawerSlotData = row[1];
@@ -189,14 +203,50 @@ getOffset( el ) {
                 )
             }())
         }
+       if(putDirection){
+        nestable_count=putDirection.nestable_count;
+        nestable_direction=putDirection.nestable_direction;
+        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
+         if(putDirection.orientation_preference && nestable_count>1){
+        orientation="orientation";
+        orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
+        }
+        else if(putDirection.orientation_preference && stackCount>=1){
+        orientation="orientation";  
+        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
+        }
+        else
+        {
+           orientation="containerHide";
+        }             
+        stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
+        stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
+        fragileClass=putDirection.fragile?"fragile":"containerHide";
+        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
+        count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
+    }
 		return (
 				<div className="drawWrap" style={wrapStyle}>
                 <div className="drawRack" id="rack" style={this.props.type=="small" ? drawRackStyle:{} }>
 					{eachRow.reverse()}
                     <div className="lastRow" style={this.props.type=="small" ?  lastSlot:{}} ></div>
-                    
+               
 				</div>
+                {putDirection?(
+                <div className="specialContainer">
+                <img className={orientation} src={orientationClass}></img>   
+                <div className={stackClass}>
+                        <span className={stackicon}></span>
+                        <span className="stackText">{stackText}</span>
+                        <span className="stackCount">{count}</span>
+                </div> 
+                 <div className={fragileClass}>
+                        <span className="fragileicons"></span>
+                        <span className="fragileText">{_("FRAGILE")}</span>  
+                 </div> 
+                 </div>
+):""}
                 {drawerCompartment}
                 </div>
 			);

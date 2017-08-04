@@ -1925,6 +1925,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["HeaderMessg"] = this.getHeaderMessg();
                 data["PutBackScreenId"] = this.getScreenId();
                 data["InvoiceType"] = this.getInvoiceType();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_TOTE_CLOSE:
                 data["PutBackScreenId"] = this.getScreenId();

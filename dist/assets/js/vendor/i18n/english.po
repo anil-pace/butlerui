@@ -2087,4 +2087,5 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:467
 msgid "FRAGILE"
+msgid "Length of {0} should not be greater than {1}"
 msgstr ""

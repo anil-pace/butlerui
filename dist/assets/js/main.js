@@ -48102,6 +48102,7 @@ var serverMessages = {
     "PtB.E.020" : "Tote matched .",
     "PtB.E.021" : "Entity already scanned.Confirm exception", 
     "PtB.E.023" : "Scan not Allowed.PPS close or force close requested",
+    "PtB.E.024" : "Length of {0} should not be greater than {1}",
     "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.", 
     "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
     "PtF.E.021" : "Bin Already Scanned",
@@ -51889,6 +51890,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["HeaderMessg"] = this.getHeaderMessg();
                 data["PutBackScreenId"] = this.getScreenId();
                 data["InvoiceType"] = this.getInvoiceType();
+                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_TOTE_CLOSE:
                 data["PutBackScreenId"] = this.getScreenId();

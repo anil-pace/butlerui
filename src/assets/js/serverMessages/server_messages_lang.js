@@ -465,4 +465,6 @@ function server_messages_list() {
     _("STACK MAX");
     _("DO NOT STACK");
     _("FRAGILE");
+    _("Length of {0} should not be greater than {1}");
+
 }

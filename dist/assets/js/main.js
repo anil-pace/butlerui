@@ -41356,7 +41356,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                         React.createElement("div", {className: "grid-container"}, 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
-                                      rackData: this.state.PickFrontRackDetails, specialHandling: this.state.PickFrontSpecialHandling}), 
+                                      rackData: this.state.PickFrontRackDetails, putDirection: this.state.PickFrontPickDirection}), 
                                 React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                             )
                         )
@@ -44818,7 +44818,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
             ), 
             React.createElement("div", {className: "main-container"}, 
-            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails, specialHandling: this.state.PutFrontSpecialHandling}), 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails, putDirection: this.state.PutFrontPutDirection}), 
             React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
             ), 
             React.createElement("div", {className: "cancel-scan"}, 
@@ -45435,7 +45435,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
       }
     
   }
-  if(this.props.specialHandling && document.getElementsByClassName("LineDirection").length===0){
+  if(this.props.putDirection && document.getElementsByClassName("LineDirection").length===0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);
@@ -45466,10 +45466,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
     // make hr
 
- var htmlLine = "<div class="+className+"style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-
- //   var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
- 
+ var htmlLine = "<div class="+className+" style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
     document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },
@@ -45484,7 +45481,7 @@ getOffset( el ) {
 },
 	render: function(){
         var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
-        var specialHandling = this.props.specialHandling;
+        var putDirection = this.props.putDirection;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
         var rackDetails = this.props.rackData.rack_type_rec;
@@ -45577,32 +45574,25 @@ getOffset( el ) {
                 )
             }())
         }
-       if(specialHandling){
-        nestable_count=specialHandling.nestable_count;
-        nestable_direction=specialHandling.nestable_direction;
-        stackCount=specialHandling.stacking_count? specialHandling.stacking_count[specialHandling.stacking_count.length-1]:0;
-         if(specialHandling.orientation_preference){
-         if(nestable_count>1){
+       if(putDirection){
+        nestable_count=putDirection.nestable_count;
+        nestable_direction=putDirection.nestable_direction;
+        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
+         if(putDirection.orientation_preference && nestable_count>1){
         orientation="orientation";
-        orientationClass = './assets/images/'+ specialHandling.nestable_direction+'Nesting.gif?q='+Math.random();
+        orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
         }
-        else if(stackCount>=1){
+        else if(putDirection.orientation_preference && stackCount>=1){
         orientation="orientation";  
-        orientationClass=stackCount>1?'./assets/images/'+ specialHandling.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + specialHandling.stacking+'nonStackable.svg';
-        //orientationClass = './assets/images/BHLStackable.gif?q='+Math.random();
+        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
         }
         else
         {
            orientation="containerHide";
-        }
-    }
-        else
-        {
-            orientation="containerHide";
-        }
-        stackText=nestable_count>1? "NEST MAX" : stackCount>1?"STACK MAX" : "DO NOT STACK";
+        }             
+        stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
         stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
-        fragileClass=specialHandling.fragile?"fragile":"containerHide";
+        fragileClass=putDirection.fragile?"fragile":"containerHide";
         stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
         count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
@@ -45614,7 +45604,7 @@ getOffset( el ) {
                     React.createElement("div", {className: "lastRow", style: this.props.type=="small" ?  lastSlot:{}})
                
 				), 
-                specialHandling?(
+                putDirection?(
                 React.createElement("div", {className: "specialContainer"}, 
                 React.createElement("img", {className: orientation, src: orientationClass}), 
                 React.createElement("div", {className: stackClass}, 
@@ -45624,7 +45614,7 @@ getOffset( el ) {
                 ), 
                  React.createElement("div", {className: fragileClass}, 
                         React.createElement("span", {className: "fragileicons"}), 
-                        React.createElement("span", {className: "fragileText"}, "FRAGILE")
+                        React.createElement("span", {className: "fragileText"}, _("FRAGILE"))
                  )
                  )
 ):"", 
@@ -50625,7 +50615,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.rack_details;
         }
     },
-     getSpecialHandlingDetails: function () {
+     getDirectionDetails: function () {
             return _seatData.special_handling;
     },
 
@@ -52046,7 +52036,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
-                data["PutFrontSpecialHandling"] = this.getSpecialHandlingDetails();
+                data["PutFrontPutDirection"] = this.getDirectionDetails();
                 break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -52236,7 +52226,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["BinMapDetails"] = this._getBinMapDetails();
-                data["PickFrontSpecialHandling"] = this.getSpecialHandlingDetails();
+                data["PickFrontPickDirection"] = this.getDirectionDetails();
                 break;
             case appConstants.PICK_FRONT_PACKING_BOX:
                 data["PickFrontBoxOrderDetails"] = this.getOrderDetails();

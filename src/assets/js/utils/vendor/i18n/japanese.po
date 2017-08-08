@@ -1902,3 +1902,8 @@ msgstr "ビンスキャン成功"
 #: src/assets/js/serverMessages/server_messages_lang.js:475
 msgid "Physically Damaged Reported should equal Scanned Quantity"
 msgstr "物理的に損害が報告された場合、スキャンされた数量"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:476
+msgid "SKU not present in Database."
+msgstr "SKUはデータベースに存在しません。"

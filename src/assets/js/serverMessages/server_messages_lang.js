@@ -473,5 +473,6 @@ function server_messages_list() {
     _("Bin scan successful");
     _("Extra entity scan found.");
     _("Physically Damaged Reported should equal Scanned Quantity");
+    _("SKU not present in Database.");
 }
 

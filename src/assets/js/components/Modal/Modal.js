@@ -265,7 +265,7 @@ function loadComponent(modalType,modalData){
             </div>
           </div>
           ));
-      title = _("Bin Full");
+      title = _("Bin full");
       break;
     case appConstants.DISCARD_PACKING_BOX:
       component = [];

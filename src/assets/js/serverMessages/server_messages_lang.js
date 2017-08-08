@@ -336,6 +336,8 @@ function server_messages_list() {
     _("Remove Item");
     _("Item Missing/Bad Barcode");
     _("Sum of missing and good quantity should be equal to {0}");
+    _("Sum of good and exception quantity should be equal to {0}");
+    _("Scan excess item quantity");
     _("Login"); 
     _("Enter Username");
     _("Enter Password");
@@ -468,4 +470,11 @@ function server_messages_list() {
     _("Scan damaged entity");
     _("Damaged Quantity");
     _("Entity Damaged");
+    _("Wrong Scan. Entity not present in Database");
+    _("Sum of good, missing and damaged should be equal to {0}");
+    _("Last item scan will be cancelled. Do you want to continue?");
+    _("Continue");
+    _("Bin full");
+    _("Please put entities which have issues in exception area");
 }
+

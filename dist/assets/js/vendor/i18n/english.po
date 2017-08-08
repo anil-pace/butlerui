@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 16:18+0530\n"
+"POT-Creation-Date: 2017-08-08 16:58+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2186,4 +2186,12 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:465
 msgid "Please put entities which have issues in exception area"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:466
+msgid "Unscannable"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:467
+msgid "Invalid Event.Expecting PPTL button press"
 msgstr ""

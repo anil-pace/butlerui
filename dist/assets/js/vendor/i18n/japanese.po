@@ -1864,3 +1864,12 @@ msgstr "ビンフル"
 #: src/assets/js/serverMessages/server_messages_lang.js:465
 msgid "Please put entities which have issues in exception area"
 msgstr "例外領域に問題があるエンティティを配置してください"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:466
+msgid "Unscannable"
+msgstr "スキャン不能"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:467
+msgid "Invalid Event.Expecting PPTL button press"
+msgstr "無効なイベント。PPTLボタンが押されていることを確認する"

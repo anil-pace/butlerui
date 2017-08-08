@@ -465,5 +465,13 @@ function server_messages_list() {
     _("Please put entities which have issues in exception area");
     _("Unscannable");
     _("Invalid Event.Expecting PPTL button press");
+    _("Remove Tote from bin & Press PPTL to confirm no Items Remaining");
+    _("Press PPTL to confirm no Items Remaining in Bin {0}");
+    _("Wrong entity scan.Please scan the correct entity");
+    _("Physically Damaged entity reported.");
+    _("Entity entry successful");
+    _("Bin scan successful");
+    _("Extra entity scan found.");
+    _("Physically Damaged Reported should equal Scanned Quantity");
 }
 

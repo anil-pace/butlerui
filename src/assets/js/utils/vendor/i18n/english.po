@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 16:58+0530\n"
+"POT-Creation-Date: 2017-08-08 18:10+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2050,6 +2050,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:436
 #: src/assets/js/serverMessages/server_messages_lang.js:438
+#: src/assets/js/serverMessages/server_messages_lang.js:469
 msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
 msgstr ""
 
@@ -2194,4 +2195,32 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:467
 msgid "Invalid Event.Expecting PPTL button press"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:468
+msgid "Remove Tote from bin & Press PPTL to confirm no Items Remaining"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:470
+msgid "Wrong entity scan.Please scan the correct entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:471
+msgid "Physically Damaged entity reported."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:472
+msgid "Entity entry successful"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:473
+msgid "Bin scan successful"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:474
+msgid "Extra entity scan found."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:475
+msgid "Physically Damaged Reported should equal Scanned Quantity"
 msgstr ""

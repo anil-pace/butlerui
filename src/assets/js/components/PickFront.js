@@ -371,7 +371,7 @@ var PickFront = React.createClass({
                             </div>
                         </div>
                         <div className='cancel-scan'>
-                            <Button1 disabled={false} text={_("Cancel exception")} module={appConstants.PUT_FRONT}
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
                                      action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                         </div>
                     </div>

@@ -1536,7 +1536,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total "), "header", false, "small", false, true, true, false));
         }
         return data;
     },
@@ -1563,12 +1563,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 });
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_excess + _(" items"), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total ") +":"+ total_excess + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total "), "header", false, "small", false, true, true, false));
         }
         return data;
     },

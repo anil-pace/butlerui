@@ -41523,7 +41523,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                             )
                         ), 
                         React.createElement("div", {className: "cancel-scan"}, 
-                            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
                                      action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -47606,6 +47606,11 @@ var japanese = {
    "Bin Info": "\u30d3\u30f3\u60c5\u5831",
    "Bin already staged. Ignoring event": "\u30d3\u30f3\u306f\u78ba\u5b9a\u6e08\u307f\u3067\u3059\u3002\u64cd\u4f5c\u3092\u7121\u8996\u3057\u307e\u3057\u305f",
    "Bin empty. Cannot be staged": "\u30d3\u30f3\u304c\u7a7a\u3067\u3059\u3002\u78ba\u5b9a\u3067\u304d\u307e\u305b\u3093",
+<<<<<<< HEAD
+=======
+   "Bin full": "\u30d3\u30f3\u30d5\u30eb",
+   "Bin scan successful": "",
+>>>>>>> 56ca385... Japanese fixes
    "Bin selected for put. Cannot be staged": "\u30d3\u30f3\u306f\u5165\u8377\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u78ba\u5b9a\u306f\u3067\u304d\u307e\u305b\u3093",
    "Bin {0} items removed successfully": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u5b8c\u4e86",
    "Bin {0} selected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u307e\u3057\u305f",
@@ -47668,6 +47673,7 @@ var japanese = {
    "Entity Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
    "Entity already scanned.Confirm exception": "\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u304c\u65e2\u306b\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f\u3002\u4f8b\u5916\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
    "Entity already scanned.Waiting for PPTL press": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u6e08\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Entity entry successful": "\u8eab\u4f53\u7684\u306b\u640d\u5bb3\u3092\u53d7\u3051\u305f\u56e3\u4f53\u304c\u5831\u544a\u3057\u305f\u3002",
    "Entity not expected in tote. Please put entity in exception area and confirm": "\u30c8\u30fc\u30c8\u306b\u5b58\u5728\u3057\u306a\u3044\u5546\u54c1\u3067\u3059\u3002\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
    "Entity scan not expected.": "\u30b9\u30ad\u30e3\u30f3\u304c\u9055\u3044\u307e\u3059",
    "Entity scan not expected. Waiting for PPTL press": "\u30b9\u30ad\u30e3\u30f3\u9055\u3044\u3002\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
@@ -47693,6 +47699,7 @@ var japanese = {
    "Extra": "\u904e\u5270",
    "Extra Entities in Bin": "\u904e\u5270\u54c1",
    "Extra Entity Found": "\u904e\u5270\u306a\u5546\u54c1",
+   "Extra entity scan found.": "\u30d3\u30f3\u30b9\u30ad\u30e3\u30f3\u6210\u529f",
    "Extra item found please put back item in Exception bin": "\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u3002\u5546\u54c1\u3092\u623b\u3059",
    "FINISH": "\u5b8c\u4e86",
    "Finish": "\u5b8c\u4e86",
@@ -47769,6 +47776,8 @@ var japanese = {
    "Peripheral deleted successfully": "\u5468\u8fba\u6a5f\u5668\u524a\u9664\u5b8c\u4e86",
    "Peripheral not added": "\u5468\u8fba\u6a5f\u5668\u8ffd\u52a0\u5931\u6557",
    "Peripheral not deleted successfully": "\u5468\u8fba\u6a5f\u5668\u524a\u9664\u5931\u6557",
+   "Physically Damaged Reported should equal Scanned Quantity": "\u7269\u7406\u7684\u306b\u640d\u5bb3\u304c\u5831\u544a\u3055\u308c\u305f\u5834\u5408\u3001\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u305f\u6570\u91cf",
+   "Physically Damaged entity reported.": "",
    "Pick complete. Waiting for next rack.": "\u30d4\u30c3\u30af\u5b8c\u4e86\u3002\u6b21\u306eMSU\u79fb\u52d5\u4e2d",
    "Picked quantity more than expected. Put extra items back in MSU": "\u30d4\u30c3\u30af\u6570\u30aa\u30fc\u30d0\u30fc\u3002\u904e\u5270\u5206\u3092MSU\u306b\u623b\u3059",
    "Place": "\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
@@ -47823,6 +47832,7 @@ var japanese = {
    "Quantity should be less than or equal to {0}": "\u6570\u91cf\u306f {0} \u4ee5\u4e0b\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093",
    "Release MTU": "MTU\u3092\u89e3\u653e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Remove Item": "\u5546\u54c1\u53d6\u308a\u51fa\u3057",
+   "Remove Tote from bin & Press PPTL to confirm no Items Remaining": "\u30d3\u30f3\u304b\u3089\u30c8\u30fc\u30c8\u3092\u53d6\u308a\u51fa\u3057\u3001PPTL\u3092\u62bc\u3057\u3066\u6b8b\u308a\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u78ba\u8a8d\u3057\u307e\u3059",
    "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining": "\u6b8b\u3063\u3066\u3044\u308b\u9805\u76ee\u3092\u78ba\u8a8d\u3059\u308b\u305f\u3081\u306b\u30d3\u30f3{0}\u304b\u3089\u30c8\u30fc\u30c8\u3092\u5916\u3057\u3066PPTL\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
    "Reprint": "\u518d\u5370\u5237",
    "SKU not present in Database.Put in exception area": "\u5546\u54c1\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332\u3002\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
@@ -47965,6 +47975,7 @@ var japanese = {
    "Wrong bin chosen.Try selecting another bin": "\u30d3\u30f3\u9055\u3044\u3002\u4ed6\u306e\u30d3\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Wrong box scanned. Please try again": "\u30dc\u30c3\u30af\u30b9\u9055\u3044\u3002\u6b63\u3057\u3044\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong enitity scanned. Expecting scan from bin {0}": "\u8aa4\u3063\u305f\u5546\u54c1\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f\u3002\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Wrong entity scan.Please scan the correct entity": "\u9593\u9055\u3063\u305f\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u30b9\u30ad\u30e3\u30f3\u3002\u6b63\u3057\u3044\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
    "Wrong entity scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong entity scanned. Please scan Container/Item.": "\u30b9\u30ad\u30e3\u30f3\u9055\u3044\u3002\u30b3\u30f3\u30c6\u30ca\u304b\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong entity scanned. Please scan tote": "\u30b9\u30ad\u30e3\u30f3\u9055\u3044\u3002\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
@@ -48047,6 +48058,8 @@ var serverMessages = {
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
     "PtF.H.017" : "Wrong Undock",
+    "PtF.H.018" : "Remove Tote from bin & Press PPTL to confirm no Items Remaining",
+    "PtF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -48092,6 +48105,7 @@ var serverMessages = {
     "PkF.E.011" : "Data capture failed at item {0}",
     "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PkF.E.014" : "Press PPTL for bin {0} to confirm",
+    "PkF.E.015" : "Wrong entity scan.Please scan the correct entity",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
@@ -48246,6 +48260,9 @@ var serverMessages = {
     "PtF.I.005" : "Space unavailable recorded.",
     "PtF.I.006" : "Cancel scan successful",
     "PtF.I.007" : "Exception entry successful",    
+    "PtF.I.008" : "Physically Damaged entity reported.",
+    "PtF.I.009" : "Entity entry successful",
+    "PtF.I.010" : "Bin scan successful",
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
@@ -48282,6 +48299,8 @@ var serverMessages = {
     "PpB.E.008" : "Wrong barcode scanned",
     "PpB001" : "Enter excess item quantity"  ,
     "PkF.E.014":"Packing box scan failed",
+    "PkF.E.017":"Extra entity scan found.",
+    "PkF.E.018":"Physically Damaged Reported should equal Scanned Quantity",
     "PkF.I.008":"Packing box closed",
     "PkF.I.009":"Packing box discarded",
     "PkF.H.011":"Place box in MSU slot and confirm",
@@ -51409,7 +51428,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total "), "header", false, "small", false, true, true, false));
         }
         return data;
     },
@@ -51436,12 +51455,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 });
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_excess + _(" items"), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total ") +":"+ total_excess + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total "), "header", false, "small", false, true, true, false));
         }
         return data;
     },

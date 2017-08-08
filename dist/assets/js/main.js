@@ -47609,8 +47609,12 @@ var japanese = {
 <<<<<<< HEAD
 =======
    "Bin full": "\u30d3\u30f3\u30d5\u30eb",
+<<<<<<< HEAD
    "Bin scan successful": "",
 >>>>>>> 56ca385... Japanese fixes
+=======
+   "Bin scan successful": "\u30d3\u30f3\u30b9\u30ad\u30e3\u30f3\u304c\u6210\u529f",
+>>>>>>> 5f3345e... Fixes for Physically Damaged entity reported. and bin successful
    "Bin selected for put. Cannot be staged": "\u30d3\u30f3\u306f\u5165\u8377\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u78ba\u5b9a\u306f\u3067\u304d\u307e\u305b\u3093",
    "Bin {0} items removed successfully": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u5b8c\u4e86",
    "Bin {0} selected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u307e\u3057\u305f",
@@ -47777,7 +47781,7 @@ var japanese = {
    "Peripheral not added": "\u5468\u8fba\u6a5f\u5668\u8ffd\u52a0\u5931\u6557",
    "Peripheral not deleted successfully": "\u5468\u8fba\u6a5f\u5668\u524a\u9664\u5931\u6557",
    "Physically Damaged Reported should equal Scanned Quantity": "\u7269\u7406\u7684\u306b\u640d\u5bb3\u304c\u5831\u544a\u3055\u308c\u305f\u5834\u5408\u3001\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u305f\u6570\u91cf",
-   "Physically Damaged entity reported.": "",
+   "Physically Damaged entity reported.": "\u640d\u5bb3\u5546\u54c1\u304c\u5831\u544a\u3055\u308c\u305f",
    "Pick complete. Waiting for next rack.": "\u30d4\u30c3\u30af\u5b8c\u4e86\u3002\u6b21\u306eMSU\u79fb\u52d5\u4e2d",
    "Picked quantity more than expected. Put extra items back in MSU": "\u30d4\u30c3\u30af\u6570\u30aa\u30fc\u30d0\u30fc\u3002\u904e\u5270\u5206\u3092MSU\u306b\u623b\u3059",
    "Place": "\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",

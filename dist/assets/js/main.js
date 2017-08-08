@@ -37174,10 +37174,10 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.AuditPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.AuditSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.AuditSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -40117,7 +40117,7 @@ function loadComponent(modalType,modalData){
             )
           )
           ));
-      title = _("Bin Full");
+      title = _("Bin full");
       break;
     case appConstants.DISCARD_PACKING_BOX:
       component = [];
@@ -41109,10 +41109,10 @@ var PickBack = React.createClass({displayName: "PickBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickBackPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), "  : ", this.state.PickBackPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickBackSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PickBackSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -41590,7 +41590,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                         React.createElement("div", {className: "exception-right"}, 
                             React.createElement("div", {className: "gor-exception-align"}, 
                                 React.createElement("div", {
-                                    className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
+                                    className: "gor-exceptionConfirm-text"}, _("Please put entities which have issues in exception area")), 
 
                                 React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", 
@@ -41688,10 +41688,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                     React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                         React.createElement("div", {className: "row scannerHeader"}, 
                             React.createElement("div", {className: "col-md-6"}, 
-                                React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                                React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), ": ", this.state.PickFrontPpsMode.toUpperCase(), " ")
                             ), 
                             React.createElement("div", {className: "col-md-6"}, 
-                                React.createElement("div", {className: "seatType"}, " Seat Type" + ' ' +
+                                React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), 
                                     ": ", this.state.PickFrontSeatType.toUpperCase())
                             )
                         ), 
@@ -42280,10 +42280,10 @@ var PrePut = React.createClass({displayName: "PrePut",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PrePutPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), ": ", this.state.PrePutPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PrePutSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PrePutSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -44603,10 +44603,10 @@ var PutBack = React.createClass({displayName: "PutBack",
       React.createElement("div", {className: "grid-container audit-reconcilation"}, 
       React.createElement("div", {className: "row scannerHeader"}, 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
+      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutBackPpsMode.toUpperCase(), " ")
       ), 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
+      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutBackSeatType.toUpperCase())
       )
       ), 
       React.createElement(TabularData, {data: this.state.utility}), 
@@ -44980,7 +44980,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             {
               UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -45038,7 +45038,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entities which have issues in exception area")), 
                    
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
@@ -45174,10 +45174,10 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "grid-container audit-reconcilation"}, 
             React.createElement("div", {className: "row scannerHeader"}, 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
+            React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
             ), 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
+            React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutFrontSeatType.toUpperCase())
             )
             ), 
             React.createElement(TabularData, {data: this.state.utility}), 
@@ -47606,6 +47606,7 @@ var japanese = {
    "Bin Info": "\u30d3\u30f3\u60c5\u5831",
    "Bin already staged. Ignoring event": "\u30d3\u30f3\u306f\u78ba\u5b9a\u6e08\u307f\u3067\u3059\u3002\u64cd\u4f5c\u3092\u7121\u8996\u3057\u307e\u3057\u305f",
    "Bin empty. Cannot be staged": "\u30d3\u30f3\u304c\u7a7a\u3067\u3059\u3002\u78ba\u5b9a\u3067\u304d\u307e\u305b\u3093",
+   "Bin full": "\u30d3\u30f3\u30d5\u30eb",
    "Bin selected for put. Cannot be staged": "\u30d3\u30f3\u306f\u5165\u8377\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u78ba\u5b9a\u306f\u3067\u304d\u307e\u305b\u3093",
    "Bin {0} items removed successfully": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u5b8c\u4e86",
    "Bin {0} selected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u307e\u3057\u305f",
@@ -47634,6 +47635,7 @@ var japanese = {
    "Confirm": "\u78ba\u8a8d",
    "Confirm MSU Release": "MSU\u306e\u30ea\u30ea\u30fc\u30b9\u3092\u78ba\u8a8d",
    "Connection is closed. Connecting...": "\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u304c\u5207\u65ad\u3055\u308c\u307e\u3057\u305f\u3002\u518d\u63a5\u7d9a\u4e2d\u30fb\u30fb\u30fb",
+   "Continue": "\u6301\u7d9a\u3059\u308b",
    "Could not connect to PPS.Please try again.": "PPS\u306b\u63a5\u7d9a\u3067\u304d\u307e\u305b\u3093\u3002\u3082\u3046\u4e00\u5ea6\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044",
    "Current PPS mode does not support back seat. Please logout.": "\u73fe\u5728\u306e\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u306f\u30d0\u30c3\u30af\u30b7\u30fc\u30c8\u4f7f\u7528\u4e0d\u53ef\u3002\u30ed\u30b0\u30a2\u30a6\u30c8\u3057\u3066\u304f\u3060\u3055\u3044",
    "Damaged Quantity": "\u4e0d\u826f\u54c1\u6570",
@@ -47718,6 +47720,7 @@ var japanese = {
    "Items In Box Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
    "Japanese": "\u65e5\u672c\u8a9e",
    "Last Box Scan Completed! Scan Remaining Box/Items": "\u30dc\u30c3\u30af\u30b9\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86\uff01\u6b8b\u308a\u306e\u5546\u54c1\u307e\u305f\u306f\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Last item scan will be cancelled. Do you want to continue?": "\u6700\u5f8c\u306e\u9805\u76ee\u30b9\u30ad\u30e3\u30f3\u306f\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3059\u3002\u7d9a\u3051\u305f\u3044\u3067\u3059\u304b\uff1f",
    "List Of Items To Reconcile": "\u8abf\u6574\u304c\u5fc5\u8981\u306a\u5546\u54c1\u30ea\u30b9\u30c8",
    "Location scan successful": "\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u306e\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
    "Login": "\u30ed\u30b0\u30a4\u30f3",
@@ -47788,6 +47791,7 @@ var japanese = {
    "Please press PPTL button which does not have any totes associated": "\u30c8\u30fc\u30c8\u306b\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u306a\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Please press those buttons having color blink_blue": "\u9752\u8272\u70b9\u6ec5\u306e\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Please put entities in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
+   "Please put entities which have issues in exception area": "\u4f8b\u5916\u9818\u57df\u306b\u554f\u984c\u304c\u3042\u308b\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u914d\u7f6e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please put entities with issues, in exception area": "\u4f8b\u5916\u9818\u57df\u306b\u554f\u984c\u306e\u3042\u308b\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u914d\u7f6e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please put entity in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
    "Please put extra entities in exception area.": "\u8d85\u904e\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
@@ -47852,6 +47856,7 @@ var japanese = {
    "Scan box barcode": "\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan damaged entity": "\u4e0d\u826f\u54c1\u3092 \u30b9\u30ad\u30e3\u30f3\u3057\u3066\u6570\u3092\u5165\u529b",
    "Scan excess item": "\u4f59\u5206\u306a\u9805\u76ee\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Scan excess item quantity": "\u4f59\u5270\u54c1\u76ee\u6570\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b",
    "Scan item / Stage PPS Bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
    "Scan item / Stage pps bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
    "Scan items and place in bin {0}": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u30d3\u30f3 {0} \u306b\u7f6e\u304f",
@@ -47889,6 +47894,8 @@ var japanese = {
    "Status": "\u30b9\u30c6\u30fc\u30bf\u30b9",
    "Status To Reconcile": "\u8abf\u6574\u4e2d",
    "Submit": "\u78ba\u5b9a",
+   "Sum of good and exception quantity should be equal to {0}": "\u826f\u3044\u3068\u4f8b\u5916\u306e\u91cf\u306e\u548c\u306f {0}",
+   "Sum of good, missing and damaged should be equal to {0}": "\u826f\u3044\u3001\u6b20\u3051\u3066\u3044\u308b\u3001\u50b7\u3064\u3044\u305f\u3082\u306e\u306e\u5408\u8a08\u306f{0}",
    "Sum of missing and good quantity should be equal to {0}": "\u5408\u8a08\u6570(\u826f\u54c1\u6570\uff0b\u7d1b\u5931\u6570)\u306f {0} \u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
    "Sum of missing, good and damaged should be equal to {0}": "\u6570\u91cf\u4e0d\u4e00\u81f4\u3002\u7d1b\u5931\u54c1\u3068\u826f\u54c1\u3068\u4e0d\u826f\u54c1\u306e\u5408\u8a08\u306f {0} ",
    "System Error. Scanned entity details not available at this time": "\u30b7\u30b9\u30c6\u30e0\u30a8\u30e9\u30fc\u3002\u73fe\u5728\u3001\u5546\u54c1\u8a73\u7d30\u306f\u53c2\u7167\u3067\u304d\u307e\u305b\u3093",
@@ -47957,6 +47964,7 @@ var japanese = {
    "Wrong PPTL pressed. Please press correct PPTL": "\u30d3\u30f3\u30dc\u30bf\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Wrong PPTL pressed. Please try another": "\u30d3\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Wrong Ppsbin button pressed.Please press those buttons having color blue": "\u30d3\u30f3\u9055\u3044\u3002\u9752\u8272\u306e\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Wrong Scan. Entity not present in Database": "\u9593\u9055\u3063\u305f\u30b9\u30ad\u30e3\u30f3\u3002\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u306b\u5b58\u5728\u3057\u306a\u3044\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3",
    "Wrong Scan. Unrecognized barcode.": "\u9593\u9055\u3063\u305f\u30b9\u30ad\u30e3\u30f3\u3002\u7121\u8a8d\u8b58\u3055\u308c\u305f\u30d0\u30fc\u30b3\u30fc\u30c9\u3002",
    "Wrong Undock": "\u9593\u9055\u3063\u305f\u30a2\u30f3\u30c9\u30c3\u30af",
    "Wrong barcode scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059",
@@ -48132,6 +48140,9 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.009": "SKU not present in Database.",
+    "Common.010": "Wrong Scan. Entity not present in Database",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
@@ -51402,7 +51413,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 });
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total ") +":"+ total_damaged + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
@@ -51416,7 +51427,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["footer"] = [];
         data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Excess quantity"), "header", false, "small", false, true, true, false));
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;

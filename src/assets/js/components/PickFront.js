@@ -424,7 +424,7 @@ var PickFront = React.createClass({
                         <div className="exception-right">
                             <div className="gor-exception-align">
                                 <div
-                                    className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
+                                    className="gor-exceptionConfirm-text">{_("Please put entities which have issues in exception area")}</div>
 
                                 <div className="finish-damaged-barcode align-button">
                                     <Button1 disabled={false} text={_("Confirm")} color={"orange"}
@@ -522,10 +522,10 @@ var PickFront = React.createClass({
                     <div className='grid-container audit-reconcilation'>
                         <div className="row scannerHeader">
                             <div className="col-md-6">
-                                <div className="ppsMode"> PPS Mode : {this.state.PickFrontPpsMode.toUpperCase()} </div>
+                                <div className="ppsMode"> {_("PPS Mode")}: {this.state.PickFrontPpsMode.toUpperCase()} </div>
                             </div>
                             <div className="col-md-6">
-                                <div className="seatType"> Seat Type
+                                <div className="seatType"> {_("Seat Type")}
                                     : {this.state.PickFrontSeatType.toUpperCase()}</div>
                             </div>
                         </div>

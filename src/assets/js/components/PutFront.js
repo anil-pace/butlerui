@@ -334,7 +334,7 @@ var PutFront = React.createClass({
             {
               UnscannableNI=( <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
                   <NumericIndicator  execType = {appConstants.UNSCANNABLE_QUANTITY}/>
                     </div>);
             }
@@ -392,7 +392,7 @@ var PutFront = React.createClass({
                 <Exception data={this.state.PutFrontExceptionData}/>
                 <div className="exception-right">
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Please put entitites which has issues in exception area")}</div>
+                    <div className="gor-exceptionConfirm-text">{_("Please put entities which have issues in exception area")}</div>
                    
                   <div className = "finish-damaged-barcode align-button">
                     <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
@@ -528,10 +528,10 @@ var PutFront = React.createClass({
             <div className='grid-container audit-reconcilation'>
             <div className="row scannerHeader">
             <div className="col-md-6">
-            <div className="ppsMode"> PPS Mode : {this.state.PutFrontPpsMode.toUpperCase()} </div>
+            <div className="ppsMode"> {_("PPS Mode")} : {this.state.PutFrontPpsMode.toUpperCase()} </div>
             </div>
             <div className="col-md-6">
-            <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
+            <div className="seatType"> {_("Seat Type")} : {this.state.PutFrontSeatType.toUpperCase()}</div>
             </div>
             </div>
             <TabularData data = {this.state.utility}/>                  

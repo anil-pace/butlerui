@@ -187,10 +187,10 @@ var PickBack = React.createClass({
               <div className='grid-container audit-reconcilation'>
                   <div className="row scannerHeader">
                     <div className="col-md-6">
-                      <div className="ppsMode"> PPS Mode : {this.state.PickBackPpsMode.toUpperCase()} </div>
+                      <div className="ppsMode"> {_("PPS Mode")}  : {this.state.PickBackPpsMode.toUpperCase()} </div>
                     </div>
                     <div className="col-md-6">
-                      <div className="seatType"> Seat Type : {this.state.PickBackSeatType.toUpperCase()}</div>
+                      <div className="seatType"> {_("Seat Type")} : {this.state.PickBackSeatType.toUpperCase()}</div>
                     </div>
                   </div>
                   <TabularData data = {this.state.utility}/>

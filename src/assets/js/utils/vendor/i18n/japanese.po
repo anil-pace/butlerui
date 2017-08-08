@@ -1831,3 +1831,36 @@ msgstr "{0}番号: :"
 
 msgid "OK"
 msgstr "はい"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:337
+msgid "Sum of good and exception quantity should be equal to {0}"
+msgstr "良いと例外の量の和は {0}"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:338
+msgid "Scan excess item quantity"
+msgstr "余剰品目数をスキャンする"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:460
+msgid "Wrong Scan. Entity not present in Database"
+msgstr "間違ったスキャン。データベースに存在しないエンティティ"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:461
+msgid "Sum of good, missing and damaged should be equal to {0}"
+msgstr "良い、欠けている、傷ついたものの合計は{0}"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:462
+msgid "Last item scan will be cancelled. Do you want to continue?"
+msgstr "最後の項目スキャンはキャンセルされます。続けたいですか？"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:463
+msgid "Continue"
+msgstr "持続する"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:464
+msgid "Bin full"
+msgstr "ビンフル"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:465
+msgid "Please put entities which have issues in exception area"
+msgstr "例外領域に問題があるエンティティを配置してください"

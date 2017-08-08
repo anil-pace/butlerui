@@ -193,10 +193,10 @@ var PrePut = React.createClass({
               <div className='grid-container audit-reconcilation'>
                   <div className="row scannerHeader">
                     <div className="col-md-6">
-                      <div className="ppsMode"> PPS Mode : {this.state.PrePutPpsMode.toUpperCase()} </div>
+                      <div className="ppsMode"> {_("PPS Mode")}: {this.state.PrePutPpsMode.toUpperCase()} </div>
                     </div>
                     <div className="col-md-6">
-                      <div className="seatType"> Seat Type : {this.state.PrePutSeatType.toUpperCase()}</div>
+                      <div className="seatType"> {_("Seat Type")} : {this.state.PrePutSeatType.toUpperCase()}</div>
                     </div>
                   </div>
                   <TabularData data = {this.state.utility}/>

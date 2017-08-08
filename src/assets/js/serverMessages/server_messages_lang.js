@@ -476,5 +476,7 @@ function server_messages_list() {
     _("Continue");
     _("Bin full");
     _("Please put entities which have issues in exception area");
+    _("Unscannable");
+    _("Invalid Event.Expecting PPTL button press");
 }
 

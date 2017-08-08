@@ -42134,7 +42134,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel Exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -42233,7 +42233,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel Exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -42257,7 +42257,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel Exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -44968,7 +44968,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -45110,7 +45110,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                       )
                     ), 
                      React.createElement("div", {className: "cancel-scan"}, 
-                       React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                       React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                     )
                   )
               );      
@@ -45128,7 +45128,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             )
             ), 
             React.createElement("div", {className: "cancel-scan"}, 
-            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
             );      
@@ -45152,7 +45152,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             )
             ), 
             React.createElement("div", {className: "cancel-scan"}, 
-            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
             );      
@@ -47701,6 +47701,7 @@ var japanese = {
    "Good Quantity Cannot be Equal to the Total Quantity": "\u826f\u3044\u6570\u91cf\u306f\u5408\u8a08\u6570\u91cf\u3068\u540c\u69d8\u3067\u3042\u308b\u3053\u3068\u306f\u3067\u304d\u307e\u305b\u3093",
    "Incorrect tote barcode scanned. Please try again": "\u8aa4\u3063\u305f\u30c8\u30fc\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
    "Input Extra Details": "\u8ffd\u52a0\u60c5\u5831\u3092\u5165\u529b",
+   "Invalid Event.Expecting PPTL button press": "\u7121\u52b9\u306a\u30a4\u30d9\u30f3\u30c8\u3002PPTL\u30dc\u30bf\u30f3\u304c\u62bc\u3055\u308c\u3066\u3044\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3059\u308b",
    "Invalid Exception for this configuration": "\u8a2d\u5b9a\u6642\u306b\u4e0d\u6b63\u306a\u4f8b\u5916\u304c\u767a\u751f",
    "Invalid Slot scanned": "\u7121\u52b9\u306a\u30b9\u30ed\u30c3\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
    "Invalid credentials": "\u7121\u52b9\u306a\u8a8d\u8a3c\u60c5\u5831",
@@ -47937,6 +47938,7 @@ var japanese = {
    "Unexpected Item": "\u5546\u54c1\u9055\u3044",
    "Unexpected entity scanned": "\u610f\u5916\u306e\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
    "Unhandled event ocurred": "\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u307e\u3057\u305f",
+   "Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u80fd",
    "Unscannable Quantity": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u6570",
    "Unselected": "\u672a\u9078\u629e",
    "Update": "\u66f4\u65b0",

@@ -10,6 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2017-08-08 12:13+0530\n"
 =======
 "POT-Creation-Date: 2017-08-08 16:58+0530\n"
@@ -17,6 +18,9 @@ msgstr ""
 =======
 "POT-Creation-Date: 2017-08-08 18:10+0530\n"
 >>>>>>> 56ca385... Japanese fixes
+=======
+"POT-Creation-Date: 2017-08-08 19:11+0530\n"
+>>>>>>> a24f2b0... SKU not present in database.
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2126,4 +2130,11 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:475
 msgid "Physically Damaged Reported should equal Scanned Quantity"
 msgstr ""
+<<<<<<< HEAD
 >>>>>>> 56ca385... Japanese fixes
+=======
+
+#: src/assets/js/serverMessages/server_messages_lang.js:476
+msgid "SKU not present in Database."
+msgstr ""
+>>>>>>> a24f2b0... SKU not present in database.

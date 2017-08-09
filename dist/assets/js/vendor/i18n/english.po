@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 19:11+0530\n"
+"POT-Creation-Date: 2017-08-09 16:30+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2218,6 +2218,7 @@ msgid "Bin scan successful"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:474
+#: src/assets/js/serverMessages/server_messages_lang.js:477
 msgid "Extra entity scan found."
 msgstr ""
 
@@ -2227,4 +2228,16 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:476
 msgid "SKU not present in Database."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:478
+msgid "Container Already Scanned."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:479
+msgid "Invalid Entity Scanned."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:480
+msgid "Quantity of Physically damaged entities scanned is less."
 msgstr ""

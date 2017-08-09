@@ -474,5 +474,9 @@ function server_messages_list() {
     _("Extra entity scan found.");
     _("Physically Damaged Reported should equal Scanned Quantity");
     _("SKU not present in Database.");
+    _("Extra entity scan found.");
+    _("Container Already Scanned.");
+    _("Invalid Entity Scanned.");
+    _("Quantity of Physically damaged entities scanned is less.")   
 }
 

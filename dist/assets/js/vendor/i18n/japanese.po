@@ -1916,4 +1916,20 @@ msgstr "物理的に損害が報告された場合、スキャンされた数量
 #: src/assets/js/serverMessages/server_messages_lang.js:476
 msgid "SKU not present in Database."
 msgstr "SKUはデータベースに存在しません。"
+<<<<<<< HEAD
 >>>>>>> a24f2b0... SKU not present in database.
+=======
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:478
+msgid "Container Already Scanned."
+msgstr "既にスキャンされたコンテナ。"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:479
+msgid "Invalid Entity Scanned."
+msgstr "無効なエンティティがスキャンされました。"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:480
+msgid "Quantity of Physically damaged entities scanned is less."
+msgstr "スキャンした物理的に損傷したエンティティの数は少なくなります。"
+>>>>>>> 019858d... Fixes fo quantity translations

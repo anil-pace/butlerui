@@ -1,860 +1,834 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-msgid ""
-msgstr ""
-"Project-Id-Version: butler_interface_kerry 1.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-09 15:13+0530\n"
-"PO-Revision-Date: 2016-10-14 19:34+0900\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: ja_JP\n"
-
 #: src/assets/js/serverMessages/server_messages_lang.js:7
 msgid "Scan item / Stage pps bin"
-msgstr "商品をスキャンしてビンに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:8
 msgid "Scan Tote to associate with Bin"
-msgstr "トートをスキャンしてビンに紐付け"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:9
 msgid "Press PpsBin Button Or Scan a Tote"
-msgstr "ビンのボタンを押すか、トートをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:10
 msgid "user Name"
-msgstr "ユーザー名"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:11
-#: src/assets/js/serverMessages/server_messages_lang.js:264
 #: src/assets/js/serverMessages/server_messages_lang.js:266
 msgid "Password"
-msgstr "パスワード"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:10
-#: src/assets/js/serverMessages/server_messages_lang.js:263
 #: src/assets/js/serverMessages/server_messages_lang.js:265
 msgid "User Name"
-msgstr "ユーザー名"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:7
-msgid "Scan item / Stage PPS Bin"
-msgstr "商品をスキャンしてビンに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:12
 msgid "Are you sure you want to close Tote"
-msgstr "トートをクローズしてもよろしいですか？"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:13
 msgid "Details"
-msgstr "商品詳細"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:14
 msgid "Scan {0} items"
-msgstr "商品を {0} 個スキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:15
 msgid "Scan box barcode"
-msgstr "ボックスをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:16
 msgid "Press PpsBin {0} to remove items"
-msgstr "ビン {0} のボタンを押して商品を取り出す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:17
 msgid "Tote is already scanned.Expecting pptl scan."
-msgstr "トートはスキャン済みです"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:18
 msgid "Totes are not required.Please don't scan tote barcode"
-msgstr "トートのスキャンは不要です"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:19
 msgid "Wrong PPS bin scanned"
-msgstr "誤ったビンがスキャンされました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:20
 msgid "Please scan the tote first and then scan pptl barcode"
-msgstr "トートの後にビンをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:21
 msgid "Tote scanned.Expecting pptl scan."
-msgstr "トートはスキャン済みです。ビンをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:22
 msgid "Pptl scan not allowed. Totes are not required"
-msgstr "ビンのスキャンは許可されていません。トートをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:23
 #: src/assets/js/serverMessages/server_messages_lang.js:162
 #: src/assets/js/serverMessages/server_messages_lang.js:164
 msgid "Tote didn't get associated"
-msgstr "トートが紐付けされていません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:24
 msgid "After scannning tote barcode, please scan pptl barcode"
-msgstr "トートをスキャンして、ビンをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:25
-msgid ""
+msgid "";
 "Wrong Ppsbin button pressed.Please press those buttons having color blue"
-msgstr "ビン違い。青色のビンのボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:26
 msgid "Please complete pickback for pending bin and then proceed"
-msgstr "ピックバック未完了のビンを確定"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:27
 msgid "No totes associated. Pease keep totes in the Bin and then scan"
-msgstr "トートが紐づけされていません。ビンのトートをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:28
 msgid "Documents printed Successfully"
-msgstr "印刷完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:29
 #: src/assets/js/serverMessages/server_messages_lang.js:177
 #: src/assets/js/serverMessages/server_messages_lang.js:179
 msgid "No tote scanned"
-msgstr "トートがスキャンされていません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:30
 msgid "Tote cancelled"
-msgstr "トートがキャンセルされました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:31
 msgid "Tote already associated with ppsbin"
-msgstr "トートは既にビンに紐付け済み"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:32
 msgid "Incorrect tote barcode scanned. Please try again"
-msgstr "誤ったトートがスキャンされました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:33
 msgid "Please press PPTL button which does not have any totes associated"
-msgstr "トートに紐づけされていないビンのボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:34
 msgid "Tote assigned successfully to ppsbin {0}"
-msgstr "ビン {0} にトートを紐付け"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:35
 msgid "Bin {0} items removed successfully"
-msgstr "ビン {0} の商品の取り出し完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:36
 msgid "Totes are not required"
-msgstr "トートは必要ありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:37
 msgid "Wrong Barcode scanned"
-msgstr "スキャン違い"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:38
 msgid "Tote could not be reserved as already reserved"
-msgstr "トートは使用済み"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:39
 msgid "Exception invalid as totes are not required with this PPS"
-msgstr "このステーションで利用されているトートではありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:40
 msgid "Override tote not possible"
-msgstr "トートの上書きはできません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:41
 msgid "Scanning pptl barcode not allowed"
-msgstr "ビンのスキャンはできません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:42
 msgid "Please press those buttons having color blink_blue"
-msgstr "青色点滅のビンボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:43
 msgid "Unhandled event ocurred"
-msgstr "エラーが発生しました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:44
 msgid "Barcode didn't match with current tote barcode"
-msgstr "バーコードが現在のトートバーコードと不一致"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:45
 msgid "Testing configuration {0} and {1}"
-msgstr "設定テスト中 {0} と {1}"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:46
 msgid "Processing. Please wait and scan later"
-msgstr "処理中。しばらく待ってスキャンを行ってください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:47
 msgid "Waiting for rack"
-msgstr "棚を呼んでいます"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:48
 msgid "Current PPS mode does not support back seat. Please logout."
-msgstr "現在のステーションモードはバックシート使用不可。ログアウトしてください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:49
 msgid "Scan items and place in bin {0}"
-msgstr "商品をスキャンしビン {0} に置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:50
 msgid "Stage Bin or Scan Entity"
-msgstr "商品をスキャンしてビンに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:51
 msgid "Place Entity in Bin and Press PPTL"
-msgstr "商品をビンに置いてボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:52
 msgid "Are You Sure You Want to Close Tote?"
-msgstr "トートを終了してよろしいですか？"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:53
 msgid "Scan Tote or Stage PPS Bin"
-msgstr "トートをスキャンするかビンに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:54
 msgid "Item Not Expected in Tote"
-msgstr "トートにない商品です"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:55
 msgid "Tote already opened. Scan some other tote"
-msgstr "トートは既に使われています。他のトートを使用"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:56
 msgid "Tote already closed. Scan some other tote"
-msgstr "トートは既に終了されています。他のトートを使用"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:57
 msgid "No matching tote found"
-msgstr "トート違い"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:58
 msgid "Wrong entity scanned. Please scan tote"
-msgstr "スキャン違い。トートをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:59
 msgid "No entities added yet. Scan entities and then press PPTL"
-msgstr "商品が追加されていません。商品スキャンしビンボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:60
 msgid "Wrong entity scanned. Please scan Container/Item."
-msgstr "スキャン違い。コンテナか商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:61
 msgid "Cannot cancel scan. No scanned box found"
-msgstr "スキャンをキャンセルできません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:62
 msgid "Entity scan not expected. Waiting for PPTL press"
-msgstr "スキャン違い。ビンボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:63
 msgid "Bin selected for put. Cannot be staged"
-msgstr "ビンは入荷で使用されています。確定はできません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:64
-msgid "SKU not present in database. Put into IRT bin "
-msgstr "商品がシステムに未登録。例外エリアに置く"
+msgid "SKU not present in database. Put into IRT bin."
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:65
-msgid ""
+msgid "";
 "Entities cannot be accommodated! Remove all entities from bin {0} and press "
 "PPTL"
-msgstr "商品が格納できません。ビン {0} を空にしてビンボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:66
 msgid "No free bins. Please scan later"
-msgstr "空きビンがありません。後でスキャンしなおしてください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:67
 msgid "Wrong PPTL pressed. Please try another"
-msgstr "ビンが違います。正しいビンボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:68
 #: src/assets/js/serverMessages/server_messages_lang.js:112
 msgid "Please put entities in exception area and confirm"
-msgstr "商品を例外エリアに置いて確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:69
 msgid "Wrong bin chosen.Try selecting another bin"
-msgstr "ビン違い。他のビンを選択してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:70
 msgid "Please scan same SKU to complete this exception"
-msgstr "同じ商品をスキャンして例外登録を完了してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:71
 msgid "Entity scan not expected."
-msgstr "スキャンが違います"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:72
 msgid "Tote not present in database."
-msgstr "このトートはシステム未登録です"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:73
-msgid ""
+msgid "";
 "Tote has been opened.Scan all items in tote and then scan tote again to "
 "close it"
-msgstr "トートは使用中。全商品を再スキャンしトートと紐付け"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:74
 msgid "PPS is in paused mode. Cannot process new entity. Try after some time"
-msgstr "PPSが中断モードです。しばらく待って再度実施してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:75
 msgid "Cancel scan successful."
-msgstr "スキャンキャンセル"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:76
 msgid "Tote close successful."
-msgstr "トートのクローズ完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:77
 msgid "Tote not closed."
-msgstr "トートはクローズしていません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:78
 msgid "Entity scan successful."
-msgstr "商品スキャンが完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:79
 #: src/assets/js/serverMessages/server_messages_lang.js:141
 msgid "PPTL press successful"
-msgstr "ビンボタンが押されました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:80
 msgid "Data capture valid"
-msgstr "正しい情報が取得"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:81
 msgid "Excess item in tote recorded. Now press PPTL"
-msgstr "トートの商品が数量オーバー。ビンのボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:82
 msgid "Invalid item in tote recorded."
-msgstr "商品が異なります"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:83
 msgid "{0} unscannable entities recorded. WMS notified"
-msgstr "スキャン不可商品 {0} 個"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:84
 msgid "{0} extra entities recorded in bin. WMS notified"
-msgstr "超過商品 {0} 個"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:85
 msgid "{0} oversized entities recorded.WMS notified"
-msgstr "サイズオーバー商品 {0} 個"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:86
 #: src/assets/js/serverMessages/server_messages_lang.js:164
 #: src/assets/js/serverMessages/server_messages_lang.js:166
 msgid "Exception cancelled"
-msgstr "例外登録がキャンセルされました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:87
 msgid "Box with same serial number already exists in the warehouse"
-msgstr "同じシリアル番号のボックスが、既に倉庫内に存在"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:88
 msgid "Entity already scanned.Waiting for PPTL press"
-msgstr "商品スキャン済。ビンのボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:89
 msgid "No bins available to stage"
-msgstr "確定可能なビンがありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:90
 msgid "Bin already staged. Ignoring event"
-msgstr "ビンは確定済みです。操作を無視しました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:91
 msgid "Bin empty. Cannot be staged"
-msgstr "ビンが空です。確定できません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:92
 msgid "Scan Box/Items from Slot"
-msgstr "スロットの商品またはボックスをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:93
 msgid "Scan Remaining Item In Box"
-msgstr "ボックスの残り商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:94
 msgid "Last Box Scan Completed! Scan Remaining Box/Items"
-msgstr "ボックススキャン完了！残りの商品またはボックスをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:95
 msgid "Status To Reconcile"
-msgstr "調整中"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:96
-msgid ""
+msgid "";
 "This box belongs to some other SKU in the slot.Put it back.Scan next box."
-msgstr "このボックスは使用中。スロットに戻して他のボックスをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:97
-msgid ""
+msgid "";
 "This box does not belong to this slot. Remove the box and put in exception "
 "area."
-msgstr "このボックスは別スロットで使用中。ボックスを例外エリアに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:98
 msgid "Waiting for MSU"
-msgstr "MSU移動中"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:99
 msgid "Wrong Barcode"
-msgstr "スキャン間違い"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:100
 msgid "Box Scan successful"
-msgstr "ボックススキャン完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:101
 msgid "Item Scan successful"
-msgstr "商品スキャン完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:102
 #: src/assets/js/serverMessages/server_messages_lang.js:139
 msgid "Item scan successful"
-msgstr "商品スキャン完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:103
 msgid "Data capture failed at item {0}"
-msgstr "商品 {0} の情報がありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:104
 msgid "Bin {0} selected"
-msgstr "ビン {0} が選択されました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:105
 msgid "Bin {0} unselected"
-msgstr "ビン {0} が選択されていません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:106
 msgid "Connection is closed. Connecting..."
-msgstr "ネットワークが切断されました。再接続中・・・"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:107
 msgid "Extra item found please put back item in Exception bin"
-msgstr "数量オーバー。商品を戻す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:108
 msgid "Enter Unscannable Entity Quantity"
-msgstr "スキャン不可商品の数量を入力"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:109
 msgid "Scan Oversized Entity Quantity"
-msgstr "特大品をスキャンして数を入力"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:110
 msgid "Please Select The Bin With Excess Entity"
-msgstr "過剰商品のビンを選択"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:111
 msgid "Enter Quantity of Excess Entities"
-msgstr "数量オーバーの商品数入力"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:113
 msgid "Place Entity in Slot and Scan More"
-msgstr "商品をスキャンしてスロットに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:114
 msgid "Scan Slot to Confirm"
-msgstr "スロットをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:115
 #: src/assets/js/serverMessages/server_messages_lang.js:119
 msgid "Wait for MSU"
-msgstr "MSU移動中"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:116
 msgid "Scan Entity From Bin {0}"
-msgstr "ビン {0} の商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:117
 msgid "Enter Good Quantity to be Put into Slot"
-msgstr "良品数入力"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:118
 msgid "Put Back Entities in the PPS Bin"
-msgstr "ビンに商品を戻す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:120
 msgid "Confirm MSU Release"
-msgstr "MSUのリリースを確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:121
 msgid "Scan Slot"
-msgstr "スロットをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:122
 msgid "Scan {0} Items"
-msgstr "商品を {0} 個スキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:123
 msgid "Cancel audit successful.Audit Restarted"
-msgstr "棚卸キャンセル完了。棚卸を再実施"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:124
 msgid "Scan Box"
-msgstr "ボックスをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:125
 msgid "Scan {0} Items and Place in Bin {1}"
-msgstr "商品を {0} 個スキャンしビン {1} に置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:126
 msgid "Press PPTL to confirm"
-msgstr "ビンボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:127
 msgid "Scan Tote to Associate with Bin"
-msgstr "トートスキャンしてビンに紐付け"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:128
 msgid "Press PPTL or Scan a Tote"
-msgstr "ビンボタンを押すか、トートスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:129
 msgid "Press PPTL to Remove Entities"
-msgstr "ビンボタンを押して、商品を取り出す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:130
 msgid "Press bin PPTL"
-msgstr "ビンボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:131
 msgid "Press PPTL for bin {0} to confirm"
-msgstr "ビン {0} のボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:132
 msgid "Press print button to proceed"
-msgstr "印刷ボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:133
 msgid "Select Bin to skip print"
-msgstr "印刷をスキップするビンを選択"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:134
 msgid "Select Bin which does not require tote"
-msgstr "トート不要なビンを選択"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:135
 msgid "Select Bin to disassociate tote"
-msgstr "トートの紐づけをやめるビンを選択"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:136
 msgid "Pick complete. Waiting for next rack."
-msgstr "ピック完了。次のMSU移動中"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:137
 msgid "Location scan successful"
-msgstr "ロケーションのスキャン完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:138
 msgid "Box scan successful"
-msgstr "ボックススキャン完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:140
 #: src/assets/js/serverMessages/server_messages_lang.js:195
 #: src/assets/js/serverMessages/server_messages_lang.js:197
 msgid "Cancel scan successful"
-msgstr "キャンセルのスキャン完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:142
 msgid "Expecting MSU release confirmation from GUI, got invalid event."
-msgstr "誤った操作です。MSUの開放を画面で確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:143
 msgid "Data capture failed at item"
-msgstr "商品の情報取得失敗"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:144
 msgid "Wrong slot location scanned. Please try again"
-msgstr "スロット違い。正しいスロットをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:145
 msgid "Wrong box scanned. Please try again"
-msgstr "ボックス違い。正しいボックスをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:146
 msgid "Scan a box first"
-msgstr "最初にボックスをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:147
 msgid "Wrong PPTL pressed. Please press correct PPTL"
-msgstr "ビンボタンが違います。正しいビンのボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:148
 msgid "Picked quantity more than expected. Put extra items back in MSU"
-msgstr "ピック数オーバー。過剰分をMSUに戻す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:149
 msgid "Wrong item quantity update"
-msgstr "数量違い"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:150
 msgid "Wrong item scanned. Please scan correct item"
-msgstr "商品が違います。正しい商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:151
 msgid "Waiting for MSU. Please wait and scan later"
-msgstr "MSU移動中。しばらく待ってスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:152
 msgid "System Error. Scanned entity details not available at this time"
-msgstr "システムエラー。現在、商品詳細は参照できません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:153
 msgid "No PPS bins empty. Please empty them from Pickback"
-msgstr "空きビンがありません。ピックバック作業を実施してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:154
 msgid "PPS mode change requested:scan not allowed"
-msgstr "ステーションモードが変更されました。スキャンできません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:155
 msgid "PPS mode change requested:auto staging all bins"
-msgstr "ステーションモードが変更されました。全てのビンを確定します"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:157
 #: src/assets/js/serverMessages/server_messages_lang.js:159
 msgid "Barcode didn't match the current tote barcode"
-msgstr "トートのバーコードが違います"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:158
 #: src/assets/js/serverMessages/server_messages_lang.js:160
 msgid "System not configured for totes"
-msgstr "トートがシステムに未登録"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:159
 #: src/assets/js/serverMessages/server_messages_lang.js:161
 msgid "Invalid Exception for this configuration"
-msgstr "設定時に不正な例外が発生"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:160
 #: src/assets/js/serverMessages/server_messages_lang.js:162
 msgid "No tote associated. Please keep a tote in bin and scan"
-msgstr "トートが紐づけされていません。トートをビンに置いてスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:161
 #: src/assets/js/serverMessages/server_messages_lang.js:163
 msgid "Wrong PPTL pressed"
-msgstr "ビン違い"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:163
 #: src/assets/js/serverMessages/server_messages_lang.js:165
 msgid "Totes are anyway not required.Please proceed further"
-msgstr "トートのスキャンは不要。作業を継続"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:165
 #: src/assets/js/serverMessages/server_messages_lang.js:167
 msgid "Tote scan cancelled"
-msgstr "トートのスキャンがキャンセルされました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:166
 #: src/assets/js/serverMessages/server_messages_lang.js:168
 msgid "Documents printed successfully"
-msgstr "印刷完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:167
 #: src/assets/js/serverMessages/server_messages_lang.js:169
 msgid "Order removed successfully from bin {0}"
-msgstr "ビン {0} から商品の取り出しが完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:168
 #: src/assets/js/serverMessages/server_messages_lang.js:170
 msgid "Tote assigned successfully to bin"
-msgstr "トートとビンの紐づけ完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:169
 #: src/assets/js/serverMessages/server_messages_lang.js:171
 msgid "Tote association failed. Repeat scan operation"
-msgstr "トートの紐づけ失敗。再度スキャンしてください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:170
 #: src/assets/js/serverMessages/server_messages_lang.js:172
 msgid "Tote associated with another bin"
-msgstr "トートは他のビンに紐づけ済み"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:171
 #: src/assets/js/serverMessages/server_messages_lang.js:173
 msgid "Please scan PPTL barcode"
-msgstr "ビンをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:172
 #: src/assets/js/serverMessages/server_messages_lang.js:174
 msgid "Tote disassociated from Bin"
-msgstr "トートとビンの紐づけを解除しました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:173
 #: src/assets/js/serverMessages/server_messages_lang.js:175
 msgid "Please complete process for pending bin and then proceed"
-msgstr "保留中のビンを完了させてください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:174
 #: src/assets/js/serverMessages/server_messages_lang.js:176
 msgid "Tote already reserved"
-msgstr "トートは既に使用中"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:175
 #: src/assets/js/serverMessages/server_messages_lang.js:177
 msgid "Wrong barcode scanned"
-msgstr "スキャンが誤っています"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:176
 #: src/assets/js/serverMessages/server_messages_lang.js:178
 msgid "Please scan the tote first and then scan PPTL barcode"
-msgstr "トートをスキャンして、ビンをスキャンしてください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:178
-msgid ""
+msgid "";
 "'Override Tote Exception' cannot be raised for bins with totes associated"
-msgstr "トートが紐づいたビンで「トート更新例外」は発生しません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:179
 #: src/assets/js/serverMessages/server_messages_lang.js:181
 msgid "PPTL scan not allowed. System not configured for tote"
-msgstr "ビンスキャンは許可されていません。トートが未登録"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:180
 #: src/assets/js/serverMessages/server_messages_lang.js:182
 msgid "PPTL scan not allowed"
-msgstr "ビンのスキャンは許可されていません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:181
 #: src/assets/js/serverMessages/server_messages_lang.js:183
 msgid "Tote scan expected"
-msgstr "トートをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:182
 #: src/assets/js/serverMessages/server_messages_lang.js:184
 msgid "Entity scanned is not from bin {0}. Replace and scan from bin {1}"
-msgstr "ビン {0} の商品ではありません。ビン {1} の商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:183
 #: src/assets/js/serverMessages/server_messages_lang.js:185
 msgid "Wrong entity scanned"
-msgstr "スキャンが誤っています。正しい商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:184
 #: src/assets/js/serverMessages/server_messages_lang.js:186
 msgid "Waiting for MSU scan. Please scan entity later."
-msgstr "スキャンが誤っています。正しいスロットをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:185
 #: src/assets/js/serverMessages/server_messages_lang.js:187
 msgid "Expected quantity exceeded."
-msgstr "有効な数値を入力してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:186
 #: src/assets/js/serverMessages/server_messages_lang.js:188
 msgid "Wrong scan! Entity scan expected but slot barcode scanned."
-msgstr "スロットではなく商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:187
 #: src/assets/js/serverMessages/server_messages_lang.js:189
-msgid ""
+msgid "";
 "Actual put quantity not equal to the sum of Good and Expection quantity."
-msgstr "良品と不良品の合計数が入荷数と異なります"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:188
 #: src/assets/js/serverMessages/server_messages_lang.js:190
 msgid "Actual put quantity less than than revised quantity."
-msgstr "入荷数が変更数量と一致していません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:189
 #: src/assets/js/serverMessages/server_messages_lang.js:191
 msgid "Wrong slot scanned"
-msgstr "違うスロットがスキャンされています"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:190
 #: src/assets/js/serverMessages/server_messages_lang.js:192
 msgid "Entity scan successful"
-msgstr "商品スキャンが完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:191
 #: src/assets/js/serverMessages/server_messages_lang.js:192
 #: src/assets/js/serverMessages/server_messages_lang.js:193
 #: src/assets/js/serverMessages/server_messages_lang.js:194
 msgid "Slot scan successful"
-msgstr "スロットスキャン完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:193
 #: src/assets/js/serverMessages/server_messages_lang.js:195
 msgid "Damaged and missing entity recorded."
-msgstr "不良品・紛失商品が記録されました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:194
 #: src/assets/js/serverMessages/server_messages_lang.js:196
 msgid "Space unavailable recorded."
-msgstr "空きスペースなし商品が記録されました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:196
 #: src/assets/js/serverMessages/server_messages_lang.js:198
 msgid "Please put entity in exception area and confirm"
-msgstr "商品を例外エリアに置いて確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:197
 #: src/assets/js/serverMessages/server_messages_lang.js:199
-msgid ""
+msgid "";
 "Entity not expected in tote. Please put entity in exception area and confirm"
-msgstr "トートに存在しない商品です。商品を例外エリアに置いて確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:198
 #: src/assets/js/serverMessages/server_messages_lang.js:200
-msgid ""
+msgid "";
 "{0} excess entities found in tote. Please put entities in exception area and "
 "confirm"
-msgstr "トートに数量オーバー商品が {0} 個あります。例外エリアに置いて確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:199
 #: src/assets/js/serverMessages/server_messages_lang.js:201
 msgid "Cancelled excess entity in tote"
-msgstr "トートの過剰商品をキャンセル"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:200
 #: src/assets/js/serverMessages/server_messages_lang.js:202
 msgid "Cancelled invalid entity in tote"
-msgstr "トートの例外商品をキャンセル"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:201
 #: src/assets/js/serverMessages/server_messages_lang.js:203
 msgid "Invalid entity in tote recorded"
-msgstr "商品違い"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:202
 #: src/assets/js/serverMessages/server_messages_lang.js:204
 msgid "Wrong enitity scanned. Expecting scan from bin {0}"
-msgstr "誤った商品がスキャンされました。ビン {0} の商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:203
 #: src/assets/js/serverMessages/server_messages_lang.js:205
 msgid "PPTL Management"
-msgstr "ビン設定"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:204
 #: src/assets/js/serverMessages/server_messages_lang.js:206
 msgid "Scanner Management"
-msgstr "スキャナ設定"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:205
 #: src/assets/js/serverMessages/server_messages_lang.js:207
 msgid "Entity Oversized"
-msgstr "特大品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:206
 #: src/assets/js/serverMessages/server_messages_lang.js:301
@@ -862,7 +836,7 @@ msgstr "特大品"
 #: src/assets/js/serverMessages/server_messages_lang.js:208
 #: src/assets/js/serverMessages/server_messages_lang.js:304
 msgid "Entity Unscannable"
-msgstr "スキャン不可商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:207
 #: src/assets/js/serverMessages/server_messages_lang.js:302
@@ -870,7 +844,7 @@ msgstr "スキャン不可商品"
 #: src/assets/js/serverMessages/server_messages_lang.js:209
 #: src/assets/js/serverMessages/server_messages_lang.js:305
 msgid "Extra Entities in Bin"
-msgstr "過剰品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:208
 #: src/assets/js/serverMessages/server_messages_lang.js:210
@@ -879,7 +853,7 @@ msgstr "過剰品"
 #: src/assets/js/serverMessages/server_messages_lang.js:212
 #: src/assets/js/serverMessages/server_messages_lang.js:306
 msgid "Entity Missing / Unscannable"
-msgstr "紛失 / スキャン不可商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:209
 #: src/assets/js/serverMessages/server_messages_lang.js:304
@@ -887,12 +861,12 @@ msgstr "紛失 / スキャン不可商品"
 #: src/assets/js/serverMessages/server_messages_lang.js:211
 #: src/assets/js/serverMessages/server_messages_lang.js:307
 msgid "Space Not Available"
-msgstr "利用可能な場所がありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:211
 #: src/assets/js/serverMessages/server_messages_lang.js:213
 msgid "Mising Box"
-msgstr "紛失ボックス"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:212
 #: src/assets/js/serverMessages/server_messages_lang.js:307
@@ -900,12 +874,12 @@ msgstr "紛失ボックス"
 #: src/assets/js/serverMessages/server_messages_lang.js:214
 #: src/assets/js/serverMessages/server_messages_lang.js:310
 msgid "Disassociate Tote"
-msgstr "紐づけされていないトート"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:213
 #: src/assets/js/serverMessages/server_messages_lang.js:215
 msgid "Overide Tote Required"
-msgstr "トートの更新が必要です"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:214
 #: src/assets/js/serverMessages/server_messages_lang.js:309
@@ -913,7 +887,7 @@ msgstr "トートの更新が必要です"
 #: src/assets/js/serverMessages/server_messages_lang.js:216
 #: src/assets/js/serverMessages/server_messages_lang.js:312
 msgid "Reprint"
-msgstr "再印刷"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:215
 #: src/assets/js/serverMessages/server_messages_lang.js:310
@@ -921,225 +895,227 @@ msgstr "再印刷"
 #: src/assets/js/serverMessages/server_messages_lang.js:217
 #: src/assets/js/serverMessages/server_messages_lang.js:313
 msgid "Skip Print"
-msgstr "印刷スキップ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:216
 #: src/assets/js/serverMessages/server_messages_lang.js:218
 msgid "Peripheral added successfully"
-msgstr "周辺機器追加完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:217
 #: src/assets/js/serverMessages/server_messages_lang.js:219
 msgid "Peripheral not added"
-msgstr "周辺機器追加失敗"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:218
 #: src/assets/js/serverMessages/server_messages_lang.js:220
 msgid "Scan Box or Items"
-msgstr "ボックスか商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:219
 #: src/assets/js/serverMessages/server_messages_lang.js:221
 msgid "Check Count"
-msgstr "数量確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:220
 #: src/assets/js/serverMessages/server_messages_lang.js:222
 msgid "You cannot enter value more than 9999"
-msgstr "9999 以上は入力不可"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:221
 #: src/assets/js/serverMessages/server_messages_lang.js:223
 msgid "You cannot enter 0"
-msgstr "0 は入力不可"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:222
 #: src/assets/js/serverMessages/server_messages_lang.js:224
 msgid "Place extra entity in Exception area."
-msgstr "過剰商品を例外エリアに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:223
 #: src/assets/js/serverMessages/server_messages_lang.js:224
 #: src/assets/js/serverMessages/server_messages_lang.js:225
 #: src/assets/js/serverMessages/server_messages_lang.js:226
 msgid "Sum of missing, good and damaged should be equal to {0}"
-msgstr "数量不一致。紛失品と良品と不良品の合計は {0} "
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:225
 #: src/assets/js/serverMessages/server_messages_lang.js:227
 msgid "Quantity should be less than or equal to {0}"
-msgstr "数量は {0} 以下でなければなりません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:226
 #: src/assets/js/serverMessages/server_messages_lang.js:228
-msgid ""
+msgid "";
 "You are not allowed to keyed in the quantity from the numpad. Force Scan is "
 "required."
-msgstr "キーパッドでの数字入力が許可されていません。商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:227
 #: src/assets/js/serverMessages/server_messages_lang.js:229
 msgid "Waiting for Bins to be Cleared at Pick Back"
-msgstr "ビン出し作業を行ってください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:228
 #: src/assets/js/serverMessages/server_messages_lang.js:230
 msgid "Peripheral deleted successfully"
-msgstr "周辺機器削除完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:229
 #: src/assets/js/serverMessages/server_messages_lang.js:231
 msgid "Peripheral not deleted successfully"
-msgstr "周辺機器削除失敗"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:230
 #: src/assets/js/serverMessages/server_messages_lang.js:232
 msgid "Cancel Exception"
-msgstr "例外登録のキャンセル"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:231
 #: src/assets/js/serverMessages/server_messages_lang.js:233
 msgid "Cancel Scan"
-msgstr "商品スキャンのキャンセル"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:232
 #: src/assets/js/serverMessages/server_messages_lang.js:277
 #: src/assets/js/serverMessages/server_messages_lang.js:234
 #: src/assets/js/serverMessages/server_messages_lang.js:279
 msgid "Finish"
-msgstr "完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:233
 #: src/assets/js/serverMessages/server_messages_lang.js:235
 msgid "Back"
-msgstr "戻る"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:234
 #: src/assets/js/serverMessages/server_messages_lang.js:236
 msgid "OK"
-msgstr "OK"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:235
 #: src/assets/js/serverMessages/server_messages_lang.js:237
 msgid "FINISH"
-msgstr "完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:236
 #: src/assets/js/serverMessages/server_messages_lang.js:238
 msgid "Print"
-msgstr "印刷"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:237
 #: src/assets/js/serverMessages/server_messages_lang.js:239
 msgid "Skip Printing"
-msgstr "印刷スキップ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:238
 #: src/assets/js/serverMessages/server_messages_lang.js:240
 msgid "Dis-associate Tote"
-msgstr "トート紐付け解除"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:239
 #: src/assets/js/serverMessages/server_messages_lang.js:241
 msgid "Override"
-msgstr "更新"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:240
 #: src/assets/js/serverMessages/server_messages_lang.js:273
 #: src/assets/js/serverMessages/server_messages_lang.js:242
 #: src/assets/js/serverMessages/server_messages_lang.js:275
 msgid "Add Scanner"
-msgstr "スキャナ追加"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:241
 #: src/assets/js/serverMessages/server_messages_lang.js:243
 msgid "Edit Details"
-msgstr "詳細編集"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:242
 #: src/assets/js/serverMessages/server_messages_lang.js:244
 msgid "NEXT"
-msgstr "次へ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:243
 #: src/assets/js/serverMessages/server_messages_lang.js:245
 msgid "CONFIRM"
-msgstr "確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:244
 #: src/assets/js/serverMessages/server_messages_lang.js:246
 msgid "Stage"
-msgstr "ステージ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:245
 #: src/assets/js/serverMessages/server_messages_lang.js:247
 msgid "Stage All"
-msgstr "全てステージ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:246
 #: src/assets/js/serverMessages/server_messages_lang.js:248
 msgid "BACK"
-msgstr "戻る"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:247
 #: src/assets/js/serverMessages/server_messages_lang.js:249
 msgid "CLOSE"
-msgstr "終了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:248
 #: src/assets/js/serverMessages/server_messages_lang.js:250
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:249
 #: src/assets/js/serverMessages/server_messages_lang.js:251
 msgid "Confirm"
-msgstr "確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:250
 #: src/assets/js/serverMessages/server_messages_lang.js:252
+#: src/assets/js/serverMessages/server_messages_lang.js:375
 msgid "TOTE"
-msgstr "トート"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:251
 #: src/assets/js/serverMessages/server_messages_lang.js:253
 msgid "Clear All"
-msgstr "全てクリア"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:252
 #: src/assets/js/serverMessages/server_messages_lang.js:254
 msgid "Submit"
-msgstr "確定"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:253
 #: src/assets/js/serverMessages/server_messages_lang.js:255
 msgid "Exceptions"
-msgstr "例外"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:255
 #: src/assets/js/serverMessages/server_messages_lang.js:257
 msgid "Bin"
-msgstr "ビン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:256
 #: src/assets/js/serverMessages/server_messages_lang.js:258
 msgid "Selected"
-msgstr "選択済"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:257
 #: src/assets/js/serverMessages/server_messages_lang.js:259
 msgid "Unselected"
-msgstr "未選択"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:258
 #: src/assets/js/serverMessages/server_messages_lang.js:260
 msgid "System is Idle"
-msgstr "待機中"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:259
 #: src/assets/js/serverMessages/server_messages_lang.js:261
+#: src/assets/js/serverMessages/server_messages_lang.js:368
 msgid "CURRENT SLOT"
-msgstr "現在のスロット"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:260
 #: src/assets/js/serverMessages/server_messages_lang.js:274
@@ -1148,775 +1124,519 @@ msgstr "現在のスロット"
 #: src/assets/js/serverMessages/server_messages_lang.js:276
 #: src/assets/js/serverMessages/server_messages_lang.js:287
 msgid "Box Serial Numbers"
-msgstr "ボックスシリアル番号"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:261
 #: src/assets/js/serverMessages/server_messages_lang.js:263
 msgid "No Items To Reconcile"
-msgstr "調整が必要な商品はありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:262
 #: src/assets/js/serverMessages/server_messages_lang.js:264
 msgid "List Of Items To Reconcile"
-msgstr "調整が必要な商品リスト"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:265
 #: src/assets/js/serverMessages/server_messages_lang.js:267
 msgid "View More"
-msgstr "詳細確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:267
 #: src/assets/js/serverMessages/server_messages_lang.js:269
 msgid "Product Information"
-msgstr "商品情報"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:268
 #: src/assets/js/serverMessages/server_messages_lang.js:270
 msgid "Bin Info"
-msgstr "ビン情報"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:269
 #: src/assets/js/serverMessages/server_messages_lang.js:271
 msgid "Associate tote with bin"
-msgstr "トートをビンに紐づけ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:270
 #: src/assets/js/serverMessages/server_messages_lang.js:272
 msgid "Extra Entity Found"
-msgstr "過剰な商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:271
 #: src/assets/js/serverMessages/server_messages_lang.js:273
 msgid "Perform Action"
-msgstr "実施"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:272
 #: src/assets/js/serverMessages/server_messages_lang.js:274
 msgid "Input Extra Details"
-msgstr "追加情報を入力"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:275
 #: src/assets/js/serverMessages/server_messages_lang.js:277
 msgid "Expected"
-msgstr "予定"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:276
 #: src/assets/js/serverMessages/server_messages_lang.js:278
 msgid "Actual"
-msgstr "正しい"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:278
 #: src/assets/js/serverMessages/server_messages_lang.js:280
 msgid "Bin ID"
-msgstr "ビンID"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:279
 #: src/assets/js/serverMessages/server_messages_lang.js:281
 msgid "Barcode"
-msgstr "バーコード"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:280
 #: src/assets/js/serverMessages/server_messages_lang.js:282
 msgid "Peripheral ID"
-msgstr "機器ID"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:281
 #: src/assets/js/serverMessages/server_messages_lang.js:283
 #: src/assets/js/serverMessages/server_messages_lang.js:285
 msgid "Actions"
-msgstr "アクション"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:282
 #: src/assets/js/serverMessages/server_messages_lang.js:284
 msgid "Scanner ID"
-msgstr "スキャナID"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:284
 #: src/assets/js/serverMessages/server_messages_lang.js:286
 msgid "Delete"
-msgstr "削除"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:286
 #: src/assets/js/serverMessages/server_messages_lang.js:298
 #: src/assets/js/serverMessages/server_messages_lang.js:288
 #: src/assets/js/serverMessages/server_messages_lang.js:300
 msgid "Product SKU"
-msgstr "商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:287
 #: src/assets/js/serverMessages/server_messages_lang.js:289
 msgid "Expected Quantity"
-msgstr "予定数"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:288
 #: src/assets/js/serverMessages/server_messages_lang.js:290
 msgid "Actual Quantity"
-msgstr "実数"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:289
 #: src/assets/js/serverMessages/server_messages_lang.js:291
 msgid "Missing"
-msgstr "紛失"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:290
 #: src/assets/js/serverMessages/server_messages_lang.js:292
 msgid "Extra"
-msgstr "過剰"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:291
 #: src/assets/js/serverMessages/server_messages_lang.js:293
 msgid "Barcode Damage"
-msgstr "バーコード不良"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:292
 #: src/assets/js/serverMessages/server_messages_lang.js:294
 msgid "Item in Box Serial Numbers"
-msgstr "シリアル番号管理の商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:293
 #: src/assets/js/serverMessages/server_messages_lang.js:295
 msgid "Loose Items"
-msgstr "未梱包商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:294
 #: src/assets/js/serverMessages/server_messages_lang.js:296
 msgid "Loose Items Serial Numbers"
-msgstr "未梱包商品のシリアル番号"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:295
 #: src/assets/js/serverMessages/server_messages_lang.js:297
 msgid "Product Details"
-msgstr "商品詳細"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:296
 #: src/assets/js/serverMessages/server_messages_lang.js:298
 msgid "Product Name"
-msgstr "商品名"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:297
 #: src/assets/js/serverMessages/server_messages_lang.js:299
 msgid "Product Desc"
-msgstr "商品説明"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:299
 #: src/assets/js/serverMessages/server_messages_lang.js:301
 msgid "Product Type"
-msgstr "商品タイプ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:305
 #: src/assets/js/serverMessages/server_messages_lang.js:306
 #: src/assets/js/serverMessages/server_messages_lang.js:308
 msgid "Item Missing/Unscannable"
-msgstr "紛失またはスキャン不可商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:306
 #: src/assets/js/serverMessages/server_messages_lang.js:307
 #: src/assets/js/serverMessages/server_messages_lang.js:309
 msgid "Missing Box"
-msgstr "紛失したボックス"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:308
 #: src/assets/js/serverMessages/server_messages_lang.js:309
 #: src/assets/js/serverMessages/server_messages_lang.js:311
 msgid "Override Tote Required"
-msgstr "トートの更新が必要"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:311
 #: src/assets/js/serverMessages/server_messages_lang.js:312
 #: src/assets/js/serverMessages/server_messages_lang.js:314
 msgid "Items In Box Unscannable"
-msgstr "スキャン不可商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:312
 #: src/assets/js/serverMessages/server_messages_lang.js:313
 #: src/assets/js/serverMessages/server_messages_lang.js:315
 msgid "Box Unscannable"
-msgstr "スキャン不可ボックス"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:313
 #: src/assets/js/serverMessages/server_messages_lang.js:314
 #: src/assets/js/serverMessages/server_messages_lang.js:316
 msgid "Loose Items Unscannable"
-msgstr "スキャン不可未梱包商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:314
 #: src/assets/js/serverMessages/server_messages_lang.js:315
 #: src/assets/js/serverMessages/server_messages_lang.js:317
 msgid "Please put unscannable entities in exception area."
-msgstr "スキャン不可商品を例外エリアに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:315
 #: src/assets/js/serverMessages/server_messages_lang.js:316
 #: src/assets/js/serverMessages/server_messages_lang.js:318
 msgid "Please put oversized entities in exception area."
-msgstr "特大品を例外エリアに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:316
 #: src/assets/js/serverMessages/server_messages_lang.js:317
 #: src/assets/js/serverMessages/server_messages_lang.js:319
 msgid "Take the Items out from the Slot"
-msgstr "スロットから商品を取り出してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:300
 #: src/assets/js/serverMessages/server_messages_lang.js:302
 msgid "Tote already associated with bin {0}"
-msgstr "トートはビン {0} に紐付け済み"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:301
 #: src/assets/js/serverMessages/server_messages_lang.js:303
 msgid "Entity Scan not expected. Press PPTL"
-msgstr "商品スキャンは不要です。ビンのボタンを押す"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:178
 #: src/assets/js/serverMessages/server_messages_lang.js:180
 msgid "Override Tote Exception cannot be raised for bins with totes associated"
-msgstr "トートが紐づいたビンでは「トート更新例外」は発生しません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:82
 msgid "Excess item in tote recorded."
-msgstr "トートの過剰な商品が記録されました"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:156
 msgid "PPTL press not expected"
-msgstr "ビンボタンは押す必要がありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:157
 msgid "Scan not expected"
-msgstr "スキャンは不要です"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:320
 msgid "Pptl press not expected."
-msgstr "ビンボタンは押す必要がありません"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:321
 msgid "Scan not expected."
-msgstr "スキャンは不要です"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:322
 msgid "Wrong scan.Expecting item scan."
-msgstr "スキャンが誤っています。商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:323
 msgid "Wrong scan.Expecting container scan."
-msgstr "スキャンが誤っています。コンテナをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:324
 msgid "Wrong scan.Expecting location scan."
-msgstr "スキャンが誤っています。ロケーションをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:327
+#: src/assets/js/serverMessages/server_messages_lang.js:328
 msgid "Exception"
-msgstr "例外登録"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:328
+#: src/assets/js/serverMessages/server_messages_lang.js:329
 msgid "Logout"
-msgstr "ログアウト"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:329
+#: src/assets/js/serverMessages/server_messages_lang.js:330
 msgid "Utility"
-msgstr "環境設定"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:330
+#: src/assets/js/serverMessages/server_messages_lang.js:331
 msgid "EXCEPTION"
-msgstr "例外登録"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:331
+#: src/assets/js/serverMessages/server_messages_lang.js:332
 msgid "Good Quantity"
-msgstr "良品数"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:332
+#: src/assets/js/serverMessages/server_messages_lang.js:333
 msgid "Missing Quantity"
-msgstr "紛失数"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:333
+#: src/assets/js/serverMessages/server_messages_lang.js:334
 msgid "Unscannable Quantity"
-msgstr "スキャン不可数"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:334
+#: src/assets/js/serverMessages/server_messages_lang.js:335
 msgid "Remove Item"
-msgstr "商品取り出し"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:335
+#: src/assets/js/serverMessages/server_messages_lang.js:336
 msgid "Item Missing/Bad Barcode"
-msgstr "紛失/バーコード不良商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:336
+#: src/assets/js/serverMessages/server_messages_lang.js:337
 msgid "Sum of missing and good quantity should be equal to {0}"
-msgstr "合計数(良品数＋紛失数)は {0} である必要があります"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:337
+#: src/assets/js/serverMessages/server_messages_lang.js:338
 msgid "Login"
-msgstr "ログイン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:324
+#: src/assets/js/serverMessages/server_messages_lang.js:325
 msgid "Scan Excess Entity Quantity"
-msgstr "過剰商品をスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:338
+#: src/assets/js/serverMessages/server_messages_lang.js:339
 msgid "Enter Username"
-msgstr "ユーザー名を入力"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:339
+#: src/assets/js/serverMessages/server_messages_lang.js:340
 msgid "Enter Password"
-msgstr "パスワードを入力"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:340
+#: src/assets/js/serverMessages/server_messages_lang.js:341
 msgid "Invalid credentials"
-msgstr "無効な認証情報"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:341
+#: src/assets/js/serverMessages/server_messages_lang.js:342
 msgid "Login not allowed. You're already logged in"
-msgstr "ログインできません。既にログインしています"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:343
+#: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "Place Item in slot and scan more"
-msgstr "商品をスロットに置いて、スキャンを繰り返してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
+#: src/assets/js/serverMessages/server_messages_lang.js:345
 msgid "PPTL"
-msgstr "ビンボタン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:345
+#: src/assets/js/serverMessages/server_messages_lang.js:346
 msgid "Scan Slot Barcode"
-msgstr "スロットをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:346
+#: src/assets/js/serverMessages/server_messages_lang.js:347
 msgid "Unexpected Item"
-msgstr "商品違い"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:347
+#: src/assets/js/serverMessages/server_messages_lang.js:348
 msgid "Stage Bin or Scan Item"
-msgstr "ステージか商品スキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:348
+#: src/assets/js/serverMessages/server_messages_lang.js:349
 msgid "Scan & Confirm"
-msgstr "スキャン＆確認"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:349
+#: src/assets/js/serverMessages/server_messages_lang.js:350
 msgid "Scan Item From Bin"
-msgstr "商品スキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:350
+#: src/assets/js/serverMessages/server_messages_lang.js:351
 msgid "Scan Tote"
-msgstr "トートスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:351
+#: src/assets/js/serverMessages/server_messages_lang.js:352
 msgid "Scan MSU Barcode"
-msgstr "スロットスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:352
+#: src/assets/js/serverMessages/server_messages_lang.js:353
 msgid "Scan Items"
-msgstr "商品スキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:353
+#: src/assets/js/serverMessages/server_messages_lang.js:354
 msgid "Status"
-msgstr "ステータス"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:354
+#: src/assets/js/serverMessages/server_messages_lang.js:355
 msgid "Could not connect to PPS.Please try again."
-msgstr "PPSに接続できません。もう一度やり直してください"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:356
+#: src/assets/js/serverMessages/server_messages_lang.js:357
 msgid "product_sku"
-msgstr "商品コード"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:357
-msgid "type"
-msgstr "種類"
+msgid "type."
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:358
+#: src/assets/js/serverMessages/server_messages_lang.js:359
 msgid "quantity"
-msgstr "数量"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:359
+#: src/assets/js/serverMessages/server_messages_lang.js:360
 msgid "item"
-msgstr "商品"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:360
+#: src/assets/js/serverMessages/server_messages_lang.js:361
 msgid "box"
-msgstr "ボックス"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:361
+#: src/assets/js/serverMessages/server_messages_lang.js:362
 msgid "SKU not present in Database.Put in exception area"
-msgstr "商品がシステムに未登録。例外エリアに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:362
+#: src/assets/js/serverMessages/server_messages_lang.js:363
 msgid "Please put extra entities in exception area."
-msgstr "超過商品を例外エリアに置く"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:363
+#: src/assets/js/serverMessages/server_messages_lang.js:364
 msgid "Space Available For"
-msgstr "場所確保可能"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:364
+#: src/assets/js/serverMessages/server_messages_lang.js:365
 msgid "Tote Details"
-msgstr "トート詳細"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:366
-msgid "Close current tote first"
-msgstr "処理中のトートを、まず閉じて下さい"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:367
 msgid "CURRENT BIN"
-msgstr "処理中ビン"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:368
-msgid "Bad Barcode Quantity"
-msgstr "スキャン不可数"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:369
-msgid "Enter Scanner Id"
-msgstr "スキャナID入力"
+msgid "Bad Barcode Quantity"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:370
+msgid "Enter Scanner Id"
+msgstr "";
+
+#: src/assets/js/serverMessages/server_messages_lang.js:371
 msgid "Back seat not supported for this mode"
-msgstr "現在のステーションモードはバックシート使用不可"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:372
 msgid "Bad Data"
-msgstr "環境設定エラー"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:373
 msgid "Peripheral already added"
-msgstr "周辺機器は既に登録済"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:374
 msgid "Scan Bin Barcode"
-msgstr "ビンをスキャン"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:376
 msgid "Update"
-msgstr "更新"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:377
 msgid "Japanese"
-msgstr "日本語"
+msgstr "";
+
+#: src/assets/js/serverMessages/server_messages_lang.js:378
+msgid "English"
+msgstr "";
+
+#: src/assets/js/serverMessages/server_messages_lang.js:7
+msgid "Scan item / Stage PPS Bin"
+msgstr "";
+
+#: src/assets/js/serverMessages/server_messages_lang.js:125
+msgid "Scan {0} Items and Place in Bin {0}"
+msgstr "";
+
+#: src/assets/js/serverMessages/server_messages_lang.js:326
+#: src/assets/js/serverMessages/server_messages_lang.js:327
+msgid "Entity already scanned.Confirm exception"
+msgstr "";
+
+#: src/assets/js/serverMessages/server_messages_lang.js:358
+msgid "type"
+msgstr "";
+
+#: src/assets/js/serverMessages/server_messages_lang.js:366
+msgid "Close current tote first"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:379
 msgid "Exception Finished"
-msgstr "例外処理完了"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:380
 msgid "PPS Mode"
-msgstr "PPSモード"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:381
 msgid "Seat Type"
-msgstr "シートタイプ"
+msgstr "";
 
 #: src/assets/js/serverMessages/server_messages_lang.js:382
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
 msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:423
-msgid "Please scan or enter {0} number"
-msgstr "シートタイプ"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:455
-msgid "Scan damaged entity"
-msgstr "不良品を スキャンして数を入力"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:456
-msgid "Damaged Quantity"
-msgstr "不良品数"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:457
-msgid "Entity Damaged"
-msgstr "不良品"
-
-
-msgid " items"
-msgstr " 項目"
- 
-msgid "Are you sure you want to cancel the exception?"
-msgstr "例外をキャンセルしたいですか"
- 
-msgid "Are you sure you want to exit from {0} invoice and stage all bins"
-msgstr " {0} 請求書から退場して全てのビンをステージしたいですか"
- 
-msgid "Are you sure you want to exit from {0} {1} and stage all bins"
-msgstr " {0} {1}から退場して全てのビンをステージしたいですか"
- 
-msgid "Dock roll cage back to proceed the operation"
-msgstr "操作を進めるためにドックロールケージを戻してください"
- 
-msgid "English"
-msgstr "英語"
- 
-msgid "Enter Quantity"
-msgstr "数量を入力してください"
- 
-msgid "Enter excess item quantity"
-msgstr "余分な項目の数量を入力してください"
- 
-msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
-msgstr "エンティティが収容できません！全てのエンティティをビンから削除してPPTLを押してください。"
- 
-msgid "Entity Damaged"
-msgstr "エンティティが破損されています"
- 
-msgid "Entity already scanned.Confirm exception"
-msgstr "エンティティが既にスキャンされました。例外を確認してください"
- 
-msgid "Exception entry successful"
-msgstr "例外入力が成功しました"
- 
-msgid "Exception finished"
-msgstr "例外が終了しました"
- 
-msgid "Exception with entity reported"
-msgstr "エンティティによる例外が報告されています"
- 
-msgid "Excess quantity"
-msgstr "過剰数量"
- 
-msgid "Exit {0}"
-msgstr "終了{0}"
- 
-msgid "Gently push roll cage away from the frame"
-msgstr "ロールケージをフレームから離れて押してください"
- 
-msgid "Good Quantity Cannot be Equal to the Total Quantity"
-msgstr "良い数量は合計数量と同様であることはできません"
- 
-msgid "Invalid Slot scanned"
-msgstr "無効なスロットがスキャンされました"
- 
-msgid "Invalid tote scanned"
-msgstr "無効なトートがスキャンされました"
- 
-msgid "Invoice number: {0}"
-msgstr "請求書番号: {0}"
- 
-msgid "Issues with entity"
-msgstr "エンティティとの問題"
- 
-msgid "No"
-msgstr "いいえ"
- 
-msgid "OK"
-msgstr "OK"
- 
-msgid "PPS is Closed"
-msgstr "PPSが閉じられています"
- 
-msgid "PPS is closed"
-msgstr "PPSが閉じられています"
- 
-msgid "Place"
-msgstr "置いてください"
- 
-msgid "Place box in MSU slot and confirm"
-msgstr "MSUスロットにボックスを置いて確認してください"
- 
-msgid "Place container in MSU slot and confirm"
-msgstr "MSUスロットにコンテナを置いて確認してください"
- 
-msgid "Place the tote back in bin {0} and press pptl"
-msgstr "トートをビン{0}に戻してpptlを押してください"
- 
-msgid "Place {0} boxes from bin {2}"
-msgstr "ビン{2}から{0}ボックスを置いてください"
- 
-msgid "Place {0} boxes with {1} items from bin {2}"
-msgstr "ビン{2}から{1}の項目を{0}のボックスと置いてください"
- 
-msgid "Please Scan tote which has excess item"
-msgstr "余分な項目があるトートをスキャンしてください"
- 
-msgid "Please enter a quantity greater than 0"
-msgstr "0以上の数量を入力してください"
- 
-msgid "Please put entities with issues, in exception area"
-msgstr "例外領域に問題のあるエンティティを配置してください"
- 
-msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
-msgstr "Bin {0}に項目が残っていないことを確認するためにPPTLを押してください"
- 
-msgid "Press bin PPTL to remove entities"
-msgstr "エンティティを削除するためにビンPPTLを押してください"
- 
-msgid "Release MTU"
-msgstr "MTUを解放してください"
- 
-msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
-msgstr "残っている項目を確認するためにビン{0}からトートを外してPPTLを押してください。"
- 
-msgid "SKU not present in database. Put into IRT bin."
-msgstr "SKUはデータベースに存在していません。IRTビンに入れてください。"
- 
-msgid "STN scan successful"
-msgstr "STNのスキャンが成功しました"
- 
-msgid "Scan Tote first and then scan rack"
-msgstr "最初にトートをスキャンして、そのあと、ラックをスキャンしてください"
- 
-msgid "Scan excess item"
-msgstr "余分な項目をスキャンしてください"
- 
-msgid "Scan or Enter the tote barcode to reprint"
-msgstr "再版するためにスキャンまたはトートバーコードを入力してください"
- 
-msgid "Scan or Enter {0} number"
-msgstr "スキャンまたは{0}の数字を入力してください"
- 
-msgid "Scan slot to confirm"
-msgstr "確認するためにスロットをスキャンしてください"
- 
-msgid "Scan tote and place it in the slot"
-msgstr "トートをスキャンしてスロットに置いてください"
- 
-msgid "Scan tote first and then scan item"
-msgstr "最初にトートをスキャンして、そのあと、項目をスキャンしてください"
- 
-msgid "Scan tote which has excess item"
-msgstr "余分な項目を持っているトートをスキャンしてください"
- 
-msgid "Scan {0} Items and Place in Bin {0}"
-msgstr "項目をスキャン{0}してビン{0}に置いてください"
- 
-msgid "Slot barcode scan successful"
-msgstr "スロットのバーコードスキャンが成功しました"
- 
-msgid "Take Printout and Press PPTL"
-msgstr "プリントアウトしてPPTLを押してください"
- 
-msgid "Take out the tote from bin {0} and scan entity"
-msgstr "ビン{0}からトートを取り出してエンティティをスキャンしてください"
- 
-msgid "Total "
-msgstr "合計"
- 
-msgid "Tote already associated with slot.Scan empty slot"
-msgstr "トートはすでにスロットと関連されています。空のスロットをスキャンしてください。"
- 
-msgid "Tote already scanned"
-msgstr "トートはすでにスキャンされました"
- 
-msgid "Tote scan cancelled."
-msgstr "トートスキャンがキャンセルされました。"
- 
-msgid "Tote scan successful."
-msgstr "トートスキャンが成功しました。"
- 
-msgid "Tote scanned is not idle"
-msgstr "スキャンされたトートはアイドル状態ではありません"
- 
-msgid "Tote scanned is not opened"
-msgstr "スキャンされたトートは開放していません"
- 
-msgid "Undock Roll Cage if no items remaining"
-msgstr "項目が残っていない場合はロールケージをアンドックしてください"
- 
-msgid "Unexpected entity scanned"
-msgstr "意外のエンティティがスキャンされました"
- 
-msgid "Validate and Confirm"
-msgstr "検証して確認してください"
- 
-msgid "Wrong Scan. Unrecognized barcode."
-msgstr "間違ったスキャン。無認識されたバーコード。"
- 
-msgid "Wrong Undock"
-msgstr "間違ったアンドック"
- 
-msgid "Wrong ppsbin button pressed"
-msgstr "間違ったppsbinボタンが押されました"
- 
-msgid "Yes"
-msgstr "はい"
- 
-msgid "{0} number :"
-msgstr "{0}番号: :"
-
-msgid "OK"
-msgstr "はい"
-
-
-#: src/assets/js/serverMessages/server_messages_lang.js:337
-msgid "Sum of good and exception quantity should be equal to {0}"
-msgstr "良いと例外の量の和は {0}"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:338
-msgid "Scan excess item quantity"
-msgstr "余剰品目数をスキャンする"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:460
-msgid "Wrong Scan. Entity not present in Database"
-msgstr "間違ったスキャン。データベースに存在しないエンティティ"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:461
-msgid "Sum of good, missing and damaged should be equal to {0}"
-msgstr "良い、欠けている、傷ついたものの合計は{0}"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:462
-msgid "Last item scan will be cancelled. Do you want to continue?"
-msgstr "最後の項目スキャンはキャンセルされます。続けたいですか？"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:463
-msgid "Continue"
-msgstr "持続する"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:464
-msgid "Bin full"
-msgstr "ビンフル"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:465
-msgid "Please put entities which have issues in exception area"
-msgstr "例外領域に問題があるエンティティを配置してください"
-
-
-#: src/assets/js/serverMessages/server_messages_lang.js:466
-msgid "Unscannable"
-msgstr "スキャン不能"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:467
-msgid "Invalid Event.Expecting PPTL button press"
-msgstr "無効なイベント。PPTLボタンが押されていることを確認する"
-
-
-#: src/assets/js/serverMessages/server_messages_lang.js:468
-msgid "Remove Tote from bin & Press PPTL to confirm no Items Remaining"
-msgstr "ビンからトートを取り出し、PPTLを押して残りのアイテムを確認します"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:470
-msgid "Wrong entity scan.Please scan the correct entity"
-msgstr "間違ったエンティティスキャン。正しいエンティティをスキャンしてください。"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:471
-msgid "Physically Damaged entity reported."
-msgstr "損害商品が報告された"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:472
-msgid "Entity entry successful"
-msgstr "身体的に損害を受けた団体が報告した。"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:473
-msgid "Bin scan successful"
-msgstr "ビンスキャンが成功"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:474
-msgid "Extra entity scan found."
-msgstr "ビンスキャン成功"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:475
-msgid "Physically Damaged Reported should equal Scanned Quantity"
-msgstr "物理的に損害が報告された場合、スキャンされた数量"
-
-
-#: src/assets/js/serverMessages/server_messages_lang.js:476
-msgid "SKU not present in Database."
-msgstr "SKUはデータベースに存在しません。"
-
-
-#: src/assets/js/serverMessages/server_messages_lang.js:478
-msgid "Container Already Scanned."
-msgstr "既にスキャンされたコンテナ。"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:479
-msgid "Invalid Entity Scanned."
-msgstr "無効なエンティティがスキャンされました。"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:480
-msgid "Quantity of Physically damaged entities scanned is less."
-msgstr "スキャンした物理的に損傷したエンティティの数は少なくなります。"

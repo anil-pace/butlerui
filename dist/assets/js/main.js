@@ -37174,10 +37174,10 @@ var Audit = React.createClass({displayName: "Audit",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.AuditPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.AuditSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.AuditSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -37755,20 +37755,31 @@ var Bin = React.createClass({displayName: "Bin",
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
+        }else if (compData.selected_state && (this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL ||this.props.screenId === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)) {
+           var pptl;
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
                 tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
+            if(this.props.screenId===appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+            {
+            pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
+            }
+            else
+            {
+             pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
+            }
+
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     tote, 
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                    pptl
                 )
             );
         }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {
@@ -38639,20 +38650,28 @@ switch (module) {
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
-                            case appConstants.SEND_KQ_QTY:
+                            case appConstants.FINISH_DAMAGED_ENTITY_DATA:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;    
+                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="finish_exception";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break; 
                             case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
+                            case appConstants.FINISH_EXCEPTION_EXTRA_ITEM:
                                   data["event_name"] = "put_back_exception";
-                                  data["event_data"]["action"] ="finish_exception";
+                                  data["event_data"]["action"] ="confirm_button_press";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
                                 break;
+
                               case appConstants.FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "put_back_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
@@ -38672,15 +38691,6 @@ switch (module) {
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen("damaged_confirm");
-                                break;
-                            case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
-                                break;
-                            case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
-                                ActionCreators.changePutBackExceptionScreen("oversized_confirm");
                                 break;
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
@@ -38831,7 +38841,14 @@ switch (module) {
                                 data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
 
                                 ActionCreators.postDataToInterface(data);
-                                break;   
+                                break; 
+
+                             case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
+                                    data["event_name"] = "pick_front_exception";
+                                  data["event_data"]["action"] ="confirm_irt_bin";
+                                  data["event_data"]["event"] = mainstore.getExceptionType();
+                                  ActionCreators.postDataToInterface(data);
+                                break;      
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
@@ -40117,7 +40134,7 @@ function loadComponent(modalType,modalData){
             )
           )
           ));
-      title = _("Bin Full");
+      title = _("Bin full");
       break;
     case appConstants.DISCARD_PACKING_BOX:
       component = [];
@@ -41109,10 +41126,10 @@ var PickBack = React.createClass({displayName: "PickBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickBackPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), "  : ", this.state.PickBackPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickBackSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PickBackSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -41503,11 +41520,25 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 var _button;
-                _button = (React.createElement("div", {className: "staging-action"}, 
+                if(!this.state.GetIRTScanStatus)
+          {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
                     React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
                              module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
                              color: "orange"})
                 ));
+
+          }
+      else
+      {
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Next"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
+                             color: "orange"})
+                ));
+      }
+
+                
 
                 this._component = (
                     React.createElement("div", {className: "grid-container exception"}, 
@@ -41542,25 +41573,25 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                                     React.createElement("hr", null)
                                 )
@@ -41583,27 +41614,34 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+            var selected_screen;
+          if(!this.state.GetIRTScanStatus)
+          {
+                  selected_screen=(
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
+                  )
+                  )
+          );
+              }
+              else{
+                selected_screen=(
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
+                  )
+          );
+              }
                 this._component = (
                     React.createElement("div", {className: "grid-container exception"}, 
                         React.createElement(Modal, null), 
                         React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                         React.createElement("div", {className: "exception-right"}, 
-                            React.createElement("div", {className: "gor-exception-align"}, 
-                                React.createElement("div", {
-                                    className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
-
-                                React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
-                                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", 
-                                             module: appConstants.PICK_FRONT, 
-                                             action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
-                                )
-                            )
-
-
+                        selected_screen
                         ), 
                         React.createElement("div", {className: "cancel-scan"}, 
-                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
-                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
                 );
@@ -41688,10 +41726,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                     React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                         React.createElement("div", {className: "row scannerHeader"}, 
                             React.createElement("div", {className: "col-md-6"}, 
-                                React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                                React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), ": ", this.state.PickFrontPpsMode.toUpperCase(), " ")
                             ), 
                             React.createElement("div", {className: "col-md-6"}, 
-                                React.createElement("div", {className: "seatType"}, " Seat Type" + ' ' +
+                                React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), 
                                     ": ", this.state.PickFrontSeatType.toUpperCase())
                             )
                         ), 
@@ -42280,10 +42318,10 @@ var PrePut = React.createClass({displayName: "PrePut",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PrePutPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), ": ", this.state.PrePutPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PrePutSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PrePutSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -43194,7 +43232,7 @@ var KQ = React.createClass({displayName: "KQ",
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
+            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() === appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
 
                 if(_updatedQtyDamaged  == 0){
                   this._appendClassDown = 'downArrow disable';
@@ -44274,6 +44312,19 @@ var PutBack = React.createClass({displayName: "PutBack",
         this._component = this.getExceptionComponent();
       }
       break;
+
+
+      case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
+      this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
+      this._component = (
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
+            )
+          )
+          );         
+      break;
+
       case appConstants.PUT_BACK_INVOICE:
       var invoiceStringArg = [];
       invoiceStringArg[0] = this.state.InvoiceType;
@@ -44371,26 +44422,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
           React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM})
-          )
-          ), 
-          React.createElement("div", {className: "cancel-scan"}, 
-          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-          )
-          )
-          );
-      else if(this.state.PutBackExceptionScreen == "damaged_confirm")
-        this._component = (
-          React.createElement("div", {className: "grid-container exception"}, 
-          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-          React.createElement("div", {className: "exception-right"}, 
-          React.createElement("div", {className: "main-container exception2"}, 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
-          )
-          ), 
-          React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_DAMAGED_ENTITY_DATA})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44415,26 +44447,7 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
-                  )
-                ), 
-                React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-                )
-              )
-            );
-          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
-                  React.createElement("div", {className: "main-container exception2"}, 
-                    React.createElement("div", {className: "kq-exception"}, 
-                      React.createElement("div", {className: "kq-header"}, _("Please put damaged entities in exception area."))
-                    )
-                  ), 
-                  React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -44458,26 +44471,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
           ), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
-          )
-          ), 
-          React.createElement("div", {className: "cancel-scan"}, 
-          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-          )
-          )
-          );
-      else if(this.state.PutBackExceptionScreen == "oversized_confirm")
-        this._component = (
-          React.createElement("div", {className: "grid-container exception"}, 
-          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-          React.createElement("div", {className: "exception-right"}, 
-          React.createElement("div", {className: "main-container exception2"}, 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "kq-header"}, _("Please put oversized entities in exception area."))
-          )
-          ), 
-          React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44528,26 +44522,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
         ), 
         React.createElement("div", {className: "finish-damaged-barcode"}, 
-        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY_1})
-        )
-        ), 
-        React.createElement("div", {className: "cancel-scan"}, 
-        React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
-        )
-        )
-        );
-    else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
-      this._component = (
-        React.createElement("div", {className: "grid-container exception"}, 
-        React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-        React.createElement("div", {className: "exception-right"}, 
-        React.createElement("div", {className: "main-container exception2"}, 
-        React.createElement("div", {className: "kq-exception"}, 
-        React.createElement("div", {className: "kq-header"}, _("Please put extra entities in exception area."))
-        )
-        ), 
-        React.createElement("div", {className: "finish-damaged-barcode"}, 
-        React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_EXTRA_ITEM})
         )
         ), 
         React.createElement("div", {className: "cancel-scan"}, 
@@ -44556,6 +44531,66 @@ var PutBack = React.createClass({displayName: "PutBack",
         )
         );
     break; 
+
+         case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+          var selected_screen;
+          var messageIRTenable,messageIRTdisable;
+          if(this.state.GetExceptionType==appConstants.PHYSICALLY_DAMAGED)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in exception area")));
+          }
+          else if(this.state.GetExceptionType==appConstants.EXTRA_ITEMS)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in exception area.")));
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_SCANNABLE)
+          {
+               messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in exception area")));
+          }
+          else if(this.state.GetExceptionType==appConstants.ITEM_OVERSIZED)
+          {
+              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in IRT bin and scan the bin")));
+              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in exception area")));
+          }
+
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    messageIRTdisable, 
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
+                  )
+                  )
+              )
+          );
+      }else
+      {
+         selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    messageIRTenable
+                  )
+              )
+          );
+      }
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                  selected_screen, 
+              React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                )
+              )
+            );
+        break;
+
+
     case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
     this._navigation = '';
     this._component = (
@@ -44573,6 +44608,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       )
       );
     break;
+
     case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
     this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
     
@@ -44603,10 +44639,10 @@ var PutBack = React.createClass({displayName: "PutBack",
       React.createElement("div", {className: "grid-container audit-reconcilation"}, 
       React.createElement("div", {className: "row scannerHeader"}, 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
+      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutBackPpsMode.toUpperCase(), " ")
       ), 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
+      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutBackSeatType.toUpperCase())
       )
       ), 
       React.createElement(TabularData, {data: this.state.utility}), 
@@ -44826,22 +44862,37 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-        var _button;
-        _button = (React.createElement("div", {className: "staging-action"}, 
-          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
-          ));
+        var selected_screen;
+        
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          if(!this.state.GetIRTScanStatus)
+          {
+          selected_screen= (
+            React.createElement("div", null, 
+           React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
+          ), 
+          React.createElement("div", {className: "staging-action"}, 
+          React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
+          )
+          ));
+         }
+         else
+         {
+        selected_screen=  (
+        React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "gor-info-text"}, _("Please put remaining entities in IRT bin and scan the bin"))
+          )
+          );
+         }
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-          React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
-          ), 
-          _button
+        selected_screen
           )
           );
         break;
-
+        
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -44865,6 +44916,8 @@ var PutFront = React.createClass({displayName: "PutFront",
       break;
 
         case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
+
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
           binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
@@ -44980,7 +45033,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             {
               UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -44999,13 +45052,13 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                     ), 
               
                      React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                     ), 
 
@@ -45013,7 +45066,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                    React.createElement("hr", null)
                     )
@@ -45030,23 +45083,36 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
         break; 
-
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                React.createElement("div", {className: "exception-right"}, 
+          var selected_screen;
+          if(!this.state.GetIRTScanStatus)
+          {
+        selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entitites which has issues in exception area")), 
-                   
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
                   )
-             
-                
-              ), 
+              )
+          );
+      }else
+      {
+         selected_screen=(
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
+                  )
+              )
+          );
+      }
+          
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                  selected_screen, 
               React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
@@ -45136,7 +45202,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Next"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
             ));
           this._component = (
             React.createElement("div", {className: "grid-container exception"}, 
@@ -45174,10 +45240,10 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "grid-container audit-reconcilation"}, 
             React.createElement("div", {className: "row scannerHeader"}, 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
+            React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
             ), 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
+            React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutFrontSeatType.toUpperCase())
             )
             ), 
             React.createElement(TabularData, {data: this.state.utility}), 
@@ -46178,6 +46244,14 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],[
+         {
+            "screen_id": "put_back_warehouse_full_irt_scan",
+            "code": "PtF.H.015",
+            "message": "Put item into IRT bin and scan the bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
     ],
     "putFront": [
@@ -46256,6 +46330,14 @@ var navData = {
             "screen_id": "put_front_bin_warehouse_full",
             "code": "PtF.H.016",
             "message": "Warehouse Full",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "put_front_warehouse_full_irt_scan",
+            "code": "PtF.H.021",
+            "message": "Scan IRT Bin",
             "showImage": false,
             "level": 1,
             "type": 'active'
@@ -46550,6 +46632,7 @@ var appConstants = {
 	SKIP_PRINTING:"SKIP_PRINTING",
 	DIS_ASSOCIATE_TOTE:"DIS_ASSOCIATE_TOTE",
 	OVERRIDE_TOTE:"OVERRIDE_TOTE",
+	PICK_FINISH_EXCEPTION_ENTITY:"PICK_FINISH_EXCEPTION_ENTITY",
 	PICK_BACK_EXCEPTION_REPRINT:"pick_back_reprint_required",
 	PICK_BACK_EXCEPTION_SKIP_PRINTING:"pick_back_skip_print",
 	PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:"pick_back_tote_deassociation",
@@ -46561,7 +46644,14 @@ var appConstants = {
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
+	PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:"put_back_warehouse_full_irt_scan",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
+	PHYSICALLY_DAMAGED:"physically_damaged",
+	EXTRA_ITEMS:"extra_items",
+	ITEM_SCANNABLE:"item_unscannable",
+	ITEM_OVERSIZED:"item_oversized",
+	FINISH_DAMAGED_ENTITY_DATA:"FINISH_DAMAGED_ENTITY_DATA",
+	FINISH_EXCEPTION_EXTRA_ITEM:"FINISH_EXCEPTION_EXTRA_ITEM",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
@@ -46616,7 +46706,9 @@ var appConstants = {
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
+	PUT_BACK_EXCEPTION_ENITY_IRT_BIN:"put_back_transfer_to_irt_bin",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
+	PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:"put_front_warehouse_full_irt_scan",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
 	UNMARKED_DAMAGED:"UNMARKED_DAMAGED",
 	EDIT_DETAILS:"EDIT_DETAILS",
@@ -46645,6 +46737,7 @@ var appConstants = {
 	UPDATE_MISSING_QUANTITY:"UPDATE_MISSING_QUANTITY",
 	UPDATE_UNSCANNABLE_QUANTITY:"UPDATE_UNSCANNABLE_QUANTITY",
 	PUT_FRONT_ITEMS_TO_IRT_BIN:"put_front_items_to_irt_bin",
+	PUT_FINISH_EXCEPTION_ENTITY:"PUT_FINISH_EXCEPTION_ENTITY",
 	UPDATE_GOOD_QUANTITY:"UPDATE_GOOD_QUANTITY",
 	UPDATE_DAMAGED_QUANTITY:"UPDATE_DAMAGED_QUANTITY",
 	CANCEL_TOTE :'CANCEL_TOTE',
@@ -46739,7 +46832,6 @@ module.exports = appConstants;
 var configConstants = {
 	WEBSOCKET_IP : "wss://localhost/wss",
 	INTERFACE_IP : "https://localhost"
-
 };
 module.exports = configConstants;
 
@@ -47606,15 +47698,8 @@ var japanese = {
    "Bin Info": "\u30d3\u30f3\u60c5\u5831",
    "Bin already staged. Ignoring event": "\u30d3\u30f3\u306f\u78ba\u5b9a\u6e08\u307f\u3067\u3059\u3002\u64cd\u4f5c\u3092\u7121\u8996\u3057\u307e\u3057\u305f",
    "Bin empty. Cannot be staged": "\u30d3\u30f3\u304c\u7a7a\u3067\u3059\u3002\u78ba\u5b9a\u3067\u304d\u307e\u305b\u3093",
-<<<<<<< HEAD
-=======
    "Bin full": "\u30d3\u30f3\u30d5\u30eb",
-<<<<<<< HEAD
-   "Bin scan successful": "",
->>>>>>> 56ca385... Japanese fixes
-=======
    "Bin scan successful": "\u30d3\u30f3\u30b9\u30ad\u30e3\u30f3\u304c\u6210\u529f",
->>>>>>> 5f3345e... Fixes for Physically Damaged entity reported. and bin successful
    "Bin selected for put. Cannot be staged": "\u30d3\u30f3\u306f\u5165\u8377\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u78ba\u5b9a\u306f\u3067\u304d\u307e\u305b\u3093",
    "Bin {0} items removed successfully": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u5b8c\u4e86",
    "Bin {0} selected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u307e\u3057\u305f",
@@ -47643,11 +47728,8 @@ var japanese = {
    "Confirm": "\u78ba\u8a8d",
    "Confirm MSU Release": "MSU\u306e\u30ea\u30ea\u30fc\u30b9\u3092\u78ba\u8a8d",
    "Connection is closed. Connecting...": "\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u304c\u5207\u65ad\u3055\u308c\u307e\u3057\u305f\u3002\u518d\u63a5\u7d9a\u4e2d\u30fb\u30fb\u30fb",
-<<<<<<< HEAD
-=======
    "Container Already Scanned.": "\u65e2\u306b\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u305f\u30b3\u30f3\u30c6\u30ca\u3002",
    "Continue": "\u6301\u7d9a\u3059\u308b",
->>>>>>> 019858d... Fixes fo quantity translations
    "Could not connect to PPS.Please try again.": "PPS\u306b\u63a5\u7d9a\u3067\u304d\u307e\u305b\u3093\u3002\u3082\u3046\u4e00\u5ea6\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044",
    "Current PPS mode does not support back seat. Please logout.": "\u73fe\u5728\u306e\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u306f\u30d0\u30c3\u30af\u30b7\u30fc\u30c8\u4f7f\u7528\u4e0d\u53ef\u3002\u30ed\u30b0\u30a2\u30a6\u30c8\u3057\u3066\u304f\u3060\u3055\u3044",
    "Damaged Quantity": "\u4e0d\u826f\u54c1\u6570",
@@ -47736,6 +47818,7 @@ var japanese = {
    "Items In Box Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
    "Japanese": "\u65e5\u672c\u8a9e",
    "Last Box Scan Completed! Scan Remaining Box/Items": "\u30dc\u30c3\u30af\u30b9\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86\uff01\u6b8b\u308a\u306e\u5546\u54c1\u307e\u305f\u306f\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Last item scan will be cancelled. Do you want to continue?": "\u6700\u5f8c\u306e\u9805\u76ee\u30b9\u30ad\u30e3\u30f3\u306f\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3059\u3002\u7d9a\u3051\u305f\u3044\u3067\u3059\u304b\uff1f",
    "List Of Items To Reconcile": "\u8abf\u6574\u304c\u5fc5\u8981\u306a\u5546\u54c1\u30ea\u30b9\u30c8",
    "Location scan successful": "\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u306e\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
    "Login": "\u30ed\u30b0\u30a4\u30f3",
@@ -47808,6 +47891,7 @@ var japanese = {
    "Please press PPTL button which does not have any totes associated": "\u30c8\u30fc\u30c8\u306b\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u306a\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Please press those buttons having color blink_blue": "\u9752\u8272\u70b9\u6ec5\u306e\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Please put entities in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
+   "Please put exception entities in exception area": "\u4f8b\u5916\u9818\u57df\u306b\u554f\u984c\u304c\u3042\u308b\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u914d\u7f6e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please put entities with issues, in exception area": "\u4f8b\u5916\u9818\u57df\u306b\u554f\u984c\u306e\u3042\u308b\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u914d\u7f6e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please put entity in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
    "Please put extra entities in exception area.": "\u8d85\u904e\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
@@ -47875,6 +47959,7 @@ var japanese = {
    "Scan box barcode": "\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan damaged entity": "\u4e0d\u826f\u54c1\u3092 \u30b9\u30ad\u30e3\u30f3\u3057\u3066\u6570\u3092\u5165\u529b",
    "Scan excess item": "\u4f59\u5206\u306a\u9805\u76ee\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Scan excess item quantity": "\u4f59\u5270\u54c1\u76ee\u6570\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b",
    "Scan item / Stage PPS Bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
    "Scan item / Stage pps bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
    "Scan items and place in bin {0}": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u30d3\u30f3 {0} \u306b\u7f6e\u304f",
@@ -47912,6 +47997,8 @@ var japanese = {
    "Status": "\u30b9\u30c6\u30fc\u30bf\u30b9",
    "Status To Reconcile": "\u8abf\u6574\u4e2d",
    "Submit": "\u78ba\u5b9a",
+   "Sum of good and exception quantity should be equal to {0}": "\u826f\u3044\u3068\u4f8b\u5916\u306e\u91cf\u306e\u548c\u306f {0}",
+   "Sum of good, missing and damaged should be equal to {0}": "\u826f\u3044\u3001\u6b20\u3051\u3066\u3044\u308b\u3001\u50b7\u3064\u3044\u305f\u3082\u306e\u306e\u5408\u8a08\u306f{0}",
    "Sum of missing and good quantity should be equal to {0}": "\u5408\u8a08\u6570(\u826f\u54c1\u6570\uff0b\u7d1b\u5931\u6570)\u306f {0} \u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
    "Sum of missing, good and damaged should be equal to {0}": "\u6570\u91cf\u4e0d\u4e00\u81f4\u3002\u7d1b\u5931\u54c1\u3068\u826f\u54c1\u3068\u4e0d\u826f\u54c1\u306e\u5408\u8a08\u306f {0} ",
    "System Error. Scanned entity details not available at this time": "\u30b7\u30b9\u30c6\u30e0\u30a8\u30e9\u30fc\u3002\u73fe\u5728\u3001\u5546\u54c1\u8a73\u7d30\u306f\u53c2\u7167\u3067\u304d\u307e\u305b\u3093",
@@ -47981,6 +48068,7 @@ var japanese = {
    "Wrong PPTL pressed. Please press correct PPTL": "\u30d3\u30f3\u30dc\u30bf\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Wrong PPTL pressed. Please try another": "\u30d3\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Wrong Ppsbin button pressed.Please press those buttons having color blue": "\u30d3\u30f3\u9055\u3044\u3002\u9752\u8272\u306e\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Wrong Scan. Entity not present in Database": "\u9593\u9055\u3063\u305f\u30b9\u30ad\u30e3\u30f3\u3002\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u306b\u5b58\u5728\u3057\u306a\u3044\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3",
    "Wrong Scan. Unrecognized barcode.": "\u9593\u9055\u3063\u305f\u30b9\u30ad\u30e3\u30f3\u3002\u7121\u8a8d\u8b58\u3055\u308c\u305f\u30d0\u30fc\u30b3\u30fc\u30c9\u3002",
    "Wrong Undock": "\u9593\u9055\u3063\u305f\u30a2\u30f3\u30c9\u30c3\u30af",
    "Wrong barcode scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059",
@@ -48031,6 +48119,7 @@ var serverMessages = {
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
     "PtB.H.010" : "Scan Excess Entity Quantity",
     "PtB.H.011" : "Please put entity in exception area and confirm",
+    "PtB.H.015" : "Please put entities in IRT and Scan IRT Bin",
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",
     "PtB.E.003" : "Close current tote first",
@@ -48052,6 +48141,10 @@ var serverMessages = {
     "PtB.E.019" : "Tote not present in database.",
     "PtB.E.020" : "Tote matched .",
     "PtB.E.021" : "Entity already scanned.Confirm exception", 
+    "PtB.E.023" : "Scan not Allowed.PPS close or force close requested",
+    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.", 
+    "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
+    "PtF.E.021" : "Bin Already Scanned",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
@@ -48067,6 +48160,11 @@ var serverMessages = {
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
     "PtF.H.017" : "Wrong Undock",
+    "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
+    "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
+    "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
+    "PtF.H.021" : "Scan IRT Bin",
+    "PtF.E.022" : "Entities cannot be accommodated!",
     "PtF.H.018" : "Remove Tote from bin & Press PPTL to confirm no Items Remaining",
     "PtF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
     "PkF.H.001" : "Wait for MSU",
@@ -48104,6 +48202,7 @@ var serverMessages = {
     "PtB.I.016" : "Invalid entity in tote recorded",
     "PtB.I.017" : "PPS mode change requested:scan not allowed",
     "PtB.I.018" : "PPS mode change requested:auto staging all bins",
+    "PtB.I.020" : "{0} Physically damaged entity recorded.WMS notified",
     "PtB.W.001" : "Box with same serial number already exists in the warehouse",
     "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
     "PtB.W.003" : "No bins available to stage",
@@ -48157,6 +48256,9 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.009": "SKU not present in Database.",
+    "Common.010": "Wrong Scan. Entity not present in Database",
+    "Common.011": "Wrong Scan. IRT bin scan expected",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
@@ -48323,6 +48425,7 @@ var serverMessages = {
     "PkF.H.010":"Scan a packing box and keep in bin {0}",
     "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
     "PkF.H.015":"Enter Quantity",
+    "PkF.H.016":"Take Printout and Press PPTL",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
@@ -48349,7 +48452,6 @@ var spanish = {
 	"Add Scanner": "Agregar el Esc\u00e1ner",
 	"After scannning tote barcode, please scan pptl barcode": "Despu\u00e9s de escanear el c\u00f3digo de barras de la bolsa, por favor, escanee el c\u00f3digo de barras pptl",
 	"Are You Sure You Want to Close Tote?": "\u00bfEst\u00e1 seguro que desea cerrar la Bolsa?",
-	"Are you sure you want to cancel the exception?": "\u00bfSeguro que desea cancelar la excepci\u00f3n?",
 	"Are you sure you want to close Tote": "Est\u00e1 seguro que desea cerrar la Bolsa",
 	"Are you sure you want to exit from {0} invoice and stage all bins": "Est\u00e1 seguro de que quiere salir de {0} la factura y montar todos los contenedore",
 	"Are you sure you want to exit from {0} {1} and stage all bins": "Est\u00e1 seguro de que quiere salir de {0} {1} y montar todos los contenedore",
@@ -48414,7 +48516,6 @@ var spanish = {
 	"English": "Ingl\u00e9s",
 	"Enter Good Quantity to be Put into Slot": "Entre una Cantidad Correcta Para Ubicar en la Vacante",
 	"Enter Password": "Escriba la Contrase\u00f1a",
-	"Enter Quantity": "Introducir cantidad",
 	"Enter Quantity of Excess Entities": "Especificarla Cantidad de Art\u00edculos Sobrantes",
 	"Enter Scanner Id": "Introducir la Identificaci\u00f3n del Esc\u00e1ner",
 	"Enter Unscannable Entity Quantity": "Especifique la Cantidad de Art\u00edculos no Escaneables",
@@ -48468,7 +48569,6 @@ var spanish = {
 	"Invalid item in tote recorded.": "Art\u00edculo no v\u00e1lido registrado en la bolsa.",
 	"Invalid tote scanned": "Un bolso no v\u00e1lido ha sido escanead",
 	"Invoice number: {0}": "N\u00famero de la factura : {0",
-	"Issues with entity": "Problemas con la entidad",
 	"Item Missing/Bad Barcode": "Art\u00edculo Faltante/C\u00f3digo de Barra Equivocado",
 	"Item Missing/Unscannable": "Art\u00edculo faltante/No escaneable",
 	"Item Not Expected in Tote": "El Art\u00edculo no se Espera en la Bolsa",
@@ -48538,7 +48638,7 @@ var spanish = {
 	"Place extra entity in Exception area.": "Ubique los art\u00edculos extra en la zona de Excepci\u00f3n.",
 	"Place the tote back in bin {0} and press pptl": "Coloque el bolso  nuevamente en el contenedor  {0} y pulse ppt",
 	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2}",
-	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2}",
+	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2",
 	"Please Scan tote which has excess item": "Por favor escanee el bolso que haya sobrepasado el l\u00edmite de art\u00edculo",
 	"Please Select The Bin With Excess Entity": "Por favor, Seleccione el Recipiente con Art\u00edculos Sobrantes",
 	"Please complete pickback for pending bin and then proceed": "Por favor complete pickback para el recipiente pendiente y luego proceda",
@@ -48698,7 +48798,6 @@ var spanish = {
 	"Update": "Actualizaci\u00f3n",
 	"User Name": "Nombre de usuario",
 	"Utility": "Utilidad",
-	"Validate and Confirm": "Validar y confirmar",
 	"View More": "Ver M\u00e1s",
 	"Wait for MSU": "Espere por MSU",
 	"Waiting for Bins to be Cleared at Pick Back": "A la espera de que los Recipientes sean Despejados para Elegir de Nuevo",
@@ -48730,7 +48829,6 @@ var spanish = {
 	"Wrong scan.Expecting location scan.": "Escaneo equivocado. Esperando el el escaneo del lugar.",
 	"Wrong slot location scanned. Please try again": "Ubicaci\u00f3n de vacante mal escaneada. Por favor, int\u00e9ntelo de nuevo",
 	"Wrong slot scanned": "Se ha escaneado la vacante equivocada",
-	"Yes": "S\u00ed",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "No se le permite ingresar la cantidad desde el teclado num\u00e9rico. El Escaneo Forzado es necesario.",
 	"You cannot enter 0": "No puede entrar 0",
 	"You cannot enter value more than 9999": "Usted no puede entrar un valor mayor de 9999",
@@ -50125,6 +50223,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
+                else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
+                    _NavData = navConfig.putBack[2];
                 else
                     _NavData = navConfig.putBack[1];
                 break;
@@ -50139,6 +50239,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[3];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
                     _NavData = navConfig.putFront[7];
+                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+                    _NavData = navConfig.putFront[8];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
                     _NavData = navConfig.putFront[4];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
@@ -50337,6 +50439,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBoxDetails: function () {
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
+    },
+    getIRTScanStatus: function () {
+        if (_seatData.hasOwnProperty('irt_scan_enabled'))
+            return _seatData.irt_scan_enabled;
+    },
+    getExceptionType:function () {
+        if (_seatData.hasOwnProperty('exception_type'))
+            return _seatData.exception_type;
     },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
@@ -51439,7 +51549,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 });
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total ") +":"+ total_damaged + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
@@ -51453,7 +51563,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["footer"] = [];
         data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Excess quantity"), "header", false, "small", false, true, true, false));
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
@@ -51793,6 +51903,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["InvoiceType"] = this.getInvoiceType();
                 data["ToteId"] = this.getToteId();
                 break;
+             case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNotification"] = this.getNotificationData();
+             break;       
+
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackNavData"] = this.getNavData();
@@ -51866,6 +51985,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 break;
+
+            case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                data["GetExceptionType"] = this.getExceptionType();
+            break;    
             case appConstants.PRE_PUT_STAGE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
@@ -51994,6 +52123,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
             case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+            case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -52048,6 +52178,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
 
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
@@ -52058,6 +52189,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -52251,6 +52384,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+
                 break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutBackKQDetails"] = this.getScanDetails();
@@ -52273,6 +52408,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontDamagedItems"] = this._getDamagedItemsData();
                 data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
                 data["PickFrontScreenId"] = this.getScreenId();

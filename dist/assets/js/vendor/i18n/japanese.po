@@ -314,7 +314,7 @@ msgstr "PPSが中断モードです。しばらく待って再度実施してく
 
 #: src/assets/js/serverMessages/server_messages_lang.js:75
 msgid "Cancel scan successful."
-msgstr "スキャンキャンセル"
+msgstr "スキャンがキャンセルされた"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:76
 msgid "Tote close successful."
@@ -572,7 +572,7 @@ msgstr "ボックススキャン完了"
 #: src/assets/js/serverMessages/server_messages_lang.js:195
 #: src/assets/js/serverMessages/server_messages_lang.js:197
 msgid "Cancel scan successful"
-msgstr "キャンセルのスキャン完了"
+msgstr "スキャンがキャンセルされた"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:142
 msgid "Expecting MSU release confirmation from GUI, got invalid event."
@@ -995,7 +995,7 @@ msgstr "周辺機器削除失敗"
 #: src/assets/js/serverMessages/server_messages_lang.js:230
 #: src/assets/js/serverMessages/server_messages_lang.js:232
 msgid "Cancel Exception"
-msgstr "例外登録のキャンセル"
+msgstr "例外処理をキャンセルする"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:231
 #: src/assets/js/serverMessages/server_messages_lang.js:233
@@ -1203,7 +1203,7 @@ msgstr "予定"
 #: src/assets/js/serverMessages/server_messages_lang.js:276
 #: src/assets/js/serverMessages/server_messages_lang.js:278
 msgid "Actual"
-msgstr "正しい"
+msgstr "実際"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:278
 #: src/assets/js/serverMessages/server_messages_lang.js:280
@@ -1430,7 +1430,7 @@ msgstr "紛失数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:333
 msgid "Unscannable Quantity"
-msgstr "スキャン不可数"
+msgstr "スキャン不可の数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:334
 msgid "Remove Item"
@@ -1470,7 +1470,7 @@ msgstr "ログインできません。既にログインしています"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:343
 msgid "Place Item in slot and scan more"
-msgstr "商品をスロットに置いて、スキャンを繰り返してください"
+msgstr "商品をスロットに入れて、次の商品スキャンを続ける"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "PPTL"
@@ -1614,11 +1614,11 @@ msgstr "シートタイプ"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:455
 msgid "Scan damaged entity"
-msgstr "不良品を スキャンして数を入力"
+msgstr "損害エンティティをスキャンする"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:456
 msgid "Damaged Quantity"
-msgstr "不良品数"
+msgstr "損害品数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:457
 msgid "Entity Damaged"
@@ -1626,10 +1626,10 @@ msgstr "不良品"
 
 
 msgid " items"
-msgstr " 項目"
+msgstr " 商品"
  
 msgid "Are you sure you want to cancel the exception?"
-msgstr "例外をキャンセルしたいですか"
+msgstr "例外処理をキャンセルしてもよろしいですか？"
  
 msgid "Are you sure you want to exit from {0} invoice and stage all bins"
 msgstr " {0} 請求書から退場して全てのビンをステージしたいですか"
@@ -1644,7 +1644,7 @@ msgid "English"
 msgstr "英語"
  
 msgid "Enter Quantity"
-msgstr "数量を入力してください"
+msgstr "数量を記入"
  
 msgid "Enter excess item quantity"
 msgstr "余分な項目の数量を入力してください"
@@ -1665,7 +1665,7 @@ msgid "Exception finished"
 msgstr "例外が終了しました"
  
 msgid "Exception with entity reported"
-msgstr "エンティティによる例外が報告されています"
+msgstr "エンティティに関して例外が報告"
  
 msgid "Excess quantity"
 msgstr "過剰数量"
@@ -1689,7 +1689,7 @@ msgid "Invoice number: {0}"
 msgstr "請求書番号: {0}"
  
 msgid "Issues with entity"
-msgstr "エンティティとの問題"
+msgstr "エンティティに問題"
  
 msgid "No"
 msgstr "いいえ"
@@ -1728,10 +1728,10 @@ msgid "Please enter a quantity greater than 0"
 msgstr "0以上の数量を入力してください"
  
 msgid "Please put entities with issues, in exception area"
-msgstr "例外領域に問題のあるエンティティを配置してください"
+msgstr "問題のあるエンティティを例外エリアに置く"
  
 msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
-msgstr "Bin {0}に項目が残っていないことを確認するためにPPTLを押してください"
+msgstr "Bin {0} に商品が残ってないことをPPTL押して確認する"
  
 msgid "Press bin PPTL to remove entities"
 msgstr "エンティティを削除するためにビンPPTLを押してください"
@@ -1743,7 +1743,7 @@ msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
 msgstr "残っている項目を確認するためにビン{0}からトートを外してPPTLを押してください。"
  
 msgid "SKU not present in database. Put into IRT bin."
-msgstr "SKUはデータベースに存在していません。IRTビンに入れてください。"
+msgstr "商品がシステムに未登録。IRTビンに入れる。"
  
 msgid "STN scan successful"
 msgstr "STNのスキャンが成功しました"
@@ -1779,7 +1779,7 @@ msgid "Slot barcode scan successful"
 msgstr "スロットのバーコードスキャンが成功しました"
  
 msgid "Take Printout and Press PPTL"
-msgstr "プリントアウトしてPPTLを押してください"
+msgstr "プリントアウトをビンに入れて、PPTLを押す"
  
 msgid "Take out the tote from bin {0} and scan entity"
 msgstr "ビン{0}からトートを取り出してエンティティをスキャンしてください"
@@ -1812,7 +1812,7 @@ msgid "Unexpected entity scanned"
 msgstr "意外のエンティティがスキャンされました"
  
 msgid "Validate and Confirm"
-msgstr "検証して確認してください"
+msgstr "数をチェックして確認する"
  
 msgid "Wrong Scan. Unrecognized barcode."
 msgstr "間違ったスキャン。無認識されたバーコード。"
@@ -1835,7 +1835,7 @@ msgstr "はい"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:337
 msgid "Sum of good and exception quantity should be equal to {0}"
-msgstr "良いと例外の量の和は {0}"
+msgstr "良品と例外品の合計なければならない数は {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:338
 msgid "Scan excess item quantity"
@@ -1847,11 +1847,11 @@ msgstr "間違ったスキャン。データベースに存在しないエンテ
 
 #: src/assets/js/serverMessages/server_messages_lang.js:461
 msgid "Sum of good, missing and damaged should be equal to {0}"
-msgstr "良い、欠けている、傷ついたものの合計は{0}"
+msgstr "数量不一致。良品と紛失品と不良品の合計は {0} "
 
 #: src/assets/js/serverMessages/server_messages_lang.js:462
 msgid "Last item scan will be cancelled. Do you want to continue?"
-msgstr "最後の項目スキャンはキャンセルされます。続けたいですか？"
+msgstr "最後の商品スキャンがキャンセルされます。続けますか？"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:463
 msgid "Continue"
@@ -1859,16 +1859,16 @@ msgstr "持続する"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:464
 msgid "Bin full"
-msgstr "ビンフル"
+msgstr "ビンがいっぱい状態"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:465
 msgid "Please put entities which have issues in exception area"
-msgstr "例外領域に問題があるエンティティを配置してください"
+msgstr "問題のあるエンティティを例外エリアに置く"
 
 
 #: src/assets/js/serverMessages/server_messages_lang.js:466
 msgid "Unscannable"
-msgstr "スキャン不能"
+msgstr "スキャン不可"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:467
 msgid "Invalid Event.Expecting PPTL button press"
@@ -1885,7 +1885,7 @@ msgstr "間違ったエンティティスキャン。正しいエンティティ
 
 #: src/assets/js/serverMessages/server_messages_lang.js:471
 msgid "Physically Damaged entity reported."
-msgstr "損害商品が報告された"
+msgstr "物理的に損害が報告された"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:472
 msgid "Entity entry successful"

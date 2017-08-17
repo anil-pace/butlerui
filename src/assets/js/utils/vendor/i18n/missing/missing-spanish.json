@@ -1,0 +1,22 @@
+[
+"Bin full",
+"Container Already Scanned.",
+"Continue",
+"Extra entity scan found.",
+"Invalid Entity Scanned.",
+"Invalid Event.Expecting PPTL button press",
+"Last item scan will be cancelled. Do you want to continue?",
+"No",
+"PPS is closed",
+"Physically Damaged Reported should equal Scanned Quantity",
+"Physically Damaged entity reported.",
+"Please put entities which have issues in exception area",
+"Quantity of Physically damaged entities scanned is less.",
+"Remove Tote from bin & Press PPTL to confirm no Items Remaining",
+"SKU not present in Database.",
+"Scan excess item quantity",
+"Sum of good, missing and damaged should be equal to {0}",
+"Unscannable",
+"Wrong Scan. Entity not present in Database",
+"Wrong entity scan.Please scan the correct entity"
+]

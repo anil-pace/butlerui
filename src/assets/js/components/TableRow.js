@@ -68,7 +68,8 @@ var TableRow = React.createClass({
             classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
-    		var selected = value.selected == true ? classes = classes + "selected ":"";
+    		var actualqty=value.status=="actualqty" && value.selected !== true? classes=classes+ "actualqty ":"";
+            var selected = value.selected == true ? classes = classes + "selected ":"";
     		var large = value.size == "large" ? classes = classes + "large ":classes = classes + "small ";
     		var bold = value.bold == true ? classes = classes + "bold ":"";
     		var disabled = value.disabled == true ? classes = classes + "disabled ":"";

@@ -46196,7 +46196,8 @@ var TableRow = React.createClass({displayName: "TableRow",
             classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
-    		var selected = value.selected == true ? classes = classes + "selected ":"";
+    		var actualqty=value.status=="actualqty" && value.selected !== true? classes=classes+ "actualqty ":"";
+            var selected = value.selected == true ? classes = classes + "selected ":"";
     		var large = value.size == "large" ? classes = classes + "large ":classes = classes + "small ";
     		var bold = value.bold == true ? classes = classes + "bold ":"";
     		var disabled = value.disabled == true ? classes = classes + "disabled ":"";
@@ -50908,8 +50909,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         });
         return data;

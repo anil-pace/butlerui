@@ -873,8 +873,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         });
         return data;

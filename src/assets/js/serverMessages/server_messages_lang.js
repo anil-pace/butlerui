@@ -51,7 +51,7 @@ function server_messages_list() {
     _("Place Entity in Bin and Press PPTL");
     _("Are You Sure You Want to Close Tote?");
     _("Scan Tote or Stage PPS Bin");
-    _("Item Not Expected in Tote");    
+    _("Item Not Expected in Tote");
     _("Tote already opened. Scan some other tote");
     _("Tote already closed. Scan some other tote");
     _("No matching tote found");
@@ -64,7 +64,7 @@ function server_messages_list() {
     _("SKU not present in database. Put into IRT bin.");
     _("Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL");
     _("No free bins. Please scan later");
-    _("Wrong PPTL pressed. Please try another");    
+    _("Wrong PPTL pressed. Please try another");
     _("Please put entities in exception area and confirm");
     _("Wrong bin chosen.Try selecting another bin");
     _("Please scan same SKU to complete this exception");
@@ -171,7 +171,7 @@ function server_messages_list() {
     _("Tote association failed. Repeat scan operation");
     _("Tote associated with another bin");
     _("Please scan PPTL barcode");
-    _("Tote disassociated from Bin");    
+    _("Tote disassociated from Bin");
     _("Please complete process for pending bin and then proceed");
     _("Tote already reserved");
     _("Wrong barcode scanned");
@@ -336,7 +336,7 @@ function server_messages_list() {
     _("Remove Item");
     _("Item Missing/Bad Barcode");
     _("Sum of missing and good quantity should be equal to {0}");
-    _("Login"); 
+    _("Login");
     _("Enter Username");
     _("Enter Password");
     _("Invalid credentials");
@@ -408,7 +408,7 @@ function server_messages_list() {
     _("Tote already associated with slot.Scan empty slot");
     _("Unexpected entity scanned");
     _("Wrong barcode scanned");
-    _("Enter excess item quantity"); 
+    _("Enter excess item quantity");
     _(" items");
     _("Wrong ppsbin button pressed");
     _("Total ");
@@ -461,7 +461,32 @@ function server_messages_list() {
     _("Please put entities in IRT and Scan IRT Bin");
     _("Wrong Scan. Unrecognized barcode.");
     _("PPS is closed");
-    _("NEST MAX");
+    _("Scan damaged entity");
+    _("Damaged Quantity");
+    _("Entity Damaged");
+    _("Wrong Scan. Entity not present in Database");
+    _("Sum of good, missing and damaged should be equal to {0}");
+    _("Last item scan will be cancelled. Do you want to continue?");
+    _("Continue");
+    _("Bin full");
+    _("Please put entities which have issues in exception area");
+    _("Unscannable");
+    _("Invalid Event.Expecting PPTL button press");
+    _("Remove Tote from bin & Press PPTL to confirm no Items Remaining");
+    _("Press PPTL to confirm no Items Remaining in Bin {0}");
+    _("Wrong entity scan.Please scan the correct entity");
+    _("Physically Damaged entity reported.");
+    _("Entity entry successful");
+    _("Bin scan successful");
+    _("Extra entity scan found.");
+    _("Physically Damaged Reported should equal Scanned Quantity");
+    _("SKU not present in Database.");
+    _("Extra entity scan found.");
+    _("Container Already Scanned.");
+    _("Invalid Entity Scanned.");
+    _("Quantity of Physically damaged entities scanned is less.")
+    _("Error")
+     _("NEST MAX");
     _("STACK MAX");
     _("DO NOT STACK");
     _("FRAGILE");

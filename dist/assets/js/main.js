@@ -38628,7 +38628,12 @@ var Button1 = React.createClass({displayName: "Button1",
     };
 
 switch (module) {
-                    case appConstants.PUT_BACK:
+    case appConstants.ERROR_NOTIFICATION:
+        ActionCreators.clearNotification()
+        closeModalBox();
+        $(".modal").removeClass("notification-error")
+        break;
+    case appConstants.PUT_BACK:
                         switch (action) {
                             case appConstants.STAGE_ONE_BIN:
                                 ActionCreators.stageOneBin();
@@ -40228,6 +40233,27 @@ function loadComponent(modalType,modalData){
           ));
       title = _("Cancel Exception");    
       break;
+
+      case appConstants.ERROR_NOTIFICATION:
+          component = [];
+          component.push((
+              React.createElement("div", null, 
+                  React.createElement("div", {className: "row"}, 
+                      React.createElement("div", {className: "col-md-12"}, 
+                          React.createElement("div", {className: "title-textbox"}, modalData)
+                      )
+                  ), 
+                  React.createElement("div", {className: "modal-footer removeBorder"}, 
+                      React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                          React.createElement("div", {className: "row removeBorder"}, 
+                              React.createElement("div", {className: "col-md-4 col-md-offset-3"}, React.createElement(Button1, {disabled: false, text: _("OK"), color: "orange", module: appConstants.ERROR_NOTIFICATION, action: appConstants.HIDE_ERROR_NOTIFICATION}))
+                          )
+                      )
+                  )
+              )
+          ));
+          title = React.createElement("span", null, React.createElement("span", {className: "glyphicon glyphicon-exclamation-sign"}), _("Error"))
+          break;
     default:
       component = null;
       title = null;
@@ -40736,6 +40762,8 @@ module.exports = PassiveNavigation;
 },{"react":232}],261:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
+var appConstants = require('../../constants/appConstants');
+var Modal = require('../Modal/Modal');
 
 var Notification = React.createClass({displayName: "Notification",
     render: function() {
@@ -40752,33 +40780,73 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';
         }
-        if(errorCode !== null){
-        return (
 
-            React.createElement("div", {className: appendClass, role: "alert"}, 
-            	React.createElement("div", {className: appendClass1}, 
-            		React.createElement("div", {className: "border-glyp"}, 
-            			React.createElement("span", {className: "glyphicon "+appendClass2})
-             		)
-            	), 
-            	(function(){
-                    if(navMessagesJson != undefined){
-                        message_args.unshift(navMessagesJson[errorCode]);
-                        if(message_args[0] == undefined){
-                            return _(compData.description);  
-                        }else{
-                            var notification_message = _.apply(null, message_args);
-                            return _(notification_message);
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error"){
+
+            if(!$(".modal.notification-error").is(":visible")){
+                let message=(function(){
+                        if(navMessagesJson !== undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                                return _(compData.description);
+                            }else{
+                                var notification_message = _.apply(null, message_args);
+                                return _(notification_message);
+                            }
                         }
-                    }
-                   
+
                     }
                 )()
-            )
-        );  
-        }else{
-            return null;
+                setTimeout((function(){ActionCreators.showModal({
+                    data:message,
+                    type:appConstants.ERROR_NOTIFICATION
+                });
+                    $('.modal').modal({backdrop:'static'});
+                    $(".modal").addClass("notification-error")
+                }),0)
+            }
+
+            return null
+
+
+        }else {
+            if($(".modal.notification-error").is(":visible")){
+                setTimeout((function(){
+                    $('.modal').modal("hide");
+                    $(".modal").removeClass("notification-error")
+                }),0)
+
+                return null
+            }
+            else if(errorCode !== null){
+                return (
+
+                    React.createElement("div", {className: appendClass, role: "alert"}, 
+                        React.createElement("div", {className: appendClass1}, 
+                            React.createElement("div", {className: "border-glyp"}, 
+                                React.createElement("span", {className: "glyphicon "+appendClass2})
+                            )
+                        ), 
+                        (function(){
+                                if(navMessagesJson != undefined){
+                                    message_args.unshift(navMessagesJson[errorCode]);
+                                    if(message_args[0] == undefined){
+                                        return _(compData.description);
+                                    }else{
+                                        var notification_message = _.apply(null, message_args);
+                                        return _(notification_message);
+                                    }
+                                }
+
+                            }
+                        )()
+                    )
+                );
+            }else{
+                return null;
+            }
         }
+
         
 
     }
@@ -40786,7 +40854,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":235,"react":232}],262:[function(require,module,exports){
+},{"../../actions/CommonActions":235,"../../constants/appConstants":300,"../Modal/Modal":254,"react":232}],262:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -46878,7 +46946,9 @@ var appConstants = {
 		"green":"#4CAF50",
 		"pink":"#FF1BA5",
 		"white":"#FFFFFF",
-	}
+	},
+	ERROR_NOTIFICATION:"ERROR_NOTIFICATION",
+	HIDE_ERROR_NOTIFICATION:"HIDE_ERROR_NOTIFICATION"
 };
 
 module.exports = appConstants;

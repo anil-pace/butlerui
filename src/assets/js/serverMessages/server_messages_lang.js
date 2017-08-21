@@ -484,9 +484,9 @@ function server_messages_list() {
     _("Extra entity scan found.");
     _("Container Already Scanned.");
     _("Invalid Entity Scanned.");
-    _("Quantity of Physically damaged entities scanned is less.")
-    _("Error")
-     _("NEST MAX");
+    _("Quantity of Physically damaged entities scanned is less.");
+    _("Error");
+    _("NEST MAX");
     _("STACK MAX");
     _("DO NOT STACK");
     _("FRAGILE");

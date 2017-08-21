@@ -101,6 +101,7 @@ var japanese = {
    "Entity scan successful": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u304c\u5b8c\u4e86",
    "Entity scan successful.": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u304c\u5b8c\u4e86",
    "Entity scanned is not from bin {0}. Replace and scan from bin {1}": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u3002\u30d3\u30f3 {1} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Error": "\u8aa4\u5dee",
    "Exception": "\u4f8b\u5916\u767b\u9332",
    "Exception Finished": "\u4f8b\u5916\u51e6\u7406\u5b8c\u4e86",
    "Exception cancelled": "\u4f8b\u5916\u767b\u9332\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f",

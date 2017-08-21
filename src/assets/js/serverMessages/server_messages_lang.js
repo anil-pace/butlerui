@@ -478,5 +478,6 @@ function server_messages_list() {
     _("Container Already Scanned.");
     _("Invalid Entity Scanned.");
     _("Quantity of Physically damaged entities scanned is less.")   
+    _("Error")
 }
 

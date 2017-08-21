@@ -220,7 +220,9 @@ var appConstants = {
 		"green":"#4CAF50",
 		"pink":"#FF1BA5",
 		"white":"#FFFFFF",
-	}
+	},
+	ERROR_NOTIFICATION:"ERROR_NOTIFICATION",
+	HIDE_ERROR_NOTIFICATION:"HIDE_ERROR_NOTIFICATION"
 };
 
 module.exports = appConstants;

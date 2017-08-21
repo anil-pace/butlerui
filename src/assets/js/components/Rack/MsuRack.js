@@ -64,7 +64,7 @@ var MsuRack = React.createClass({
       }
     
   }
-  if(this.props.putDirection && document.getElementsByClassName("LineDirection").length===0){
+  if(this.props.putDirection && this.props.putDirection.length>0 && document.getElementsByClassName("LineDirection").length===0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
     start = start ? start.parentNode : null;
     var end  = (document.querySelectorAll(".specialContainer")[0]);

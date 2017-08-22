@@ -38620,7 +38620,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
             case appConstants.ERROR_NOTIFICATION:
                 ActionCreators.clearNotification()
-                closeModalBox();
+                $(".modal.notification-error").modal("hide");
                 $(".modal").removeClass("notification-error")
                 break;
             case appConstants.PUT_BACK:
@@ -40765,7 +40765,7 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass2 = 'glyphicon-ok';
         }
 
-        if(this.props.notification.level!=undefined && this.props.notification.level == "error"){
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
 
             if(!$(".modal.notification-error").is(":visible")){
                 let message=(function(){
@@ -40796,7 +40796,7 @@ var Notification = React.createClass({displayName: "Notification",
         }else {
             if($(".modal.notification-error").is(":visible")){
                 setTimeout((function(){
-                    $('.modal').modal("hide");
+                    $('.modal.notification-error').modal("hide");
                     $(".modal").removeClass("notification-error")
                 }),0)
 

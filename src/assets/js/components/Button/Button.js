@@ -32,7 +32,7 @@ var Button1 = React.createClass({
 
             case appConstants.ERROR_NOTIFICATION:
                 ActionCreators.clearNotification()
-                closeModalBox();
+                $(".modal.notification-error").modal("hide");
                 $(".modal").removeClass("notification-error")
                 break;
             case appConstants.PUT_BACK:
@@ -417,6 +417,7 @@ var Button1 = React.createClass({
                         break;
 
                     case appConstants.ADD_SCANNER_DETAILS:
+                        $('.modal:not(.notification-error)').modal("hide");
                         peripheralId = document.getElementById("add_scanner").value;
                         peripheralData["peripheral_id"] = peripheralId;
                         peripheralData["peripheral_type"] = "barcode_scanner";

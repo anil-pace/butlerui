@@ -225,6 +225,7 @@ var PutBack = React.createClass({
       if(this.state.PutBackExceptionScreen == "damaged")
         this._component = (
           <div className='grid-container exception'>
+              <Modal/>
           <Exception data={this.state.PutBackExceptionData}/>
           <div className="exception-right">
           <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -241,6 +242,7 @@ var PutBack = React.createClass({
       else if(this.state.PutBackExceptionScreen == "damaged_confirm")
         this._component = (
           <div className='grid-container exception'>
+              <Modal/>
           <Exception data={this.state.PutBackExceptionData}/>
           <div className="exception-right">
           <div className="main-container exception2">
@@ -263,6 +265,7 @@ var PutBack = React.createClass({
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -285,6 +288,7 @@ var PutBack = React.createClass({
           else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
             this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">
@@ -307,6 +311,7 @@ var PutBack = React.createClass({
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -328,6 +333,7 @@ var PutBack = React.createClass({
       else if(this.state.PutBackExceptionScreen == "oversized_confirm")
         this._component = (
           <div className='grid-container exception'>
+              <Modal/>
           <Exception data={this.state.PutBackExceptionData}/>
           <div className="exception-right">
           <div className="main-container exception2">
@@ -359,6 +365,7 @@ var PutBack = React.createClass({
      }
      this._component = (
       <div className='grid-container exception'>
+          <Modal/>
       <Exception data={this.state.PutBackExceptionData}/>
       <div className="exception-right">
       <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -378,6 +385,7 @@ var PutBack = React.createClass({
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
         <div className='grid-container exception'>
+            <Modal/>
         <Exception data={this.state.PutBackExceptionData}/>
         <div className="exception-right">
         <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -398,6 +406,7 @@ var PutBack = React.createClass({
     else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
       this._component = (
         <div className='grid-container exception'>
+            <Modal/>
         <Exception data={this.state.PutBackExceptionData}/>
         <div className="exception-right">
         <div className="main-container exception2">
@@ -419,6 +428,7 @@ var PutBack = React.createClass({
     this._navigation = '';
     this._component = (
       <div className='grid-container exception'>
+          <Modal/>
       <Exception data={this.state.PutBackExceptionData}/>
       <div className="exception-right">
       <ExceptionHeader data={this.state.PutBackServerNavData} />

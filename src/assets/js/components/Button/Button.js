@@ -31,7 +31,7 @@ var Button1 = React.createClass({
 switch (module) {
     case appConstants.ERROR_NOTIFICATION:
         ActionCreators.clearNotification()
-        closeModalBox();
+        $(".modal.notification-error").modal("hide");
         $(".modal").removeClass("notification-error")
         break;
     case appConstants.PUT_BACK:

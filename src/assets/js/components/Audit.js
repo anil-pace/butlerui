@@ -246,6 +246,7 @@ var Audit = React.createClass({
           this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.AuditExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.AuditServerNavData} />
@@ -263,6 +264,7 @@ var Audit = React.createClass({
           else if(this.state.AuditExceptionScreen == "second_screen"){
               this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.AuditExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">

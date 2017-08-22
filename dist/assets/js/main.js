@@ -37125,6 +37125,7 @@ var Audit = React.createClass({displayName: "Audit",
           this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
@@ -37142,6 +37143,7 @@ var Audit = React.createClass({displayName: "Audit",
           else if(this.state.AuditExceptionScreen == "second_screen"){
               this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
@@ -39005,6 +39007,7 @@ var Button1 = React.createClass({displayName: "Button1",
                         break;
 
                     case appConstants.ADD_SCANNER_DETAILS:
+                        $('.modal:not(.notification-error)').modal("hide");
                         peripheralId = document.getElementById("add_scanner").value;
                         peripheralData["peripheral_id"] = peripheralId;
                         peripheralData["peripheral_type"] = "barcode_scanner";
@@ -40784,6 +40787,8 @@ var Notification = React.createClass({displayName: "Notification",
                 setTimeout((function(){ActionCreators.showModal({
                     data:message,
                     type:appConstants.ERROR_NOTIFICATION
+                });$(".modal-backdrop").each(function(element){
+                    $(element).remove()
                 });
                     $('.modal').modal({backdrop:'static'});
                     $(".modal").addClass("notification-error")
@@ -41134,6 +41139,7 @@ var PickBack = React.createClass({displayName: "PickBack",
           } 
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}), 
@@ -41154,6 +41160,7 @@ var PickBack = React.createClass({displayName: "PickBack",
           this._navigation = '';
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData})
@@ -41686,6 +41693,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 if (this.state.PickFrontExceptionScreen == "box_serial") {
                     this._component = (
                         React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
                             React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                             React.createElement("div", {className: "exception-right"}, 
                                 React.createElement("div", {className: "main-container"}, 
@@ -41714,6 +41722,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
                     this._component = (
                         React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
                             React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                             React.createElement("div", {className: "exception-right"}, 
                                 React.createElement("div", {className: "main-container exception2"}, 
@@ -44439,6 +44448,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       if(this.state.PutBackExceptionScreen == "damaged")
         this._component = (
           React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
           React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
           React.createElement("div", {className: "exception-right"}, 
           React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44455,6 +44465,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       else if(this.state.PutBackExceptionScreen == "damaged_confirm")
         this._component = (
           React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
           React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
           React.createElement("div", {className: "exception-right"}, 
           React.createElement("div", {className: "main-container exception2"}, 
@@ -44477,6 +44488,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44499,6 +44511,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
@@ -44521,6 +44534,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44542,6 +44556,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       else if(this.state.PutBackExceptionScreen == "oversized_confirm")
         this._component = (
           React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
           React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
           React.createElement("div", {className: "exception-right"}, 
           React.createElement("div", {className: "main-container exception2"}, 
@@ -44573,6 +44588,7 @@ var PutBack = React.createClass({displayName: "PutBack",
      }
      this._component = (
       React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
       React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
       React.createElement("div", {className: "exception-right"}, 
       React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44592,6 +44608,7 @@ var PutBack = React.createClass({displayName: "PutBack",
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
         React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
         React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
         React.createElement("div", {className: "exception-right"}, 
         React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44612,6 +44629,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
       this._component = (
         React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
         React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
         React.createElement("div", {className: "exception-right"}, 
         React.createElement("div", {className: "main-container exception2"}, 
@@ -44633,6 +44651,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     this._navigation = '';
     this._component = (
       React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
       React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
       React.createElement("div", {className: "exception-right"}, 
       React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44833,6 +44852,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._navigation = '';
       this._component =(
           React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
               React.createElement("div", {className: "exception-right"}), 
               React.createElement("div", {className: "cancel-scan"}, 
@@ -45131,6 +45151,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
               React.createElement("div", {className: "exception-right"}, 
               React.createElement("div", {className: "main-container exception2"}, 
@@ -45150,6 +45171,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
               React.createElement("div", {className: "exception-right"}, 
               React.createElement("div", {className: "main-container"}, 

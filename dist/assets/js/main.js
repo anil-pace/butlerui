@@ -43344,7 +43344,7 @@ var KQ = React.createClass({displayName: "KQ",
     render: function(data) {
         var typeValue="";
         typeValue=this.props.type;
-         _updatedQtyDamaged = typeValue === appConstants.UNSCANNABLE?_updatedQtyDamaged:parseInt(this.props.scanDetailsDamaged.current_qty);
+         _updatedQtyDamaged = typeValue === appConstants.UNSCANNABLE?mainstore.getkQQuanity():parseInt(this.props.scanDetailsDamaged.current_qty);
         _scanDetails = this.props.scanDetailsDamaged;
         console.log(_updatedQtyDamaged);
         this.checkKqAllowed();

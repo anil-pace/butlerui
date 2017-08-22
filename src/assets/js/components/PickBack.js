@@ -139,6 +139,7 @@ var PickBack = React.createClass({
           } 
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PickBackExceptionData}/>
                 <div className="exception-right">
                    <ExceptionHeader data={this.state.PickBackServerNavData} />
@@ -159,6 +160,7 @@ var PickBack = React.createClass({
           this._navigation = '';
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PickBackExceptionData}/>
                 <div className="exception-right">
                    <ExceptionHeader data={this.state.PickBackServerNavData} />

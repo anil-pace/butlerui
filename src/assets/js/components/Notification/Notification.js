@@ -38,6 +38,8 @@ var Notification = React.createClass({
                 setTimeout((function(){ActionCreators.showModal({
                     data:message,
                     type:appConstants.ERROR_NOTIFICATION
+                });$(".modal-backdrop").each(function(element){
+                    $(element).remove()
                 });
                     $('.modal').modal({backdrop:'static'});
                     $(".modal").addClass("notification-error")

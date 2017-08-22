@@ -114,6 +114,7 @@ var PutFront = React.createClass({
         this._navigation = '';
       this._component =(
           <div className='grid-container exception'>
+            <Modal/>
               <Exception data={this.state.PutFrontExceptionData} action={true}/>
               <div className="exception-right"></div>
               <div className = 'cancel-scan'>
@@ -443,6 +444,7 @@ var PutFront = React.createClass({
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               <div className='grid-container exception'>
+                <Modal/>
               <Exception data={this.state.PutFrontExceptionData}/>
               <div className="exception-right">
               <div className="main-container exception2">
@@ -462,6 +464,7 @@ var PutFront = React.createClass({
           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
               <div className='grid-container exception'>
+                <Modal/>
               <Exception data={this.state.PutFrontExceptionData}/>
               <div className="exception-right">
               <div className="main-container">

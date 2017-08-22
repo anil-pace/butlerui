@@ -238,6 +238,7 @@ var PutBack = React.createClass({
       if(this.state.PutBackExceptionScreen == "damaged")
         this._component = (
           <div className='grid-container exception'>
+              <Modal/>
           <Exception data={this.state.PutBackExceptionData}/>
           <div className="exception-right">
           <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -257,6 +258,7 @@ var PutBack = React.createClass({
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -282,6 +284,7 @@ var PutBack = React.createClass({
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -315,6 +318,7 @@ var PutBack = React.createClass({
      }
      this._component = (
       <div className='grid-container exception'>
+          <Modal/>
       <Exception data={this.state.PutBackExceptionData}/>
       <div className="exception-right">
       <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -334,6 +338,7 @@ var PutBack = React.createClass({
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
         <div className='grid-container exception'>
+            <Modal/>
         <Exception data={this.state.PutBackExceptionData}/>
         <div className="exception-right">
         <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -416,6 +421,7 @@ var PutBack = React.createClass({
     this._navigation = '';
     this._component = (
       <div className='grid-container exception'>
+          <Modal/>
       <Exception data={this.state.PutBackExceptionData}/>
       <div className="exception-right">
       <ExceptionHeader data={this.state.PutBackServerNavData} />

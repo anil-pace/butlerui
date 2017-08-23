@@ -77,6 +77,7 @@ var PutFront = React.createClass({
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
         this._component = (
           <div className='grid-container'>
+            <Modal/>
           <div className='main-container'>
           {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
           </div>
@@ -155,6 +156,7 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.UNDOCK_PUSH}/>);
           this._component = (
             <div className='grid-container'>
+              <Modal/>
             <div className='main-container'>
             <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
             </div>
@@ -170,6 +172,7 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.WRONG_UNDOCK}/>);
           this._component = (
             <div className='grid-container'>
+              <Modal/>
             <div className='main-container'>
             <SplitPPS  groupInfo = {this.state.BinMapDetails} wrongUndock={this.state.WrongUndock}/>
             </div>
@@ -188,6 +191,7 @@ var PutFront = React.createClass({
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
           <div className='grid-container'>
+            <Modal/>
           {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
           <div className = "kq-exception">
           <div className="gor-info-text">{_("Empty the rollcage to undock")}</div>

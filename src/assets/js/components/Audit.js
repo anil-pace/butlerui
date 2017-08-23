@@ -313,7 +313,6 @@ var Audit = React.createClass({
                   </div>
                   <TabularData data = {this.state.utility}/>
                   {_button}
-                  <Modal /> 
               </div>
             );
         break; 

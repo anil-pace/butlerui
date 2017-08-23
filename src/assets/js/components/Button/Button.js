@@ -30,6 +30,7 @@ var Button1 = React.createClass({
 
 switch (module) {
     case appConstants.ERROR_NOTIFICATION:
+        $('.modal.notification-error').data('bs.modal').options.backdrop=true
         ActionCreators.clearNotification()
          $(".modal-backdrop").remove()
         $(".modal.notification-error").modal("hide");

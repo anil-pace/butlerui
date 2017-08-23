@@ -131,6 +131,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Spinner />
                             </div>
@@ -152,6 +153,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
                                       rackData={this.state.PickFrontRackDetails}/>
@@ -171,6 +173,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
                                       rackData={this.state.PickFrontRackDetails}/>
@@ -191,6 +194,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <BoxSerial boxData={this.state.PickFrontBoxDetails}/>
                                 <Rack rackData={this.state.PickFrontRackDetails} slotType={this.state.SlotType}/>
@@ -326,6 +330,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Spinner />
                             </div>

@@ -2500,6 +2500,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditPpsMode"] = this.getPpsMode();
                 data["AuditSeatType"] = this.getSeatType();
+                data["AuditShowModal"] = this.getModalStatus();
 
                 //Peripheral management for pre-put
                 data["PrePutScreenId"] = this.getScreenId();

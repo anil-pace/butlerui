@@ -36993,6 +36993,7 @@ var Audit = React.createClass({displayName: "Audit",
           this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                  React.createElement(Modal, null), 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Spinner, null)
                  )
@@ -37007,6 +37008,7 @@ var Audit = React.createClass({displayName: "Audit",
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                  React.createElement(Modal, null), 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Rack, {rackData: this.state.AuditRackDetails})
                  )
@@ -37102,6 +37104,7 @@ var Audit = React.createClass({displayName: "Audit",
             messageType = "small";
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement(Modal, null), 
                  React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
@@ -37178,6 +37181,7 @@ var Audit = React.createClass({displayName: "Audit",
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement(Modal, null), 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
                       React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.AuditPpsMode.toUpperCase(), " ")

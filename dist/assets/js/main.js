@@ -38628,7 +38628,6 @@ var Button1 = React.createClass({displayName: "Button1",
                 ActionCreators.clearNotification()
                 $(".modal-backdrop").remove()
                 $(".modal.notification-error").modal("hide");
-                $(".modal-backdrop").remove()
                 $(".modal").removeClass("notification-error")
                 break;
             case appConstants.PUT_BACK:

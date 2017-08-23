@@ -38626,6 +38626,7 @@ var Button1 = React.createClass({displayName: "Button1",
 
             case appConstants.ERROR_NOTIFICATION:
                 ActionCreators.clearNotification()
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
                 $(".modal-backdrop").remove()
                 $(".modal.notification-error").modal("hide");
                 $(".modal").removeClass("notification-error")
@@ -40795,8 +40796,9 @@ var Notification = React.createClass({displayName: "Notification",
                 });$(".modal-backdrop").each(function(element){
                     $(element).remove()
                 });
-                    $('.modal').modal({backdrop:'static'});
+                     $('.modal').modal({});
                     $(".modal").addClass("notification-error")
+                    $('.modal.notification-error').data('bs.modal').options.backdrop = 'static';
                 }),0)
             }
 

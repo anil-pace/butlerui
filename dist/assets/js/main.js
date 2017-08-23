@@ -43969,7 +43969,7 @@ componentDidMount(){
                 },
                 accepted: function(e, keypressed, el) {
                     let txtBoxVal=0;
-                    txtBoxVal=e.target.value===""?0:e.target.value;
+                    txtBoxVal=e.target.value=== "" || parseInt(e.target.value)<0 || isNaN(parseInt(e.target.value)) ?0:e.target.value;
                     if(self.props.execType===appConstants.GOOD_QUANTITY)
                     {
                         self._updatedQtyGood=txtBoxVal;

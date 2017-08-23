@@ -37187,8 +37187,7 @@ var Audit = React.createClass({displayName: "Audit",
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
-                  _button, 
-                  React.createElement(Modal, null)
+                  _button
               )
             );
         break; 
@@ -40284,7 +40283,7 @@ var Modal = React.createClass({displayName: "Modal",
     this.setState(getStateData());
   },
   render: function () {      
-    return (React.createElement("div", {className: "modal fade"}, 
+    return (React.createElement("div", {className: "modal"}, 
         React.createElement("div", {className: "modal-dialog"}, 
           React.createElement("div", {className: "modal-content"}, 
             React.createElement(ModalHeader, {title: title}), 
@@ -41394,6 +41393,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
@@ -41415,6 +41415,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
                                       rackData: this.state.PickFrontRackDetails})
@@ -41434,6 +41435,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
                                       rackData: this.state.PickFrontRackDetails, putDirection: this.state.PickFrontPickDirection}), 
@@ -41454,6 +41456,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
                                 React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
@@ -41589,6 +41592,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
@@ -44414,6 +44418,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       this._navigation = '';
       this._component = (
         React.createElement("div", {className: "grid-container gor-invoice-wrap"}, 
+            React.createElement(Modal, null), 
           React.createElement("div", {className: "gor-invoice-input-wrap"}, 
             React.createElement("div", {className: "gor-invoice-h1-wrap"}, componentModalString), 
             React.createElement("div", {className: "gor-invoice-input-keyboard-wrap", onClick: this.openKeyboard}, 
@@ -44482,6 +44487,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         messageType = "small";
         this._component = (
           React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+              React.createElement(Modal, null), 
           subComponent, 
           React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
@@ -44702,6 +44708,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     
     this._component = (
       React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+          React.createElement(Modal, null), 
       React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
       React.createElement("div", {className: "staging-action"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
@@ -44847,6 +44854,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, showSpinner: this.state.MobileFlag}));
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
           React.createElement("div", {className: "main-container"}, 
           this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup}):React.createElement(Spinner, null)
           )
@@ -44925,6 +44933,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.UNDOCK_PUSH}));
           this._component = (
             React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
             React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup})
             )
@@ -44940,6 +44949,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.WRONG_UNDOCK}));
           this._component = (
             React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
             React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, wrongUndock: this.state.WrongUndock})
             )
@@ -44976,6 +44986,7 @@ var PutFront = React.createClass({displayName: "PutFront",
          }
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
         selected_screen
           )
@@ -52696,6 +52707,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditPpsMode"] = this.getPpsMode();
                 data["AuditSeatType"] = this.getSeatType();
+                data["AuditShowModal"] = this.getModalStatus();
 
                 //Peripheral management for pre-put
                 data["PrePutScreenId"] = this.getScreenId();

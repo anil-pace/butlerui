@@ -114,6 +114,7 @@ var Audit = React.createClass({
           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
+                  <Modal />
                  <div className='main-container'>
                     <Spinner />
                  </div>
@@ -128,6 +129,7 @@ var Audit = React.createClass({
         this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
               <div className='grid-container'>
+                  <Modal />
                  <div className='main-container'>
                     <Rack rackData = {this.state.AuditRackDetails}/>
                  </div>
@@ -223,6 +225,7 @@ var Audit = React.createClass({
             messageType = "small";
           this._component = (
               <div className='grid-container audit-reconcilation'>
+                  <Modal />
                  <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 {subComponent}
                  <div className = 'staging-action' >
@@ -299,6 +302,7 @@ var Audit = React.createClass({
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>
+                  <Modal />
                   <div className="row scannerHeader">
                     <div className="col-md-6">
                       <div className="ppsMode"> PPS Mode : {this.state.AuditPpsMode.toUpperCase()} </div>
@@ -309,7 +313,6 @@ var Audit = React.createClass({
                   </div>
                   <TabularData data = {this.state.utility}/>
                   {_button}
-                  <Modal /> 
               </div>
             );
         break; 

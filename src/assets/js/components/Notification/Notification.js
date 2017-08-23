@@ -41,8 +41,9 @@ var Notification = React.createClass({
                 });$(".modal-backdrop").each(function(element){
                     $(element).remove()
                 });
-                    $('.modal').modal({backdrop:'static'});
+                     $('.modal').modal({});
                     $(".modal").addClass("notification-error")
+                    $('.modal.notification-error').data('bs.modal').options.backdrop = 'static';
                 }),0)
             }
 

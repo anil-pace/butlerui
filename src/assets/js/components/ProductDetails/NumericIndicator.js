@@ -207,7 +207,8 @@ componentDidMount(){
                     else if(parseInt(keypressed.last.val) > 9999){
                         self.generateExcessNotification();
                         $('.ui-keyboard-preview').val(9999);
-                    }else{
+                    }else
+                    {
                         data["code"] = null;
                         data["level"] = 'error'
                         CommonActions.generateNotification(data);
@@ -215,10 +216,11 @@ componentDidMount(){
                     }
                 },
                 accepted: function(e, keypressed, el) {
-
+                    let txtBoxVal=0;
+                    txtBoxVal=e.target.value=== "" || parseInt(e.target.value)<0 || isNaN(parseInt(e.target.value)) ?0:e.target.value;                   
                     if(self.props.execType===appConstants.GOOD_QUANTITY)
                     {
-                        self._updatedQtyGood=e.target.value
+                        self._updatedQtyGood=txtBoxVal;
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
                         self.setState({
                             value : self._updatedQtyGood
@@ -227,7 +229,7 @@ componentDidMount(){
                     }
                     else if(self.props.execType===appConstants.MISSING_QUANTITY)
                     {
-                        self._updatedQtyMissing=e.target.value
+                        self._updatedQtyMissing=txtBoxVal;
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
                         self.setState({
                             value : self._updatedQtyMissing
@@ -236,7 +238,7 @@ componentDidMount(){
                     }
                     else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY)
                     {
-                        self._updatedQtyUnscannble=e.target.value
+                        self._updatedQtyUnscannble=txtBoxVal;
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
                         self.setState({
                             value : self._updatedQtyUnscannble
@@ -245,7 +247,7 @@ componentDidMount(){
                     }
                     else if(self.props.execType===appConstants.DAMAGED_QUANTITY)
                     {
-                        self._updatedQtyDamaged=e.target.value
+                        self._updatedQtyDamaged=txtBoxVal;
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));
                         self.setState({
                             value : self._updatedQtyDamaged

@@ -153,6 +153,7 @@ var PutBack = React.createClass({
       this._navigation = '';
       this._component = (
         <div className='grid-container gor-invoice-wrap'>
+            <Modal/>
           <div className='gor-invoice-input-wrap'>
             <div className='gor-invoice-h1-wrap'>{componentModalString}</div>
             <div className='gor-invoice-input-keyboard-wrap' onClick={this.openKeyboard}> 
@@ -221,6 +222,7 @@ var PutBack = React.createClass({
         messageType = "small";
         this._component = (
           <div className='grid-container audit-reconcilation'>
+              <Modal/>
           {subComponent}
           <div className = 'staging-action' >
           <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PUT_BACK} toteId={this.state.PutBackToteId} status={false} action={appConstants.CANCEL_TOTE} color={"black"}/>
@@ -238,6 +240,7 @@ var PutBack = React.createClass({
       if(this.state.PutBackExceptionScreen == "damaged")
         this._component = (
           <div className='grid-container exception'>
+              <Modal/>
           <Exception data={this.state.PutBackExceptionData}/>
           <div className="exception-right">
           <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -257,6 +260,7 @@ var PutBack = React.createClass({
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -282,6 +286,7 @@ var PutBack = React.createClass({
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.PutBackExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -315,6 +320,7 @@ var PutBack = React.createClass({
      }
      this._component = (
       <div className='grid-container exception'>
+          <Modal/>
       <Exception data={this.state.PutBackExceptionData}/>
       <div className="exception-right">
       <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -334,6 +340,7 @@ var PutBack = React.createClass({
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
         <div className='grid-container exception'>
+            <Modal/>
         <Exception data={this.state.PutBackExceptionData}/>
         <div className="exception-right">
         <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -416,6 +423,7 @@ var PutBack = React.createClass({
     this._navigation = '';
     this._component = (
       <div className='grid-container exception'>
+          <Modal/>
       <Exception data={this.state.PutBackExceptionData}/>
       <div className="exception-right">
       <ExceptionHeader data={this.state.PutBackServerNavData} />
@@ -435,6 +443,7 @@ var PutBack = React.createClass({
     
     this._component = (
       <div className='grid-container audit-reconcilation'>
+          <Modal/>
       <Reconcile navMessagesJson={this.props.navMessagesJson} message={this.state.PutBackToteException} />
       <div className = 'staging-action' >
       <Button1 disabled = {false} text = {_("Cancel")} module ={appConstants.PUT_BACK} status={true} action={appConstants.CANCEL_TOTE_EXCEPTION} color={"black"} /> 

@@ -402,7 +402,7 @@ var Modal = React.createClass({
     this.setState(getStateData());
   },
   render: function () {      
-    return (<div className="modal fade">
+    return (<div className="modal">
         <div className="modal-dialog">
           <div className="modal-content">
             <ModalHeader title={title}/>

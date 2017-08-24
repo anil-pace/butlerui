@@ -131,6 +131,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Spinner />
                             </div>
@@ -152,6 +153,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
                                       rackData={this.state.PickFrontRackDetails}/>
@@ -171,6 +173,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
                                       rackData={this.state.PickFrontRackDetails} putDirection={this.state.PickFrontPickDirection}/>
@@ -191,6 +194,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <BoxSerial boxData={this.state.PickFrontBoxDetails}/>
                                 <Rack rackData={this.state.PickFrontRackDetails} slotType={this.state.SlotType}/>
@@ -326,6 +330,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
+                            <Modal />
                             <div className='main-container'>
                                 <Spinner />
                             </div>
@@ -468,6 +473,7 @@ var PickFront = React.createClass({
                 if (this.state.PickFrontExceptionScreen == "box_serial") {
                     this._component = (
                         <div className='grid-container exception'>
+                            <Modal/>
                             <Exception data={this.state.PickFrontExceptionData}/>
                             <div className="exception-right">
                                 <div className="main-container">
@@ -496,6 +502,7 @@ var PickFront = React.createClass({
                 } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
                     this._component = (
                         <div className='grid-container exception'>
+                            <Modal/>
                             <Exception data={this.state.PickFrontExceptionData}/>
                             <div className="exception-right">
                                 <div className="main-container exception2">

@@ -30,8 +30,10 @@ var Button1 = React.createClass({
 
 switch (module) {
     case appConstants.ERROR_NOTIFICATION:
+        $('.modal.notification-error').data('bs.modal').options.backdrop=true
         ActionCreators.clearNotification()
-        closeModalBox();
+         $(".modal-backdrop").remove()
+        $(".modal.notification-error").modal("hide");
         $(".modal").removeClass("notification-error")
         break;
     case appConstants.PUT_BACK:
@@ -421,7 +423,8 @@ switch (module) {
             this.showModal(null, "enter_barcode");
             break;
 
-            case appConstants.ADD_SCANNER_DETAILS: 
+            case appConstants.ADD_SCANNER_DETAILS:
+            $('.modal:not(.notification-error)').modal("hide");
             peripheralId = document.getElementById("add_scanner").value;
             peripheralData["peripheral_id"] = peripheralId;
             peripheralData["peripheral_type"]= "barcode_scanner";

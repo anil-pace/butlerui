@@ -77,6 +77,7 @@ var PutFront = React.createClass({
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
         this._component = (
           <div className='grid-container'>
+            <Modal/>
           <div className='main-container'>
           {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
           </div>
@@ -114,6 +115,7 @@ var PutFront = React.createClass({
         this._navigation = '';
       this._component =(
           <div className='grid-container exception'>
+            <Modal/>
               <Exception data={this.state.PutFrontExceptionData} action={true}/>
               <div className="exception-right"></div>
               <div className = 'cancel-scan'>
@@ -154,6 +156,7 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.UNDOCK_PUSH}/>);
           this._component = (
             <div className='grid-container'>
+              <Modal/>
             <div className='main-container'>
             <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
             </div>
@@ -169,6 +172,7 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.WRONG_UNDOCK}/>);
           this._component = (
             <div className='grid-container'>
+              <Modal/>
             <div className='main-container'>
             <SplitPPS  groupInfo = {this.state.BinMapDetails} wrongUndock={this.state.WrongUndock}/>
             </div>
@@ -205,6 +209,7 @@ var PutFront = React.createClass({
          }
         this._component = (
           <div className='grid-container'>
+            <Modal/>
           {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
         {selected_screen}
           </div>
@@ -443,6 +448,7 @@ var PutFront = React.createClass({
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               <div className='grid-container exception'>
+                <Modal/>
               <Exception data={this.state.PutFrontExceptionData}/>
               <div className="exception-right">
               <div className="main-container exception2">
@@ -462,6 +468,7 @@ var PutFront = React.createClass({
           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
               <div className='grid-container exception'>
+                <Modal/>
               <Exception data={this.state.PutFrontExceptionData}/>
               <div className="exception-right">
               <div className="main-container">

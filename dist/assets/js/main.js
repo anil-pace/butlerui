@@ -36989,6 +36989,7 @@ var Audit = React.createClass({displayName: "Audit",
           this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                  React.createElement(Modal, null), 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Spinner, null)
                  )
@@ -37003,6 +37004,7 @@ var Audit = React.createClass({displayName: "Audit",
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                  React.createElement(Modal, null), 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Rack, {rackData: this.state.AuditRackDetails})
                  )
@@ -37098,6 +37100,7 @@ var Audit = React.createClass({displayName: "Audit",
             messageType = "small";
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement(Modal, null), 
                  React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
@@ -37121,6 +37124,7 @@ var Audit = React.createClass({displayName: "Audit",
           this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
@@ -37138,6 +37142,7 @@ var Audit = React.createClass({displayName: "Audit",
           else if(this.state.AuditExceptionScreen == "second_screen"){
               this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
@@ -37172,17 +37177,17 @@ var Audit = React.createClass({displayName: "Audit",
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement(Modal, null), 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.AuditPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.AuditSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.AuditSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
-                  _button, 
-                  React.createElement(Modal, null)
+                  _button
               )
             );
         break; 
@@ -37755,31 +37760,20 @@ var Bin = React.createClass({displayName: "Bin",
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
-        }else if (compData.selected_state && (this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL ||this.props.screenId === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)) {
-           var pptl;
+        }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
                 tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
-            if(this.props.screenId===appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
-            {
-            pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
-            }
-            else
-            {
-             pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
-            }
-
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
                     tote, 
-                    pptl
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {
@@ -38601,512 +38595,510 @@ var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 
-function closeModalBox(){ 
+function closeModalBox() {
     $(".modal").modal("hide");
 };
 
 var Button1 = React.createClass({displayName: "Button1",
     _checklistClass: '',
-    removeTextField: function(){
-      $('.modal-body').find('input:text').val('');
-  },
+    removeTextField: function () {
+        $('.modal-body').find('input:text').val('');
+    },
 
 
-  performAction: function(module, action) {
-    var peripheralId;
-    var data = {
-        "event_name": "",
-        "event_data": {}
-    };
-    var peripheralData ={
-        "peripheral_id": "",
-        "peripheral_type": ""
-    };
+    performAction: function (module, action) {
+        var peripheralId;
+        var data = {
+            "event_name": "",
+            "event_data": {}
+        };
+        var peripheralData = {
+            "peripheral_id": "",
+            "peripheral_type": ""
+        };
 
-switch (module) {
-    case appConstants.ERROR_NOTIFICATION:
-        ActionCreators.clearNotification()
-        closeModalBox();
-        $(".modal").removeClass("notification-error")
-        break;
-    case appConstants.PUT_BACK:
-                        switch (action) {
-                            case appConstants.STAGE_ONE_BIN:
-                                ActionCreators.stageOneBin();
-                                break;
-                            case appConstants.STAGE_ALL:
-                                ActionCreators.stageAllBins();
-                                break;
-                            case appConstants.CANCEL_SCAN:
-                                data["event_name"] = "cancel_barcode_scan";
-                                data["event_data"]["barcode"] = this.props.barcode;
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CANCEL_EXCEPTION:
-                                ActionCreators.enableException(false);
-                                break;
-                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
-                                data["event_name"] = "cancel_exception";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendDataToServer();
-                                break;    
-                            case appConstants.SEND_KQ_QTY_1:
-                                ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
-                                break;
-                            case appConstants.FINISH_DAMAGED_ENTITY_DATA:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
-                                ActionCreators.postDataToInterface(data);
-                                break;    
-                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="finish_exception";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break; 
-                            case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
-                            case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
-                            case appConstants.FINISH_EXCEPTION_EXTRA_ITEM:
-                                  data["event_name"] = "put_back_exception";
-                                  data["event_data"]["action"] ="confirm_button_press";
-                                  data["event_data"]["event"] = mainstore.getExceptionType();
-                                  ActionCreators.postDataToInterface(data);
-                                break;
+        switch (module) {
 
-                              case appConstants.FINISH_EXCEPTION_ENTITY:
-                                  data["event_name"] = "put_back_exception";
-                                  data["event_data"]["action"] ="confirm_irt_bin";
-                                  data["event_data"]["event"] = mainstore.getExceptionType();
-                                  ActionCreators.postDataToInterface(data);
-                                break;   
-                            case appConstants.SEND_EXCESS_ITEMS_BIN:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="extra_items_bin_select";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["bin_id"] = mainstore.getSelectedBin();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CANCEL_TOTE:
-                            case appConstants.CLOSE_TOTE:
-                                data["event_name"] = "confirm_close_tote";
-                                data["event_data"]["close_value"] = this.props.status;
-                                data["event_data"]["barcode"] = this.props.toteId;
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CONFIRM_TOTE_EXCEPTION:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] = "confirm_invalid_item_in_tote",
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["item_uid"] = mainstore.getItemUid();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.EXIT_INVOICE:
-                                this.showModal(null, appConstants.EXIT_INVOICE);
-                                break;
-                                case appConstants.DECLINE_CANCEL_INVOICE:
-                                closeModalBox();
-                                break;
-                                case appConstants.CONFIRM_EXIT_INVOICE:
-                                data["event_name"] = "close_invoice";
-                                data["event_data"]["barcode"] = mainstore.getInvoiceStatus().invoiceId;
-                                ActionCreators.postDataToInterface(data);
-                                closeModalBox();
-                                break;
-                            case appConstants.CANCEL_TOTE_EXCEPTION:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] = "cancel_invalid_item_in_tote",
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["item_uid"] = mainstore.getItemUid();
-                                ActionCreators.postDataToInterface(data);   
-
-                            default:
-                                return true;
-                        }
+            case appConstants.ERROR_NOTIFICATION:
+                ActionCreators.clearNotification()
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+                break;
+            case appConstants.PUT_BACK:
+                switch (action) {
+                    case appConstants.STAGE_ONE_BIN:
+                        ActionCreators.stageOneBin();
                         break;
-                    case appConstants.PUT_FRONT:
-                        switch (action) {
-                            case appConstants.CANCEL_SCAN:
-                                data["event_name"] = "cancel_scan_all";
-                                data["event_data"]["barcode"] = this.props.barcode;
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                             case appConstants.WAREHOUSEFULL_EXCEPTION:
-                                data["event_name"] = "put_front_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                              ActionCreators.postDataToInterface(data);
-                             break;   
-                            case appConstants.CANCEL_EXCEPTION:
-                                ActionCreators.enableException(false);
-                                break;
-                            case appConstants.GET_REVISED_QUANTITY:
-                                 ActionCreators.changePutFrontExceptionScreen("revised_quantity");
-                                break;
-                            case appConstants.MOVE_TO_DAMAGED_CONFIRM:
-                                ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
-                                break;
-                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
-                                data["event_name"] = "cancel_exception";
-                                ActionCreators.postDataToInterface(data);
-                                closeModalBox();
-                                break;
-                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendDataToServer();
-                                break;
-                            case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendSpaceUnavailableDataToServer();
-                                break;
-                            case appConstants.SEND_EXCESS_ITEMS_BIN:
-                                data["event_name"] = "put_front_exception";
-                                data["event_data"]["action"] ="finish_exception";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break; 
-                            case appConstants.UNMARKED_DAMAGED:
-                                ActionCreators.validateUnmarkedDamagedData();
-                                break;                                
-                            case appConstants.CANCEL_EXCEPTION_MODAL:
-                                this.showModal(appConstants.PUT_FRONT, "cancel_exception");
-                                break;
-                            case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
-                                    data["event_name"] = "put_front_exception";
-                                  data["event_data"]["action"] ="confirm_irt_bin";
-                                  data["event_data"]["event"] = mainstore.getExceptionType();
-                                  ActionCreators.postDataToInterface(data);
-                                break;  
-
-                            case appConstants.CLOSE_CANCEL_EXCEPTION:
-                               closeModalBox(); 
-                               break;                                                               
-                            default:
-                                return true;
-                        }
+                    case appConstants.STAGE_ALL:
+                        ActionCreators.stageAllBins();
                         break;
-                    case appConstants.PICK_FRONT:
-                        switch (action) {
+                    case appConstants.CANCEL_SCAN:
+                        data["event_name"] = "cancel_barcode_scan";
+                        data["event_data"]["barcode"] = this.props.barcode;
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION:
+                        ActionCreators.enableException(false);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                        data["event_name"] = "cancel_exception";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                        ActionCreators.validateAndSendDataToServer();
+                        break;
+                    case appConstants.SEND_KQ_QTY_1:
+                        ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
+                        break;
+                    case appConstants.SEND_KQ_QTY:
+                        data["event_name"] = "put_back_exception";
+                        data["event_data"]["action"] = "confirm_quantity_update";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
+                    case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
+                        data["event_name"] = "put_back_exception";
+                        data["event_data"]["action"] = "finish_exception";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.FINISH_EXCEPTION_ENTITY:
+                        data["event_name"] = "put_back_exception";
+                        data["event_data"]["action"] = "confirm_irt_bin";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.SEND_EXCESS_ITEMS_BIN:
+                        data["event_name"] = "put_back_exception";
+                        data["event_data"]["action"] = "extra_items_bin_select";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["bin_id"] = mainstore.getSelectedBin();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
+                        data["event_name"] = "put_back_exception";
+                        data["event_data"]["action"] = "confirm_quantity_update";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM:
+                        ActionCreators.changePutBackExceptionScreen("damaged_confirm");
+                        break;
+                    case appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM:
+                        ActionCreators.changePutBackExceptionScreen(appConstants.DAMAGED_ENTITY_CONFIRM);
+                        break;
+                    case appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM:
+                        ActionCreators.changePutBackExceptionScreen("oversized_confirm");
+                        break;
+                    case appConstants.CANCEL_TOTE:
+                    case appConstants.CLOSE_TOTE:
+                        data["event_name"] = "confirm_close_tote";
+                        data["event_data"]["close_value"] = this.props.status;
+                        data["event_data"]["barcode"] = this.props.toteId;
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CONFIRM_TOTE_EXCEPTION:
+                        data["event_name"] = "put_back_exception";
+                        data["event_data"]["action"] = "confirm_invalid_item_in_tote",
+                            data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["item_uid"] = mainstore.getItemUid();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.EXIT_INVOICE:
+                        this.showModal(null, appConstants.EXIT_INVOICE);
+                        break;
+                    case appConstants.DECLINE_CANCEL_INVOICE:
+                        closeModalBox();
+                        break;
+                    case appConstants.CONFIRM_EXIT_INVOICE:
+                        data["event_name"] = "close_invoice";
+                        data["event_data"]["barcode"] = mainstore.getInvoiceStatus().invoiceId;
+                        ActionCreators.postDataToInterface(data);
+                        closeModalBox();
+                        break;
+                    case appConstants.CANCEL_TOTE_EXCEPTION:
+                        data["event_name"] = "put_back_exception";
+                        data["event_data"]["action"] = "cancel_invalid_item_in_tote",
+                            data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["item_uid"] = mainstore.getItemUid();
+                        ActionCreators.postDataToInterface(data);
 
-                            case appConstants.CANCEL_SCAN:
-                                data["event_name"] = "cancel_scan_all";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CHECKLIST_SUBMIT:
-                                var checklist_index = this.props.checkListData.checklist_index;
-                                var checkList = this.props.checkListData;
-                                if (checklist_index != "all") {
-                                    checkList.checklist_data[checklist_index - 1].map(function(value, index) {
-                                        var keyvalue = Object.keys(value);
-                                        if(checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format !="Integer")
-                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
-                                        else
-                                            checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value);
-                                    });
-                                } else {
-                                    checkList.checklist_data.map(function(value, index) {
-                                        if(index < mainstore.scanDetails()["current_qty"])
-                                        value.map(function(value1, index1) {
-                                            var keyvalue = Object.keys(value1);
-                                            if(checkList.checklist_data[index][index1][keyvalue[0]].Format !="Integer")
-                                                checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index ).value;
-                                            else
-                                                checkList.checklist_data[index][index1][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index1 + "-" + index ).value);
-                                        })
-                                    });
-                                }
-                                if(mainstore.getChecklistCompleteDetails()["checklist_index"] == "all")
-                                    data["event_name"] = "all_items_pick_checklist_update";
+                    default:
+                        return true;
+                }
+                break;
+            case appConstants.PUT_FRONT:
+                switch (action) {
+                    case appConstants.CANCEL_SCAN:
+                        data["event_name"] = "cancel_scan_all";
+                        data["event_data"]["barcode"] = this.props.barcode;
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.WAREHOUSEFULL_EXCEPTION:
+                        data["event_name"] = "put_front_exception";
+                        data["event_data"]["action"] = "confirm_quantity_update";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION:
+                        ActionCreators.enableException(false);
+                        break;
+                    case appConstants.GET_REVISED_QUANTITY:
+                        ActionCreators.changePutFrontExceptionScreen("revised_quantity");
+                        break;
+                    case appConstants.MOVE_TO_DAMAGED_CONFIRM:
+                        ActionCreators.changePutFrontExceptionScreen("damaged_or_missing_confirm");
+                        break;
+                    case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                        data["event_name"] = "cancel_exception";
+                        ActionCreators.postDataToInterface(data);
+                        closeModalBox();
+                        break;
+                    case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                        ActionCreators.validateAndSendDataToServer();
+                        break;
+                    case appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER:
+                        ActionCreators.validateAndSendSpaceUnavailableDataToServer();
+                        break;
+                    case appConstants.SEND_EXCESS_ITEMS_BIN:
+                        data["event_name"] = "put_front_exception";
+                        data["event_data"]["action"] = "finish_exception";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.UNMARKED_DAMAGED:
+                        ActionCreators.validateUnmarkedDamagedData();
+                        break;
+                    case appConstants.CANCEL_EXCEPTION_MODAL:
+                        this.showModal(appConstants.PUT_FRONT, "cancel_exception");
+                        break;
+                    case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
+                        data["event_name"] = "put_front_exception";
+                        data["event_data"]["action"] = "confirm_irt_bin";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+
+                    case appConstants.CLOSE_CANCEL_EXCEPTION:
+                        closeModalBox();
+                        break;
+                    default:
+                        return true;
+                }
+                break;
+            case appConstants.PICK_FRONT:
+                switch (action) {
+
+                    case appConstants.CANCEL_SCAN:
+                        data["event_name"] = "cancel_scan_all";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CHECKLIST_SUBMIT:
+                        var checklist_index = this.props.checkListData.checklist_index;
+                        var checkList = this.props.checkListData;
+                        if (checklist_index != "all") {
+                            checkList.checklist_data[checklist_index - 1].map(function (value, index) {
+                                var keyvalue = Object.keys(value);
+                                if (checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].Format != "Integer")
+                                    checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value;
                                 else
-                                    data["event_name"] = "single_item_pick_checklist_update";
-                                data["event_data"]["pick_checklist"] = checkList;
-                                ActionCreators.postDataToInterface(data);
-                                
-                                break;
-                           
-                            case appConstants.CONFIRM_FROM_USER:
-                                ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
-                                break;
-                            case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
-                                ActionCreators.validateAndSendDataToServer();
-                                break;
-                             case appConstants.SEND_MISSING_BOX_EXCEPTION:
-                                data["event_name"] = "pick_front_exception";
-                                data["event_data"] = {};
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["quantity"] = {};
-                                data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
-
-                                ActionCreators.postDataToInterface(data);
-                                break; 
-
-                             case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
-                                    data["event_name"] = "pick_front_exception";
-                                  data["event_data"]["action"] ="confirm_irt_bin";
-                                  data["event_data"]["event"] = mainstore.getExceptionType();
-                                  ActionCreators.postDataToInterface(data);
-                                break;      
-                               case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
-                                  data["event_name"] = "pick_front_exception";
-                                  data["event_data"]["action"] ="confirm_irt_bin";
-                                  data["event_data"]["event"] = mainstore.getExceptionType();
-                                  ActionCreators.postDataToInterface(data);
-                                break;   
-                            case appConstants.EDIT_DETAILS:
-                                data["event_name"] = "checklist_edit";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CANCEL_EXCEPTION:
-                                ActionCreators.enableException(false);
-                                break;
-                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
-                                data["event_name"] = "cancel_exception";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                                case appConstants.CHECKLIST_CLEARALL:
-                                this.removeTextField();
-                                break;
-                            case appConstants.BIN_FULL:
-                                data["event_name"] = appConstants.BIN_FULL_REQUEST;
-                                data["event_data"] = null
-                                ActionCreators.postDataToInterface(data); 
-                                 this.showModal(null, appConstants.BIN_FULL);  
-                                break; 
-                            case appConstants.BOX_FULL:
-                                data["event_name"] = appConstants.BOX_FULL_REQUEST;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
-                                this.showModal(null, appConstants.BOX_FULL);
-                                break; 
-                            case appConstants.DISCARD_PACKING_BOX: 
-                                data["event_name"] = appConstants.BOX_FULL_REQUEST;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
-                                this.showModal(null, appConstants.DISCARD_PACKING_BOX);
-                                break; 
-                            case appConstants.CANCEL_BIN_FULL_REQUEST:
-                                data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
-                            closeModalBox();
-                            break;   
-                            case appConstants.CONFIRM_BIN_FULL_REQUEST:
-                                data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
-                            closeModalBox();
-                            break; 
-                            case appConstants.CANCEL_BOX_FULL:
-                                data["event_name"] = appConstants.CANCEL_BOX_FULL_REQUEST;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
-                            closeModalBox();
-                            break;   
-                            case appConstants.CONFIRM_BOX_FULL:
-                                data["event_name"] = appConstants.CONFIRM_BOX_FULL;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
-                            closeModalBox();
-                            break; 
-                            case appConstants.CONFIRM_LOCATION:
-                            data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
-                            break;  
-                            case appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS:
-                                data["event_name"] = "pick_front_exception";
-                                data["event_data"]["action"] ="physically_damaged";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break;                      
-                            default:
-                                return true;
+                                    checkList.checklist_data[checklist_index - 1][index][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index + "-" + (checklist_index - 1)).value);
+                            });
+                        } else {
+                            checkList.checklist_data.map(function (value, index) {
+                                if (index < mainstore.scanDetails()["current_qty"])
+                                    value.map(function (value1, index1) {
+                                        var keyvalue = Object.keys(value1);
+                                        if (checkList.checklist_data[index][index1][keyvalue[0]].Format != "Integer")
+                                            checkList.checklist_data[index][index1][keyvalue[0]].value = document.getElementById("checklist_field" + index1 + "-" + index).value;
+                                        else
+                                            checkList.checklist_data[index][index1][keyvalue[0]].value = parseInt(document.getElementById("checklist_field" + index1 + "-" + index).value);
+                                    })
+                            });
                         }
-                        break;
-                    case appConstants.PICK_BACK:
-                        switch (action) {
-                            case appConstants.CANCEL_SCAN:
-                                data["event_name"] = "cancel_tote_scan";
-                                data["event_data"]["barcode"] = this.props.barcode;
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CANCEL_EXCEPTION:
-                                ActionCreators.enableException(false);
-                                break;
-                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
-                                data["event_name"] = "cancel_exception";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.REPRINT_INVOICE:
-                                 data["event_name"] = "pick_back_exception";
-                                 data["event_data"]["ppsbin_id"] = "undefined";
-                                 data["event_data"]["type"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.SKIP_PRINTING:
-                                 data["event_name"] = "pick_back_exception";
-                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
-                                 data["event_data"]["type"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.DIS_ASSOCIATE_TOTE:
-                                 data["event_name"] = "pick_back_exception";
-                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
-                                 data["event_data"]["type"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.OVERRIDE_TOTE:
-                                 data["event_name"] = "pick_back_exception";
-                                 data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
-                                 data["event_data"]["type"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            default:
-                                return true;
-                        }
-                        break;
-                    case appConstants.AUDIT:
-                        data["event_name"] = "audit_actions";
-                        switch (action) {
-                            case appConstants.CANCEL_SCAN:
-                                data["event_data"]["type"] = "cancel_audit";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.GENERATE_REPORT:
-                                data["event_data"]["type"] = "generate_report";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CANCEL_FINISH_AUDIT:
-                                data["event_data"]["type"] = "cancel_finish_audit";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.FINISH_CURRENT_AUDIT:
-                                data["event_data"]["type"] = "finish_current_audit";
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.AUDIT_NEXT_SCREEN:
-                                ActionCreators.changeAuditExceptionScreen("second_screen");
-                                break;
-                             case appConstants.SEND_KQ_QTY:
-                                data["event_name"] = "audit_actions";
-                                data["event_data"]["type"] = "exception_response";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                            case appConstants.CANCEL_EXCEPTION_TO_SERVER:
-                                data["event_name"] = "cancel_exception";
-                                ActionCreators.postDataToInterface(data);
-                                break;    
-                            default:
-                                return true;
-                        }
-                        break;
-        case appConstants.PERIPHERAL_MANAGEMENT:
-        switch(action) {
-            case appConstants.ADD_SCANNER:
-            this.showModal(null, "enter_barcode");
-            break;
-
-            case appConstants.ADD_SCANNER_DETAILS: 
-            peripheralId = document.getElementById("add_scanner").value;
-            peripheralData["peripheral_id"] = peripheralId;
-            peripheralData["peripheral_type"]= "barcode_scanner";
-            ActionCreators.updateData(peripheralData, 'POST');
-            closeModalBox();
-            document.getElementById("add_scanner").value = '';
-            break;
-
-            case appConstants.CANCEL_ADD_SCANNER:                            
-            closeModalBox();
-            location.reload();
-            break;
-            case appConstants.CANCEL_CLOSE_SCANNER:                            
-            closeModalBox();
-                                //location.reload();
-                                break;
-                                case appConstants.CANCEL_PPTL:                           
-                                location.reload();
-                                break;
-                            }   
-                            break;
-                            case appConstants.PRE_PUT:
-                            switch (action) {
-                                case appConstants.CANCEL_EXCEPTION_MODAL:
-                                this.showModal(appConstants.PRE_PUT, "cancel_exception");
-                                break;
-                                case appConstants.CANCEL_SCAN:
-                                data["event_name"] = "cancel_barcode_scan";
-                                data["event_data"]["barcode"] = this.props.barcode;
-                                ActionCreators.postDataToInterface(data);
-                                break;
-                                case appConstants.RELEASE_MTU:
-                                data["event_name"] = "release_mtu";
-                                ActionCreators.postDataToInterface(data);
-                                break;                            
-                                case appConstants.CANCEL_EXCEPTION_TO_SERVER:
-                                data["event_name"] = "cancel_exception";
-                                ActionCreators.postDataToInterface(data);
-                                closeModalBox();
-                                break;   
-                                case appConstants.SEND_EXCESS_ITEMS_BIN:
-                                data["event_name"] = "pre_put_exception";
-                                data["event_data"]["action"] ="finish_exception";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                ActionCreators.postDataToInterface(data);
-                                break;                                 
-                                case appConstants.CANCEL_LAST_SCAN:
-                                data["event_name"] = "cancel_last_scan";
-                                ActionCreators.postDataToInterface(data);
-                                break;   
-                                case appConstants.CLOSE_CANCEL_EXCEPTION:
-                                closeModalBox(); 
-                                break;                               
-                                default:
-                                return true;
-                            }
-                            break;
-                            default:
-                            return true;
-                        }
-                    },
-                    showModal: function(data,type) {
-                       ActionCreators.showModal({
-                        data:data,
-                        type:type
-                    });
-                       $('.modal').modal();
-                   },
-                   render: function() {
-                    
-                    if (this.props.disabled == false)
-                        return ( React.createElement("a", {className: 
-                            this.props.color == "orange" ? "custom-button orange " : "custom-button black ", 
-                        
-                        onClick: 
-                            this.performAction.bind(this, this.props.module, this.props.action)
-                        }, " ", 
-                            this.props.text, 
-                        " ")
-                        );
+                        if (mainstore.getChecklistCompleteDetails()["checklist_index"] == "all")
+                            data["event_name"] = "all_items_pick_checklist_update";
                         else
-                            return ( React.createElement("a", {className: 
-                                this.props.color == "orange" ? "custom-button disabled orange" : "custom-button disabled black"
-                            }, " ", 
-                                this.props.text, 
-                            " "));
-                        }
-                    });
+                            data["event_name"] = "single_item_pick_checklist_update";
+                        data["event_data"]["pick_checklist"] = checkList;
+                        ActionCreators.postDataToInterface(data);
 
-                    module.exports = Button1;
+                        break;
+
+                    case appConstants.CONFIRM_FROM_USER:
+                        ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
+                        break;
+                    case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
+                        ActionCreators.validateAndSendDataToServer();
+                        break;
+                    case appConstants.SEND_MISSING_BOX_EXCEPTION:
+                        data["event_name"] = "pick_front_exception";
+                        data["event_data"] = {};
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["quantity"] = {};
+                        data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
+
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
+                        data["event_name"] = "pick_front_exception";
+                        data["event_data"]["action"] = "confirm_irt_bin";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.EDIT_DETAILS:
+                        data["event_name"] = "checklist_edit";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION:
+                        ActionCreators.enableException(false);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                        data["event_name"] = "cancel_exception";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CHECKLIST_CLEARALL:
+                        this.removeTextField();
+                        break;
+                    case appConstants.BIN_FULL:
+                        data["event_name"] = appConstants.BIN_FULL_REQUEST;
+                        data["event_data"] = null
+                        ActionCreators.postDataToInterface(data);
+                        this.showModal(null, appConstants.BIN_FULL);
+                        break;
+                    case appConstants.BOX_FULL:
+                        data["event_name"] = appConstants.BOX_FULL_REQUEST;
+                        data["event_data"] = null;
+                        ActionCreators.postDataToInterface(data);
+                        this.showModal(null, appConstants.BOX_FULL);
+                        break;
+                    case appConstants.DISCARD_PACKING_BOX:
+                        data["event_name"] = appConstants.BOX_FULL_REQUEST;
+                        data["event_data"] = null;
+                        ActionCreators.postDataToInterface(data);
+                        this.showModal(null, appConstants.DISCARD_PACKING_BOX);
+                        break;
+                    case appConstants.CANCEL_BIN_FULL_REQUEST:
+                        data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
+                        data["event_data"] = null;
+                        ActionCreators.postDataToInterface(data);
+                        closeModalBox();
+                        break;
+                    case appConstants.CONFIRM_BIN_FULL_REQUEST:
+                        data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
+                        data["event_data"] = null;
+                        ActionCreators.postDataToInterface(data);
+                        closeModalBox();
+                        break;
+                    case appConstants.CANCEL_BOX_FULL:
+                        data["event_name"] = appConstants.CANCEL_BOX_FULL_REQUEST;
+                        data["event_data"] = null;
+                        ActionCreators.postDataToInterface(data);
+                        closeModalBox();
+                        break;
+                    case appConstants.CONFIRM_BOX_FULL:
+                        data["event_name"] = appConstants.CONFIRM_BOX_FULL;
+                        data["event_data"] = null;
+                        ActionCreators.postDataToInterface(data);
+                        closeModalBox();
+                        break;
+                    case appConstants.CONFIRM_LOCATION:
+                        data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
+                        data["event_data"] = null;
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS:
+                        data["event_name"] = "pick_front_exception";
+                        data["event_data"]["action"] = "physically_damaged";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    default:
+                        return true;
+                }
+                break;
+            case appConstants.PICK_BACK:
+                switch (action) {
+                    case appConstants.CANCEL_SCAN:
+                        data["event_name"] = "cancel_tote_scan";
+                        data["event_data"]["barcode"] = this.props.barcode;
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION:
+                        ActionCreators.enableException(false);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                        data["event_name"] = "cancel_exception";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.REPRINT_INVOICE:
+                        data["event_name"] = "pick_back_exception";
+                        data["event_data"]["ppsbin_id"] = "undefined";
+                        data["event_data"]["type"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.SKIP_PRINTING:
+                        data["event_name"] = "pick_back_exception";
+                        data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
+                        data["event_data"]["type"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.DIS_ASSOCIATE_TOTE:
+                        data["event_name"] = "pick_back_exception";
+                        data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
+                        data["event_data"]["type"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.OVERRIDE_TOTE:
+                        data["event_name"] = "pick_back_exception";
+                        data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
+                        data["event_data"]["type"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    default:
+                        return true;
+                }
+                break;
+            case appConstants.AUDIT:
+                data["event_name"] = "audit_actions";
+                switch (action) {
+                    case appConstants.CANCEL_SCAN:
+                        data["event_data"]["type"] = "cancel_audit";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.GENERATE_REPORT:
+                        data["event_data"]["type"] = "generate_report";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_FINISH_AUDIT:
+                        data["event_data"]["type"] = "cancel_finish_audit";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.FINISH_CURRENT_AUDIT:
+                        data["event_data"]["type"] = "finish_current_audit";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.AUDIT_NEXT_SCREEN:
+                        ActionCreators.changeAuditExceptionScreen("second_screen");
+                        break;
+                    case appConstants.SEND_KQ_QTY:
+                        data["event_name"] = "audit_actions";
+                        data["event_data"]["type"] = "exception_response";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                        data["event_name"] = "cancel_exception";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    default:
+                        return true;
+                }
+                break;
+            case appConstants.PERIPHERAL_MANAGEMENT:
+                switch (action) {
+                    case appConstants.ADD_SCANNER:
+                        this.showModal(null, "enter_barcode");
+                        break;
+
+                    case appConstants.ADD_SCANNER_DETAILS:
+                        $('.modal:not(.notification-error)').modal("hide");
+                        peripheralId = document.getElementById("add_scanner").value;
+                        peripheralData["peripheral_id"] = peripheralId;
+                        peripheralData["peripheral_type"] = "barcode_scanner";
+                        ActionCreators.updateData(peripheralData, 'POST');
+                        closeModalBox();
+                        document.getElementById("add_scanner").value = '';
+                        break;
+
+                    case appConstants.CANCEL_ADD_SCANNER:
+                        closeModalBox();
+                        location.reload();
+                        break;
+                    case appConstants.CANCEL_CLOSE_SCANNER:
+                        closeModalBox();
+                        //location.reload();
+                        break;
+                    case appConstants.CANCEL_PPTL:
+                        location.reload();
+                        break;
+                }
+                break;
+            case appConstants.PRE_PUT:
+                switch (action) {
+                    case appConstants.CANCEL_EXCEPTION_MODAL:
+                        this.showModal(appConstants.PRE_PUT, "cancel_exception");
+                        break;
+                    case appConstants.CANCEL_SCAN:
+                        data["event_name"] = "cancel_barcode_scan";
+                        data["event_data"]["barcode"] = this.props.barcode;
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.RELEASE_MTU:
+                        data["event_name"] = "release_mtu";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_EXCEPTION_TO_SERVER:
+                        data["event_name"] = "cancel_exception";
+                        ActionCreators.postDataToInterface(data);
+                        closeModalBox();
+                        break;
+                    case appConstants.SEND_EXCESS_ITEMS_BIN:
+                        data["event_name"] = "pre_put_exception";
+                        data["event_data"]["action"] = "finish_exception";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CANCEL_LAST_SCAN:
+                        data["event_name"] = "cancel_last_scan";
+                        ActionCreators.postDataToInterface(data);
+                        break;
+                    case appConstants.CLOSE_CANCEL_EXCEPTION:
+                        closeModalBox();
+                        break;
+                    default:
+                        return true;
+                }
+                break;
+            default:
+                return true;
+        }
+    },
+    showModal: function (data, type) {
+        ActionCreators.showModal({
+            data: data,
+            type: type
+        });
+        $('.modal').modal();
+    },
+    render: function () {
+
+        if (this.props.disabled == false)
+            return ( React.createElement("a", {className: 
+                    this.props.color == "orange" ? "custom-button orange " : "custom-button black ", 
+                
+                         onClick: 
+                             this.performAction.bind(this, this.props.module, this.props.action)
+                         }, " ", 
+                    this.props.text
+                )
+            );
+        else
+            return ( React.createElement("a", {className: 
+                this.props.color == "orange" ? "custom-button disabled orange" : "custom-button disabled black"
+            }, " ", 
+                this.props.text
+            ));
+    }
+});
+
+module.exports = Button1;
 
 },{"../../actions/CommonActions":233,"../../constants/appConstants":298,"../../stores/PickFrontStore":313,"../../stores/PutBackStore":314,"../../stores/mainstore":317,"react":230}],242:[function(require,module,exports){
 var React = require('react');
@@ -40139,7 +40131,7 @@ function loadComponent(modalType,modalData){
             )
           )
           ));
-      title = _("Bin Full");
+      title = _("Bin full");
       break;
     case appConstants.DISCARD_PACKING_BOX:
       component = [];
@@ -40276,7 +40268,7 @@ var Modal = React.createClass({displayName: "Modal",
     this.setState(getStateData());
   },
   render: function () {      
-    return (React.createElement("div", {className: "modal fade"}, 
+    return (React.createElement("div", {className: "modal"}, 
         React.createElement("div", {className: "modal-dialog"}, 
           React.createElement("div", {className: "modal-content"}, 
             React.createElement(ModalHeader, {title: title}), 
@@ -40777,7 +40769,7 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass2 = 'glyphicon-ok';
         }
 
-        if(this.props.notification.level!=undefined && this.props.notification.level == "error"){
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
 
             if(!$(".modal.notification-error").is(":visible")){
                 let message=(function(){
@@ -40796,9 +40788,12 @@ var Notification = React.createClass({displayName: "Notification",
                 setTimeout((function(){ActionCreators.showModal({
                     data:message,
                     type:appConstants.ERROR_NOTIFICATION
+                });$(".modal-backdrop").each(function(element){
+                    $(element).remove()
                 });
-                    $('.modal').modal({backdrop:'static'});
+                     $('.modal').modal({});
                     $(".modal").addClass("notification-error")
+                    $('.modal.notification-error').data('bs.modal').options.backdrop = 'static';
                 }),0)
             }
 
@@ -40808,7 +40803,7 @@ var Notification = React.createClass({displayName: "Notification",
         }else {
             if($(".modal.notification-error").is(":visible")){
                 setTimeout((function(){
-                    $('.modal').modal("hide");
+                    $('.modal.notification-error').modal("hide");
                     $(".modal").removeClass("notification-error")
                 }),0)
 
@@ -41146,6 +41141,7 @@ var PickBack = React.createClass({displayName: "PickBack",
           } 
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}), 
@@ -41166,6 +41162,7 @@ var PickBack = React.createClass({displayName: "PickBack",
           this._navigation = '';
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData})
@@ -41194,10 +41191,10 @@ var PickBack = React.createClass({displayName: "PickBack",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickBackPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), "  : ", this.state.PickBackPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickBackSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PickBackSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -41382,6 +41379,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
@@ -41403,6 +41401,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
                                       rackData: this.state.PickFrontRackDetails})
@@ -41422,9 +41421,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
-                                      rackData: this.state.PickFrontRackDetails, putDirection: this.state.PickFrontPickDirection}), 
+                                      rackData: this.state.PickFrontRackDetails}), 
                                 React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                             )
                         )
@@ -41442,6 +41442,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
                                 React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
@@ -41577,6 +41578,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
@@ -41588,25 +41590,11 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 var _button;
-                if(!this.state.GetIRTScanStatus)
-          {
-                    _button = (React.createElement("div", {className: "staging-action"}, 
+                _button = (React.createElement("div", {className: "staging-action"}, 
                     React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
                              module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
                              color: "orange"})
                 ));
-
-          }
-      else
-      {
-                    _button = (React.createElement("div", {className: "staging-action"}, 
-                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Next"), 
-                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
-                             color: "orange"})
-                ));
-      }
-
-                
 
                 this._component = (
                     React.createElement("div", {className: "grid-container exception"}, 
@@ -41622,7 +41610,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                             )
                         ), 
                         React.createElement("div", {className: "cancel-scan"}, 
-                            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
                                      action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -41641,25 +41629,25 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                                     React.createElement("hr", null)
                                 )
@@ -41682,34 +41670,27 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-            var selected_screen;
-          if(!this.state.GetIRTScanStatus)
-          {
-                  selected_screen=(
-                   React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
-                  )
-                  )
-          );
-              }
-              else{
-                selected_screen=(
-                   React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
-                  )
-          );
-              }
                 this._component = (
                     React.createElement("div", {className: "grid-container exception"}, 
                         React.createElement(Modal, null), 
                         React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                         React.createElement("div", {className: "exception-right"}, 
-                        selected_screen
+                            React.createElement("div", {className: "gor-exception-align"}, 
+                                React.createElement("div", {
+                                    className: "gor-exceptionConfirm-text"}, _("Please put entities which have issues in exception area")), 
+
+                                React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", 
+                                             module: appConstants.PICK_FRONT, 
+                                             action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
+                                )
+                            )
+
+
                         ), 
                         React.createElement("div", {className: "cancel-scan"}, 
-                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
                 );
@@ -41719,6 +41700,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 if (this.state.PickFrontExceptionScreen == "box_serial") {
                     this._component = (
                         React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
                             React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                             React.createElement("div", {className: "exception-right"}, 
                                 React.createElement("div", {className: "main-container"}, 
@@ -41747,6 +41729,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
                     this._component = (
                         React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
                             React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                             React.createElement("div", {className: "exception-right"}, 
                                 React.createElement("div", {className: "main-container exception2"}, 
@@ -41794,10 +41777,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                     React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                         React.createElement("div", {className: "row scannerHeader"}, 
                             React.createElement("div", {className: "col-md-6"}, 
-                                React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
+                                React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), ": ", this.state.PickFrontPpsMode.toUpperCase(), " ")
                             ), 
                             React.createElement("div", {className: "col-md-6"}, 
-                                React.createElement("div", {className: "seatType"}, " Seat Type" + ' ' +
+                                React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), 
                                     ": ", this.state.PickFrontSeatType.toUpperCase())
                             )
                         ), 
@@ -42240,7 +42223,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                 React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}), 
                 React.createElement("div", {className: "exception-right"}), 
                 React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel Exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
             );
@@ -42339,7 +42322,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel Exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -42363,7 +42346,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button, {disabled: false, text: _("Cancel Exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -42386,10 +42369,10 @@ var PrePut = React.createClass({displayName: "PrePut",
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PrePutPpsMode.toUpperCase(), " ")
+                      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), ": ", this.state.PrePutPpsMode.toUpperCase(), " ")
                     ), 
                     React.createElement("div", {className: "col-md-6"}, 
-                      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PrePutSeatType.toUpperCase())
+                      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PrePutSeatType.toUpperCase())
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
@@ -43300,7 +43283,7 @@ var KQ = React.createClass({displayName: "KQ",
                 }else{
                   this._appendClassDown = 'downArrow enable';
                 } 
-            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() === appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
+            }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
 
                 if(_updatedQtyDamaged  == 0){
                   this._appendClassDown = 'downArrow disable';
@@ -43344,7 +43327,7 @@ var KQ = React.createClass({displayName: "KQ",
     render: function(data) {
         var typeValue="";
         typeValue=this.props.type;
-         _updatedQtyDamaged = typeValue === appConstants.UNSCANNABLE?mainstore.getkQQuanity():parseInt(this.props.scanDetailsDamaged.current_qty);
+         _updatedQtyDamaged = typeValue === appConstants.UNSCANNABLE?_updatedQtyDamaged:parseInt(this.props.scanDetailsDamaged.current_qty);
         _scanDetails = this.props.scanDetailsDamaged;
         console.log(_updatedQtyDamaged);
         this.checkKqAllowed();
@@ -43968,8 +43951,7 @@ componentDidMount(){
                     }
                 },
                 accepted: function(e, keypressed, el) {
-                    let txtBoxVal=0;
-                    txtBoxVal=e.target.value=== "" || parseInt(e.target.value)<0 || isNaN(parseInt(e.target.value)) ?0:e.target.value;
+                    let txtBoxVal = isNaN(parseInt(e.target.value,10))?0:Math.abs(parseInt(e.target.value,10));
                     if(self.props.execType===appConstants.GOOD_QUANTITY)
                     {
                         self._updatedQtyGood=txtBoxVal;
@@ -44382,19 +44364,6 @@ var PutBack = React.createClass({displayName: "PutBack",
         this._component = this.getExceptionComponent();
       }
       break;
-
-
-      case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
-      this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
-      this._component = (
-          React.createElement("div", {className: "grid-container"}, 
-          React.createElement("div", {className: "main-container"}, 
-            React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
-            )
-          )
-          );         
-      break;
-
       case appConstants.PUT_BACK_INVOICE:
       var invoiceStringArg = [];
       invoiceStringArg[0] = this.state.InvoiceType;
@@ -44402,6 +44371,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       this._navigation = '';
       this._component = (
         React.createElement("div", {className: "grid-container gor-invoice-wrap"}, 
+            React.createElement(Modal, null), 
           React.createElement("div", {className: "gor-invoice-input-wrap"}, 
             React.createElement("div", {className: "gor-invoice-h1-wrap"}, componentModalString), 
             React.createElement("div", {className: "gor-invoice-input-keyboard-wrap", onClick: this.openKeyboard}, 
@@ -44470,6 +44440,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         messageType = "small";
         this._component = (
           React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+              React.createElement(Modal, null), 
           subComponent, 
           React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
@@ -44487,12 +44458,33 @@ var PutBack = React.createClass({displayName: "PutBack",
       if(this.state.PutBackExceptionScreen == "damaged")
         this._component = (
           React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
           React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
           React.createElement("div", {className: "exception-right"}, 
           React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
           React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_DAMAGED_ENTITY_DATA})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_SCREEN_CONFIRM})
+          )
+          ), 
+          React.createElement("div", {className: "cancel-scan"}, 
+          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+          )
+          )
+          );
+      else if(this.state.PutBackExceptionScreen == "damaged_confirm")
+        this._component = (
+          React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+          React.createElement("div", {className: "exception-right"}, 
+          React.createElement("div", {className: "main-container exception2"}, 
+          React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "kq-header"}, _("Please put unscannable entities in exception area."))
+          )
+          ), 
+          React.createElement("div", {className: "finish-damaged-barcode"}, 
+          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44506,6 +44498,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44517,7 +44510,27 @@ var PutBack = React.createClass({displayName: "PutBack",
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
-                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
+                    React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_DAMAGED_ENTITY_CONFIRM})
+                  )
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+                )
+              )
+            );
+          else if(this.state.PutBackExceptionScreen === appConstants.DAMAGED_ENTITY_CONFIRM)
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Please put damaged entities in exception area."))
+                    )
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
+                    React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -44531,6 +44544,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44541,7 +44555,27 @@ var PutBack = React.createClass({displayName: "PutBack",
           React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
           ), 
           React.createElement("div", {className: "finish-damaged-barcode"}, 
-          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
+          React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CHANGE_OVERSIZED_SCREEN_CONFIRM})
+          )
+          ), 
+          React.createElement("div", {className: "cancel-scan"}, 
+          React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+          )
+          )
+          );
+      else if(this.state.PutBackExceptionScreen == "oversized_confirm")
+        this._component = (
+          React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+          React.createElement("div", {className: "exception-right"}, 
+          React.createElement("div", {className: "main-container exception2"}, 
+          React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "kq-header"}, _("Please put oversized entities in exception area."))
+          )
+          ), 
+          React.createElement("div", {className: "finish-damaged-barcode"}, 
+          React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
           )
           ), 
           React.createElement("div", {className: "cancel-scan"}, 
@@ -44564,6 +44598,7 @@ var PutBack = React.createClass({displayName: "PutBack",
      }
      this._component = (
       React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
       React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
       React.createElement("div", {className: "exception-right"}, 
       React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44583,6 +44618,7 @@ var PutBack = React.createClass({displayName: "PutBack",
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
         React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
         React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
         React.createElement("div", {className: "exception-right"}, 
         React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44592,7 +44628,27 @@ var PutBack = React.createClass({displayName: "PutBack",
         React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
         ), 
         React.createElement("div", {className: "finish-damaged-barcode"}, 
-        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_EXTRA_ITEM})
+        React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_KQ_QTY_1})
+        )
+        ), 
+        React.createElement("div", {className: "cancel-scan"}, 
+        React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
+        )
+        )
+        );
+    else if(this.state.PutBackExceptionScreen == "extra_quantity_update")
+      this._component = (
+        React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+        React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+        React.createElement("div", {className: "exception-right"}, 
+        React.createElement("div", {className: "main-container exception2"}, 
+        React.createElement("div", {className: "kq-exception"}, 
+        React.createElement("div", {className: "kq-header"}, _("Please put extra entities in exception area."))
+        )
+        ), 
+        React.createElement("div", {className: "finish-damaged-barcode"}, 
+        React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
         )
         ), 
         React.createElement("div", {className: "cancel-scan"}, 
@@ -44601,70 +44657,11 @@ var PutBack = React.createClass({displayName: "PutBack",
         )
         );
     break; 
-
-         case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
-          var selected_screen;
-          var messageIRTenable,messageIRTdisable;
-          if(this.state.GetExceptionType==appConstants.PHYSICALLY_DAMAGED)
-          {
-              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in IRT bin and scan the bin")));
-              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put damaged entities in exception area")));
-          }
-          else if(this.state.GetExceptionType==appConstants.EXTRA_ITEMS)
-          {
-              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in IRT bin and scan the bin")));
-              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put extra entities in exception area.")));
-          }
-          else if(this.state.GetExceptionType==appConstants.ITEM_SCANNABLE)
-          {
-               messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in IRT bin and scan the bin")));
-              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put unscannable entities in exception area")));
-          }
-          else if(this.state.GetExceptionType==appConstants.ITEM_OVERSIZED)
-          {
-              messageIRTenable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in IRT bin and scan the bin")));
-              messageIRTdisable=(React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put oversized entities in exception area")));
-          }
-
-          if(!this.state.GetIRTScanStatus)
-          {
-        selected_screen=(
-  React.createElement("div", {className: "exception-right"}, 
-                   React.createElement("div", {className: "gor-exception-align"}, 
-                    messageIRTdisable, 
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
-                    React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
-                  )
-                  )
-              )
-          );
-      }else
-      {
-         selected_screen=(
-  React.createElement("div", {className: "exception-right"}, 
-                   React.createElement("div", {className: "gor-exception-align"}, 
-                    messageIRTenable
-                  )
-              )
-          );
-      }
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
-                  selected_screen, 
-              React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
-                )
-              )
-            );
-        break;
-
-
     case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
     this._navigation = '';
     this._component = (
       React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
       React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
       React.createElement("div", {className: "exception-right"}, 
       React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44678,12 +44675,12 @@ var PutBack = React.createClass({displayName: "PutBack",
       )
       );
     break;
-
     case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
     this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
     
     this._component = (
       React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+          React.createElement(Modal, null), 
       React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
       React.createElement("div", {className: "staging-action"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
@@ -44709,10 +44706,10 @@ var PutBack = React.createClass({displayName: "PutBack",
       React.createElement("div", {className: "grid-container audit-reconcilation"}, 
       React.createElement("div", {className: "row scannerHeader"}, 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
+      React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutBackPpsMode.toUpperCase(), " ")
       ), 
       React.createElement("div", {className: "col-md-6"}, 
-      React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
+      React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutBackSeatType.toUpperCase())
       )
       ), 
       React.createElement(TabularData, {data: this.state.utility}), 
@@ -44829,6 +44826,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, showSpinner: this.state.MobileFlag}));
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
           React.createElement("div", {className: "main-container"}, 
           this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup}):React.createElement(Spinner, null)
           )
@@ -44866,6 +44864,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._navigation = '';
       this._component =(
           React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
               React.createElement("div", {className: "exception-right"}), 
               React.createElement("div", {className: "cancel-scan"}, 
@@ -44888,7 +44887,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
             ), 
             React.createElement("div", {className: "main-container"}, 
-            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails, putDirection: this.state.PutFrontPutDirection}), 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
             React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
             ), 
             React.createElement("div", {className: "cancel-scan"}, 
@@ -44906,6 +44905,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.UNDOCK_PUSH}));
           this._component = (
             React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
             React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup})
             )
@@ -44921,6 +44921,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.WRONG_UNDOCK}));
           this._component = (
             React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
             React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, wrongUndock: this.state.WrongUndock})
             )
@@ -44932,37 +44933,23 @@ var PutFront = React.createClass({displayName: "PutFront",
         break;
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-        var selected_screen;
-        
-        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
-          if(!this.state.GetIRTScanStatus)
-          {
-          selected_screen= (
-            React.createElement("div", null, 
-           React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
-          ), 
-          React.createElement("div", {className: "staging-action"}, 
+        var _button;
+        _button = (React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
-          )
           ));
-         }
-         else
-         {
-        selected_screen=  (
-        React.createElement("div", {className: "kq-exception"}, 
-          React.createElement("div", {className: "gor-info-text"}, _("Please put remaining entities in IRT bin and scan the bin"))
-          )
-          );
-         }
+        this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
-        selected_screen
+          React.createElement("div", {className: "kq-exception"}, 
+          React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
+          ), 
+          _button
           )
           );
         break;
-        
+
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -44986,8 +44973,6 @@ var PutFront = React.createClass({displayName: "PutFront",
       break;
 
         case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
-        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
-
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
           binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
@@ -45091,7 +45076,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   )
                 ), 
                  React.createElement("div", {className: "cancel-scan"}, 
-                   React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                   React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
           );      
@@ -45103,7 +45088,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             {
               UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -45122,13 +45107,13 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                     ), 
               
                      React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                     ), 
 
@@ -45136,7 +45121,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                    React.createElement("hr", null)
                     )
@@ -45153,37 +45138,23 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
             );
         break; 
+
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-          var selected_screen;
-          if(!this.state.GetIRTScanStatus)
-          {
-        selected_screen=(
-  React.createElement("div", {className: "exception-right"}, 
+            this._component = (
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put entities which have issues in exception area")), 
                    
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
                   )
-              )
-          );
-      }else
-      {
-         selected_screen=(
-  React.createElement("div", {className: "exception-right"}, 
-                   React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
-                  )
-              )
-          );
-      }
-          
-            this._component = (
-              React.createElement("div", {className: "grid-container exception"}, 
-              React.createElement(Modal, null), 
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
-                  selected_screen, 
+             
+                
+              ), 
               React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
@@ -45195,6 +45166,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
               React.createElement("div", {className: "exception-right"}, 
               React.createElement("div", {className: "main-container exception2"}, 
@@ -45214,6 +45186,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
               React.createElement("div", {className: "exception-right"}, 
               React.createElement("div", {className: "main-container"}, 
@@ -45247,7 +45220,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                       )
                     ), 
                      React.createElement("div", {className: "cancel-scan"}, 
-                       React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                       React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                     )
                   )
               );      
@@ -45265,7 +45238,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             )
             ), 
             React.createElement("div", {className: "cancel-scan"}, 
-            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
             );      
@@ -45273,7 +45246,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
-            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Next"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
+            React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
             ));
           this._component = (
             React.createElement("div", {className: "grid-container exception"}, 
@@ -45289,7 +45262,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             )
             ), 
             React.createElement("div", {className: "cancel-scan"}, 
-            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
             );      
@@ -45311,10 +45284,10 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "grid-container audit-reconcilation"}, 
             React.createElement("div", {className: "row scannerHeader"}, 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
+            React.createElement("div", {className: "ppsMode"}, " ", _("PPS Mode"), " : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
             ), 
             React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
+            React.createElement("div", {className: "seatType"}, " ", _("Seat Type"), " : ", this.state.PutFrontSeatType.toUpperCase())
             )
             ), 
             React.createElement(TabularData, {data: this.state.utility}), 
@@ -45476,14 +45449,9 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         },
     componentWillUnmount:function(){
         var lines = document.getElementsByClassName("drawerLine");
-        var directionLine = document.getElementsByClassName("LineDirection");
         if(lines.length){
             lines[0].remove();
         }
-        if(directionLine.length){
-            directionLine[0].remove();
-        }
-
     },
     /*
         Since performing DOM manipulations hence 
@@ -45501,16 +45469,9 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         strEl = strEl ? strEl.parentNode : null;
         var endEl  = document.querySelectorAll("#drSlot .activeSlot")[0];
         if(strEl && endEl){
-        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
+        this.connect(strEl, endEl, "#6d6d6d", 3);
       }
-    
   }
-  if(this.props.putDirection && this.props.putDirection.length>0 && document.getElementsByClassName("LineDirection").length===0){
-    var start = (document.querySelectorAll("#rack .activeSlot")[0]);
-    start = start ? start.parentNode : null;
-    var end  = (document.querySelectorAll(".specialContainer")[0]);
-    this.connect(start, end, "#6d6d6d", 3,"LineDirection");
-}
     },
     /*
         function to create line between 2 points
@@ -45518,7 +45479,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         color (Hexadecimal color), thickness(Integer)
      */
     
-    connect:function(startEl, endEl, color, thickness,className) {
+    connect:function(startEl, endEl, color, thickness) {
     var off1 = this.getOffset(startEl);
     var off2 = this.getOffset(endEl);
     // bottom right
@@ -45535,8 +45496,8 @@ var MsuRack = React.createClass({displayName: "MsuRack",
     // angle
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
     // make hr
-
- var htmlLine = "<div class="+className+" style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+    var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+    
     document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },
@@ -45550,8 +45511,6 @@ getOffset( el ) {
     };
 },
 	render: function(){
-        var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
-        var putDirection = this.props.putDirection;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
         var rackDetails = this.props.rackData.rack_type_rec;
@@ -45601,11 +45560,11 @@ getOffset( el ) {
                 "justify-content": "center",
                 "flex-grow": 1,
                 "flex-wrap": "nowrap",
-                "box-sizing": "border-box",               
+                "box-sizing": "border-box",
+                width: "100%",
                 overflow: "hidden"
-
             }
-
+        
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow){
                 drawerSlotData = row[1];
@@ -45644,50 +45603,14 @@ getOffset( el ) {
                 )
             }())
         }
-       if(putDirection){
-        nestable_count=putDirection.nestable_count;
-        nestable_direction=putDirection.nestable_direction;
-        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
-         if(putDirection.orientation_preference && nestable_count>1){
-        orientation="orientation";
-        orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
-        }
-        else if(putDirection.orientation_preference && stackCount>=1){
-        orientation="orientation";  
-        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
-        }
-        else
-        {
-           orientation="containerHide";
-        }             
-        stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
-        stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
-        fragileClass=putDirection.fragile?"fragile":"containerHide";
-        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
-        count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
-    }
 		return (
 				React.createElement("div", {className: "drawWrap", style: wrapStyle}, 
                 React.createElement("div", {className: "drawRack", id: "rack", style: this.props.type=="small" ? drawRackStyle:{}}, 
 					eachRow.reverse(), 
                     React.createElement("div", {className: "lastRow", style: this.props.type=="small" ?  lastSlot:{}})
-               
+                    
 				), 
-                putDirection?(
-                React.createElement("div", {className: "specialContainer"}, 
-                React.createElement("img", {className: orientation, src: orientationClass}), 
-                React.createElement("div", {className: stackClass}, 
-                        React.createElement("span", {className: stackicon}), 
-                        React.createElement("span", {className: "stackText"}, stackText), 
-                        React.createElement("span", {className: "stackCount"}, count)
-                ), 
-                 React.createElement("div", {className: fragileClass}, 
-                        React.createElement("span", {className: "fragileicons"}), 
-                        React.createElement("span", {className: "fragileText"}, _("FRAGILE"))
-                 )
-                 )
-):"", 
                 drawerCompartment
                 )
 			);
@@ -46366,14 +46289,6 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
-        }],[
-         {
-            "screen_id": "put_back_warehouse_full_irt_scan",
-            "code": "PtF.H.015",
-            "message": "Put item into IRT bin and scan the bin",
-            "showImage": false,
-            "level": 1,
-            "type": 'active'
         }]
     ],
     "putFront": [
@@ -46452,14 +46367,6 @@ var navData = {
             "screen_id": "put_front_bin_warehouse_full",
             "code": "PtF.H.016",
             "message": "Warehouse Full",
-            "showImage": false,
-            "level": 1,
-            "type": 'active'
-        }],
-        [{
-            "screen_id": "put_front_warehouse_full_irt_scan",
-            "code": "PtF.H.021",
-            "message": "Scan IRT Bin",
             "showImage": false,
             "level": 1,
             "type": 'active'
@@ -46754,7 +46661,6 @@ var appConstants = {
 	SKIP_PRINTING:"SKIP_PRINTING",
 	DIS_ASSOCIATE_TOTE:"DIS_ASSOCIATE_TOTE",
 	OVERRIDE_TOTE:"OVERRIDE_TOTE",
-	PICK_FINISH_EXCEPTION_ENTITY:"PICK_FINISH_EXCEPTION_ENTITY",
 	PICK_BACK_EXCEPTION_REPRINT:"pick_back_reprint_required",
 	PICK_BACK_EXCEPTION_SKIP_PRINTING:"pick_back_skip_print",
 	PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:"pick_back_tote_deassociation",
@@ -46766,14 +46672,7 @@ var appConstants = {
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
-	PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:"put_back_warehouse_full_irt_scan",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
-	PHYSICALLY_DAMAGED:"physically_damaged",
-	EXTRA_ITEMS:"extra_items",
-	ITEM_SCANNABLE:"item_unscannable",
-	ITEM_OVERSIZED:"item_oversized",
-	FINISH_DAMAGED_ENTITY_DATA:"FINISH_DAMAGED_ENTITY_DATA",
-	FINISH_EXCEPTION_EXTRA_ITEM:"FINISH_EXCEPTION_EXTRA_ITEM",
 	PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:"put_front_physically_damaged_items",
 	PUT_FRONT_EXCEPTION_EXCESS_TOTE: "put_front_excess_items_tote",
 	PUT_FRONT_EXCEPTION_EXCESS_ITEMS: "put_front_excess_items",
@@ -46828,9 +46727,7 @@ var appConstants = {
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
-	PUT_BACK_EXCEPTION_ENITY_IRT_BIN:"put_back_transfer_to_irt_bin",
 	PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:"put_back_extra_item_quantity_update",
-	PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:"put_front_warehouse_full_irt_scan",
 	SEND_EXTRA_ITEM_QTY:"SEND_EXTRA_ITEM_QTY",
 	UNMARKED_DAMAGED:"UNMARKED_DAMAGED",
 	EDIT_DETAILS:"EDIT_DETAILS",
@@ -46859,7 +46756,6 @@ var appConstants = {
 	UPDATE_MISSING_QUANTITY:"UPDATE_MISSING_QUANTITY",
 	UPDATE_UNSCANNABLE_QUANTITY:"UPDATE_UNSCANNABLE_QUANTITY",
 	PUT_FRONT_ITEMS_TO_IRT_BIN:"put_front_items_to_irt_bin",
-	PUT_FINISH_EXCEPTION_ENTITY:"PUT_FINISH_EXCEPTION_ENTITY",
 	UPDATE_GOOD_QUANTITY:"UPDATE_GOOD_QUANTITY",
 	UPDATE_DAMAGED_QUANTITY:"UPDATE_DAMAGED_QUANTITY",
 	CANCEL_TOTE :'CANCEL_TOTE',
@@ -47793,16 +47689,20 @@ module.exports = german;
 
 },{}],308:[function(require,module,exports){
 var japanese = {
+   " items": " \u5546\u54c1",
    "'Override Tote Exception' cannot be raised for bins with totes associated": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3044\u305f\u30d3\u30f3\u3067\u300c\u30c8\u30fc\u30c8\u66f4\u65b0\u4f8b\u5916\u300d\u306f\u767a\u751f\u3057\u307e\u305b\u3093",
    "Actions": "\u30a2\u30af\u30b7\u30e7\u30f3",
-   "Actual": "\u6b63\u3057\u3044",
+   "Actual": "\u5b9f\u969b",
    "Actual Quantity": "\u5b9f\u6570",
    "Actual put quantity less than than revised quantity.": "\u5165\u8377\u6570\u304c\u5909\u66f4\u6570\u91cf\u3068\u4e00\u81f4\u3057\u3066\u3044\u307e\u305b\u3093",
    "Actual put quantity not equal to the sum of Good and Expection quantity.": "\u826f\u54c1\u3068\u4e0d\u826f\u54c1\u306e\u5408\u8a08\u6570\u304c\u5165\u8377\u6570\u3068\u7570\u306a\u308a\u307e\u3059",
    "Add Scanner": "\u30b9\u30ad\u30e3\u30ca\u8ffd\u52a0",
    "After scannning tote barcode, please scan pptl barcode": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",
    "Are You Sure You Want to Close Tote?": "\u30c8\u30fc\u30c8\u3092\u7d42\u4e86\u3057\u3066\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
+   "Are you sure you want to cancel the exception?": "\u4f8b\u5916\u51e6\u7406\u3092\u30ad\u30e3\u30f3\u30bb\u30eb\u3057\u3066\u3082\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
    "Are you sure you want to close Tote": "\u30c8\u30fc\u30c8\u3092\u30af\u30ed\u30fc\u30ba\u3057\u3066\u3082\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
+   "Are you sure you want to exit from {0} invoice and stage all bins": " {0} \u8acb\u6c42\u66f8\u304b\u3089\u9000\u5834\u3057\u3066\u5168\u3066\u306e\u30d3\u30f3\u3092\u30b9\u30c6\u30fc\u30b8\u3057\u305f\u3044\u3067\u3059\u304b",
+   "Are you sure you want to exit from {0} {1} and stage all bins": " {0} {1}\u304b\u3089\u9000\u5834\u3057\u3066\u5168\u3066\u306e\u30d3\u30f3\u3092\u30b9\u30c6\u30fc\u30b8\u3057\u305f\u3044\u3067\u3059\u304b",
    "Associate tote with bin": "\u30c8\u30fc\u30c8\u3092\u30d3\u30f3\u306b\u7d10\u3065\u3051",
    "BACK": "\u623b\u308b",
    "Back": "\u623b\u308b",
@@ -47818,6 +47718,8 @@ var japanese = {
    "Bin Info": "\u30d3\u30f3\u60c5\u5831",
    "Bin already staged. Ignoring event": "\u30d3\u30f3\u306f\u78ba\u5b9a\u6e08\u307f\u3067\u3059\u3002\u64cd\u4f5c\u3092\u7121\u8996\u3057\u307e\u3057\u305f",
    "Bin empty. Cannot be staged": "\u30d3\u30f3\u304c\u7a7a\u3067\u3059\u3002\u78ba\u5b9a\u3067\u304d\u307e\u305b\u3093",
+   "Bin full": "\u30d3\u30f3\u304c\u3044\u3063\u3071\u3044\u72b6\u614b",
+   "Bin scan successful": "\u30d3\u30f3\u30b9\u30ad\u30e3\u30f3\u304c\u6210\u529f",
    "Bin selected for put. Cannot be staged": "\u30d3\u30f3\u306f\u5165\u8377\u3067\u4f7f\u7528\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u78ba\u5b9a\u306f\u3067\u304d\u307e\u305b\u3093",
    "Bin {0} items removed successfully": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u5b8c\u4e86",
    "Bin {0} selected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u307e\u3057\u305f",
@@ -47832,11 +47734,11 @@ var japanese = {
    "CURRENT BIN": "\u51e6\u7406\u4e2d\u30d3\u30f3",
    "CURRENT SLOT": "\u73fe\u5728\u306e\u30b9\u30ed\u30c3\u30c8",
    "Cancel": "\u30ad\u30e3\u30f3\u30bb\u30eb",
-   "Cancel Exception": "\u4f8b\u5916\u767b\u9332\u306e\u30ad\u30e3\u30f3\u30bb\u30eb",
+   "Cancel Exception": "\u4f8b\u5916\u51e6\u7406\u3092\u30ad\u30e3\u30f3\u30bb\u30eb\u3059\u308b",
    "Cancel Scan": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u306e\u30ad\u30e3\u30f3\u30bb\u30eb",
    "Cancel audit successful.Audit Restarted": "\u68da\u5378\u30ad\u30e3\u30f3\u30bb\u30eb\u5b8c\u4e86\u3002\u68da\u5378\u3092\u518d\u5b9f\u65bd",
-   "Cancel scan successful": "\u30ad\u30e3\u30f3\u30bb\u30eb\u306e\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
-   "Cancel scan successful.": "\u30b9\u30ad\u30e3\u30f3\u30ad\u30e3\u30f3\u30bb\u30eb",
+   "Cancel scan successful": "\u30b9\u30ad\u30e3\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u305f",
+   "Cancel scan successful.": "\u30b9\u30ad\u30e3\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u305f",
    "Cancelled excess entity in tote": "\u30c8\u30fc\u30c8\u306e\u904e\u5270\u5546\u54c1\u3092\u30ad\u30e3\u30f3\u30bb\u30eb",
    "Cancelled invalid entity in tote": "\u30c8\u30fc\u30c8\u306e\u4f8b\u5916\u5546\u54c1\u3092\u30ad\u30e3\u30f3\u30bb\u30eb",
    "Cannot cancel scan. No scanned box found": "\u30b9\u30ad\u30e3\u30f3\u3092\u30ad\u30e3\u30f3\u30bb\u30eb\u3067\u304d\u307e\u305b\u3093",
@@ -47846,8 +47748,11 @@ var japanese = {
    "Confirm": "\u78ba\u8a8d",
    "Confirm MSU Release": "MSU\u306e\u30ea\u30ea\u30fc\u30b9\u3092\u78ba\u8a8d",
    "Connection is closed. Connecting...": "\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u304c\u5207\u65ad\u3055\u308c\u307e\u3057\u305f\u3002\u518d\u63a5\u7d9a\u4e2d\u30fb\u30fb\u30fb",
+   "Container Already Scanned.": "\u65e2\u306b\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u305f\u30b3\u30f3\u30c6\u30ca\u3002",
+   "Continue": "\u6301\u7d9a\u3059\u308b",
    "Could not connect to PPS.Please try again.": "PPS\u306b\u63a5\u7d9a\u3067\u304d\u307e\u305b\u3093\u3002\u3082\u3046\u4e00\u5ea6\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044",
    "Current PPS mode does not support back seat. Please logout.": "\u73fe\u5728\u306e\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u306f\u30d0\u30c3\u30af\u30b7\u30fc\u30c8\u4f7f\u7528\u4e0d\u53ef\u3002\u30ed\u30b0\u30a2\u30a6\u30c8\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Damaged Quantity": "\u640d\u5bb3\u54c1\u6570",
    "Damaged and missing entity recorded.": "\u4e0d\u826f\u54c1\u30fb\u7d1b\u5931\u5546\u54c1\u304c\u8a18\u9332\u3055\u308c\u307e\u3057\u305f",
    "Data capture failed at item": "\u5546\u54c1\u306e\u60c5\u5831\u53d6\u5f97\u5931\u6557",
    "Data capture failed at item {0}": "\u5546\u54c1 {0} \u306e\u60c5\u5831\u304c\u3042\u308a\u307e\u305b\u3093",
@@ -47856,35 +47761,49 @@ var japanese = {
    "Details": "\u5546\u54c1\u8a73\u7d30",
    "Dis-associate Tote": "\u30c8\u30fc\u30c8\u7d10\u4ed8\u3051\u89e3\u9664",
    "Disassociate Tote": "\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u306a\u3044\u30c8\u30fc\u30c8",
+   "Dock roll cage back to proceed the operation": "\u64cd\u4f5c\u3092\u9032\u3081\u308b\u305f\u3081\u306b\u30c9\u30c3\u30af\u30ed\u30fc\u30eb\u30b1\u30fc\u30b8\u3092\u623b\u3057\u3066\u304f\u3060\u3055\u3044",
    "Documents printed Successfully": "\u5370\u5237\u5b8c\u4e86",
    "Documents printed successfully": "\u5370\u5237\u5b8c\u4e86",
    "EXCEPTION": "\u4f8b\u5916\u767b\u9332",
    "Edit Details": "\u8a73\u7d30\u7de8\u96c6",
+   "English": "\u82f1\u8a9e",
    "Enter Good Quantity to be Put into Slot": "\u826f\u54c1\u6570\u5165\u529b",
    "Enter Password": "\u30d1\u30b9\u30ef\u30fc\u30c9\u3092\u5165\u529b",
+   "Enter Quantity": "\u6570\u91cf\u3092\u8a18\u5165",
    "Enter Quantity of Excess Entities": "\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u306e\u5546\u54c1\u6570\u5165\u529b",
    "Enter Scanner Id": "\u30b9\u30ad\u30e3\u30caID\u5165\u529b",
    "Enter Unscannable Entity Quantity": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1\u306e\u6570\u91cf\u3092\u5165\u529b",
    "Enter Username": "\u30e6\u30fc\u30b6\u30fc\u540d\u3092\u5165\u529b",
+   "Enter excess item quantity": "\u4f59\u5206\u306a\u9805\u76ee\u306e\u6570\u91cf\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Entities cannot be accommodated! Remove all entities from bin and press PPTL.": "\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u304c\u53ce\u5bb9\u3067\u304d\u307e\u305b\u3093\uff01\u5168\u3066\u306e\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30d3\u30f3\u304b\u3089\u524a\u9664\u3057\u3066PPTL\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
    "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL": "\u5546\u54c1\u304c\u683c\u7d0d\u3067\u304d\u307e\u305b\u3093\u3002\u30d3\u30f3 {0} \u3092\u7a7a\u306b\u3057\u3066\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Entity Damaged": "\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u304c\u7834\u640d\u3055\u308c\u3066\u3044\u307e\u3059",
    "Entity Missing / Unscannable": "\u7d1b\u5931 / \u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
    "Entity Oversized": "\u7279\u5927\u54c1",
    "Entity Scan not expected. Press PPTL": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Entity Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
+   "Entity already scanned.Confirm exception": "\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u304c\u65e2\u306b\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f\u3002\u4f8b\u5916\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
    "Entity already scanned.Waiting for PPTL press": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u6e08\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Entity entry successful": "\u8eab\u4f53\u7684\u306b\u640d\u5bb3\u3092\u53d7\u3051\u305f\u56e3\u4f53\u304c\u5831\u544a\u3057\u305f\u3002",
    "Entity not expected in tote. Please put entity in exception area and confirm": "\u30c8\u30fc\u30c8\u306b\u5b58\u5728\u3057\u306a\u3044\u5546\u54c1\u3067\u3059\u3002\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
    "Entity scan not expected.": "\u30b9\u30ad\u30e3\u30f3\u304c\u9055\u3044\u307e\u3059",
    "Entity scan not expected. Waiting for PPTL press": "\u30b9\u30ad\u30e3\u30f3\u9055\u3044\u3002\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Entity scan successful": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u304c\u5b8c\u4e86",
    "Entity scan successful.": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u304c\u5b8c\u4e86",
    "Entity scanned is not from bin {0}. Replace and scan from bin {1}": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u3002\u30d3\u30f3 {1} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Error": "\u30a8\u30e9\u30fc",
    "Exception": "\u4f8b\u5916\u767b\u9332",
    "Exception Finished": "\u4f8b\u5916\u51e6\u7406\u5b8c\u4e86",
    "Exception cancelled": "\u4f8b\u5916\u767b\u9332\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f",
+   "Exception entry successful": "\u4f8b\u5916\u5165\u529b\u304c\u6210\u529f\u3057\u307e\u3057\u305f",
+   "Exception finished": "\u4f8b\u5916\u304c\u7d42\u4e86\u3057\u307e\u3057\u305f",
    "Exception invalid as totes are not required with this PPS": "\u3053\u306e\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u3067\u5229\u7528\u3055\u308c\u3066\u3044\u308b\u30c8\u30fc\u30c8\u3067\u306f\u3042\u308a\u307e\u305b\u3093",
+   "Exception with entity reported": "\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u306b\u95a2\u3057\u3066\u4f8b\u5916\u304c\u5831\u544a",
    "Exceptions": "\u4f8b\u5916",
    "Excess item in tote recorded.": "\u30c8\u30fc\u30c8\u306e\u904e\u5270\u306a\u5546\u54c1\u304c\u8a18\u9332\u3055\u308c\u307e\u3057\u305f",
    "Excess item in tote recorded. Now press PPTL": "\u30c8\u30fc\u30c8\u306e\u5546\u54c1\u304c\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u3002\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Excess quantity": "\u904e\u5270\u6570\u91cf",
+   "Exit {0}": "\u7d42\u4e86{0}",
    "Expected": "\u4e88\u5b9a",
    "Expected Quantity": "\u4e88\u5b9a\u6570",
    "Expected quantity exceeded.": "\u6709\u52b9\u306a\u6570\u5024\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
@@ -47892,16 +47811,25 @@ var japanese = {
    "Extra": "\u904e\u5270",
    "Extra Entities in Bin": "\u904e\u5270\u54c1",
    "Extra Entity Found": "\u904e\u5270\u306a\u5546\u54c1",
+   "Extra entity scan found.": "\u30d3\u30f3\u30b9\u30ad\u30e3\u30f3\u6210\u529f",
    "Extra item found please put back item in Exception bin": "\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u3002\u5546\u54c1\u3092\u623b\u3059",
    "FINISH": "\u5b8c\u4e86",
    "Finish": "\u5b8c\u4e86",
+   "Gently push roll cage away from the frame": "\u30ed\u30fc\u30eb\u30b1\u30fc\u30b8\u3092\u30d5\u30ec\u30fc\u30e0\u304b\u3089\u96e2\u308c\u3066\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
    "Good Quantity": "\u826f\u54c1\u6570",
+   "Good Quantity Cannot be Equal to the Total Quantity": "\u826f\u3044\u6570\u91cf\u306f\u5408\u8a08\u6570\u91cf\u3068\u540c\u69d8\u3067\u3042\u308b\u3053\u3068\u306f\u3067\u304d\u307e\u305b\u3093",
    "Incorrect tote barcode scanned. Please try again": "\u8aa4\u3063\u305f\u30c8\u30fc\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
    "Input Extra Details": "\u8ffd\u52a0\u60c5\u5831\u3092\u5165\u529b",
+   "Invalid Entity Scanned.": "\u7121\u52b9\u306a\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f\u3002",
+   "Invalid Event.Expecting PPTL button press": "\u7121\u52b9\u306a\u30a4\u30d9\u30f3\u30c8\u3002PPTL\u30dc\u30bf\u30f3\u304c\u62bc\u3055\u308c\u3066\u3044\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3059\u308b",
    "Invalid Exception for this configuration": "\u8a2d\u5b9a\u6642\u306b\u4e0d\u6b63\u306a\u4f8b\u5916\u304c\u767a\u751f",
+   "Invalid Slot scanned": "\u7121\u52b9\u306a\u30b9\u30ed\u30c3\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
    "Invalid credentials": "\u7121\u52b9\u306a\u8a8d\u8a3c\u60c5\u5831",
    "Invalid entity in tote recorded": "\u5546\u54c1\u9055\u3044",
    "Invalid item in tote recorded.": "\u5546\u54c1\u304c\u7570\u306a\u308a\u307e\u3059",
+   "Invalid tote scanned": "\u7121\u52b9\u306a\u30c8\u30fc\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
+   "Invoice number: {0}": "\u8acb\u6c42\u66f8\u756a\u53f7: {0}",
+   "Issues with entity": "\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u306b\u554f\u984c",
    "Item Missing/Bad Barcode": "\u7d1b\u5931/\u30d0\u30fc\u30b3\u30fc\u30c9\u4e0d\u826f\u5546\u54c1",
    "Item Missing/Unscannable": "\u7d1b\u5931\u307e\u305f\u306f\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
    "Item Not Expected in Tote": "\u30c8\u30fc\u30c8\u306b\u306a\u3044\u5546\u54c1\u3067\u3059",
@@ -47911,6 +47839,7 @@ var japanese = {
    "Items In Box Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1",
    "Japanese": "\u65e5\u672c\u8a9e",
    "Last Box Scan Completed! Scan Remaining Box/Items": "\u30dc\u30c3\u30af\u30b9\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86\uff01\u6b8b\u308a\u306e\u5546\u54c1\u307e\u305f\u306f\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Last item scan will be cancelled. Do you want to continue?": "\u6700\u5f8c\u306e\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3059\u3002\u7d9a\u3051\u307e\u3059\u304b\uff1f",
    "List Of Items To Reconcile": "\u8abf\u6574\u304c\u5fc5\u8981\u306a\u5546\u54c1\u30ea\u30b9\u30c8",
    "Location scan successful": "\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u306e\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
    "Login": "\u30ed\u30b0\u30a4\u30f3",
@@ -47924,6 +47853,7 @@ var japanese = {
    "Missing Box": "\u7d1b\u5931\u3057\u305f\u30dc\u30c3\u30af\u30b9",
    "Missing Quantity": "\u7d1b\u5931\u6570",
    "NEXT": "\u6b21\u3078",
+   "No": "\u3044\u3044\u3048",
    "No Items To Reconcile": "\u8abf\u6574\u304c\u5fc5\u8981\u306a\u5546\u54c1\u306f\u3042\u308a\u307e\u305b\u3093",
    "No PPS bins empty. Please empty them from Pickback": "\u7a7a\u304d\u30d3\u30f3\u304c\u3042\u308a\u307e\u305b\u3093\u3002\u30d4\u30c3\u30af\u30d0\u30c3\u30af\u4f5c\u696d\u3092\u5b9f\u65bd\u3057\u3066\u304f\u3060\u3055\u3044",
    "No bins available to stage": "\u78ba\u5b9a\u53ef\u80fd\u306a\u30d3\u30f3\u304c\u3042\u308a\u307e\u305b\u3093",
@@ -47933,6 +47863,7 @@ var japanese = {
    "No tote associated. Please keep a tote in bin and scan": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u30c8\u30fc\u30c8\u3092\u30d3\u30f3\u306b\u7f6e\u3044\u3066\u30b9\u30ad\u30e3\u30f3",
    "No tote scanned": "\u30c8\u30fc\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
    "No totes associated. Pease keep totes in the Bin and then scan": "\u30c8\u30fc\u30c8\u304c\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u30d3\u30f3\u306e\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
+   "OK": "\u306f\u3044",
    "Order removed successfully from bin {0}": "\u30d3\u30f3 {0} \u304b\u3089\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u304c\u5b8c\u4e86",
    "Overide Tote Required": "\u30c8\u30fc\u30c8\u306e\u66f4\u65b0\u304c\u5fc5\u8981\u3067\u3059",
    "Override": "\u66f4\u65b0",
@@ -47940,6 +47871,8 @@ var japanese = {
    "Override Tote Required": "\u30c8\u30fc\u30c8\u306e\u66f4\u65b0\u304c\u5fc5\u8981",
    "Override tote not possible": "\u30c8\u30fc\u30c8\u306e\u4e0a\u66f8\u304d\u306f\u3067\u304d\u307e\u305b\u3093",
    "PPS Mode": "PPS\u30e2\u30fc\u30c9",
+   "PPS is Closed": "PPS\u304c\u9589\u3058\u3089\u308c\u3066\u3044\u307e\u3059",
+   "PPS is closed": "PPS\u304c\u9589\u3058\u3089\u308c\u3066\u3044\u307e\u3059",
    "PPS is in paused mode. Cannot process new entity. Try after some time": "PPS\u304c\u4e2d\u65ad\u30e2\u30fc\u30c9\u3067\u3059\u3002\u3057\u3070\u3089\u304f\u5f85\u3063\u3066\u518d\u5ea6\u5b9f\u65bd\u3057\u3066\u304f\u3060\u3055\u3044",
    "PPS mode change requested:auto staging all bins": "\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u304c\u5909\u66f4\u3055\u308c\u307e\u3057\u305f\u3002\u5168\u3066\u306e\u30d3\u30f3\u3092\u78ba\u5b9a\u3057\u307e\u3059",
    "PPS mode change requested:scan not allowed": "\u30b9\u30c6\u30fc\u30b7\u30e7\u30f3\u30e2\u30fc\u30c9\u304c\u5909\u66f4\u3055\u308c\u307e\u3057\u305f\u3002\u30b9\u30ad\u30e3\u30f3\u3067\u304d\u307e\u305b\u3093",
@@ -47957,18 +47890,30 @@ var japanese = {
    "Peripheral deleted successfully": "\u5468\u8fba\u6a5f\u5668\u524a\u9664\u5b8c\u4e86",
    "Peripheral not added": "\u5468\u8fba\u6a5f\u5668\u8ffd\u52a0\u5931\u6557",
    "Peripheral not deleted successfully": "\u5468\u8fba\u6a5f\u5668\u524a\u9664\u5931\u6557",
+   "Physically Damaged Reported should equal Scanned Quantity": "\u7269\u7406\u7684\u306b\u640d\u5bb3\u304c\u5831\u544a\u3055\u308c\u305f\u5834\u5408\u3001\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u305f\u6570\u91cf",
+   "Physically Damaged entity reported.": "\u7269\u7406\u7684\u306b\u640d\u5bb3\u304c\u5831\u544a\u3055\u308c\u305f",
    "Pick complete. Waiting for next rack.": "\u30d4\u30c3\u30af\u5b8c\u4e86\u3002\u6b21\u306eMSU\u79fb\u52d5\u4e2d",
    "Picked quantity more than expected. Put extra items back in MSU": "\u30d4\u30c3\u30af\u6570\u30aa\u30fc\u30d0\u30fc\u3002\u904e\u5270\u5206\u3092MSU\u306b\u623b\u3059",
+   "Place": "\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
    "Place Entity in Bin and Press PPTL": "\u5546\u54c1\u3092\u30d3\u30f3\u306b\u7f6e\u3044\u3066\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Place Entity in Slot and Scan More": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30b9\u30ed\u30c3\u30c8\u306b\u7f6e\u304f",
-   "Place Item in slot and scan more": "\u5546\u54c1\u3092\u30b9\u30ed\u30c3\u30c8\u306b\u7f6e\u3044\u3066\u3001\u30b9\u30ad\u30e3\u30f3\u3092\u7e70\u308a\u8fd4\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Place Item in slot and scan more": "\u5546\u54c1\u3092\u30b9\u30ed\u30c3\u30c8\u306b\u5165\u308c\u3066\u3001\u6b21\u306e\u5546\u54c1\u30b9\u30ad\u30e3\u30f3\u3092\u7d9a\u3051\u308b",
+   "Place box in MSU slot and confirm": "MSU\u30b9\u30ed\u30c3\u30c8\u306b\u30dc\u30c3\u30af\u30b9\u3092\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Place container in MSU slot and confirm": "MSU\u30b9\u30ed\u30c3\u30c8\u306b\u30b3\u30f3\u30c6\u30ca\u3092\u7f6e\u3044\u3066\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044",
    "Place extra entity in Exception area.": "\u904e\u5270\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
+   "Place the tote back in bin {0} and press pptl": "\u30c8\u30fc\u30c8\u3092\u30d3\u30f3{0}\u306b\u623b\u3057\u3066pptl\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Place {0} boxes from bin {2}": "\u30d3\u30f3{2}\u304b\u3089{0}\u30dc\u30c3\u30af\u30b9\u3092\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+   "Place {0} boxes with {1} items from bin {2}": "\u30d3\u30f3{2}\u304b\u3089{1}\u306e\u9805\u76ee\u3092{0}\u306e\u30dc\u30c3\u30af\u30b9\u3068\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+   "Please Scan tote which has excess item": "\u4f59\u5206\u306a\u9805\u76ee\u304c\u3042\u308b\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please Select The Bin With Excess Entity": "\u904e\u5270\u5546\u54c1\u306e\u30d3\u30f3\u3092\u9078\u629e",
    "Please complete pickback for pending bin and then proceed": "\u30d4\u30c3\u30af\u30d0\u30c3\u30af\u672a\u5b8c\u4e86\u306e\u30d3\u30f3\u3092\u78ba\u5b9a",
    "Please complete process for pending bin and then proceed": "\u4fdd\u7559\u4e2d\u306e\u30d3\u30f3\u3092\u5b8c\u4e86\u3055\u305b\u3066\u304f\u3060\u3055\u3044",
+   "Please enter a quantity greater than 0": "0\u4ee5\u4e0a\u306e\u6570\u91cf\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
    "Please press PPTL button which does not have any totes associated": "\u30c8\u30fc\u30c8\u306b\u7d10\u3065\u3051\u3055\u308c\u3066\u3044\u306a\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Please press those buttons having color blink_blue": "\u9752\u8272\u70b9\u6ec5\u306e\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Please put entities in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
+   "Please put entities which have issues in exception area": "\u554f\u984c\u306e\u3042\u308b\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
+   "Please put entities with issues, in exception area": "\u554f\u984c\u306e\u3042\u308b\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
    "Please put entity in exception area and confirm": "\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
    "Please put extra entities in exception area.": "\u8d85\u904e\u5546\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
    "Please put oversized entities in exception area.": "\u7279\u5927\u54c1\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
@@ -47984,11 +47929,14 @@ var japanese = {
    "Press PPTL or Scan a Tote": "\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u304b\u3001\u30c8\u30fc\u30c8\u30b9\u30ad\u30e3\u30f3",
    "Press PPTL to Remove Entities": "\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u3001\u5546\u54c1\u3092\u53d6\u308a\u51fa\u3059",
    "Press PPTL to confirm": "\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Press PPTL to confirm no Items Remaining in Bin {0}": "Bin {0} \u306b\u5546\u54c1\u304c\u6b8b\u3063\u3066\u306a\u3044\u3053\u3068\u3092PPTL\u62bc\u3057\u3066\u78ba\u8a8d\u3059\u308b",
    "Press PpsBin Button Or Scan a Tote": "\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u304b\u3001\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Press PpsBin {0} to remove items": "\u30d3\u30f3 {0} \u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u5546\u54c1\u3092\u53d6\u308a\u51fa\u3059",
    "Press bin PPTL": "\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Press bin PPTL to remove entities": "\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u524a\u9664\u3059\u308b\u305f\u3081\u306b\u30d3\u30f3PPTL\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044",
    "Press print button to proceed": "\u5370\u5237\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Print": "\u5370\u5237",
+   "Processing Next Pick from Rack ": "\u30e9\u30c3\u30af\u304b\u3089\u6b21\u306e\u30d4\u30c3\u30ad\u30f3\u30b0\u3092\u51e6\u7406\u3059\u308b",
    "Processing. Please wait and scan later": "\u51e6\u7406\u4e2d\u3002\u3057\u3070\u3089\u304f\u5f85\u3063\u3066\u30b9\u30ad\u30e3\u30f3\u3092\u884c\u3063\u3066\u304f\u3060\u3055\u3044",
    "Product Desc": "\u5546\u54c1\u8aac\u660e",
    "Product Details": "\u5546\u54c1\u8a73\u7d30",
@@ -47997,16 +47945,24 @@ var japanese = {
    "Product SKU": "\u5546\u54c1",
    "Product Type": "\u5546\u54c1\u30bf\u30a4\u30d7",
    "Put Back Entities in the PPS Bin": "\u30d3\u30f3\u306b\u5546\u54c1\u3092\u623b\u3059",
+   "Quantity of Physically damaged entities scanned is less.": "\u30b9\u30ad\u30e3\u30f3\u3057\u305f\u7269\u7406\u7684\u306b\u640d\u50b7\u3057\u305f\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u306e\u6570\u306f\u5c11\u306a\u304f\u306a\u308a\u307e\u3059\u3002",
    "Quantity should be less than or equal to {0}": "\u6570\u91cf\u306f {0} \u4ee5\u4e0b\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093",
+   "Release MTU": "MTU\u3092\u89e3\u653e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Remove Item": "\u5546\u54c1\u53d6\u308a\u51fa\u3057",
+   "Remove Tote from bin & Press PPTL to confirm no Items Remaining": "\u30d3\u30f3\u304b\u3089\u30c8\u30fc\u30c8\u3092\u53d6\u308a\u51fa\u3057\u3001PPTL\u3092\u62bc\u3057\u3066\u6b8b\u308a\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u78ba\u8a8d\u3057\u307e\u3059",
+   "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining": "\u6b8b\u3063\u3066\u3044\u308b\u9805\u76ee\u3092\u78ba\u8a8d\u3059\u308b\u305f\u3081\u306b\u30d3\u30f3{0}\u304b\u3089\u30c8\u30fc\u30c8\u3092\u5916\u3057\u3066PPTL\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
    "Reprint": "\u518d\u5370\u5237",
+   "SKU not present in Database.": "SKU\u306f\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u306b\u5b58\u5728\u3057\u307e\u305b\u3093\u3002",
    "SKU not present in Database.Put in exception area": "\u5546\u54c1\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332\u3002\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
    "SKU not present in database. Put into IRT bin ": "\u5546\u54c1\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332\u3002\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
+   "SKU not present in database. Put into IRT bin.": "\u5546\u54c1\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332\u3002IRT\u30d3\u30f3\u306b\u5165\u308c\u308b\u3002",
+   "STN scan successful": "STN\u306e\u30b9\u30ad\u30e3\u30f3\u304c\u6210\u529f\u3057\u307e\u3057\u305f",
    "Scan & Confirm": "\u30b9\u30ad\u30e3\u30f3\uff06\u78ba\u8a8d",
    "Scan Bin Barcode": "\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan Box": "\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan Box or Items": "\u30dc\u30c3\u30af\u30b9\u304b\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan Box/Items from Slot": "\u30b9\u30ed\u30c3\u30c8\u306e\u5546\u54c1\u307e\u305f\u306f\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Scan Damaged Entity": "\u640d\u50b7\u3057\u305f\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b",
    "Scan Entity From Bin {0}": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan Excess Entity Quantity": "\u904e\u5270\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan Item From Bin": "\u5546\u54c1\u30b9\u30ad\u30e3\u30f3",
@@ -48018,17 +47974,28 @@ var japanese = {
    "Scan Slot Barcode": "\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan Slot to Confirm": "\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan Tote": "\u30c8\u30fc\u30c8\u30b9\u30ad\u30e3\u30f3",
+   "Scan Tote first and then scan rack": "\u6700\u521d\u306b\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u305d\u306e\u3042\u3068\u3001\u30e9\u30c3\u30af\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
    "Scan Tote or Stage PPS Bin": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b\u304b\u30d3\u30f3\u306b\u7f6e\u304f",
    "Scan Tote to Associate with Bin": "\u30c8\u30fc\u30c8\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7d10\u4ed8\u3051",
    "Scan Tote to associate with Bin": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7d10\u4ed8\u3051",
    "Scan a box first": "\u6700\u521d\u306b\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
    "Scan box barcode": "\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Scan damaged entity": "\u640d\u5bb3\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b",
+   "Scan excess item": "\u4f59\u5206\u306a\u9805\u76ee\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Scan excess item quantity": "\u4f59\u5270\u54c1\u76ee\u6570\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b",
    "Scan item / Stage PPS Bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
    "Scan item / Stage pps bin": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30d3\u30f3\u306b\u7f6e\u304f",
    "Scan items and place in bin {0}": "\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u30d3\u30f3 {0} \u306b\u7f6e\u304f",
    "Scan not expected": "\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059",
    "Scan not expected.": "\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059",
+   "Scan or Enter the tote barcode to reprint": "\u518d\u7248\u3059\u308b\u305f\u3081\u306b\u30b9\u30ad\u30e3\u30f3\u307e\u305f\u306f\u30c8\u30fc\u30c8\u30d0\u30fc\u30b3\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Scan or Enter {0} number": "\u30b9\u30ad\u30e3\u30f3\u307e\u305f\u306f{0}\u306e\u6570\u5b57\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Scan slot to confirm": "\u78ba\u8a8d\u3059\u308b\u305f\u3081\u306b\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Scan tote and place it in the slot": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30b9\u30ed\u30c3\u30c8\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
+   "Scan tote first and then scan item": "\u6700\u521d\u306b\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u3001\u305d\u306e\u3042\u3068\u3001\u9805\u76ee\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
+   "Scan tote which has excess item": "\u4f59\u5206\u306a\u9805\u76ee\u3092\u6301\u3063\u3066\u3044\u308b\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
    "Scan {0} Items": "\u5546\u54c1\u3092 {0} \u500b\u30b9\u30ad\u30e3\u30f3",
+   "Scan {0} Items and Place in Bin {0}": "\u9805\u76ee\u3092\u30b9\u30ad\u30e3\u30f3{0}\u3057\u3066\u30d3\u30f3{0}\u306b\u7f6e\u3044\u3066\u304f\u3060\u3055\u3044",
    "Scan {0} Items and Place in Bin {1}": "\u5546\u54c1\u3092 {0} \u500b\u30b9\u30ad\u30e3\u30f3\u3057\u30d3\u30f3 {1} \u306b\u7f6e\u304f",
    "Scan {0} items": "\u5546\u54c1\u3092 {0} \u500b\u30b9\u30ad\u30e3\u30f3",
    "Scanner ID": "\u30b9\u30ad\u30e3\u30caID",
@@ -48041,6 +48008,7 @@ var japanese = {
    "Selected": "\u9078\u629e\u6e08",
    "Skip Print": "\u5370\u5237\u30b9\u30ad\u30c3\u30d7",
    "Skip Printing": "\u5370\u5237\u30b9\u30ad\u30c3\u30d7",
+   "Slot barcode scan successful": "\u30b9\u30ed\u30c3\u30c8\u306e\u30d0\u30fc\u30b3\u30fc\u30c9\u30b9\u30ad\u30e3\u30f3\u304c\u6210\u529f\u3057\u307e\u3057\u305f",
    "Slot scan successful": "\u30b9\u30ed\u30c3\u30c8\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
    "Space Available For": "\u5834\u6240\u78ba\u4fdd\u53ef\u80fd",
    "Space Not Available": "\u5229\u7528\u53ef\u80fd\u306a\u5834\u6240\u304c\u3042\u308a\u307e\u305b\u3093",
@@ -48052,22 +48020,29 @@ var japanese = {
    "Status": "\u30b9\u30c6\u30fc\u30bf\u30b9",
    "Status To Reconcile": "\u8abf\u6574\u4e2d",
    "Submit": "\u78ba\u5b9a",
+   "Sum of good and exception quantity should be equal to {0}": "\u826f\u54c1\u3068\u4f8b\u5916\u54c1\u306e\u5408\u8a08\u306a\u3051\u308c\u3070\u306a\u3089\u306a\u3044\u6570\u306f {0}",
+   "Sum of good, missing and damaged should be equal to {0}": "\u6570\u91cf\u4e0d\u4e00\u81f4\u3002\u826f\u54c1\u3068\u7d1b\u5931\u54c1\u3068\u4e0d\u826f\u54c1\u306e\u5408\u8a08\u306f {0} ",
    "Sum of missing and good quantity should be equal to {0}": "\u5408\u8a08\u6570(\u826f\u54c1\u6570\uff0b\u7d1b\u5931\u6570)\u306f {0} \u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
    "Sum of missing, good and damaged should be equal to {0}": "\u6570\u91cf\u4e0d\u4e00\u81f4\u3002\u7d1b\u5931\u54c1\u3068\u826f\u54c1\u3068\u4e0d\u826f\u54c1\u306e\u5408\u8a08\u306f {0} ",
    "System Error. Scanned entity details not available at this time": "\u30b7\u30b9\u30c6\u30e0\u30a8\u30e9\u30fc\u3002\u73fe\u5728\u3001\u5546\u54c1\u8a73\u7d30\u306f\u53c2\u7167\u3067\u304d\u307e\u305b\u3093",
    "System is Idle": "\u5f85\u6a5f\u4e2d",
    "System not configured for totes": "\u30c8\u30fc\u30c8\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332",
    "TOTE": "\u30c8\u30fc\u30c8",
+   "Take Printout and Press PPTL": "\u30d7\u30ea\u30f3\u30c8\u30a2\u30a6\u30c8\u3092\u30d3\u30f3\u306b\u5165\u308c\u3066\u3001PPTL\u3092\u62bc\u3059",
+   "Take out the tote from bin {0} and scan entity": "\u30d3\u30f3{0}\u304b\u3089\u30c8\u30fc\u30c8\u3092\u53d6\u308a\u51fa\u3057\u3066\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
    "Take the Items out from the Slot": "\u30b9\u30ed\u30c3\u30c8\u304b\u3089\u5546\u54c1\u3092\u53d6\u308a\u51fa\u3057\u3066\u304f\u3060\u3055\u3044",
    "Testing configuration {0} and {1}": "\u8a2d\u5b9a\u30c6\u30b9\u30c8\u4e2d {0} \u3068 {1}",
    "This box belongs to some other SKU in the slot.Put it back.Scan next box.": "\u3053\u306e\u30dc\u30c3\u30af\u30b9\u306f\u4f7f\u7528\u4e2d\u3002\u30b9\u30ed\u30c3\u30c8\u306b\u623b\u3057\u3066\u4ed6\u306e\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
    "This box does not belong to this slot. Remove the box and put in exception area.": "\u3053\u306e\u30dc\u30c3\u30af\u30b9\u306f\u5225\u30b9\u30ed\u30c3\u30c8\u3067\u4f7f\u7528\u4e2d\u3002\u30dc\u30c3\u30af\u30b9\u3092\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u304f",
+   "Total ": "\u5408\u8a08",
    "Tote Details": "\u30c8\u30fc\u30c8\u8a73\u7d30",
    "Tote already associated with bin {0}": "\u30c8\u30fc\u30c8\u306f\u30d3\u30f3 {0} \u306b\u7d10\u4ed8\u3051\u6e08\u307f",
    "Tote already associated with ppsbin": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u30d3\u30f3\u306b\u7d10\u4ed8\u3051\u6e08\u307f",
+   "Tote already associated with slot.Scan empty slot": "\u30c8\u30fc\u30c8\u306f\u3059\u3067\u306b\u30b9\u30ed\u30c3\u30c8\u3068\u95a2\u9023\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u7a7a\u306e\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
    "Tote already closed. Scan some other tote": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u7d42\u4e86\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u4ed6\u306e\u30c8\u30fc\u30c8\u3092\u4f7f\u7528",
    "Tote already opened. Scan some other tote": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u4f7f\u308f\u308c\u3066\u3044\u307e\u3059\u3002\u4ed6\u306e\u30c8\u30fc\u30c8\u3092\u4f7f\u7528",
    "Tote already reserved": "\u30c8\u30fc\u30c8\u306f\u65e2\u306b\u4f7f\u7528\u4e2d",
+   "Tote already scanned": "\u30c8\u30fc\u30c8\u306f\u3059\u3067\u306b\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
    "Tote assigned successfully to bin": "\u30c8\u30fc\u30c8\u3068\u30d3\u30f3\u306e\u7d10\u3065\u3051\u5b8c\u4e86",
    "Tote assigned successfully to ppsbin {0}": "\u30d3\u30f3 {0} \u306b\u30c8\u30fc\u30c8\u3092\u7d10\u4ed8\u3051",
    "Tote associated with another bin": "\u30c8\u30fc\u30c8\u306f\u4ed6\u306e\u30d3\u30f3\u306b\u7d10\u3065\u3051\u6e08\u307f",
@@ -48082,21 +48057,30 @@ var japanese = {
    "Tote not closed.": "\u30c8\u30fc\u30c8\u306f\u30af\u30ed\u30fc\u30ba\u3057\u3066\u3044\u307e\u305b\u3093",
    "Tote not present in database.": "\u3053\u306e\u30c8\u30fc\u30c8\u306f\u30b7\u30b9\u30c6\u30e0\u672a\u767b\u9332\u3067\u3059",
    "Tote scan cancelled": "\u30c8\u30fc\u30c8\u306e\u30b9\u30ad\u30e3\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f",
+   "Tote scan cancelled.": "\u30c8\u30fc\u30c8\u30b9\u30ad\u30e3\u30f3\u304c\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f\u3002",
    "Tote scan expected": "\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Tote scan successful.": "\u30c8\u30fc\u30c8\u30b9\u30ad\u30e3\u30f3\u304c\u6210\u529f\u3057\u307e\u3057\u305f\u3002",
+   "Tote scanned is not idle": "\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u305f\u30c8\u30fc\u30c8\u306f\u30a2\u30a4\u30c9\u30eb\u72b6\u614b\u3067\u306f\u3042\u308a\u307e\u305b\u3093",
+   "Tote scanned is not opened": "\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u305f\u30c8\u30fc\u30c8\u306f\u958b\u653e\u3057\u3066\u3044\u307e\u305b\u3093",
    "Tote scanned.Expecting pptl scan.": "\u30c8\u30fc\u30c8\u306f\u30b9\u30ad\u30e3\u30f3\u6e08\u307f\u3067\u3059\u3002\u30d3\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",
    "Totes are anyway not required.Please proceed further": "\u30c8\u30fc\u30c8\u306e\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3002\u4f5c\u696d\u3092\u7d99\u7d9a",
    "Totes are not required": "\u30c8\u30fc\u30c8\u306f\u5fc5\u8981\u3042\u308a\u307e\u305b\u3093",
    "Totes are not required.Please don't scan tote barcode": "\u30c8\u30fc\u30c8\u306e\u30b9\u30ad\u30e3\u30f3\u306f\u4e0d\u8981\u3067\u3059",
+   "Undock Roll Cage if no items remaining": "\u9805\u76ee\u304c\u6b8b\u3063\u3066\u3044\u306a\u3044\u5834\u5408\u306f\u30ed\u30fc\u30eb\u30b1\u30fc\u30b8\u3092\u30a2\u30f3\u30c9\u30c3\u30af\u3057\u3066\u304f\u3060\u3055\u3044",
    "Unexpected Item": "\u5546\u54c1\u9055\u3044",
+   "Unexpected entity scanned": "\u610f\u5916\u306e\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f",
    "Unhandled event ocurred": "\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u307e\u3057\u305f",
-   "Unscannable Quantity": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u6570",
+   "Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef",
+   "Unscannable Quantity": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u306e\u6570",
    "Unselected": "\u672a\u9078\u629e",
    "Update": "\u66f4\u65b0",
    "User Name": "\u30e6\u30fc\u30b6\u30fc\u540d",
    "Utility": "\u74b0\u5883\u8a2d\u5b9a",
+   "Validate and Confirm": "\u6570\u3092\u30c1\u30a7\u30c3\u30af\u3057\u3066\u78ba\u8a8d\u3059\u308b",
    "View More": "\u8a73\u7d30\u78ba\u8a8d",
    "Wait for MSU": "MSU\u79fb\u52d5\u4e2d",
    "Waiting for Bins to be Cleared at Pick Back": "\u30d3\u30f3\u51fa\u3057\u4f5c\u696d\u3092\u884c\u3063\u3066\u304f\u3060\u3055\u3044",
+   "Waiting for Bins to be Cleared at Pick Front": "\u30d4\u30c3\u30af\u30fb\u30d5\u30ed\u30f3\u30c8\u3067\u30d3\u30f3\u304c\u30af\u30ea\u30a2\u3055\u308c\u308b\u306e\u3092\u5f85\u3064",
    "Waiting for MSU": "MSU\u79fb\u52d5\u4e2d",
    "Waiting for MSU scan. Please scan entity later.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Waiting for MSU. Please wait and scan later": "MSU\u79fb\u52d5\u4e2d\u3002\u3057\u3070\u3089\u304f\u5f85\u3063\u3066\u30b9\u30ad\u30e3\u30f3",
@@ -48108,23 +48092,29 @@ var japanese = {
    "Wrong PPTL pressed. Please press correct PPTL": "\u30d3\u30f3\u30dc\u30bf\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Wrong PPTL pressed. Please try another": "\u30d3\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u30d3\u30f3\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
    "Wrong Ppsbin button pressed.Please press those buttons having color blue": "\u30d3\u30f3\u9055\u3044\u3002\u9752\u8272\u306e\u30d3\u30f3\u306e\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Wrong Scan. Entity not present in Database": "\u9593\u9055\u3063\u305f\u30b9\u30ad\u30e3\u30f3\u3002\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u306b\u5b58\u5728\u3057\u306a\u3044\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3",
+   "Wrong Scan. Unrecognized barcode.": "\u9593\u9055\u3063\u305f\u30b9\u30ad\u30e3\u30f3\u3002\u7121\u8a8d\u8b58\u3055\u308c\u305f\u30d0\u30fc\u30b3\u30fc\u30c9\u3002",
+   "Wrong Undock": "\u9593\u9055\u3063\u305f\u30a2\u30f3\u30c9\u30c3\u30af",
    "Wrong barcode scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059",
    "Wrong bin chosen.Try selecting another bin": "\u30d3\u30f3\u9055\u3044\u3002\u4ed6\u306e\u30d3\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044",
    "Wrong box scanned. Please try again": "\u30dc\u30c3\u30af\u30b9\u9055\u3044\u3002\u6b63\u3057\u3044\u30dc\u30c3\u30af\u30b9\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong enitity scanned. Expecting scan from bin {0}": "\u8aa4\u3063\u305f\u5546\u54c1\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f\u3002\u30d3\u30f3 {0} \u306e\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Wrong entity scan.Please scan the correct entity": "\u9593\u9055\u3063\u305f\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u30b9\u30ad\u30e3\u30f3\u3002\u6b63\u3057\u3044\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
    "Wrong entity scanned": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong entity scanned. Please scan Container/Item.": "\u30b9\u30ad\u30e3\u30f3\u9055\u3044\u3002\u30b3\u30f3\u30c6\u30ca\u304b\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong entity scanned. Please scan tote": "\u30b9\u30ad\u30e3\u30f3\u9055\u3044\u3002\u30c8\u30fc\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong item quantity update": "\u6570\u91cf\u9055\u3044",
    "Wrong item scanned. Please scan correct item": "\u5546\u54c1\u304c\u9055\u3044\u307e\u3059\u3002\u6b63\u3057\u3044\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
+   "Wrong ppsbin button pressed": "\u9593\u9055\u3063\u305fppsbin\u30dc\u30bf\u30f3\u304c\u62bc\u3055\u308c\u307e\u3057\u305f",
    "Wrong scan! Entity scan expected but slot barcode scanned.": "\u30b9\u30ed\u30c3\u30c8\u3067\u306f\u306a\u304f\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong scan.Expecting container scan.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u30b3\u30f3\u30c6\u30ca\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong scan.Expecting item scan.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong scan.Expecting location scan.": "\u30b9\u30ad\u30e3\u30f3\u304c\u8aa4\u3063\u3066\u3044\u307e\u3059\u3002\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong slot location scanned. Please try again": "\u30b9\u30ed\u30c3\u30c8\u9055\u3044\u3002\u6b63\u3057\u3044\u30b9\u30ed\u30c3\u30c8\u3092\u30b9\u30ad\u30e3\u30f3",
    "Wrong slot scanned": "\u9055\u3046\u30b9\u30ed\u30c3\u30c8\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u3066\u3044\u307e\u3059",
+   "Yes": "\u306f\u3044",
    "You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "\u30ad\u30fc\u30d1\u30c3\u30c9\u3067\u306e\u6570\u5b57\u5165\u529b\u304c\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3",
-   "Please enter a quantity greater than 0": "0 \u306f\u5165\u529b\u4e0d\u53ef",
+   "You cannot enter 0": "0 \u306f\u5165\u529b\u4e0d\u53ef",
    "You cannot enter value more than 9999": "9999 \u4ee5\u4e0a\u306f\u5165\u529b\u4e0d\u53ef",
    "box": "\u30dc\u30c3\u30af\u30b9",
    "item": "\u5546\u54c1",
@@ -48134,6 +48124,7 @@ var japanese = {
    "user Name": "\u30e6\u30fc\u30b6\u30fc\u540d",
    "{0} excess entities found in tote. Please put entities in exception area and confirm": "\u30c8\u30fc\u30c8\u306b\u6570\u91cf\u30aa\u30fc\u30d0\u30fc\u5546\u54c1\u304c {0} \u500b\u3042\u308a\u307e\u3059\u3002\u4f8b\u5916\u30a8\u30ea\u30a2\u306b\u7f6e\u3044\u3066\u78ba\u8a8d",
    "{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",
+   "{0} number :": "{0}\u756a\u53f7: :",
    "{0} oversized entities recorded.WMS notified": "\u30b5\u30a4\u30ba\u30aa\u30fc\u30d0\u30fc\u5546\u54c1 {0} \u500b",
    "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b"
 }
@@ -48152,7 +48143,6 @@ var serverMessages = {
     "PtB.H.009" : "Please Select The Bin With Excess Entity",
     "PtB.H.010" : "Scan Excess Entity Quantity",
     "PtB.H.011" : "Please put entity in exception area and confirm",
-    "PtB.H.015" : "Please put entities in IRT and Scan IRT Bin",
     "PtB.E.001" : "Tote already opened. Scan some other tote",
     "PtB.E.002" : "Tote already closed. Scan some other tote",
     "PtB.E.003" : "Close current tote first",
@@ -48174,11 +48164,6 @@ var serverMessages = {
     "PtB.E.019" : "Tote not present in database.",
     "PtB.E.020" : "Tote matched .",
     "PtB.E.021" : "Entity already scanned.Confirm exception", 
-    "PtB.E.023" : "Scan not Allowed.PPS close or force close requested",
-    "PtB.E.024" : "Length of {0} should not be greater than {1}",
-    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.", 
-    "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
-    "PtF.E.021" : "Bin Already Scanned",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",
     "PtF.H.003" : "Wait for MSU",
@@ -48194,11 +48179,8 @@ var serverMessages = {
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
     "PtF.H.017" : "Wrong Undock",
-    "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
-    "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
-    "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
-    "PtF.H.021" : "Scan IRT Bin",
-    "PtF.E.022" : "Entities cannot be accommodated!",
+    "PtF.H.018" : "Remove Tote from bin & Press PPTL to confirm no Items Remaining",
+    "PtF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -48207,6 +48189,13 @@ var serverMessages = {
     "PkF.H.006" : "Scan {0} Items and Place in Bin {1}",
     "PkF.H.007" : "Press PPTL to confirm",
     "PkF.H.008" : "Waiting for Bins to be Cleared at Pick Back",
+    "PkF.H.009":"Processing Next Pick from Rack ",
+    "PkF.H.010":"Scan a packing box and keep in bin {0}",
+    "PkF.H.011":"Place box in MSU slot and confirm",
+    "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
+    "PkF.H.013":"Scan Damaged Entity",
+    "PkF.H.014":"Waiting for Bins to be Cleared at Pick Front",
+    "PkF.H.015":"Enter Quantity",
     "PkB.H.001" : "Scan Tote to Associate with Bin",
     "PkB.H.002" : "Press PPTL or Scan a Tote",
     "PkB.H.003" : "Press PPTL to Remove Entities",
@@ -48234,7 +48223,6 @@ var serverMessages = {
     "PtB.I.016" : "Invalid entity in tote recorded",
     "PtB.I.017" : "PPS mode change requested:scan not allowed",
     "PtB.I.018" : "PPS mode change requested:auto staging all bins",
-    "PtB.I.020" : "{0} Physically damaged entity recorded.WMS notified",
     "PtB.W.001" : "Box with same serial number already exists in the warehouse",
     "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
     "PtB.W.003" : "No bins available to stage",
@@ -48245,6 +48233,7 @@ var serverMessages = {
     "PkF.E.011" : "Data capture failed at item {0}",
     "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PkF.E.014" : "Press PPTL for bin {0} to confirm",
+    "PkF.E.015" : "Wrong entity scan.Please scan the correct entity",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
@@ -48287,8 +48276,9 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
-    "Common.010": "Wrong Scan. Unrecognized barcode.",
-    "Common.011": "Wrong Scan. IRT bin scan expected",
+    "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.009": "SKU not present in Database.",
+    "Common.010": "Wrong Scan. Entity not present in Database",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
@@ -48394,6 +48384,13 @@ var serverMessages = {
     "PtF.E.012" : "Scan tote first and then scan item",
     "PtF.E.013" : "Tote already scanned",
     "PtF.E.014" : "Invalid tote scanned",
+    "PtF.E.015" : "Extra entity scan found.",
+    "PtF.E.016" : "Container Already Scanned.",
+    "PtF.E.017" : "Invalid Entity Scanned.",
+    "PtF.E.018" : "Quantity of Physically damaged entities scanned is less.", 
+    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.", 
+    "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
+    "PtF.E.021" : "Bin Already Scanned",
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
@@ -48401,6 +48398,9 @@ var serverMessages = {
     "PtF.I.005" : "Space unavailable recorded.",
     "PtF.I.006" : "Cancel scan successful",
     "PtF.I.007" : "Exception entry successful",    
+    "PtF.I.008" : "Physically Damaged entity reported.",
+    "PtF.I.009" : "Entity entry successful",
+    "PtF.I.010" : "Bin scan successful",
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
@@ -48437,13 +48437,10 @@ var serverMessages = {
     "PpB.E.008" : "Wrong barcode scanned",
     "PpB001" : "Enter excess item quantity"  ,
     "PkF.E.014":"Packing box scan failed",
+    "PkF.E.017":"Extra entity scan found.",
+    "PkF.E.018":"Physically Damaged Reported should equal Scanned Quantity",
     "PkF.I.008":"Packing box closed",
     "PkF.I.009":"Packing box discarded",
-    "PkF.H.011":"Place box in MSU slot and confirm",
-    "PkF.H.010":"Scan a packing box and keep in bin {0}",
-    "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
-    "PkF.H.015":"Enter Quantity",
-    "PkF.H.016":"Take Printout and Press PPTL",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
@@ -48453,9 +48450,7 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
-  
-    
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"    
 };
 
 
@@ -48472,6 +48467,7 @@ var spanish = {
 	"Add Scanner": "Agregar el Esc\u00e1ner",
 	"After scannning tote barcode, please scan pptl barcode": "Despu\u00e9s de escanear el c\u00f3digo de barras de la bolsa, por favor, escanee el c\u00f3digo de barras pptl",
 	"Are You Sure You Want to Close Tote?": "\u00bfEst\u00e1 seguro que desea cerrar la Bolsa?",
+	"Are you sure you want to cancel the exception?": "\u00bfSeguro que desea cancelar la excepci\u00f3n?",
 	"Are you sure you want to close Tote": "Est\u00e1 seguro que desea cerrar la Bolsa",
 	"Are you sure you want to exit from {0} invoice and stage all bins": "Est\u00e1 seguro de que quiere salir de {0} la factura y montar todos los contenedore",
 	"Are you sure you want to exit from {0} {1} and stage all bins": "Est\u00e1 seguro de que quiere salir de {0} {1} y montar todos los contenedore",
@@ -48536,6 +48532,7 @@ var spanish = {
 	"English": "Ingl\u00e9s",
 	"Enter Good Quantity to be Put into Slot": "Entre una Cantidad Correcta Para Ubicar en la Vacante",
 	"Enter Password": "Escriba la Contrase\u00f1a",
+	"Enter Quantity": "Introducir cantidad",
 	"Enter Quantity of Excess Entities": "Especificarla Cantidad de Art\u00edculos Sobrantes",
 	"Enter Scanner Id": "Introducir la Identificaci\u00f3n del Esc\u00e1ner",
 	"Enter Unscannable Entity Quantity": "Especifique la Cantidad de Art\u00edculos no Escaneables",
@@ -48589,6 +48586,7 @@ var spanish = {
 	"Invalid item in tote recorded.": "Art\u00edculo no v\u00e1lido registrado en la bolsa.",
 	"Invalid tote scanned": "Un bolso no v\u00e1lido ha sido escanead",
 	"Invoice number: {0}": "N\u00famero de la factura : {0",
+	"Issues with entity": "Problemas con la entidad",
 	"Item Missing/Bad Barcode": "Art\u00edculo Faltante/C\u00f3digo de Barra Equivocado",
 	"Item Missing/Unscannable": "Art\u00edculo faltante/No escaneable",
 	"Item Not Expected in Tote": "El Art\u00edculo no se Espera en la Bolsa",
@@ -48658,7 +48656,7 @@ var spanish = {
 	"Place extra entity in Exception area.": "Ubique los art\u00edculos extra en la zona de Excepci\u00f3n.",
 	"Place the tote back in bin {0} and press pptl": "Coloque el bolso  nuevamente en el contenedor  {0} y pulse ppt",
 	"Place {0} boxes from bin {2}": "Coloque {0} cajones del contenedor {2}",
-	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2",
+	"Place {0} boxes with {1} items from bin {2}": "Coloque {0} cajones con {1} art\u00edculos del contenedor {2}",
 	"Please Scan tote which has excess item": "Por favor escanee el bolso que haya sobrepasado el l\u00edmite de art\u00edculo",
 	"Please Select The Bin With Excess Entity": "Por favor, Seleccione el Recipiente con Art\u00edculos Sobrantes",
 	"Please complete pickback for pending bin and then proceed": "Por favor complete pickback para el recipiente pendiente y luego proceda",
@@ -48818,6 +48816,7 @@ var spanish = {
 	"Update": "Actualizaci\u00f3n",
 	"User Name": "Nombre de usuario",
 	"Utility": "Utilidad",
+	"Validate and Confirm": "Validar y confirmar",
 	"View More": "Ver M\u00e1s",
 	"Wait for MSU": "Espere por MSU",
 	"Waiting for Bins to be Cleared at Pick Back": "A la espera de que los Recipientes sean Despejados para Elegir de Nuevo",
@@ -48849,6 +48848,7 @@ var spanish = {
 	"Wrong scan.Expecting location scan.": "Escaneo equivocado. Esperando el el escaneo del lugar.",
 	"Wrong slot location scanned. Please try again": "Ubicaci\u00f3n de vacante mal escaneada. Por favor, int\u00e9ntelo de nuevo",
 	"Wrong slot scanned": "Se ha escaneado la vacante equivocada",
+	"Yes": "S\u00ed",
 	"You are not allowed to keyed in the quantity from the numpad. Force Scan is required.": "No se le permite ingresar la cantidad desde el teclado num\u00e9rico. El Escaneo Forzado es necesario.",
 	"You cannot enter 0": "No puede entrar 0",
 	"You cannot enter value more than 9999": "Usted no puede entrar un valor mayor de 9999",
@@ -50243,8 +50243,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
-                else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
-                    _NavData = navConfig.putBack[2];
                 else
                     _NavData = navConfig.putBack[1];
                 break;
@@ -50259,8 +50257,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.putFront[3];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
                     _NavData = navConfig.putFront[7];
-                else if (_seatData.screen_id === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
-                    _NavData = navConfig.putFront[8];
                 else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
                     _NavData = navConfig.putFront[4];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
@@ -50459,14 +50455,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getBoxDetails: function () {
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
-    },
-    getIRTScanStatus: function () {
-        if (_seatData.hasOwnProperty('irt_scan_enabled'))
-            return _seatData.irt_scan_enabled;
-    },
-    getExceptionType:function () {
-        if (_seatData.hasOwnProperty('exception_type'))
-            return _seatData.exception_type;
     },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
@@ -50689,9 +50677,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.rack_details;
         }
     },
-     getDirectionDetails: function () {
-            return _seatData.special_handling;
-    },
 
     getCurrentSelectedBin: function () {
         var binData = {};
@@ -50911,8 +50896,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+             d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+           d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         });
         return data;
@@ -51572,12 +51557,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 });
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total ") +":"+ total_damaged + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total "), "header", false, "small", false, true, true, false));
         }
         return data;
     },
@@ -51586,7 +51571,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"] = [];
         data["footer"] = [];
         data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol(_("Excess Quantity"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Excess quantity"), "header", false, "small", false, true, true, false));
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
@@ -51604,12 +51589,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                 });
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_excess + _(" items"), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total ") +":"+ total_excess + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
             ]);
-            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total "), "header", false, "small", false, true, true, false));
         }
         return data;
     },
@@ -51926,15 +51911,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["InvoiceType"] = this.getInvoiceType();
                 data["ToteId"] = this.getToteId();
                 break;
-             case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
-                data["PutBackNavData"] = this.getNavData();
-                data["PutBackServerNavData"] = this.getServerNavData();
-                data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackBinData"] = this.getBinData();
-                data["PutBackScreenId"] = this.getScreenId();
-                data["PutBackNotification"] = this.getNotificationData();
-             break;       
-
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
                 data["PutBackScreenId"] = this.getScreenId();
                 data["PutBackNavData"] = this.getNavData();
@@ -51963,7 +51939,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["HeaderMessg"] = this.getHeaderMessg();
                 data["PutBackScreenId"] = this.getScreenId();
                 data["InvoiceType"] = this.getInvoiceType();
-                data["PutBackNotification"] = this.getNotificationData();
                 break;
             case appConstants.PUT_BACK_TOTE_CLOSE:
                 data["PutBackScreenId"] = this.getScreenId();
@@ -52009,16 +51984,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutBackExceptionData"] = this.getExceptionData();
                 data["PutBackNotification"] = this.getNotificationData();
                 break;
-
-            case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
-                data["PutBackScreenId"] = this.getScreenId();
-                data["PutBackNavData"] = this.getNavData();
-                data["PutBackServerNavData"] = this.getServerNavData();
-                data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = this.getNotificationData();
-                data["GetIRTScanStatus"] = this.getIRTScanStatus();
-                data["GetExceptionType"] = this.getExceptionType();
-            break;    
             case appConstants.PRE_PUT_STAGE:
                 data["PrePutBinData"] = this.getBinData();
                 data["PrePutScreenId"] = this.getScreenId();
@@ -52099,7 +52064,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
-                
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
                 data["BinMapDetails"] = this._getBinMapDetails();
@@ -52111,7 +52075,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
-                data["PutFrontPutDirection"] = this.getDirectionDetails();
                 break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -52149,7 +52112,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 break;
             case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
-            case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
                 data["PutFrontNavData"] = this.getNavData();
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -52204,7 +52166,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontServerNavData"] = this.getServerNavData();
                 data["PutFrontExceptionData"] = this.getExceptionData();
                 data["PutFrontNotification"] = this.getNotificationData();
-                data["GetIRTScanStatus"] = this.getIRTScanStatus();
 
                 break;
             case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
@@ -52215,8 +52176,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SplitScreenFlag"] = this._getSplitScreenFlag();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
-                data["PutFrontNotification"] = this.getNotificationData();
-                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutFrontScreenId"] = this.getScreenId();
@@ -52301,7 +52260,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["BinMapDetails"] = this._getBinMapDetails();
-                data["PickFrontPickDirection"] = this.getDirectionDetails();
                 break;
             case appConstants.PICK_FRONT_PACKING_BOX:
                 data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
@@ -52411,8 +52369,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
                 data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
                 data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-                data["GetIRTScanStatus"] = this.getIRTScanStatus();
-
                 break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 data["PutBackKQDetails"] = this.getScanDetails();
@@ -52435,7 +52391,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontDamagedItems"] = this._getDamagedItemsData();
                 data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
-                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
                 data["PickFrontScreenId"] = this.getScreenId();
@@ -52583,6 +52538,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditPpsMode"] = this.getPpsMode();
                 data["AuditSeatType"] = this.getSeatType();
+                data["AuditShowModal"] = this.getModalStatus();
 
                 //Peripheral management for pre-put
                 data["PrePutScreenId"] = this.getScreenId();
@@ -53036,8 +52992,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    
     console.log(data);
+
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

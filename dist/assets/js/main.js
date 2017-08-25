@@ -46989,8 +46989,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+WEBSOCKET_IP : "wss://192.168.8.83/wss",
+	INTERFACE_IP : "https://192.168.8.83"
 };
 module.exports = configConstants;
 
@@ -48372,6 +48372,9 @@ var serverMessages = {
     "PkF.E.011" : "Data capture failed at item {0}",
     "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PkF.E.014" : "Press PPTL for bin {0} to confirm",
+    "PkF.E.015" : "Wrong entity scan.Please scan the correct entity",
+    "PkF.E.017" :"Extra entity scan found.",
+    "PkF.E.018" :"Physically Damaged Reported should equal Scanned Quantity",
     "PkF.D.010" :"Scan box barcode",
     "PkB.A.001" : "Scan Tote to associate with Bin",
     "PkB.A.002" : "Press PpsBin Button Or Scan a Tote",
@@ -48414,6 +48417,7 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
+    "Common.009": "SKU not present in Database.",
     "Common.010": "Wrong Scan. Unrecognized barcode.",
     "Common.011": "Wrong Scan. IRT bin scan expected",
     "AdF.I.003" : "Item scan successful",
@@ -48521,6 +48525,13 @@ var serverMessages = {
     "PtF.E.012" : "Scan tote first and then scan item",
     "PtF.E.013" : "Tote already scanned",
     "PtF.E.014" : "Invalid tote scanned",
+    "PtF.E.015" : "Extra entity scan found.",
+    "PtF.E.016" : "Container Already Scanned.",
+    "PtF.E.017" : "Invalid Entity Scanned.",
+    "PtF.E.018" : "Quantity of Physically damaged entities scanned is less.",
+    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.",
+    "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
+    "PtF.E.021" : "Bin Already Scanned",
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
@@ -48528,6 +48539,9 @@ var serverMessages = {
     "PtF.I.005" : "Space unavailable recorded.",
     "PtF.I.006" : "Cancel scan successful",
     "PtF.I.007" : "Exception entry successful",    
+    "PtF.I.008" : "Physically Damaged entity reported.",
+    "PtF.I.009" : "Entity entry successful",
+    "PtF.I.010" : "Bin scan successful",
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",

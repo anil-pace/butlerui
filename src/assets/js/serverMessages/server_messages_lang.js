@@ -477,7 +477,10 @@ function server_messages_list() {
     _("Extra entity scan found.");
     _("Container Already Scanned.");
     _("Invalid Entity Scanned.");
-    _("Quantity of Physically damaged entities scanned is less.")   
-    _("Error")
+    _("Quantity of Physically damaged entities scanned is less.")   ;
+    _("Error");
+    _("Waiting for Bins to be Cleared at Pick Front");
+    _("Processing Next Pick from Rack ");
+    _("Scan Damaged Entity");
 }
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 17:14+0530\n"
+"POT-Creation-Date: 2017-08-28 17:55+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1958,26 +1958,31 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:489
 #: src/assets/js/serverMessages/server_messages_lang.js:498
+#: src/assets/js/serverMessages/server_messages_lang.js:502
 msgid "NEST MAX"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:490
 #: src/assets/js/serverMessages/server_messages_lang.js:499
+#: src/assets/js/serverMessages/server_messages_lang.js:503
 msgid "STACK MAX"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:491
 #: src/assets/js/serverMessages/server_messages_lang.js:500
+#: src/assets/js/serverMessages/server_messages_lang.js:504
 msgid "DO NOT STACK"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:492
 #: src/assets/js/serverMessages/server_messages_lang.js:501
+#: src/assets/js/serverMessages/server_messages_lang.js:505
 msgid "FRAGILE"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:493
 #: src/assets/js/serverMessages/server_messages_lang.js:502
+#: src/assets/js/serverMessages/server_messages_lang.js:506
 msgid "Length of {0} should not be greater than {1}"
 msgstr ""
 
@@ -2017,4 +2022,20 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:469
 msgid "Please put entities with issues, in exception area"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:498
+msgid "Waiting for Bins to be Cleared at Pick Front"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:499
+msgid "Processing Next Pick from Rack "
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:500
+msgid "Scan Damaged Entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:501
+msgid "Warehouse Full"
 msgstr ""

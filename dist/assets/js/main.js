@@ -38624,6 +38624,17 @@ var Button1 = React.createClass({displayName: "Button1",
         switch (module) {
 
             case appConstants.ERROR_NOTIFICATION:
+                var notification_data=mainstore.getNotificationData()
+                var data = {
+                    "event_name": "remove_gui_alert",
+                    "event_data": {
+                            "ui_event":mainstore.getScreenEvent()
+                    }
+                }
+                if(notification_data && notification_data.type!== appConstants.CLIENT_NOTIFICATION){
+                    ActionCreators.postDataToInterface(data);
+                }
+
                 ActionCreators.clearNotification()
                 $('.modal.notification-error').data('bs.modal').options.backdrop=true
                 $(".modal-backdrop").remove()
@@ -46846,7 +46857,8 @@ var appConstants = {
 		"white":"#FFFFFF",
 	},
 	ERROR_NOTIFICATION:"ERROR_NOTIFICATION",
-	HIDE_ERROR_NOTIFICATION:"HIDE_ERROR_NOTIFICATION"
+	HIDE_ERROR_NOTIFICATION:"HIDE_ERROR_NOTIFICATION",
+    CLIENT_NOTIFICATION:"client"
 };
 
 module.exports = appConstants;
@@ -50165,6 +50177,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         });
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
+            _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION
             if (flag == true) {
                 _enableButton = false;
             }
@@ -50173,13 +50186,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
             _seatData.notification_list[0].details[0] = bin_id;
             _seatData.notification_list[0].level = "info";
+            _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION;
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
         } else {
             var notification_list = {
                 "code": (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002,
                 "level": "info",
                 "details": [bin_id],
-                "description": ""
+                "description": "",
+                type: appConstants.CLIENT_NOTIFICATION
             }
             _seatData.notification_list[0] = notification_list;
         }
@@ -50197,6 +50212,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var currentState = this.getEnableButton();
         this.setEnableButtonIntialState();
         return currentState;
+    },
+
+    getScreenEvent:function(){
+        return _seatData.event
     },
 
     getStageActiveStatus: function () {
@@ -51400,6 +51419,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
+                    data["type"] =  appConstants.CLIENT_NOTIFICATION;
                     data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
 
@@ -51407,6 +51427,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
                     _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
+                    _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
                 }
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -51423,6 +51444,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_017;
                     data["level"] = "error";
+                    data["type"] =  appConstants.CLIENT_NOTIFICATION;
                     data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
 
@@ -51430,6 +51452,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_017;
                     _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
+                    _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
                 }
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -51442,6 +51465,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
+                    data["type"] =  appConstants.CLIENT_NOTIFICATION;
                     data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
 
@@ -51449,6 +51473,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
                     _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
+                    _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
                 }
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -51673,12 +51698,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 data["level"] = "error";
+                data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [details];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
+                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
             if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
                 _putFrontExceptionScreen = "good";
@@ -51718,12 +51745,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
+                data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [_allowedQuantity];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
                 _seatData.notification_list[0].details = [_allowedQuantity];
                 _seatData.notification_list[0].level = "error";
+                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
             _goodQuantity = 0;
 
@@ -51746,12 +51775,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
+                data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [_allowedQuantity];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
                 _seatData.notification_list[0].details = [_allowedQuantity];
                 _seatData.notification_list[0].level = "error";
+                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
             _damagedQuantity = 0;
 
@@ -51854,12 +51885,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.notification_list.length > 0) {
             _seatData.notification_list[0]["code"] = data.code;
             _seatData.notification_list[0].level = data.level;
+            _seatData.notification_list[0].type= appConstants.CLIENT_NOTIFICATION
         } else {
             var notification_list = {
                 "code": data.code,
                 "level": data.level,
                 "details": [],
-                "description": ""
+                "description": "",
+                type: appConstants.CLIENT_NOTIFICATION
             }
             _seatData.notification_list[0] = notification_list;
         }

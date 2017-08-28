@@ -33,11 +33,11 @@ fs.readdir(LANG_DIR,(err, files)=>{
 					}
 				}
 				let fsText = '[\n'+aMissedTranslations.join (',\n')+'\n]';
-				console.log('Numbe of missing translations in '+files[x]+ aMissedTranslations.length);
+				console.log('Number of missing translations in '+files[x]+":"+ aMissedTranslations.length);
 				fs.writeFile(MISSING_TRANS_DIR+'missing-'+files[x],fsText, (err) => {
 					if (err) throw err;
 					console.log('Missing Translations Saved for:'+files[x]+
-						'in file: '+MISSING_TRANS_DIR+'missing-'+files[x] );
+						' in file: '+MISSING_TRANS_DIR+'missing-'+files[x] );
 				});
 			});
 		}

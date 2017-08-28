@@ -482,5 +482,6 @@ function server_messages_list() {
     _("Waiting for Bins to be Cleared at Pick Front");
     _("Processing Next Pick from Rack ");
     _("Scan Damaged Entity");
+    _("Warehouse Full");
 }
 

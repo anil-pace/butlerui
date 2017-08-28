@@ -36,7 +36,6 @@ for srcfile in args:
 			continue
 			
 		xlate_map[entry.msgid] = entry.msgstr;
-		print("converting: %s" % (entry.msgid))		
 	dest = open(destfile, "w")
 	
 	dest.write(json.dumps(xlate_map, sort_keys = True));

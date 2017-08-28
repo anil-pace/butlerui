@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 18:32+0530\n"
+"POT-Creation-Date: 2017-08-28 15:08+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2256,4 +2256,8 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:484
 msgid "Scan Damaged Entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:485
+msgid "Warehouse Full"
 msgstr ""

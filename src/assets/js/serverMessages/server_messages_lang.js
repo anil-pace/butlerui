@@ -495,6 +495,10 @@ function server_messages_list() {
     _("Invalid Entity Scanned.");
     _("Quantity of Physically damaged entities scanned is less.");
     _("Error");
+    _("Waiting for Bins to be Cleared at Pick Front");
+    _("Processing Next Pick from Rack ");
+    _("Scan Damaged Entity");
+    _("Warehouse Full");
     _("NEST MAX");
     _("STACK MAX");
     _("DO NOT STACK");

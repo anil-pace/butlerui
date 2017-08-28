@@ -51,8 +51,21 @@ var PutFront = React.createClass({
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
       this._notification = <Notification notification={this.state.PutFrontNotification} navMessagesJson={this.props.navMessagesJson} />
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
+
   },
 
   getExceptionComponent:function(){

@@ -64,8 +64,20 @@ var PickFront = React.createClass({
         if (this.state.PickFrontNotification != undefined)
             this._notification = <Notification notification={this.state.PickFrontNotification}
                                                navMessagesJson={this.props.navMessagesJson}/>
-        else
+        else{
+            if($(".modal.notification-error").is(":visible")){
+                setTimeout((function(){
+                    $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                    $(".modal-backdrop").remove()
+                    $(".modal.notification-error").modal("hide");
+                    $(".modal").removeClass("notification-error")
+
+                }),0)
+
+                return null
+            }
             this._notification = "";
+        }
     },
     showModal: function (data, index, manual) {
         if (manual == true)

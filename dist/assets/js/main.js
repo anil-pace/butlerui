@@ -48595,8 +48595,6 @@ var serverMessages = {
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
     "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
-  
-    
 };
 
 

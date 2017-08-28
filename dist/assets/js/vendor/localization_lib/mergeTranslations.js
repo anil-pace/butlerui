@@ -21,7 +21,6 @@ fs.readdir(LANG_DIR,(err, files)=>{
 				// so comparing the others with the base and finding the difference
 				let objTranslations = JSON.parse(data);
 				for (let engMsg in enTranslationMessages){
-					console.log('Comparing the translations now:'+engMsg.key);
 					let bMissingTranslation = true;
 					for (let obj in  objTranslations){	
 						if (obj===engMsg){

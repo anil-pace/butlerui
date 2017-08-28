@@ -30,9 +30,20 @@ var Button1 = React.createClass({
 
 switch (module) {
     case appConstants.ERROR_NOTIFICATION:
-        $('.modal.notification-error').data('bs.modal').options.backdrop=true
+        var notification_data=mainstore.getNotificationData()
+        var data = {
+            "event_name": "remove_gui_alert",
+            "event_data": {
+                "ui_event":mainstore.getScreenEvent()
+            }
+        }
+        if(notification_data && notification_data.type!== appConstants.CLIENT_NOTIFICATION){
+            ActionCreators.postDataToInterface(data);
+        }
+
         ActionCreators.clearNotification()
-         $(".modal-backdrop").remove()
+        $('.modal.notification-error').data('bs.modal').options.backdrop=true
+        $(".modal-backdrop").remove()
         $(".modal.notification-error").modal("hide");
         $(".modal").removeClass("notification-error")
         break;

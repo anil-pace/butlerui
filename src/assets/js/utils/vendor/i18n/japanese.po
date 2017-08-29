@@ -140,7 +140,7 @@ msgstr "誤ったトートがスキャンされました"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:33
 msgid "Please press PPTL button which does not have any totes associated"
-msgstr "トートに紐づけされていないビンのボタンを押す"
+msgstr "トートに紐づけされていないPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:34
 msgid "Tote assigned successfully to ppsbin {0}"
@@ -176,7 +176,7 @@ msgstr "ビンのスキャンはできません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:42
 msgid "Please press those buttons having color blink_blue"
-msgstr "青色点滅のビンボタンを押す"
+msgstr "青色点滅のPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:43
 msgid "Unhandled event ocurred"
@@ -244,7 +244,7 @@ msgstr "スキャン違い。トートをスキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:59
 msgid "No entities added yet. Scan entities and then press PPTL"
-msgstr "商品が追加されていません。商品スキャンしビンボタンを押す"
+msgstr "商品が追加されていません。商品スキャンしPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:60
 msgid "Wrong entity scanned. Please scan Container/Item."
@@ -256,7 +256,7 @@ msgstr "スキャンをキャンセルできません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:62
 msgid "Entity scan not expected. Waiting for PPTL press"
-msgstr "スキャン違い。ビンボタンを押す"
+msgstr "スキャン違い。PPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:63
 msgid "Bin selected for put. Cannot be staged"
@@ -268,7 +268,7 @@ msgstr "商品がシステムに未登録。例外エリアに置く"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:65
 msgid "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL"
-msgstr "商品が格納できません。ビン {0} を空にしてビンボタンを押す"
+msgstr "商品が格納できません。ビン {0} を空にしてPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:66
 msgid "No free bins. Please scan later"
@@ -276,7 +276,7 @@ msgstr "空きビンがありません。後でスキャンしなおしてくだ
 
 #: src/assets/js/serverMessages/server_messages_lang.js:67
 msgid "Wrong PPTL pressed. Please try another"
-msgstr "ビンが違います。正しいビンボタンを押す"
+msgstr "ビンが違います。正しいPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:68
 #: src/assets/js/serverMessages/server_messages_lang.js:112
@@ -309,7 +309,7 @@ msgstr "PPSが中断モードです。しばらく待って再度実施してく
 
 #: src/assets/js/serverMessages/server_messages_lang.js:75
 msgid "Cancel scan successful."
-msgstr "スキャンがキャンセルされた"
+msgstr "スキャンのキャンセル完了"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:76
 msgid "Tote close successful."
@@ -326,7 +326,7 @@ msgstr "商品スキャンが完了"
 #: src/assets/js/serverMessages/server_messages_lang.js:79
 #: src/assets/js/serverMessages/server_messages_lang.js:141
 msgid "PPTL press successful"
-msgstr "ビンボタンが押されました"
+msgstr "PPTLボタンが押されました"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:80
 msgid "Data capture valid"
@@ -334,7 +334,7 @@ msgstr "正しい情報が取得"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:81
 msgid "Excess item in tote recorded. Now press PPTL"
-msgstr "トートの商品が数量オーバー。ビンのボタンを押す"
+msgstr "トートの商品が数量オーバー。PPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:82
 msgid "Invalid item in tote recorded."
@@ -364,7 +364,7 @@ msgstr "同じシリアル番号のボックスが、既に倉庫内に存在"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:88
 msgid "Entity already scanned.Waiting for PPTL press"
-msgstr "商品スキャン済。ビンのボタンを押す"
+msgstr "商品スキャン済。PPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:89
 msgid "No bins available to stage"
@@ -510,7 +510,7 @@ msgstr "商品を {0} 個スキャンしビン {1} に置く"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:126
 msgid "Press PPTL to confirm"
-msgstr "ビンボタンを押す"
+msgstr "PPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:127
 msgid "Scan Tote to Associate with Bin"
@@ -518,19 +518,19 @@ msgstr "トートスキャンしてビンに紐付け"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:128
 msgid "Press PPTL or Scan a Tote"
-msgstr "ビンボタンを押すか、トートスキャン"
+msgstr "PPTLボタンを押すか、トートスキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:129
 msgid "Press PPTL to Remove Entities"
-msgstr "ビンボタンを押して、商品を取り出す"
+msgstr "PPTLボタンを押して、商品を取り出す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:130
 msgid "Press bin PPTL"
-msgstr "ビンボタンを押す"
+msgstr "PPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:131
 msgid "Press PPTL for bin {0} to confirm"
-msgstr "ビン {0} のボタンを押す"
+msgstr "ビン {0} のPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:132
 msgid "Press print button to proceed"
@@ -550,7 +550,7 @@ msgstr "トートの紐づけをやめるビンを選択"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:136
 msgid "Pick complete. Waiting for next rack."
-msgstr "ピック完了。次のMSU移動中"
+msgstr "ピック完了。MSU移動中"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:137
 msgid "Location scan successful"
@@ -564,7 +564,7 @@ msgstr "ボックススキャン完了"
 #: src/assets/js/serverMessages/server_messages_lang.js:195
 #: src/assets/js/serverMessages/server_messages_lang.js:197
 msgid "Cancel scan successful"
-msgstr "スキャンがキャンセルされた"
+msgstr "スキャンのキャンセル完了"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:142
 msgid "Expecting MSU release confirmation from GUI, got invalid event."
@@ -588,7 +588,7 @@ msgstr "最初にボックスをスキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:147
 msgid "Wrong PPTL pressed. Please press correct PPTL"
-msgstr "ビンボタンが違います。正しいビンのボタンを押す"
+msgstr "PPTLボタンが違います。正しいPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:148
 msgid "Picked quantity more than expected. Put extra items back in MSU"
@@ -645,7 +645,7 @@ msgstr "トートが紐づけされていません。トートをビンに置い
 #: src/assets/js/serverMessages/server_messages_lang.js:161
 #: src/assets/js/serverMessages/server_messages_lang.js:163
 msgid "Wrong PPTL pressed"
-msgstr "ビン違い"
+msgstr "PPTLボタンが違います"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:163
 #: src/assets/js/serverMessages/server_messages_lang.js:165
@@ -786,12 +786,12 @@ msgstr "スロットスキャン完了"
 #: src/assets/js/serverMessages/server_messages_lang.js:193
 #: src/assets/js/serverMessages/server_messages_lang.js:195
 msgid "Damaged and missing entity recorded."
-msgstr "不良品・紛失商品が記録されました"
+msgstr "不良品・不足商品が記録されました"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:194
 #: src/assets/js/serverMessages/server_messages_lang.js:196
 msgid "Space unavailable recorded."
-msgstr "空きスペースなし商品が記録されました"
+msgstr "格納不可商品が記録されました"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:196
 #: src/assets/js/serverMessages/server_messages_lang.js:198
@@ -866,7 +866,7 @@ msgstr "過剰品"
 #: src/assets/js/serverMessages/server_messages_lang.js:212
 #: src/assets/js/serverMessages/server_messages_lang.js:306
 msgid "Entity Missing / Unscannable"
-msgstr "紛失 / スキャン不可商品"
+msgstr "不足 / スキャン不可商品"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:209
 #: src/assets/js/serverMessages/server_messages_lang.js:304
@@ -874,7 +874,7 @@ msgstr "紛失 / スキャン不可商品"
 #: src/assets/js/serverMessages/server_messages_lang.js:211
 #: src/assets/js/serverMessages/server_messages_lang.js:307
 msgid "Space Not Available"
-msgstr "利用可能な場所がありません"
+msgstr "スロット内格納不可"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:211
 #: src/assets/js/serverMessages/server_messages_lang.js:213
@@ -950,7 +950,7 @@ msgstr "過剰商品を例外エリアに置く"
 #: src/assets/js/serverMessages/server_messages_lang.js:225
 #: src/assets/js/serverMessages/server_messages_lang.js:226
 msgid "Sum of missing, good and damaged should be equal to {0}"
-msgstr "数量不一致。紛失品と良品と不良品の合計は {0} "
+msgstr "良品、不足、不良品の合計は {0} でなければなりません。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:225
 #: src/assets/js/serverMessages/server_messages_lang.js:227
@@ -980,7 +980,7 @@ msgstr "周辺機器削除失敗"
 #: src/assets/js/serverMessages/server_messages_lang.js:230
 #: src/assets/js/serverMessages/server_messages_lang.js:232
 msgid "Cancel Exception"
-msgstr "例外処理をキャンセルする"
+msgstr "例外登録をキャンセル"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:231
 #: src/assets/js/serverMessages/server_messages_lang.js:233
@@ -1188,7 +1188,7 @@ msgstr "予定"
 #: src/assets/js/serverMessages/server_messages_lang.js:276
 #: src/assets/js/serverMessages/server_messages_lang.js:278
 msgid "Actual"
-msgstr "実際"
+msgstr "実数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:278
 #: src/assets/js/serverMessages/server_messages_lang.js:280
@@ -1241,7 +1241,7 @@ msgstr "実数"
 #: src/assets/js/serverMessages/server_messages_lang.js:289
 #: src/assets/js/serverMessages/server_messages_lang.js:291
 msgid "Missing"
-msgstr "紛失"
+msgstr "不足"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:290
 #: src/assets/js/serverMessages/server_messages_lang.js:292
@@ -1292,13 +1292,13 @@ msgstr "商品タイプ"
 #: src/assets/js/serverMessages/server_messages_lang.js:306
 #: src/assets/js/serverMessages/server_messages_lang.js:308
 msgid "Item Missing/Unscannable"
-msgstr "紛失またはスキャン不可商品"
+msgstr "不足またはスキャン不可商品"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:306
 #: src/assets/js/serverMessages/server_messages_lang.js:307
 #: src/assets/js/serverMessages/server_messages_lang.js:309
 msgid "Missing Box"
-msgstr "紛失したボックス"
+msgstr "不足ボックス"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:308
 #: src/assets/js/serverMessages/server_messages_lang.js:309
@@ -1340,7 +1340,7 @@ msgstr "特大品を例外エリアに置く"
 #: src/assets/js/serverMessages/server_messages_lang.js:317
 #: src/assets/js/serverMessages/server_messages_lang.js:319
 msgid "Take the Items out from the Slot"
-msgstr "スロットから商品を取り出してください"
+msgstr "ビンに商品を戻してください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:300
 #: src/assets/js/serverMessages/server_messages_lang.js:302
@@ -1350,7 +1350,7 @@ msgstr "トートはビン {0} に紐付け済み"
 #: src/assets/js/serverMessages/server_messages_lang.js:301
 #: src/assets/js/serverMessages/server_messages_lang.js:303
 msgid "Entity Scan not expected. Press PPTL"
-msgstr "商品スキャンは不要です。ビンのボタンを押す"
+msgstr "スキャン違い。PPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:178
 #: src/assets/js/serverMessages/server_messages_lang.js:180
@@ -1363,7 +1363,7 @@ msgstr "トートの過剰な商品が記録されました"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:156
 msgid "PPTL press not expected"
-msgstr "ビンボタンは押す必要がありません"
+msgstr "PPTLボタンは押す必要がありません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:157
 msgid "Scan not expected"
@@ -1371,7 +1371,7 @@ msgstr "スキャンは不要です"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:320
 msgid "Pptl press not expected."
-msgstr "ビンボタンは押す必要がありません"
+msgstr "PPTLボタンは押す必要がありません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:321
 msgid "Scan not expected."
@@ -1411,11 +1411,11 @@ msgstr "良品数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:332
 msgid "Missing Quantity"
-msgstr "紛失数"
+msgstr "不足数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:333
 msgid "Unscannable Quantity"
-msgstr "スキャン不可の数"
+msgstr "スキャン不可数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:334
 msgid "Remove Item"
@@ -1423,11 +1423,11 @@ msgstr "商品取り出し"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:335
 msgid "Item Missing/Bad Barcode"
-msgstr "紛失/バーコード不良商品"
+msgstr "不足/バーコード不良商品"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:336
 msgid "Sum of missing and good quantity should be equal to {0}"
-msgstr "合計数(良品数＋紛失数)は {0} である必要があります"
+msgstr "不足数と良品数の合計は {0} である必要があります"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:337
 msgid "Login"
@@ -1455,11 +1455,11 @@ msgstr "ログインできません。既にログインしています"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:343
 msgid "Place Item in slot and scan more"
-msgstr "商品をスロットに入れて、次の商品スキャンを続ける"
+msgstr "商品をスロットに置き、商品スキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "PPTL"
-msgstr "ビンボタン"
+msgstr "PPTLボタン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:345
 msgid "Scan Slot Barcode"
@@ -1523,15 +1523,15 @@ msgstr "ボックス"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:361
 msgid "SKU not present in Database.Put in exception area"
-msgstr "商品がシステムに未登録。例外エリアに置く"
+msgstr "未登録商品です。商品を取出し商品登録を確認してください。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:362
 msgid "Please put extra entities in exception area."
-msgstr "超過商品を例外エリアに置く"
+msgstr "過剰商品を例外エリアに置く"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:363
 msgid "Space Available For"
-msgstr "場所確保可能"
+msgstr "スロット格納可能数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:364
 msgid "Tote Details"
@@ -1595,28 +1595,27 @@ msgstr "シートタイプ"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:455
 msgid "Scan damaged entity"
-msgstr "損害エンティティをスキャンする"
+msgstr "ダメージ商品をスキャンする"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:456
 msgid "Damaged Quantity"
-msgstr "損害品数"
+msgstr "ダメージ数"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:457
 msgid "Entity Damaged"
-msgstr "不良品"
-
+msgstr "ダメージ商品"
 
 msgid " items"
 msgstr " 商品"
  
 msgid "Are you sure you want to cancel the exception?"
-msgstr "例外処理をキャンセルしてもよろしいですか？"
+msgstr "例外処理をキャンセルしますか？"
  
 msgid "Are you sure you want to exit from {0} invoice and stage all bins"
-msgstr " {0} 請求書から退場して全てのビンをステージしたいですか"
+msgstr " {0} 納品書と全てのビンステージングを終了しますか"
  
 msgid "Are you sure you want to exit from {0} {1} and stage all bins"
-msgstr " {0} {1}から退場して全てのビンをステージしたいですか"
+msgstr " {0} {1} と全てのビンステージングを終了しますか"
  
 msgid "Dock roll cage back to proceed the operation"
 msgstr "操作を進めるためにドックロールケージを戻してください"
@@ -1625,28 +1624,28 @@ msgid "English"
 msgstr "英語"
  
 msgid "Enter Quantity"
-msgstr "数量を記入"
+msgstr "数量入力"
  
 msgid "Enter excess item quantity"
-msgstr "余分な項目の数量を入力してください"
+msgstr "過剰数量を入力してください"
  
 msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
-msgstr "エンティティが収容できません！全てのエンティティをビンから削除してPPTLを押してください。"
+msgstr "格納できません！全ての商品を取出しPPTLボタンを押してください"
  
 msgid "Entity Damaged"
-msgstr "エンティティが破損されています"
+msgstr "商品破損"
  
 msgid "Entity already scanned.Confirm exception"
-msgstr "エンティティが既にスキャンされました。例外を確認してください"
+msgstr "既にスキャンされた商品です。例外登録を確認してください"
  
 msgid "Exception entry successful"
 msgstr "例外入力が成功しました"
  
 msgid "Exception finished"
-msgstr "例外が終了しました"
+msgstr "例外入力が終了しました"
  
 msgid "Exception with entity reported"
-msgstr "エンティティに関して例外が報告"
+msgstr "例外商品を登録しました。"
  
 msgid "Excess quantity"
 msgstr "過剰数量"
@@ -1658,7 +1657,7 @@ msgid "Gently push roll cage away from the frame"
 msgstr "ロールケージをフレームから離れて押してください"
  
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
-msgstr "良い数量は合計数量と同様であることはできません"
+msgstr "良品数と合計数は同じにできません"
  
 msgid "Invalid Slot scanned"
 msgstr "無効なスロットがスキャンされました"
@@ -1670,7 +1669,7 @@ msgid "Invoice number: {0}"
 msgstr "請求書番号: {0}"
  
 msgid "Issues with entity"
-msgstr "エンティティに問題"
+msgstr "商品に問題"
  
 msgid "No"
 msgstr "いいえ"
@@ -1694,7 +1693,7 @@ msgid "Place container in MSU slot and confirm"
 msgstr "MSUスロットにコンテナを置いて確認してください"
  
 msgid "Place the tote back in bin {0} and press pptl"
-msgstr "トートをビン{0}に戻してpptlを押してください"
+msgstr "トートをビン{0}に戻してPPTLボタンを押してください"
  
 msgid "Place {0} boxes from bin {2}"
 msgstr "ビン{2}から{0}ボックスを置いてください"
@@ -1709,13 +1708,13 @@ msgid "Please enter a quantity greater than 0"
 msgstr "0以上の数量を入力してください"
  
 msgid "Please put entities with issues, in exception area"
-msgstr "問題のあるエンティティを例外エリアに置く"
+msgstr "該当商品を例外商品用エリアに保管してください。"
  
 msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
-msgstr "Bin {0} に商品が残ってないことをPPTL押して確認する"
+msgstr "ビン {0} に商品が残ってないことを確認しPPTLボタンを押す"
  
 msgid "Press bin PPTL to remove entities"
-msgstr "エンティティを削除するためにビンPPTLを押してください"
+msgstr "商品を取出して、PPTLボタンを押す"
  
 msgid "Release MTU"
 msgstr "MTUを解放してください"
@@ -1724,7 +1723,7 @@ msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
 msgstr "残っている項目を確認するためにビン{0}からトートを外してPPTLを押してください。"
  
 msgid "SKU not present in database. Put into IRT bin."
-msgstr "商品がシステムに未登録。IRTビンに入れる。"
+msgstr "未登録商品です。商品を取出し商品登録を確認してください。"
  
 msgid "STN scan successful"
 msgstr "STNのスキャンが成功しました"
@@ -1760,10 +1759,10 @@ msgid "Slot barcode scan successful"
 msgstr "スロットのバーコードスキャンが成功しました"
  
 msgid "Take Printout and Press PPTL"
-msgstr "プリントアウトをビンに入れて、PPTLを押す"
+msgstr "ピッキングリストをビンに入れて、PPTLボタンを押す"
  
 msgid "Take out the tote from bin {0} and scan entity"
-msgstr "ビン{0}からトートを取り出してエンティティをスキャンしてください"
+msgstr "ビン {0} からトートを取り出して商品をスキャンしてください"
  
 msgid "Total "
 msgstr "合計"
@@ -1790,19 +1789,19 @@ msgid "Undock Roll Cage if no items remaining"
 msgstr "項目が残っていない場合はロールケージをアンドックしてください"
  
 msgid "Unexpected entity scanned"
-msgstr "意外のエンティティがスキャンされました"
+msgstr "予定外の商品がスキャンされました"
  
 msgid "Validate and Confirm"
-msgstr "数をチェックして確認する"
+msgstr "確定"
  
 msgid "Wrong Scan. Unrecognized barcode."
-msgstr "間違ったスキャン。無認識されたバーコード。"
+msgstr "間違ったスキャン。認識されないバーコード。"
  
 msgid "Wrong Undock"
 msgstr "間違ったアンドック"
  
 msgid "Wrong ppsbin button pressed"
-msgstr "間違ったppsbinボタンが押されました"
+msgstr "間違ったPPTLボタンが押されました"
  
 msgid "Yes"
 msgstr "はい"
@@ -1816,35 +1815,35 @@ msgstr "はい"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:337
 msgid "Sum of good and exception quantity should be equal to {0}"
-msgstr "良品と例外品の合計なければならない数は {0}"
+msgstr "良品数と例外登録数の合計は {0} でなければいけません。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:338
 msgid "Scan excess item quantity"
-msgstr "余剰品目数をスキャンする"
+msgstr "過剰品をスキャンする"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:460
 msgid "Wrong Scan. Entity not present in Database"
-msgstr "間違ったスキャン。データベースに存在しないエンティティ"
+msgstr "マスタに存在しない商品です"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:461
 msgid "Sum of good, missing and damaged should be equal to {0}"
-msgstr "数量不一致。良品と紛失品と不良品の合計は {0} "
+msgstr "良品、不足品、不良品の合計は {0} でなければなりません。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:462
 msgid "Last item scan will be cancelled. Do you want to continue?"
-msgstr "最後の商品スキャンがキャンセルされます。続けますか？"
+msgstr "最後の商品スキャンをキャンセルします。継続しますか？"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:463
 msgid "Continue"
-msgstr "持続する"
+msgstr "継続"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:464
 msgid "Bin full"
-msgstr "ビンがいっぱい状態"
+msgstr "ビン満杯"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:465
 msgid "Please put entities which have issues in exception area"
-msgstr "問題のあるエンティティを例外エリアに置く"
+msgstr "該当商品を例外商品用エリアに保管してください。"
 
 
 #: src/assets/js/serverMessages/server_messages_lang.js:466
@@ -1853,7 +1852,7 @@ msgstr "スキャン不可"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:467
 msgid "Invalid Event.Expecting PPTL button press"
-msgstr "無効なイベント。PPTLボタンが押されていることを確認する"
+msgstr "操作が誤っています。PPTLボタンを押してください。"
 
 
 #: src/assets/js/serverMessages/server_messages_lang.js:468
@@ -1862,15 +1861,15 @@ msgstr "ビンからトートを取り出し、PPTLを押して残りのアイ�
 
 #: src/assets/js/serverMessages/server_messages_lang.js:470
 msgid "Wrong entity scan.Please scan the correct entity"
-msgstr "間違ったエンティティスキャン。正しいエンティティをスキャンしてください。"
+msgstr "間違った商品スキャン。正しい商品をスキャンしてください。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:471
 msgid "Physically Damaged entity reported."
-msgstr "物理的に損害が報告された"
+msgstr "ダメージ商品を登録しました"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:472
 msgid "Entity entry successful"
-msgstr "身体的に損害を受けた団体が報告した。"
+msgstr "商品登録をしました。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:473
 msgid "Bin scan successful"
@@ -1882,12 +1881,12 @@ msgstr "ビンスキャン成功"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:475
 msgid "Physically Damaged Reported should equal Scanned Quantity"
-msgstr "物理的に損害が報告された場合、スキャンされた数量"
+msgstr "ダメージ報告数はスキャンされた数量に一致する必要があります"
 
 
 #: src/assets/js/serverMessages/server_messages_lang.js:476
 msgid "SKU not present in Database."
-msgstr "SKUはデータベースに存在しません。"
+msgstr "未登録SKU"
 
 
 #: src/assets/js/serverMessages/server_messages_lang.js:478

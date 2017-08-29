@@ -242,6 +242,7 @@ function server_messages_list() {
     _("Add Scanner");
     _("Edit Details");
     _("NEXT");
+    _("Next");
     _("CONFIRM");
     _("Stage");
     _("Stage All");

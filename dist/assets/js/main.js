@@ -37199,8 +37199,20 @@ var Audit = React.createClass({displayName: "Audit",
   getNotificationComponent:function(){
     if(this.state.AuditNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){
     this.getNotificationComponent();
@@ -40830,8 +40842,11 @@ var Notification = React.createClass({displayName: "Notification",
         }else {
             if($(".modal.notification-error").is(":visible")){
                 setTimeout((function(){
-                    $('.modal.notification-error').modal("hide");
+                    $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                    $(".modal-backdrop").remove()
+                    $(".modal.notification-error").modal("hide");
                     $(".modal").removeClass("notification-error")
+
                 }),0)
 
                 return null
@@ -41252,8 +41267,20 @@ var PickBack = React.createClass({displayName: "PickBack",
   getNotificationComponent:function(){
     if(this.state.PickBackNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PickBackNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){
     this.getNotificationComponent();
@@ -41339,8 +41366,20 @@ var PickFront = React.createClass({displayName: "PickFront",
         if (this.state.PickFrontNotification != undefined)
             this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, 
                                                navMessagesJson: this.props.navMessagesJson})
-        else
+        else{
+            if($(".modal.notification-error").is(":visible")){
+                setTimeout((function(){
+                    $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                    $(".modal-backdrop").remove()
+                    $(".modal.notification-error").modal("hide");
+                    $(".modal").removeClass("notification-error")
+
+                }),0)
+
+                return null
+            }
             this._notification = "";
+        }
     },
     showModal: function (data, index, manual) {
         if (manual == true)
@@ -42437,8 +42476,20 @@ var PrePut = React.createClass({displayName: "PrePut",
   getNotificationComponent:function(){
     if(this.state.PrePutNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PrePutNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){ 
     this.getNotificationComponent();
@@ -44768,8 +44819,20 @@ var PutBack = React.createClass({displayName: "PutBack",
 getNotificationComponent:function(){
   if(this.state.PutBackNotification != undefined)
     this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification, navMessagesJson: this.props.navMessagesJson})
-  else
-    this._notification = "";
+  else{
+      if($(".modal.notification-error").is(":visible")){
+          setTimeout((function(){
+              $('.modal.notification-error').data('bs.modal').options.backdrop=true
+              $(".modal-backdrop").remove()
+              $(".modal.notification-error").modal("hide");
+              $(".modal").removeClass("notification-error")
+
+          }),0)
+
+          return null
+      }
+      this._notification = "";
+  }
 },
 render: function(data){ 
   this.getNotificationComponent();
@@ -44842,8 +44905,21 @@ var PutFront = React.createClass({displayName: "PutFront",
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
+
   },
 
   getExceptionComponent:function(){

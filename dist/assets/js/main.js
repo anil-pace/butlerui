@@ -52964,16 +52964,21 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 }
                 else{
                 var received_msg = evt.data;
-                var data = JSON.parse(evt.data);
-                if(data.hasOwnProperty('data')){
-                    if(data.data == 'disconnect'){
-                        utils.sessionLogout();
-                        return false;
+                try{
+                    var data = JSON.parse(evt.data);
+                    if(data.hasOwnProperty('data')){
+                        if(data.data == 'disconnect'){
+                            utils.sessionLogout();
+                            return false;
+                        }
                     }
+                    putSeatData(data);
+                    CommonActions.setCurrentSeat(data.state_data);
+                    CommonActions.setServerMessages();
+                }catch(ex){
+
                 }
-                putSeatData(data);
-                CommonActions.setCurrentSeat(data.state_data);
-                CommonActions.setServerMessages();
+
             }
             };
             ws.onclose = function() {

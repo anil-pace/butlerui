@@ -294,13 +294,29 @@ var navData = {
             "level": null,
             "type": 'passive'
         }],[{
-            "screen_id": "pick_front_bin_printout",
+            "screen_id": ["pick_front_bin_printout","pick_front_rollcage_print"],
             "code": "PkF.H.016",
             "message": "Take Printout and Press PPTL",
             "showImage": false,
             "level": 1,
             "type": 'passive'
-        }]
+        }],[{
+            "screen_id": "pick_front_scan_packs",
+            "code": "TEST.GAURAV.1", //TODO: Would be changed
+            "image": svgConstants.scan,
+            "message": "Scan {0} packs",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },  {
+                "screen_id": "",
+                "code": "TEST.GAURAV.2", //TODO: Would be changed
+                "image": svgConstants.pptl,
+                "message": "Press PPTL",
+                "showImage": true,
+                "level": 2,
+                "type": 'passive'
+            }]
 
     ],
     "pickBack": [ {

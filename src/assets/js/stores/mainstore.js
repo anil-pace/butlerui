@@ -285,10 +285,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.utility[1];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                 }
-                else if (_seatData.screen_id === appConstants.PICK_FRONT_BIN_PRINTOUT) {
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_BIN_PRINTOUT|| _seatData.screen_id===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT) {
                     _NavData = navConfig.pickFront[8];
                 }
-
+                else if (_seatData.screen_id === appConstants.PICK_FRONT_SCAN_PACKS) {
+                    _NavData = navConfig.pickFront[9];
+                    _NavData[0].type="active"
+                }
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
@@ -2305,6 +2308,23 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
                 data["PickFrontCancelScan"] = this.cancelScanDetails();
                 break;
+
+                case appConstants.PICK_FRONT_SCAN_PACKS:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
+                data["PickFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontItemUid"] = this.getItemUid();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
                 data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
@@ -2329,6 +2349,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
                 break;
                 case appConstants.PICK_FRONT_BIN_PRINTOUT:
+                case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontScreenId"] = this.getScreenId();

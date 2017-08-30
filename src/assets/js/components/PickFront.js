@@ -27,6 +27,7 @@ var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
 var OrderDetails = require('./OrderDetails/OrderDetails.js');
+var Pallet=require("./Pallet/pallet")
 
 var checkListOpen = false;
 
@@ -222,7 +223,7 @@ var PickFront = React.createClass({
                     if (this.state.OrigBinUse) {
                         binComponent = (<div className="binsFlexWrapperContainer">
                             <BinsFlex binsData={this.state.PickFrontBinData}
-                                      screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType={this.state.SeatType}/>
+                                      screenId={screen_id} seatType={this.state.SeatType}/>
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
                                               productDetails={this.state.PickFrontProductDetails}
                                               itemUid={this.state.PickFrontItemUid}/>
@@ -230,7 +231,7 @@ var PickFront = React.createClass({
                     } else {
                         binComponent = (<div className='main-container'>
                             <Bins binsData={this.state.PickFrontBinData}
-                                  screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
+                                  screenId={screen_id}/>
                             <Wrapper scanDetails={this.state.PickFrontScanDetails}
                                      productDetails={this.state.PickFrontProductDetails}
                                      itemUid={this.state.PickFrontItemUid}/>
@@ -758,14 +759,15 @@ var PickFront = React.createClass({
                 }
                 break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
+            case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
                 if (!this.state.PickFrontExceptionStatus) {
                     if (this.state.OrigBinUse) {
                         binComponent = (
-                            <BinsFlex binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_BIN_PRINTOUT}
+                            <BinsFlex binsData={this.state.PickFrontBinData} screenId={screen_id}
                                       seatType={this.state.SeatType}/>);
                     } else {
                         binComponent = (<div className='main-container'>
-                            <Bins binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_BIN_PRINTOUT}/>
+                            <Bins binsData={this.state.PickFrontBinData} screenId={screen_id}/>
                         </div>)
                     }
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
@@ -784,6 +786,30 @@ var PickFront = React.createClass({
                     this._component = this.getExceptionComponent();
                 }
                 break;
+
+            case appConstants.PICK_FRONT_SCAN_PACKS:
+                if (!this.state.PickFrontExceptionStatus) {
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                    serverNavData={this.state.PickFrontServerNavData}
+                                                    navMessagesJson={this.props.navMessagesJson}/>);
+
+
+                    this._component = (
+
+                        <div className='grid-container'>
+                            <Modal />
+                            <div className='main-container'>
+                                <Pallet/>
+                                <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
+                            </div>
+
+                        </div>
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
 
             default:
                 return true;

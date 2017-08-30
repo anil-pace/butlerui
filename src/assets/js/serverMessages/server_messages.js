@@ -52,8 +52,8 @@ var serverMessages = {
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
     "PtF.H.017" : "Wrong Undock",
-    "PkF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
-    "PkF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
+    "PtF.H.018" : "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining",
+    "PtF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
     "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
     "PtF.H.021" : "Scan IRT Bin",
     "PtF.E.022" : "Entities cannot be accommodated!",
@@ -311,9 +311,12 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
-  
-    
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
+    //SR PICK FLOW
+    "PkF.H.017":"Scan {0} packs",
+    "PkF.H.018":"Scan {0} sub packs",
+    "PkF.H.019":"Scan {0} more packs and place in bin {1}",
+    "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
 };
 
 

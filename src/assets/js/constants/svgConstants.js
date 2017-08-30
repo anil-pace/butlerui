@@ -13,7 +13,8 @@ var allSvgConstants = {
 	iconBar :'assets/images/Icon.png',
 	tote:'assets/images/tote.png',
 	exception:'assets/images/exceptionIcon.png',
-	scanner:'assets/images/scanner.png'
+	scanner:'assets/images/scanner.png',
+	pallet:'assets/images/MPU.svg'
 }
 
 module.exports = allSvgConstants;

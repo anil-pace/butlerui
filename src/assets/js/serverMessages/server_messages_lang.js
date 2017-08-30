@@ -461,4 +461,9 @@ function server_messages_list() {
     _("Please put entities in IRT and Scan IRT Bin");
     _("Wrong Scan. Unrecognized barcode.");
     _("Length of {0} should not be greater than {1}");
+    _("Scan {0} packs");
+    _("Press PPTL");
+    _("Pack Scan Successful");
+    _("Scan {0} more packs and place in bin {1}");
+    _("Put pack list in trolley and press PPTL to confirm");
 }

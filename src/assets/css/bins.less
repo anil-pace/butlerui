@@ -19,11 +19,11 @@
       position: relative;
       border: 2px solid @text-color;
       &.use {
-        color: #a1a1a1;
+        color: @bin-inactive-text;
       }
       &.empty {
         background: white;
-        color: #a1a1a1;
+        color: @bin-inactive-text;
       }
       &.selected {
         border: 2px solid @bin-selected-bck;
@@ -39,7 +39,7 @@
       }
       &.staged {
         background: @bin-staged-bck;
-        color: #a1a1a1;
+        color: @bin-inactive-text;
       }
       &.no-excess-item {
         color: #d1d1d1;
@@ -218,11 +218,11 @@
     height: 100%;
     position: relative;
     &.use {
-      color: #a1a1a1;
+      color: @bin-inactive-text;
     }
     &.empty {
       background: white;
-      color: #a1a1a1;
+      color: @bin-inactive-text;
     }
     &.selected {
       border: 2px solid @bin-selected-bck;
@@ -238,7 +238,7 @@
     }
     &.staged {
       background: @bin-staged-bck;
-      color: #a1a1a1;
+      color: @bin-inactive-text;
     }
     &.no-excess-item {
       color: #d1d1d1;

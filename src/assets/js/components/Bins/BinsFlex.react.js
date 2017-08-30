@@ -107,7 +107,7 @@ var Bin = React.createClass({
             return (
                 <div className={"bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
-                    <div className="item-count">{compData.ppsbin_count<1?'-':compData.ppsbin_count}</div>
+                    <div className="item-count">{"-"}</div>
                     {tote}
                     <div className={"pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
                          onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}

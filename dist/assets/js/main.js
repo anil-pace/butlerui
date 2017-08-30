@@ -38020,7 +38020,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, "-"), 
                     tote, 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 

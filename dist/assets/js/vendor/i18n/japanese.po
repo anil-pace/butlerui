@@ -1455,7 +1455,7 @@ msgstr "ログインできません。既にログインしています"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:343
 msgid "Place Item in slot and scan more"
-msgstr "商品をスロットに置き、商品スキャン"
+msgstr "スロットに置き、商品スキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "PPTL"
@@ -1895,11 +1895,11 @@ msgstr "既にスキャンされたコンテナ。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:479
 msgid "Invalid Entity Scanned."
-msgstr "無効なエンティティがスキャンされました。"
+msgstr "異なる商品がスキャンされました。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:480
 msgid "Quantity of Physically damaged entities scanned is less."
-msgstr "スキャンした物理的に損傷したエンティティの数は少なくなります。"
+msgstr "スキャンしたダメージ商品の数が少ないです。"
 
 
 #: src/assets/js/serverMessages/server_messages_lang.js:481

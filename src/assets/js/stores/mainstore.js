@@ -302,6 +302,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
+                else if (_seatData.screen_id === appConstants.AUDIT_SCAN_MPU)
+                    _NavData = navConfig.audit[0];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
                     _NavData = navConfig.utility[0];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -2481,7 +2483,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditItemDetailsData"] = this.getItemDetailsData();
                 data["AuditScanDetails"] = this.getScanDetails();
                 data["AuditFinishFlag"] = this.getFinishAuditFlag();
+                
                 break;
+
+             case appConstants.AUDIT_SCAN_MPU:
+              data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+             break;   
             case appConstants.AUDIT_RECONCILE:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();
@@ -2518,6 +2528,26 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditKQDetails"] = this.getScanDetails();
                 data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
+//SR Audit
+                case appConstants.AUDIT_SCAN_SR:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                data["AuditCancelScanStatus"] = this.getCancelScanStatus();
+                data["AuditBoxSerialData"] = this.getBoxSerialData();
+                data["AuditLooseItemsData"] = this.getLooseItemsData();
+                data["AuditSlotDetails"] = this.getCurrentSlot();
+                data["AuditItemDetailsData"] = this.getItemDetailsData();
+                data["AuditScanDetails"] = this.getScanDetails();
+                data["AuditFinishFlag"] = this.getFinishAuditFlag();
+                data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
+                data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
+                break;
+
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
                 data["utility"] = this.getPptlData();

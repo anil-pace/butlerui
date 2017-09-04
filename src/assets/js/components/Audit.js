@@ -22,6 +22,7 @@ var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
 var ExceptionHeader = require('./ExceptionHeader');
+var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 
 
 function getStateData(){
@@ -161,6 +162,7 @@ var Audit = React.createClass({
           }else{
             this._looseItems = '';
           }
+
           this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -175,7 +177,74 @@ var Audit = React.createClass({
                    <TabularData data = {this.state.AuditItemDetailsData}/>
                   </div>
                   <div className="audit-scan-right">
-                    
+                                    
+                   <div className = 'finish-scan'>
+                    <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
+                  </div>
+                  </div>
+                </div>
+                {this._cancelStatus}
+              </div>
+            );
+           }else{
+          this._component = this.getExceptionComponent();
+        }
+
+        break;
+//SR Audit
+ case appConstants.AUDIT_SCAN_MPU:
+      
+           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._component = (
+              <div className='grid-container'>
+                  
+                   <div className="gor-mpu"/>
+                  
+              </div>
+            );
+       
+          break;
+         case appConstants.AUDIT_SCAN_SR:
+       if(this.state.AuditExceptionStatus == false){
+           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          if(this.state.AuditCancelScanStatus == true){
+            this._cancelStatus = (
+              <div className = 'cancel-scan'>
+                <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.AUDIT} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+              </div>
+            );
+          }else{
+            this._cancelStatus = '';
+          }
+          if(this.state.AuditBoxSerialData["tableRows"].length > 0 ){
+            this._boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
+          }else{
+            this._boxSerial = '';
+          }
+          if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
+            this._looseItems = (<TabularData data = {this.state.AuditLooseItemsData} />);
+          }else{
+            this._looseItems = '';
+          }
+
+          this._component = (
+              <div className='grid-container'>
+                <Modal />
+                <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
+                <div className='main-container space-left'>
+                  <div className="audit-scan-left">
+                      {this._boxSerial}
+                      {this._looseItems}
+                  </div>
+                  <div className="audit-scan-middle">
+                   <Img srcURL= {this.state.AuditItemDetailsData.image_url}/>
+                   <TabularData data = {this.state.AuditItemDetailsData}/>
+                  </div>
+                  <div className="audit-scan-right">
+                    <KQExceptionDamaged scanDetailsDamaged={this.state.PickFrontDamagedQuantity}
+                                                            type={appConstants.UNSCANNABLE}
+                                                            action={appConstants.UNSCANNABLE}/>
+                                    
                    <div className = 'finish-scan'>
                     <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
                   </div>

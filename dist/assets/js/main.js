@@ -36993,6 +36993,7 @@ var Audit = React.createClass({displayName: "Audit",
           this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                  React.createElement(Modal, null), 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Spinner, null)
                  )
@@ -37007,6 +37008,7 @@ var Audit = React.createClass({displayName: "Audit",
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
               React.createElement("div", {className: "grid-container"}, 
+                  React.createElement(Modal, null), 
                  React.createElement("div", {className: "main-container"}, 
                     React.createElement(Rack, {rackData: this.state.AuditRackDetails})
                  )
@@ -37102,6 +37104,7 @@ var Audit = React.createClass({displayName: "Audit",
             messageType = "small";
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement(Modal, null), 
                  React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
                 subComponent, 
                  React.createElement("div", {className: "staging-action"}, 
@@ -37125,6 +37128,7 @@ var Audit = React.createClass({displayName: "Audit",
           this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
@@ -37142,6 +37146,7 @@ var Audit = React.createClass({displayName: "Audit",
           else if(this.state.AuditExceptionScreen == "second_screen"){
               this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.AuditExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement("div", {className: "main-container exception2"}, 
@@ -37176,6 +37181,7 @@ var Audit = React.createClass({displayName: "Audit",
           }
           this._component = (
               React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement(Modal, null), 
                   React.createElement("div", {className: "row scannerHeader"}, 
                     React.createElement("div", {className: "col-md-6"}, 
                       React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
@@ -37185,8 +37191,7 @@ var Audit = React.createClass({displayName: "Audit",
                     )
                   ), 
                   React.createElement(TabularData, {data: this.state.utility}), 
-                  _button, 
-                  React.createElement(Modal, null)
+                  _button
               )
             );
         break; 
@@ -37198,8 +37203,20 @@ var Audit = React.createClass({displayName: "Audit",
   getNotificationComponent:function(){
     if(this.state.AuditNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){
     this.getNotificationComponent();
@@ -37353,7 +37370,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (React.createElement("div", {
                 className: compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "bin selected blink1" : "bin no-excess-item"}, 
                 tote, 
-                React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                 React.createElement("div", {
                     className: compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "pptl selected blink" : "pptl no-excess-item"}, compData.ppsbin_id)
             ));
@@ -37362,7 +37379,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin selected binError " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected binError " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37381,7 +37398,7 @@ var Bin = React.createClass({displayName: "Bin",
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
@@ -37389,7 +37406,7 @@ var Bin = React.createClass({displayName: "Bin",
                 return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                              style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
@@ -37406,7 +37423,7 @@ var Bin = React.createClass({displayName: "Bin",
                     return (React.createElement("div", {className: "bin excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                                  style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
@@ -37416,7 +37433,7 @@ var Bin = React.createClass({displayName: "Bin",
                         onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                         style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
@@ -37425,7 +37442,7 @@ var Bin = React.createClass({displayName: "Bin",
                 return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                              style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
@@ -37442,14 +37459,14 @@ var Bin = React.createClass({displayName: "Bin",
                     className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink ' : '')}, compData.ppsbin_id)
                 ));
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                              style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
@@ -37459,7 +37476,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37470,7 +37487,7 @@ var Bin = React.createClass({displayName: "Bin",
                     className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37479,7 +37496,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin staged " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37488,7 +37505,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin completed " + (compData['pps_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37517,7 +37534,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin  selected blink1", 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected blink", 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37538,7 +37555,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected " + (compData['pps_blink_state'] ? 'blink1' : ' ') + binClass, 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ' ') + binClass, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37556,7 +37573,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37570,7 +37587,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37585,7 +37602,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37599,7 +37616,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37613,7 +37630,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37624,7 +37641,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37636,7 +37653,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37655,7 +37672,7 @@ var Bin = React.createClass({displayName: "Bin",
                     className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {
                         className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37670,7 +37687,7 @@ var Bin = React.createClass({displayName: "Bin",
                     React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                     ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37680,7 +37697,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37719,7 +37736,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
@@ -37736,7 +37753,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     tote, 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
@@ -37753,7 +37770,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     tote, 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37781,7 +37798,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     tote, 
                     pptl
                 )
@@ -37795,7 +37812,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     tote, 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
@@ -37814,7 +37831,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37831,7 +37848,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -37953,7 +37970,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (React.createElement("div", {
                 className: "bin "+(compData['pps_blink_state'] ? 'selected blink1 ' : 'no-excess-item')}, 
                 tote, 
-                React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                 React.createElement("div", {
                     className: "pptl "+(compData['pps_blink_state'] ? 'selected blink ' : 'no-excess-item'), 
                     style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -37963,7 +37980,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin selected binError "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected binError "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
@@ -37981,7 +37998,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : '-'), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38002,7 +38019,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
@@ -38036,7 +38053,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count > 0 ? compData.ppsbin_count : "-"), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     tote, 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -38055,7 +38072,7 @@ var Bin = React.createClass({displayName: "Bin",
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
@@ -38080,7 +38097,7 @@ var Bin = React.createClass({displayName: "Bin",
                     return (React.createElement("div", {className: "bin excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
                                  style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
@@ -38090,7 +38107,7 @@ var Bin = React.createClass({displayName: "Bin",
                         onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                         style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                         tote, 
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                         React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
@@ -38099,7 +38116,7 @@ var Bin = React.createClass({displayName: "Bin",
                 return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
                              style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
@@ -38117,14 +38134,14 @@ var Bin = React.createClass({displayName: "Bin",
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             } else {
                 return (React.createElement("div", {className: "bin no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                              style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
@@ -38134,7 +38151,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38145,7 +38162,7 @@ var Bin = React.createClass({displayName: "Bin",
                     className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38154,7 +38171,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin staged " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38163,7 +38180,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin completed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38174,7 +38191,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin use selected-staging " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38192,7 +38209,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin  selected blink1", 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected blink", 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -38213,7 +38230,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '') + binClass, 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '') + binClass, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -38231,7 +38248,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38245,7 +38262,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -38260,7 +38277,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38274,7 +38291,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38288,7 +38305,7 @@ var Bin = React.createClass({displayName: "Bin",
                  React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                  ), 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38299,7 +38316,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38311,7 +38328,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -38333,7 +38350,7 @@ var Bin = React.createClass({displayName: "Bin",
                     className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {
                         className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -38358,7 +38375,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                      onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38390,7 +38407,7 @@ var Bin = React.createClass({displayName: "Bin",
             return (
                 React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
@@ -38408,8 +38425,24 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
+                )
+            );
+        }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
+            if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"})
+                ));
+            }
+            return (
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38425,7 +38458,7 @@ var Bin = React.createClass({displayName: "Bin",
                 React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
                     tote, 
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
@@ -38628,7 +38661,25 @@ var Button1 = React.createClass({displayName: "Button1",
     };
 
 switch (module) {
-                    case appConstants.PUT_BACK:
+    case appConstants.ERROR_NOTIFICATION:
+        var notification_data=mainstore.getNotificationData()
+        var data = {
+            "event_name": "remove_gui_alert",
+            "event_data": {
+                "ui_event":mainstore.getScreenEvent()
+            }
+        }
+        if(notification_data && notification_data.type!== appConstants.CLIENT_NOTIFICATION){
+            ActionCreators.postDataToInterface(data);
+        }
+
+        ActionCreators.clearNotification()
+        $('.modal.notification-error').data('bs.modal').options.backdrop=true
+        $(".modal-backdrop").remove()
+        $(".modal.notification-error").modal("hide");
+        $(".modal").removeClass("notification-error")
+        break;
+    case appConstants.PUT_BACK:
                         switch (action) {
                             case appConstants.STAGE_ONE_BIN:
                                 ActionCreators.stageOneBin();
@@ -39015,7 +39066,8 @@ switch (module) {
             this.showModal(null, "enter_barcode");
             break;
 
-            case appConstants.ADD_SCANNER_DETAILS: 
+            case appConstants.ADD_SCANNER_DETAILS:
+            $('.modal:not(.notification-error)').modal("hide");
             peripheralId = document.getElementById("add_scanner").value;
             peripheralData["peripheral_id"] = peripheralId;
             peripheralData["peripheral_type"]= "barcode_scanner";
@@ -40228,6 +40280,27 @@ function loadComponent(modalType,modalData){
           ));
       title = _("Cancel Exception");    
       break;
+
+      case appConstants.ERROR_NOTIFICATION:
+          component = [];
+          component.push((
+              React.createElement("div", null, 
+                  React.createElement("div", {className: "row"}, 
+                      React.createElement("div", {className: "col-md-12"}, 
+                          React.createElement("div", {className: "title-textbox"}, modalData)
+                      )
+                  ), 
+                  React.createElement("div", {className: "modal-footer removeBorder"}, 
+                      React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                          React.createElement("div", {className: "row removeBorder"}, 
+                              React.createElement("div", {className: "col-md-4 col-md-offset-3"}, React.createElement(Button1, {disabled: false, text: _("OK"), color: "orange", module: appConstants.ERROR_NOTIFICATION, action: appConstants.HIDE_ERROR_NOTIFICATION}))
+                          )
+                      )
+                  )
+              )
+          ));
+          title = React.createElement("span", null, React.createElement("span", {className: "glyphicon glyphicon-exclamation-sign"}), _("Error"))
+          break;
     default:
       component = null;
       title = null;
@@ -40254,7 +40327,7 @@ var Modal = React.createClass({displayName: "Modal",
     this.setState(getStateData());
   },
   render: function () {      
-    return (React.createElement("div", {className: "modal fade"}, 
+    return (React.createElement("div", {className: "modal"}, 
         React.createElement("div", {className: "modal-dialog"}, 
           React.createElement("div", {className: "modal-content"}, 
             React.createElement(ModalHeader, {title: title}), 
@@ -40736,6 +40809,8 @@ module.exports = PassiveNavigation;
 },{"react":232}],261:[function(require,module,exports){
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
+var appConstants = require('../../constants/appConstants');
+var Modal = require('../Modal/Modal');
 
 var Notification = React.createClass({displayName: "Notification",
     render: function() {
@@ -40752,33 +40827,79 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';
         }
-        if(errorCode !== null){
-        return (
 
-            React.createElement("div", {className: appendClass, role: "alert"}, 
-            	React.createElement("div", {className: appendClass1}, 
-            		React.createElement("div", {className: "border-glyp"}, 
-            			React.createElement("span", {className: "glyphicon "+appendClass2})
-             		)
-            	), 
-            	(function(){
-                    if(navMessagesJson != undefined){
-                        message_args.unshift(navMessagesJson[errorCode]);
-                        if(message_args[0] == undefined){
-                            return _(compData.description);  
-                        }else{
-                            var notification_message = _.apply(null, message_args);
-                            return _(notification_message);
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
+
+            if(!$(".modal.notification-error").is(":visible")){
+                let message=(function(){
+                        if(navMessagesJson !== undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                                return _(compData.description);
+                            }else{
+                                var notification_message = _.apply(null, message_args);
+                                return _(notification_message);
+                            }
                         }
-                    }
-                   
+
                     }
                 )()
-            )
-        );  
-        }else{
-            return null;
+                setTimeout((function(){ActionCreators.showModal({
+                    data:message,
+                    type:appConstants.ERROR_NOTIFICATION
+                });$(".modal-backdrop").each(function(element){
+                    $(element).remove()
+                });
+                     $('.modal').modal({});
+                    $(".modal").addClass("notification-error")
+                    $('.modal.notification-error').data('bs.modal').options.backdrop = 'static';
+                }),0)
+            }
+
+            return null
+
+
+        }else {
+            if($(".modal.notification-error").is(":visible")){
+                setTimeout((function(){
+                    $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                    $(".modal-backdrop").remove()
+                    $(".modal.notification-error").modal("hide");
+                    $(".modal").removeClass("notification-error")
+
+                }),0)
+
+                return null
+            }
+            else if(errorCode !== null){
+                return (
+
+                    React.createElement("div", {className: appendClass, role: "alert"}, 
+                        React.createElement("div", {className: appendClass1}, 
+                            React.createElement("div", {className: "border-glyp"}, 
+                                React.createElement("span", {className: "glyphicon "+appendClass2})
+                            )
+                        ), 
+                        (function(){
+                                if(navMessagesJson != undefined){
+                                    message_args.unshift(navMessagesJson[errorCode]);
+                                    if(message_args[0] == undefined){
+                                        return _(compData.description);
+                                    }else{
+                                        var notification_message = _.apply(null, message_args);
+                                        return _(notification_message);
+                                    }
+                                }
+
+                            }
+                        )()
+                    )
+                );
+            }else{
+                return null;
+            }
         }
+
         
 
     }
@@ -40786,7 +40907,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":235,"react":232}],262:[function(require,module,exports){
+},{"../../actions/CommonActions":235,"../../constants/appConstants":301,"../Modal/Modal":254,"react":232}],262:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -41105,6 +41226,7 @@ var PickBack = React.createClass({displayName: "PickBack",
           } 
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}), 
@@ -41125,6 +41247,7 @@ var PickBack = React.createClass({displayName: "PickBack",
           this._navigation = '';
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData})
@@ -41187,8 +41310,20 @@ var PickBack = React.createClass({displayName: "PickBack",
   getNotificationComponent:function(){
     if(this.state.PickBackNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PickBackNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){
     this.getNotificationComponent();
@@ -41275,8 +41410,20 @@ var PickFront = React.createClass({displayName: "PickFront",
         if (this.state.PickFrontNotification != undefined)
             this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, 
                                                navMessagesJson: this.props.navMessagesJson})
-        else
+        else{
+            if($(".modal.notification-error").is(":visible")){
+                setTimeout((function(){
+                    $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                    $(".modal-backdrop").remove()
+                    $(".modal.notification-error").modal("hide");
+                    $(".modal").removeClass("notification-error")
+
+                }),0)
+
+                return null
+            }
             this._notification = "";
+        }
     },
     showModal: function (data, index, manual) {
         if (manual == true)
@@ -41342,6 +41489,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
@@ -41363,6 +41511,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
                                       rackData: this.state.PickFrontRackDetails})
@@ -41382,9 +41531,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
-                                      rackData: this.state.PickFrontRackDetails}), 
+                                      rackData: this.state.PickFrontRackDetails, putDirection: this.state.PickFrontPickDirection}), 
                                 React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                             )
                         )
@@ -41402,6 +41552,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
                                 React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
@@ -41537,6 +41688,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
@@ -41679,6 +41831,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 if (this.state.PickFrontExceptionScreen == "box_serial") {
                     this._component = (
                         React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
                             React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                             React.createElement("div", {className: "exception-right"}, 
                                 React.createElement("div", {className: "main-container"}, 
@@ -41707,6 +41860,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
                     this._component = (
                         React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
                             React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
                             React.createElement("div", {className: "exception-right"}, 
                                 React.createElement("div", {className: "main-container exception2"}, 
@@ -42391,8 +42545,20 @@ var PrePut = React.createClass({displayName: "PrePut",
   getNotificationComponent:function(){
     if(this.state.PrePutNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PrePutNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){ 
     this.getNotificationComponent();
@@ -43329,7 +43495,7 @@ var KQ = React.createClass({displayName: "KQ",
     render: function(data) {
         var typeValue="";
         typeValue=this.props.type;
-         _updatedQtyDamaged = typeValue === appConstants.UNSCANNABLE?_updatedQtyDamaged:parseInt(this.props.scanDetailsDamaged.current_qty);
+         _updatedQtyDamaged = typeValue === appConstants.UNSCANNABLE?mainstore.getkQQuanity():parseInt(this.props.scanDetailsDamaged.current_qty);
         _scanDetails = this.props.scanDetailsDamaged;
         console.log(_updatedQtyDamaged);
         this.checkKqAllowed();
@@ -43944,7 +44110,8 @@ componentDidMount(){
                     else if(parseInt(keypressed.last.val) > 9999){
                         self.generateExcessNotification();
                         $('.ui-keyboard-preview').val(9999);
-                    }else{
+                    }
+                    else{
                         data["code"] = null;
                         data["level"] = 'error'
                         CommonActions.generateNotification(data);
@@ -43952,10 +44119,10 @@ componentDidMount(){
                     }
                 },
                 accepted: function(e, keypressed, el) {
-
-                    if(self.props.execType===appConstants.GOOD_QUANTITY)
+                   let txtBoxVal = isNaN(parseInt(e.target.value,10))?0:Math.abs(parseInt(e.target.value,10));
+                   if(self.props.execType===appConstants.GOOD_QUANTITY)
                     {
-                        self._updatedQtyGood=e.target.value
+                        self._updatedQtyGood=txtBoxVal;
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
                         self.setState({
                             value : self._updatedQtyGood
@@ -43964,7 +44131,7 @@ componentDidMount(){
                     }
                     else if(self.props.execType===appConstants.MISSING_QUANTITY)
                     {
-                        self._updatedQtyMissing=e.target.value
+                        self._updatedQtyMissing=txtBoxVal;
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
                         self.setState({
                             value : self._updatedQtyMissing
@@ -43973,7 +44140,7 @@ componentDidMount(){
                     }
                     else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY)
                     {
-                        self._updatedQtyUnscannble=e.target.value
+                        self._updatedQtyUnscannble=txtBoxVal;
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
                         self.setState({
                             value : self._updatedQtyUnscannble
@@ -43982,7 +44149,7 @@ componentDidMount(){
                     }
                     else if(self.props.execType===appConstants.DAMAGED_QUANTITY)
                     {
-                        self._updatedQtyDamaged=e.target.value
+                        self._updatedQtyDamaged=txtBoxVal;
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));
                         self.setState({
                             value : self._updatedQtyDamaged
@@ -44385,6 +44552,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       this._navigation = '';
       this._component = (
         React.createElement("div", {className: "grid-container gor-invoice-wrap"}, 
+            React.createElement(Modal, null), 
           React.createElement("div", {className: "gor-invoice-input-wrap"}, 
             React.createElement("div", {className: "gor-invoice-h1-wrap"}, componentModalString), 
             React.createElement("div", {className: "gor-invoice-input-keyboard-wrap", onClick: this.openKeyboard}, 
@@ -44453,6 +44621,7 @@ var PutBack = React.createClass({displayName: "PutBack",
         messageType = "small";
         this._component = (
           React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+              React.createElement(Modal, null), 
           subComponent, 
           React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
@@ -44470,6 +44639,7 @@ var PutBack = React.createClass({displayName: "PutBack",
       if(this.state.PutBackExceptionScreen == "damaged")
         this._component = (
           React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
           React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
           React.createElement("div", {className: "exception-right"}, 
           React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44489,6 +44659,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44514,6 +44685,7 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
                 React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
                 React.createElement("div", {className: "exception-right"}, 
                   React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44547,6 +44719,7 @@ var PutBack = React.createClass({displayName: "PutBack",
      }
      this._component = (
       React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
       React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
       React.createElement("div", {className: "exception-right"}, 
       React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44566,6 +44739,7 @@ var PutBack = React.createClass({displayName: "PutBack",
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
         React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
         React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
         React.createElement("div", {className: "exception-right"}, 
         React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44648,6 +44822,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     this._navigation = '';
     this._component = (
       React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
       React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
       React.createElement("div", {className: "exception-right"}, 
       React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
@@ -44667,6 +44842,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     
     this._component = (
       React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+          React.createElement(Modal, null), 
       React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
       React.createElement("div", {className: "staging-action"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
@@ -44712,8 +44888,20 @@ var PutBack = React.createClass({displayName: "PutBack",
 getNotificationComponent:function(){
   if(this.state.PutBackNotification != undefined)
     this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification, navMessagesJson: this.props.navMessagesJson})
-  else
-    this._notification = "";
+  else{
+      if($(".modal.notification-error").is(":visible")){
+          setTimeout((function(){
+              $('.modal.notification-error').data('bs.modal').options.backdrop=true
+              $(".modal-backdrop").remove()
+              $(".modal.notification-error").modal("hide");
+              $(".modal").removeClass("notification-error")
+
+          }),0)
+
+          return null
+      }
+      this._notification = "";
+  }
 },
 render: function(data){ 
   this.getNotificationComponent();
@@ -44786,8 +44974,21 @@ var PutFront = React.createClass({displayName: "PutFront",
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
       this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
+
   },
 
   getExceptionComponent:function(){
@@ -44812,6 +45013,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, showSpinner: this.state.MobileFlag}));
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
           React.createElement("div", {className: "main-container"}, 
           this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup}):React.createElement(Spinner, null)
           )
@@ -44849,6 +45051,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._navigation = '';
       this._component =(
           React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
               React.createElement("div", {className: "exception-right"}), 
               React.createElement("div", {className: "cancel-scan"}, 
@@ -44871,7 +45074,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
             ), 
             React.createElement("div", {className: "main-container"}, 
-            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails, putDirection: this.state.PutFrontPutDirection}), 
             React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
             ), 
             React.createElement("div", {className: "cancel-scan"}, 
@@ -44889,6 +45092,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.UNDOCK_PUSH}));
           this._component = (
             React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
             React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup})
             )
@@ -44904,6 +45108,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.WRONG_UNDOCK}));
           this._component = (
             React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
             React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, wrongUndock: this.state.WrongUndock})
             )
@@ -44940,6 +45145,7 @@ var PutFront = React.createClass({displayName: "PutFront",
          }
         this._component = (
           React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
           this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
         selected_screen
           )
@@ -45178,6 +45384,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
               React.createElement("div", {className: "exception-right"}, 
               React.createElement("div", {className: "main-container exception2"}, 
@@ -45197,6 +45404,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
               React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
               React.createElement("div", {className: "exception-right"}, 
               React.createElement("div", {className: "main-container"}, 
@@ -45459,9 +45667,14 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         },
     componentWillUnmount:function(){
         var lines = document.getElementsByClassName("drawerLine");
+        var directionLine = document.getElementsByClassName("LineDirection");
         if(lines.length){
             lines[0].remove();
         }
+        if(directionLine.length){
+            directionLine[0].remove();
+        }
+
     },
     /*
         Since performing DOM manipulations hence 
@@ -45479,9 +45692,16 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         strEl = strEl ? strEl.parentNode : null;
         var endEl  = document.querySelectorAll("#drSlot .activeSlot")[0];
         if(strEl && endEl){
-        this.connect(strEl, endEl, "#6d6d6d", 3);
+        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
       }
+    
   }
+  if(this.props.putDirection && this.props.putDirection.length>0 && document.getElementsByClassName("LineDirection").length===0){
+    var start = (document.querySelectorAll("#rack .activeSlot")[0]);
+    start = start ? start.parentNode : null;
+    var end  = (document.querySelectorAll(".specialContainer")[0]);
+    this.connect(start, end, "#6d6d6d", 3,"LineDirection");
+}
     },
     /*
         function to create line between 2 points
@@ -45489,7 +45709,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         color (Hexadecimal color), thickness(Integer)
      */
     
-    connect:function(startEl, endEl, color, thickness) {
+    connect:function(startEl, endEl, color, thickness,className) {
     var off1 = this.getOffset(startEl);
     var off2 = this.getOffset(endEl);
     // bottom right
@@ -45506,8 +45726,8 @@ var MsuRack = React.createClass({displayName: "MsuRack",
     // angle
     var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
     // make hr
-    var htmlLine = "<div class='drawerLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-    
+
+ var htmlLine = "<div class="+className+" style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
     document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },
@@ -45521,6 +45741,8 @@ getOffset( el ) {
     };
 },
 	render: function(){
+        var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
+        var putDirection = this.props.putDirection;
         var type = this.props.type;
         var isDrawer = this.props.isDrawer;
         var rackDetails = this.props.rackData.rack_type_rec;
@@ -45570,11 +45792,11 @@ getOffset( el ) {
                 "justify-content": "center",
                 "flex-grow": 1,
                 "flex-wrap": "nowrap",
-                "box-sizing": "border-box",
-                width: "100%",
+                "box-sizing": "border-box",               
                 overflow: "hidden"
+
             }
-        
+
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow){
                 drawerSlotData = row[1];
@@ -45613,14 +45835,50 @@ getOffset( el ) {
                 )
             }())
         }
+       if(putDirection){
+        nestable_count=putDirection.nestable_count;
+        nestable_direction=putDirection.nestable_direction;
+        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
+         if(putDirection.orientation_preference && nestable_count>1){
+        orientation="orientation";
+        orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
+        }
+        else if(putDirection.orientation_preference && stackCount>=1){
+        orientation="orientation";  
+        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
+        }
+        else
+        {
+           orientation="containerHide";
+        }             
+        stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
+        stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
+        fragileClass=putDirection.fragile?"fragile":"containerHide";
+        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
+        count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
+    }
 		return (
 				React.createElement("div", {className: "drawWrap", style: wrapStyle}, 
                 React.createElement("div", {className: "drawRack", id: "rack", style: this.props.type=="small" ? drawRackStyle:{}}, 
 					eachRow.reverse(), 
                     React.createElement("div", {className: "lastRow", style: this.props.type=="small" ?  lastSlot:{}})
-                    
+               
 				), 
+                putDirection?(
+                React.createElement("div", {className: "specialContainer"}, 
+                React.createElement("img", {className: orientation, src: orientationClass}), 
+                React.createElement("div", {className: stackClass}, 
+                        React.createElement("span", {className: stackicon}), 
+                        React.createElement("span", {className: "stackText"}, stackText), 
+                        React.createElement("span", {className: "stackCount"}, count)
+                ), 
+                 React.createElement("div", {className: fragileClass}, 
+                        React.createElement("span", {className: "fragileicons"}), 
+                        React.createElement("span", {className: "fragileText"}, _("FRAGILE"))
+                 )
+                 )
+):"", 
                 drawerCompartment
                 )
 			);
@@ -46131,7 +46389,8 @@ var TableRow = React.createClass({displayName: "TableRow",
             classes = classes+ "table-col-peripheral-"+value.management+" ";
     		var border = value.border == true ? classes = classes + "border-left " : "";
     		var grow = value.grow == true ? classes = classes + "flex-grow ":"";
-    		var selected = value.selected == true ? classes = classes + "selected ":"";
+    		var actualqty=value.status=="actualqty" && value.selected !== true? classes=classes+ "actualqty ":"";
+            var selected = value.selected == true ? classes = classes + "selected ":"";
     		var large = value.size == "large" ? classes = classes + "large ":classes = classes + "small ";
     		var bold = value.bold == true ? classes = classes + "bold ":"";
     		var disabled = value.disabled == true ? classes = classes + "disabled ":"";
@@ -46896,6 +47155,9 @@ var appConstants = {
 		"white":"#FFFFFF",
 	},
 	PICK_FRONT_SCAN_PACKS:"pick_front_scan_packs",
+	ERROR_NOTIFICATION:"ERROR_NOTIFICATION",
+	HIDE_ERROR_NOTIFICATION:"HIDE_ERROR_NOTIFICATION",
+    CLIENT_NOTIFICATION:"client"
 };
 
 module.exports = appConstants;
@@ -50119,6 +50381,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         });
         if (_seatData.notification_list.length != 0) {
             _seatData.notification_list[0].code = (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002;
+            _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION
             if (flag == true) {
                 _enableButton = false;
             }
@@ -50127,13 +50390,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
             _seatData.notification_list[0].details[0] = bin_id;
             _seatData.notification_list[0].level = "info";
+            _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION;
             //_seatData.notification_list[0].description = (flag) ? resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.SELECTED : resourceConstants.BIN + ' ' + bin_id + ' ' + resourceConstants.UNSELECTED;
         } else {
             var notification_list = {
                 "code": (flag) ? resourceConstants.CLIENTCODE_001 : resourceConstants.CLIENTCODE_002,
                 "level": "info",
                 "details": [bin_id],
-                "description": ""
+                "description": "",
+                type: appConstants.CLIENT_NOTIFICATION
             }
             _seatData.notification_list[0] = notification_list;
         }
@@ -50151,6 +50416,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var currentState = this.getEnableButton();
         this.setEnableButtonIntialState();
         return currentState;
+    },
+
+    getScreenEvent:function(){
+        return _seatData.event
     },
 
     getStageActiveStatus: function () {
@@ -50644,6 +50913,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.rack_details;
         }
     },
+     getDirectionDetails: function () {
+            return _seatData.special_handling;
+    },
 
     getCurrentSelectedBin: function () {
         var binData = {};
@@ -50863,9 +51135,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
-            data["tableRows"].push(d);
+            d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+           d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
+           data["tableRows"].push(d);
         });
         return data;
     },
@@ -51369,6 +51641,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
+                    data["type"] =  appConstants.CLIENT_NOTIFICATION;
                     data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
 
@@ -51376,6 +51649,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
                     _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
+                    _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
                 }
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -51392,6 +51666,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_017;
                     data["level"] = "error";
+                    data["type"] =  appConstants.CLIENT_NOTIFICATION;
                     data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
 
@@ -51399,6 +51674,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_017;
                     _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
+                    _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
                 }
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -51411,6 +51687,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     var data = {};
                     data["code"] = resourceConstants.CLIENTCODE_011;
                     data["level"] = "error";
+                    data["type"] =  appConstants.CLIENT_NOTIFICATION;
                     data["details"] = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0] = data;
 
@@ -51418,6 +51695,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_011;
                     _seatData.notification_list[0].details = [_seatData["pick_quantity"]];
                     _seatData.notification_list[0].level = "error";
+                    _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
                 }
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -51642,12 +51920,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 data["level"] = "error";
+                data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [details];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
+                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
             if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
                 _putFrontExceptionScreen = "good";
@@ -51687,12 +51967,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
+                data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [_allowedQuantity];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
                 _seatData.notification_list[0].details = [_allowedQuantity];
                 _seatData.notification_list[0].level = "error";
+                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
             _goodQuantity = 0;
 
@@ -51715,12 +51997,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var data = {};
                 data["code"] = resourceConstants.CLIENTCODE_012;
                 data["level"] = "error";
+                data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [_allowedQuantity];
                 _seatData.notification_list[0] = data;
             } else {
                 _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
                 _seatData.notification_list[0].details = [_allowedQuantity];
                 _seatData.notification_list[0].level = "error";
+                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
             _damagedQuantity = 0;
 
@@ -51823,12 +52107,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.notification_list.length > 0) {
             _seatData.notification_list[0]["code"] = data.code;
             _seatData.notification_list[0].level = data.level;
+            _seatData.notification_list[0].type= appConstants.CLIENT_NOTIFICATION
         } else {
             var notification_list = {
                 "code": data.code,
                 "level": data.level,
                 "details": [],
-                "description": ""
+                "description": "",
+                type: appConstants.CLIENT_NOTIFICATION
             }
             _seatData.notification_list[0] = notification_list;
         }
@@ -52051,6 +52337,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontScreenId"] = this.getScreenId();
                 data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
                 data["PutFrontRackDetails"] = this.getRackDetails();
+                
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
                 data["BinMapDetails"] = this._getBinMapDetails();
@@ -52062,6 +52349,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PutFrontNotification"] = this.getNotificationData();
                 data["PutFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PutFrontItemUid"] = this.getItemUid();
+                data["PutFrontPutDirection"] = this.getDirectionDetails();
                 break;
             case appConstants.PUT_FRONT_WAITING_UNDOCK:
                 data["PutFrontNavData"] = this.getNavData();
@@ -52251,6 +52539,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontPickDirection"] = this.getDirectionDetails();
                 break;
             case appConstants.PICK_FRONT_PACKING_BOX:
                 data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
@@ -52550,6 +52839,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditPpsMode"] = this.getPpsMode();
                 data["AuditSeatType"] = this.getSeatType();
+                data["AuditShowModal"] = this.getModalStatus();
 
                 //Peripheral management for pre-put
                 data["PrePutScreenId"] = this.getScreenId();
@@ -52782,16 +53072,21 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 }
                 else{
                 var received_msg = evt.data;
-                var data = JSON.parse(evt.data);
-                if(data.hasOwnProperty('data')){
-                    if(data.data == 'disconnect'){
-                        utils.sessionLogout();
-                        return false;
+                try{
+                    var data = JSON.parse(evt.data);
+                    if(data.hasOwnProperty('data')){
+                        if(data.data == 'disconnect'){
+                            utils.sessionLogout();
+                            return false;
+                        }
                     }
+                    putSeatData(data);
+                    CommonActions.setCurrentSeat(data.state_data);
+                    CommonActions.setServerMessages();
+                }catch(ex){
+
                 }
-                putSeatData(data);
-                CommonActions.setCurrentSeat(data.state_data);
-                CommonActions.setServerMessages();
+
             }
             };
             ws.onclose = function() {
@@ -53003,8 +53298,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
+    
     console.log(data);
-
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

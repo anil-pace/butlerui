@@ -2070,5 +2070,22 @@ msgid "Wrong Scan. Unrecognized barcode."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:463
+msgid "PPS is closed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:464
+msgid "NEST MAX"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:465
+msgid "STACK MAX"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:466
+msgid "DO NOT STACK"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:467
+msgid "FRAGILE"
 msgid "Length of {0} should not be greater than {1}"
 msgstr ""

@@ -114,6 +114,7 @@ var Audit = React.createClass({
           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
+                  <Modal />
                  <div className='main-container'>
                     <Spinner />
                  </div>
@@ -128,6 +129,7 @@ var Audit = React.createClass({
         this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
               <div className='grid-container'>
+                  <Modal />
                  <div className='main-container'>
                     <Rack rackData = {this.state.AuditRackDetails}/>
                  </div>
@@ -223,6 +225,7 @@ var Audit = React.createClass({
             messageType = "small";
           this._component = (
               <div className='grid-container audit-reconcilation'>
+                  <Modal />
                  <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
                 {subComponent}
                  <div className = 'staging-action' >
@@ -246,6 +249,7 @@ var Audit = React.createClass({
           this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.AuditExceptionData}/>
                 <div className="exception-right">
                   <ExceptionHeader data={this.state.AuditServerNavData} />
@@ -263,6 +267,7 @@ var Audit = React.createClass({
           else if(this.state.AuditExceptionScreen == "second_screen"){
               this._component = (
               <div className='grid-container exception'>
+                  <Modal/>
                 <Exception data={this.state.AuditExceptionData}/>
                 <div className="exception-right">
                   <div className="main-container exception2">
@@ -297,6 +302,7 @@ var Audit = React.createClass({
           }
           this._component = (
               <div className='grid-container audit-reconcilation'>
+                  <Modal />
                   <div className="row scannerHeader">
                     <div className="col-md-6">
                       <div className="ppsMode"> PPS Mode : {this.state.AuditPpsMode.toUpperCase()} </div>
@@ -307,7 +313,6 @@ var Audit = React.createClass({
                   </div>
                   <TabularData data = {this.state.utility}/>
                   {_button}
-                  <Modal /> 
               </div>
             );
         break; 
@@ -319,8 +324,20 @@ var Audit = React.createClass({
   getNotificationComponent:function(){
     if(this.state.AuditNotification != undefined)
       this._notification = <Notification notification={this.state.AuditNotification} navMessagesJson={this.props.navMessagesJson} />
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){
     this.getNotificationComponent();

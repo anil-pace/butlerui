@@ -29,7 +29,25 @@ var Button1 = React.createClass({
     };
 
 switch (module) {
-                    case appConstants.PUT_BACK:
+    case appConstants.ERROR_NOTIFICATION:
+        var notification_data=mainstore.getNotificationData()
+        var data = {
+            "event_name": "remove_gui_alert",
+            "event_data": {
+                "ui_event":mainstore.getScreenEvent()
+            }
+        }
+        if(notification_data && notification_data.type!== appConstants.CLIENT_NOTIFICATION){
+            ActionCreators.postDataToInterface(data);
+        }
+
+        ActionCreators.clearNotification()
+        $('.modal.notification-error').data('bs.modal').options.backdrop=true
+        $(".modal-backdrop").remove()
+        $(".modal.notification-error").modal("hide");
+        $(".modal").removeClass("notification-error")
+        break;
+    case appConstants.PUT_BACK:
                         switch (action) {
                             case appConstants.STAGE_ONE_BIN:
                                 ActionCreators.stageOneBin();
@@ -416,7 +434,8 @@ switch (module) {
             this.showModal(null, "enter_barcode");
             break;
 
-            case appConstants.ADD_SCANNER_DETAILS: 
+            case appConstants.ADD_SCANNER_DETAILS:
+            $('.modal:not(.notification-error)').modal("hide");
             peripheralId = document.getElementById("add_scanner").value;
             peripheralData["peripheral_id"] = peripheralId;
             peripheralData["peripheral_type"]= "barcode_scanner";
@@ -495,14 +514,14 @@ switch (module) {
                             this.performAction.bind(this, this.props.module, this.props.action)
                         }  > {
                             this.props.text
-                        } < /a>
+                        } </a>
                         );
                         else
                             return ( < a className = {
                                 this.props.color == "orange" ? "custom-button disabled orange" : "custom-button disabled black"
                             } > {
                                 this.props.text
-                            } < /a>);
+                            } </a>);
                         }
                     });
 

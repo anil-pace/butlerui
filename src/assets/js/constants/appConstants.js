@@ -234,6 +234,10 @@ var appConstants = {
 		"white":"#FFFFFF",
 	},
 	PICK_FRONT_SCAN_PACKS:"pick_front_scan_packs",
+	},
+	ERROR_NOTIFICATION:"ERROR_NOTIFICATION",
+	HIDE_ERROR_NOTIFICATION:"HIDE_ERROR_NOTIFICATION",
+    CLIENT_NOTIFICATION:"client"
 };
 
 module.exports = appConstants;

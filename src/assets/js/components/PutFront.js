@@ -51,8 +51,21 @@ var PutFront = React.createClass({
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
       this._notification = <Notification notification={this.state.PutFrontNotification} navMessagesJson={this.props.navMessagesJson} />
-    else
-      this._notification = "";
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        this._notification = "";
+    }
+
   },
 
   getExceptionComponent:function(){
@@ -77,6 +90,7 @@ var PutFront = React.createClass({
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
         this._component = (
           <div className='grid-container'>
+            <Modal/>
           <div className='main-container'>
           {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
           </div>
@@ -114,6 +128,7 @@ var PutFront = React.createClass({
         this._navigation = '';
       this._component =(
           <div className='grid-container exception'>
+            <Modal/>
               <Exception data={this.state.PutFrontExceptionData} action={true}/>
               <div className="exception-right"></div>
               <div className = 'cancel-scan'>
@@ -136,8 +151,8 @@ var PutFront = React.createClass({
             <div className="text">{_("CURRENT BIN")}</div>
             </div>
             <div className='main-container'>
-            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails}/>
-            <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
+            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection}/>
+            <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>
             <div className = 'cancel-scan'>
             <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"}/>
@@ -154,6 +169,7 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.UNDOCK_PUSH}/>);
           this._component = (
             <div className='grid-container'>
+              <Modal/>
             <div className='main-container'>
             <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
             </div>
@@ -169,6 +185,7 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.WRONG_UNDOCK}/>);
           this._component = (
             <div className='grid-container'>
+              <Modal/>
             <div className='main-container'>
             <SplitPPS  groupInfo = {this.state.BinMapDetails} wrongUndock={this.state.WrongUndock}/>
             </div>
@@ -205,6 +222,7 @@ var PutFront = React.createClass({
          }
         this._component = (
           <div className='grid-container'>
+            <Modal/>
           {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
         {selected_screen}
           </div>
@@ -443,6 +461,7 @@ var PutFront = React.createClass({
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
               <div className='grid-container exception'>
+                <Modal/>
               <Exception data={this.state.PutFrontExceptionData}/>
               <div className="exception-right">
               <div className="main-container exception2">
@@ -462,6 +481,7 @@ var PutFront = React.createClass({
           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
               <div className='grid-container exception'>
+                <Modal/>
               <Exception data={this.state.PutFrontExceptionData}/>
               <div className="exception-right">
               <div className="main-container">

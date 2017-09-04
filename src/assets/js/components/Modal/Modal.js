@@ -355,6 +355,27 @@ function loadComponent(modalType,modalData){
           ));
       title = _("Cancel Exception");    
       break;
+
+      case appConstants.ERROR_NOTIFICATION:
+          component = [];
+          component.push((
+              <div>
+                  <div className="row">
+                      <div className="col-md-12">
+                          <div className="title-textbox">{modalData}</div>
+                      </div>
+                  </div>
+                  <div className="modal-footer removeBorder">
+                      <div className="buttonContainer center-block chklstButtonContainer">
+                          <div className="row removeBorder">
+                              <div className="col-md-4 col-md-offset-3"><Button1 disabled = {false} text ={_("OK")} color={"orange"} module ={appConstants.ERROR_NOTIFICATION} action={appConstants.HIDE_ERROR_NOTIFICATION}/></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          ));
+          title = <span><span className="glyphicon glyphicon-exclamation-sign"></span>{_("Error")}</span>
+          break;
     default:
       component = null;
       title = null;
@@ -381,7 +402,7 @@ var Modal = React.createClass({
     this.setState(getStateData());
   },
   render: function () {      
-    return (<div className="modal fade">
+    return (<div className="modal">
         <div className="modal-dialog">
           <div className="modal-content">
             <ModalHeader title={title}/>

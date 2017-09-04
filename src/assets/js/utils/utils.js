@@ -60,16 +60,21 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 }
                 else{
                 var received_msg = evt.data;
-                var data = JSON.parse(evt.data);
-                if(data.hasOwnProperty('data')){
-                    if(data.data == 'disconnect'){
-                        utils.sessionLogout();
-                        return false;
+                try{
+                    var data = JSON.parse(evt.data);
+                    if(data.hasOwnProperty('data')){
+                        if(data.data == 'disconnect'){
+                            utils.sessionLogout();
+                            return false;
+                        }
                     }
+                    putSeatData(data);
+                    CommonActions.setCurrentSeat(data.state_data);
+                    CommonActions.setServerMessages();
+                }catch(ex){
+
                 }
-                putSeatData(data);
-                CommonActions.setCurrentSeat(data.state_data);
-                CommonActions.setServerMessages();
+
             }
             };
             ws.onclose = function() {
@@ -281,8 +286,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
+    
     console.log(data);
-
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

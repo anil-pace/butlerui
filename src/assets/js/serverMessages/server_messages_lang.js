@@ -460,6 +460,11 @@ function server_messages_list() {
     _("Exception with entity reported");
     _("Please put entities in IRT and Scan IRT Bin");
     _("Wrong Scan. Unrecognized barcode.");
+    _("PPS is closed");
+    _("NEST MAX");
+    _("STACK MAX");
+    _("DO NOT STACK");
+    _("FRAGILE");
     _("Length of {0} should not be greater than {1}");
     _("Scan {0} packs");
     _("Scan {0} sub packs");
@@ -468,4 +473,30 @@ function server_messages_list() {
     _("Scan {0} more packs and place in bin {1}");
     _("Scan {0} more sub packs and place in bin {1}");
     _("Put pack list in trolley and press PPTL to confirm");
+    _("Scan damaged entity");
+    _("Damaged Quantity");
+    _("Entity Damaged");
+    _("Wrong Scan. Entity not present in Database");
+    _("Sum of good, missing and damaged should be equal to {0}");
+    _("Last item scan will be cancelled. Do you want to continue?");
+    _("Continue");
+    _("Bin full");
+    _("Please put entities which have issues in exception area");
+    _("Unscannable");
+    _("Invalid Event.Expecting PPTL button press");
+    _("Remove Tote from bin & Press PPTL to confirm no Items Remaining");
+    _("Press PPTL to confirm no Items Remaining in Bin {0}");
+    _("Wrong entity scan.Please scan the correct entity");
+    _("Physically Damaged entity reported.");
+    _("Entity entry successful");
+    _("Bin scan successful");
+    _("Extra entity scan found.");
+    _("Physically Damaged Reported should equal Scanned Quantity");
+    _("SKU not present in Database.");
+    _("Extra entity scan found.");
+    _("Container Already Scanned.");
+    _("Invalid Entity Scanned.");
+    _("Quantity of Physically damaged entities scanned is less.")
+    _("Error")
 }
+

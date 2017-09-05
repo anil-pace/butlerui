@@ -304,6 +304,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.audit[0];
                 else if (_seatData.screen_id === appConstants.AUDIT_SCAN_MPU)
                     _NavData = navConfig.sraudit[1];
+                else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
+                    _NavData = navConfig.sraudit[1];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
                     _NavData = navConfig.utility[0];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -2538,13 +2540,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditCancelScanStatus"] = this.getCancelScanStatus();
-                data["AuditBoxSerialData"] = this.getBoxSerialData();
-                data["AuditLooseItemsData"] = this.getLooseItemsData();
-                data["AuditSlotDetails"] = this.getCurrentSlot();
-                data["AuditItemDetailsData"] = this.getItemDetailsData();
+                data["AuditSRPackData"] = this.getSRPackData();
+                data["AuditSRSubPackData"] = this.getSRSubPackData();
                 data["AuditScanDetails"] = this.getScanDetails();
                 data["AuditFinishFlag"] = this.getFinishAuditFlag();
-                data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
                 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
                 break;
 

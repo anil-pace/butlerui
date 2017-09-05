@@ -37105,7 +37105,7 @@ var Audit = React.createClass({displayName: "Audit",
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
-                React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
+                
                 React.createElement("div", {className: "main-container space-left"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
                       this._boxSerial, 
@@ -37146,6 +37146,12 @@ var Audit = React.createClass({displayName: "Audit",
             "details": [],
             "code": "Audit.A.012",
             "description": "No Items To Reconcile",
+            "level": "info"
+          };
+           var mm = {
+            "details": [],
+            "code": "Audit.A.013",
+            "description": "No Sub-pack To Reconcile",
             "level": "info"
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
@@ -48568,7 +48574,8 @@ var serverMessages = {
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
     "CLIENTCODE_403" : "PPS is Closed",
     "CLIENTCODE_401" : "Invalid Credentials",
-    "Audit.A.012":"No Items To Reconcile",
+    "Audit.A.012"    : "No Items To Reconcile",
+    "Audit.A.013"    : "No sub-packs to reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
     "CLIENTCODE_006" : "Peripheral added successfully",
@@ -49359,6 +49366,63 @@ var AuditStore = assign({}, EventEmitter.prototype, {
                 })(),
                 new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
             ]);*/
+        });
+        return data;
+    },
+
+    //SR Audit
+    getSRPackData: function() {
+        var data = {};
+        var disabledStatus;
+        //if (_AuditData.Current_box_details.length > 0) {
+        disabledStatus = false;
+        //}
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Pack", "header", false, "small", false, true, true, false));
+        if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
+        data["tableRows"] = [];
+        var self = this;
+        var d = [];
+        _AuditData.Loose_sku_list.map(function(value, index) {
+            d= [];
+             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
+            if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
+            d.push(new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+            console.log("jkkkk");
+            console.log(d);
+            data["tableRows"].push(d);
+
+        });
+        return data;
+    },
+
+       getSRSubPackData: function() {
+        var data = {};
+        var disabledStatus;
+        //if (_AuditData.Current_box_details.length > 0) {
+        disabledStatus = false;
+        //}
+        data["header"] = [];
+        data["header"].push(new this.tableCol("Sub-Pack", "header", false, "small", false, true, true, false));
+        if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
+        data["tableRows"] = [];
+        var self = this;
+        var d = [];
+        _AuditData.Loose_sku_list.map(function(value, index) {
+            d= [];
+             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
+            if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
+                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
+            d.push(new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+            console.log("jkkkk");
+            console.log(d);
+            data["tableRows"].push(d);
+
         });
         return data;
     },
@@ -50594,6 +50658,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
                 else if (_seatData.screen_id === appConstants.AUDIT_SCAN_MPU)
+                    _NavData = navConfig.sraudit[1];
+                else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
                     _NavData = navConfig.sraudit[1];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
                     _NavData = navConfig.utility[0];
@@ -52829,13 +52895,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditCancelScanStatus"] = this.getCancelScanStatus();
-                data["AuditBoxSerialData"] = this.getBoxSerialData();
-                data["AuditLooseItemsData"] = this.getLooseItemsData();
-                data["AuditSlotDetails"] = this.getCurrentSlot();
-                data["AuditItemDetailsData"] = this.getItemDetailsData();
+                data["AuditSRPackData"] = this.getSRPackData();
+                data["AuditSRSubPackData"] = this.getSRSubPackData();
                 data["AuditScanDetails"] = this.getScanDetails();
                 data["AuditFinishFlag"] = this.getFinishAuditFlag();
-                data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
                 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
                 break;
 
@@ -53362,7 +53425,8 @@ var putSeatData = function(data) {
             CommonActions.setPickFrontData(data.state_data);
             break;
         case appConstants.AUDIT:
-            data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_mpu","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.002","details":[],"description":"Scan Box/Items"}]}');
+            //data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_sr","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.003","details":[],"description":"Scan Box/Items"}]}');
+            data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["026.1.A.03","026.1.A.04"],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_sr","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.003","details":[],"description":"Scan Box/Items"}]}');
             console.log(data);
             CommonActions.setAuditData(data.state_data);
             break;

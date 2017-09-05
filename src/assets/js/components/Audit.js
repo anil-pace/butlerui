@@ -230,7 +230,7 @@ var Audit = React.createClass({
           this._component = (
               <div className='grid-container'>
                 <Modal />
-                <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
+                
                 <div className='main-container space-left'>
                   <div className="audit-scan-left">
                       {this._boxSerial}
@@ -271,6 +271,12 @@ var Audit = React.createClass({
             "details": [],
             "code": "Audit.A.012",
             "description": "No Items To Reconcile",
+            "level": "info"
+          };
+           var mm = {
+            "details": [],
+            "code": "Audit.A.013",
+            "description": "No Sub-pack To Reconcile",
             "level": "info"
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )

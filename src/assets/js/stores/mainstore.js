@@ -428,6 +428,57 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     },
 
+//SR pack-subpack
+ getPackData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        data["header"].push(new this.tableCol(_("Pack"), "header", false, "small", false, true, true, false));
+        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
+        _finishAuditFlag = true;
+        var d = [];
+        _seatData.Box_qty_list.map(function (value, index) {
+            d = [];
+            if (value.Scan_status != "close") {
+                d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
+                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+                data["tableRows"].push(d);
+            } else {
+                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+                data["tableRows"].push(d);
+            }
+
+            if (value.Scan_status == "open") {
+                _finishAuditFlag = false;
+            }
+        });
+
+        _seatData.Extra_box_list.map(function (value, index) {
+            d = [];
+            d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
+            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
+            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+            data["tableRows"].push(d);
+            if (value.Scan_status == "open") {
+                _finishAuditFlag = false;
+            }
+        });
+
+        return data;
+
+    },
 
     getBoxDetails: function () {
         if (_seatData.hasOwnProperty('box_serials'))
@@ -2540,8 +2591,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditCancelScanStatus"] = this.getCancelScanStatus();
-                data["AuditSRPackData"] = this.getSRPackData();
-                data["AuditSRSubPackData"] = this.getSRSubPackData();
+               data["AuditBoxSerialData"] = this.getBoxSerialData();
                 data["AuditScanDetails"] = this.getScanDetails();
                 data["AuditFinishFlag"] = this.getFinishAuditFlag();
                 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();

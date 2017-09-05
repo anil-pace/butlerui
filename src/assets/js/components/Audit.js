@@ -204,7 +204,9 @@ var Audit = React.createClass({
             );
        
           break;
-         case appConstants.AUDIT_SCAN_SR:
+
+
+      case appConstants.AUDIT_SCAN_SR:
        if(this.state.AuditExceptionStatus == false){
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(this.state.AuditCancelScanStatus == true){
@@ -216,13 +218,13 @@ var Audit = React.createClass({
           }else{
             this._cancelStatus = '';
           }
-          if(this.state.AuditBoxSerialData["tableRows"].length > 0 ){
+          if(this.state.AuditBoxSerialData["tableRows"].length > 0){
             this._boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
           }else{
             this._boxSerial = '';
           }
-          if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
-            this._looseItems = (<TabularData data = {this.state.AuditLooseItemsData} />);
+          if(this.state.AuditBoxSerialData["tableRows"].length > 0){
+            this._looseItems = (<TabularData data = {this.state.AuditBoxSerialData} />);
           }else{
             this._looseItems = '';
           }

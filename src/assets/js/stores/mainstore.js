@@ -303,7 +303,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
                 else if (_seatData.screen_id === appConstants.AUDIT_SCAN_MPU)
-                    _NavData = navConfig.audit[0];
+                    _NavData = navConfig.sraudit[1];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
                     _NavData = navConfig.utility[0];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;

@@ -46884,6 +46884,45 @@ var navData = {
         "type": 'passive'
     }]
     ],
+"sraudit": [
+        [{
+            "screen_id": "audit_front_waiting_for_mpu",
+            "code": "Common.000",
+            "message": "Wait For MPU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [ 
+          {
+        "screen_id": "audit_scan_mpu",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan MPU",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    },
+        {
+        "screen_id": "audit_scan_sr",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan Sub-Packs",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
+    },
+    ,{
+        "screen_id": "audit_reconcile",
+        "code": "Common.000",
+        "image": svgConstants.place,
+        "message": "Status",
+        "showImage": true,
+        "level": 3,
+        "type": 'passive'
+    }]
+    ],
+
     "prePut": [
         [{
             "screen_id": "pre_put_stage",
@@ -47056,6 +47095,7 @@ var appConstants = {
 	AUDIT_SCAN_MPU:"audit_scan_mpu",
 	AUDIT_RECONCILE:"audit_reconcile",
 	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
+	AUDIT_WAITING_FOR_MPU:"audit_front_waiting_for_mpu",
 	GET_REVISED_QUANTITY:"GET_REVISED_QUANTITY",
 	BARCODE_SCAN : 'BARCODE_SCAN',
 	GET_SERVER_MESSAGES :'GET_SERVER_MESSAGES',
@@ -48510,6 +48550,9 @@ var serverMessages = {
     "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
     "AdF.H.001" : "Scan Box or Items",
+    "AdF.H.002" : "Scan MPU",
+    "AdF.H.003" : "Scan Pack or Sub-Packs",
+    "AdF.H.004" : "Continue scanning Sub-Packs and Pack",
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",
@@ -50551,7 +50594,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
                 else if (_seatData.screen_id === appConstants.AUDIT_SCAN_MPU)
-                    _NavData = navConfig.audit[0];
+                    _NavData = navConfig.sraudit[1];
                 else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
                     _NavData = navConfig.utility[0];
                     _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
@@ -53319,7 +53362,7 @@ var putSeatData = function(data) {
             CommonActions.setPickFrontData(data.state_data);
             break;
         case appConstants.AUDIT:
-            data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_mpu","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.001","details":[],"description":"Scan Box/Items"}]}');
+            data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_mpu","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.002","details":[],"description":"Scan Box/Items"}]}');
             console.log(data);
             CommonActions.setAuditData(data.state_data);
             break;

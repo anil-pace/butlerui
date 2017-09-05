@@ -358,6 +358,45 @@ var navData = {
         "type": 'passive'
     }]
     ],
+"sraudit": [
+        [{
+            "screen_id": "audit_front_waiting_for_mpu",
+            "code": "Common.000",
+            "message": "Wait For MPU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [ 
+          {
+        "screen_id": "audit_scan_mpu",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan MPU",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    },
+        {
+        "screen_id": "audit_scan_sr",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan Sub-Packs",
+        "showImage": true,
+        "level": 2,
+        "type": 'passive'
+    },
+    ,{
+        "screen_id": "audit_reconcile",
+        "code": "Common.000",
+        "image": svgConstants.place,
+        "message": "Status",
+        "showImage": true,
+        "level": 3,
+        "type": 'passive'
+    }]
+    ],
+
     "prePut": [
         [{
             "screen_id": "pre_put_stage",

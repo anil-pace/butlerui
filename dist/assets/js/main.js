@@ -36897,7 +36897,7 @@ var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
 var ExceptionHeader = require('./ExceptionHeader');
-var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 
 
 function getStateData(){
@@ -37093,32 +37093,32 @@ var Audit = React.createClass({displayName: "Audit",
           }else{
             this._cancelStatus = '';
           }
-          if(this.state.AuditBoxSerialData["tableRows"].length > 0){
-            this._boxSerial = (React.createElement(TabularData, {data: this.state.AuditBoxSerialData}));
+          if(this.state.AuditPackData["tableRows"].length > 0){
+            this._packData = (React.createElement(TabularData, {data: this.state.AuditPackData}));
           }else{
-            this._boxSerial = '';
+            this._packData = '';
           }
-          if(this.state.AuditBoxSerialData["tableRows"].length > 0){
-            this._looseItems = (React.createElement(TabularData, {data: this.state.AuditBoxSerialData}));
+          if(this.state.AuditSubPackData["tableRows"].length > 0){
+            this._subPackData = (React.createElement(TabularData, {data: this.state.AuditSubPackData}));
           }else{
-            this._looseItems = '';
+            this._subPackData = '';
           }
-
+          
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
                 React.createElement(Modal, null), 
                 
                 React.createElement("div", {className: "main-container space-left"}, 
                   React.createElement("div", {className: "audit-scan-left"}, 
-                      this._boxSerial, 
-                      this._looseItems
+                      this._packData, 
+                      this._subPackData
                   ), 
                   React.createElement("div", {className: "audit-scan-middle"}, 
                    React.createElement(Img, {srcURL: this.state.AuditItemDetailsData.image_url}), 
                    React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
-                    React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, 
+                    React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.AuditSRKQQuantity, 
                                                             type: appConstants.UNSCANNABLE, 
                                                             action: appConstants.UNSCANNABLE}), 
                                     
@@ -37308,7 +37308,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":298,"../stores/AuditStore":311,"../stores/mainstore":317,"../utils/utils.js":318,"./Button/Button":241,"./Button/Button.js":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ.js":269,"./ProductDetails/KQExceptionDamaged":270,"./Rack/MsuRack.js":281,"./Reconcile":285,"./Spinner/LoaderButler":286,"./SystemIdle":290,"./TabularData":295,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":298,"../stores/AuditStore":311,"../stores/mainstore":317,"../utils/utils.js":318,"./Button/Button":241,"./Button/Button.js":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ.js":269,"./ProductDetails/KQExceptionMissing":271,"./Rack/MsuRack.js":281,"./Reconcile":285,"./Spinner/LoaderButler":286,"./SystemIdle":290,"./TabularData":295,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -50746,7 +50746,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _finishAuditFlag = true;
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
-            d = [];
+            if(value.Type!="outer/pack" && value.Type!="inner/subpack")
+            {
             if (value.Scan_status != "close") {
                 d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
@@ -50762,7 +50763,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
             }
-
+}
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
             }
@@ -50799,35 +50800,45 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-            if (value.Scan_status != "close") {
-                d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
+            if(value.Type=="outer/pack")
+        {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+                    d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
                 data["tableRows"].push(d);
-            } else {
-                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
-                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
-                data["tableRows"].push(d);
-            }
+       }
 
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
             }
         });
 
-        _seatData.Extra_box_list.map(function (value, index) {
+      
+
+        return data;
+
+    },
+
+    getSubPackData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        data["header"].push(new this.tableCol(_("Sub-Pack"), "header", false, "small", false, true, true, false));
+        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
+        _finishAuditFlag = true;
+        var d = [];
+        _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-            d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
-            data["tableRows"].push(d);
+             if(value.Type=="inner/subpack"){
+                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Box_Actual_Qty, "complete", false, "large", true, false, false, false, true));
+                data["tableRows"].push(d);
+}
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
             }
@@ -50838,6 +50849,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getBoxDetails: function () {
+       
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
     },
@@ -51272,7 +51284,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Sku_Item_List.map(function (value, index) {
+        _seatData.Sku_Item_List.map(function (value, index) {   
             d = [];
             var itemQtyList = [];
             var itemList = value.Item_Qty_List;
@@ -51287,7 +51299,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
         });
-
         _seatData.extra_loose_sku_item_list.map(function (value, index) {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
@@ -52198,6 +52209,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.rack_details.slot_type === "drawer" ? true : false;
         }
     },
+    getSRKQQuantity:function(){
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _seatData.Current_box_details[0].Actual_qty,
+                    "total_qty": 0,
+                    "kq_allowed": true
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
     getSlotType: function () {
         if (_seatData.rack_details) {
             return _seatData.rack_details.slot_type ? _seatData.rack_details.slot_type : "none";
@@ -52948,8 +52973,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditCancelScanStatus"] = this.getCancelScanStatus();
-               data["AuditBoxSerialData"] = this.getBoxSerialData();
+               data["AuditPackData"] = this.getPackData();
+               data["AuditSubPackData"] = this.getSubPackData();
                 data["AuditScanDetails"] = this.getScanDetails();
+                data["AuditItemDetailsData"]=this.getItemDetailsData();
+                data["AuditSRKQQuantity"]=this.getSRKQQuantity()
                 data["AuditFinishFlag"] = this.getFinishAuditFlag();
                 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
                 break;
@@ -53477,8 +53505,10 @@ var putSeatData = function(data) {
             CommonActions.setPickFrontData(data.state_data);
             break;
         case appConstants.AUDIT:
-            //data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_sr","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.003","details":[],"description":"Scan Box/Items"}]}');
-            data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["026.1.A.03","026.1.A.04"],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.003","details":[],"description":"Scan Box/Items"}]}');
+            //scan MPU screen data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_sr","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[{"Sku":"2001","Item_Qty_List":[{"Item_Id":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","Actual_Qty":0,"Expected_Qty":9}]}],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[{"Sku":"2001","Actual_qty":0,"Expected_qty":9}],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.003","details":[],"description":"Scan Box/Items"}]}');
+            //add pack screen 
+            //data.state_data=JSON.parse('{"seat_name":"front_3","notification_list":[{"level":"info","code":"AdF.I.008","details":[],"description":"Cancel audit successful.Audit Restarted"}],"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["026.1.A.03","026.1.A.04"],"slot_type":"slot"},"exception_allowed":[{"exception_id":"AdF003","exception_name":"Loose Item unscannable","event":"loose_item_damage"},{"exception_id":"AdF002","exception_name":"Box unscannable","event":"box_damage"}],"roll_cage_flow":false,"show_expected_qty":false,"bin_coordinate_plotting":false,"screen_id":"audit_scan_sr","last_finished_box":[],"Cancel_scan":false,"logout_allowed":true,"seat_type":"front","product_info":[],"time_stamp":"1504526748","api_version":"1","mode":"audit","Box_qty_list":[{"Box_serial": "A001","Actual_qty": "3","Expected_qty": "5","Box_Expected_Qty": "3","Box_Actual_Qty": "2","Scan_status": "close","Type": "outer/pack"},{"Box_serial": "A002","Actual_qty": "4","Expected_qty": "7","Box_Expected_Qty": "6","Box_Actual_Qty": "3",”Scan_status": "close","Type": "inner/subpack"}],"group_info":{"1":"center"},"scan_allowed":true,"Extra_box_list":[],"Sku_Item_List":[],"Current_box_details":[],"item_in_box_barcode_damage":[],"extra_loose_sku_item_list":[],"screen_version":"1","enable_kq":false,"loose_item_barcode_damage":0,"docked":[],"Loose_sku_list":[],"is_idle":false,"box_barcode_damage":0,"header_msge_list":[{"level":"info","code":"AdF.H.003","details":[],"description":"Scan Box/Items"}]}');
+            data.state_data=JSON.parse('{"seat_name": "front_1", "notification_list": [], "rack_details": { "rack_type_rec": [ ["A", [ [ ["01", "02"], 32, 33, 48 ], [ ["03", "04"], 32, 33, 48 ], [ ["05", "06"], 32, 33, 48 ] ]], ["B", [ [ ["01", "02"], 32, 33, 48 ], [ ["03", "04"], 32, 33, 48 ], [ ["05", "06"], 32, 33, 48 ] ]], ["C", [ [ ["01", "02"], 32, 33, 48 ], [ ["03", "04"], 32, 33, 48 ], [ ["05", "06"], 32, 33, 48 ] ]], ["D", [ [ ["01", "02"], 32, 33, 48 ], [ ["03", "04"], 32, 33, 48 ], [ ["05", "06"], 32, 33, 48 ] ]], ["E", [ [ ["01", "02"], 32, 33, 48 ], [ ["03", "04"], 32, 33, 48 ], [ ["05", "06"], 32, 33, 48 ] ]] ], "slot_barcodes": ["002.1.A.01", "002.1.A.02"], "slot_type": "slot" }, "exception_allowed": [{ "exception_id": "AdF003", "exception_name": "Loose Item unscannable", "event": "loose_item_damage" }, { "exception_id": "AdF002", "exception_name": "Box unscannable", "event": "box_damage" }], "roll_cage_flow": false, "show_expected_qty": false, "bin_coordinate_plotting": false, "event": "process_barcode", "screen_id": "audit_scan_sr", "last_finished_box": [], "Cancel_scan": false, "logout_allowed": true, "seat_type": "front", "product_info": [], "time_stamp": "1504680547", "api_version": "1", "mode": "audit", "Box_qty_list": [{ "Box_serial": "A001", "Actual_qty": 3, "Expected_qty": 5, "Box_Expected_Qty": 3, "Box_Actual_Qty": 2, "Scan_status": "close", "Type": "outer/pack" }, { "Box_serial": "A002", "Actual_qty": 4, "Expected_qty": 7, "Box_Expected_Qty": 6, "Box_Actual_Qty": 3, "Scan_status": "close", "Type": "inner/subpack" }], "group_info": { "1": "center" }, "scan_allowed": true, "Extra_box_list": [], "Sku_Item_List": [{ "Sku": "2022", "Item_Qty_List": [{ "Item_Id": "eaddb471-bffd-43fb-9e6b-074d7b171a38", "Actual_Qty": 0, "Expected_Qty": 7 }] }], "Current_box_details": [{"Box_serial": "A001","Sku": "null","Actual_qty": 2,"Expected_qty": 9}], "item_in_box_barcode_damage": [], "extra_loose_sku_item_list": [], "screen_version": "1", "enable_kq": false, "loose_item_barcode_damage": 0, "docked": [], "Loose_sku_list": [], "is_idle": false, "box_barcode_damage": 0, "header_msge_list": [{ "level": "info", "code": "AdF.H.003", "details": [], "description": "Scan Box/Items" }]}');
             console.log(data);
             CommonActions.setAuditData(data.state_data);
             break;

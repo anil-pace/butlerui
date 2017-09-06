@@ -389,7 +389,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _finishAuditFlag = true;
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
-            d = [];
+            if(value.Type!="outer/pack" && value.Type!="inner/subpack")
+            {
             if (value.Scan_status != "close") {
                 d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
@@ -405,7 +406,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 data["tableRows"].push(d);
             }
-
+}
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
             }
@@ -442,35 +443,45 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-            if (value.Scan_status != "close") {
-                d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
+            if(value.Type=="outer/pack")
+        {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
+                    d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
                 data["tableRows"].push(d);
-            } else {
-                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
-                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
-                data["tableRows"].push(d);
-            }
+       }
 
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
             }
         });
 
-        _seatData.Extra_box_list.map(function (value, index) {
+      
+
+        return data;
+
+    },
+
+    getSubPackData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        data["header"].push(new this.tableCol(_("Sub-Pack"), "header", false, "small", false, true, true, false));
+        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+            data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
+        data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
+        _finishAuditFlag = true;
+        var d = [];
+        _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-            d.push(new self.tableCol(value.Box_serial, "extra", false, "large", false, true, false, false));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            // d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Actual_qty, "enabled", value.Scan_status == "open", "large", true, false, false, false, true));
-            d.push(new self.tableCol("0", "enabled", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
-            data["tableRows"].push(d);
+             if(value.Type=="inner/subpack"){
+                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Box_Actual_Qty, "complete", false, "large", true, false, false, false, true));
+                data["tableRows"].push(d);
+}
             if (value.Scan_status == "open") {
                 _finishAuditFlag = false;
             }
@@ -481,6 +492,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getBoxDetails: function () {
+       
         if (_seatData.hasOwnProperty('box_serials'))
             return _seatData.box_serials;
     },
@@ -915,7 +927,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Sku_Item_List.map(function (value, index) {
+        _seatData.Sku_Item_List.map(function (value, index) {   
             d = [];
             var itemQtyList = [];
             var itemList = value.Item_Qty_List;
@@ -930,7 +942,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
             data["tableRows"].push(d);
         });
-
         _seatData.extra_loose_sku_item_list.map(function (value, index) {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
@@ -1841,6 +1852,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.rack_details.slot_type === "drawer" ? true : false;
         }
     },
+    getSRKQQuantity:function(){
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _seatData.Current_box_details[0].Actual_qty,
+                    "total_qty": 0,
+                    "kq_allowed": true
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
     getSlotType: function () {
         if (_seatData.rack_details) {
             return _seatData.rack_details.slot_type ? _seatData.rack_details.slot_type : "none";
@@ -2591,8 +2616,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditShowModal"] = this.getModalStatus();
                 data["AuditCancelScanStatus"] = this.getCancelScanStatus();
-               data["AuditBoxSerialData"] = this.getBoxSerialData();
+               data["AuditPackData"] = this.getPackData();
+               data["AuditSubPackData"] = this.getSubPackData();
                 data["AuditScanDetails"] = this.getScanDetails();
+                data["AuditItemDetailsData"]=this.getItemDetailsData();
+                data["AuditSRKQQuantity"]=this.getSRKQQuantity()
                 data["AuditFinishFlag"] = this.getFinishAuditFlag();
                 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
                 break;

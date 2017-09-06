@@ -22,7 +22,7 @@ var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
 var ExceptionHeader = require('./ExceptionHeader');
-var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
+var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 
 
 function getStateData(){
@@ -218,32 +218,32 @@ var Audit = React.createClass({
           }else{
             this._cancelStatus = '';
           }
-          if(this.state.AuditBoxSerialData["tableRows"].length > 0){
-            this._boxSerial = (<TabularData data = {this.state.AuditBoxSerialData}/>);
+          if(this.state.AuditPackData["tableRows"].length > 0){
+            this._packData = (<TabularData data = {this.state.AuditPackData}/>);
           }else{
-            this._boxSerial = '';
+            this._packData = '';
           }
-          if(this.state.AuditBoxSerialData["tableRows"].length > 0){
-            this._looseItems = (<TabularData data = {this.state.AuditBoxSerialData} />);
+          if(this.state.AuditSubPackData["tableRows"].length > 0){
+            this._subPackData = (<TabularData data = {this.state.AuditSubPackData} />);
           }else{
-            this._looseItems = '';
+            this._subPackData = '';
           }
-
+          
           this._component = (
               <div className='grid-container'>
                 <Modal />
                 
                 <div className='main-container space-left'>
                   <div className="audit-scan-left">
-                      {this._boxSerial}
-                      {this._looseItems}
+                      {this._packData}
+                      {this._subPackData}
                   </div>
                   <div className="audit-scan-middle">
                    <Img srcURL= {this.state.AuditItemDetailsData.image_url}/>
                    <TabularData data = {this.state.AuditItemDetailsData}/>
                   </div>
                   <div className="audit-scan-right">
-                    <KQExceptionDamaged scanDetailsDamaged={this.state.PickFrontDamagedQuantity}
+                    <KQExceptionMissing scanDetailsMissing={this.state.AuditSRKQQuantity}
                                                             type={appConstants.UNSCANNABLE}
                                                             action={appConstants.UNSCANNABLE}/>
                                     

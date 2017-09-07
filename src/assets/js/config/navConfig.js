@@ -302,7 +302,7 @@ var navData = {
             "type": 'passive'
         }],[{
             "screen_id": "pick_front_scan_packs",
-            "code": "TEST.GAURAV.1", //TODO: Would be changed
+            "code": "PkF.H.017",
             "image": svgConstants.scan,
             "message": "Scan {0} packs",
             "showImage": true,

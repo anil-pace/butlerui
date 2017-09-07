@@ -144,7 +144,7 @@ var serverMessages = {
     "Common.006": "Wrong scan.Expecting item scan.",
     "Common.007": "Wrong scan.Expecting container scan.",
     "Common.008": "Wrong scan.Expecting location scan.",
-    "Common.009": "SKU not present in Database.",   
+    "Common.009": "SKU not present in Database.",
     "Common.010": "Wrong Scan. Unrecognized barcode.",
     "Common.011": "Wrong Scan. IRT bin scan expected",
     "AdF.I.003" : "Item scan successful",
@@ -194,6 +194,7 @@ var serverMessages = {
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
+    "PkF.E.012" : "Data capture failed at item {0}",       
     "PkF.I.002" : "Location scan successful",
     "PkF.I.003" : "Box scan successful",
     "PkF.I.004" : "Item scan successful",
@@ -214,8 +215,8 @@ var serverMessages = {
     "PkF.E.009" : "System Error. Scanned entity details not available at this time",
     "PkF.E.010" : "No PPS bins empty. Please empty them from Pickback",
     "PkF.E.011" : "Extra details entered are incorrect.Please enter correct details",
-    "PkF.E.012" : "Data capture failed at item {0}", 
-    "PkF.E.013" : "Invalid Event.Expecting PPTL button press",      
+    "PkF.E.012" : "Data capture failed at item {0}",
+    "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PkF.E.014" : "Packing box scan failed",
     "PkF.E.015" : "Wrong entity scan.Please scan the correct entity",
     "PkF.E.017" : "Extra entity scan found.",
@@ -262,7 +263,7 @@ var serverMessages = {
     "PtF.E.016" : "Container Already Scanned.",
     "PtF.E.017" : "Invalid Entity Scanned.",
     "PtF.E.018" : "Quantity of Physically damaged entities scanned is less.",
-    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.", 
+    "PtF.E.019" : "Wrong entity Scanned. Bin Scan Expected.",
     "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
     "PtF.E.021" : "Bin Already Scanned",
     "PtF.E.022" : "Entities cannot be accommodated!",
@@ -310,7 +311,8 @@ var serverMessages = {
     "PpB.E.006" : "Tote already associated with slot.Scan empty slot",
     "PpB.E.007" : "Unexpected entity scanned",
     "PpB.E.008" : "Wrong barcode scanned",
-    "PpB001" : "Enter excess item quantity",
+    "PpB001" : "Enter excess item quantity"  ,
+    "PkF.E.014":"Packing box scan failed",
     "PkF.I.008":"Packing box closed",
     "PkF.I.009":"Packing box discarded",
     "PkF.H.011":"Place box in MSU slot and confirm",
@@ -327,8 +329,12 @@ var serverMessages = {
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
     "FRNT.PBI.03" : "{0} number :",
-    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins"
-    
+    "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
+    //SR PICK FLOW
+    "PkF.H.017":"Scan {0} packs",
+    "PkF.H.018":"Scan {0} sub packs",
+    "PkF.H.019":"Scan {0} more packs and place in bin {1}",
+    "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
 };
 
 

@@ -472,6 +472,13 @@ function server_messages_list() {
     _("DO NOT STACK");
     _("FRAGILE");
     _("Length of {0} should not be greater than {1}");
+    _("Scan {0} packs");
+    _("Scan {0} sub packs");
+    _("Press PPTL");
+    _("Pack Scan Successful");
+    _("Scan {0} more packs and place in bin {1}");
+    _("Scan {0} more sub packs and place in bin {1}");
+    _("Put pack list in trolley and press PPTL to confirm");
     _("Scan damaged entity");
     _("Damaged Quantity");
     _("Entity Damaged");

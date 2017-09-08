@@ -228,7 +228,7 @@ var Audit = React.createClass({
           }else{
             this._subPackData = '';
           }
-          
+
           this._component = (
               <div className='grid-container'>
                 <Modal />
@@ -269,26 +269,35 @@ var Audit = React.createClass({
           var ItemInBoxData = '';
           var LooseItemsData = '';
           var AuditMessage = '';
+          var PackData='';
+          var SubPackData='';
+          var displayStyle;
           var mm = {
             "details": [],
             "code": "Audit.A.012",
             "description": "No Items To Reconcile",
             "level": "info"
           };
-           var mm = {
+           var SRmessage = {
             "details": [],
             "code": "Audit.A.013",
             "description": "No Sub-pack To Reconcile",
             "level": "info"
           };
-          if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 )
+          if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)
             AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={mm} />);
+       if(this.state.AuditReconcilePackData["tableRows"].length == 0  && this.state.AuditReconcileSubPackData["tableRows"].length == 0 && this.state.AuditSRStatus)
+            AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={SRmessage} />);
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
               BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);
           if(this.state.AuditReconcileItemInBoxData["tableRows"].length != 0 )
               ItemInBoxData = (<TabularData data = {this.state.AuditReconcileItemInBoxData}/>);
           if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
               LooseItemsData = (<TabularData data = {this.state.AuditReconcileLooseItemsData}/>);
+          if(this.state.AuditReconcilePackData["tableRows"].length != 0 )
+              PackData = (<TabularData data = {this.state.AuditReconcilePackData}/>);
+          if(this.state.AuditReconcileSubPackData["tableRows"].length != 0 )
+              SubPackData = (<TabularData data = {this.state.AuditReconcileSubPackData}/>);
             subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
@@ -296,6 +305,8 @@ var Audit = React.createClass({
                     {BoxSerialData}
                     {ItemInBoxData}
                     {LooseItemsData}
+                    {PackData}
+                    {SubPackData}
                   </div>
                 </div>
               );
@@ -303,7 +314,7 @@ var Audit = React.createClass({
           this._component = (
               <div className='grid-container audit-reconcilation'>
                   <Modal />
-                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
+                  <CurrentSlot slotDetails={this.state.AuditSlotDetails}/>
                 {subComponent}
                  <div className = 'staging-action' >
                   <Button1 disabled = {false} text = {_("Back")} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>

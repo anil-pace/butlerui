@@ -394,7 +394,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
 
         _seatData.Box_qty_list.map(function (value, index) {
-            
+            d = [];
             if (value.Scan_status != "close") {
                 d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)

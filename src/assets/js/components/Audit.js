@@ -197,9 +197,7 @@ var Audit = React.createClass({
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           this._component = (
               <div className='grid-container'>
-                  
-                   <div className="gor-mpu"/>
-                  
+                   <div className="gor-mpu"/>                  
               </div>
             );
        

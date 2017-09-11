@@ -37072,9 +37072,7 @@ var Audit = React.createClass({displayName: "Audit",
            this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
               React.createElement("div", {className: "grid-container"}, 
-                  
                    React.createElement("div", {className: "gor-mpu"})
-                  
               )
             );
        
@@ -47253,8 +47251,8 @@ module.exports = appConstants;
 
 },{}],299:[function(require,module,exports){
 var configConstants = {
-WEBSOCKET_IP : "wss://192.168.8.83/wss",
-	INTERFACE_IP : "https://192.168.8.83"
+WEBSOCKET_IP : "ws://192.168.3.66:8888/ws",
+	INTERFACE_IP : "http://192.168.3.66:5000"
 };
 module.exports = configConstants;
 
@@ -48599,9 +48597,9 @@ var serverMessages = {
     "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
     "AdF.H.001" : "Scan Box or Items",
-    "AdF.H.002" : "Scan MPU",
-    "AdF.H.003" : "Scan Pack or Sub-Packs",
-    "AdF.H.004" : "Continue scanning Sub-Packs and Pack",
+    "AdF.H.010" : "Scan MPU",
+    "AdF.H.011" : "Scan Pack or Sub-Packs",
+    "AdF.H.012" : "Continue scanning Sub-Packs and Pack",
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",
@@ -50792,7 +50790,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
 
         _seatData.Box_qty_list.map(function (value, index) {
-            
+            d = [];
             if (value.Scan_status != "close") {
                 d.push(new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)

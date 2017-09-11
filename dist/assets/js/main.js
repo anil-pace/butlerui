@@ -48724,6 +48724,8 @@ var serverMessages = {
     "AdF001" : "Items In Box Unscannable",
     "AdF002" : "Box Unscannable",
     "AdF003" : "Loose Items Unscannable",
+    "AdF004" : "Pack Unscannable",
+    "AdF005" : "Sub-Pack Unscannable",
     "PpB.H.001" : "Scan tote and place it in the slot",
     "PpB.H.002" : "Scan slot to confirm",
     "PpB.H.005" : "Release MTU",
@@ -50760,13 +50762,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["showModal"] = "";
         data["message"] = "";
-        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && ((_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])||(_seatData["Current_box_details"][0]["Box_Actual_Qty"] > _seatData["Current_box_details"][0]["Box_Expected_Qty"])) ) {
+        if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["Current_box_details"].length > 0 && _seatData["Current_box_details"][0]["Box_serial"] == null && ((_seatData["Current_box_details"][0]["Actual_qty"] > _seatData["Current_box_details"][0]["Expected_qty"])) ) {
             showModal = false;
             return {
                 "showModal": true,
                 "message": _("Place extra entity in Exception area.")
             }
-        } else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
+        }else if(_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData.k_deep_audit && _seatData["Current_box_details"][0]["Box_Actual_Qty"] > _seatData["Current_box_details"][0]["Box_Expected_Qty"]){
+            showModal = false;
+            return {
+                "showModal": true,
+                "message": _("Place extra entity in Exception area.")
+            }
+        }
+
+         else if (_seatData.screen_id != appConstants.AUDIT_RECONCILE && showModal && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) {
             showModal = false;
             console.log(_seatData.last_finished_box[0]["Actual_qty"] - _seatData.last_finished_box[0]["Expected_qty"])
             return {
@@ -51745,7 +51755,11 @@ if(extraPackSerials!=""){
             _putBackExceptionScreen = "extra_quantity";
         else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION)
             _auditExceptionScreen = "first_screen";
-        if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 && (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || (_seatData["Current_box_details"] != undefined && _seatData["Current_box_details"].length > 0 && (_seatData["Current_box_details"][0]["Actual_qty"] - _seatData["Current_box_details"][0]["Expected_qty"]) > 0))
+        if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 && 
+            (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || 
+            (_seatData["Current_box_details"] != undefined && _seatData["Current_box_details"].length > 0 && 
+            (((_seatData["Current_box_details"][0]["Actual_qty"] - _seatData["Current_box_details"][0]["Expected_qty"]) > 0)||
+                ((_seatData["Current_box_details"][0]["Box_Actual_Qty"] - _seatData["Current_box_details"][0]["Box_Expected_Qty"]) > 0))))
             showModal = true;
         else
             showModal = false;
@@ -53151,7 +53165,7 @@ return _seatData.k_deep_audit;
                data["AuditSubPackData"] = this.getSubPackData();
                 data["AuditScanDetails"] = this.getScanDetails();
                 data["AuditItemDetailsData"]=this.getItemDetailsData();
-                data["AuditSRKQQuantity"]=this.getSRKQQuantity()
+                data["AuditSRKQQuantity"]=this.getSRKQQuantity();
                 data["AuditFinishFlag"] = this.getFinishAuditFlag();
                 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
                 break;

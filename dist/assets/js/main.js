@@ -37000,7 +37000,20 @@ var Audit = React.createClass({displayName: "Audit",
           this._component = this.getExceptionComponent();
         }
         break;
+
+
       case appConstants.AUDIT_LOCATION_SCAN:
+      if(this.state.AuditSRStatus){
+        this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
+          this._component = (
+              React.createElement("div", {className: "grid-container"}, 
+                   React.createElement("div", {className: "gor-mpu"})
+              )
+            );
+
+      }
+      else
+      {
          if(this.state.AuditExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
@@ -37014,7 +37027,10 @@ var Audit = React.createClass({displayName: "Audit",
       }else{
           this._component = this.getExceptionComponent();
         }
+      }
+        
       break;
+
       case appConstants.AUDIT_SCAN:
        if(this.state.AuditExceptionStatus == false){
            this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
@@ -37067,16 +37083,6 @@ var Audit = React.createClass({displayName: "Audit",
 
         break;
 //SR Audit
- case appConstants.AUDIT_SCAN_MPU:
-      
-           this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
-          this._component = (
-              React.createElement("div", {className: "grid-container"}, 
-                   React.createElement("div", {className: "gor-mpu"})
-              )
-            );
-       
-          break;
 
 
       case appConstants.AUDIT_SCAN_SR:
@@ -46942,7 +46948,7 @@ var navData = {
         }],
         [ 
           {
-        "screen_id": "audit_scan_mpu",
+        "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan MPU",
@@ -47139,7 +47145,6 @@ var appConstants = {
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",
 	AUDIT_SCAN_SR:"audit_scan_sr",
-	AUDIT_SCAN_MPU:"audit_scan_mpu",
 	AUDIT_RECONCILE:"audit_reconcile",
 	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
 	AUDIT_WAITING_FOR_MPU:"audit_front_waiting_for_mpu",
@@ -50698,7 +50703,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
-                else if (_seatData.screen_id === appConstants.AUDIT_SCAN_MPU)
+                else if (_seatData.screen_id === appConstants.AUDIT_LOCATION_SCAN && _seatData.k_deep_audit)
                     _NavData = navConfig.sraudit[1];
                 else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
                     _NavData = navConfig.sraudit[1];
@@ -53090,12 +53095,8 @@ return _seatData.k_deep_audit;
                 
                 break;
 
-             case appConstants.AUDIT_SCAN_MPU:
-              data["AuditNavData"] = this.getNavData();
-                data["AuditNotification"] = this.getNotificationData();
-                data["AuditScreenId"] = this.getScreenId();
-                data["AuditServerNavData"] = this.getServerNavData();
-             break;   
+           
+           
             case appConstants.AUDIT_RECONCILE:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();
@@ -53110,7 +53111,6 @@ return _seatData.k_deep_audit;
                 data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditReconcilePackData"] = this.getPackReconcileData();
                 data["AuditReconcileSubPackData"] = this.getSubPackReconcileData();
-                
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_LOCATION_SCAN:
@@ -53122,6 +53122,7 @@ return _seatData.k_deep_audit;
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditShowModal"] = this.getModalStatus();
+                 data["AuditSRStatus"]=this.getSRStatus();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:

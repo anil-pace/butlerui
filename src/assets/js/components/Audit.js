@@ -125,7 +125,20 @@ var Audit = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+
+
       case appConstants.AUDIT_LOCATION_SCAN:
+      if(this.state.AuditSRStatus){
+        this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+          this._component = (
+              <div className='grid-container'>
+                   <div className="gor-mpu"/>                  
+              </div>
+            );
+
+      }
+      else
+      {
          if(this.state.AuditExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
@@ -139,7 +152,10 @@ var Audit = React.createClass({
       }else{
           this._component = this.getExceptionComponent();
         }
+      }
+        
       break;
+
       case appConstants.AUDIT_SCAN:
        if(this.state.AuditExceptionStatus == false){
            this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
@@ -192,16 +208,6 @@ var Audit = React.createClass({
 
         break;
 //SR Audit
- case appConstants.AUDIT_SCAN_MPU:
-      
-           this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-          this._component = (
-              <div className='grid-container'>
-                   <div className="gor-mpu"/>                  
-              </div>
-            );
-       
-          break;
 
 
       case appConstants.AUDIT_SCAN_SR:

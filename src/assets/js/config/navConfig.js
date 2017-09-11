@@ -369,7 +369,7 @@ var navData = {
         }],
         [ 
           {
-        "screen_id": "audit_scan_mpu",
+        "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
         "message": "Scan MPU",

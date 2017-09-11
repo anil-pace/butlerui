@@ -132,7 +132,6 @@ var appConstants = {
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",
 	AUDIT_SCAN_SR:"audit_scan_sr",
-	AUDIT_SCAN_MPU:"audit_scan_mpu",
 	AUDIT_RECONCILE:"audit_reconcile",
 	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
 	AUDIT_WAITING_FOR_MPU:"audit_front_waiting_for_mpu",

@@ -302,7 +302,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.AUDIT:
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
-                else if (_seatData.screen_id === appConstants.AUDIT_SCAN_MPU)
+                else if (_seatData.screen_id === appConstants.AUDIT_LOCATION_SCAN && _seatData.k_deep_audit)
                     _NavData = navConfig.sraudit[1];
                 else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
                     _NavData = navConfig.sraudit[1];
@@ -2694,12 +2694,8 @@ return _seatData.k_deep_audit;
                 
                 break;
 
-             case appConstants.AUDIT_SCAN_MPU:
-              data["AuditNavData"] = this.getNavData();
-                data["AuditNotification"] = this.getNotificationData();
-                data["AuditScreenId"] = this.getScreenId();
-                data["AuditServerNavData"] = this.getServerNavData();
-             break;   
+           
+           
             case appConstants.AUDIT_RECONCILE:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditNotification"] = this.getNotificationData();
@@ -2714,7 +2710,6 @@ return _seatData.k_deep_audit;
                 data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditReconcilePackData"] = this.getPackReconcileData();
                 data["AuditReconcileSubPackData"] = this.getSubPackReconcileData();
-                
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_LOCATION_SCAN:
@@ -2726,6 +2721,7 @@ return _seatData.k_deep_audit;
                 data["AuditNotification"] = this.getNotificationData();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
                 data["AuditShowModal"] = this.getModalStatus();
+                 data["AuditSRStatus"]=this.getSRStatus();
                 break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:

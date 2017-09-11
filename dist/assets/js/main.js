@@ -36897,7 +36897,6 @@ var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
 var ExceptionHeader = require('./ExceptionHeader');
-var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 
 
 function getStateData(){
@@ -37122,9 +37121,7 @@ var Audit = React.createClass({displayName: "Audit",
                    React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
                   ), 
                   React.createElement("div", {className: "audit-scan-right"}, 
-                    React.createElement(KQExceptionMissing, {scanDetailsMissing: this.state.AuditSRKQQuantity, 
-                                                            type: appConstants.UNSCANNABLE, 
-                                                            action: appConstants.UNSCANNABLE}), 
+                    React.createElement(KQ, {scanDetailsGood: this.state.AuditSRKQQuantity}), 
                                     
                    React.createElement("div", {className: "finish-scan"}, 
                     React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: _("Finish"), module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
@@ -37323,7 +37320,7 @@ var Audit = React.createClass({displayName: "Audit",
 
 module.exports = Audit;
 
-},{"../actions/CommonActions":233,"../constants/appConstants":298,"../stores/AuditStore":311,"../stores/mainstore":317,"../utils/utils.js":318,"./Button/Button":241,"./Button/Button.js":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ.js":269,"./ProductDetails/KQExceptionMissing":271,"./Rack/MsuRack.js":281,"./Reconcile":285,"./Spinner/LoaderButler":286,"./SystemIdle":290,"./TabularData":295,"react":230}],235:[function(require,module,exports){
+},{"../actions/CommonActions":233,"../constants/appConstants":298,"../stores/AuditStore":311,"../stores/mainstore":317,"../utils/utils.js":318,"./Button/Button":241,"./Button/Button.js":241,"./CurrentSlot":243,"./Exception/Exception":244,"./ExceptionHeader":248,"./Header":249,"./Modal/Modal":252,"./Navigation/Navigation.react":257,"./Notification/Notification":259,"./PrdtDetails/ProductImage.js":266,"./ProductDetails/KQ.js":269,"./Rack/MsuRack.js":281,"./Reconcile":285,"./Spinner/LoaderButler":286,"./SystemIdle":290,"./TabularData":295,"react":230}],235:[function(require,module,exports){
 var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
@@ -42768,7 +42765,17 @@ var KQ = React.createClass({displayName: "KQ",
                 return true;
             }
 
-            if (mainstore.getCurrentSeat() == "audit_front") {
+             if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
+                 data = {
+                    "event_name": "quantity_update_for_audit_seat",
+                    "event_data": {
+                        "type": "change_qty",
+                        "quantity": parseInt(_updatedQty)
+                    }
+                };
+            }
+
+            else if (mainstore.getCurrentSeat() == "audit_front") {
 
                 data = {
                     "event_name": "audit_actions",
@@ -42819,7 +42826,17 @@ var KQ = React.createClass({displayName: "KQ",
                     CommonActions.updateKQQuantity(parseInt(_updatedQty) );
                      return true;
                 }
-                if (mainstore.getCurrentSeat() == "audit_front") {
+                 if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
+                 data = {
+                    "event_name": "quantity_update_for_audit_seat",
+                    "event_data": {
+                        "type": "change_qty",
+                        "quantity": parseInt(_updatedQty)
+                    }
+                };
+            }
+
+            else if (mainstore.getCurrentSeat() == "audit_front") {
                     data = {
                         "event_name": "audit_actions",
                         "event_data": {
@@ -42935,7 +42952,17 @@ var KQ = React.createClass({displayName: "KQ",
                          return true;
                     }
                     
-                    if (mainstore.getCurrentSeat() == "audit_front") {
+                      if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
+                 data = {
+                    "event_name": "quantity_update_for_audit_seat",
+                    "event_data": {
+                        "type": "change_qty",
+                        "quantity": parseInt(e.target.value)
+                    }
+                };
+            }
+
+            else if (mainstore.getCurrentSeat() == "audit_front") {
                         data = {
                             "event_name": "audit_actions",
                             "event_data": {
@@ -50901,7 +50928,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
-                d.push(new self.tableCol(value.Box_Actual_Qty, "complete", false, "large", true, false, false, false, true));
+                d.push(new self.tableCol(value.Box_Actual_Qty, "complete", (_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
                 data["tableRows"].push(d);
 }
             if (value.Scan_status == "open") {

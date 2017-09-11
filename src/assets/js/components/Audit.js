@@ -22,7 +22,6 @@ var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
 var ExceptionHeader = require('./ExceptionHeader');
-var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 
 
 function getStateData(){
@@ -247,9 +246,7 @@ var Audit = React.createClass({
                    <TabularData data = {this.state.AuditItemDetailsData}/>
                   </div>
                   <div className="audit-scan-right">
-                    <KQExceptionMissing scanDetailsMissing={this.state.AuditSRKQQuantity}
-                                                            type={appConstants.UNSCANNABLE}
-                                                            action={appConstants.UNSCANNABLE}/>
+                    <KQ scanDetailsGood={this.state.AuditSRKQQuantity}/>
                                     
                    <div className = 'finish-scan'>
                     <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>

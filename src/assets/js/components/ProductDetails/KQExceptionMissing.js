@@ -285,7 +285,7 @@ var KQ = React.createClass({
                     "event_name": "quantity_update_for_audit_seat",
                     "event_data": {
                         "type": "change_qty",
-                        "quantity": parseInt(_updatedQtyMissing)
+                        "quantity": parseInt(e.target.value)
                     }
                 };
             }

@@ -43842,7 +43842,7 @@ var KQ = React.createClass({displayName: "KQ",
                     "event_name": "quantity_update_for_audit_seat",
                     "event_data": {
                         "type": "change_qty",
-                        "quantity": parseInt(_updatedQtyMissing)
+                        "quantity": parseInt(e.target.value)
                     }
                 };
             }
@@ -52387,7 +52387,7 @@ return _seatData.k_deep_audit;
         if (_seatData["scan_details"] == undefined) {
             var data = {
                 "scan_details": {
-                    "current_qty": _seatData.Current_box_details[0].Actual_qty,
+                    "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Box_Actual_Qty:0,
                     "total_qty": 0,
                     "kq_allowed": true
                 }

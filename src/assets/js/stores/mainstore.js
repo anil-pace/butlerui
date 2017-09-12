@@ -1640,7 +1640,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     validateAndSendDataToServer: function () {
         var flag = false, type = false;
         var details;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+        if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
             if (_goodQuantity === _seatData.pick_quantity && _unscannableQuantity === 0) {
                 flag = type = true;
             }
@@ -1677,7 +1677,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _seatData.notification_list[0].level = "error";
                 _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
-            if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+            if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
                 _putFrontExceptionScreen = "good";
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -1686,8 +1686,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
         } else {
             var data = {};
-            if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
-                data["event_name"] = _seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ? "pick_front_exception" : "put_front_exception"
+            if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
+                data["event_name"] = (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;
@@ -2419,6 +2419,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
                 break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
                 data["PutBackKQDetails"] = this.getScanDetails();
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontScreenId"] = this.getScreenId();

@@ -448,6 +448,109 @@ var PickFront = React.createClass({
 
                 break;
 
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
+                var buttonActivateFlag = mainstore.getExeptionQuanity();
+                this._component = (
+                    <div className='grid-container exception'>
+                        <Modal />
+                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <div className="exception-right">
+                            <ExceptionHeader data={this.state.PickFrontServerNavData}/>
+
+                            <div className="main-container exception1 displayBlocked">
+
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Bad barcode on pack")}</div>
+                                    <NumericIndicator execType={appConstants.BAD_BARCODE_PACK}/>
+                                </div>
+
+
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Pack missing")}</div>
+                                    <NumericIndicator execType={appConstants.PACK_MISSING}/>
+                                </div>
+
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Damaged pack")}</div>
+                                    <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
+                                    <hr/>
+                                </div>
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Good pack")}</div>
+                                    <NumericIndicator execType={appConstants.GOOD_PACK}/>
+                                </div>
+                            </div>
+                            <div className="finish-damaged-barcode padding">
+                                <Button1 disabled={buttonActivateFlag} text={_("Validate and Confirm")} color={"orange"}
+                                         module={appConstants.PICK_FRONT}
+                                         action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}/>
+
+                            </div>
+                        </div>
+                        <div className='cancel-scan'>
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
+                                     action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                        </div>
+                    </div>
+                );
+
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
+                var buttonActivateFlag = mainstore.getExeptionQuanity();
+                this._component = (
+                    <div className='grid-container exception'>
+                        <Modal />
+                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <div className="exception-right">
+                            <ExceptionHeader data={this.state.PickFrontServerNavData}/>
+
+                            <div className="main-container exception1 displayBlocked">
+
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Bad barcode on sub pack")}</div>
+                                    <NumericIndicator execType={appConstants.BAD_BARCODE_SUB_PACK}/>
+                                </div>
+
+
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Sub pack missing")}</div>
+                                    <NumericIndicator execType={appConstants.SUB_PACK_MISSING}/>
+                                </div>
+
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Damaged sub pack")}</div>
+                                    <NumericIndicator execType={appConstants.DAMAGED_SUB_PACK}/>
+                                    <hr/>
+                                </div>
+                                <div className="gor-NI-wrapper">
+                                    <hr/>
+                                    <div className="exception-qty-title">{_("Good sub pack")}</div>
+                                    <NumericIndicator execType={appConstants.GOOD_SUB_PACK}/>
+                                </div>
+                            </div>
+                            <div className="finish-damaged-barcode padding">
+                                <Button1 disabled={buttonActivateFlag} text={_("Validate and Confirm")} color={"orange"}
+                                         module={appConstants.PICK_FRONT}
+                                         action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}/>
+
+                            </div>
+                        </div>
+                        <div className='cancel-scan'>
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
+                                     action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                        </div>
+                    </div>
+                );
+
+                break;
+
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
             var selected_screen;
           if(!this.state.GetIRTScanStatus)

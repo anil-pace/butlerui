@@ -513,5 +513,17 @@ function server_messages_list() {
     _("Packing box scan failed");
     _("Wrong entity Scanned. Bin Scan Expected.");
     _("Bin Already Scanned");
+    _("Issue with Pack");
+    _("Issue with Sub pack");
+    _("Issue with MPU");
+    _("Space not available");
+    _("Bad barcode on pack");
+    _("Bad barcode on sub pack");
+    _("Unexpected pack");
+    _("Pack missing");
+    _("Sub pack missing");
+    _("Damaged sub pack");
+    _("Good pack");
+    _("Good sub pack");
 }
 

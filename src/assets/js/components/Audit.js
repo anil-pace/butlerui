@@ -57,7 +57,13 @@ var Audit = React.createClass({
   _looseItems:'',
   _navigation:'',
   showModal: function() {
-      if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
+      if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && 
+        this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && 
+        this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && 
+        this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
+        this.state.AuditScreenId !=AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
+      this.state.AuditScreenId != AUDIT_PACK_UNSCANNABLE_EXCEPTION)
+      {
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
           this.state.AuditShowModal["showModal"] = false;
@@ -333,6 +339,8 @@ var Audit = React.createClass({
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
+      case appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION:
+      case appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:
           this._navigation = '';
           if(this.state.AuditExceptionScreen == "first_screen"){
           /**

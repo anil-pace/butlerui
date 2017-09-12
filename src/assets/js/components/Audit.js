@@ -272,6 +272,7 @@ var Audit = React.createClass({
           var AuditMessage = '';
           var PackData='';
           var SubPackData='';
+          var Slot='';
           var displayStyle;
           var mm = {
             "details": [],
@@ -299,6 +300,8 @@ var Audit = React.createClass({
               PackData = (<TabularData data = {this.state.AuditReconcilePackData}/>);
           if(this.state.AuditReconcileSubPackData["tableRows"].length != 0 )
               SubPackData = (<TabularData data = {this.state.AuditReconcileSubPackData}/>);
+            if(!this.state.AuditSRStatus)
+              Slot=(<CurrentSlot slotDetails={this.state.AuditSlotDetails}/>)
             subComponent=(
                 <div className='main-container'>
                   <div className="audit-reconcile-left">
@@ -315,7 +318,7 @@ var Audit = React.createClass({
           this._component = (
               <div className='grid-container audit-reconcilation'>
                   <Modal />
-                  <CurrentSlot slotDetails={this.state.AuditSlotDetails}/>
+                  {Slot}
                 {subComponent}
                  <div className = 'staging-action' >
                   <Button1 disabled = {false} text = {_("Back")} module ={appConstants.AUDIT} action={appConstants.CANCEL_FINISH_AUDIT} color={"black"}/>

@@ -1923,3 +1923,70 @@ msgstr "損害エンティティをスキャンする"
 #: src/assets/js/serverMessages/server_messages_lang.js:501
 msgid "Warehouse Full"
 msgstr "格納できません"
+
+msgid "DO NOT STACK"
+msgstr "スタックしてはいけません"
+
+msgid "Entities cannot be accommodated!"
+msgstr "エンティティが収容できません!"
+
+msgid "FRAGILE"
+msgstr "割れ物注意"
+
+msgid "Length of {0} should not be greater than {1}"
+msgstr "{0}の長さは{1}より大きくてはいけません"
+
+msgid "NEST MAX"
+msgstr "ネストマックス"
+
+msgid "Next"
+msgstr "次"
+
+msgid "Please put damaged entities in IRT bin and scan the bin"
+msgstr "破損されたエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put damaged entities in exception area"
+msgstr "破損されたエンティティを例外領域に入れてください"
+
+msgid "Please put entities in IRT and Scan IRT Bin"
+msgstr "エンティティをIRTビンに入れて IRTビンをスキャンしてください"
+
+msgid "Please put exception entities in IRT bin and scan the bin"
+msgstr "例外のエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put exception entities in exception area"
+msgstr "例外のエンティティを例外領域に入れてください"
+
+msgid "Please put extra entities in IRT bin and scan the bin"
+msgstr "余分なエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put extra entities in exception area"
+msgstr "余分なエンティティを例外領域に入れてください"
+
+msgid "Please put oversized entities in IRT bin and scan the bin"
+msgstr "大型のエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put oversized entities in exception area"
+msgstr "大型のエンティティを例外領域に入れてください"
+
+msgid "Please put unscannable entities in IRT bin and scan the bin"
+msgstr "スキャンできないエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put unscannable entities in exception area"
+msgstr "スキャンできないエンティティを例外領域に入れてください"
+
+msgid "STACK MAX"
+msgstr "スタック マックス"
+
+msgid "Scan IRT Bin"
+msgstr "IRT ビンをスキャンしてください"
+
+msgid "Warehouse Full Remove all entities from bin & press PPTL"
+msgstr "ウェアハウスがいっぱいです。ビンからすべてのエンティティを取り除いてPPTLを押してください。"
+
+msgid "Wrong Scan. IRT bin scan expected"
+msgstr "間違ったスキャン。IRTビンのスキャンが予想されています。"
+
+msgid "{0} Physically damaged entity recorded.WMS notified"
+msgstr "{0}物理的に破損されたエンティティが記録されました。WMSが通知されました。"
+

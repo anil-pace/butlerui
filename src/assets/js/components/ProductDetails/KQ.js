@@ -426,6 +426,7 @@ var KQ = React.createClass({
   },
   checkKqAllowed : function(){
     if(_scanDetails.kq_allowed === true){
+        
       if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){
 
           if((mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(_updatedQty) == 1) ){
@@ -514,12 +515,14 @@ var KQ = React.createClass({
             _updatedQty = parseInt(this.props.scanDetails.current_qty);
             _scanDetails = this.props.scanDetails;
 
+
         }
         else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
             _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
             _scanDetails = this.props.scanDetailsGood;
             this.checkKqAllowed();
             this.handleTotalQty();
+            
         }
 
 

@@ -151,6 +151,8 @@ var serverMessages = {
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
     "AdF.I.010" : "Exception Finished",
+    "AdF.I.011" : "Pack scan successfully",
+    "AdF.I.012" : "Sub-Pack scan successfully",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
@@ -161,6 +163,9 @@ var serverMessages = {
     "AdF.H.010" : "Scan MPU",
     "AdF.H.011" : "Scan Pack or Sub-Packs",
     "AdF.H.012" : "Continue scanning Sub-Packs and Pack",
+    "AdF.H.013" : "Enter Quantity of Unscannable Pack",
+    "AdF.H.014" : "Enter Quantity of Unscannable Sub-Pack",
+
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",

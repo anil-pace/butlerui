@@ -36936,8 +36936,8 @@ var Audit = React.createClass({displayName: "Audit",
         this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && 
         this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && 
         this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
-        this.state.AuditScreenId !=AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
-      this.state.AuditScreenId != AUDIT_PACK_UNSCANNABLE_EXCEPTION)
+        this.state.AuditScreenId != appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
+      this.state.AuditScreenId != appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION)
       {
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
@@ -37302,10 +37302,10 @@ var Audit = React.createClass({displayName: "Audit",
     else{
         if($(".modal.notification-error").is(":visible")){
             setTimeout((function(){
-                $('.modal.notification-error').data('bs.modal').options.backdrop=true
-                $(".modal-backdrop").remove()
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true;
+                $(".modal-backdrop").remove();
                 $(".modal.notification-error").modal("hide");
-                $(".modal").removeClass("notification-error")
+                $(".modal").removeClass("notification-error");
 
             }),0)
 
@@ -43053,6 +43053,7 @@ var KQ = React.createClass({displayName: "KQ",
   },
   checkKqAllowed : function(){
     if(_scanDetails.kq_allowed === true){
+        
       if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){
 
           if((mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(_updatedQty) == 1) ){
@@ -43141,12 +43142,14 @@ var KQ = React.createClass({displayName: "KQ",
             _updatedQty = parseInt(this.props.scanDetails.current_qty);
             _scanDetails = this.props.scanDetails;
 
+
         }
         else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
             _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
             _scanDetails = this.props.scanDetailsGood;
             this.checkKqAllowed();
             this.handleTotalQty();
+            
         }
 
 
@@ -48658,6 +48661,8 @@ var serverMessages = {
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
     "AdF.I.010" : "Exception Finished",
+    "AdF.I.011" : "Pack scan successfully",
+    "AdF.I.012" : "Sub-Pack scan successfully",
     "AdF.A.001" :"Scan Box/Items from Slot",
     "AdF.A.002" :"Scan Remaining Item In Box",
     "AdF.A.004" :"Last Box Scan Completed! Scan Remaining Box/Items",
@@ -48668,6 +48673,9 @@ var serverMessages = {
     "AdF.H.010" : "Scan MPU",
     "AdF.H.011" : "Scan Pack or Sub-Packs",
     "AdF.H.012" : "Continue scanning Sub-Packs and Pack",
+    "AdF.H.013" : "Enter Quantity of Unscannable Pack",
+    "AdF.H.014" : "Enter Quantity of Unscannable Sub-Pack",
+
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",
@@ -51404,13 +51412,13 @@ if(!_seatData.k_deep_audit)
                 });
 
         _seatData.Box_qty_list.map(function(value, index) {
-            if(value.Type=="outer/pack"){
+           
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
-                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0), "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0), "enabled", false, "large", true, false, false, false, true),
+                    data["tableRows"].push([new self.tableCol(value.Type=="outer/pack"? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)]);
-            }
+         
            
     });
     if (_seatData.Extra_box_list.length != 0)
@@ -51454,14 +51462,14 @@ if(extraPackSerials!=""){
                         barcodeDamagedQty = val.damage_count;
                 });
         _seatData.Box_qty_list.map(function(value, index) {
-            if(value.Type=="inner/subpack"){
+        
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
-                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0), "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0), "enabled", false, "large", true, false, false, false, true),
+                    data["tableRows"].push([new self.tableCol(value.Type=="inner/subpack"?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
                     ]);
-            }
+      
 
     });
     if (_seatData.Extra_box_list.length != 0)
@@ -52475,7 +52483,8 @@ return _seatData.k_deep_audit;
                 "scan_details": {
                     "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Box_Actual_Qty:0,
                     "total_qty": 0,
-                    "kq_allowed": true
+                    "kq_allowed": _seatData.Current_box_details.length?true:false
+                   
                 }
             };
             return data.scan_details;

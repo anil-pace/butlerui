@@ -61,8 +61,8 @@ var Audit = React.createClass({
         this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && 
         this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && 
         this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
-        this.state.AuditScreenId !=AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
-      this.state.AuditScreenId != AUDIT_PACK_UNSCANNABLE_EXCEPTION)
+        this.state.AuditScreenId != appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
+      this.state.AuditScreenId != appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION)
       {
         if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
           var self = this;
@@ -427,10 +427,10 @@ var Audit = React.createClass({
     else{
         if($(".modal.notification-error").is(":visible")){
             setTimeout((function(){
-                $('.modal.notification-error').data('bs.modal').options.backdrop=true
-                $(".modal-backdrop").remove()
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true;
+                $(".modal-backdrop").remove();
                 $(".modal.notification-error").modal("hide");
-                $(".modal").removeClass("notification-error")
+                $(".modal").removeClass("notification-error");
 
             }),0)
 

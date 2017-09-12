@@ -938,13 +938,13 @@ if(!_seatData.k_deep_audit)
                 });
 
         _seatData.Box_qty_list.map(function(value, index) {
-            if(value.Type=="outer/pack"){
+           
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
-                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0), "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0), "enabled", false, "large", true, false, false, false, true),
+                    data["tableRows"].push([new self.tableCol(value.Type=="outer/pack"? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)]);
-            }
+         
            
     });
     if (_seatData.Extra_box_list.length != 0)
@@ -988,14 +988,14 @@ if(extraPackSerials!=""){
                         barcodeDamagedQty = val.damage_count;
                 });
         _seatData.Box_qty_list.map(function(value, index) {
-            if(value.Type=="inner/subpack"){
+        
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
-                    data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0), "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0), "enabled", false, "large", true, false, false, false, true),
+                    data["tableRows"].push([new self.tableCol(value.Type=="inner/subpack"?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
                     ]);
-            }
+      
 
     });
     if (_seatData.Extra_box_list.length != 0)
@@ -2009,7 +2009,8 @@ return _seatData.k_deep_audit;
                 "scan_details": {
                     "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Box_Actual_Qty:0,
                     "total_qty": 0,
-                    "kq_allowed": true
+                    "kq_allowed": _seatData.Current_box_details.length?true:false
+                   
                 }
             };
             return data.scan_details;

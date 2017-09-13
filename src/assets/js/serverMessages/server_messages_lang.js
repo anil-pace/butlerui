@@ -505,5 +505,6 @@ function server_messages_list() {
     _("DO NOT STACK");
     _("FRAGILE");
     _("Length of {0} should not be greater than {1}");
+    _("Scan not Allowed. PPS close/force close or profile change requested.");
 
 }

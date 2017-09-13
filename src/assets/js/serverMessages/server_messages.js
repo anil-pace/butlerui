@@ -165,7 +165,7 @@ var serverMessages = {
     "AdF.H.012" : "Continue scanning Sub-Packs and Pack",
     "AdF.H.013" : "Enter Quantity of Unscannable Pack",
     "AdF.H.014" : "Enter Quantity of Unscannable Sub-Pack",
-
+    "AdF.H.015" :"Wait for MPU",
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",

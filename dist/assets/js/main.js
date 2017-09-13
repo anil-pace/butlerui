@@ -47186,7 +47186,6 @@ var appConstants = {
 	AUDIT_SCAN_SR:"audit_scan_sr",
 	AUDIT_RECONCILE:"audit_reconcile",
 	AUDIT_WAITING_FOR_MSU:"audit_front_waiting_for_msu",
-	AUDIT_WAITING_FOR_MPU:"audit_front_waiting_for_mpu",
 	GET_REVISED_QUANTITY:"GET_REVISED_QUANTITY",
 	BARCODE_SCAN : 'BARCODE_SCAN',
 	GET_SERVER_MESSAGES :'GET_SERVER_MESSAGES',
@@ -48650,7 +48649,7 @@ var serverMessages = {
     "AdF.H.012" : "Continue scanning Sub-Packs and Pack",
     "AdF.H.013" : "Enter Quantity of Unscannable Pack",
     "AdF.H.014" : "Enter Quantity of Unscannable Sub-Pack",
-
+    "AdF.H.015" :"Wait for MPU",
     "AdF.H.006" :"Check Count",
     "AdF.H.007" :"Wait for MSU",
     "AdF.H.008" : "Scan Slot",

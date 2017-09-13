@@ -923,6 +923,7 @@ if(!_seatData.k_deep_audit)
          data["tableRows"] = [];
         var missingPackSerials='';
         var extraPackSerials='';
+        var extraPackCounts=0;
         var self = this;
         var barcodeDamagedQty=0;
         if(_seatData.k_deep_audit)
@@ -930,6 +931,7 @@ if(!_seatData.k_deep_audit)
          _seatData.Extra_box_list.map(function(value, index) {
             if(value.Type=="outer/pack"){
             extraPackSerials = extraPackSerials + value.Box_serial + " ";
+            extraPackCounts++;
         }
         });
           _seatData.box_barcode_damage.map(function (val, ind) {
@@ -939,20 +941,40 @@ if(!_seatData.k_deep_audit)
 
         _seatData.Box_qty_list.map(function(value, index) {
            
-        if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
+        if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 )
+            {
+                    if(value.Type=="outer/pack")
+                    {
                     data["tableRows"].push([new self.tableCol(value.Type=="outer/pack"? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
                         new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)]);
-         
+                       new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)  
+           ]);
+                barcodeDamagedQty=0;
+            }
            
+        }
     });
+          if(barcodeDamagedQty!=0)
+            {
+                  data["tableRows"].push([new self.tableCol("-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                       new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)  
+           ]);
+                  barcodeDamagedQty=0;
+            }
+
+
+
+
     if (_seatData.Extra_box_list.length != 0)
 if(extraPackSerials!=""){
+
             data["tableRows"].push([new self.tableCol(extraPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+                new self.tableCol(extraPackCounts, "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(' ', "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
             ]);
         }
 
@@ -973,6 +995,7 @@ if(extraPackSerials!=""){
          data["tableRows"] = [];
         var missingPackSerials='';
         var extraSubPackSerials='';
+        var extraSubPackCounts=0;
         var self = this;
         var barcodeDamagedQty=0;
         if(_seatData.k_deep_audit)
@@ -980,6 +1003,7 @@ if(extraPackSerials!=""){
          _seatData.Extra_box_list.map(function(value, index) {
             if(value.Type=="inner/subpack"){
             extraSubPackSerials = extraSubPackSerials + value.Box_serial + " ";
+            extraSubPackCounts++;
            }
 
         });
@@ -990,20 +1014,34 @@ if(extraPackSerials!=""){
         _seatData.Box_qty_list.map(function(value, index) {
         
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
+                      if(value.Type=="inner/subpack")
+                      {
                     data["tableRows"].push([new self.tableCol(value.Type=="inner/subpack"?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
                         new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
+                    new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
                     ]);
-      
+                        barcodeDamagedQty=0;
+                    }
+            
 
     });
+         if(barcodeDamagedQty!=0)
+            {
+                  data["tableRows"].push([new self.tableCol("-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                       new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)  
+           ]);
+                  barcodeDamagedQty=0;
+            }
     if (_seatData.Extra_box_list.length != 0)
    if(extraSubPackSerials){
             data["tableRows"].push([new self.tableCol(extraSubPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+                //new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+            new self.tableCol(' ', "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
             ]);
         }
 

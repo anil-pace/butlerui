@@ -296,7 +296,7 @@ var Audit = React.createClass({
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)
             AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={mm} />);
-       if(this.state.AuditReconcilePackData["tableRows"].length == 0  && this.state.AuditReconcileSubPackData["tableRows"].length == 0 && this.state.AuditSRStatus)
+       if(this.state.AuditReconcilePackData["tableRows"].length == 0  && this.state.AuditReconcileSubPackData["tableRows"].length == 0 &&  this.state.AuditSRStatus)
             AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={SRmessage} />);
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
               BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);

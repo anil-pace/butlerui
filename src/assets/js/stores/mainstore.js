@@ -300,7 +300,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[1];
                 break;
             case appConstants.AUDIT:
-                if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
+            
+                if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU && _seatData.k_deep_audit)
+                    _NavData = navConfig.sraudit[0];
+                else if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
                     _NavData = navConfig.audit[0];
                 else if (_seatData.screen_id === appConstants.AUDIT_LOCATION_SCAN && _seatData.k_deep_audit)
                     _NavData = navConfig.sraudit[1];

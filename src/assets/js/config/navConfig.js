@@ -360,7 +360,7 @@ var navData = {
     ],
 "sraudit": [
         [{
-            "screen_id": "audit_front_waiting_for_mpu",
+            "screen_id": "audit_front_waiting_for_msu",
             "code": "Common.000",
             "message": "Wait For MPU",
             "showImage": false,

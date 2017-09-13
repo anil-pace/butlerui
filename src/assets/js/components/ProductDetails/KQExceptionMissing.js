@@ -114,17 +114,7 @@ var KQ = React.createClass({
                 return true;
             }
 
-            if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
-                 data = {
-                    "event_name": "quantity_update_for_audit_seat",
-                    "event_data": {
-                        "type": "change_qty",
-                        "quantity": parseInt(_updatedQtyMissing)
-                    }
-                };
-            }
-
-            else if (mainstore.getCurrentSeat() == "audit_front") {
+            if (mainstore.getCurrentSeat() == "audit_front") {
 
                 data = {
                     "event_name": "audit_actions",
@@ -166,17 +156,7 @@ var KQ = React.createClass({
                      return true;
                 }
                
-                 if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
-                 data = {
-                    "event_name": "quantity_update_for_audit_seat",
-                    "event_data": {
-                        "type": "change_qty",
-                        "quantity": parseInt(_updatedQtyMissing)
-                    }
-                };
-            }
-
-            else if (mainstore.getCurrentSeat() == "audit_front") {
+                if (mainstore.getCurrentSeat() == "audit_front") {
                     data = {
                         "event_name": "audit_actions",
                         "event_data": {
@@ -280,17 +260,8 @@ var KQ = React.createClass({
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
                          return true;
                     }
-                     if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
-                 data = {
-                    "event_name": "quantity_update_for_audit_seat",
-                    "event_data": {
-                        "type": "change_qty",
-                        "quantity": parseInt(e.target.value)
-                    }
-                };
-            }
-
-            else if (mainstore.getCurrentSeat() == "audit_front") {
+                    
+                 if (mainstore.getCurrentSeat() == "audit_front") {
                         data = {
                             "event_name": "audit_actions",
                             "event_data": {

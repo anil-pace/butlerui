@@ -280,6 +280,7 @@ var Audit = React.createClass({
           var AuditMessage = '';
           var PackData='';
           var SubPackData='';
+          var DamageData='';
           var Slot='';
           var displayStyle;
           var mm = {
@@ -296,7 +297,7 @@ var Audit = React.createClass({
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)
             AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={mm} />);
-       if(this.state.AuditReconcilePackData["tableRows"].length == 0  && this.state.AuditReconcileSubPackData["tableRows"].length == 0 &&  this.state.AuditSRStatus)
+       if(this.state.AuditReconcilePackData["tableRows"].length == 0  && this.state.AuditReconcileSubPackData["tableRows"].length == 0 && this.state.DamageReconcileData["tableRows"].length == 0 &&  this.state.AuditSRStatus)
             AuditMessage=(<Reconcile navMessagesJson={this.props.navMessagesJson} message={SRmessage} />);
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length != 0 )
               BoxSerialData = (<TabularData data = {this.state.AuditReconcileBoxSerialData}/>);
@@ -308,6 +309,8 @@ var Audit = React.createClass({
               PackData = (<TabularData data = {this.state.AuditReconcilePackData}/>);
           if(this.state.AuditReconcileSubPackData["tableRows"].length != 0 )
               SubPackData = (<TabularData data = {this.state.AuditReconcileSubPackData}/>);
+          if(this.state.DamageReconcileData["tableRows"].length != 0 )
+              DamageData = (<TabularData data = {this.state.DamageReconcileData}/>);
             if(!this.state.AuditSRStatus)
               Slot=(<CurrentSlot slotDetails={this.state.AuditSlotDetails}/>)
             subComponent=(
@@ -319,6 +322,7 @@ var Audit = React.createClass({
                     {LooseItemsData}
                     {PackData}
                     {SubPackData}
+                    {DamageData}
                   </div>
                 </div>
               );

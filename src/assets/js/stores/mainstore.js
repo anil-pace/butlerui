@@ -923,6 +923,37 @@ if(!_seatData.k_deep_audit)
     
     },
 
+    getDamageReconcileData:function(){
+        var data = {};
+         data["header"] = [];
+         data["tableRows"] = [];
+         var self=this;
+         var packBarcodeDamagedQty=0;
+         var subPackBarcodeDamagedQty=0;
+         if(_seatData.k_deep_audit)
+        {
+            _seatData.box_barcode_damage.map(function (val, ind) {
+                    if (val.type=="outer/pack")
+                        packBarcodeDamagedQty = val.damage_count;
+                    else{
+                        subPackBarcodeDamagedQty=val.damage_count;
+                    }
+                });
+            if(_seatData.box_barcode_damage.length!=0){
+                data["tableRows"].push([new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(subPackBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
+                        ]);
+                }
+        if (data["tableRows"].length > 0) {
+            data["header"].push(new this.tableCol(_("Damage Barcode"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_("Packs"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Sub-Packs"), "header", false, "small", false, false, true, false, true));
+        }
+        }
+         return data;
+    },
+
     getPackReconcileData:function(){
         var data = {};
          data["header"] = [];
@@ -931,7 +962,7 @@ if(!_seatData.k_deep_audit)
         var extraPackSerials='';
         var extraPackCounts=0;
         var self = this;
-        var barcodeDamagedQty=0;
+        
         if(_seatData.k_deep_audit)
         {
          _seatData.Extra_box_list.map(function(value, index) {
@@ -940,10 +971,7 @@ if(!_seatData.k_deep_audit)
             extraPackCounts++;
         }
         });
-          _seatData.box_barcode_damage.map(function (val, ind) {
-                    if (val.type=="outer/pack")
-                        barcodeDamagedQty = val.damage_count;
-                });
+        
 
         _seatData.Box_qty_list.map(function(value, index) {
            
@@ -953,10 +981,10 @@ if(!_seatData.k_deep_audit)
                     {
                     data["tableRows"].push([new self.tableCol(value.Type=="outer/pack"? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
                         new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
-                       new self.tableCol(barcodeDamagedQty==0?" ":barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)  
+                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
+                        
            ]);
-                barcodeDamagedQty=0;
+               
             }
            
         }
@@ -966,27 +994,17 @@ if(!_seatData.k_deep_audit)
 
             data["tableRows"].push([new self.tableCol(extraPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(extraPackCounts, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(barcodeDamagedQty==0?" ":barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
-            ]);
-            barcodeDamagedQty=0;
+                new self.tableCol(extraPackCounts, "enabled", false, "large", true, false, false, false, true)
+                 ]);
+            
         }
-          if(barcodeDamagedQty!=0)
-            {
-                  data["tableRows"].push([new self.tableCol("-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                       new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)  
-           ]);
-                  barcodeDamagedQty=0;
-            }
+         
 
      if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("Pack"), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
-        }
+             }
     }
     return data;
 
@@ -1000,7 +1018,7 @@ if(!_seatData.k_deep_audit)
         var extraSubPackSerials='';
         var extraSubPackCounts=0;
         var self = this;
-        var barcodeDamagedQty=0;
+       
         if(_seatData.k_deep_audit)
 {
          _seatData.Extra_box_list.map(function(value, index) {
@@ -1010,10 +1028,7 @@ if(!_seatData.k_deep_audit)
            }
 
         });
-         _seatData.box_barcode_damage.map(function (val, ind) {
-                    if (val.type=="inner/subpack")
-                        barcodeDamagedQty = val.damage_count;
-                });
+         
         _seatData.Box_qty_list.map(function(value, index) {
         
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
@@ -1021,10 +1036,9 @@ if(!_seatData.k_deep_audit)
                       {
                     data["tableRows"].push([new self.tableCol(value.Type=="inner/subpack"?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
                         new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(barcodeDamagedQty==0?" ":barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
-                    ]);
-                        barcodeDamagedQty=0;
+                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
+                         ]);
+                       
                     }
             
 
@@ -1034,27 +1048,17 @@ if(!_seatData.k_deep_audit)
    if(extraSubPackSerials){
             data["tableRows"].push([new self.tableCol(extraSubPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true),
-            new self.tableCol(barcodeDamagedQty==0?" ":barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
+                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
             ]);
-            barcodeDamagedQty=0;
+            
         }
-         if(barcodeDamagedQty!=0)
-            {
-                  data["tableRows"].push([new self.tableCol("-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                       new self.tableCol(barcodeDamagedQty, "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)  
-           ]);
-                  barcodeDamagedQty=0;
-            }
+         
 
      if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("SubPack"), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
-        }
+             }
 
 
  }   
@@ -2792,6 +2796,7 @@ return _seatData.k_deep_audit;
                 data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
                 data["AuditReconcilePackData"] = this.getPackReconcileData();
                 data["AuditReconcileSubPackData"] = this.getSubPackReconcileData();
+                data["DamageReconcileData"] = this.getDamageReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 break;
             case appConstants.AUDIT_LOCATION_SCAN:

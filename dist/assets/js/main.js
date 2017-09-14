@@ -48313,7 +48313,7 @@ var serverMessages = {
     "PtB.E.019" : "Tote not present in database.",
     "PtB.E.020" : "Tote matched .",
     "PtB.E.021" : "Entity already scanned.Confirm exception", 
-    "PtB.E.023" : "Scan not Allowed.PPS close or force close requested",
+    "PtB.E.023" : "Scan not Allowed. PPS close/force close or profile change requested.",
     "PtB.E.024" : "Length of {0} should not be greater than {1}",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
     "PtF.H.002" : "Scan Slot to Confirm",

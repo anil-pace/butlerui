@@ -306,11 +306,11 @@ var Audit = React.createClass({
           if(this.state.AuditReconcileLooseItemsData["tableRows"].length != 0 )
               LooseItemsData = (<TabularData data = {this.state.AuditReconcileLooseItemsData}/>);
           if(this.state.AuditReconcilePackData["tableRows"].length != 0 )
-              PackData = (<TabularData data = {this.state.AuditReconcilePackData}/>);
+              PackData = (<TabularData className="srTable" data = {this.state.AuditReconcilePackData}/>);
           if(this.state.AuditReconcileSubPackData["tableRows"].length != 0 )
-              SubPackData = (<TabularData data = {this.state.AuditReconcileSubPackData}/>);
+              SubPackData = (<TabularData className="srTable" data = {this.state.AuditReconcileSubPackData}/>);
           if(this.state.DamageReconcileData["tableRows"].length != 0 )
-              DamageData = (<TabularData data = {this.state.DamageReconcileData}/>);
+              DamageData = (<TabularData className="srTable" data = {this.state.DamageReconcileData}/>);
             if(!this.state.AuditSRStatus)
               Slot=(<CurrentSlot slotDetails={this.state.AuditSlotDetails}/>)
             subComponent=(
@@ -328,7 +328,7 @@ var Audit = React.createClass({
               );
             messageType = "small";
           this._component = (
-              <div className='grid-container audit-reconcilation'>
+              <div className={this.state.AuditSRStatus?'grid-container audit-reconcilation-sr':'grid-container audit-reconcilation'}>
                   <Modal />
                   {Slot}
                 {subComponent}

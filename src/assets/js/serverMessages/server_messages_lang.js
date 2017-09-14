@@ -513,5 +513,24 @@ function server_messages_list() {
     _("Packing box scan failed");
     _("Wrong entity Scanned. Bin Scan Expected.");
     _("Bin Already Scanned");
+    _("Pack scan successfully");
+    _("Sub-Pack scan successfully");
+    _("Scan MPU");
+    _("Scan Pack or Sub-Packs");
+    _("Continue scanning Sub-Packs and Pack");
+    _("Enter Quantity of Unscannable Pack");
+    _("Enter Quantity of Unscannable Sub-Pack");
+    _("Wait for MPU");
+    _("No Sub-Packs to reconcile");
+    _("Pack Unscannable");
+    _("Sub-Pack Unscannable");
+    _("Damage Barcode");
+    _("Packs");
+    _("Sub-Packs");
+    
+
+
+
+
 }
 

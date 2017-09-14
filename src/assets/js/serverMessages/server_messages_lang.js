@@ -513,6 +513,7 @@ function server_messages_list() {
     _("Packing box scan failed");
     _("Wrong entity Scanned. Bin Scan Expected.");
     _("Bin Already Scanned");
+    _("Scan not Allowed. PPS close/force close or profile change requested.");
     _("Pack scan successfully");
     _("Sub-Pack scan successfully");
     _("Scan MPU");
@@ -527,10 +528,6 @@ function server_messages_list() {
     _("Damage Barcode");
     _("Packs");
     _("Sub-Packs");
-    
-
-
-
 
 }
 

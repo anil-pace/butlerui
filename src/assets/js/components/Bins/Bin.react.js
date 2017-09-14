@@ -475,7 +475,7 @@ var Bin = React.createClass({
                     {pptl}
                 </div>
             );
-        }else if (compData.selected_state && this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT) {
+        }else if (compData.selected_state && (this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT|| this.props.screenId === appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT)) {
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
                 tote = (<div className="tote">
                     <span className="bin-icon tote-icon"/>

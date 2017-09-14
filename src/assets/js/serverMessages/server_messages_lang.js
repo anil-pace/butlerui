@@ -1,7 +1,7 @@
 
 /*
     Generated using:
-    cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep -Ev "({|})" | sed 's/$/);/g'
+    cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep Ev "({|})" | sed 's/$/);/g'
  */
 function server_messages_list() {
     _("Scan item / Stage PPS Bin");
@@ -62,7 +62,6 @@ function server_messages_list() {
     _("Entity scan not expected. Waiting for PPTL press");
     _("Bin selected for put. Cannot be staged");
     _("SKU not present in database. Put into IRT bin.");
-    _("Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL");
     _("No free bins. Please scan later");
     _("Wrong PPTL pressed. Please try another");    
     _("Please put entities in exception area and confirm");
@@ -223,7 +222,7 @@ function server_messages_list() {
     _("Please enter a quantity greater than 0");
     _("Place extra entity in Exception area.");
     _("Sum of missing, good and damaged should be equal to {0}");
-    _("Sum of missing, good and damaged should be equal to {0}");
+    _("Scan excess item quantity");
     _("Quantity should be less than or equal to {0}");
     _("You are not allowed to keyed in the quantity from the numpad. Force Scan is required.");
     _("Waiting for Bins to be Cleared at Pick Back");
@@ -237,7 +236,7 @@ function server_messages_list() {
     _("FINISH");
     _("Print");
     _("Skip Printing");
-    _("Dis-associate Tote");
+    _("Disassociate Tote");
     _("Override");
     _("Add Scanner");
     _("Edit Details");
@@ -354,7 +353,7 @@ function server_messages_list() {
     _("Scan Items");
     _("Status");
     _("Could not connect to PPS.Please try again.");
-    /* bin-info modal box */
+    /* bininfo modal box */
     _("product_sku");
     _("type");
     _("quantity");
@@ -381,10 +380,10 @@ function server_messages_list() {
     _("PPS Mode");
     _("Seat Type");
     _("Good Quantity Cannot be Equal to the Total Quantity");
-    /*Roll-cage*/
+    /*Rollcage*/
     _("Undock Roll Cage if no items remaining");
     _("Gently push roll cage away from the frame");
-    /*Pre-put */
+    /*Preput */
     _("Scan tote and place it in the slot");
     _("Scan slot to confirm");
     _("Release MTU");
@@ -436,6 +435,7 @@ function server_messages_list() {
     _("Place");
     _("Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining");
     _("Press PPTL to confirm no Items Remaining in Bin {0}");
+    _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
     _("Entities cannot be accommodated!");
     _("Take Printout and Press PPTL");
     _("PPS is Closed");
@@ -444,6 +444,8 @@ function server_messages_list() {
     _("Dock roll cage back to proceed the operation");
     _("Excess quantity");
     _("Entity Damaged");
+    _("Issues with entity");
+    _("Validate and Confirm");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
     _("Please put damaged entities in IRT bin and scan the bin");
@@ -457,7 +459,11 @@ function server_messages_list() {
     _("Entity Damaged");
     _("Warehouse Full Remove all entities from bin & press PPTL");
     _("Enter Quantity");
+    _("Are you sure you want to cancel the exception?");
+    _("Yes");
+    _("No");
     _("Exception with entity reported");
+    _("Please put entities with issues, in exception area");
     _("Please put entities in IRT and Scan IRT Bin");
     _("Wrong Scan. Unrecognized barcode.");
     _("PPS is closed");
@@ -466,6 +472,13 @@ function server_messages_list() {
     _("DO NOT STACK");
     _("FRAGILE");
     _("Length of {0} should not be greater than {1}");
+    _("Scan {0} packs");
+    _("Scan {0} sub packs");
+    _("Press PPTL");
+    _("Pack Scan Successful");
+    _("Scan {0} more packs and place in bin {1}");
+    _("Scan {0} more sub packs and place in bin {1}");
+    _("Put pack list in trolley and press PPTL to confirm");
     _("Scan damaged entity");
     _("Damaged Quantity");
     _("Entity Damaged");
@@ -483,13 +496,22 @@ function server_messages_list() {
     _("Physically Damaged entity reported.");
     _("Entity entry successful");
     _("Bin scan successful");
-    _("Extra entity scan found.");
     _("Physically Damaged Reported should equal Scanned Quantity");
     _("SKU not present in Database.");
     _("Extra entity scan found.");
     _("Container Already Scanned.");
     _("Invalid Entity Scanned.");
-    _("Quantity of Physically damaged entities scanned is less.")
-    _("Error")
+    _("Quantity of Physically damaged entities scanned is less.");
+    _("Error");
+    _("Waiting for Bins to be Cleared at Pick Front");
+    _("Processing Next Pick from Rack ");
+    _("Scan Damaged Entity");
+    _("Warehouse Full");
+    _("Scan a packing box and keep in bin {0}");
+    _("Pick box from MSU and press PPTL on Bin {0}");
+    _("Extra details entered are incorrect.Please enter correct details");
+    _("Packing box scan failed");
+    _("Wrong entity Scanned. Bin Scan Expected.");
+    _("Bin Already Scanned");
 }
 

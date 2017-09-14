@@ -240,62 +240,6 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         return data;
     },
 
-    //SR Audit
-    getSRPackData: function() {
-        var data = {};
-        var disabledStatus;
-        //if (_AuditData.Current_box_details.length > 0) {
-        disabledStatus = false;
-        //}
-        data["header"] = [];
-        data["header"].push(new this.tableCol("Pack", "header", false, "small", false, true, true, false));
-        if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["tableRows"] = [];
-        var self = this;
-        var d = [];
-        _AuditData.Loose_sku_list.map(function(value, index) {
-            d= [];
-             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
-            if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            console.log("jkkkk");
-            console.log(d);
-            data["tableRows"].push(d);
-
-        });
-        return data;
-    },
-
-       getSRSubPackData: function() {
-        var data = {};
-        var disabledStatus;
-        //if (_AuditData.Current_box_details.length > 0) {
-        disabledStatus = false;
-        //}
-        data["header"] = [];
-        data["header"].push(new this.tableCol("Sub-Pack", "header", false, "small", false, true, true, false));
-        if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
-            data["header"].push(new this.tableCol("Expected", "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
-        data["tableRows"] = [];
-        var self = this;
-        var d = [];
-        _AuditData.Loose_sku_list.map(function(value, index) {
-            d= [];
-             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
-            if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            console.log("jkkkk");
-            console.log(d);
-            data["tableRows"].push(d);
-
-        });
-        return data;
-    },
 
     getFinishAuditFlag: function() {
         return _finishAuditFlag;

@@ -37166,8 +37166,8 @@ var Audit = React.createClass({displayName: "Audit",
           };
            var SRmessage = {
             "details": [],
-            "code": "Audit.A.013",
-            "description": "No Sub-pack To Reconcile",
+            "code": "AdF.B.004",
+            "description": "No Sub-Packs to reconcile",
             "level": "info"
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)
@@ -42838,7 +42838,7 @@ var KQ = React.createClass({displayName: "KQ",
 
              if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
                  data = {
-                    "event_name": "quantity_update_for_audit_seat",
+                    "event_name": appConstants.QUANTITY_UPDATE_AUDIT_SEAT,
                     "event_data": {
                         "type": "change_qty",
                         "quantity": parseInt(_updatedQty)
@@ -42906,7 +42906,7 @@ var KQ = React.createClass({displayName: "KQ",
                 }
                  if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
                  data = {
-                    "event_name": "quantity_update_for_audit_seat",
+                    "event_name": appConstants.QUANTITY_UPDATE_AUDIT_SEAT,
                     "event_data": {
                         "type": "change_qty",
                         "quantity": parseInt(_updatedQty)
@@ -43038,7 +43038,7 @@ var KQ = React.createClass({displayName: "KQ",
                     
                       if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
                  data = {
-                    "event_name": "quantity_update_for_audit_seat",
+                    "event_name": appConstants.QUANTITY_UPDATE_AUDIT_SEAT,
                     "event_data": {
                         "type": "change_qty",
                         "quantity": parseInt(e.target.value)
@@ -47138,6 +47138,9 @@ var appConstants = {
 	PICK : "pick",
 	CHANGE_AUDIT_EXCEPTION_SCREEN:"CHANGE_AUDIT_EXCEPTION_SCREEN",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
+	OUTER_PACK:"outer_pack",
+	INNER_SUBPACK:"inner_subpack",
+	QUANTITY_UPDATE_AUDIT_SEAT:"quantity_update_for_audit_seat",
 	TOGGLE_BIN_SELECTION:"TOGGLE_BIN_SELECTION",
 	CHANGE_DAMAGED_SCREEN_CONFIRM:"CHANGE_DAMAGED_SCREEN_CONFIRM",
 	CHANGE_OVERSIZED_SCREEN_CONFIRM:"CHANGE_OVERSIZED_SCREEN_CONFIRM",
@@ -48725,6 +48728,7 @@ var serverMessages = {
     "AdF.B.001" :"Wrong Barcode",
     "AdF.B.002" :"Box Scan successful",
     "AdF.B.003" :"Item Scan successful",
+    "AdF.B.004"    : "No Sub-Packs to reconcile",
     "CLIENTCODE_001" : "Bin {0} selected",
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",
@@ -48734,7 +48738,6 @@ var serverMessages = {
     "CLIENTCODE_403" : "PPS is Closed",
     "CLIENTCODE_401" : "Invalid Credentials",
     "Audit.A.012"    : "No Items To Reconcile",
-    "Audit.A.013"    : "No sub-packs to reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",
     "CLIENTCODE_006" : "Peripheral added successfully",
@@ -50942,7 +50945,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-            if(value.Type=="outer/pack")
+            if(value.Type===appConstants.OUTER_PACK)
         {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -50955,7 +50958,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         });
         _seatData.Extra_box_list.map(function (value, index){
-            if(value.Type=="outer/pack")
+            if(value.Type===appConstants.OUTER_PACK)
         {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -50981,7 +50984,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-             if(value.Type=="inner/subpack"){
+             if(value.Type===appConstants.INNER_SUBPACK){
                 d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -50993,7 +50996,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         });
          _seatData.Extra_box_list.map(function (value, index){
-            if(value.Type=="inner/subpack")
+            if(value.Type===appConstants.INNER_SUBPACK)
         {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -51414,7 +51417,7 @@ if(!_seatData.k_deep_audit)
          if(_seatData.k_deep_audit)
         {
             _seatData.box_barcode_damage.map(function (val, ind) {
-                    if (val.type=="outer/pack")
+                    if (val.type===appConstants.OUTER_PACK)
                         packBarcodeDamagedQty = val.damage_count;
                     else{
                         subPackBarcodeDamagedQty=val.damage_count;
@@ -51447,7 +51450,7 @@ if(!_seatData.k_deep_audit)
         if(_seatData.k_deep_audit)
         {
          _seatData.Extra_box_list.map(function(value, index) {
-            if(value.Type=="outer/pack"){
+            if(value.Type===appConstants.OUTER_PACK){
             extraPackSerials = extraPackSerials + value.Box_serial + " ";
             extraPackCounts++;
         }
@@ -51458,11 +51461,11 @@ if(!_seatData.k_deep_audit)
            
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 )
             {
-                    if(value.Type=="outer/pack")
+                    if(value.Type===appConstants.OUTER_PACK)
                     {
-                    data["tableRows"].push([new self.tableCol(value.Type=="outer/pack"? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
+                    data["tableRows"].push([new self.tableCol(value.Type===appConstants.OUTER_PACK? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
                         
            ]);
                
@@ -51503,7 +51506,7 @@ if(!_seatData.k_deep_audit)
         if(_seatData.k_deep_audit)
 {
          _seatData.Extra_box_list.map(function(value, index) {
-            if(value.Type=="inner/subpack"){
+            if(value.Type===appConstants.INNER_SUBPACK){
             extraSubPackSerials = extraSubPackSerials + value.Box_serial + " ";
             extraSubPackCounts++;
            }
@@ -51513,11 +51516,11 @@ if(!_seatData.k_deep_audit)
         _seatData.Box_qty_list.map(function(value, index) {
         
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
-                      if(value.Type=="inner/subpack")
+                      if(value.Type===appConstants.INNER_SUBPACK)
                       {
-                    data["tableRows"].push([new self.tableCol(value.Type=="inner/subpack"?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
+                    data["tableRows"].push([new self.tableCol(value.Type===appConstants.INNER_SUBPACK?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
                          ]);
                        
                     }

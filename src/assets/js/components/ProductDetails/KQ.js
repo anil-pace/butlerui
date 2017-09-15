@@ -158,7 +158,7 @@ var KQ = React.createClass({
 
              if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
                  data = {
-                    "event_name": "quantity_update_for_audit_seat",
+                    "event_name": appConstants.QUANTITY_UPDATE_AUDIT_SEAT,
                     "event_data": {
                         "type": "change_qty",
                         "quantity": parseInt(_updatedQty)
@@ -226,7 +226,7 @@ var KQ = React.createClass({
                 }
                  if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
                  data = {
-                    "event_name": "quantity_update_for_audit_seat",
+                    "event_name": appConstants.QUANTITY_UPDATE_AUDIT_SEAT,
                     "event_data": {
                         "type": "change_qty",
                         "quantity": parseInt(_updatedQty)
@@ -358,7 +358,7 @@ var KQ = React.createClass({
                     
                       if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
                  data = {
-                    "event_name": "quantity_update_for_audit_seat",
+                    "event_name": appConstants.QUANTITY_UPDATE_AUDIT_SEAT,
                     "event_data": {
                         "type": "change_qty",
                         "quantity": parseInt(e.target.value)

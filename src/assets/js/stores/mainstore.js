@@ -461,7 +461,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-            if(value.Type=="outer/pack")
+            if(value.Type===appConstants.OUTER_PACK)
         {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -474,7 +474,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         });
         _seatData.Extra_box_list.map(function (value, index){
-            if(value.Type=="outer/pack")
+            if(value.Type===appConstants.OUTER_PACK)
         {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -500,7 +500,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
-             if(value.Type=="inner/subpack"){
+             if(value.Type===appConstants.INNER_SUBPACK){
                 d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -512,7 +512,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         });
          _seatData.Extra_box_list.map(function (value, index){
-            if(value.Type=="inner/subpack")
+            if(value.Type===appConstants.INNER_SUBPACK)
         {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                     d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
@@ -933,7 +933,7 @@ if(!_seatData.k_deep_audit)
          if(_seatData.k_deep_audit)
         {
             _seatData.box_barcode_damage.map(function (val, ind) {
-                    if (val.type=="outer/pack")
+                    if (val.type===appConstants.OUTER_PACK)
                         packBarcodeDamagedQty = val.damage_count;
                     else{
                         subPackBarcodeDamagedQty=val.damage_count;
@@ -966,7 +966,7 @@ if(!_seatData.k_deep_audit)
         if(_seatData.k_deep_audit)
         {
          _seatData.Extra_box_list.map(function(value, index) {
-            if(value.Type=="outer/pack"){
+            if(value.Type===appConstants.OUTER_PACK){
             extraPackSerials = extraPackSerials + value.Box_serial + " ";
             extraPackCounts++;
         }
@@ -977,11 +977,11 @@ if(!_seatData.k_deep_audit)
            
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 )
             {
-                    if(value.Type=="outer/pack")
+                    if(value.Type===appConstants.OUTER_PACK)
                     {
-                    data["tableRows"].push([new self.tableCol(value.Type=="outer/pack"? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(value.Type=="outer/pack"?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
+                    data["tableRows"].push([new self.tableCol(value.Type===appConstants.OUTER_PACK? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
                         
            ]);
                
@@ -1022,7 +1022,7 @@ if(!_seatData.k_deep_audit)
         if(_seatData.k_deep_audit)
 {
          _seatData.Extra_box_list.map(function(value, index) {
-            if(value.Type=="inner/subpack"){
+            if(value.Type===appConstants.INNER_SUBPACK){
             extraSubPackSerials = extraSubPackSerials + value.Box_serial + " ";
             extraSubPackCounts++;
            }
@@ -1032,11 +1032,11 @@ if(!_seatData.k_deep_audit)
         _seatData.Box_qty_list.map(function(value, index) {
         
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
-                      if(value.Type=="inner/subpack")
+                      if(value.Type===appConstants.INNER_SUBPACK)
                       {
-                    data["tableRows"].push([new self.tableCol(value.Type=="inner/subpack"?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
-                        new self.tableCol(value.Type=="inner/subpack"? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
+                    data["tableRows"].push([new self.tableCol(value.Type===appConstants.INNER_SUBPACK?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
+                        new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
                          ]);
                        
                     }

@@ -291,8 +291,8 @@ var Audit = React.createClass({
           };
            var SRmessage = {
             "details": [],
-            "code": "Audit.A.013",
-            "description": "No Sub-pack To Reconcile",
+            "code": "AdF.B.004",
+            "description": "No Sub-Packs to reconcile",
             "level": "info"
           };
           if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)

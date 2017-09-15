@@ -50941,7 +50941,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
             data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-        _finishAuditFlag = true;
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
@@ -50952,10 +50951,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
                 data["tableRows"].push(d);
        }
-
-            if (value.Scan_status == "open") {
-                _finishAuditFlag = false;
-            }
         });
         _seatData.Extra_box_list.map(function (value, index){
             if(value.Type===appConstants.OUTER_PACK)
@@ -50980,7 +50975,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
             data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-        _finishAuditFlag = true;
+        
         var d = [];
         _seatData.Box_qty_list.map(function (value, index) {
             d = [];
@@ -50991,9 +50986,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 d.push(new self.tableCol(value.Box_Actual_Qty, "complete", (_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
                 data["tableRows"].push(d);
 }
-            if (value.Scan_status == "open") {
-                _finishAuditFlag = false;
-            }
+            
         });
          _seatData.Extra_box_list.map(function (value, index){
             if(value.Type===appConstants.INNER_SUBPACK)

@@ -525,5 +525,6 @@ function server_messages_list() {
     _("Damaged sub pack");
     _("Good pack");
     _("Good sub pack");
+    _("Scan not Allowed. PPS close/force close or profile change requested.");
 }
 

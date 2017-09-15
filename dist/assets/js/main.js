@@ -38972,7 +38972,12 @@ switch (module) {
                                 data["event_data"]["action"] ="physically_damaged";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                      
+                                break; 
+                            case appConstants.REPRINT:
+                                data["event_name"] = "pick_front";
+                                data["event_data"]["action"] ="reprint";
+                                ActionCreators.postDataToInterface(data);
+                                break;                          
                             default:
                                 return true;
                         }
@@ -42221,6 +42226,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
+            var reprintButton='';
                 if (!this.state.PickFrontExceptionStatus) {
                     if (this.state.OrigBinUse) {
                         binComponent = (
@@ -42231,6 +42237,9 @@ var PickFront = React.createClass({displayName: "PickFront",
                             React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: screen_id})
                         ))
                     }
+                    reprintButton=this.state.PickFrontScreenId===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT?(React.createElement(Button1, {disabled: false, text: _("Reprint"), module: appConstants.PICK_FRONT, 
+                             action: appConstants.REPRINT, color: "black"})):'';
+
                     this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
                                                     serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
@@ -42240,8 +42249,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                             this.state.SplitScreenFlag &&
                             React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
                                     screenClass: "putFrontFlow"}), 
-                            binComponent
+                            binComponent, 
+                            reprintButton
                         )
+
                     );
                 } else {
                     this._component = this.getExceptionComponent();
@@ -47195,6 +47206,7 @@ var appConstants = {
 	SEND_KQ_QTY:"SEND_KQ_QTY",
 	ENABLE_EXCEPTION:"ENABLE_EXCEPTION",
 	CANCEL_EXCEPTION:"CANCEL_EXCEPTION",
+	REPRINT:"REPRINT",
 	CANCEL_EXCEPTION_TO_SERVER:"CANCEL_EXCEPTION_TO_SERVER",
 	LOGOUT_SESSION:"LOGOUT_SESSION",
 	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",

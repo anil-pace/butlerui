@@ -93,7 +93,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
                 "message":"Place extra " + (_AuditData.Current_box_details[0].Actual_qty - _AuditData.Current_box_details[0].Expected_qty) + " items in Exception area ."
             }
         }else
-            return data;
+        return data;
     },
 
     getBoxSerialData: function() {
@@ -107,7 +107,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol("Actual", "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol("Finish", "header", false, "small", false, false, true, false, true));
         _finishAuditFlag = true;
-         var d = [];
+        var d = [];
         _AuditData.Box_qty_list.map(function(value, index) {
             d = [];
             if (value.Scan_status != "close") {
@@ -171,17 +171,17 @@ var AuditStore = assign({}, EventEmitter.prototype, {
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                     new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
-                ]);
+                    ]);
             else
                 data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                     new self.tableCol("Missing Box", "missing", false, "large", false, false, false, false, true)
-                ]);
+                    ]);
 
         });
         _AuditData.Extra_box_list.map(function(value, index) {
             data["tableRows"].push([new self.tableCol(value.Box_serial, "enabled", false, "large", false, true, false, false),
                 new self.tableCol("Extra ( " + value.Actual_qty + "/" + value.Expected_qty + " )", "extra", false, "large", false, false, false, false, true)
-            ]);
+                ]);
         });
 
         return data;
@@ -210,7 +210,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         var data = {};
         var disabledStatus;
         //if (_AuditData.Current_box_details.length > 0) {
-        disabledStatus = false;
+            disabledStatus = false;
         //}
         data["header"] = [];
         data["header"].push(new this.tableCol("Loose Items", "header", false, "small", false, true, true, false));
@@ -222,7 +222,7 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         var d = [];
         _AuditData.Loose_sku_list.map(function(value, index) {
             d= [];
-             d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
+            d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
             if (_AuditData["show_expected_qty"] != undefined && _AuditData["show_expected_qty"] == true)
                 d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
             d.push(new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
@@ -235,8 +235,8 @@ var AuditStore = assign({}, EventEmitter.prototype, {
                         new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true);
                 })(),
                 new self.tableCol(value.Actual_qty, "enabled", (_AuditData.Current_box_details.length > 0 && _AuditData.Current_box_details[0]["Box_serial"] == null) ? _AuditData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true)
-            ]);*/
-        });
+                ]);*/
+            });
         return data;
     },
 
@@ -260,16 +260,16 @@ var AuditStore = assign({}, EventEmitter.prototype, {
         } else {
             data["tableRows"].push([new self.tableCol("Product Name", "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
+                ]);
             data["tableRows"].push([new self.tableCol("Product Desc", "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
+                ]);
             data["tableRows"].push([new self.tableCol("Product SKU", "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
+                ]);
             data["tableRows"].push([new self.tableCol("Product Type", "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false)
-            ]);
+                ]);
         }
 
         return data;
@@ -319,14 +319,14 @@ AuditStore.dispatchToken = AppDispatcher.register(function(action) {
     switch (action.action.actionType) {
 
         case ActionTypes.SET_AUDIT_DATA:
-            AuditStore.setAuditData(action.action.data);
-            AuditStore.emitChange();
-            break;
+        AuditStore.setAuditData(action.action.data);
+        AuditStore.emitChange();
+        break;
 
         default:
             // do nothing
-    }
+        }
 
-});
+    });
 
 module.exports = AuditStore;

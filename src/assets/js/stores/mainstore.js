@@ -1028,7 +1028,7 @@ getOrderID: function () {
        
        _seatData.Box_qty_list.map(function(value, index) {
         
-        if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 || barcodeDamagedQty != 0)
+        if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0)
           if(value.Type===appConstants.INNER_SUBPACK)
           {
             data["tableRows"].push([new self.tableCol(value.Type===appConstants.INNER_SUBPACK?value.Box_serial:"-", "enabled", false, "large", false, true, false, false),

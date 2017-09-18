@@ -513,7 +513,22 @@ function server_messages_list() {
     _("Packing box scan failed");
     _("Wrong entity Scanned. Bin Scan Expected.");
     _("Bin Already Scanned");
+    _("Issue with Pack");
+    _("Issue with Sub pack");
+    _("Issue with MPU");
+    _("Space not available");
+    _("Bad barcode on pack");
+    _("Bad barcode on sub pack");
+    _("Unexpected pack");
+    _("Pack missing");
+    _("Sub pack missing");
+    _("Damaged sub pack");
+    _("Good pack");
+    _("Good sub pack");
     _("Scan not Allowed. PPS close/force close or profile change requested.");
+<<<<<<< HEAD
+    _("Reprint");
+=======
     _("Pack scan successfully");
     _("Sub-Pack scan successfully");
     _("Scan MPU");
@@ -529,5 +544,6 @@ function server_messages_list() {
     _("Packs");
     _("Sub-Packs");
 
+>>>>>>> 70d4170972e36dfc9d77c1baef3a399929197b7d
 }
 

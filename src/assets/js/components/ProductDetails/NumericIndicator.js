@@ -35,14 +35,14 @@ generateExcessNotification: function () {
 
 changeValueIncrement : function(event){
 
-    if(this.props.execType===appConstants.GOOD_QUANTITY)
+    if(this.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
     {
         this._updatedQtyGood++;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.execType===appConstants.MISSING_QUANTITY)
+    else if(this.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
     {
         this._updatedQtyMissing++;
 
@@ -50,7 +50,7 @@ changeValueIncrement : function(event){
             value :this. _updatedQtyMissing
         })
     }
-    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY)
+    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
     {
         this._updatedQtyUnscannble++;
 
@@ -58,7 +58,7 @@ changeValueIncrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.execType===appConstants.DAMAGED_QUANTITY)
+    else if(this.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
     {
         this._updatedQtyDamaged++;
 
@@ -70,14 +70,14 @@ changeValueIncrement : function(event){
 
 changeValueDecrement : function(event){
 
-    if(this.props.execType===appConstants.GOOD_QUANTITY)
+    if(this.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
     {
         this._updatedQtyGood--;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.execType===appConstants.MISSING_QUANTITY)
+    else if(this.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
     {
         this._updatedQtyMissing--;
 
@@ -85,7 +85,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyMissing
         })
     }
-    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY)
+    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
     {
         this._updatedQtyUnscannble--;
 
@@ -93,7 +93,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.execType===appConstants.DAMAGED_QUANTITY)
+    else if(this.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
     {
         this._updatedQtyDamaged--;
 
@@ -111,15 +111,23 @@ updateStore: function(event, qty) {
       var data = {};
       switch(this.props.execType){
         case appConstants.GOOD_QUANTITY:
+        case appConstants.GOOD_PACK:
+        case appConstants.GOOD_SUB_PACK:
         CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
         break;
         case appConstants.MISSING_QUANTITY:
+        case appConstants.PACK_MISSING:
+        case appConstants.SUB_PACK_MISSING:
         CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
         break;
         case appConstants.DAMAGED_QUANTITY:
+        case appConstants.DAMAGED_PACK:
+        case appConstants.DAMAGED_SUB_PACK:
         CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
         break;
         case appConstants.UNSCANNABLE_QUANTITY:
+        case appConstants.BAD_BARCODE_PACK:
+        case appConstants.BAD_BARCODE_SUB_PACK:
         CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
         break;
         default:
@@ -217,7 +225,7 @@ componentDidMount(){
                 },
                 accepted: function(e, keypressed, el) {
                    let txtBoxVal = isNaN(parseInt(e.target.value,10))?0:Math.abs(parseInt(e.target.value,10));
-                   if(self.props.execType===appConstants.GOOD_QUANTITY)
+                   if(self.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
                     {
                         self._updatedQtyGood=txtBoxVal;
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
@@ -226,7 +234,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.MISSING_QUANTITY)
+                    else if(self.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
                     {
                         self._updatedQtyMissing=txtBoxVal;
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
@@ -235,7 +243,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY)
+                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
                     {
                         self._updatedQtyUnscannble=txtBoxVal;
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
@@ -244,7 +252,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY)
+                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
                     {
                         self._updatedQtyDamaged=txtBoxVal;
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));

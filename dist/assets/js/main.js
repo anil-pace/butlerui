@@ -39078,7 +39078,12 @@ switch (module) {
                                 data["event_data"]["action"] ="physically_damaged";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                      
+                                break; 
+                            case appConstants.REPRINT:
+                                data["event_name"] = "pick_front";
+                                data["event_data"]["action"] ="reprint";
+                                ActionCreators.postDataToInterface(data);
+                                break;                          
                             default:
                                 return true;
                         }
@@ -41893,6 +41898,109 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                 break;
 
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
+                var buttonActivateFlag = mainstore.getExeptionQuanity();
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
+
+                            React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Bad barcode on pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.BAD_BARCODE_PACK})
+                                ), 
+
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Pack missing")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.PACK_MISSING})
+                                ), 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_PACK}), 
+                                    React.createElement("hr", null)
+                                ), 
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_PACK})
+                                )
+                            ), 
+                            React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", 
+                                         module: appConstants.PICK_FRONT, 
+                                         action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+
+                            )
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
+                    )
+                );
+
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
+                var buttonActivateFlag = mainstore.getExeptionQuanity();
+                this._component = (
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
+
+                            React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Bad barcode on sub pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.BAD_BARCODE_SUB_PACK})
+                                ), 
+
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Sub pack missing")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.SUB_PACK_MISSING})
+                                ), 
+
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged sub pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_SUB_PACK}), 
+                                    React.createElement("hr", null)
+                                ), 
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good sub pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_SUB_PACK})
+                                )
+                            ), 
+                            React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", 
+                                         module: appConstants.PICK_FRONT, 
+                                         action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
+
+                            )
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
+                                     action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                        )
+                    )
+                );
+
+                break;
+
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
             var selected_screen;
           if(!this.state.GetIRTScanStatus)
@@ -42224,6 +42332,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
+            var reprintButton='';
                 if (!this.state.PickFrontExceptionStatus) {
                     if (this.state.OrigBinUse) {
                         binComponent = (
@@ -42234,6 +42343,9 @@ var PickFront = React.createClass({displayName: "PickFront",
                             React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: screen_id})
                         ))
                     }
+                    reprintButton=this.state.PickFrontScreenId===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT?(React.createElement(Button1, {disabled: false, text: _("Reprint"), module: appConstants.PICK_FRONT, 
+                             action: appConstants.REPRINT, color: "black"})):'';
+
                     this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
                                                     serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
@@ -42243,8 +42355,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                             this.state.SplitScreenFlag &&
                             React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
                                     screenClass: "putFrontFlow"}), 
-                            binComponent
+                            binComponent, 
+                            reprintButton
                         )
+
                     );
                 } else {
                     this._component = this.getExceptionComponent();
@@ -44092,14 +44206,14 @@ generateExcessNotification: function () {
 
 changeValueIncrement : function(event){
 
-    if(this.props.execType===appConstants.GOOD_QUANTITY)
+    if(this.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
     {
         this._updatedQtyGood++;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.execType===appConstants.MISSING_QUANTITY)
+    else if(this.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
     {
         this._updatedQtyMissing++;
 
@@ -44107,7 +44221,7 @@ changeValueIncrement : function(event){
             value :this. _updatedQtyMissing
         })
     }
-    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY)
+    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
     {
         this._updatedQtyUnscannble++;
 
@@ -44115,7 +44229,7 @@ changeValueIncrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.execType===appConstants.DAMAGED_QUANTITY)
+    else if(this.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
     {
         this._updatedQtyDamaged++;
 
@@ -44127,14 +44241,14 @@ changeValueIncrement : function(event){
 
 changeValueDecrement : function(event){
 
-    if(this.props.execType===appConstants.GOOD_QUANTITY)
+    if(this.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
     {
         this._updatedQtyGood--;
         this.setState({
             value : this._updatedQtyGood
         })
     }
-    else if(this.props.execType===appConstants.MISSING_QUANTITY)
+    else if(this.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
     {
         this._updatedQtyMissing--;
 
@@ -44142,7 +44256,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyMissing
         })
     }
-    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY)
+    else if(this.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
     {
         this._updatedQtyUnscannble--;
 
@@ -44150,7 +44264,7 @@ changeValueDecrement : function(event){
             value : this._updatedQtyUnscannble
         })
     }
-    else if(this.props.execType===appConstants.DAMAGED_QUANTITY)
+    else if(this.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
     {
         this._updatedQtyDamaged--;
 
@@ -44168,15 +44282,23 @@ updateStore: function(event, qty) {
       var data = {};
       switch(this.props.execType){
         case appConstants.GOOD_QUANTITY:
+        case appConstants.GOOD_PACK:
+        case appConstants.GOOD_SUB_PACK:
         CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
         break;
         case appConstants.MISSING_QUANTITY:
+        case appConstants.PACK_MISSING:
+        case appConstants.SUB_PACK_MISSING:
         CommonActions.updateMissingQuantity(parseInt(this._updatedQtyMissing));
         break;
         case appConstants.DAMAGED_QUANTITY:
+        case appConstants.DAMAGED_PACK:
+        case appConstants.DAMAGED_SUB_PACK:
         CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
         break;
         case appConstants.UNSCANNABLE_QUANTITY:
+        case appConstants.BAD_BARCODE_PACK:
+        case appConstants.BAD_BARCODE_SUB_PACK:
         CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
         break;
         default:
@@ -44274,7 +44396,7 @@ componentDidMount(){
                 },
                 accepted: function(e, keypressed, el) {
                    let txtBoxVal = isNaN(parseInt(e.target.value,10))?0:Math.abs(parseInt(e.target.value,10));
-                   if(self.props.execType===appConstants.GOOD_QUANTITY)
+                   if(self.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
                     {
                         self._updatedQtyGood=txtBoxVal;
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
@@ -44283,7 +44405,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.MISSING_QUANTITY)
+                    else if(self.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
                     {
                         self._updatedQtyMissing=txtBoxVal;
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
@@ -44292,7 +44414,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY)
+                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
                     {
                         self._updatedQtyUnscannble=txtBoxVal;
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
@@ -44301,7 +44423,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY)
+                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
                     {
                         self._updatedQtyDamaged=txtBoxVal;
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));
@@ -47187,6 +47309,8 @@ var appConstants = {
 	PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:"put_front_scan_rack_for_unmarked_entity",
 	PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:"pick_front_physically_damaged",
 	PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"pick_front_missing_or_unscannable_damaged_item",
+	PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:"pick_front_missing_or_unscannable_damaged_pack",
+	PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:"pick_front_missing_or_unscannable_damaged_subpack",
 	PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:"put_front_unscannable_or_missing_or_damaged",
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
 	PICK_FRONT_BIN_PRINTOUT:"pick_front_bin_printout",
@@ -47219,6 +47343,16 @@ var appConstants = {
 	UNSCANNABLE_QUANTITY:"Unscannable_quntity",
 	UNSCANNABLE:"UNSCANNABLE",
 	DAMAGED_QUANTITY:"Damaged_quntity",
+	GOOD_PACK:"good_pack",
+	GOOD_SUB_PACK:"good_sub_pack",
+	UNEXPECTED_PACK:"unexpected_pack",
+	UNEXPECTED_SUB_PACK:"unexpected_sub_pack",
+	PACK_MISSING:"pack_missing",
+	SUB_PACK_MISSING:"sub_pack_missing",
+	DAMAGED_PACK:"damaged_pack",
+	DAMAGED_SUB_PACK:"damaged_sub_pack",
+	BAD_BARCODE_PACK:"bad_barcode_pack",
+	BAD_BARCODE_SUB_PACK:"bad_barcode_sub_pack",
 	PICK_FRONT_WAITING_FOR_MSU:"pick_front_waiting_for_msu",
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
 	PICK_FRONT_CONTAINER_SCAN:"pick_front_container_scan",
@@ -47280,6 +47414,7 @@ var appConstants = {
 	SEND_KQ_QTY:"SEND_KQ_QTY",
 	ENABLE_EXCEPTION:"ENABLE_EXCEPTION",
 	CANCEL_EXCEPTION:"CANCEL_EXCEPTION",
+	REPRINT:"REPRINT",
 	CANCEL_EXCEPTION_TO_SERVER:"CANCEL_EXCEPTION_TO_SERVER",
 	LOGOUT_SESSION:"LOGOUT_SESSION",
 	SET_ACTIVE_EXCEPTION:"SET_ACTIVE_EXCEPTION",
@@ -48858,6 +48993,8 @@ var serverMessages = {
     "AdF001" : "Items In Box Unscannable",
     "AdF002" : "Box Unscannable",
     "AdF003" : "Loose Items Unscannable",
+    "PkF007" : "Issue with Pack",
+    "PkF008" : "Issue with Sub pack",
     "AdF004" : "Pack Unscannable",
     "AdF005" : "Sub-Pack Unscannable",
     "PpB.H.001" : "Scan tote and place it in the slot",
@@ -48901,6 +49038,7 @@ var serverMessages = {
     "PkF.H.018":"Scan {0} sub packs",
     "PkF.H.019":"Scan {0} more packs and place in bin {1}",
     "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
+    "PkF.H.022":"Waiting for roll cage to be docked",
 };
 
 
@@ -50787,7 +50925,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[1];
                 break;
                 case appConstants.AUDIT:
-                
+
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU && _seatData.k_deep_audit)
                     _NavData = navConfig.sraudit[0];
                 else if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
@@ -50979,7 +51117,7 @@ getSubPackData: function () {
         data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
     }
     data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-    
+
     var d = [];
     _seatData.Box_qty_list.map(function (value, index) {
         d = [];
@@ -50990,7 +51128,7 @@ getSubPackData: function () {
             d.push(new self.tableCol(value.Box_Actual_Qty, "complete", (_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         }
-        
+
     });
     _seatData.Extra_box_list.map(function (value, index){
         if(value.Type===appConstants.INNER_SUBPACK)
@@ -51007,7 +51145,7 @@ getSubPackData: function () {
 },
 
 getBoxDetails: function () {
- 
+
     if (_seatData.hasOwnProperty('box_serials'))
         return _seatData.box_serials;
 },
@@ -51401,7 +51539,7 @@ getOrderID: function () {
                     ]);
         }
         return data;
-        
+
     },
 
     getDamageReconcileData:function(){
@@ -51443,7 +51581,7 @@ getOrderID: function () {
         var extraPackSerials='';
         var extraPackCounts=0;
         var self = this;
-        
+
         if(_seatData.k_deep_audit)
         {
            _seatData.Extra_box_list.map(function(value, index) {
@@ -51452,10 +51590,10 @@ getOrderID: function () {
                 extraPackCounts++;
             }
         });
-           
+
 
            _seatData.Box_qty_list.map(function(value, index) {
-             
+
             if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 )
             {
                 if(value.Type===appConstants.OUTER_PACK)
@@ -51463,11 +51601,11 @@ getOrderID: function () {
                     data["tableRows"].push([new self.tableCol(value.Type===appConstants.OUTER_PACK? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
                         new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
-                        
+
                         ]);
-                    
+
                 }
-                
+
             }
         });
            if (_seatData.Extra_box_list.length != 0)
@@ -51477,9 +51615,9 @@ getOrderID: function () {
                     new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(extraPackCounts, "enabled", false, "large", true, false, false, false, true)
                     ]);
-                
+
             }
-            
+
 
             if (data["tableRows"].length > 0) {
                 data["header"].push(new this.tableCol(_("Pack"), "header", false, "small", false, true, true, false));
@@ -51499,7 +51637,7 @@ getOrderID: function () {
       var extraSubPackSerials='';
       var extraSubPackCounts=0;
       var self = this;
-      
+
       if(_seatData.k_deep_audit)
       {
        _seatData.Extra_box_list.map(function(value, index) {
@@ -51509,9 +51647,9 @@ getOrderID: function () {
         }
 
     });
-       
+
        _seatData.Box_qty_list.map(function(value, index) {
-        
+
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0)
           if(value.Type===appConstants.INNER_SUBPACK)
           {
@@ -51519,21 +51657,21 @@ getOrderID: function () {
                 new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
                 ]);
-            
+
         }
-        
+
 
     });
-       
+
        if (_seatData.Extra_box_list.length != 0)
          if(extraSubPackSerials){
             data["tableRows"].push([new self.tableCol(extraSubPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
                 ]);
-            
+
         }
-        
+
 
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("SubPack"), "header", false, "small", false, true, true, false));
@@ -51542,7 +51680,7 @@ getOrderID: function () {
         }
 
 
-    }   
+    }
     return data;
 
 },
@@ -51576,7 +51714,7 @@ getItemInBoxReconcileData: function () {
         }
     }
     return data;
-    
+
 },
 
 getLooseItemsData: function () {
@@ -51593,7 +51731,7 @@ getLooseItemsData: function () {
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Sku_Item_List.map(function (value, index) {   
+        _seatData.Sku_Item_List.map(function (value, index) {
             d = [];
             var itemQtyList = [];
             var itemList = value.Item_Qty_List;
@@ -51618,7 +51756,7 @@ getLooseItemsData: function () {
         });
     }
     return data;
-    
+
 
 },
 
@@ -51888,9 +52026,9 @@ setCurrentSeat: function (data) {
             _putBackExceptionScreen = "extra_quantity";
         else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||_screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION|| _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
             _auditExceptionScreen = "first_screen";
-        if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 && 
-            (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || 
-            (_seatData["Current_box_details"] != undefined && _seatData["Current_box_details"].length > 0 && 
+        if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 &&
+            (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) ||
+            (_seatData["Current_box_details"] != undefined && _seatData["Current_box_details"].length > 0 &&
                 (((_seatData["Current_box_details"][0]["Actual_qty"] - _seatData["Current_box_details"][0]["Expected_qty"]) > 0)||
                     ((_seatData["Current_box_details"][0]["Box_Actual_Qty"] - _seatData["Current_box_details"][0]["Box_Expected_Qty"]) > 0))))
             showModal = true;
@@ -52381,7 +52519,7 @@ setCurrentSeat: function (data) {
     validateAndSendDataToServer: function () {
         var flag = false, type = false;
         var details;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+        if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
             if (_goodQuantity === _seatData.pick_quantity && _unscannableQuantity === 0) {
                 flag = type = true;
             }
@@ -52418,7 +52556,7 @@ setCurrentSeat: function (data) {
                 _seatData.notification_list[0].level = "error";
                 _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
-            if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+            if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
                 _putFrontExceptionScreen = "good";
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -52427,8 +52565,8 @@ setCurrentSeat: function (data) {
 
         } else {
             var data = {};
-            if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
-                data["event_name"] = _seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ? "pick_front_exception" : "put_front_exception"
+            if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
+                data["event_name"] = (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;
@@ -52537,7 +52675,7 @@ setCurrentSeat: function (data) {
                     "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Box_Actual_Qty:0,
                     "total_qty": 0,
                     "kq_allowed": _seatData.Current_box_details.length?true:false
-                    
+
                 }
             };
             return data.scan_details;
@@ -52675,7 +52813,7 @@ setCurrentSeat: function (data) {
             data["PutBackBinData"] = this.getBinData();
             data["PutBackScreenId"] = this.getScreenId();
             data["PutBackNotification"] = this.getNotificationData();
-            break;       
+            break;
 
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
             data["PutBackScreenId"] = this.getScreenId();
@@ -52841,7 +52979,7 @@ setCurrentSeat: function (data) {
             data["PutFrontScreenId"] = this.getScreenId();
             data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
             data["PutFrontRackDetails"] = this.getRackDetails();
-            
+
             data["isDrawer"] = this.getDrawerFlag();
             data["SlotType"] = this.getSlotType();
             data["BinMapDetails"] = this._getBinMapDetails();
@@ -53175,17 +53313,41 @@ setCurrentSeat: function (data) {
 
             break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-            data["PutBackKQDetails"] = this.getScanDetails();
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
-            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
-            data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-            break;
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
 
 
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
@@ -53258,11 +53420,11 @@ setCurrentSeat: function (data) {
             data["AuditItemDetailsData"] = this.getItemDetailsData();
             data["AuditScanDetails"] = this.getScanDetails();
             data["AuditFinishFlag"] = this.getFinishAuditFlag();
-            
+
             break;
 
-            
-            
+
+
             case appConstants.AUDIT_RECONCILE:
             data["AuditNavData"] = this.getNavData();
             data["AuditNotification"] = this.getNotificationData();

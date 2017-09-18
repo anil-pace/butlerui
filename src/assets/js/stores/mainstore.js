@@ -303,7 +303,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[1];
                 break;
                 case appConstants.AUDIT:
-                
+
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU && _seatData.k_deep_audit)
                     _NavData = navConfig.sraudit[0];
                 else if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
@@ -495,7 +495,7 @@ getSubPackData: function () {
         data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
     }
     data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-    
+
     var d = [];
     _seatData.Box_qty_list.map(function (value, index) {
         d = [];
@@ -506,7 +506,7 @@ getSubPackData: function () {
             d.push(new self.tableCol(value.Box_Actual_Qty, "complete", (_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         }
-        
+
     });
     _seatData.Extra_box_list.map(function (value, index){
         if(value.Type===appConstants.INNER_SUBPACK)
@@ -523,7 +523,7 @@ getSubPackData: function () {
 },
 
 getBoxDetails: function () {
- 
+
     if (_seatData.hasOwnProperty('box_serials'))
         return _seatData.box_serials;
 },
@@ -917,7 +917,7 @@ getOrderID: function () {
                     ]);
         }
         return data;
-        
+
     },
 
     getDamageReconcileData:function(){
@@ -959,7 +959,7 @@ getOrderID: function () {
         var extraPackSerials='';
         var extraPackCounts=0;
         var self = this;
-        
+
         if(_seatData.k_deep_audit)
         {
            _seatData.Extra_box_list.map(function(value, index) {
@@ -968,10 +968,10 @@ getOrderID: function () {
                 extraPackCounts++;
             }
         });
-           
+
 
            _seatData.Box_qty_list.map(function(value, index) {
-             
+
             if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0 )
             {
                 if(value.Type===appConstants.OUTER_PACK)
@@ -979,11 +979,11 @@ getOrderID: function () {
                     data["tableRows"].push([new self.tableCol(value.Type===appConstants.OUTER_PACK? value.Box_serial:"-", "enabled", false, "large", false, true, false, false),
                         new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(value.Type===appConstants.OUTER_PACK?Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
-                        
+
                         ]);
-                    
+
                 }
-                
+
             }
         });
            if (_seatData.Extra_box_list.length != 0)
@@ -993,9 +993,9 @@ getOrderID: function () {
                     new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                     new self.tableCol(extraPackCounts, "enabled", false, "large", true, false, false, false, true)
                     ]);
-                
+
             }
-            
+
 
             if (data["tableRows"].length > 0) {
                 data["header"].push(new this.tableCol(_("Pack"), "header", false, "small", false, true, true, false));
@@ -1015,7 +1015,7 @@ getOrderID: function () {
       var extraSubPackSerials='';
       var extraSubPackCounts=0;
       var self = this;
-      
+
       if(_seatData.k_deep_audit)
       {
        _seatData.Extra_box_list.map(function(value, index) {
@@ -1025,9 +1025,9 @@ getOrderID: function () {
         }
 
     });
-       
+
        _seatData.Box_qty_list.map(function(value, index) {
-        
+
         if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0)
           if(value.Type===appConstants.INNER_SUBPACK)
           {
@@ -1035,21 +1035,21 @@ getOrderID: function () {
                 new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty , 0):0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(value.Type===appConstants.INNER_SUBPACK? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0):0, "enabled", false, "large", true, false, false, false, true)
                 ]);
-            
+
         }
-        
+
 
     });
-       
+
        if (_seatData.Extra_box_list.length != 0)
          if(extraSubPackSerials){
             data["tableRows"].push([new self.tableCol(extraSubPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
                 ]);
-            
+
         }
-        
+
 
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(_("SubPack"), "header", false, "small", false, true, true, false));
@@ -1058,7 +1058,7 @@ getOrderID: function () {
         }
 
 
-    }   
+    }
     return data;
 
 },
@@ -1092,7 +1092,7 @@ getItemInBoxReconcileData: function () {
         }
     }
     return data;
-    
+
 },
 
 getLooseItemsData: function () {
@@ -1109,7 +1109,7 @@ getLooseItemsData: function () {
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Sku_Item_List.map(function (value, index) {   
+        _seatData.Sku_Item_List.map(function (value, index) {
             d = [];
             var itemQtyList = [];
             var itemList = value.Item_Qty_List;
@@ -1134,7 +1134,7 @@ getLooseItemsData: function () {
         });
     }
     return data;
-    
+
 
 },
 
@@ -1404,9 +1404,9 @@ setCurrentSeat: function (data) {
             _putBackExceptionScreen = "extra_quantity";
         else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||_screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION|| _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
             _auditExceptionScreen = "first_screen";
-        if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 && 
-            (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) || 
-            (_seatData["Current_box_details"] != undefined && _seatData["Current_box_details"].length > 0 && 
+        if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 &&
+            (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) ||
+            (_seatData["Current_box_details"] != undefined && _seatData["Current_box_details"].length > 0 &&
                 (((_seatData["Current_box_details"][0]["Actual_qty"] - _seatData["Current_box_details"][0]["Expected_qty"]) > 0)||
                     ((_seatData["Current_box_details"][0]["Box_Actual_Qty"] - _seatData["Current_box_details"][0]["Box_Expected_Qty"]) > 0))))
             showModal = true;
@@ -1897,7 +1897,7 @@ setCurrentSeat: function (data) {
     validateAndSendDataToServer: function () {
         var flag = false, type = false;
         var details;
-        if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+        if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
             if (_goodQuantity === _seatData.pick_quantity && _unscannableQuantity === 0) {
                 flag = type = true;
             }
@@ -1934,7 +1934,7 @@ setCurrentSeat: function (data) {
                 _seatData.notification_list[0].level = "error";
                 _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
             }
-            if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
+            if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
                 _putFrontExceptionScreen = "good";
                 _goodQuantity = 0;
                 _damagedQuantity = 0;
@@ -1943,8 +1943,8 @@ setCurrentSeat: function (data) {
 
         } else {
             var data = {};
-            if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) {
-                data["event_name"] = _seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ? "pick_front_exception" : "put_front_exception"
+            if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
+                data["event_name"] = (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;
@@ -2053,7 +2053,7 @@ setCurrentSeat: function (data) {
                     "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Box_Actual_Qty:0,
                     "total_qty": 0,
                     "kq_allowed": _seatData.Current_box_details.length?true:false
-                    
+
                 }
             };
             return data.scan_details;
@@ -2191,7 +2191,7 @@ setCurrentSeat: function (data) {
             data["PutBackBinData"] = this.getBinData();
             data["PutBackScreenId"] = this.getScreenId();
             data["PutBackNotification"] = this.getNotificationData();
-            break;       
+            break;
 
             case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
             data["PutBackScreenId"] = this.getScreenId();
@@ -2357,7 +2357,7 @@ setCurrentSeat: function (data) {
             data["PutFrontScreenId"] = this.getScreenId();
             data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
             data["PutFrontRackDetails"] = this.getRackDetails();
-            
+
             data["isDrawer"] = this.getDrawerFlag();
             data["SlotType"] = this.getSlotType();
             data["BinMapDetails"] = this._getBinMapDetails();
@@ -2691,17 +2691,41 @@ setCurrentSeat: function (data) {
 
             break;
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-            data["PutBackKQDetails"] = this.getScanDetails();
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
-            data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
-            data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
-            data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
-            break;
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
 
 
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
@@ -2774,11 +2798,11 @@ setCurrentSeat: function (data) {
             data["AuditItemDetailsData"] = this.getItemDetailsData();
             data["AuditScanDetails"] = this.getScanDetails();
             data["AuditFinishFlag"] = this.getFinishAuditFlag();
-            
+
             break;
 
-            
-            
+
+
             case appConstants.AUDIT_RECONCILE:
             data["AuditNavData"] = this.getNavData();
             data["AuditNotification"] = this.getNotificationData();

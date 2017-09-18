@@ -303,6 +303,8 @@ var serverMessages = {
     "AdF001" : "Items In Box Unscannable",
     "AdF002" : "Box Unscannable",
     "AdF003" : "Loose Items Unscannable",
+    "PkF007" : "Issue with Pack",
+    "PkF008" : "Issue with Sub pack",
     "AdF004" : "Pack Unscannable",
     "AdF005" : "Sub-Pack Unscannable",
     "PpB.H.001" : "Scan tote and place it in the slot",
@@ -346,6 +348,7 @@ var serverMessages = {
     "PkF.H.018":"Scan {0} sub packs",
     "PkF.H.019":"Scan {0} more packs and place in bin {1}",
     "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
+    "PkF.H.022":"Waiting for roll cage to be docked",
 };
 
 

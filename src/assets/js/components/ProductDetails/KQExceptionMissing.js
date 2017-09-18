@@ -260,7 +260,8 @@ var KQ = React.createClass({
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
                          return true;
                     }
-                    if (mainstore.getCurrentSeat() == "audit_front") {
+                    
+                 if (mainstore.getCurrentSeat() == "audit_front") {
                         data = {
                             "event_name": "audit_actions",
                             "event_data": {

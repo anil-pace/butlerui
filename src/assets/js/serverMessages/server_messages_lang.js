@@ -526,6 +526,24 @@ function server_messages_list() {
     _("Good pack");
     _("Good sub pack");
     _("Scan not Allowed. PPS close/force close or profile change requested.");
+<<<<<<< HEAD
     _("Reprint");
+=======
+    _("Pack scan successfully");
+    _("Sub-Pack scan successfully");
+    _("Scan MPU");
+    _("Scan Pack or Sub-Packs");
+    _("Continue scanning Sub-Packs and Pack");
+    _("Enter Quantity of Unscannable Pack");
+    _("Enter Quantity of Unscannable Sub-Pack");
+    _("Wait for MPU");
+    _("No Sub-Packs to reconcile");
+    _("Pack Unscannable");
+    _("Sub-Pack Unscannable");
+    _("Damage Barcode");
+    _("Packs");
+    _("Sub-Packs");
+
+>>>>>>> 70d4170972e36dfc9d77c1baef3a399929197b7d
 }
 

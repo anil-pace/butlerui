@@ -882,6 +882,7 @@ var PickFront = React.createClass({
                 break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
+            var reprintButton='';
                 if (!this.state.PickFrontExceptionStatus) {
                     if (this.state.OrigBinUse) {
                         binComponent = (
@@ -892,6 +893,9 @@ var PickFront = React.createClass({
                             <Bins binsData={this.state.PickFrontBinData} screenId={screen_id}/>
                         </div>)
                     }
+                    reprintButton=this.state.PickFrontScreenId===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT?(<Button1 disabled={false} text={_("Reprint")} module={appConstants.PICK_FRONT}
+                             action={appConstants.REPRINT} color={"black"}/>):'';
+
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
                                                     navMessagesJson={this.props.navMessagesJson}/>);
@@ -902,7 +906,9 @@ var PickFront = React.createClass({
                             <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='putFrontFlow'/>}
                             {binComponent}
+                            {reprintButton}
                         </div>
+
                     );
                 } else {
                     this._component = this.getExceptionComponent();

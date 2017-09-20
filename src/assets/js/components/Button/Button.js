@@ -344,7 +344,12 @@ switch (module) {
                                 data["event_data"]["action"] ="physically_damaged";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;                      
+                                break; 
+                            case appConstants.REPRINT:
+                                data["event_name"] = "pick_front";
+                                data["event_data"]["action"] ="reprint";
+                                ActionCreators.postDataToInterface(data);
+                                break;                          
                             default:
                                 return true;
                         }

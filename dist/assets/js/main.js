@@ -52566,7 +52566,7 @@ setCurrentSeat: function (data) {
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
-                data["event_name"] = (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
+                data["event_name"] = (_seatData.screen_id === (appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK))  ? "pick_front_exception" : "put_front_exception"
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;

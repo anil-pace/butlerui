@@ -170,13 +170,13 @@ getOffset( el ) {
                 drawerSlotData = row[1];
                 
                 return (
-                        <RackRow slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
+                        <RackRow rowTotalWidth={row[1].reduce(function(height,slot){return length+slot[1]},0)} slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
                     );
             }
 
             else{
                 return (
-        				<RackRow slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
+        				<RackRow rowTotalWidth={row[1].reduce(function(height,slot){return length+slot[1]},0)} slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
         			);
             }
         	});

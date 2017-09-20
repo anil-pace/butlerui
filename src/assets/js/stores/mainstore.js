@@ -299,6 +299,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[9];
                     _NavData[0].type="active"
                 }
+                else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) ||  (_seatData.parallelFlag==true))
+                {
+                     _NavData = navConfig.pickFront[10];     
+                }
+                else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
+                {
+                    _NavData = navConfig.print[0];     
+                }
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
@@ -1568,6 +1576,9 @@ setCurrentSeat: function (data) {
         var data = (_goodQuantity !== 0 || _missingQuantity !== 0 || _damagedQuantity !== 0 || _unscannableQuantity !== 0) ? false : true;
         return data;
     },
+    getParallelFlag:function(){
+        return _seatData.parallelFlag;
+    },
     getkQQuanity: function () {
         if (_seatData.hasOwnProperty('Current_box_details')) {
             if (_seatData.Current_box_details.length > 0) {
@@ -1944,7 +1955,7 @@ setCurrentSeat: function (data) {
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
-                data["event_name"] = (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
+                data["event_name"] = (_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;
@@ -2543,6 +2554,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
+            data["PickFrontParallelFlag"]=this.getParallelFlag();
             break;
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
@@ -2560,6 +2572,9 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
+            data["PickFrontParallelFlag"]=this.getParallelFlag();
+            break;
+
             break;
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
@@ -2584,7 +2599,9 @@ setCurrentSeat: function (data) {
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
             data["PickFrontBoxOrderDetails"] = this.getOrderID();
+
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+            case appConstants.PICK_FRONT_WORKING_TABLE:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
             data["PickFrontScreenId"] = this.getScreenId();
@@ -2606,6 +2623,17 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
+            break;
+
+            case appConstants.PER_ITEM_PRINT:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PrintScanDetails"]= this.getScanDetails();
+
             break;
 
             case appConstants.PICK_FRONT_SCAN_PACKS:
@@ -2632,6 +2660,7 @@ setCurrentSeat: function (data) {
             data["PickFrontServerNavData"] = this.getServerNavData();
             data["PickFrontScreenId"] = this.getScreenId();
             data["PickFrontScanDetails"] = this.scanDetails();
+            data["PickFrontProductDetails"] = this.productDetails();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
             data["PickFrontChecklistDetails"] = this.getChecklistDetails();
             data["PickFrontChecklistIndex"] = this.getChecklistIndex();
@@ -2646,6 +2675,8 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+            data["PickFrontItemUid"] = this.getItemUid();
+            data["PickFrontParallelFlag"]=this.getParallelFlag();
             break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:

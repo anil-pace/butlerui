@@ -41649,6 +41649,28 @@ var PickFront = React.createClass({displayName: "PickFront",
                 }
                 break;
 
+             // case appConstants.PICK_FRONT_WORKING_TABLE:
+             //   if (this.state.PickFrontExceptionStatus == false) {
+             //        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+             //                                        serverNavData={this.state.PickFrontServerNavData}
+             //                                        navMessagesJson={this.props.navMessagesJson}/>);
+             //        this._component = (
+             //            <div className='grid-container'>
+             //                <Modal />
+             //                <div className='main-container'>
+             //                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
+      
+             //                    <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
+             //                                  productDetails={this.state.PickFrontProductDetails}
+             //                                  itemUid={this.state.PickFrontItemUid}/>
+             //                </div>
+             //            </div>
+             //        );
+             //    } else {
+             //        this._component = this.getExceptionComponent();
+             //    }
+             // break;   
+
 
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 if (this.state.PickFrontExceptionStatus == false) {
@@ -41669,7 +41691,41 @@ var PickFront = React.createClass({displayName: "PickFront",
                 }
                 break;
 
+                case appConstants.PER_ITEM_PRINT:
+                  var binComponent;
+                  this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
+                                                    navMessagesJson: this.props.navMessagesJson}));
+                 binComponent=(React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "printImage"}), 
+                    React.createElement(KQ, {scanDetails: this.state.PrintScanDetails})
+                    )
+                    );
+                   this._component = (
+                        React.createElement("div", {className: "grid-container"}, 
+                       
+                              React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            
+                            binComponent, 
+                             React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
+                             color: "orange"}), 
+                            React.createElement("div", {className: "actions"}, 
+                                React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
+                                         color: "black"})
+                            )
+                        )
+
+                    );
+
+              
+                                    
+            break;  
+
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+            case appConstants.PICK_FRONT_WORKING_TABLE:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 if (this.state.PickFrontExceptionStatus == false) {
@@ -41686,6 +41742,28 @@ var PickFront = React.createClass({displayName: "PickFront",
                     var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
                                             action: appConstants.BIN_FULL, color: "black"}) );
                     var binComponent = "";
+
+        if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
+     if (this.state.OrigBinUse)
+     {
+     binComponent=(React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+        React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
+                                              itemUid: this.state.PickFrontItemUid})
+                                              ))
+ }
+ else
+ {
+    binComponent=(React.createElement("div", {className: "main-container"}, 
+        React.createElement("div", {className: "workingTable"}), 
+    React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
+                                     itemUid: this.state.PickFrontItemUid})
+                                     ));
+ }
+    }
+        else
+        {
                     if (this.state.OrigBinUse) {
                         binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
@@ -41704,6 +41782,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                         ));
                     }
 
+}
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
                             React.createElement(Modal, null), 
@@ -41719,7 +41798,9 @@ var PickFront = React.createClass({displayName: "PickFront",
                                          module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
                                          color: "black"}), 
                                 editButton, 
-                                (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
+
+                                (this.state.PickFrontScreenId!==appConstants.PICK_FRONT_WORKING_TABLE && this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
+                            
                             )
 
                         )
@@ -41763,8 +41844,15 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                   seatType: this.state.SeatType}))
                     } else {
                         binComponent = (React.createElement("div", {className: "main-container"}, 
-                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
-                        ))
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS}), 
+                 this.state.PickFrontParallelFlag?
+                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
+                                     itemUid: this.state.PickFrontItemUid}):''
+                                 
+                                     ));
+
+                        
                     }
                     this._component = (
                         React.createElement("div", {className: "grid-container"}, 
@@ -41803,6 +41891,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                     this._component = this.getExceptionComponent();
                 }
                 break;
+
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 var _button;
                 if(!this.state.GetIRTScanStatus)
@@ -47102,7 +47191,32 @@ var navData = {
                 "showImage": true,
                 "level": 2,
                 "type": 'passive'
-            }]
+            }],
+            [{
+            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan"],
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan Slot",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+             "screen_id": "pick_front_working_table",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan Items",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        },{
+            "screen_id": "pick_front_pptl_press",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Press PPTL",
+            "showImage": true,
+            "level": 3,
+            "type": 'passive'
+        }]
 
     ],
     "pickBack": [ {
@@ -47227,6 +47341,16 @@ var navData = {
         "level": 1,
         "type": 'active'
         }]
+    ],
+    "print":[
+[{
+            "screen_id": "print_per_item",
+            "code": "Common.000",
+            "message": "Paste printout on the item and confirm",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
     ]
 
 };
@@ -47315,6 +47439,8 @@ var appConstants = {
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
 	PICK_FRONT_BIN_PRINTOUT:"pick_front_bin_printout",
 	PICK_FRONT_ROLLCAGE_PRINTOUT:"pick_front_rollcage_print",
+	PICK_FRONT_WORKING_TABLE:"pick_front_working_table",
+	PER_ITEM_PRINT:'per_item_print',
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",
@@ -47501,8 +47627,8 @@ module.exports = appConstants;
 
 },{}],300:[function(require,module,exports){
 var configConstants = {
-WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+WEBSOCKET_IP : "wss://192.168.8.83/wss",
+	INTERFACE_IP : "https://192.168.8.83"
 };
 module.exports = configConstants;
 
@@ -48758,6 +48884,9 @@ var serverMessages = {
     "PkF.H.013" : "Scan Damaged Entity",
     "PkF.H.014" : "Waiting for Bins to be Cleared at Pick Front",
     "PkF.H.015" : "Enter Quantity",
+    "PkF.H.023" : "Scan {0} items and place on the table",
+    "PkF.H.024" : "Place {0} items in bin {1} and press PPTL to confirm",
+    "PkF.H.025" : "Paste Printout on the item and confirm",
     "PkB.H.001" : "Scan Tote to Associate with Bin",
     "PkB.H.002" : "Press PPTL or Scan a Tote",
     "PkB.H.003" : "Press PPTL to Remove Entities",
@@ -50921,6 +51050,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[9];
                     _NavData[0].type="active"
                 }
+                else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) ||  (_seatData.parallelFlag==true))
+                {
+                     _NavData = navConfig.pickFront[10];     
+                }
+                else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
+                {
+                    _NavData = navConfig.print[0];     
+                }
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
@@ -52190,6 +52327,9 @@ setCurrentSeat: function (data) {
         var data = (_goodQuantity !== 0 || _missingQuantity !== 0 || _damagedQuantity !== 0 || _unscannableQuantity !== 0) ? false : true;
         return data;
     },
+    getParallelFlag:function(){
+        return _seatData.parallelFlag;
+    },
     getkQQuanity: function () {
         if (_seatData.hasOwnProperty('Current_box_details')) {
             if (_seatData.Current_box_details.length > 0) {
@@ -52566,7 +52706,7 @@ setCurrentSeat: function (data) {
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
-                data["event_name"] = (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
+                data["event_name"] = (_seatData.screen_id ==appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)  ? "pick_front_exception" : "put_front_exception"
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;
@@ -53165,6 +53305,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
+            data["PickFrontParallelFlag"]=this.getParallelFlag();
             break;
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
@@ -53182,6 +53323,9 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
+            data["PickFrontParallelFlag"]=this.getParallelFlag();
+            break;
+
             break;
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
@@ -53206,7 +53350,9 @@ setCurrentSeat: function (data) {
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
             data["PickFrontBoxOrderDetails"] = this.getOrderID();
+
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+            case appConstants.PICK_FRONT_WORKING_TABLE:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
             data["PickFrontScreenId"] = this.getScreenId();
@@ -53228,6 +53374,17 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
+            break;
+
+            case appConstants.PER_ITEM_PRINT:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PrintScanDetails"]= this.getScanDetails();
+
             break;
 
             case appConstants.PICK_FRONT_SCAN_PACKS:
@@ -53254,6 +53411,7 @@ setCurrentSeat: function (data) {
             data["PickFrontServerNavData"] = this.getServerNavData();
             data["PickFrontScreenId"] = this.getScreenId();
             data["PickFrontScanDetails"] = this.scanDetails();
+            data["PickFrontProductDetails"] = this.productDetails();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
             data["PickFrontChecklistDetails"] = this.getChecklistDetails();
             data["PickFrontChecklistIndex"] = this.getChecklistIndex();
@@ -53268,6 +53426,8 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+            data["PickFrontItemUid"] = this.getItemUid();
+            data["PickFrontParallelFlag"]=this.getParallelFlag();
             break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
@@ -54007,6 +54167,8 @@ var putSeatData = function(data) {
             CommonActions.setPickBackData(data.state_data);
             break;
         case appConstants.PICK_FRONT:
+        //data.state_data=JSON.parse('{"seat_name":"front_5","notification_list":[{"level":"info","code":"PkF.I.004","details":[],"description":"Item Scan successful"}],"scan_details":{"current_qty":"1","total_qty":"2","kq_allowed":true},"checklist_details":{"pick_checklist":[],"checklist_index":0,"display_checklist_overlay":false},"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["038.1.A.05","038.1.A.06"],"slot_type":"slot"},"exception_allowed":[{"exception_id":"PkF001","exception_name":"Item Missing/Bad Barcode","event":"missing_or_unscannable_damaged_item"}],"roll_cage_flow":false,"bin_coordinate_plotting":false,"event":"more_items","screen_id":"pick_front_working_table","logout_allowed":false,"seat_type":"front","product_info":[[{"product_sku":"2001","display_data":[{"locale":"ja-JP","display_name":"製品SKU"},{"locale":"en-US","display_name":"Product SKU"}]}],[{"display_data":[{"locale":"en-US","display_name":"product_local_image_url"}],"product_local_image_url":"https://192.168.8.83/product_images/b0662a85-0c69-405d-b8ce-a7bdd0d7607e.png"}],[{"display_data":[{"locale":"ja-JP","display_name":"製品バーコード"},{"locale":"en-US","display_name":"Product Barcodes"}],"product_barcodes":["2001"]}],[{"display_data":[{"locale":"ja-JP","display_name":"商品の寸法"},{"locale":"en-US","display_name":"Product Dimensions"}],"product_dimensions":[1,3,10]}]],"time_stamp":"1505822880","ppsbin_list":[{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"5","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"4","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"3","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"2","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,4],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"1","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,5],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"10","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"9","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"8","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"7","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,4],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":1}],"ppsbin_blink_state":false,"ppsbin_id":"6","ppsbin_light_color":"blue","length":"200","selected_state":true,"ppsbin_state":"empty","ppsbin_count":"1","coordinate":[2,5],"group_id":"1"}],"mode":"pick","group_info":{"1":"center"},"scan_allowed":true,"button_press_allowed":true,"item_uid":"b0662a85-0c69-405d-b8ce-a7bdd0d7607e","cancel_scan_enabled":true,"button_press_id":"bin_full","structure":[2,5],"screen_version":"1","docked":[],"api_version":"1","is_idle":false,"header_msge_list":[{"level":"info","code":"PkF.H.023","details":[1],"description":"Scan items and place on the table"}]}');
+          data.state_data=JSON.parse('{"seat_name":"front_5","notification_list":[{"level":"info","code":"PkF.I.004","details":[],"description":"Item Scan successful"}],"scan_details":{"current_qty":"2","total_qty":"2","kq_allowed":true},"checklist_details":{"pick_checklist":[],"checklist_index":0,"display_checklist_overlay":false},"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["038.1.A.05","038.1.A.06"],"slot_type":"slot"},"exception_allowed":[],"roll_cage_flow":false,"bin_coordinate_plotting":false,"event":"empty","screen_id":"per_item_print","logout_allowed":false,"seat_type":"front","time_stamp":"1505898862","ppsbin_list":[{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"5","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"4","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"3","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"2","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,4],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"1","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,5],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"10","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"9","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"8","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"7","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,4],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":2}],"ppsbin_blink_state":false,"ppsbin_id":"6","ppsbin_light_color":"blue","length":"200","selected_state":true,"ppsbin_state":"empty","ppsbin_count":"2","coordinate":[2,5],"group_id":"1"}],"mode":"pick","group_info":{"1":"center"},"is_idle":false,"button_press_allowed":true,"cancel_scan_enabled":true,"button_press_id":"bin_full","structure":[2,5],"screen_version":"1","docked":[],"api_version":"1","scan_allowed":true,"header_msge_list":[{"level":"info","code":"PkF.H.025","details":["6"],"description":"Paste Printout on the item and confirm"}]}');
             CommonActions.setPickFrontData(data.state_data);
             break;
         case appConstants.AUDIT:

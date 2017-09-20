@@ -79,6 +79,8 @@ var appConstants = {
 	PICK_FRONT_IRT_BIN_CONFIRM:"pick_front_irt_bin_confirm",
 	PICK_FRONT_BIN_PRINTOUT:"pick_front_bin_printout",
 	PICK_FRONT_ROLLCAGE_PRINTOUT:"pick_front_rollcage_print",
+	PICK_FRONT_WORKING_TABLE:"pick_front_working_table",
+	PER_ITEM_PRINT:'per_item_print',
 	PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:"put_front_space_unavailable",
 	VALIDATE_AND_SEND_DATA_TO_SERVER:"VALIDATE_AND_SEND_DATA_TO_SERVER",
 	VALIDATE_AND_SEND_PUT_DATA_TO_SERVER:"VALIDATE_AND_SEND_PUT_DATA_TO_SERVER",

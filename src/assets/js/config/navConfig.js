@@ -316,7 +316,32 @@ var navData = {
                 "showImage": true,
                 "level": 2,
                 "type": 'passive'
-            }]
+            }],
+            [{
+            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan"],
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Scan Slot",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+             "screen_id": "pick_front_working_table",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan Items",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        },{
+            "screen_id": "pick_front_pptl_press",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Press PPTL",
+            "showImage": true,
+            "level": 3,
+            "type": 'passive'
+        }]
 
     ],
     "pickBack": [ {
@@ -441,6 +466,16 @@ var navData = {
         "level": 1,
         "type": 'active'
         }]
+    ],
+    "print":[
+[{
+            "screen_id": "print_per_item",
+            "code": "Common.000",
+            "message": "Paste printout on the item and confirm",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
     ]
 
 };

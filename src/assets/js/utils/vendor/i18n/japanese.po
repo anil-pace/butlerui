@@ -256,7 +256,7 @@ msgstr "スキャンをキャンセルできません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:62
 msgid "Entity scan not expected. Waiting for PPTL press"
-msgstr "スキャン違い。ビンボタンを押す"
+msgstr "スキャン違い。PPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:63
 msgid "Bin selected for put. Cannot be staged"
@@ -999,10 +999,6 @@ msgstr "完了"
 msgid "Back"
 msgstr "戻る"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:234
-#: src/assets/js/serverMessages/server_messages_lang.js:236
-msgid "OK"
-msgstr "OK"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:235
 #: src/assets/js/serverMessages/server_messages_lang.js:237
@@ -1455,7 +1451,7 @@ msgstr "ログインできません。既にログインしています"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:343
 msgid "Place Item in slot and scan more"
-msgstr "商品をスロットに置き、商品スキャン"
+msgstr "スロットに置き、商品スキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "PPTL"
@@ -1605,7 +1601,6 @@ msgstr "ダメージ数"
 msgid "Entity Damaged"
 msgstr "ダメージ商品"
 
-
 msgid " items"
 msgstr " 商品"
  
@@ -1632,9 +1627,6 @@ msgstr "過剰数量を入力してください"
  
 msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
 msgstr "格納できません！全ての商品を取出しPPTLボタンを押してください"
- 
-msgid "Entity Damaged"
-msgstr "商品破損"
  
 msgid "Entity already scanned.Confirm exception"
 msgstr "既にスキャンされた商品です。例外登録を確認してください"
@@ -1674,9 +1666,6 @@ msgstr "商品に問題"
  
 msgid "No"
 msgstr "いいえ"
- 
-msgid "OK"
-msgstr "OK"
  
 msgid "PPS is Closed"
 msgstr "PPSが閉じられています"
@@ -1900,93 +1889,29 @@ msgstr "異なる商品がスキャンされました。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:480
 msgid "Quantity of Physically damaged entities scanned is less."
-msgstr "スキャンした物理的に損傷したエンティティの数は少なくなります。"
-
+msgstr "スキャンしたダメージ商品の数が少ないです。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:481
 msgid "Error"
 msgstr "エラー"
 
-
-#: src/assets/js/serverMessages/server_messages_lang.js:498
+#: src/assets/js/serverMessages/server_messages_lang.js:482
 msgid "Waiting for Bins to be Cleared at Pick Front"
 msgstr "ビンが一杯です。作業を完了しビンを開放してください。"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:499
+#: src/assets/js/serverMessages/server_messages_lang.js:483
 msgid "Processing Next Pick from Rack "
 msgstr "ラックから次のピッキングを処理する"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:500
+#: src/assets/js/serverMessages/server_messages_lang.js:484
 msgid "Scan Damaged Entity"
-msgstr "損害エンティティをスキャンする"
+msgstr "損傷したエンティティをスキャンする"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:501
+
+#: src/assets/js/serverMessages/server_messages_lang.js:485
 msgid "Warehouse Full"
 msgstr "格納できません"
 
-msgid "DO NOT STACK"
-msgstr "スタックしてはいけません"
-
-msgid "Entities cannot be accommodated!"
-msgstr "エンティティが収容できません!"
-
-msgid "FRAGILE"
-msgstr "割れ物注意"
-
-msgid "Length of {0} should not be greater than {1}"
-msgstr "{0}の長さは{1}より大きくてはいけません"
-
-msgid "NEST MAX"
-msgstr "ネストマックス"
-
-msgid "Next"
-msgstr "次"
-
-msgid "Please put damaged entities in IRT bin and scan the bin"
-msgstr "破損されたエンティティをIRTビンに入れてビンをスキャンしてください"
-
-msgid "Please put damaged entities in exception area"
-msgstr "破損されたエンティティを例外領域に入れてください"
-
-msgid "Please put entities in IRT and Scan IRT Bin"
-msgstr "エンティティをIRTビンに入れて IRTビンをスキャンしてください"
-
-msgid "Please put exception entities in IRT bin and scan the bin"
-msgstr "例外のエンティティをIRTビンに入れてビンをスキャンしてください"
-
-msgid "Please put exception entities in exception area"
-msgstr "例外のエンティティを例外領域に入れてください"
-
-msgid "Please put extra entities in IRT bin and scan the bin"
-msgstr "余分なエンティティをIRTビンに入れてビンをスキャンしてください"
-
-msgid "Please put extra entities in exception area"
-msgstr "余分なエンティティを例外領域に入れてください"
-
-msgid "Please put oversized entities in IRT bin and scan the bin"
-msgstr "大型のエンティティをIRTビンに入れてビンをスキャンしてください"
-
-msgid "Please put oversized entities in exception area"
-msgstr "大型のエンティティを例外領域に入れてください"
-
-msgid "Please put unscannable entities in IRT bin and scan the bin"
-msgstr "スキャンできないエンティティをIRTビンに入れてビンをスキャンしてください"
-
-msgid "Please put unscannable entities in exception area"
-msgstr "スキャンできないエンティティを例外領域に入れてください"
-
-msgid "STACK MAX"
-msgstr "スタック マックス"
-
-msgid "Scan IRT Bin"
-msgstr "IRT ビンをスキャンしてください"
-
-msgid "Warehouse Full Remove all entities from bin & press PPTL"
-msgstr "ウェアハウスがいっぱいです。ビンからすべてのエンティティを取り除いてPPTLを押してください。"
-
-msgid "Wrong Scan. IRT bin scan expected"
-msgstr "間違ったスキャン。IRTビンのスキャンが予想されています。"
-
-msgid "{0} Physically damaged entity recorded.WMS notified"
-msgstr "{0}物理的に破損されたエンティティが記録されました。WMSが通知されました。"
-
+#: src/assets/js/serverMessages/server_messages_lang.js:508
+msgid "Scan not Allowed. PPS close/force close or profile change requested."
+msgstr "スキャンは許可されません。 PPSのクローズ/強制クローズまたはプロファイルの変更が要求されました。"

@@ -1,24 +1,3 @@
 [
-"DO NOT STACK",
-"Entities cannot be accommodated!",
-"FRAGILE",
-"Length of {0} should not be greater than {1}",
-"NEST MAX",
-"Next",
-"Please put damaged entities in IRT bin and scan the bin",
-"Please put damaged entities in exception area",
-"Please put entities in IRT and Scan IRT Bin",
-"Please put exception entities in IRT bin and scan the bin",
-"Please put exception entities in exception area",
-"Please put extra entities in IRT bin and scan the bin",
-"Please put extra entities in exception area",
-"Please put oversized entities in IRT bin and scan the bin",
-"Please put oversized entities in exception area",
-"Please put unscannable entities in IRT bin and scan the bin",
-"Please put unscannable entities in exception area",
-"STACK MAX",
-"Scan IRT Bin",
-"Warehouse Full Remove all entities from bin & press PPTL",
-"Wrong Scan. IRT bin scan expected",
-"{0} Physically damaged entity recorded.WMS notified"
+"Scan not Allowed. PPS close/force close or profile change requested."
 ]

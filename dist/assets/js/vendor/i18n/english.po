@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-29 15:39+0530\n"
+"POT-Creation-Date: 2017-09-21 17:28+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2294,4 +2294,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:501
 #: src/assets/js/serverMessages/server_messages_lang.js:502
 msgid "Warehouse Full"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:508
+msgid "Scan not Allowed. PPS close/force close or profile change requested."
 msgstr ""

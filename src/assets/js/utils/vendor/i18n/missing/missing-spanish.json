@@ -46,6 +46,7 @@
 "Scan IRT Bin",
 "Scan damaged entity",
 "Scan excess item quantity",
+"Scan not Allowed. PPS close/force close or profile change requested.",
 "Sum of good and exception quantity should be equal to {0}",
 "Sum of good, missing and damaged should be equal to {0}",
 "Unscannable",

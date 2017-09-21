@@ -78,6 +78,7 @@
 "Scan damaged entity",
 "Scan excess item",
 "Scan excess item quantity",
+"Scan not Allowed. PPS close/force close or profile change requested.",
 "Scan or Enter the tote barcode to reprint",
 "Scan or Enter {0} number",
 "Scan slot to confirm",

@@ -47343,14 +47343,14 @@ var navData = {
         }]
     ],
     "print":[
-[{
-            "screen_id": "print_per_item",
+        [{
+            "screen_id": "per_item_print",
             "code": "Common.000",
-            "message": "Paste printout on the item and confirm",
+            "message": "Paste print out on the item and confirm",
             "showImage": false,
             "level": 1,
             "type": 'active'
-        }],
+        }]
     ]
 
 };
@@ -53379,7 +53379,6 @@ setCurrentSeat: function (data) {
             case appConstants.PER_ITEM_PRINT:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
-
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();

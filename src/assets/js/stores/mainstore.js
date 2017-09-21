@@ -2628,7 +2628,6 @@ setCurrentSeat: function (data) {
             case appConstants.PER_ITEM_PRINT:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
-
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();

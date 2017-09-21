@@ -673,6 +673,34 @@ var PickFront = React.createClass({
                     </div>
                 );
                 break;
+
+  case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
+            var selected_screen;
+         
+                selected_screen=(
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Press print button to reprint label for current item")}</div>
+                  <div className = "finish-damaged-barcode align-button">
+                    <Button1 disabled = {false} text = {_("Reprint")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FRONT_REPRINT} />  
+                  </div>
+                  </div>
+          );
+              
+                this._component = (
+                    <div className='grid-container exception'>
+                        <Modal />
+                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <div className="exception-right">
+                        {selected_screen}
+                        </div>
+                        <div className='cancel-scan'>
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                        </div>
+                    </div>
+                );
+                break;
+
+
             case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
                 this._navigation = '';
                 if (this.state.PickFrontExceptionScreen == "box_serial") {

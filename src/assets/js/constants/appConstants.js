@@ -55,6 +55,7 @@ var appConstants = {
 	PUT_FRONT_WAITING_FOR_RACK:"put_front_waiting_for_rack",
 	PUT_FRONT_PLACE_ITEMS_IN_RACK:"put_front_place_items_in_rack",
 	PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN : "put_back_put_extra_item_in_irt_bin",
+	PICK_FRONT_REPRINT_EXCEPTION:'pick_front_reprint_exception',
 	PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:"put_back_warehouse_full_irt_scan",
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
 	PHYSICALLY_DAMAGED:"physically_damaged",

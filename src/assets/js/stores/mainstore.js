@@ -2635,6 +2635,14 @@ setCurrentSeat: function (data) {
 
             break;
 
+            case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                 data["PickFrontExceptionData"] = this.getExceptionData();
+            data["PickFrontNotification"] = this.getNotificationData();
+            break;
+
             case appConstants.PICK_FRONT_SCAN_PACKS:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();

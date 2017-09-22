@@ -3,6 +3,7 @@ var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
+var ShowCounter= require('./ProductDetails/ShowCounter')
 var ExceptionHeader = require('./ExceptionHeader');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
@@ -248,15 +249,19 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                  binComponent=(<div className='main-container'> 
                     <div className='printImage'></div>
-                    <KQ scanDetails = {this.state.PrintScanDetails} />
+                    <ShowCounter scanDetails = {this.state.PrintScanDetails} />
                     </div>
                     );
                    this._component = (
                         <div className='grid-container'>
                        
                               <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFlow'/>
-                            
+                                    screenClass='putFrontFlow'/>
+
+                              <div className={"single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':'')}>
+            <Bins binsData={this.state.PickCurrentBin} screenId = {this.state.PickFrontScreenId}/>
+            <div className="text">{_("CURRENT BIN")}</div>
+            </div>
                             {binComponent}
                              <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Confirm")}
                              module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
@@ -266,7 +271,7 @@ var PickFront = React.createClass({
                                          module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN}
                                          color={"black"}/>
                             </div>
-                        </div>
+                       </div>
 
                     );
 

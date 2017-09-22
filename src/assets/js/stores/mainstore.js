@@ -2632,6 +2632,7 @@ setCurrentSeat: function (data) {
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
                 data["PrintScanDetails"]= this.getScanDetails();
+                data["PickCurrentBin"] = this.getCurrentSelectedBin();
 
             break;
 

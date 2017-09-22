@@ -133,6 +133,7 @@ var LoginPage = React.createClass({
        $('.errorNotify').css('display','none');
   },
   render: function(){
+    
     var d = new Date();
     var n = d.getFullYear();   
     var seatData;
@@ -189,6 +190,7 @@ var LoginPage = React.createClass({
         } else{
             errorClass = 'ErrorMsg'
         }
+        
        
         return (
         <div>
@@ -201,6 +203,8 @@ var LoginPage = React.createClass({
                   </div>
           </div>
           <div className="bodyContent">
+            
+          
          
                 <div className="bodyLoginPage">
                     <div className="factoryImage">
@@ -212,7 +216,7 @@ var LoginPage = React.createClass({
               <div className={errorClass}><span>{_(this.state.showError)}</span>
 
               </div>
-              <div className="form-group"> 
+              <div className="form-group" > 
                 <label >{_(resourceConstants.USERNAME)}</label>
                   <input type="text" className
                   ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
@@ -230,9 +234,11 @@ var LoginPage = React.createClass({
           </div>
                 </div>
             </div>
+            
             <div className="copyright">
                 Copyright &copy; {n} GreyOrange Pte Ltd
             </div>
+
         </div>
       );
     }

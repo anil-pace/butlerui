@@ -200,27 +200,7 @@ var PickFront = React.createClass({
                 }
                 break;
 
-             // case appConstants.PICK_FRONT_WORKING_TABLE:
-             //   if (this.state.PickFrontExceptionStatus == false) {
-             //        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-             //                                        serverNavData={this.state.PickFrontServerNavData}
-             //                                        navMessagesJson={this.props.navMessagesJson}/>);
-             //        this._component = (
-             //            <div className='grid-container'>
-             //                <Modal />
-             //                <div className='main-container'>
-             //                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
-      
-             //                    <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
-             //                                  productDetails={this.state.PickFrontProductDetails}
-             //                                  itemUid={this.state.PickFrontItemUid}/>
-             //                </div>
-             //            </div>
-             //        );
-             //    } else {
-             //        this._component = this.getExceptionComponent();
-             //    }
-             // break;   
+        
 
 
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
@@ -258,7 +238,7 @@ var PickFront = React.createClass({
                               <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='putFrontFlow'/>
 
-                              <div className={"single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':'')}>
+                              <div className={"single-bin gor-fixed-position"+(this.state.SplitScreenFlag?' gor-fixed-position':'')}>
             <Bins binsData={this.state.PickCurrentBin} screenId = {this.state.PickFrontScreenId}/>
             <div className="text">{_("CURRENT BIN")}</div>
             </div>

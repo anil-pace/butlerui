@@ -299,6 +299,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[9];
                     _NavData[0].type="active"
                 }
+                
+                else if((_seatData.parallelFlag==true)&&(location_scan_required))
+                {
+                    _NavData = navConfig.pickFront[11]; 
+                }
                 else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) ||  (_seatData.parallelFlag==true))
                 {
                      _NavData = navConfig.pickFront[10];     
@@ -307,6 +312,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 {
                     _NavData = navConfig.print[0];     
                 }
+              
                 else
                     _NavData = navConfig.pickFront[1];
                 break;

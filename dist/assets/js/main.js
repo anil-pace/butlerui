@@ -47268,7 +47268,25 @@ var navData = {
             "showImage": true,
             "level": 3,
             "type": 'passive'
-        }]
+        }],[{
+             "screen_id": "pick_front_working_table",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan Items",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "pick_front_pptl_press",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Press PPTL",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }
+
+        ]
 
     ],
     "pickBack": [ {
@@ -51105,6 +51123,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[9];
                     _NavData[0].type="active"
                 }
+                
+                else if((_seatData.parallelFlag==true)&&(location_scan_required))
+                {
+                    _NavData = navConfig.pickFront[11]; 
+                }
                 else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) ||  (_seatData.parallelFlag==true))
                 {
                      _NavData = navConfig.pickFront[10];     
@@ -51113,6 +51136,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 {
                     _NavData = navConfig.print[0];     
                 }
+              
                 else
                     _NavData = navConfig.pickFront[1];
                 break;

@@ -341,7 +341,25 @@ var navData = {
             "showImage": true,
             "level": 3,
             "type": 'passive'
-        }]
+        }],[{
+             "screen_id": "pick_front_working_table",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Scan Items",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "pick_front_pptl_press",
+            "code": "Common.001",
+            "image": svgConstants.pptl,
+            "message": "Press PPTL",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }
+
+        ]
 
     ],
     "pickBack": [ {

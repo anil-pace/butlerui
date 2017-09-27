@@ -380,17 +380,16 @@ else {
                     var binComponent = "";
                     if (this.state.OrigBinUse) {
 
-                        binComponent = (<BinsFlex binsData={this.state.PickFrontBinData}
+                        binComponent = (
+                                <div className='main-container'>
+                            <BinsFlex binsData={this.state.PickFrontBinData}
                                                   screenId={appConstants.PICK_FRONT_PPTL_PRESS}
-                                                  seatType={this.state.SeatType}/>)
+                                                  seatType={this.state.SeatType}/>
+
+                                                  </div>);
                     } else {
                         binComponent = (<div className='main-container'>
                             <Bins binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_PPTL_PRESS}/>
-                 {this.state.PickFrontParallelFlag?
-                            <Wrapper scanDetails={this.state.PickFrontScanDetails}
-                                     productDetails={this.state.PickFrontProductDetails}
-                                     itemUid={this.state.PickFrontItemUid}/>:''
-                                 }
                                      </div>);
 
                         

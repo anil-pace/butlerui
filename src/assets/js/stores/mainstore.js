@@ -300,13 +300,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData[0].type="active"
                 }
                 
-                else if((_seatData.parallelFlag==true)&&(location_scan_required))
+                else if(_seatData.location_scan_required)
                 {
-                    _NavData = navConfig.pickFront[11]; 
+                    _NavData = navConfig.pickFront[10]; 
                 }
-                else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) ||  (_seatData.parallelFlag==true))
+                else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) || (_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS))
                 {
-                     _NavData = navConfig.pickFront[10];     
+                     _NavData = navConfig.pickFront[11];     
                 }
                 else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
                 {
@@ -1595,9 +1595,6 @@ setCurrentSeat: function (data) {
         var data = (_goodQuantity !== 0 || _missingQuantity !== 0 || _damagedQuantity !== 0 || _unscannableQuantity !== 0) ? false : true;
         return data;
     },
-    getParallelFlag:function(){
-        return _seatData.parallelFlag;
-    },
     getkQQuanity: function () {
         if (_seatData.hasOwnProperty('Current_box_details')) {
             if (_seatData.Current_box_details.length > 0) {
@@ -2573,7 +2570,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
-            data["PickFrontParallelFlag"]=this.getParallelFlag();
+          
             break;
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
@@ -2591,7 +2588,7 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
-            data["PickFrontParallelFlag"]=this.getParallelFlag();
+            
             break;
 
             break;
@@ -2707,7 +2704,7 @@ setCurrentSeat: function (data) {
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PickFrontItemUid"] = this.getItemUid();
-            data["PickFrontParallelFlag"]=this.getParallelFlag();
+
             break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:

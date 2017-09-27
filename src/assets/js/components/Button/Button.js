@@ -204,6 +204,7 @@ switch (module) {
                                   ActionCreators.postDataToInterface(data);
                                 break;  
 
+
                             case appConstants.CLOSE_CANCEL_EXCEPTION:
                                closeModalBox(); 
                                break;                                                               
@@ -218,6 +219,15 @@ switch (module) {
                                 data["event_name"] = "cancel_scan_all";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL:
+                                data["event_name"] = "cancel_scan_all";
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;    
+                            case appConstants.CANCEL_SCAN_MODAL:
+                                this.showModal(appConstants.PICK_FRONT, "cancel_scan_all");
+                               break;    
+                            
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
@@ -345,11 +355,26 @@ switch (module) {
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break; 
+
                             case appConstants.REPRINT:
                                 data["event_name"] = "pick_front";
                                 data["event_data"]["action"] ="reprint";
                                 ActionCreators.postDataToInterface(data);
-                                break;                          
+                                break;   
+                            case appConstants.PRINT_CONFIRM:
+                                data["event_name"] = "pick_front";
+                                data["event_data"]["action"] ="item_print_done";
+                                ActionCreators.postDataToInterface(data);
+                                break;        
+                            case appConstants.PICK_FRONT_REPRINT:
+                                data["event_name"] = "pick_front";
+                                data["event_data"]["action"] ="pick_front_item_reprint";
+                                ActionCreators.postDataToInterface(data);
+                                break;  
+
+                             case appConstants.CLOSE_CANCEL_SCAN:
+                               closeModalBox(); 
+                               break;                   
                             default:
                                 return true;
                         }

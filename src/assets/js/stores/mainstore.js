@@ -1309,6 +1309,19 @@ getScanDetails: function () {
         return _seatData["scan_details"];
     }
 },
+
+getQuantityDetails:function(){
+var data={
+    "scan_details": {
+                "current_qty": _seatData.per_item_print.print_done,
+                "total_qty": _seatData.per_item_print.print_required
+                
+            }
+}
+return data.scan_details;
+}
+,
+
 kQstatus: function () {
     if (_seatData.hasOwnProperty('enable_kq')) {
         return _seatData.enable_kq;
@@ -2636,9 +2649,13 @@ setCurrentSeat: function (data) {
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontExceptionData"] = this.getExceptionData();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
-                data["PrintScanDetails"]= this.getScanDetails();
+                data["PrintScanDetails"]= this.getQuantityDetails();
                 data["PickCurrentBin"] = this.getCurrentSelectedBin();
+                data["SplitScreenFlag"]=this._getSplitScreenFlag();
+                data["PrintCancelScan"] = this.cancelScanDetails();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
 
             break;
 

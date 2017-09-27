@@ -223,6 +223,10 @@ var PickFront = React.createClass({
                 break;
 
                 case appConstants.PER_ITEM_PRINT:
+                if(this.state.PickFrontExceptionStatus == false)
+                {
+                var cancelScanFlag = this.state.PrintCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                   var binComponent;
                   this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
@@ -230,31 +234,33 @@ var PickFront = React.createClass({
                  binComponent=(<div className='main-container'> 
                     <div className='printImage'></div>
                     <ShowCounter scanDetails = {this.state.PrintScanDetails} />
-                    </div>
+                    </div> 
                     );
                    this._component = (
                         <div className='grid-container'>
-                       
-                              <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='putFrontFlow'/>
+                       <Modal/>
+                              {this.state.SplitScreenFlag && <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='putFrontFlow'/>}
 
-                              <div className={"single-bin gor-fixed-position"+(this.state.SplitScreenFlag?' gor-fixed-position':'')}>
+                              <div className={"single-bin "+(this.state.SplitScreenFlag?' gor-fixed-position':'fix-top')}>
             <Bins binsData={this.state.PickCurrentBin} screenId = {this.state.PickFrontScreenId}/>
             <div className="text">{_("CURRENT BIN")}</div>
             </div>
                             {binComponent}
-                             <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Confirm")}
-                             module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+                             <Button1  text={_("Confirm")} disabled={false}  module={appConstants.PICK_FRONT} action={appConstants.PRINT_CONFIRM}
                              color={"orange"}/>
                             <div className='actions'>
                                 <Button1 disabled={cancelScanDisabled} text={_("Cancel Scan")}
-                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN}
+                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN_MODAL}
                                          color={"black"}/>
                             </div>
                        </div>
 
                     );
-
+}
+else {
+                    this._component = this.getExceptionComponent();
+                }
               
                                     
             break;  
@@ -330,7 +336,7 @@ var PickFront = React.createClass({
                             {binComponent}
                             <div className='actions'>
                                 <Button1 disabled={cancelScanDisabled} text={_("Cancel Scan")}
-                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN}
+                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN_MODAL}
                                          color={"black"}/>
                                 {editButton}
 

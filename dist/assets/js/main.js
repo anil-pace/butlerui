@@ -38938,6 +38938,7 @@ switch (module) {
                                   ActionCreators.postDataToInterface(data);
                                 break;  
 
+
                             case appConstants.CLOSE_CANCEL_EXCEPTION:
                                closeModalBox(); 
                                break;                                                               
@@ -38952,6 +38953,15 @@ switch (module) {
                                 data["event_name"] = "cancel_scan_all";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL:
+                                data["event_name"] = "cancel_scan_all";
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;    
+                            case appConstants.CANCEL_SCAN_MODAL:
+                                this.showModal(appConstants.PICK_FRONT, "cancel_scan_all");
+                               break;    
+                            
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
@@ -39079,11 +39089,26 @@ switch (module) {
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break; 
+
                             case appConstants.REPRINT:
                                 data["event_name"] = "pick_front";
                                 data["event_data"]["action"] ="reprint";
                                 ActionCreators.postDataToInterface(data);
-                                break;                          
+                                break;   
+                            case appConstants.PRINT_CONFIRM:
+                                data["event_name"] = "pick_front";
+                                data["event_data"]["action"] ="item_print_done";
+                                ActionCreators.postDataToInterface(data);
+                                break;        
+                            case appConstants.PICK_FRONT_REPRINT:
+                                data["event_name"] = "pick_front";
+                                data["event_data"]["action"] ="pick_front_item_reprint";
+                                ActionCreators.postDataToInterface(data);
+                                break;  
+
+                             case appConstants.CLOSE_CANCEL_SCAN:
+                               closeModalBox(); 
+                               break;                   
                             default:
                                 return true;
                         }
@@ -40388,6 +40413,28 @@ function loadComponent(modalType,modalData){
       title = _("Cancel Exception");    
       break;
 
+        case "cancel_scan_all":
+        component = [];
+        component.push((
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the scan?"))
+              )
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: modalData, action: appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: modalData, action: appConstants.CLOSE_CANCEL_SCAN}))
+                )
+              )
+            )
+          )
+          ));
+      title = _("Cancel Scan");    
+      break;
+
       case appConstants.ERROR_NOTIFICATION:
           component = [];
           component.push((
@@ -41673,6 +41720,10 @@ var PickFront = React.createClass({displayName: "PickFront",
                 break;
 
                 case appConstants.PER_ITEM_PRINT:
+                if(this.state.PickFrontExceptionStatus == false)
+                {
+                var cancelScanFlag = this.state.PrintCancelScan;
+                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                   var binComponent;
                   this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
                                                     serverNavData: this.state.PickFrontServerNavData, 
@@ -41680,31 +41731,33 @@ var PickFront = React.createClass({displayName: "PickFront",
                  binComponent=(React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "printImage"}), 
                     React.createElement(ShowCounter, {scanDetails: this.state.PrintScanDetails})
-                    )
+                    ) 
                     );
                    this._component = (
                         React.createElement("div", {className: "grid-container"}, 
-                       
-                              React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                       React.createElement(Modal, null), 
+                              this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
                                     screenClass: "putFrontFlow"}), 
 
-                              React.createElement("div", {className: "single-bin gor-fixed-position"+(this.state.SplitScreenFlag?' gor-fixed-position':'')}, 
+                              React.createElement("div", {className: "single-bin "+(this.state.SplitScreenFlag?' gor-fixed-position':'fix-top')}, 
             React.createElement(Bins, {binsData: this.state.PickCurrentBin, screenId: this.state.PickFrontScreenId}), 
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
             ), 
                             binComponent, 
-                             React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
-                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
+                             React.createElement(Button1, {text: _("Confirm"), disabled: false, module: appConstants.PICK_FRONT, action: appConstants.PRINT_CONFIRM, 
                              color: "orange"}), 
                             React.createElement("div", {className: "actions"}, 
                                 React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
-                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN_MODAL, 
                                          color: "black"})
                             )
                        )
 
                     );
-
+}
+else {
+                    this._component = this.getExceptionComponent();
+                }
               
                                     
             break;  
@@ -41780,7 +41833,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                             binComponent, 
                             React.createElement("div", {className: "actions"}, 
                                 React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
-                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN_MODAL, 
                                          color: "black"}), 
                                 editButton, 
 
@@ -47452,6 +47505,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	PRINT_CONFIRM:'PRINT_CONFIRM',
 	CHANGE_AUDIT_EXCEPTION_SCREEN:"CHANGE_AUDIT_EXCEPTION_SCREEN",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
 	OUTER_PACK:"container_level_1",
@@ -47490,6 +47544,9 @@ var appConstants = {
 	PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:"put_back_physically_damaged_items",
 	PHYSICALLY_DAMAGED:"physically_damaged",
 	EXTRA_ITEMS:"extra_items",
+	CANCEL_SCAN_MODAL:'CANCEL_SCAN_MODAL',
+	'CANCEL_SCAN_SEND_TO_SERVER_MODAL':'CANCEL_SCAN_SEND_TO_SERVER_MODAL',
+	PICK_FRONT_REPRINT:'PICK_FRONT_REPRINT',
 	ITEM_SCANNABLE:"item_unscannable",
 	ITEM_OVERSIZED:"item_oversized",
 	FINISH_DAMAGED_ENTITY_DATA:"FINISH_DAMAGED_ENTITY_DATA",
@@ -47520,6 +47577,7 @@ var appConstants = {
 	SEND_MISSING_BOX_EXCEPTION:"SEND_MISSING_BOX_EXCEPTION",
 	PUT_FRONT_SCAN:"put_front_scan",
 	STAGE_ONE_BIN : 'STAGE_ONE_BIN',
+	CLOSE_CANCEL_SCAN:'CLOSE_CANCEL_SCAN',
 	PICK_FRONT_EXCEPTION_MISSING_BOX:"pick_front_no_containers_found",
 	STAGE_ALL : 'STAGE_ALL',
 	KQ_OPERATION : 'KQ_OPERATION',
@@ -47698,10 +47756,10 @@ module.exports = appConstants;
 
 },{}],301:[function(require,module,exports){
 var configConstants = {
-// WEBSOCKET_IP : "wss://192.168.8.83/wss",
-// 	INTERFACE_IP : "https://192.168.8.83"
-WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
-	INTERFACE_IP : "https://192.168.3.106:5000"
+WEBSOCKET_IP : "wss://192.168.8.83/wss",
+	INTERFACE_IP : "https://192.168.8.83"
+// WEBSOCKET_IP : "ws://192.168.3.106:8888/ws",
+// 	INTERFACE_IP : "https://192.168.3.106:5000"
 };
 module.exports = configConstants;
 
@@ -52133,6 +52191,19 @@ getScanDetails: function () {
         return _seatData["scan_details"];
     }
 },
+
+getQuantityDetails:function(){
+var data={
+    "scan_details": {
+                "current_qty": _seatData.per_item_print.print_done,
+                "total_qty": _seatData.per_item_print.print_required
+                
+            }
+}
+return data.scan_details;
+}
+,
+
 kQstatus: function () {
     if (_seatData.hasOwnProperty('enable_kq')) {
         return _seatData.enable_kq;
@@ -53460,9 +53531,13 @@ setCurrentSeat: function (data) {
                 data["PickFrontServerNavData"] = this.getServerNavData();
                 data["PickFrontScreenId"] = this.getScreenId();
                 data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontExceptionData"] = this.getExceptionData();
                 data["BinMapGroupDetails"] = this.getSelectedBinGroup();
-                data["PrintScanDetails"]= this.getScanDetails();
+                data["PrintScanDetails"]= this.getQuantityDetails();
                 data["PickCurrentBin"] = this.getCurrentSelectedBin();
+                data["SplitScreenFlag"]=this._getSplitScreenFlag();
+                data["PrintCancelScan"] = this.cancelScanDetails();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
 
             break;
 
@@ -54243,6 +54318,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 var putSeatData = function(data) {
     
     console.log(data);
+    //data.state_data=JSON.parse('{"seat_name":"front_1","notification_list":[],"per_item_print":{"print_done":0,"print_required":3},"exception_allowed":[],"roll_cage_flow":false,"bin_coordinate_plotting":false,"event":"empty","screen_id":"per_item_print","logout_allowed":false,"seat_type":"front","time_stamp":"1506415597","ppsbin_list":[{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"4","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"3","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_blink_state":false,"ppsbin_id":"2","ppsbin_light_color":"none","length":"200","selected_state":true,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":3}],"ppsbin_id":"1","length":"200","selected_state":false,"ppsbin_state":"pick_processed","ppsbin_count":"3","coordinate":[1,4],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":3}],"ppsbin_id":"8","length":"200","selected_state":false,"ppsbin_state":"pick_processed","ppsbin_count":"3","coordinate":[2,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":3}],"ppsbin_id":"7","length":"200","selected_state":false,"ppsbin_state":"pick_processed","ppsbin_count":"3","coordinate":[2,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":1}],"ppsbin_id":"6","length":"200","selected_state":false,"ppsbin_state":"error","ppsbin_count":"1","coordinate":[2,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":4}],"ppsbin_id":"5","length":"200","selected_state":false,"ppsbin_state":"pick_processed","ppsbin_count":"4","coordinate":[2,4],"group_id":"1"}],"mode":"pick","group_info":{"2":"center"},"is_idle":false,"button_press_allowed":false,"item_uid":"f5fdc506-5d93-441f-baa2-8f3be15fe577","button_press_id":"bin_full","structure":[2,4],"screen_version":"1","docked":[],"api_version":"1","scan_allowed":false,"header_msge_list":[{"level":"info","code":"PkF.H.025","details":[],"description":"Paste Printout on the item and confirm"}]}');
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

@@ -38950,16 +38950,16 @@ switch (module) {
                         switch (action) {
 
                             case appConstants.CANCEL_SCAN:
-                                data["event_name"] = "cancel_scan_all";
+                                data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL:
-                                data["event_name"] = "cancel_scan_all";
+                                data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
                                 break;    
                             case appConstants.CANCEL_SCAN_MODAL:
-                                this.showModal(appConstants.PICK_FRONT, "cancel_scan_all");
+                                this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
                                break;    
                             
                             case appConstants.CHECKLIST_SUBMIT:
@@ -40413,20 +40413,20 @@ function loadComponent(modalType,modalData){
       title = _("Cancel Exception");    
       break;
 
-        case "cancel_scan_all":
+        case appConstants.CANCEL_SCAN_ALL:
         component = [];
         component.push((
           React.createElement("div", null, 
             React.createElement("div", {className: "row"}, 
               React.createElement("div", {className: "col-md-12"}, 
-                React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the scan?"))
+                React.createElement("div", {className: "title-textbox"}, _("All scan and print will be cancelled. Confirm to cancel?"))
               )
             ), 
             React.createElement("div", {className: "modal-footer removeBorder"}, 
               React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
                 React.createElement("div", {className: "row removeBorder"}, 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: modalData, action: appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL})), 
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: modalData, action: appConstants.CLOSE_CANCEL_SCAN}))
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: modalData, action: appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL})), 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: modalData, action: appConstants.CLOSE_CANCEL_SCAN}))
                 )
               )
             )
@@ -41833,7 +41833,7 @@ else {
                             binComponent, 
                             React.createElement("div", {className: "actions"}, 
                                 React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
-                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN_MODAL, 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
                                          color: "black"}), 
                                 editButton, 
 
@@ -47298,7 +47298,7 @@ var navData = {
                 "type": 'passive'
             }],
             [{
-            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan"],
+            "screen_id": "pick_front_location_scan",
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot",
@@ -47306,7 +47306,7 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-             "screen_id": "pick_front_working_table",
+             "screen_id": ["pick_front_working_table", "pick_front_item_scan"],
             "code": "Common.001",
             "image": svgConstants.pptl,
             "message": "Scan Items",
@@ -47590,6 +47590,7 @@ var appConstants = {
 	FINISH_BOX:"FINISH_BOX",
 	GENERATE_REPORT:"GENERATE_REPORT",
 	LOAD_MODAL:'load_modal',
+	CANCEL_SCAN_ALL:'cancel_scan_all',
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
 	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",
@@ -51179,7 +51180,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[9];
                     _NavData[0].type="active"
                 }
-                else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN))
+                else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_ITEM_SCAN))
                 {
                     _NavData = navConfig.pickFront[10]; 
                 }

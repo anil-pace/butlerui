@@ -299,7 +299,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[9];
                     _NavData[0].type="active"
                 }
-                else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN))
+                else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_ITEM_SCAN))
                 {
                     _NavData = navConfig.pickFront[10]; 
                 }

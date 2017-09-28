@@ -336,7 +336,7 @@ else {
                             {binComponent}
                             <div className='actions'>
                                 <Button1 disabled={cancelScanDisabled} text={_("Cancel Scan")}
-                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN_MODAL}
+                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN}
                                          color={"black"}/>
                                 {editButton}
 

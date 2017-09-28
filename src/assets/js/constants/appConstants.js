@@ -107,6 +107,7 @@ var appConstants = {
 	FINISH_BOX:"FINISH_BOX",
 	GENERATE_REPORT:"GENERATE_REPORT",
 	LOAD_MODAL:'load_modal',
+	CANCEL_SCAN_ALL:'cancel_scan_all',
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
 	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",

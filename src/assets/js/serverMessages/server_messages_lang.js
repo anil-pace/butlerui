@@ -460,6 +460,7 @@ function server_messages_list() {
     _("Warehouse Full Remove all entities from bin & press PPTL");
     _("Enter Quantity");
     _("Are you sure you want to cancel the exception?");
+    _("All scan and print will be cancelled. Confirm to cancel?");
     _("Yes");
     _("No");
     _("Exception with entity reported");

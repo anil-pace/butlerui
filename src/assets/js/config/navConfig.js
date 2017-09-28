@@ -318,7 +318,7 @@ var navData = {
                 "type": 'passive'
             }],
             [{
-            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan"],
+            "screen_id": "pick_front_location_scan",
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot",
@@ -326,7 +326,7 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-             "screen_id": "pick_front_working_table",
+             "screen_id": ["pick_front_working_table", "pick_front_item_scan"],
             "code": "Common.001",
             "image": svgConstants.pptl,
             "message": "Scan Items",

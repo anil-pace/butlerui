@@ -216,16 +216,16 @@ switch (module) {
                         switch (action) {
 
                             case appConstants.CANCEL_SCAN:
-                                data["event_name"] = "cancel_scan_all";
+                                data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL:
-                                data["event_name"] = "cancel_scan_all";
+                                data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
                                 break;    
                             case appConstants.CANCEL_SCAN_MODAL:
-                                this.showModal(appConstants.PICK_FRONT, "cancel_scan_all");
+                                this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
                                break;    
                             
                             case appConstants.CHECKLIST_SUBMIT:

@@ -288,7 +288,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 var putSeatData = function(data) {
     
     console.log(data);
-  switch (data.state_data.mode + "_" + data.state_data.seat_type) {
+     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);
             break;

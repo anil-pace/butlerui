@@ -299,6 +299,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     _NavData = navConfig.pickFront[9];
                     _NavData[0].type="active"
                 }
+                else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_ITEM_SCAN))
+                {
+                    _NavData = navConfig.pickFront[10]; 
+                }
+                else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) || (_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS))
+                {
+                     _NavData = navConfig.pickFront[11];     
+                }
+                else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
+                {
+                    _NavData = navConfig.print[0];     
+                }
+              
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
@@ -1295,6 +1308,19 @@ getScanDetails: function () {
         return _seatData["scan_details"];
     }
 },
+
+getQuantityDetails:function(){
+var data={
+    "scan_details": {
+                "current_qty": _seatData.per_item_print.print_done,
+                "total_qty": _seatData.per_item_print.print_required
+                
+            }
+}
+return data.scan_details;
+}
+,
+
 kQstatus: function () {
     if (_seatData.hasOwnProperty('enable_kq')) {
         return _seatData.enable_kq;
@@ -2543,6 +2569,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
+          
             break;
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
@@ -2560,6 +2587,9 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
+            
+            break;
+
             break;
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
@@ -2584,7 +2614,9 @@ setCurrentSeat: function (data) {
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
             data["PickFrontBoxOrderDetails"] = this.getOrderID();
+
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+            case appConstants.PICK_FRONT_WORKING_TABLE:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
             data["PickFrontScreenId"] = this.getScreenId();
@@ -2606,6 +2638,29 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
+            break;
+
+            case appConstants.PER_ITEM_PRINT:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PrintScanDetails"]= this.getQuantityDetails();
+                data["PickCurrentBin"] = this.getCurrentSelectedBin();
+                data["SplitScreenFlag"]=this._getSplitScreenFlag();
+                data["PrintCancelScan"] = this.cancelScanDetails();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+
+            break;
+
+            case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                 data["PickFrontExceptionData"] = this.getExceptionData();
+            data["PickFrontNotification"] = this.getNotificationData();
             break;
 
             case appConstants.PICK_FRONT_SCAN_PACKS:
@@ -2632,6 +2687,7 @@ setCurrentSeat: function (data) {
             data["PickFrontServerNavData"] = this.getServerNavData();
             data["PickFrontScreenId"] = this.getScreenId();
             data["PickFrontScanDetails"] = this.scanDetails();
+            data["PickFrontProductDetails"] = this.productDetails();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
             data["PickFrontChecklistDetails"] = this.getChecklistDetails();
             data["PickFrontChecklistIndex"] = this.getChecklistIndex();
@@ -2646,6 +2702,8 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+            data["PickFrontItemUid"] = this.getItemUid();
+
             break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:

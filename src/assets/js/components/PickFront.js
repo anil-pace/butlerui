@@ -284,7 +284,7 @@ else {
                     var binComponent = "";
 
         if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
-     if (true)
+     if (this.state.OrigBinUse)
      {
      binComponent=(<div className="binsFlexWrapperContainer"> 
         <div className="workingTableFlex"></div>

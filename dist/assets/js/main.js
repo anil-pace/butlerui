@@ -41729,7 +41729,7 @@ var PickFront = React.createClass({displayName: "PickFront",
                                                     navMessagesJson: this.props.navMessagesJson}));
                  binComponent=(React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "printImage"}), 
-                    React.createElement(KQ, {scanDetails: this.state.PrintScanDetails, showCounter: true})
+                    React.createElement(KQ, {scanDetails: this.state.PrintScanDetails, disable: true})
                     ) 
                     );
                    this._component = (
@@ -43441,7 +43441,7 @@ var KQ = React.createClass({displayName: "KQ",
 
     if(_scanDetails.total_qty != 0 || mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
         this._qtyComponent = (
-          React.createElement("div", {id: !this.props.showCounter?'textbox':'textbox-counter'}, 
+          React.createElement("div", {id: !this.props.disable?'textbox':'textbox-counter'}, 
             React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null,"keyboard")}), 
             React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
@@ -43474,19 +43474,21 @@ var KQ = React.createClass({displayName: "KQ",
         }
 
 
-        return ( React.createElement("div", {className: !this.props.showCounter? "kq-wrapper":"kq-wrapper-counter"}, 
-            !this.props.showCounter?React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+        return ( React.createElement("div", {className: !this.props.disable? "kq-wrapper":"kq-wrapper-counter"}, 
+            !this.props.disable?React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "):'', 
 
             this._qtyComponent, 
-            !this.props.showCounter?React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
+            !this.props.disable?React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " "):''
             
             )
         )
 
     }
+
 });
+KQ.defaultProps = { disable: false };
 
 module.exports = KQ;
 

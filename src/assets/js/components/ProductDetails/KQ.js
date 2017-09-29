@@ -493,7 +493,7 @@ var KQ = React.createClass({
 
     if(_scanDetails.total_qty != 0 || mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
         this._qtyComponent = (
-          <div id='textbox'>
+          <div id={!this.props.disable?'textbox':'textbox-counter'}>
             <input id="keyboard" className="current-quantity" key="text_1" value={_updatedQty} onClick={this.openNumpad.call(null,"keyboard")}/>
             <span className="separator">/</span>
             <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span>
@@ -526,15 +526,20 @@ var KQ = React.createClass({
         }
 
 
-        return ( < div className = "kq-wrapper" >
-            < a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
-            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent}
-            < a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
-            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a>
+        return ( < div className = {!this.props.disable? "kq-wrapper":"kq-wrapper-counter"}>
+            {!this.props.disable?< a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
+            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a>:'' }
+
+            {this._qtyComponent}
+            {!this.props.disable?< a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
+            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a>:''}
+            
             < /div>
         )
 
     }
+
 });
+KQ.defaultProps = { disable: false };
 
 module.exports = KQ;

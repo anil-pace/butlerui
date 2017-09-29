@@ -3,7 +3,6 @@ var PickFrontStore = require('../stores/PickFrontStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
 var KQ = require('./ProductDetails/KQ');
-var ShowCounter= require('./ProductDetails/ShowCounter')
 var ExceptionHeader = require('./ExceptionHeader');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
@@ -233,7 +232,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                  binComponent=(<div className='main-container'> 
                     <div className='printImage'></div>
-                    <ShowCounter scanDetails = {this.state.PrintScanDetails} />
+                    <KQ scanDetails = {this.state.PrintScanDetails} showCounter={true} />
                     </div> 
                     );
                    this._component = (
@@ -285,9 +284,10 @@ else {
                     var binComponent = "";
 
         if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
-     if (this.state.OrigBinUse)
+     if (true)
      {
      binComponent=(<div className="binsFlexWrapperContainer"> 
+        <div className="workingTableFlex"></div>
         <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
                                               productDetails={this.state.PickFrontProductDetails}
                                               itemUid={this.state.PickFrontItemUid}/>

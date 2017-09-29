@@ -1313,6 +1313,7 @@ getQuantityDetails:function(){
 var data={
     "scan_details": {
                 "current_qty": _seatData.per_item_print.print_done,
+                 "kq_allowed":false,
                 "total_qty": _seatData.per_item_print.print_required
                 
             }

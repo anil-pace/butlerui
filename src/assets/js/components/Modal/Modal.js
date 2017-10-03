@@ -252,9 +252,7 @@ function loadComponent(modalType,modalData){
       component = [];
       component.push((
           <div>
-            <div className="row">
               <p>{_("Last item scan will be cancelled. Do you want to continue?")}</p>
-            </div>
             <div className="modal-footer removeBorder">
               <div className="buttonContainer center-block chklstButtonContainer">
                 <div className="row removeBorder">

@@ -18,8 +18,7 @@ var NumericIndicator = React.createClass({
    _updatedQtyDamaged:0,
    _updatedQtyUnscannble:0,
    _updatedQtyMissing:0,
-
-
+   _qty:0,
    getInitialState: function() {
     return {value: 0};
 },
@@ -66,6 +65,13 @@ changeValueIncrement : function(event){
             value : this._updatedQtyDamaged
         })
     }
+     else{
+        this._qty++;
+        this.setState({
+            value : this._qty
+        }
+            )
+        }
 },
 
 changeValueDecrement : function(event){
@@ -101,6 +107,12 @@ changeValueDecrement : function(event){
             value : this._updatedQtyDamaged
         })
     }
+    else{
+        this._qty--;
+        this.setState({
+            value : this._qty
+        })
+    }
 
 },
 
@@ -131,6 +143,8 @@ updateStore: function(event, qty) {
         CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
         break;
         default:
+        CommonActions.updateKQQuantity(parseInt(this._qty));
+        
     }
     return true;
 
@@ -260,7 +274,15 @@ componentDidMount(){
                             value : self._updatedQtyDamaged
                         })
 
-                    }                
+                    }
+                    else{
+                        self._qty=txtBoxVal;
+                        CommonActions.updateKQQuantity(parseInt(self._qty));
+                        this.setState({
+                        value : this._qty
+                            }
+                        )
+                    }
                 }
             });
         }(this))

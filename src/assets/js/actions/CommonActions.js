@@ -195,7 +195,6 @@ var commonActions = {
       data:data
     });
   },
-
     updateUnscannableQuantity:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_UNSCANNABLE_QUANTITY,
@@ -216,6 +215,8 @@ var commonActions = {
       data:data
     });
   },
+
+
 
   changePutFrontExceptionScreen:function(data){
     AppDispatcher.handleAction({

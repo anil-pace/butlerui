@@ -328,7 +328,7 @@ switch (module) {
                             break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
                                 data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
-                                data["event_data"]= null;
+                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();
                             break; 

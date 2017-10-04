@@ -258,7 +258,7 @@ function loadComponent(modalType,modalData){
             </div>
             <div className="modal-footer removeBorder fixedWidth">
               <div className="buttonContainer center-block fixedHeight">
-              <NumericIndicator Formattingclass={"widerComponent"} execType={appConstants.GOOD_QUANTITY}/>
+              <NumericIndicator Formattingclass={"widerComponent"} execType={appConstants.DEFAULT}/>
                 <div className="removeBorder fixedBottom">
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_BIN_FULL_REQUEST}/></div>
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Continue")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_BIN_FULL_REQUEST}/></div>

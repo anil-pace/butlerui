@@ -269,7 +269,7 @@ componentDidMount(){
     render: function(data) {
         this.checkKqAllowed();
         return (
-            <div className = "indicator-wrapper" >       
+            <div className ={this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"} >       
             <div>
             <span  className = {this._appendClassDown}  action={this.props.action} onClick={this.decrementValue} onMouseDown = {this.decrementValue} ></span>
             <input id="keyboard" value={this.state.value} type="text" name="quantity" className={"gor-quantity-text gor_"+this.props.execType}/>

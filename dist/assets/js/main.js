@@ -40063,6 +40063,7 @@ var ModalFooter = require('./ModalFooter');
 var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
 var allSvgConstants = require('../../constants/svgConstants');
+var NumericIndicator = require('../ProductDetails/NumericIndicator');
 var bootstrap = require('bootstrap');
 var jqueryPosition = require('jquery-ui/position');
 var virtualkeyboard = require('virtual-keyboard');
@@ -40309,12 +40310,13 @@ function loadComponent(modalType,modalData){
       component = [];
       component.push((
           React.createElement("div", null, 
-            React.createElement("div", {className: "row"}, 
-              React.createElement("p", null, _("Last item scan will be cancelled. Do you want to continue?"))
+            React.createElement("div", {className: "rowMiddle"}, 
+              React.createElement("p", null, _("KQ number of items kept in the bin and confirm?"))
             ), 
-            React.createElement("div", {className: "modal-footer removeBorder"}, 
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
-                React.createElement("div", {className: "row removeBorder"}, 
+            React.createElement("div", {className: "modal-footer removeBorder fixedWidth"}, 
+              React.createElement("div", {className: "buttonContainer center-block fixedHeight"}, 
+              React.createElement(NumericIndicator, {Formattingclass: "widerComponent", execType: appConstants.GOOD_QUANTITY}), 
+                React.createElement("div", {className: "removeBorder fixedBottom"}, 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL_REQUEST})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BIN_FULL_REQUEST}))
                 )
@@ -40497,7 +40499,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":299,"../../constants/svgConstants":302,"../../stores/PickFrontStore":314,"../../stores/mainstore":318,"../../utils/utils.js":319,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
+},{"../../constants/appConstants":299,"../../constants/svgConstants":302,"../../stores/PickFrontStore":314,"../../stores/mainstore":318,"../../utils/utils.js":319,"../Button/Button":241,"../ProductDetails/NumericIndicator":273,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -44599,7 +44601,7 @@ componentDidMount(){
     render: function(data) {
         this.checkKqAllowed();
         return (
-            React.createElement("div", {className: "indicator-wrapper"}, 
+            React.createElement("div", {className: this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"}, 
             React.createElement("div", null, 
             React.createElement("span", {className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}), 
             React.createElement("input", {id: "keyboard", value: this.state.value, type: "text", name: "quantity", className: "gor-quantity-text gor_"+this.props.execType}), 
@@ -47723,8 +47725,8 @@ module.exports = appConstants;
 
 },{}],300:[function(require,module,exports){
 var configConstants = {
-WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+WEBSOCKET_IP : "wss://192.168.8.83/wss",
+	INTERFACE_IP : "https://192.168.8.83"
 };
 module.exports = configConstants;
 
@@ -54279,7 +54281,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     
-    
+    data.state_data=JSON.parse('{"seat_name":"front_1","notification_list":[],"scan_details":{"current_qty":"2","total_qty":"2","kq_allowed":true},"checklist_details":{"pick_checklist":[],"checklist_index":"undefined","display_checklist_overlay":false},"rack_details":{"rack_type_rec":[["A",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["B",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["C",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["D",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]],["E",[[["01","02"],32,33,48],[["03","04"],32,33,48],[["05","06"],32,33,48]]]],"slot_barcodes":["014.1.A.01","014.1.A.02"],"slot_type":"slot"},"exception_allowed":[],"roll_cage_flow":false,"bin_coordinate_plotting":false,"event":"empty","screen_id":"pick_front_pptl_press","location_scan_required":true,"logout_allowed":false,"seat_type":"front","time_stamp":"1506594978","ppsbin_list":[{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"4","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"3","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"2","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"1","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[1,4],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"8","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"7","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,2],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[],"ppsbin_id":"6","length":"200","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,3],"group_id":"1"},{"breadth":"200","direction":"center","bin_info":[{"product_sku":"2001","type":"item","quantity":2}],"ppsbin_blink_state":true,"ppsbin_id":"5","ppsbin_light_color":"blue","length":"200","selected_state":true,"ppsbin_state":"empty","ppsbin_count":"2","coordinate":[2,4],"group_id":"1"}],"mode":"pick","group_info":{"1":"center"},"is_idle":false,"button_press_allowed":true,"cancel_scan_enabled":true,"button_press_id":"bin_full","structure":[2,4],"screen_version":"1","docked":[],"api_version":"1","scan_allowed":true,"header_msge_list":[{"level":"info","code":"PkF.H.024","details":[2,"5"],"description":"Place items in bin and press PPTL to confirm"}]}')
    console.log(data);
    switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

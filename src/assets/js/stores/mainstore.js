@@ -1942,7 +1942,14 @@ setCurrentSeat: function (data) {
                 details = _seatData.put_quantity;
             }
         }
+        else if(_seatData.screen_id ==appConstants.PICK_FRONT_MORE_ITEM_SCAN || _seatData.screen_id ==appConstants.PICK_FRONT_PPTL_PRESS || _seatData.screen_id ==appConstants.PICK_FRONT_PACKING_ITEM_SCAN)
+        {
+                if(_KQQty > _seatData.scan_details.current_qty)
+                {
+                    flag = type = true;
 
+                }
+        }
         else {
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
@@ -1950,7 +1957,13 @@ setCurrentSeat: function (data) {
         if (flag) {
             if (_seatData.notification_list.length == 0) {
                 var data = {};
+                if(_seatData.screen_id ==appConstants.PICK_FRONT_MORE_ITEM_SCAN || _seatData.screen_id ==appConstants.PICK_FRONT_PPTL_PRESS || _seatData.screen_id ==appConstants.PICK_FRONT_PACKING_ITEM_SCAN)
+                {
+                data["code"] =resourceConstants.CLIENTCODE_019;
+                }else
+                {
                 data["code"] = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
+                }
                 data["level"] = "error";
                 data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [details];
@@ -1986,6 +1999,16 @@ setCurrentSeat: function (data) {
                 _unscannableQuantity = 0;
                 this.showSpinner();
                 utils.postDataToInterface(data, _seatData.seat_name);
+            }
+            else
+            {
+                data["event_name"] =appConstants.CONFIRM_BIN_FULL_REQUEST;
+                data["event_data"] = {};
+                data["event_data"]["quantity"]=mainstore.getkQQuanity();
+                utils.postDataToInterface(data, _seatData.seat_name);
+                _KQQty=_seatData.scan_details.current_qty;
+
+
             }
         }
 

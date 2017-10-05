@@ -20,7 +20,9 @@ var NumericIndicator = React.createClass({
    _updatedQtyMissing:0,
    _qty:0,
    getInitialState: function() {
-    return {value: 0};
+    this._qty=this.props.execType===appConstants.DEFAULT?this.props.scanDetails.current_qty:0;
+    CommonActions.updateKQQuantity(parseInt(this._qty));
+    return {value: this._qty}
 },
 self:this,
 
@@ -279,7 +281,7 @@ componentDidMount(){
                         self._qty=txtBoxVal;
                         CommonActions.updateKQQuantity(parseInt(self._qty));
                         this.setState({
-                        value : this._qty
+                        value : self._qty
                             }
                         )
                     }

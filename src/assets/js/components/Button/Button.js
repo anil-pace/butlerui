@@ -327,9 +327,10 @@ switch (module) {
                             closeModalBox();
                             break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
-                                data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
-                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
-                                ActionCreators.postDataToInterface(data);
+                                // data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
+                                //  data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                                 ActionCreators.validateAndSendDataToServer();
+                                //ActionCreators.postDataToInterface(data);
                             closeModalBox();
                             break; 
                             case appConstants.CANCEL_BOX_FULL:

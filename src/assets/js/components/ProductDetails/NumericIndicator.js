@@ -21,7 +21,6 @@ var NumericIndicator = React.createClass({
    _qty:0,
    getInitialState: function() {
     this._qty=this.props.execType===appConstants.DEFAULT?this.props.scanDetails.current_qty:0;
-    CommonActions.updateKQQuantity(parseInt(this._qty));
     return {value: this._qty}
 },
 self:this,
@@ -33,6 +32,7 @@ generateExcessNotification: function () {
     CommonActions.generateNotification(data);
     return;
 },
+
 
 changeValueIncrement : function(event){
 
@@ -288,7 +288,9 @@ componentDidMount(){
                 }
             });
         }(this))
-        
+       CommonActions.updateKQQuantity(parseInt(this._qty));
+       
+       
     },
     render: function(data) {
         this.checkKqAllowed();

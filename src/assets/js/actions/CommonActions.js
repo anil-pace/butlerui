@@ -188,7 +188,6 @@ var commonActions = {
       data:data
     });
   },
-
   updateMissingQuantity:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_MISSING_QUANTITY,

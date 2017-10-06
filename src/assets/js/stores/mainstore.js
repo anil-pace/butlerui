@@ -1404,7 +1404,10 @@ setCurrentSeat: function (data) {
         _showSpinner = false;
         _enableException = false;
         _seatData = data;
-        _KQQty = _seatData.hasOwnProperty("quantity") ? _seatData["quantity"] : 0;
+        if(_seatData.screen_id !==appConstants.PICK_FRONT_MORE_ITEM_SCAN && _seatData.screen_id !==appConstants.PICK_FRONT_PPTL_PRESS && _seatData.screen_id !==appConstants.PICK_FRONT_PACKING_ITEM_SCAN)
+        {
+        _KQQty = _seatData.hasOwnProperty("quantity") ? _seatData["quantity"] :  0;
+        }
         _seatName = data.seat_name;
         _seatMode = data.mode;
         _seatType = data.seat_type;
@@ -1922,7 +1925,7 @@ setCurrentSeat: function (data) {
         return groupId;
     },
     validateAndSendDataToServer: function () {
-        var flag = false, type = false;
+        var flag = false, type = false, binFullQty=false;
         var details;
         if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
             if (_goodQuantity === _seatData.pick_quantity && _unscannableQuantity === 0) {
@@ -1946,7 +1949,8 @@ setCurrentSeat: function (data) {
         {
                 if(_KQQty > _seatData.scan_details.current_qty)
                 {
-                    flag = type = true;
+                    flag = binFullQty = true;
+                    details=_seatData.scan_details.current_qty;
 
                 }
         }
@@ -1956,20 +1960,14 @@ setCurrentSeat: function (data) {
         }
         if (flag) {
             if (_seatData.notification_list.length == 0) {
-                var data = {};
-                if(_seatData.screen_id ==appConstants.PICK_FRONT_MORE_ITEM_SCAN || _seatData.screen_id ==appConstants.PICK_FRONT_PPTL_PRESS || _seatData.screen_id ==appConstants.PICK_FRONT_PACKING_ITEM_SCAN)
-                {
-                data["code"] =resourceConstants.CLIENTCODE_019;
-                }else
-                {
-                data["code"] = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
-                }
+                var data = {};              
+                data["code"] = binFullQty?resourceConstants.CLIENTCODE_012: (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);                
                 data["level"] = "error";
                 data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [details];
                 _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].code = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
+                _seatData.notification_list[0].code = binFullQty?resourceConstants.CLIENTCODE_012 : (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
                 _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
@@ -2006,9 +2004,6 @@ setCurrentSeat: function (data) {
                 data["event_data"] = {};
                 data["event_data"]["quantity"]=mainstore.getkQQuanity();
                 utils.postDataToInterface(data, _seatData.seat_name);
-                _KQQty=_seatData.scan_details.current_qty;
-
-
             }
         }
 

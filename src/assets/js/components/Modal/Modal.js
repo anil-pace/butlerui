@@ -248,7 +248,7 @@ function loadComponent(modalType,modalData){
           </div>
           ));
       title = _("Box Full");
-      break;
+      break;  
        case appConstants.BIN_FULL:
       component = [];
       component.push((
@@ -257,7 +257,7 @@ function loadComponent(modalType,modalData){
               <p>{_("KQ number of items kept in the bin and confirm?")}</p>
             </div>
             <div className="modal-footer removeBorder fixedWidth">
-              <div className="buttonContainer center-block fixedHeight">
+              <div className="buttonContainer50 center-block fixedHeight">
               <NumericIndicator Formattingclass={"widerComponent"} execType={appConstants.DEFAULT} scanDetails={mainstore.getScanDetails()}/>
                 <div className="removeBorder fixedBottom">
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_BIN_FULL_REQUEST}/></div>

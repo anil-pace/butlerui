@@ -39058,10 +39058,7 @@ switch (module) {
                             closeModalBox();
                             break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
-                                // data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
-                                //  data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                  ActionCreators.validateAndSendDataToServer();
-                                //ActionCreators.postDataToInterface(data);
                             closeModalBox();
                             break; 
                             case appConstants.CANCEL_BOX_FULL:
@@ -40303,7 +40300,7 @@ function loadComponent(modalType,modalData){
           )
           ));
       title = _("Box Full");
-      break;
+      break;  
        case appConstants.BIN_FULL:
       component = [];
       component.push((
@@ -40312,7 +40309,7 @@ function loadComponent(modalType,modalData){
               React.createElement("p", null, _("KQ number of items kept in the bin and confirm?"))
             ), 
             React.createElement("div", {className: "modal-footer removeBorder fixedWidth"}, 
-              React.createElement("div", {className: "buttonContainer center-block fixedHeight"}, 
+              React.createElement("div", {className: "buttonContainer50 center-block fixedHeight"}, 
               React.createElement(NumericIndicator, {Formattingclass: "widerComponent", execType: appConstants.DEFAULT, scanDetails: mainstore.getScanDetails()}), 
                 React.createElement("div", {className: "removeBorder fixedBottom"}, 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL_REQUEST})), 
@@ -47793,7 +47790,6 @@ var resourceConstants = {
 	CLIENTCODE_016 : 'CLIENTCODE_016',
 	CLIENTCODE_017 : 'CLIENTCODE_017',
 	CLIENTCODE_018 : "CLIENTCODE_018",
-	CLIENTCODE_019 : "CLIENTCODE_019",
 	CLIENTCODE_409 : "CLIENTCODE_409",
 	CLIENTCODE_409_PERIPHERAL:"CLIENTCODE_409_PERIPHERAL",
 	CLIENTCODE_400_PERIPHERAL:"CLIENTCODE_400_PERIPHERAL",
@@ -49140,7 +49136,6 @@ var serverMessages = {
     "CLIENTCODE_016" : "Peripheral not deleted successfully",
     "CLIENTCODE_017" : "Good Quantity Cannot be Equal to the Total Quantity",
     "CLIENTCODE_018" : "Sum of good, missing and damaged should be equal to {0}",
-    "CLIENTCODE_019" : "KQ quantity shouldnot exced scan quantity",
     "CLIENTCODE_409_PERIPHERAL" : "Peripheral already added",
     "CLIENTCODE_400" : "Bad Data",
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",

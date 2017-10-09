@@ -42051,13 +42051,13 @@ else {
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
                                     React.createElement("div", {className: "exception-qty-title"}, _("Damaged pack")), 
-                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_PACK}), 
-                                    React.createElement("hr", null)
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_PACK})
                                 ), 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
                                     React.createElement("div", {className: "exception-qty-title"}, _("Good pack")), 
-                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_PACK})
+                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_PACK}), 
+                                     React.createElement("hr", null)
                                 )
                             ), 
                             React.createElement("div", {className: "finish-damaged-barcode padding"}, 
@@ -52818,7 +52818,7 @@ setCurrentSeat: function (data) {
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
-                data["event_name"] = (_seatData.screen_id === (appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK))  ? "pick_front_exception" : "put_front_exception"
+                data["event_name"] = (_seatData.screen_id ===appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id ===appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id === appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)? "pick_front_exception" : "put_front_exception";
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;

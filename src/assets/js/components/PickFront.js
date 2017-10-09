@@ -555,12 +555,12 @@ else {
                                     <hr/>
                                     <div className="exception-qty-title">{_("Damaged pack")}</div>
                                     <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
-                                    <hr/>
                                 </div>
                                 <div className="gor-NI-wrapper">
                                     <hr/>
                                     <div className="exception-qty-title">{_("Good pack")}</div>
                                     <NumericIndicator execType={appConstants.GOOD_PACK}/>
+                                     <hr/>
                                 </div>
                             </div>
                             <div className="finish-damaged-barcode padding">

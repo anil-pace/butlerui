@@ -52817,10 +52817,10 @@ setCurrentSeat: function (data) {
         }
         else if(_seatData.screen_id ==appConstants.PICK_FRONT_MORE_ITEM_SCAN || _seatData.screen_id ==appConstants.PICK_FRONT_PPTL_PRESS || _seatData.screen_id ==appConstants.PICK_FRONT_PACKING_ITEM_SCAN)
         {
-                if(_KQQty > _seatData.scan_details.current_qty)
+                if(_KQQty > _seatData.scan_details.total_qty)
                 {
                     flag = binFullQty = true;
-                    details=_seatData.scan_details.current_qty;
+                    details=_seatData.scan_details.total_qty;
 
                 }
         }

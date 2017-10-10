@@ -39033,10 +39033,13 @@ switch (module) {
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                                case appConstants.CHECKLIST_CLEARALL:
+                            case appConstants.CHECKLIST_CLEARALL:
                                 this.removeTextField();
                                 break;
                             case appConstants.BIN_FULL:
+                                 data["event_name"] = appConstants.BIN_FULL_REQUEST;
+                                 data["event_data"] = null;
+-                                ActionCreators.postDataToInterface(data);
                                  this.showModal(null, appConstants.BIN_FULL);  
                                 break; 
                             case appConstants.BOX_FULL:

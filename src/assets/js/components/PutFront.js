@@ -336,7 +336,7 @@ var PutFront = React.createClass({
           }
           else{
             unmarkedContainer = (<div>
-               <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height' />
+               <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height width-extra ' />
             </div>)
             kqHeadMessage = _("Scan damaged entity");
           }
@@ -551,7 +551,7 @@ var PutFront = React.createClass({
             <div className="main-container">
             <div className = "kq-exception">
             <div className="kq-header">{_("Scan excess item quantity")}</div>
-            <TabularData data={this.state.PutFrontExcessItems}  className='limit-height' />
+            <TabularData data={this.state.PutFrontExcessItems}  className='limit-height width-extra ' />
             {_button}
             </div>
             </div>

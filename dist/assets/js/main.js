@@ -41956,7 +41956,7 @@ else {
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement("div", {className: "kq-exception"}, 
                                     React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height"}), 
+                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height width-extra "}), 
                                     _button
                                 )
                             )
@@ -42048,13 +42048,13 @@ else {
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
                                     React.createElement("div", {className: "exception-qty-title"}, _("Damaged pack")), 
-                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_PACK}), 
-                                    React.createElement("hr", null)
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_PACK})
                                 ), 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
                                     React.createElement("div", {className: "exception-qty-title"}, _("Good pack")), 
-                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_PACK})
+                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_PACK}), 
+                                    React.createElement("hr", null)
                                 )
                             ), 
                             React.createElement("div", {className: "finish-damaged-barcode padding"}, 
@@ -42861,7 +42861,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
-                      React.createElement(TabularData, {data: this.state.PrePutExcessItems, className: "limit-height"}), 
+                      React.createElement(TabularData, {data: this.state.PrePutExcessItems, className: "limit-height width-extra "}), 
                       _button
                     )
                   )
@@ -44568,7 +44568,7 @@ componentDidMount(){
                 },
                 accepted: function(e, keypressed, el) {
                    let txtBoxVal = isNaN(parseInt(e.target.value,10))?0:Math.abs(parseInt(e.target.value,10));
-                   if(self.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
+                   if(self.props.execType===appConstants.GOOD_QUANTITY || self.props.execType===appConstants.GOOD_PACK || self.props.execType===appConstants.GOOD_SUB_PACK)
                     {
                         self._updatedQtyGood=txtBoxVal;
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
@@ -44577,7 +44577,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
+                    else if(self.props.execType===appConstants.MISSING_QUANTITY || self.props.execType===appConstants.PACK_MISSING || self.props.execType===appConstants.SUB_PACK_MISSING)
                     {
                         self._updatedQtyMissing=txtBoxVal;
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
@@ -44586,7 +44586,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
+                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY || self.props.execType===appConstants.BAD_BARCODE_PACK || self.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
                     {
                         self._updatedQtyUnscannble=txtBoxVal;
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
@@ -44595,7 +44595,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
+                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY || self.props.execType===appConstants.DAMAGED_PACK || self.props.execType===appConstants.DAMAGED_SUB_PACK)
                     {
                         self._updatedQtyDamaged=txtBoxVal;
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));
@@ -45717,7 +45717,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           }
           else{
             unmarkedContainer = (React.createElement("div", null, 
-               React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"})
+               React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height width-extra "})
             ))
             kqHeadMessage = _("Scan damaged entity");
           }
@@ -45932,7 +45932,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "main-container"}, 
             React.createElement("div", {className: "kq-exception"}, 
             React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
-            React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
+            React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height width-extra "}), 
             _button
             )
             )
@@ -52852,7 +52852,7 @@ setCurrentSeat: function (data) {
         } else {
             var data = {};
             if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
-                data["event_name"] = (_seatData.screen_id === (appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK))  ? "pick_front_exception" : "put_front_exception"
+                data["event_name"] = (_seatData.screen_id ===appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id ===appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id === appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK)? "pick_front_exception" : "put_front_exception";
                 data["event_data"] = {};
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;

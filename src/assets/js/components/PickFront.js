@@ -462,7 +462,7 @@ else {
                             <div className="main-container">
                                 <div className="kq-exception">
                                     <div className="kq-header">{_("Scan damaged entity")}</div>
-                                    <TabularData data={this.state.PickFrontDamagedItems} className='limit-height'/>
+                                    <TabularData data={this.state.PickFrontDamagedItems} className='limit-height width-extra '/>
                                     {_button}
                                 </div>
                             </div>
@@ -555,12 +555,12 @@ else {
                                     <hr/>
                                     <div className="exception-qty-title">{_("Damaged pack")}</div>
                                     <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
-                                    <hr/>
                                 </div>
                                 <div className="gor-NI-wrapper">
                                     <hr/>
                                     <div className="exception-qty-title">{_("Good pack")}</div>
                                     <NumericIndicator execType={appConstants.GOOD_PACK}/>
+                                    <hr/>
                                 </div>
                             </div>
                             <div className="finish-damaged-barcode padding">

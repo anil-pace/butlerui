@@ -303,6 +303,9 @@ switch (module) {
                                 this.removeTextField();
                                 break;
                             case appConstants.BIN_FULL:
+                                 data["event_name"] = appConstants.BIN_FULL_REQUEST;
+-                                data["event_data"] = null
+-                                ActionCreators.postDataToInterface(data);
                                  this.showModal(null, appConstants.BIN_FULL);  
                                 break; 
                             case appConstants.BOX_FULL:

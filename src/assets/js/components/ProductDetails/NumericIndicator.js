@@ -241,7 +241,7 @@ componentDidMount(){
                 },
                 accepted: function(e, keypressed, el) {
                    let txtBoxVal = isNaN(parseInt(e.target.value,10))?0:Math.abs(parseInt(e.target.value,10));
-                   if(self.props.execType===appConstants.GOOD_QUANTITY || this.props.execType===appConstants.GOOD_PACK || this.props.execType===appConstants.GOOD_SUB_PACK)
+                   if(self.props.execType===appConstants.GOOD_QUANTITY || self.props.execType===appConstants.GOOD_PACK || self.props.execType===appConstants.GOOD_SUB_PACK)
                     {
                         self._updatedQtyGood=txtBoxVal;
                         CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
@@ -250,7 +250,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.MISSING_QUANTITY || this.props.execType===appConstants.PACK_MISSING || this.props.execType===appConstants.SUB_PACK_MISSING)
+                    else if(self.props.execType===appConstants.MISSING_QUANTITY || self.props.execType===appConstants.PACK_MISSING || self.props.execType===appConstants.SUB_PACK_MISSING)
                     {
                         self._updatedQtyMissing=txtBoxVal;
                         CommonActions.updateMissingQuantity(parseInt(self._updatedQtyMissing));
@@ -259,7 +259,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY || this.props.execType===appConstants.BAD_BARCODE_PACK || this.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
+                    else if(self.props.execType===appConstants.UNSCANNABLE_QUANTITY || self.props.execType===appConstants.BAD_BARCODE_PACK || self.props.execType===appConstants.BAD_BARCODE_SUB_PACK)
                     {
                         self._updatedQtyUnscannble=txtBoxVal;
                         CommonActions.updateUnscannableQuantity(parseInt(self._updatedQtyUnscannble));
@@ -268,7 +268,7 @@ componentDidMount(){
                         })
 
                     }
-                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY || this.props.execType===appConstants.DAMAGED_PACK || this.props.execType===appConstants.DAMAGED_SUB_PACK)
+                    else if(self.props.execType===appConstants.DAMAGED_QUANTITY || self.props.execType===appConstants.DAMAGED_PACK || self.props.execType===appConstants.DAMAGED_SUB_PACK)
                     {
                         self._updatedQtyDamaged=txtBoxVal;
                         CommonActions.updateDamagedQuantity(parseInt(self._updatedQtyDamaged));

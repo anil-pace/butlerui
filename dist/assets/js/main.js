@@ -41959,7 +41959,7 @@ else {
                             React.createElement("div", {className: "main-container"}, 
                                 React.createElement("div", {className: "kq-exception"}, 
                                     React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
-                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height"}), 
+                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height width-extra "}), 
                                     _button
                                 )
                             )
@@ -42864,7 +42864,7 @@ var PrePut = React.createClass({displayName: "PrePut",
                   React.createElement("div", {className: "main-container"}, 
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
-                      React.createElement(TabularData, {data: this.state.PrePutExcessItems, className: "limit-height"}), 
+                      React.createElement(TabularData, {data: this.state.PrePutExcessItems, className: "limit-height width-extra "}), 
                       _button
                     )
                   )
@@ -45694,7 +45694,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           }
           else{
             unmarkedContainer = (React.createElement("div", null, 
-               React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height"})
+               React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height width-extra "})
             ))
             kqHeadMessage = _("Scan damaged entity");
           }
@@ -45909,7 +45909,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "main-container"}, 
             React.createElement("div", {className: "kq-exception"}, 
             React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
-            React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height"}), 
+            React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height width-extra "}), 
             _button
             )
             )
@@ -54278,7 +54278,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-    
     
    console.log(data);
    switch (data.state_data.mode + "_" + data.state_data.seat_type) {

@@ -462,7 +462,7 @@ else {
                             <div className="main-container">
                                 <div className="kq-exception">
                                     <div className="kq-header">{_("Scan damaged entity")}</div>
-                                    <TabularData data={this.state.PickFrontDamagedItems} className='limit-height'/>
+                                    <TabularData data={this.state.PickFrontDamagedItems} className='limit-height width-extra '/>
                                     {_button}
                                 </div>
                             </div>

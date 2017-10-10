@@ -39803,7 +39803,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
     console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);
-    CommonActions.clearNotification();  
+    //CommonActions.clearNotification(); Removing this clear notification to enable pop-up modal after login 
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);

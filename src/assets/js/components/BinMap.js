@@ -2,7 +2,7 @@ var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({
-	
+
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
@@ -58,9 +58,9 @@ var BinMap = React.createClass({
 			rightColCount:rightColCount
 		}
 	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
+	render:function(){
+
+		var mapStructure = this.processData();
 		return (
 				<div className={"binMapWrapper "+this.props.screenClass}>
 					<div className="mapCont">
@@ -78,9 +78,9 @@ var BinMap = React.createClass({
 					</div>
 					</div>
 				</div>
-						
-					
-				
+
+
+
 			);
 	}
 });

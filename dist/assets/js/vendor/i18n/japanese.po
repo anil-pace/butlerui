@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-12 14:33+0530\n"
+"POT-Creation-Date: 2017-10-12 14:56+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1854,12 +1854,12 @@ msgid "Enter excess item quantity"
 msgstr "過剰数量を入力してください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:442
-msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
+msgid ""
+"Entities cannot be accommodated! Remove all entities from bin and press PPTL."
 msgstr "格納できません！全ての商品を取出しPPTLボタンを押してください"
- 
-msgid "Entity Damaged"
-msgstr "商品破損"
- 
+
+#: src/assets/js/serverMessages/server_messages_lang.js:328
+#: src/assets/js/serverMessages/server_messages_lang.js:329
 msgid "Entity already scanned.Confirm exception"
 msgstr "既にスキャンされた商品です。例外登録を確認してください"
 

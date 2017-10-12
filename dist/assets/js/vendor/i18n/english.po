@@ -95,8 +95,7 @@ msgid "After scannning tote barcode, please scan pptl barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:25
-msgid ""
-"Wrong Ppsbin button pressed.Please press those buttons having color blue"
+msgid "Wrong Ppsbin button pressed.Please press those buttons having color blue"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:26
@@ -257,9 +256,7 @@ msgid "SKU not present in database. Put into IRT bin."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:65
-msgid ""
-"Entities cannot be accommodated! Remove all entities from bin {0} and press "
-"PPTL"
+msgid "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:66
@@ -292,9 +289,7 @@ msgid "Tote not present in database."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:73
-msgid ""
-"Tote has been opened.Scan all items in tote and then scan tote again to "
-"close it"
+msgid "Tote has been opened.Scan all items in tote and then scan tote again to close it"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:74
@@ -395,14 +390,11 @@ msgid "Status To Reconcile"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:97
-msgid ""
-"This box belongs to some other SKU in the slot.Put it back.Scan next box."
+msgid "This box belongs to some other SKU in the slot.Put it back.Scan next box."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:98
-msgid ""
-"This box does not belong to this slot. Remove the box and put in exception "
-"area."
+msgid "This box does not belong to this slot. Remove the box and put in exception area."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:99
@@ -744,8 +736,7 @@ msgid "Wrong scan! Entity scan expected but slot barcode scanned."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:189
-msgid ""
-"Actual put quantity not equal to the sum of Good and Expection quantity."
+msgid "Actual put quantity not equal to the sum of Good and Expection quantity."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:190
@@ -778,14 +769,11 @@ msgid "Please put entity in exception area and confirm"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:199
-msgid ""
-"Entity not expected in tote. Please put entity in exception area and confirm"
+msgid "Entity not expected in tote. Please put entity in exception area and confirm"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:200
-msgid ""
-"{0} excess entities found in tote. Please put entities in exception area and "
-"confirm"
+msgid "{0} excess entities found in tote. Please put entities in exception area and confirm"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:201
@@ -905,9 +893,7 @@ msgid "Quantity should be less than or equal to {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:228
-msgid ""
-"You are not allowed to keyed in the quantity from the numpad. Force Scan is "
-"required."
+msgid "You are not allowed to keyed in the quantity from the numpad. Force Scan is required."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:229
@@ -2241,8 +2227,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:441
 #: src/assets/js/serverMessages/server_messages_lang.js:442
-msgid ""
-"Entities cannot be accommodated! Remove all entities from bin and press PPTL."
+msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:450

@@ -106,8 +106,7 @@ msgid "After scannning tote barcode, please scan pptl barcode"
 msgstr "トートをスキャンして、ビンをスキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:25
-msgid ""
-"Wrong Ppsbin button pressed.Please press those buttons having color blue"
+msgid "Wrong Ppsbin button pressed.Please press those buttons having color blue"
 msgstr "ビン違い。青色のビンのボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:26
@@ -269,9 +268,7 @@ msgid "SKU not present in database. Put into IRT bin "
 msgstr "商品がシステムに未登録。例外エリアに置く"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:65
-msgid ""
-"Entities cannot be accommodated! Remove all entities from bin {0} and press "
-"PPTL"
+msgid "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL"
 msgstr "商品が格納できません。ビン {0} を空にしてPPTLボタンを押す"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:66
@@ -305,9 +302,7 @@ msgid "Tote not present in database."
 msgstr "このトートはシステム未登録です"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:73
-msgid ""
-"Tote has been opened.Scan all items in tote and then scan tote again to "
-"close it"
+msgid "Tote has been opened.Scan all items in tote and then scan tote again to close it"
 msgstr "トートは使用中。全商品を再スキャンしトートと紐付け"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:74
@@ -415,15 +410,12 @@ msgstr "調整中"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:96
 #: src/assets/js/serverMessages/server_messages_lang.js:97
-msgid ""
-"This box belongs to some other SKU in the slot.Put it back.Scan next box."
+msgid "This box belongs to some other SKU in the slot.Put it back.Scan next box."
 msgstr "このボックスは使用中。スロットに戻して他のボックスをスキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:97
 #: src/assets/js/serverMessages/server_messages_lang.js:98
-msgid ""
-"This box does not belong to this slot. Remove the box and put in exception "
-"area."
+msgid "This box does not belong to this slot. Remove the box and put in exception area."
 msgstr "このボックスは別スロットで使用中。ボックスを例外エリアに置く"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:98
@@ -792,8 +784,7 @@ msgid "Please scan the tote first and then scan PPTL barcode"
 msgstr "トートをスキャンして、ビンをスキャンしてください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:178
-msgid ""
-"'Override Tote Exception' cannot be raised for bins with totes associated"
+msgid "'Override Tote Exception' cannot be raised for bins with totes associated"
 msgstr "トートが紐づいたビンで「トート更新例外」は発生しません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:179
@@ -838,8 +829,7 @@ msgstr "スロットではなく商品をスキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:187
 #: src/assets/js/serverMessages/server_messages_lang.js:189
-msgid ""
-"Actual put quantity not equal to the sum of Good and Expection quantity."
+msgid "Actual put quantity not equal to the sum of Good and Expection quantity."
 msgstr "良品と不良品の合計数が入荷数と異なります"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:188
@@ -881,15 +871,12 @@ msgstr "商品を例外エリアに置いて確認"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:197
 #: src/assets/js/serverMessages/server_messages_lang.js:199
-msgid ""
-"Entity not expected in tote. Please put entity in exception area and confirm"
+msgid "Entity not expected in tote. Please put entity in exception area and confirm"
 msgstr "トートに存在しない商品です。商品を例外エリアに置いて確認"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:198
 #: src/assets/js/serverMessages/server_messages_lang.js:200
-msgid ""
-"{0} excess entities found in tote. Please put entities in exception area and "
-"confirm"
+msgid "{0} excess entities found in tote. Please put entities in exception area and confirm"
 msgstr "トートに数量オーバー商品が {0} 個あります。例外エリアに置いて確認"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:199
@@ -1050,9 +1037,7 @@ msgstr "数量は {0} 以下でなければなりません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:226
 #: src/assets/js/serverMessages/server_messages_lang.js:228
-msgid ""
-"You are not allowed to keyed in the quantity from the numpad. Force Scan is "
-"required."
+msgid "You are not allowed to keyed in the quantity from the numpad. Force Scan is required."
 msgstr "キーパッドでの数字入力が許可されていません。商品をスキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:227
@@ -1854,8 +1839,7 @@ msgid "Enter excess item quantity"
 msgstr "過剰数量を入力してください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:442
-msgid ""
-"Entities cannot be accommodated! Remove all entities from bin and press PPTL."
+msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
 msgstr "格納できません！全ての商品を取出しPPTLボタンを押してください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:328
@@ -1971,8 +1955,7 @@ msgstr "MTUを解放してください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:440
 msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
-msgstr ""
-"残っている項目を確認するためにビン{0}からトートを外してPPTLを押してください。"
+msgstr "残っている項目を確認するためにビン{0}からトートを外してPPTLを押してください。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:64
 msgid "SKU not present in database. Put into IRT bin."
@@ -2038,9 +2021,7 @@ msgstr "合計"
 #: src/assets/js/serverMessages/server_messages_lang.js:401
 #: src/assets/js/serverMessages/server_messages_lang.js:411
 msgid "Tote already associated with slot.Scan empty slot"
-msgstr ""
-"トートはすでにスロットと関連されています。空のスロットをスキャンしてくださ"
-"い。"
+msgstr "トートはすでにスロットと関連されています。空のスロットをスキャンしてください。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:396
 #: src/assets/js/serverMessages/server_messages_lang.js:406
@@ -2234,9 +2215,7 @@ msgstr "格納できません"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:508
 msgid "Scan not Allowed. PPS close/force close or profile change requested."
-msgstr ""
-"スキャンは許可されません。 PPSのクローズ/強制クローズまたはプロファイルの変更"
-"が要求されました。"
+msgstr "スキャンは許可されません。 PPSのクローズ/強制クローズまたはプロファイルの変更が要求されました。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:505
 msgid "DO NOT STACK"
@@ -2301,8 +2280,7 @@ msgstr "大型のエンティティを例外領域に入れてください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:459
 msgid "Please put unscannable entities in IRT bin and scan the bin"
-msgstr ""
-"スキャンできないエンティティをIRTビンに入れてビンをスキャンしてください"
+msgstr "スキャンできないエンティティをIRTビンに入れてビンをスキャンしてください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:460
 msgid "Please put unscannable entities in exception area"
@@ -2318,9 +2296,7 @@ msgstr "IRTビンをスキャンしてください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:464
 msgid "Warehouse Full Remove all entities from bin & press PPTL"
-msgstr ""
-"ウェアハウスがいっぱいです。ビンからすべてのエンティティを取り除いてPPTLを押"
-"してください"
+msgstr "ウェアハウスがいっぱいです。ビンからすべてのエンティティを取り除いてPPTLを押してください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:453
 msgid "Wrong Scan. IRT bin scan expected"

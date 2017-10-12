@@ -1854,12 +1854,12 @@ msgid "Enter excess item quantity"
 msgstr "過剰数量を入力してください"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:442
-msgid ""
-"Entities cannot be accommodated! Remove all entities from bin and press PPTL."
+msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
 msgstr "格納できません！全ての商品を取出しPPTLボタンを押してください"
-
-#: src/assets/js/serverMessages/server_messages_lang.js:328
-#: src/assets/js/serverMessages/server_messages_lang.js:329
+ 
+msgid "Entity Damaged"
+msgstr "商品破損"
+ 
 msgid "Entity already scanned.Confirm exception"
 msgstr "既にスキャンされた商品です。例外登録を確認してください"
 

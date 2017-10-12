@@ -41736,25 +41736,25 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                                 ), 
 
                                 React.createElement("div", {className: "gor-NI-wrapper"}, 
                                     React.createElement("hr", null), 
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                                     React.createElement("hr", null)
                                 )
@@ -45250,7 +45250,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             {
               UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -45269,13 +45269,13 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                     React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                     ), 
               
                      React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
                     ), 
 
@@ -45283,7 +45283,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
                     React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                    React.createElement("hr", null)
                     )
@@ -45359,7 +45359,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
               )
               );
-          }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+          }else if(this.state.PutFrontExceptionScreen == "revised_Quantity"){
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
                 React.createElement(Modal, null), 
@@ -45431,7 +45431,7 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement("div", {className: "exception-right"}, 
             React.createElement("div", {className: "main-container"}, 
             React.createElement("div", {className: "kq-exception"}, 
-            React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+            React.createElement("div", {className: "kq-header"}, _("Scan excess item Quantity")), 
             React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height width-extra "}), 
             _button
             )

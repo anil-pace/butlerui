@@ -369,7 +369,7 @@ var PutFront = React.createClass({
             {
               UnscannableNI=( <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Unscannable quantity")}</div>
+                  <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
                   <NumericIndicator  execType = {appConstants.UNSCANNABLE_QUANTITY}/>
                     </div>);
             }
@@ -388,13 +388,13 @@ var PutFront = React.createClass({
 
                     <div className="gor-NI-wrapper">
                     <hr/>
-                  <div className="exception-qty-title">{_("Good quantity")}</div>
+                  <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType = {appConstants.GOOD_QUANTITY}/>
                     </div>
               
                      <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Missing quantity")}</div>
+                  <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType = {appConstants.MISSING_QUANTITY} />
                     </div>
 
@@ -402,7 +402,7 @@ var PutFront = React.createClass({
 
                     <div className="gor-NI-wrapper">
                      <hr/>
-                  <div className="exception-qty-title">{_("Damaged quantity")}</div>
+                  <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType = {appConstants.DAMAGED_QUANTITY}/>
                    <hr/>
                     </div>
@@ -478,7 +478,7 @@ var PutFront = React.createClass({
               </div>
               </div>
               );
-          }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
+          }else if(this.state.PutFrontExceptionScreen == "revised_Quantity"){
             this._component = (
               <div className='grid-container exception'>
                 <Modal/>
@@ -550,7 +550,7 @@ var PutFront = React.createClass({
             <div className="exception-right">
             <div className="main-container">
             <div className = "kq-exception">
-            <div className="kq-header">{_("Scan excess item quantity")}</div>
+            <div className="kq-header">{_("Scan excess item Quantity")}</div>
             <TabularData data={this.state.PutFrontExcessItems}  className='limit-height width-extra ' />
             {_button}
             </div>

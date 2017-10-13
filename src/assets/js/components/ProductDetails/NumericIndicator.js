@@ -288,9 +288,6 @@ componentDidMount(){
                 }
             });
         }(this))
-       CommonActions.updateKQQuantity(parseInt(this._qty));
-       
-       
     },
     render: function(data) {
         this.checkKqAllowed();

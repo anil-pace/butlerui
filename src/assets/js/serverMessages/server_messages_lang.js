@@ -542,5 +542,9 @@ function server_messages_list() {
     _("Damage Barcode");
     _("Packs");
     _("Sub-Packs");
+    _("Scan Small Box");
+    _("Scan Box and Place in Bin");
+    _("Scan Small Box and Place in Bin");
+
 }
 

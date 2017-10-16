@@ -1886,11 +1886,15 @@ msgid "Scan Small Box"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:546
-msgid "Scan Box and Place in Bin"
+msgid "Scan {0} Box and Place in Bin {1}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:547
-msgid "Scan Small Box and Place in Bin"
+msgid "Scan {0} Small Box and Place in Bin {1}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:548
+msgid "Put Pack list in trolley and press PPTL to confirm"
 msgstr ""
 
 

@@ -157,7 +157,7 @@ var appConstants = {
 
 	AUDIT_PACK_UNSCANNABLE_EXCEPTION:"audit_pack_unscannable_exception",
 	AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:"audit_sub_pack_unscannable_exception",
-
+	DEFAULT:"default",
 	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",

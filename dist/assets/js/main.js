@@ -36754,14 +36754,12 @@ var commonActions = {
       data:data
     });
   },
-
   updateMissingQuantity:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_MISSING_QUANTITY,
       data:data
     });
   },
-
     updateUnscannableQuantity:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_UNSCANNABLE_QUANTITY,
@@ -36782,6 +36780,8 @@ var commonActions = {
       data:data
     });
   },
+
+
 
   changePutFrontExceptionScreen:function(data){
     AppDispatcher.handleAction({
@@ -39033,13 +39033,13 @@ switch (module) {
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 break;
-                                case appConstants.CHECKLIST_CLEARALL:
+                            case appConstants.CHECKLIST_CLEARALL:
                                 this.removeTextField();
                                 break;
                             case appConstants.BIN_FULL:
-                                data["event_name"] = appConstants.BIN_FULL_REQUEST;
-                                data["event_data"] = null
-                                ActionCreators.postDataToInterface(data); 
+                                 data["event_name"] = appConstants.BIN_FULL_REQUEST;
+                                 data["event_data"] = null;
+-                                ActionCreators.postDataToInterface(data);
                                  this.showModal(null, appConstants.BIN_FULL);  
                                 break; 
                             case appConstants.BOX_FULL:
@@ -39061,9 +39061,7 @@ switch (module) {
                             closeModalBox();
                             break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
-                                data["event_name"] = appConstants.CONFIRM_BIN_FULL_REQUEST;
-                                data["event_data"]= null;
-                                ActionCreators.postDataToInterface(data);
+                                 ActionCreators.validateAndSendDataToServer();
                             closeModalBox();
                             break; 
                             case appConstants.CANCEL_BOX_FULL:
@@ -40063,6 +40061,7 @@ var ModalFooter = require('./ModalFooter');
 var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
 var allSvgConstants = require('../../constants/svgConstants');
+var NumericIndicator = require('../ProductDetails/NumericIndicator');
 var bootstrap = require('bootstrap');
 var jqueryPosition = require('jquery-ui/position');
 var virtualkeyboard = require('virtual-keyboard');
@@ -40304,17 +40303,18 @@ function loadComponent(modalType,modalData){
           )
           ));
       title = _("Box Full");
-      break;
+      break;  
        case appConstants.BIN_FULL:
       component = [];
       component.push((
           React.createElement("div", null, 
-            React.createElement("div", {className: "row"}, 
-              React.createElement("p", null, _("Last item scan will be cancelled. Do you want to continue?"))
+            React.createElement("div", {className: "rowMiddle"}, 
+              React.createElement("p", null, _("KQ number of items kept in the bin and confirm?"))
             ), 
-            React.createElement("div", {className: "modal-footer removeBorder"}, 
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
-                React.createElement("div", {className: "row removeBorder"}, 
+            React.createElement("div", {className: "modal-footer removeBorder fixedWidth"}, 
+              React.createElement("div", {className: "buttonContainer50 center-block fixedHeight"}, 
+              React.createElement(NumericIndicator, {Formattingclass: "widerComponent", execType: appConstants.DEFAULT, scanDetails: mainstore.getScanDetails()}), 
+                React.createElement("div", {className: "removeBorder fixedBottom"}, 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL_REQUEST})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BIN_FULL_REQUEST}))
                 )
@@ -40497,7 +40497,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"../../constants/appConstants":299,"../../constants/svgConstants":302,"../../stores/PickFrontStore":314,"../../stores/mainstore":318,"../../utils/utils.js":319,"../Button/Button":241,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
+},{"../../constants/appConstants":299,"../../constants/svgConstants":302,"../../stores/PickFrontStore":314,"../../stores/mainstore":318,"../../utils/utils.js":319,"../Button/Button":241,"../ProductDetails/NumericIndicator":273,"./ModalFooter":254,"./ModalHeader":255,"bootstrap":1,"jquery-ui/position":66,"react":230,"virtual-keyboard":231}],253:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../../stores/mainstore');
 var ModalHeader = require('./ModalHeader');
@@ -44348,10 +44348,10 @@ var NumericIndicator = React.createClass({displayName: "NumericIndicator",
    _updatedQtyDamaged:0,
    _updatedQtyUnscannble:0,
    _updatedQtyMissing:0,
-
-
+   _qty:0,
    getInitialState: function() {
-    return {value: 0};
+    this._qty=this.props.execType===appConstants.DEFAULT?this.props.scanDetails.current_qty:0;
+    return {value: this._qty}
 },
 self:this,
 
@@ -44362,6 +44362,7 @@ generateExcessNotification: function () {
     CommonActions.generateNotification(data);
     return;
 },
+
 
 changeValueIncrement : function(event){
 
@@ -44396,6 +44397,13 @@ changeValueIncrement : function(event){
             value : this._updatedQtyDamaged
         })
     }
+     else{
+        this._qty++;
+        this.setState({
+            value : this._qty
+        }
+            )
+        }
 },
 
 changeValueDecrement : function(event){
@@ -44431,6 +44439,12 @@ changeValueDecrement : function(event){
             value : this._updatedQtyDamaged
         })
     }
+    else{
+        this._qty--;
+        this.setState({
+            value : this._qty
+        })
+    }
 
 },
 
@@ -44461,6 +44475,8 @@ updateStore: function(event, qty) {
         CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
         break;
         default:
+        CommonActions.updateKQQuantity(parseInt(this._qty));
+        
     }
     return true;
 
@@ -44590,16 +44606,23 @@ componentDidMount(){
                             value : self._updatedQtyDamaged
                         })
 
-                    }                
+                    }
+                    else{
+                        self._qty=txtBoxVal;
+                        CommonActions.updateKQQuantity(parseInt(self._qty));
+                        this.setState({
+                        value : self._qty
+                            }
+                        )
+                    }
                 }
             });
         }(this))
-        
     },
     render: function(data) {
         this.checkKqAllowed();
         return (
-            React.createElement("div", {className: "indicator-wrapper"}, 
+            React.createElement("div", {className: this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"}, 
             React.createElement("div", null, 
             React.createElement("span", {className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}), 
             React.createElement("input", {id: "keyboard", value: this.state.value, type: "text", name: "quantity", className: "gor-quantity-text gor_"+this.props.execType}), 
@@ -47606,7 +47629,7 @@ var appConstants = {
 
 	AUDIT_PACK_UNSCANNABLE_EXCEPTION:"audit_pack_unscannable_exception",
 	AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:"audit_sub_pack_unscannable_exception",
-
+	DEFAULT:"default",
 	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
 	AUDIT_SCAN:"audit_scan",
@@ -52251,7 +52274,10 @@ setCurrentSeat: function (data) {
         _showSpinner = false;
         _enableException = false;
         _seatData = data;
-        _KQQty = _seatData.hasOwnProperty("quantity") ? _seatData["quantity"] : 0;
+        if(_seatData.screen_id !==appConstants.PICK_FRONT_MORE_ITEM_SCAN && _seatData.screen_id !==appConstants.PICK_FRONT_PPTL_PRESS && _seatData.screen_id !==appConstants.PICK_FRONT_PACKING_ITEM_SCAN)
+        {
+        _KQQty = _seatData.hasOwnProperty("quantity") ? _seatData["quantity"] :  0;
+        }
         _seatName = data.seat_name;
         _seatMode = data.mode;
         _seatType = data.seat_type;
@@ -52769,7 +52795,7 @@ setCurrentSeat: function (data) {
         return groupId;
     },
     validateAndSendDataToServer: function () {
-        var flag = false, type = false;
+        var flag = false, type = false, binFullQty=false;
         var details;
         if (_seatData.screen_id == appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK || _seatData.screen_id == appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
             if (_goodQuantity === _seatData.pick_quantity && _unscannableQuantity === 0) {
@@ -52789,21 +52815,29 @@ setCurrentSeat: function (data) {
                 details = _seatData.put_quantity;
             }
         }
+        else if(_seatData.screen_id ==appConstants.PICK_FRONT_MORE_ITEM_SCAN || _seatData.screen_id ==appConstants.PICK_FRONT_PPTL_PRESS || _seatData.screen_id ==appConstants.PICK_FRONT_PACKING_ITEM_SCAN)
+        {
+                if(_KQQty > _seatData.scan_details.total_qty)
+                {
+                    flag = binFullQty = true;
+                    details=_seatData.scan_details.total_qty;
 
+                }
+        }
         else {
             flag = (_goodQuantity + _missingQuantity + _damagedQuantity) != _seatData.put_quantity;
             details = _seatData.put_quantity;
         }
         if (flag) {
             if (_seatData.notification_list.length == 0) {
-                var data = {};
-                data["code"] = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
+                var data = {};              
+                data["code"] = binFullQty?resourceConstants.CLIENTCODE_012: (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);                
                 data["level"] = "error";
                 data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [details];
                 _seatData.notification_list[0] = data;
             } else {
-                _seatData.notification_list[0].code = (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
+                _seatData.notification_list[0].code = binFullQty?resourceConstants.CLIENTCODE_012 : (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
                 _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
@@ -52832,6 +52866,13 @@ setCurrentSeat: function (data) {
                 _missingQuantity = 0;
                 _unscannableQuantity = 0;
                 this.showSpinner();
+                utils.postDataToInterface(data, _seatData.seat_name);
+            }
+            else
+            {
+                data["event_name"] =appConstants.CONFIRM_BIN_FULL_REQUEST;
+                data["event_data"] = {};
+                data["event_data"]["quantity"]=mainstore.getkQQuanity();
                 utils.postDataToInterface(data, _seatData.seat_name);
             }
         }
@@ -54279,7 +54320,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function(data) {
     
-   console.log(data);
+  console.log(data);
    switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
             CommonActions.setPutBackData(data.state_data);

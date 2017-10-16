@@ -18,10 +18,10 @@ var NumericIndicator = React.createClass({
    _updatedQtyDamaged:0,
    _updatedQtyUnscannble:0,
    _updatedQtyMissing:0,
-
-
+   _qty:0,
    getInitialState: function() {
-    return {value: 0};
+    this._qty=this.props.execType===appConstants.DEFAULT?this.props.scanDetails.current_qty:0;
+    return {value: this._qty}
 },
 self:this,
 
@@ -32,6 +32,7 @@ generateExcessNotification: function () {
     CommonActions.generateNotification(data);
     return;
 },
+
 
 changeValueIncrement : function(event){
 
@@ -66,6 +67,13 @@ changeValueIncrement : function(event){
             value : this._updatedQtyDamaged
         })
     }
+     else{
+        this._qty++;
+        this.setState({
+            value : this._qty
+        }
+            )
+        }
 },
 
 changeValueDecrement : function(event){
@@ -101,6 +109,12 @@ changeValueDecrement : function(event){
             value : this._updatedQtyDamaged
         })
     }
+    else{
+        this._qty--;
+        this.setState({
+            value : this._qty
+        })
+    }
 
 },
 
@@ -131,6 +145,8 @@ updateStore: function(event, qty) {
         CommonActions.updateUnscannableQuantity(parseInt(this._updatedQtyUnscannble));
         break;
         default:
+        CommonActions.updateKQQuantity(parseInt(this._qty));
+        
     }
     return true;
 
@@ -260,16 +276,23 @@ componentDidMount(){
                             value : self._updatedQtyDamaged
                         })
 
-                    }                
+                    }
+                    else{
+                        self._qty=txtBoxVal;
+                        CommonActions.updateKQQuantity(parseInt(self._qty));
+                        this.setState({
+                        value : self._qty
+                            }
+                        )
+                    }
                 }
             });
         }(this))
-        
     },
     render: function(data) {
         this.checkKqAllowed();
         return (
-            <div className = "indicator-wrapper" >       
+            <div className ={this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"} >       
             <div>
             <span  className = {this._appendClassDown}  action={this.props.action} onClick={this.decrementValue} onMouseDown = {this.decrementValue} ></span>
             <input id="keyboard" value={this.state.value} type="text" name="quantity" className={"gor-quantity-text gor_"+this.props.execType}/>

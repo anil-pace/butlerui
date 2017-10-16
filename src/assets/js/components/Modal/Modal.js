@@ -6,6 +6,7 @@ var ModalFooter = require('./ModalFooter');
 var Button1 = require("../Button/Button");
 var appConstants = require('../../constants/appConstants');
 var allSvgConstants = require('../../constants/svgConstants');
+var NumericIndicator = require('../ProductDetails/NumericIndicator');
 var bootstrap = require('bootstrap');
 var jqueryPosition = require('jquery-ui/position');
 var virtualkeyboard = require('virtual-keyboard');
@@ -247,17 +248,18 @@ function loadComponent(modalType,modalData){
           </div>
           ));
       title = _("Box Full");
-      break;
+      break;  
        case appConstants.BIN_FULL:
       component = [];
       component.push((
           <div>
-            <div className="row">
-              <p>{_("Last item scan will be cancelled. Do you want to continue?")}</p>
+            <div className="rowMiddle">
+              <p>{_("KQ number of items kept in the bin and confirm?")}</p>
             </div>
-            <div className="modal-footer removeBorder">
-              <div className="buttonContainer center-block chklstButtonContainer">
-                <div className="row removeBorder">
+            <div className="modal-footer removeBorder fixedWidth">
+              <div className="buttonContainer50 center-block fixedHeight">
+              <NumericIndicator Formattingclass={"widerComponent"} execType={appConstants.DEFAULT} scanDetails={mainstore.getScanDetails()}/>
+                <div className="removeBorder fixedBottom">
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_BIN_FULL_REQUEST}/></div>
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Continue")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_BIN_FULL_REQUEST}/></div>
                 </div>

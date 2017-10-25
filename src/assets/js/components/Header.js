@@ -12,7 +12,8 @@ function getState(){
             spinner: mainstore.getSpinnerState(),
             systemIsIdle: mainstore.getSystemIdleState(),
             logoutState: mainstore.getLogoutState(),
-            scanAllowed : mainstore.getScanAllowedStatus()
+            scanAllowed : mainstore.getScanAllowedStatus(),
+            ppsMode: mainstore.getPpsMode()
         }
 }
 var Header = React.createClass({
@@ -152,6 +153,7 @@ var Header = React.createClass({
               <div className="logo">
               <img src={allSvgConstants.logo} />
               </div>
+              <div className="ppsMode"> PPS Mode : {this.state.ppsMode.toUpperCase()} </div>
                 <div className={cssClass} onClick={this.openKeyboard}>
                   <img  src={allSvgConstants.scanHeader} className={disableScanClass} />
                   <input id="barcode" type="text" value='' />

@@ -2212,6 +2212,7 @@ setCurrentSeat: function (data) {
         //since OrigBinUse Flag is needed in all the screens.
         data["OrigBinUse"] = this._getOrigBinUse();
         data["SeatType"] = this.getSeatType();
+        data["ppsMode"] = this.getPpsMode();
         switch (_screenId) {
 
             case appConstants.PUT_BACK_STAGE:

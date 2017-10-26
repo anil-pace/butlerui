@@ -478,7 +478,7 @@ var PutFront = React.createClass({
               </div>
               </div>
               );
-          }else if(this.state.PutFrontExceptionScreen == "revised_Quantity"){
+          }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
               <div className='grid-container exception'>
                 <Modal/>

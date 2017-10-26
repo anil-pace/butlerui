@@ -1,4 +1,5 @@
 [
+<<<<<<< HEAD
 " items",
 "Are you sure you want to exit from {0} invoice and stage all bins",
 "Are you sure you want to exit from {0} {1} and stage all bins",
@@ -51,4 +52,7 @@
 "Wrong ppsbin button pressed",
 "product_sku",
 "{0} number :"
+=======
+
+>>>>>>> a3364e7... Updated the spanish translations
 ]

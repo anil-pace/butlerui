@@ -38440,9 +38440,15 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+<<<<<<< HEAD
                 tote = (React.createElement("div", {className: "tote"},
                           React.createElement("span", {className: "bin-icon tote-icon"}),
                           React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
+=======
+                tote = (React.createElement("div", {className: "tote"}, 
+                          React.createElement("span", {className: "bin-icon tote-icon"}), 
+                          React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+>>>>>>> updated fix
                             onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                           )
                         ));

@@ -4084,7 +4084,7 @@ module.exports = performanceNow;
  *
  * @providesModule shallowEqual
  * @typechecks
- *
+ * 
  */
 
 'use strict';
@@ -4267,7 +4267,7 @@ module.exports.Dispatcher = require('./lib/Dispatcher');
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule Dispatcher
- *
+ * 
  * @preventMunge
  */
 
@@ -17290,7 +17290,7 @@ function createRouteFromReactElement(element) {
  * nested.
  *
  *   import { Route, createRoutesFromReactChildren } from 'react-router'
- *
+ *   
  *   const routes = createRoutesFromReactChildren(
  *     <Route component={App}>
  *       <Route path="home" component={Dashboard}/>
@@ -36570,7 +36570,7 @@ var appConstants = require('../constants/appConstants');
 var commonActions = {
   webSocketConnection: function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.WEBSOCKET_CONNECT,
+      actionType: appConstants.WEBSOCKET_CONNECT, 
       data: data
     });
   },
@@ -36582,19 +36582,19 @@ var commonActions = {
   },
   login: function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.LOGIN,
+      actionType: appConstants.LOGIN, 
       data: data
     });
   },
-  operatorSeat: function(data){
+  operatorSeat: function(data){ 
     AppDispatcher.handleAction({
-      actionType: appConstants.OPERATOR_SEAT,
+      actionType: appConstants.OPERATOR_SEAT, 
       data: data
     });
   },
-  loginSeat: function(data){
+  loginSeat: function(data){ 
     AppDispatcher.handleAction({
-      actionType: appConstants.LOGIN_SEAT,
+      actionType: appConstants.LOGIN_SEAT, 
       data: data
     });
   },
@@ -36612,13 +36612,13 @@ var commonActions = {
     })
   },
 
-  setCurrentSeat:function(seat){
+  setCurrentSeat:function(seat){ 
     AppDispatcher.handleAction({
       actionType: appConstants.SET_CURRENT_SEAT,
       data:seat
     })
   },
-  hideSpinner:function(data){
+  hideSpinner:function(data){ 
     AppDispatcher.handleAction({
       actionType: appConstants.HIDE_SPINNER,
       data:data
@@ -36666,25 +36666,25 @@ var commonActions = {
     })
   },
 
-  updatePopupVisible:function(status){
+  updatePopupVisible:function(status){   
     AppDispatcher.handleAction({
       actionType: appConstants.POPUP_VISIBLE,
       status: status
     })
   },
-  stageAllBins:function(){
+  stageAllBins:function(){   
     AppDispatcher.handleAction({
       actionType: appConstants.STAGE_ALL
     })
   },
-  stageOneBin:function(){
+  stageOneBin:function(){   
     AppDispatcher.handleAction({
       actionType: appConstants.STAGE_ONE_BIN
     })
   },
   resetNumpadVal : function(data){
     AppDispatcher.handleAction({
-      actionType: appConstants.RESET_NUMPAD,
+      actionType: appConstants.RESET_NUMPAD, 
       data: data
     });
   },
@@ -36700,7 +36700,7 @@ var commonActions = {
       data:data
     })
   },
-  setPickFrontData :function(data){
+  setPickFrontData :function(data){  
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PICK_FRONT_DATA,
       data:data
@@ -36715,37 +36715,37 @@ var commonActions = {
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_LANGUAGE,
       data:data
-    });
+    }); 
   },
   setLanguage: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_LANGUAGE,
       data:data
-    });
+    }); 
   },
   logError: function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOG_ERROR,
       data:data
-    });
+    }); 
   },
   enableException:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.ENABLE_EXCEPTION,
       data:data
-    });
+    }); 
   },
   logoutSession:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOGOUT_SESSION,
       data:data
-    });
+    }); 
   },
   setActiveException:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.SET_ACTIVE_EXCEPTION,
       data:data
-    });
+    }); 
   },
 
   updateKQQuantity:function(data){
@@ -36932,9 +36932,9 @@ function getStateData(){
         _looseItems:'',
         _navigation:'',
         showModal: function() {
-          if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE &&
-            this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
-            this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+          if(this.state.AuditScreenId != appConstants.AUDIT_RECONCILE && 
+            this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE && 
+            this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && 
             this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
             this.state.AuditScreenId != appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
             this.state.AuditScreenId != appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION)
@@ -36970,7 +36970,7 @@ function getStateData(){
     this.showModal();
     AuditStore.addChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
     this.setState(getStateData());
     this.showModal();
   },
@@ -36978,11 +36978,11 @@ function getStateData(){
     var _rightComponent = '';
     this._navigation = '';
     return (
-      React.createElement("div", {className: "grid-container exception"},
-      React.createElement(Modal, null),
-      React.createElement(Exception, {data: this.state.AuditExceptionData, action: true}),
-      React.createElement("div", {className: "exception-right"}),
-      React.createElement("div", {className: "cancel-scan"},
+      React.createElement("div", {className: "grid-container exception"}, 
+      React.createElement(Modal, null), 
+      React.createElement(Exception, {data: this.state.AuditExceptionData, action: true}), 
+      React.createElement("div", {className: "exception-right"}), 
+      React.createElement("div", {className: "cancel-scan"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION, color: "black"})
       )
       )
@@ -36994,9 +36994,9 @@ function getStateData(){
       if(this.state.AuditExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-          React.createElement(Modal, null),
-          React.createElement("div", {className: "main-container"},
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          React.createElement("div", {className: "main-container"}, 
           React.createElement(Spinner, null)
           )
           )
@@ -37011,8 +37011,8 @@ function getStateData(){
       if(this.state.AuditSRStatus){
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-          React.createElement(Modal, null),
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
           React.createElement("div", {className: "gor-mpu"})
           )
           );
@@ -37024,9 +37024,9 @@ function getStateData(){
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
 
-          React.createElement("div", {className: "grid-container"},
-          React.createElement(Modal, null),
-          React.createElement("div", {className: "main-container"},
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          React.createElement("div", {className: "main-container"}, 
           React.createElement(Rack, {rackData: this.state.AuditRackDetails})
           )
           )
@@ -37035,7 +37035,7 @@ function getStateData(){
         this._component = this.getExceptionComponent();
       }
     }
-
+    
     break;
 
     case appConstants.AUDIT_SCAN:
@@ -37043,7 +37043,7 @@ function getStateData(){
      this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
      if(this.state.AuditCancelScanStatus == true){
       this._cancelStatus = (
-        React.createElement("div", {className: "cancel-scan"},
+        React.createElement("div", {className: "cancel-scan"}, 
         React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
         )
         );
@@ -37062,25 +37062,25 @@ function getStateData(){
     }
 
     this._component = (
-      React.createElement("div", {className: "grid-container"},
-      React.createElement(Modal, null),
-      React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}),
-      React.createElement("div", {className: "main-container space-left"},
-      React.createElement("div", {className: "audit-scan-left"},
-      this._boxSerial,
+      React.createElement("div", {className: "grid-container"}, 
+      React.createElement(Modal, null), 
+      React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}), 
+      React.createElement("div", {className: "main-container space-left"}, 
+      React.createElement("div", {className: "audit-scan-left"}, 
+      this._boxSerial, 
       this._looseItems
-      ),
-      React.createElement("div", {className: "audit-scan-middle"},
-      React.createElement(Img, {srcURL: this.state.AuditItemDetailsData.image_url}),
+      ), 
+      React.createElement("div", {className: "audit-scan-middle"}, 
+      React.createElement(Img, {srcURL: this.state.AuditItemDetailsData.image_url}), 
       React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
-      ),
-      React.createElement("div", {className: "audit-scan-right"},
-
-      React.createElement("div", {className: "finish-scan"},
+      ), 
+      React.createElement("div", {className: "audit-scan-right"}, 
+      
+      React.createElement("div", {className: "finish-scan"}, 
       React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: _("Finish"), module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
       )
       )
-      ),
+      ), 
       this._cancelStatus
       )
       );
@@ -37097,7 +37097,7 @@ if(this.state.AuditExceptionStatus == false){
  this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
  if(this.state.AuditCancelScanStatus == true){
   this._cancelStatus = (
-    React.createElement("div", {className: "cancel-scan"},
+    React.createElement("div", {className: "cancel-scan"}, 
     React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.AUDIT, action: appConstants.CANCEL_SCAN, color: "black"})
     )
     );
@@ -37116,26 +37116,26 @@ if(this.state.AuditSubPackData["tableRows"].length > 0){
 }
 
 this._component = (
-  React.createElement("div", {className: "grid-container"},
-  React.createElement(Modal, null),
-
-  React.createElement("div", {className: "main-container space-left"},
-  React.createElement("div", {className: "audit-scan-left"},
-  this._packData,
+  React.createElement("div", {className: "grid-container"}, 
+  React.createElement(Modal, null), 
+  
+  React.createElement("div", {className: "main-container space-left"}, 
+  React.createElement("div", {className: "audit-scan-left"}, 
+  this._packData, 
   this._subPackData
-  ),
-  React.createElement("div", {className: "audit-scan-middle"},
-  React.createElement(Img, {srcURL: this.state.AuditItemDetailsData.image_url}),
+  ), 
+  React.createElement("div", {className: "audit-scan-middle"}, 
+  React.createElement(Img, {srcURL: this.state.AuditItemDetailsData.image_url}), 
   React.createElement(TabularData, {data: this.state.AuditItemDetailsData})
-  ),
-  React.createElement("div", {className: "audit-scan-right"},
-  React.createElement(KQ, {scanDetailsGood: this.state.AuditSRKQQuantity}),
-
-  React.createElement("div", {className: "finish-scan"},
+  ), 
+  React.createElement("div", {className: "audit-scan-right"}, 
+  React.createElement(KQ, {scanDetailsGood: this.state.AuditSRKQQuantity}), 
+  
+  React.createElement("div", {className: "finish-scan"}, 
   React.createElement(Button1, {disabled: !this.state.AuditFinishFlag, text: _("Finish"), module: appConstants.AUDIT, action: appConstants.GENERATE_REPORT, color: "orange"})
   )
   )
-  ),
+  ), 
   this._cancelStatus
   )
   );
@@ -37146,7 +37146,7 @@ this._component = (
 break;
 case appConstants.AUDIT_RECONCILE:
 if(this.state.AuditExceptionStatus == false){
-  this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));
+  this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}));  
   var subComponent='';
   var messageType = 'large';
   var BoxSerialData = '';
@@ -37189,26 +37189,26 @@ if(this.state.AuditExceptionStatus == false){
   if(!this.state.AuditSRStatus)
     Slot=(React.createElement(CurrentSlot, {slotDetails: this.state.AuditSlotDetails}))
   subComponent=(
-    React.createElement("div", {className: "main-container"},
-    React.createElement("div", {className: "audit-reconcile-left"},
-    AuditMessage,
-    BoxSerialData,
-    ItemInBoxData,
-    LooseItemsData,
-    PackData,
-    SubPackData,
+    React.createElement("div", {className: "main-container"}, 
+    React.createElement("div", {className: "audit-reconcile-left"}, 
+    AuditMessage, 
+    BoxSerialData, 
+    ItemInBoxData, 
+    LooseItemsData, 
+    PackData, 
+    SubPackData, 
     DamageData
     )
     )
     );
   messageType = "small";
   this._component = (
-    React.createElement("div", {className: this.state.AuditSRStatus?'grid-container audit-reconcilation-sr':'grid-container audit-reconcilation'},
-    React.createElement(Modal, null),
-    Slot,
-    subComponent,
-    React.createElement("div", {className: "staging-action"},
-    React.createElement(Button1, {disabled: false, text: _("Back"), module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}),
+    React.createElement("div", {className: this.state.AuditSRStatus?'grid-container audit-reconcilation-sr':'grid-container audit-reconcilation'}, 
+    React.createElement(Modal, null), 
+    Slot, 
+    subComponent, 
+    React.createElement("div", {className: "staging-action"}, 
+    React.createElement(Button1, {disabled: false, text: _("Back"), module: appConstants.AUDIT, action: appConstants.CANCEL_FINISH_AUDIT, color: "black"}), 
     React.createElement(Button1, {disabled: false, text: _("OK"), module: appConstants.AUDIT, action: appConstants.FINISH_CURRENT_AUDIT, color: "orange"})
     )
     )
@@ -37229,17 +37229,17 @@ if(this.state.AuditExceptionScreen == "first_screen"){
            */
            this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
            this._component = (
-            React.createElement("div", {className: "grid-container exception"},
-            React.createElement(Modal, null),
-            React.createElement(Exception, {data: this.state.AuditExceptionData}),
-            React.createElement("div", {className: "exception-right"},
-            React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}),
-            React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}),
-            React.createElement("div", {className: "finish-damaged-barcode"},
+            React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+            React.createElement(Exception, {data: this.state.AuditExceptionData}), 
+            React.createElement("div", {className: "exception-right"}, 
+            React.createElement(ExceptionHeader, {data: this.state.AuditServerNavData}), 
+            React.createElement(KQ, {scanDetailsGood: this.state.AuditKQDetails}), 
+            React.createElement("div", {className: "finish-damaged-barcode"}, 
             React.createElement(Button1, {disabled: this._disableNext, text: _("NEXT"), color: "orange", module: appConstants.AUDIT, action: appConstants.AUDIT_NEXT_SCREEN})
             )
-            ),
-            React.createElement("div", {className: "cancel-scan"},
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
             )
             )
@@ -37247,34 +37247,34 @@ if(this.state.AuditExceptionScreen == "first_screen"){
          }
          else if(this.state.AuditExceptionScreen == "second_screen"){
           this._component = (
-            React.createElement("div", {className: "grid-container exception"},
-            React.createElement(Modal, null),
-            React.createElement(Exception, {data: this.state.AuditExceptionData}),
-            React.createElement("div", {className: "exception-right"},
-            React.createElement("div", {className: "main-container exception2"},
-            React.createElement("div", {className: "kq-exception"},
+            React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+            React.createElement(Exception, {data: this.state.AuditExceptionData}), 
+            React.createElement("div", {className: "exception-right"}, 
+            React.createElement("div", {className: "main-container exception2"}, 
+            React.createElement("div", {className: "kq-exception"}, 
             React.createElement("div", {className: "kq-header"}, _("Please put entities in exception area and confirm"))
             )
-            ),
-            React.createElement("div", {className: "finish-damaged-barcode"},
+            ), 
+            React.createElement("div", {className: "finish-damaged-barcode"}, 
             React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.AUDIT, action: appConstants.SEND_KQ_QTY})
             )
-            ),
-            React.createElement("div", {className: "cancel-scan"},
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.AUDIT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
             )
             )
             );
         }
-        break;
+        break; 
 
         case appConstants.PPTL_MANAGEMENT:
         case appConstants.SCANNER_MANAGEMENT:
         this._navigation = (React.createElement(Navigation, {navData: this.state.AuditNavData, serverNavData: this.state.AuditServerNavData, navMessagesJson: this.props.navMessagesJson}))
         var _button;
         if(this.state.AuditScreenId == appConstants.SCANNER_MANAGEMENT){
-          _button = (React.createElement("div", {className: "staging-action"},
-            React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}),
+          _button = (React.createElement("div", {className: "staging-action"}, 
+            React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
             React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
             ))
         }
@@ -37282,24 +37282,24 @@ if(this.state.AuditExceptionScreen == "first_screen"){
           _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
         }
         this._component = (
-          React.createElement("div", {className: "grid-container audit-reconcilation"},
-          React.createElement(Modal, null),
-          React.createElement("div", {className: "row scannerHeader"},
-          React.createElement("div", {className: "col-md-6"},
+          React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+          React.createElement(Modal, null), 
+          React.createElement("div", {className: "row scannerHeader"}, 
+          React.createElement("div", {className: "col-md-6"}, 
           React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.AuditPpsMode.toUpperCase(), " ")
-          ),
-          React.createElement("div", {className: "col-md-6"},
+          ), 
+          React.createElement("div", {className: "col-md-6"}, 
           React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.AuditSeatType.toUpperCase())
           )
-          ),
-          React.createElement(TabularData, {data: this.state.utility}),
+          ), 
+          React.createElement(TabularData, {data: this.state.utility}), 
           _button
           )
           );
-        break;
-
+        break; 
+        
         default:
-        return true;
+        return true; 
       }
     },
     getNotificationComponent:function(){
@@ -37324,13 +37324,13 @@ if(this.state.AuditExceptionScreen == "first_screen"){
       this.getNotificationComponent();
       this.getScreenComponent(this.state.AuditScreenId);
       return (
-        React.createElement("div", {className: "main"},
-        React.createElement(Header, null),
-        this._navigation,
-        this._component,
+        React.createElement("div", {className: "main"}, 
+        React.createElement(Header, null), 
+        this._navigation, 
+        this._component, 
         this._notification
-        )
-
+        ) 
+        
         )
     }
   });
@@ -37402,17 +37402,17 @@ var BinMap = React.createClass({displayName: "BinMap",
 
 		var mapStructure = this.processData();
 		return (
-				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass},
-					React.createElement("div", {className: "mapCont"},
-					React.createElement("div", {className: "col1 "+mapStructure.leftColCount},
-					React.createElement("ul", null,
+				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 "+mapStructure.leftColCount}, 
+					React.createElement("ul", null, 
 					mapStructure.leftCol
 					)
-					),
+					), 
 					React.createElement("div", {className: "col2 spriteIcons"}
-					),
-					React.createElement("div", {className: "col3 "+mapStructure.rightColCount},
-					React.createElement("ul", null,
+					), 
+					React.createElement("div", {className: "col3 "+mapStructure.rightColCount}, 
+					React.createElement("ul", null, 
 					mapStructure.rightCol
 					)
 					)
@@ -37466,24 +37466,24 @@ var Bin = React.createClass({displayName: "Bin",
         if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (React.createElement("div", {
-                className: compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "bin selected blink1" : "bin no-excess-item"},
-                tote,
-                React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
+                className: compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "bin selected blink1" : "bin no-excess-item"}, 
+                tote, 
+                React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                 React.createElement("div", {
                     className: compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "pptl selected blink" : "pptl no-excess-item"}, compData.ppsbin_id)
             ));
         }
         else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
-                React.createElement("div", {className: "bin selected binError " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected binError " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin selected binError " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected binError " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37491,25 +37491,25 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''),
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : " ") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             } else {
-                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
@@ -37517,35 +37517,35 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 if (compData["totes_associated"] == true || compData["totes_associated"] == "true") {
-                    return (React.createElement("div", {className: "bin excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                        tote,
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                        React.createElement("div", {className: "pptl excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                    return (React.createElement("div", {className: "bin excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 } else {
                     return (React.createElement("div", {
-                        className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                        onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                        tote,
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                        React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''),
+                        className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                        onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 }
             } else {
-                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
@@ -37553,73 +37553,73 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink ' : '')}, compData.ppsbin_id)
                 ));
             } else {
-                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                return (React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
             return (
-                React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "staged")
             return (
-                React.createElement("div", {className: "bin staged " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin staged " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "completed")
             return (
-                React.createElement("div", {className: "bin completed " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin completed " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
         else if (compData.ppsbin_count > 0 && (compData["selected_for_staging"] != undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use selected-staging " + (compData['pps_blink_state'] ? 'blink1' : ''),
-                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin use selected-staging " + (compData['pps_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37629,16 +37629,16 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             var binClass = 'bin ';
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin  selected blink1",
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected blink",
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin  selected blink1", 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink", 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37650,16 +37650,16 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '', binClass = '';
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin selected " + (compData['pps_blink_state'] ? 'blink1' : ' ') + binClass,
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ' ') + binClass,
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin selected " + (compData['pps_blink_state'] ? 'blink1' : ' ') + binClass, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ' ') + binClass, 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37668,15 +37668,15 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN )) {
             var tote = '';
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37684,14 +37684,14 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37699,13 +37699,13 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37713,13 +37713,13 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37727,13 +37727,13 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37741,10 +37741,10 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == false || compData.selected_state == "false") && ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete'))) {
 
             return (
-                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37753,11 +37753,11 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37765,61 +37765,61 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
                 React.createElement("div", {
-                    className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
+                    className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {
-                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                    ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {},
-                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                    ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37827,20 +37827,20 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state === true && compData.ppsbin_count > 0) {
             let tote = '';
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
-                tote = (React.createElement("div", {className: "tote"},
-                    React.createElement("span", {className: "bin-icon tote-icon"}),
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                         )
                 ));
             }
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {},
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
@@ -37848,76 +37848,76 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state === true) {
             var tote = '';
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    tote,
-                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
         else if (this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) {
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    tote,
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }else if (compData.selected_state && (this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL ||this.props.screenId === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)) {
            var pptl;
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             if(this.props.screenId===appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
             {
-            pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+            pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
             }
             else
             {
-             pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+             pptl=(React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id));
             }
 
             return (
-                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    tote,
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    tote, 
                     pptl
                 )
             );
         }else if (compData.selected_state && (this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT|| this.props.screenId === appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT)) {
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    tote,
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37925,16 +37925,16 @@ var Bin = React.createClass({displayName: "Bin",
         else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37942,16 +37942,16 @@ var Bin = React.createClass({displayName: "Bin",
         else {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -37983,14 +37983,14 @@ var Bins = React.createClass({displayName: "Bins",
     },
     render: function() {
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-        var compData = this.props.binsData;
+        var compData = this.props.binsData; 
         var scrnId = this.props.screenId;
         var self = this;
         return (
-                 React.createElement("div", {className: "bins"},
-
+                 React.createElement("div", {className: "bins"}, 
+                    
                         (function(){
-                            var l =[];
+                            var l =[]; 
                             for(var j = 0 ;j<compData.structure[0] ;j++){
                             var list = [];
                             var i = 0;
@@ -37998,14 +37998,14 @@ var Bins = React.createClass({displayName: "Bins",
                                 list.push(React.createElement(Bin, {binData: compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)], screenId: scrnId}));
                             }
                             l.push((
-                                React.createElement("div", {className: "bin-row"},
+                                React.createElement("div", {className: "bin-row"}, 
                                     list
                                 )
                                 ));
                         }
                         return l;
                         })()
-
+                    
                  )
         );
     },
@@ -38066,25 +38066,25 @@ var Bin = React.createClass({displayName: "Bin",
         if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (React.createElement("div", {
-                className: "bin "+(compData['pps_blink_state'] ? 'selected blink1 ' : 'no-excess-item')},
-                tote,
-                React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
+                className: "bin "+(compData['pps_blink_state'] ? 'selected blink1 ' : 'no-excess-item')}, 
+                tote, 
+                React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                 React.createElement("div", {
-                    className: "pptl "+(compData['pps_blink_state'] ? 'selected blink ' : 'no-excess-item'),
+                    className: "pptl "+(compData['pps_blink_state'] ? 'selected blink ' : 'no-excess-item'), 
                     style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
             ));
         }
         else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
-                React.createElement("div", {className: "bin selected binError "+(compData['pps_blink_state'] ? 'blink1 ' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected binError "+(compData['pps_blink_state'] ? 'blink ' : ''),
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {},
+                React.createElement("div", {className: "bin selected binError "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected binError "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
@@ -38092,16 +38092,16 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((this.props.screenId == appConstants.PRE_PUT_SCAN || this.props.screenId == appConstants.PRE_PUT_STAGE || this.props.screenId == appConstants.PRE_PUT_RELEASE )) {
             var tote = '';
             if (compData.totes_associated == true) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin "+(compData['pps_blink_state'] ? 'blink1 ' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl "+(compData['pps_blink_state'] ? 'blink ' : ''),
+                React.createElement("div", {className: "bin "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38110,20 +38110,20 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state == true && compData.ppsbin_count > 0) {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
-                    React.createElement("span", {className: "bin-icon tote-icon"}),
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
+                tote = (React.createElement("div", {className: "tote"}, 
+                    React.createElement("span", {className: "bin-icon tote-icon"}), 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
                         )
                 ));
             }
             return (
-                React.createElement("div", {className: "bin selected "+(compData['pps_blink_state'] ? 'blink1 ' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''),
-                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {},
+                React.createElement("div", {className: "bin selected "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
+                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
                          onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}, compData.ppsbin_id)
                 )
             );
@@ -38131,33 +38131,33 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS && compData.selected_state == true) {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, "-"),
-                    tote,
-                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, "-"), 
+                    tote, 
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
         else if (this.props.screenId == appConstants.PUT_FRONT_PPTL_PRESS) {
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    tote,
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38165,25 +38165,25 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
-                    className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''),
+                    className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             } else {
-                return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''),
-                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''),
+                return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
@@ -38191,35 +38191,35 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             if (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && compData.ppsbin_state != 'error') {
                 if (compData["totes_associated"] == true || compData["totes_associated"] == "true") {
-                    return (React.createElement("div", {className: "bin excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''),
-                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                        tote,
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                        React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''),
+                    return (React.createElement("div", {className: "bin excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                                 style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 } else {
                     return (React.createElement("div", {
-                        className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                        onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                        tote,
-                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                        React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''),
+                        className: "bin selected " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                        onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                        style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                        tote, 
+                        React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                        React.createElement("div", {className: "pptl selected "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                              style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                     ));
                 }
             } else {
-                return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''),
-                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''),
+                return (React.createElement("div", {className: "bin no-excess-item "+(compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item "+(compData['pps_blink_state'] ? 'blink ' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
@@ -38227,74 +38227,74 @@ var Bin = React.createClass({displayName: "Bin",
         else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true") && compData.ppsbin_state != 'error') {
                 return (React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {},
-                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {className: "pptl excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             } else {
-                return (React.createElement("div", {className: "bin no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''),
+                return (React.createElement("div", {className: "bin no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                             style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl no-excess-item "+(compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 ));
             }
         }
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
             return (
-                React.createElement("div", {className: "bin no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin no-excess-item " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
             return (
                 React.createElement("div", {
-                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''),
-                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                    className: "bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : ''), 
+                    onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "staged")
             return (
-                React.createElement("div", {className: "bin staged " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin staged " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_state == "completed")
             return (
-                React.createElement("div", {className: "bin completed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin completed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl completed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
 
         else if (compData.ppsbin_count > 0 && (compData["selected_for_staging"] != undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use selected-staging " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin use selected-staging " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38304,16 +38304,16 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             var binClass = 'bin ';
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin  selected blink1",
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected blink",
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin  selected blink1", 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected blink", 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38325,16 +38325,16 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '', binClass = '';
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '') + binClass,
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '') + binClass,
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '') + binClass, 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '') + binClass, 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38343,15 +38343,15 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN )) {
             var tote = '';
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             return (
-                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38359,14 +38359,14 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38374,13 +38374,13 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38388,13 +38388,13 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38402,13 +38402,13 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PICK_FRONT_PACKING_BOX )) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon",
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                 React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon grey-icon", 
                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                 ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                 ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38416,10 +38416,10 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == false || compData.selected_state == "false") && ((this.props.screenId == appConstants.PICK_FRONT_PPTL_PRESS || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN) && (compData.ppsbin_state == 'pick_processed' || compData.ppsbin_state == 'pick_allowed' || compData.ppsbin_state == 'order_front_complete'))) {
 
             return (
-                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin pick_processed " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl pick_processed " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38428,93 +38428,97 @@ var Bin = React.createClass({displayName: "Bin",
         else if ((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
+            var applyClassNameOnTote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-<<<<<<< HEAD
-                tote = (React.createElement("div", {className: "tote"},
-                          React.createElement("span", {className: "bin-icon tote-icon"}),
-                          React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
-=======
-                tote = (React.createElement("div", {className: "tote"}, 
-                          React.createElement("span", {className: "bin-icon tote-icon"}), 
-                          React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
->>>>>>> updated fix
-                            onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                          )
-                        ));
+              applyClassNameOnTote = 'bin-icon tote-icon'
             }
+            if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
+              applyClassNameOnTote = 'bin-icon tote-icon bin-coordinate-plotting-enabled'
+            }
+            tote = (React.createElement("div", {className: "tote"}, 
+                      React.createElement("span", {className: applyClassNameOnTote}), 
+                      React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
+                      )
+                    ));
             return (
                 React.createElement("div", {
-                    className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
+                    className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                    style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
                     React.createElement("div", {
-                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                        className: (compData.ppsbin_count > 0 ? "pptl selected " : "pptl ") + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                         style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                    ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {},
-                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}, 
+                     onClick: this._toggleBinSelection.bind(this, compData.ppsbin_id)}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
+            var applyClassNameOnTote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
-                          React.createElement("span", {className: "bin-icon tote-icon"})
-                        ));
+              applyClassNameOnTote = 'bin-icon tote-icon'
             }
+            if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
+              applyClassNameOnTote = 'bin-icon tote-icon bin-coordinate-plotting-enabled'
+            }
+            tote = (React.createElement("div", {className: "tote"}, 
+                      React.createElement("span", {className: applyClassNameOnTote})
+                    ));
             return (
-                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon",
+                React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
                           onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                    ),
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                    ), 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }else if ((compData.selected_state && (this.props.screenId === appConstants.PICK_FRONT_BIN_PRINTOUT|| this.props.screenId === appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT))) {
 
             return (
-                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38522,32 +38526,32 @@ var Bin = React.createClass({displayName: "Bin",
         else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
         }else if (compData.selected_state && this.props.screenId === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL) {
             if ((compData.totes_associated === true) || (compData.totes_associated === "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count),
-                    tote,
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
-                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state),
+                React.createElement("div", {className: "bin " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count), 
+                    tote, 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
+                         onClick: this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38555,16 +38559,16 @@ var Bin = React.createClass({displayName: "Bin",
         else {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"},
+                tote = (React.createElement("div", {className: "tote"}, 
                     React.createElement("span", {className: "bin-icon tote-icon"})
                 ));
             }
             return (
-                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''),
-                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}},
-                    tote,
-                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count),
-                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''),
+                React.createElement("div", {className: "bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
+                     style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
+                    tote, 
+                    React.createElement("div", {className: "item-count"}, compData.ppsbin_count<1?'-':compData.ppsbin_count), 
+                    React.createElement("div", {className: "pptl " + (compData['ppsbin_blink_state'] ? 'blink' : ''), 
                          style: compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, compData.ppsbin_id)
                 )
             );
@@ -38633,7 +38637,7 @@ var Bins = React.createClass({displayName: "Bins",
         }
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, binCoordinatePlotting) {
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
@@ -38661,15 +38665,33 @@ var Bins = React.createClass({displayName: "Bins",
                 ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'):
                     (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
                 itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
-                aHTMLBins.push(
-                                 React.createElement("div", {className: "bin-container", style: {
-                                width: binWidth,height:binHeight,
 
-                                top: itop,
-                                left:ileft}},
-                                     React.createElement(Bin, {binData: aBins[i], screenId: screenId})
-                                 )
-                                 )
+                if(binCoordinatePlotting == true || binCoordinatePlotting == "true"){
+                  aHTMLBins.push(
+                                   React.createElement("div", {className: "bin-container", 
+                                     style: {
+                                        width: binWidth,
+                                        height:binHeight,
+                                        top: itop,
+                                        left:ileft
+                                      }}, 
+                                      React.createElement(Bin, {binData: aBins[i], screenId: screenId, binCoordinatePlotting: true})
+                                   )
+                                   )
+                }
+                else{
+                  aHTMLBins.push(
+                                   React.createElement("div", {className: "bin-container", 
+                                      style: {
+                                        width: binWidth,
+                                        height:binHeight,
+                                        top: itop,
+                                        left:ileft
+                                      }}, 
+                                      React.createElement(Bin, {binData: aBins[i], screenId: screenId})
+                                   )
+                                   )
+                }
               }
         return aHTMLBins;
     },
@@ -38682,10 +38704,11 @@ var Bins = React.createClass({displayName: "Bins",
 
                                                this.props.seatType,
 
-                                               this.props.screenId);
+                                               this.props.screenId,
+                                               this.props.binCoordinatePlotting);
         var self = this;
         return (
-                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}},
+                 React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}, 
                         aHTMLBins
                  )
         );
@@ -38706,8 +38729,8 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 		eachBoxSerial = boxList.map(function(row,index){
 				return(
-						React.createElement("tr", null,
-							React.createElement("td", null,
+						React.createElement("tr", null, 
+							React.createElement("td", null, 
 								(index+1) + ". " + row
 							)
 						)
@@ -38716,14 +38739,14 @@ var BoxSerial = React.createClass({displayName: "BoxSerial",
 
 
 		return (
-				React.createElement("div", {className: "boxSerial"},
-					React.createElement("table", {className: "table"},
-						React.createElement("thead", null,
-							React.createElement("div", {className: "boxHeader"},
+				React.createElement("div", {className: "boxSerial"}, 
+					React.createElement("table", {className: "table"}, 
+						React.createElement("thead", null, 
+							React.createElement("div", {className: "boxHeader"}, 
 								allresourceConstants.TBL_HEADER
 							)
-						),
-						React.createElement("tbody", null,
+						), 
+						React.createElement("tbody", null, 
 							eachBoxSerial
 						)
 					)
@@ -38743,7 +38766,7 @@ var PutBackStore = require('../../stores/PutBackStore');
 var mainstore = require('../../stores/mainstore');
 
 
-function closeModalBox(){
+function closeModalBox(){ 
     $(".modal").modal("hide");
 };
 
@@ -38806,7 +38829,7 @@ switch (module) {
                                 break;
                             case appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER:
                                 ActionCreators.validateAndSendDataToServer();
-                                break;
+                                break;    
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
@@ -38816,13 +38839,13 @@ switch (module) {
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;    
                             case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="finish_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break; 
                             case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                             case appConstants.FINISH_EXCEPTION_EXTRA_ITEM:
@@ -38837,7 +38860,7 @@ switch (module) {
                                   data["event_data"]["action"] ="confirm_irt_bin";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
-                                break;
+                                break;   
                             case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="extra_items_bin_select";
@@ -38883,7 +38906,7 @@ switch (module) {
                                 data["event_data"]["action"] = "cancel_invalid_item_in_tote",
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 data["event_data"]["item_uid"] = mainstore.getItemUid();
-                                ActionCreators.postDataToInterface(data);
+                                ActionCreators.postDataToInterface(data);   
 
                             default:
                                 return true;
@@ -38901,7 +38924,7 @@ switch (module) {
                                 data["event_data"]["action"] ="confirm_quantity_update";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                               ActionCreators.postDataToInterface(data);
-                             break;
+                             break;   
                             case appConstants.CANCEL_EXCEPTION:
                                 ActionCreators.enableException(false);
                                 break;
@@ -38927,10 +38950,10 @@ switch (module) {
                                 data["event_data"]["action"] ="finish_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break; 
                             case appConstants.UNMARKED_DAMAGED:
                                 ActionCreators.validateUnmarkedDamagedData();
-                                break;
+                                break;                                
                             case appConstants.CANCEL_EXCEPTION_MODAL:
                                 this.showModal(appConstants.PUT_FRONT, "cancel_exception");
                                 break;
@@ -38939,12 +38962,12 @@ switch (module) {
                                   data["event_data"]["action"] ="confirm_irt_bin";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
-                                break;
+                                break;  
 
 
                             case appConstants.CLOSE_CANCEL_EXCEPTION:
-                               closeModalBox();
-                               break;
+                               closeModalBox(); 
+                               break;                                                               
                             default:
                                 return true;
                         }
@@ -38960,11 +38983,11 @@ switch (module) {
                                 data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
-                                break;
+                                break;    
                             case appConstants.CANCEL_SCAN_MODAL:
                                 this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
-                               break;
-
+                               break;    
+                            
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
@@ -38994,9 +39017,9 @@ switch (module) {
                                     data["event_name"] = "single_item_pick_checklist_update";
                                 data["event_data"]["pick_checklist"] = checkList;
                                 ActionCreators.postDataToInterface(data);
-
+                                
                                 break;
-
+                           
                             case appConstants.CONFIRM_FROM_USER:
                                 ActionCreators.changePickFrontExceptionScreen("confirm_from_user");
                                 break;
@@ -39011,20 +39034,20 @@ switch (module) {
                                 data["event_data"]["quantity"]["unscannable"] = mainstore.getkQQuanity();
 
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break; 
 
                              case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                     data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
-                                break;
+                                break;      
                                case appConstants.PICK_FINISH_EXCEPTION_ENTITY:
                                   data["event_name"] = "pick_front_exception";
                                   data["event_data"]["action"] ="confirm_irt_bin";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
                                   ActionCreators.postDataToInterface(data);
-                                break;
+                                break;   
                             case appConstants.EDIT_DETAILS:
                                 data["event_name"] = "checklist_edit";
                                 ActionCreators.postDataToInterface(data);
@@ -39043,73 +39066,73 @@ switch (module) {
                                  data["event_name"] = appConstants.BIN_FULL_REQUEST;
                                  data["event_data"] = null;
 -                                ActionCreators.postDataToInterface(data);
-                                 this.showModal(null, appConstants.BIN_FULL);
-                                break;
+                                 this.showModal(null, appConstants.BIN_FULL);  
+                                break; 
                             case appConstants.BOX_FULL:
                                 data["event_name"] = appConstants.BOX_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(null, appConstants.BOX_FULL);
-                                break;
-                            case appConstants.DISCARD_PACKING_BOX:
+                                break; 
+                            case appConstants.DISCARD_PACKING_BOX: 
                                 data["event_name"] = appConstants.BOX_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(null, appConstants.DISCARD_PACKING_BOX);
-                                break;
+                                break; 
                             case appConstants.CANCEL_BIN_FULL_REQUEST:
                                 data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();
-                            break;
+                            break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
                                  ActionCreators.validateAndSendDataToServer();
                             closeModalBox();
-                            break;
+                            break; 
                             case appConstants.CANCEL_BOX_FULL:
                                 data["event_name"] = appConstants.CANCEL_BOX_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();
-                            break;
+                            break;   
                             case appConstants.CONFIRM_BOX_FULL:
                                 data["event_name"] = appConstants.CONFIRM_BOX_FULL;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                             closeModalBox();
-                            break;
+                            break; 
                             case appConstants.CONFIRM_LOCATION:
                             data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
-                            break;
+                            break;  
                             case appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS:
                                 data["event_name"] = "pick_front_exception";
                                 data["event_data"]["action"] ="physically_damaged";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break; 
 
                             case appConstants.REPRINT:
                                 data["event_name"] = "pick_front";
                                 data["event_data"]["action"] ="reprint";
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;   
                             case appConstants.PRINT_CONFIRM:
                                 data["event_name"] = "pick_front";
                                 data["event_data"]["action"] ="item_print_done";
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;        
                             case appConstants.PICK_FRONT_REPRINT:
                                 data["event_name"] = "pick_front";
                                 data["event_data"]["action"] ="pick_front_item_reprint";
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;  
 
                              case appConstants.CLOSE_CANCEL_SCAN:
-                               closeModalBox();
-                               break;
+                               closeModalBox(); 
+                               break;                   
                             default:
                                 return true;
                         }
@@ -39188,7 +39211,7 @@ switch (module) {
                             case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;    
                             default:
                                 return true;
                         }
@@ -39209,18 +39232,18 @@ switch (module) {
             document.getElementById("add_scanner").value = '';
             break;
 
-            case appConstants.CANCEL_ADD_SCANNER:
+            case appConstants.CANCEL_ADD_SCANNER:                            
             closeModalBox();
             location.reload();
             break;
-            case appConstants.CANCEL_CLOSE_SCANNER:
+            case appConstants.CANCEL_CLOSE_SCANNER:                            
             closeModalBox();
                                 //location.reload();
                                 break;
-                                case appConstants.CANCEL_PPTL:
+                                case appConstants.CANCEL_PPTL:                           
                                 location.reload();
                                 break;
-                            }
+                            }   
                             break;
                             case appConstants.PRE_PUT:
                             switch (action) {
@@ -39235,25 +39258,25 @@ switch (module) {
                                 case appConstants.RELEASE_MTU:
                                 data["event_name"] = "release_mtu";
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;                            
                                 case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
-                                break;
+                                break;   
                                 case appConstants.SEND_EXCESS_ITEMS_BIN:
                                 data["event_name"] = "pre_put_exception";
                                 data["event_data"]["action"] ="finish_exception";
                                 data["event_data"]["event"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;                                 
                                 case appConstants.CANCEL_LAST_SCAN:
                                 data["event_name"] = "cancel_last_scan";
                                 ActionCreators.postDataToInterface(data);
-                                break;
+                                break;   
                                 case appConstants.CLOSE_CANCEL_EXCEPTION:
-                                closeModalBox();
-                                break;
+                                closeModalBox(); 
+                                break;                               
                                 default:
                                 return true;
                             }
@@ -39270,22 +39293,22 @@ switch (module) {
                        $('.modal').modal();
                    },
                    render: function() {
-
+                    
                     if (this.props.disabled == false)
-                        return ( React.createElement("a", {className:
-                            this.props.color == "orange" ? "custom-button orange " : "custom-button black ",
-
-                        onClick:
+                        return ( React.createElement("a", {className: 
+                            this.props.color == "orange" ? "custom-button orange " : "custom-button black ", 
+                        
+                        onClick: 
                             this.performAction.bind(this, this.props.module, this.props.action)
-                        }, " ",
-                            this.props.text,
+                        }, " ", 
+                            this.props.text, 
                         " ")
                         );
                         else
-                            return ( React.createElement("a", {className:
+                            return ( React.createElement("a", {className: 
                                 this.props.color == "orange" ? "custom-button disabled orange" : "custom-button disabled black"
-                            }, " ",
-                                this.props.text,
+                            }, " ", 
+                                this.props.text, 
                             " "));
                         }
                     });
@@ -39323,46 +39346,46 @@ var IconButton = React.createClass({displayName: "IconButton",
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "finish_box";
                         ActionCreators.postDataToInterface(data);
-                        break;
+                        break;    
                      default:
-                        return true;
+                        return true; 
                 }
             break;
              default:
-                return true;
+                return true; 
         }
     },
-    render: function() {
+    render: function() { 
             if(this.props.type == "finish" && this.props.status == true)
                 return (
-                    React.createElement("div", {className: "success-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)},
-                        React.createElement("div", {className: "border-glyp"},
+                    React.createElement("div", {className: "success-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
+                        React.createElement("div", {className: "border-glyp"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-ok-circle"})
                         )
                     )
                 );
             else if(this.props.type == "finish" && this.props.status == false)
                 return (
-                    React.createElement("div", {className: "success-icon disabled"},
-                        React.createElement("div", {className: "border-glyp"},
+                    React.createElement("div", {className: "success-icon disabled"}, 
+                        React.createElement("div", {className: "border-glyp"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-ok-circle"})
                         )
                     )
                 );
             else if(this.props.type == "edit")
                 return (
-                React.createElement("div", {className: "edit-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)},
-                        React.createElement("div", {className: "border-glyp"},
+                React.createElement("div", {className: "edit-icon", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, 
+                        React.createElement("div", {className: "border-glyp"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-pencil"})
                         )
                 )
-            );
+            );     
             else if(this.props.type == "action" )
                 return (
-               React.createElement("div", {className: "audit-actions"},
+               React.createElement("div", {className: "audit-actions"}, 
                         React.createElement("button", {disabled: !this.props.status, className: "audit-action done", type: "button", onClick: this.performAction.bind(this,this.props.module,this.props.action)}, _("Done"))
                     )
-            );
+            );                 
     }
 });
 
@@ -39374,19 +39397,19 @@ var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var CurrentSlot = React.createClass({displayName: "CurrentSlot",
-	render:function(){
+	render:function(){		
 		var slotStart = this.props.slotDetails[0].split(".")[2] + this.props.slotDetails[0].split(".")[3].slice(1, 2);
 		var slotEnd = this.props.slotDetails[1].split(".")[2] + this.props.slotDetails[1].split(".")[3].slice(1, 2);
-		var range = slotStart + " - " + slotEnd;
-
+		var range = slotStart + " - " + slotEnd;		
+		
 		return (
-				React.createElement("div", {className: "currentSlotWrapper"},
-					React.createElement("div", {className: "slotRange"}, " ", range, " "),
+				React.createElement("div", {className: "currentSlotWrapper"}, 
+					React.createElement("div", {className: "slotRange"}, " ", range, " "), 
 					React.createElement("div", {className: "slotFooter"}, " ", _(allresourceConstants.CURR_SLOT), " ")
 				)
-
-
-
+						
+					
+				
 			);
 	}
 });
@@ -39398,11 +39421,11 @@ var React = require('react');[]
 var ExceptionHeader = require('./ExceptionHeader');
 var ExceptionList = require('./ExceptionList');
 
-var Exception = React.createClass({displayName: "Exception",
+var Exception = React.createClass({displayName: "Exception", 
     render: function() {
         return (
-            React.createElement("div", {className: "exception"},
-                React.createElement(ExceptionHeader, {data: _("EXCEPTION")}),
+            React.createElement("div", {className: "exception"}, 
+                React.createElement(ExceptionHeader, {data: _("EXCEPTION")}), 
                 React.createElement(ExceptionList, {data: this.props.data.list, action: this.props.action})
             )
         );
@@ -39414,11 +39437,11 @@ module.exports = Exception;
 },{"./ExceptionHeader":245,"./ExceptionList":246,"react":230}],245:[function(require,module,exports){
 var React = require('react');
 
-var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
-
+var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
+    
     render: function() {
         return (
-            React.createElement("div", {className: "exception-header"},
+            React.createElement("div", {className: "exception-header"}, 
                this.props.data
       		)
         );
@@ -39431,7 +39454,7 @@ module.exports = ExceptionHeader;
 var React = require('react');
 var ExceptionListItem = require('./ExceptionListItem');
 
-var ExceptionList = React.createClass({displayName: "ExceptionList",
+var ExceptionList = React.createClass({displayName: "ExceptionList", 
     _exceptionListItems:[],
     getExceptionListItems:function(){
     	var comp =[];
@@ -39444,7 +39467,7 @@ var ExceptionList = React.createClass({displayName: "ExceptionList",
     render: function() {
     	this.getExceptionListItems();
         return (
-            React.createElement("div", {className: "exception-list"},
+            React.createElement("div", {className: "exception-list"}, 
                this._exceptionListItems
             )
         );
@@ -39464,7 +39487,7 @@ function getState(){
   }
 }
 
-var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
+var ExceptionListItem = React.createClass({displayName: "ExceptionListItem", 
 	_component:[],
   getInitialState: function(){
     return getState();
@@ -39492,7 +39515,7 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
    if(navMessagesJson != undefined){
     message_args.unshift(navMessagesJson[errorCode]);
     if(message_args[0] == undefined){
-      return server_message;
+      return server_message;  
                             }else{
                             var header_message = _.apply(null, message_args);
                             return header_message;
@@ -39512,17 +39535,17 @@ var ExceptionListItem = React.createClass({displayName: "ExceptionListItem",
 
     return(
         React.createElement("div", {className: this.props.data.selected==true?"exception-list-item selected":
-          (this.props.data.disabled === true?"exception-list-item disabled":"exception-list-item"),
-             onClick: clickHandler},
+          (this.props.data.disabled === true?"exception-list-item disabled":"exception-list-item"), 
+             onClick: clickHandler}, 
                this._getHeaderMessage()
-
+                
         ));
-
+    
   },
 
   render: function() {
     var exceptionItemDiv = this._getExceptionItemDiv();
-
+    
     return  exceptionItemDiv;
     },
 });
@@ -39538,7 +39561,7 @@ function getState(){
       navMessages : mainstore.getServerMessages()
   }
 }
-var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
+var ExceptionHeader = React.createClass({displayName: "ExceptionHeader", 
 	_component:[],
 	getInitialState: function(){
     	return getState();
@@ -39550,18 +39573,18 @@ var ExceptionHeader = React.createClass({displayName: "ExceptionHeader",
       	var errorCode = this.props.data.code;
       	var message_args  = this.props.data.details.slice(0);
         return (
-            React.createElement("div", {className: "exception-head"},
+            React.createElement("div", {className: "exception-head"}, 
               		(function(){
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
                             if(message_args[0] == undefined){
-                              return server_message;
+                              return server_message;  
                             }else{
                             var header_message = _.apply(null, message_args);
                             return header_message;
                             }
                         }
-
+                       
                         }
                     )()
       		)
@@ -39610,7 +39633,7 @@ var Header = React.createClass({displayName: "Header",
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
+            initialFocus: true,           
             position: {
                 of: $('.keyboard-actions'),
                 my: 'center top',
@@ -39633,18 +39656,18 @@ var Header = React.createClass({displayName: "Header",
             }
         })
         $('#barcode').data('keyboard').reveal();
-    },
+    },    
     logoutSession:function(){
-        $("#actionMenu").hide();
-        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){
+        $("#actionMenu").hide();        
+        if(mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false){             
             return false;
         }
         else{
             CommonActions.logoutSession(true);
-        }
-
+        }        
+        
     },
-    componentDidMount: function() {
+    componentDidMount: function() { 
     },
     enableException:function(){
         CommonActions.enableException(true);
@@ -39653,14 +39676,14 @@ var Header = React.createClass({displayName: "Header",
         data["level"] = 'error'
         CommonActions.generateNotification(data);
         $("#actionMenu").hide();
-    },
+    },    
     showMenu: function(){
         $("#actionMenu").toggle();
         $(".subMenu").hide();
     },
     refresh: function(){
            location.reload();
-
+        
     },
     componentWillMount: function() {
         mainstore.addChangeListener(this.onChange);
@@ -39685,27 +39708,27 @@ var Header = React.createClass({displayName: "Header",
         if(x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS|| screenId===appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN || screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM || screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
             this.exceptionMenu = '';
         else if(mainstore.getExceptionAllowed().length > 0 )
-            this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException},
+            this.exceptionMenu =   (React.createElement("div", {className: "actionItem", onClick: this.enableException}, 
                                          _("Exception")
                                     ));
         else
-            this.exceptionMenu = (React.createElement("div", {className: "actionItem disable"},
+            this.exceptionMenu = (React.createElement("div", {className: "actionItem disable"}, 
                                          _("Exception")
                                     ));
-    },
+    },    
     peripheralData : function(type){
         CommonActions.getPeriPheralData(type);
         $("#actionMenu").hide();
     },
     utilityMenu : function(){
-        $(".subMenu").toggle();
+        $(".subMenu").toggle();       
         //CommonActions.displayperipheralMenu();
     },
-    render: function() {
+    render: function() {    
         var logoutClass;
-        var cssClass;
+        var cssClass;  
         var disableScanClass;
-        var invoiceFlow = mainstore.getScreenId()===appConstants.PUT_BACK_INVOICE?true:false;
+        var invoiceFlow = mainstore.getScreenId()===appConstants.PUT_BACK_INVOICE?true:false; 
         this.getExceptionMenu();
         if(this.state.spinner || this.state.systemIsIdle || invoiceFlow){
             cssClass = 'keyboard-actions hide-manual-barcode'
@@ -39722,34 +39745,34 @@ var Header = React.createClass({displayName: "Header",
         }else{
             disableScanClass = 'disableScanClass'
         }
-        return (React.createElement("div", null,
-            React.createElement("div", {className: "head"},
-              React.createElement("div", {className: "logo"},
+        return (React.createElement("div", null, 
+            React.createElement("div", {className: "head"}, 
+              React.createElement("div", {className: "logo"}, 
               React.createElement("img", {src: allSvgConstants.logo})
-              ),
-              React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.ppsMode.toUpperCase(), " "),
-                React.createElement("div", {className: cssClass, onClick: this.openKeyboard},
-                  React.createElement("img", {src: allSvgConstants.scanHeader, className: disableScanClass}),
+              ), 
+              React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.ppsMode.toUpperCase(), " "), 
+                React.createElement("div", {className: cssClass, onClick: this.openKeyboard}, 
+                  React.createElement("img", {src: allSvgConstants.scanHeader, className: disableScanClass}), 
                   React.createElement("input", {id: "barcode", type: "text", value: ""})
-                ),
-              React.createElement("div", {className: "header-actions", onClick: this.showMenu},
+                ), 
+              React.createElement("div", {className: "header-actions", onClick: this.showMenu}, 
                  React.createElement("img", {src: allSvgConstants.menu})
-
+                 
               )
-            ),
-            React.createElement("div", {className: "actionMenu", id: "actionMenu"},
-
-                this.exceptionMenu,
-                React.createElement("div", {className: "actionItem", onClick: this.utilityMenu},
-                    _("Utility"),
-                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'pptl')},
+            ), 
+            React.createElement("div", {className: "actionMenu", id: "actionMenu"}, 
+             
+                this.exceptionMenu, 
+                React.createElement("div", {className: "actionItem", onClick: this.utilityMenu}, 
+                    _("Utility"), 
+                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'pptl')}, 
                          _("PPTL Management")
-                    ),
-                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'barcode_scanner')},
+                    ), 
+                    React.createElement("div", {className: "subMenu", onClick: this.peripheralData.bind(this, 'barcode_scanner')}, 
                         _("Scanner Management")
                     )
-                ),
-                React.createElement("div", {className: logoutClass, onClick: this.logoutSession},
+                ), 
+                React.createElement("div", {className: logoutClass, onClick: this.logoutSession}, 
                     _("Logout")
                 )
             )
@@ -39790,7 +39813,7 @@ var LoginPage = React.createClass({displayName: "LoginPage",
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(e){
+  handleLogin: function(e){ 
   if(_seat_name == null){
     _seat_name = this.refs.seat_name.value;
   }
@@ -39800,24 +39823,24 @@ var LoginPage = React.createClass({displayName: "LoginPage",
               'username': this.refs.username.value,
               'password': this.refs.password.value,
               'seat_name': _seat_name
-
+              
           }
       }
     console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);
-    //CommonActions.clearNotification(); Removing this clear notification to enable pop-up modal after login
-  },
+    //CommonActions.clearNotification(); Removing this clear notification to enable pop-up modal after login 
+  }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
-    CommonActions.webSocketConnection();
+    CommonActions.webSocketConnection(); 
     CommonActions.listSeats();
     CommonActions.setLanguage();                 //Dispatch setLanguage action
     if(this.state.getLang){
       CommonActions.changeLanguage(this.state.getLang);
     }
-    else if(this.state.getCurrentLang){
+    else if(this.state.getCurrentLang){    
       CommonActions.changeLanguage(this.state.getCurrentLang);
     }
     virtualKeyBoard_login = $('#username, #password').keyboard({
@@ -39831,22 +39854,22 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,
+      initialFocus: true,      
       visible : function(e, keypressed, el){
         el.value = '';
-        //$(".authNotify").css("display","none");
+        //$(".authNotify").css("display","none"); 
       },
-
+      
       accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
           $('#loginBtn').prop('disabled', false);
         }else{
-          $('#loginBtn').prop('disabled', true);
-        }
+          $('#loginBtn').prop('disabled', true); 
+        }    
       }
-    });
+    }); 
   },
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
@@ -39864,24 +39887,24 @@ var LoginPage = React.createClass({displayName: "LoginPage",
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,
+      initialFocus: true,      
       visible : function(e, keypressed, el){
         el.value = '';
-        //$(".authNotify").css("display","none");
+        //$(".authNotify").css("display","none"); 
       },
-
+      
       accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
           $('#loginBtn').prop('disabled', false);
         }else{
-          $('#loginBtn').prop('disabled', true);
-        }
+          $('#loginBtn').prop('disabled', true); 
+        }    
       }
     });
    },
-  onChange: function(){
+  onChange: function(){    
     this.setState(getState());
 
   },
@@ -39890,30 +39913,30 @@ var LoginPage = React.createClass({displayName: "LoginPage",
   },
   changeLanguage : function(){
     CommonActions.changeLanguage(this.refs.language.value);
-    this.disableLoginButton();
+    this.disableLoginButton();    
   },
   removeNotify:function(){
        $('.errorNotify').css('display','none');
   },
   render: function(){
     var d = new Date();
-    var n = d.getFullYear();
+    var n = d.getFullYear();   
     var seatData;
     var locale = window.sessionStorage.getItem("localeData");
     var _languageDropDown=(
-              React.createElement("select", {className: "selectLang", value: this.state.getCurrentLang, ref: "language", onChange: this.changeLanguage},
-                  React.createElement("option", {value: "en-US"}, "English"),
-                  React.createElement("option", {value: "ja-JP"}, "日本語"),
-                  React.createElement("option", {value: "de-DE"}, "Deutsche"),
-                  React.createElement("option", {value: "zh-ZH"}, "中文"),
-                  React.createElement("option", {value: "fr-FR"}, "Français"),
+              React.createElement("select", {className: "selectLang", value: this.state.getCurrentLang, ref: "language", onChange: this.changeLanguage}, 
+                  React.createElement("option", {value: "en-US"}, "English"), 
+                  React.createElement("option", {value: "ja-JP"}, "日本語"), 
+                  React.createElement("option", {value: "de-DE"}, "Deutsche"), 
+                  React.createElement("option", {value: "zh-ZH"}, "中文"), 
+                  React.createElement("option", {value: "fr-FR"}, "Français"), 
                   React.createElement("option", {value: "es-ES"}, "Español")
               )
       );
     var display = this.state.flag === true ? 'block' : 'none';
     if(this.state.seatList.length > 0){
           var parseSeatID;
-          seatData = this.state.seatList.map(function(data, index){
+          seatData = this.state.seatList.map(function(data, index){ 
             if(data.hasOwnProperty('seat_type')){
                parseSeatID = null;
                return (
@@ -39952,63 +39975,63 @@ var LoginPage = React.createClass({displayName: "LoginPage",
         } else{
             errorClass = 'ErrorMsg'
         }
-
+       
         return (
-        React.createElement("div", null,
-          React.createElement("div", {className: "headerLoginPage"},
-                  React.createElement("div", {className: "logo"},
+        React.createElement("div", null, 
+          React.createElement("div", {className: "headerLoginPage"}, 
+                  React.createElement("div", {className: "logo"}, 
                     React.createElement("img", {className: "imgLogo", src: allSvgConstants.gorLogo})
-                  ),
-                  React.createElement("div", {className: "header-actions"},
+                  ), 
+                  React.createElement("div", {className: "header-actions"}, 
                       React.createElement("img", {className: "mapImg", src: allSvgConstants.headerbg})
                   )
-          ),
-          React.createElement("div", {className: "bodyContent"},
-
-                React.createElement("div", {className: "bodyLoginPage"},
-                    React.createElement("div", {className: "factoryImage"},
+          ), 
+          React.createElement("div", {className: "bodyContent"}, 
+         
+                React.createElement("div", {className: "bodyLoginPage"}, 
+                    React.createElement("div", {className: "factoryImage"}, 
                         React.createElement("img", {src: allSvgConstants.factoryImg})
-                    ),
-                    React.createElement("div", {className: "userFormLoginPage"},
-                        React.createElement("form", null,
-                            ppsOption,
+                    ), 
+                    React.createElement("div", {className: "userFormLoginPage"}, 
+                        React.createElement("form", null, 
+                            ppsOption, 
               React.createElement("div", {className: errorClass}, React.createElement("span", null, _(this.state.showError))
 
-              ),
-              React.createElement("div", {className: "form-group"},
-                React.createElement("label", null, _(resourceConstants.USERNAME)),
-                  React.createElement("input", {type: "text", className:
+              ), 
+              React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", null, _(resourceConstants.USERNAME)), 
+                  React.createElement("input", {type: "text", className: 
 "form-control", id: "username", placeholder: _('Enter Username'), ref: "username", valueLink: this.linkState('username')})
-              ),
+              ), 
 
-              React.createElement("div", {className: "form-group"},
-                React.createElement("label", null, _(resourceConstants.PASSWORD)),
+              React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", null, _(resourceConstants.PASSWORD)), 
                   React.createElement("input", {type: "password", className: "form-control", id: "password", placeholder: _('Enter Password'), ref: "password", valueLink: this.linkState('password')})
-              ),
-
-               this.state.getLang?'':_languageDropDown,
+              ), 
+               
+               this.state.getLang?'':_languageDropDown, 
 
               React.createElement("input", {type: "button", className: "btn btn-default loginButton loginButton", id: "loginBtn", disabled: true, onClick: this.handleLogin, value: _('Login')})
           )
           )
                 )
-            ),
-            React.createElement("div", {className: "copyright"},
+            ), 
+            React.createElement("div", {className: "copyright"}, 
                 "Copyright © ", n, " GreyOrange Pte Ltd"
             )
         )
       );
     }
-     else{
+     else{ 
       return(
-         React.createElement("div", {className: "main"},
+         React.createElement("div", {className: "main"}, 
             React.createElement(Operator, null)
           )
-
+        
       )
     }
 
-
+    
   }
 });
 
@@ -40041,15 +40064,15 @@ var MobileSystemIdle = React.createClass({displayName: "MobileSystemIdle",
   	componentWillUnmount: function(){
     	mainstore.removeChangeListener(this.onChange);
   	},
-  	onChange: function(){
+  	onChange: function(){ 
   		if(this.refs.myRef){
    			this.setState(getState());
   		}
   	},
 	render: function(){
 		return (
-			React.createElement("div", {ref: "myRef"},
-					React.createElement(SystemIdleHeader, null),
+			React.createElement("div", {ref: "myRef"}, 
+					React.createElement(SystemIdleHeader, null), 
 					React.createElement(SplitPPS, {groupInfo: this.state.groupInfo, wrongUndock: this.state.wrongUndock, undockAwaited: this.state.undockAwaited, docked: this.state.dockedGroup})
 			)
 		)
@@ -40083,7 +40106,7 @@ function getStateData(){
     };
 }
 
-function attachKeyboard(id){
+function attachKeyboard(id){   
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
              customLayout: {
@@ -40095,10 +40118,10 @@ function attachKeyboard(id){
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
+            initialFocus: true,          
             visible : function(e, keypressed, el){
-              el.value = '';
-
+              el.value = '';          
+                           
             },
             accepted: function(e, keypressed, el) {
 
@@ -40113,35 +40136,35 @@ function attachNumpad(id){
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
+            initialFocus : true,          
             accepted: function(e, keypressed, el) {
             },
             visible : function(e, keypressed, el){
-              el.value = '';
+              el.value = '';             
             }
       });
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id, toggleTime){
+function attachDateTime(id, toggleTime){  
   if(toggleTime === "true" || toggleTime === true){
       $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");
   }
   else{
       $('#'+id).datetimepicker({timepicker:toggleTime,format:'Y/m/d'}).datetimepicker("show");
-  }
+  }   
 }
 
 function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
 
-function loadComponent(modalType,modalData){
+function loadComponent(modalType,modalData){ 
   switch(modalType){
     case "product-detail":
       component = [];
       for (var key in modalData) {
-        if (modalData.hasOwnProperty(key)) {
+        if (modalData.hasOwnProperty(key)) {          
            component.push((React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6 key"}, key), React.createElement("div", {className: "col-md-6 value"}, modalData[key]))));
         }
       }
@@ -40154,56 +40177,56 @@ function loadComponent(modalType,modalData){
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
            //component.push((<div className="col-md-4 heading">{key} </div>));
-           headerArray.push(
-              React.createElement("th", null, _(key))
+           headerArray.push(              
+              React.createElement("th", null, _(key))              
           );
         }
-      }
-      var tr = [];
+      } 
+      var tr = [];    
       modalData.map(function(value,index){
         var rowData = [];
-           for (var key in value) {
+           for (var key in value) {        
             if (value.hasOwnProperty(key)) {
               rowData.push(
                 React.createElement("td", null, value[key])
               )
-            }
+            }                    
           }
           tr.push(React.createElement("tr", null, rowData));
-
+          
       })
        component.push(
-              React.createElement("div", {className: "binInfoValue"},
-                  React.createElement("table", {className: "table"},
-                    React.createElement("thead", {className: "heading"},
+              React.createElement("div", {className: "binInfoValue"}, 
+                  React.createElement("table", {className: "table"}, 
+                    React.createElement("thead", {className: "heading"}, 
                     React.createElement("tr", null, headerArray)
-                    ),
+                    ), 
                     React.createElement("tbody", null, tr)
                  )
               )
           );
       title = _("Bin Info");
-
+      
       break;
-
+      
     case "scan_bin_barcode":
       component = [];
       footer = [];
-      component.push((React.createElement("div", null,
-        React.createElement("div", {className: "modalContent removeBorder"},
-            React.createElement("div", {className: "image1"},
+      component.push((React.createElement("div", null, 
+        React.createElement("div", {className: "modalContent removeBorder"}, 
+            React.createElement("div", {className: "image1"}, 
                 React.createElement("img", {src: allSvgConstants.iconBar})
-            ),
-            React.createElement("div", {className: "content1"}, _("Scan Bin Barcode")),
+            ), 
+            React.createElement("div", {className: "content1"}, _("Scan Bin Barcode")), 
             React.createElement("div", {className: "clearfix"})
-        ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-             React.createElement("div", {className: "buttonContainer center-block"},
+        ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+             React.createElement("div", {className: "buttonContainer center-block"}, 
                 React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
              )
        )
-       ));
-
+       ));      
+      
       title = _("Associate tote with bin");
       break;
     case "message":
@@ -40224,83 +40247,83 @@ function loadComponent(modalType,modalData){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer" || modalData.checklist_data[index][index1][keyvalue[0]].Format == "Float")
-                    {
+                    {                              
                       var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
-
+                      
                     }
                     else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String")
-                    {
+                    {                      
                       var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
-
+                       
                     }
                      else{
                           if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Datetime")
-                          {
-                            var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, true)}))
+                          {                      
+                            var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, true)}))                            
                           }
                           else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Date")
-                          {
+                          {                       
                             var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, false)}))
                           }
-                    }
+                    }                
 
 
-                      return (React.createElement("div", {className: "col-md-6"},
-                                  React.createElement("div", {className: "dataCaptureHead removeBorder"},
+                      return (React.createElement("div", {className: "col-md-6"}, 
+                                  React.createElement("div", {className: "dataCaptureHead removeBorder"}, 
                                       keyvalue
-                                  ),
-                                  React.createElement("div", {className: "dataCaptureInput removeBorder"},
+                                  ), 
+                                  React.createElement("div", {className: "dataCaptureInput removeBorder"}, 
                                       inputBox
                                   )
                               )
                         );
                   })
               return (
-                  React.createElement("div", {className: "row item-input"},
-                    React.createElement("div", {className: "col-md-12"},
-                        React.createElement("div", {className: "col-md-1 serial"},
+                  React.createElement("div", {className: "row item-input"}, 
+                    React.createElement("div", {className: "col-md-12"}, 
+                        React.createElement("div", {className: "col-md-1 serial"}, 
                             serial+1, "."
-                        ),
-                        React.createElement("div", {className: "col-md-11"},
+                        ), 
+                        React.createElement("div", {className: "col-md-11"}, 
                             d
                         )
                     )
                   )
                 );
-
+                  
             }
             else{}
           });
       return (
               component.push((
-                React.createElement("div", null,
-                React.createElement("header", null, modalData.product_details.product_sku),
-                  rowData,
-                      React.createElement("div", {className: "modal-footer removeBorder"},
-                          React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                                React.createElement("div", {className: "row removeBorder"},
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Clear All"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})),
+                React.createElement("div", null, 
+                React.createElement("header", null, modalData.product_details.product_sku), 
+                  rowData, 
+                      React.createElement("div", {className: "modal-footer removeBorder"}, 
+                          React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                                React.createElement("div", {className: "row removeBorder"}, 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Clear All"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})), 
                                     React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
                                 )
                           )
                      )
                 )
-               ))
-               );
-
-
+               ))   
+               );  
+     
+      
       break;
     case appConstants.BOX_FULL:
       component = [];
       component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
               React.createElement("p", null, _("Last item scan will be cancelled. Do you want to continue?"))
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BOX_FULL})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BOX_FULL})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BOX_FULL}))
                 )
               )
@@ -40308,19 +40331,19 @@ function loadComponent(modalType,modalData){
           )
           ));
       title = _("Box Full");
-      break;
+      break;  
        case appConstants.BIN_FULL:
       component = [];
       component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "rowMiddle"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "rowMiddle"}, 
               React.createElement("p", null, _("KQ number of items kept in the bin and confirm?"))
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder fixedWidth"},
-              React.createElement("div", {className: "buttonContainer50 center-block fixedHeight"},
-              React.createElement(NumericIndicator, {Formattingclass: "widerComponent", execType: appConstants.DEFAULT, scanDetails: mainstore.getScanDetails()}),
-                React.createElement("div", {className: "removeBorder fixedBottom"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL_REQUEST})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder fixedWidth"}, 
+              React.createElement("div", {className: "buttonContainer50 center-block fixedHeight"}, 
+              React.createElement(NumericIndicator, {Formattingclass: "widerComponent", execType: appConstants.DEFAULT, scanDetails: mainstore.getScanDetails()}), 
+                React.createElement("div", {className: "removeBorder fixedBottom"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BIN_FULL_REQUEST})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BIN_FULL_REQUEST}))
                 )
               )
@@ -40332,14 +40355,14 @@ function loadComponent(modalType,modalData){
     case appConstants.DISCARD_PACKING_BOX:
       component = [];
       component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
               React.createElement("p", null, _("All item scan will be cancelled. Do you want to discard packing box?"))
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BOX_FULL})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CANCEL_BOX_FULL})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Continue"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_BOX_FULL}))
                 )
               )
@@ -40354,14 +40377,14 @@ function loadComponent(modalType,modalData){
       invoiceStringArg[1] = mainstore.getInvoiceType()?mainstore.getInvoiceType():"";
       component = [];
       component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
               React.createElement("p", null, utils.frntStringTransform("FRNT.PBIM.01",invoiceStringArg))
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Exit"), color: "black", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_EXIT_INVOICE})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Exit"), color: "black", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_EXIT_INVOICE})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.DECLINE_CANCEL_INVOICE}))
                 )
               )
@@ -40374,84 +40397,84 @@ function loadComponent(modalType,modalData){
     case "enter_barcode":
         component = [];
         component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
-              React.createElement("div", {className: "col-md-12"},
-                React.createElement("div", {className: "title-textbox"}, _("Enter Scanner Id")),
-                React.createElement("div", {className: "textBox-div"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, _("Enter Scanner Id")), 
+                React.createElement("div", {className: "textBox-div"}, 
                   React.createElement("input", {className: "width95", type: "text", id: "add_scanner", onClick: attachKeyboard.bind(this, 'add_scanner')})
                 )
               )
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_CLOSE_SCANNER})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_CLOSE_SCANNER})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.ADD_SCANNER_DETAILS}))
                 )
               )
             )
           )
           ));
-
+         
       title = _("Add Scanner");
       break;
     case "cancel_exception":
         component = [];
         component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
-              React.createElement("div", {className: "col-md-12"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
                 React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the exception?"))
               )
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: modalData, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: modalData, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: modalData, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
                 )
               )
             )
           )
           ));
-      title = _("Cancel Exception");
+      title = _("Cancel Exception");    
       break;
 
         case appConstants.CANCEL_SCAN_ALL:
         component = [];
         component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
-              React.createElement("div", {className: "col-md-12"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
                 React.createElement("div", {className: "title-textbox"}, _("All scan and print will be cancelled. Confirm to cancel?"))
               )
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: modalData, action: appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: modalData, action: appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: modalData, action: appConstants.CLOSE_CANCEL_SCAN}))
                 )
               )
             )
           )
           ));
-      title = _("Cancel Scan");
+      title = _("Cancel Scan");    
       break;
 
       case appConstants.ERROR_NOTIFICATION:
           component = [];
           component.push((
-              React.createElement("div", null,
-                  React.createElement("div", {className: "row"},
-                      React.createElement("div", {className: "col-md-12"},
+              React.createElement("div", null, 
+                  React.createElement("div", {className: "row"}, 
+                      React.createElement("div", {className: "col-md-12"}, 
                           React.createElement("div", {className: "title-textbox"}, modalData)
                       )
-                  ),
-                  React.createElement("div", {className: "modal-footer removeBorder"},
-                      React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                          React.createElement("div", {className: "row removeBorder"},
+                  ), 
+                  React.createElement("div", {className: "modal-footer removeBorder"}, 
+                      React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                          React.createElement("div", {className: "row removeBorder"}, 
                               React.createElement("div", {className: "col-md-4 col-md-offset-3"}, React.createElement(Button1, {disabled: false, text: _("OK"), color: "orange", module: appConstants.ERROR_NOTIFICATION, action: appConstants.HIDE_ERROR_NOTIFICATION}))
                           )
                       )
@@ -40473,9 +40496,9 @@ var Modal = React.createClass({displayName: "Modal",
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });*/
+    });*/      
   },
-
+ 
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -40485,12 +40508,12 @@ var Modal = React.createClass({displayName: "Modal",
   onChange: function(){
     this.setState(getStateData());
   },
-  render: function () {
-    return (React.createElement("div", {className: "modal"},
-        React.createElement("div", {className: "modal-dialog"},
-          React.createElement("div", {className: "modal-content"},
-            React.createElement(ModalHeader, {title: title}),
-             React.createElement("div", {className: "modal-body"},
+  render: function () {      
+    return (React.createElement("div", {className: "modal"}, 
+        React.createElement("div", {className: "modal-dialog"}, 
+          React.createElement("div", {className: "modal-content"}, 
+            React.createElement(ModalHeader, {title: title}), 
+             React.createElement("div", {className: "modal-body"}, 
               component
             )
 
@@ -40527,7 +40550,7 @@ function getStateData(){
     };
 }
 
-function attachKeyboard(id){
+function attachKeyboard(id){   
     virtualKeyBoard1 = $('#'+id).keyboard({
             layout: 'custom',
             customLayout: {
@@ -40539,10 +40562,10 @@ function attachKeyboard(id){
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
+            initialFocus: true,          
             visible : function(e, keypressed, el){
-              el.value = '';
-
+              el.value = '';          
+                           
             },
             accepted: function(e, keypressed, el) {
 
@@ -40557,35 +40580,35 @@ function attachNumpad(id){
             customLayout: { 'default'  : ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}'] },
             reposition   : true,
             alwaysOpen   : false,
-            initialFocus : true,
+            initialFocus : true,          
             accepted: function(e, keypressed, el) {
             },
             visible : function(e, keypressed, el){
-              el.value = '';
+              el.value = '';             
             }
       });
    $('#'+id).data('keyboard').reveal();
 }
 
-function attachDateTime(id, toggleTime){
+function attachDateTime(id, toggleTime){  
   if(toggleTime === "true" || toggleTime === true){
       $('#'+id).datetimepicker({timepicker:toggleTime}).datetimepicker("show");
   }
   else{
       $('#'+id).datetimepicker({timepicker:toggleTime,format:'Y/m/d'}).datetimepicker("show");
-  }
+  }   
 }
 
 function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
 
-function loadComponent(modalType,modalData){
+function loadComponent(modalType,modalData){ 
   switch(modalType){
     case "product-detail":
       component = [];
       for (var key in modalData) {
-        if (modalData.hasOwnProperty(key)) {
+        if (modalData.hasOwnProperty(key)) {          
            component.push((React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6 key"}, key), React.createElement("div", {className: "col-md-6 value"}, modalData[key]))));
         }
       }
@@ -40598,56 +40621,56 @@ function loadComponent(modalType,modalData){
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
            //component.push((<div className="col-md-4 heading">{key} </div>));
-           headerArray.push(
-              React.createElement("th", null, _(key))
+           headerArray.push(              
+              React.createElement("th", null, _(key))              
           );
         }
-      }
-      var tr = [];
+      } 
+      var tr = [];    
       modalData.map(function(value,index){
         var rowData = [];
-           for (var key in value) {
+           for (var key in value) {        
             if (value.hasOwnProperty(key)) {
               rowData.push(
                 React.createElement("td", null, value[key])
               )
-            }
+            }                    
           }
           tr.push(React.createElement("tr", null, rowData));
-
+          
       })
        component.push(
-              React.createElement("div", {className: "binInfoValue"},
-                  React.createElement("table", {className: "table"},
-                    React.createElement("thead", {className: "heading"},
+              React.createElement("div", {className: "binInfoValue"}, 
+                  React.createElement("table", {className: "table"}, 
+                    React.createElement("thead", {className: "heading"}, 
                     React.createElement("tr", null, headerArray)
-                    ),
+                    ), 
                     React.createElement("tbody", null, tr)
                  )
               )
           );
       title = _("Bin Info");
-
+      
       break;
-
+      
     case "scan_bin_barcode":
       component = [];
       footer = [];
-      component.push((React.createElement("div", null,
-        React.createElement("div", {className: "modalContent removeBorder"},
-            React.createElement("div", {className: "image1"},
+      component.push((React.createElement("div", null, 
+        React.createElement("div", {className: "modalContent removeBorder"}, 
+            React.createElement("div", {className: "image1"}, 
                 React.createElement("img", {src: allSvgConstants.iconBar})
-            ),
-            React.createElement("div", {className: "content1"}, _("Scan Bin Barcode")),
+            ), 
+            React.createElement("div", {className: "content1"}, _("Scan Bin Barcode")), 
             React.createElement("div", {className: "clearfix"})
-        ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-             React.createElement("div", {className: "buttonContainer center-block"},
+        ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+             React.createElement("div", {className: "buttonContainer center-block"}, 
                 React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_SCAN, barcode: modalData.tote_barcode, color: "black"}))
              )
        )
-       ));
-
+       ));      
+      
       title = _("Associate tote with bin");
       break;
     case "message":
@@ -40668,117 +40691,117 @@ function loadComponent(modalType,modalData){
                     var keyvalue = Object.keys(data1);
                     var inputBoxValue = data1[keyvalue]["value"];
                     if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Integer" || modalData.checklist_data[index][index1][keyvalue[0]].Format == "Float")
-                    {
+                    {                              
                       var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
-
+                      
                     }
                     else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "String")
-                    {
+                    {                      
                       var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachKeyboard.bind(this, 'checklist_field'+index1+ "-" + index)}))
-
+                       
                     }
                      else{
                           if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Datetime")
-                          {
-                            var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, true)}))
+                          {                      
+                            var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, true)}))                            
                           }
                           else if(modalData.checklist_data[index][index1][keyvalue[0]].Format == "Date")
-                          {
+                          {                       
                             var inputBox = (React.createElement("input", {className: "center-block", type: "text", id: "checklist_field"+index1+ "-" + index, value: inputBoxValue, onClick: attachDateTime.bind(this, 'checklist_field'+index1+ "-" + index, false)}))
                           }
-                    }
+                    }                
 
 
-                      return (React.createElement("div", {className: "col-md-6"},
-                                  React.createElement("div", {className: "dataCaptureHead removeBorder"},
+                      return (React.createElement("div", {className: "col-md-6"}, 
+                                  React.createElement("div", {className: "dataCaptureHead removeBorder"}, 
                                       keyvalue
-                                  ),
-                                  React.createElement("div", {className: "dataCaptureInput removeBorder"},
+                                  ), 
+                                  React.createElement("div", {className: "dataCaptureInput removeBorder"}, 
                                       inputBox
                                   )
                               )
                         );
                   })
               return (
-                  React.createElement("div", {className: "row item-input"},
-                    React.createElement("div", {className: "col-md-12"},
-                        React.createElement("div", {className: "col-md-1 serial"},
+                  React.createElement("div", {className: "row item-input"}, 
+                    React.createElement("div", {className: "col-md-12"}, 
+                        React.createElement("div", {className: "col-md-1 serial"}, 
                             serial+1, "."
-                        ),
-                        React.createElement("div", {className: "col-md-11"},
+                        ), 
+                        React.createElement("div", {className: "col-md-11"}, 
                             d
                         )
                     )
                   )
                 );
-
+                  
             }
             else{}
           });
       return (
               component.push((
-                React.createElement("div", null,
-                React.createElement("header", null, modalData.product_details.product_sku),
-                  rowData,
-                      React.createElement("div", {className: "modal-footer removeBorder"},
-                          React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                                React.createElement("div", {className: "row removeBorder"},
-                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Clear All"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})),
+                React.createElement("div", null, 
+                React.createElement("header", null, modalData.product_details.product_sku), 
+                  rowData, 
+                      React.createElement("div", {className: "modal-footer removeBorder"}, 
+                          React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                                React.createElement("div", {className: "row removeBorder"}, 
+                                    React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Clear All"), color: "black", module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_CLEARALL})), 
                                     React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", buttonChecklist: "checklist", checkListData: modalData, module: appConstants.PICK_FRONT, action: appConstants.CHECKLIST_SUBMIT}))
                                 )
                           )
                      )
                 )
-               ))
-               );
-
-
+               ))   
+               );  
+     
+      
       break;
     case "enter_barcode":
         component = [];
         component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
-              React.createElement("div", {className: "col-md-12"},
-                React.createElement("div", {className: "title-textbox"}, "Enter Scanner Id"),
-                React.createElement("div", {className: "textBox-div"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
+                React.createElement("div", {className: "title-textbox"}, "Enter Scanner Id"), 
+                React.createElement("div", {className: "textBox-div"}, 
                   React.createElement("input", {className: "width95", type: "text", id: "add_scanner", onClick: attachKeyboard.bind(this, 'add_scanner')})
                 )
               )
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_ADD_SCANNER})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Cancel"), color: "black", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.CANCEL_ADD_SCANNER})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Submit"), color: "orange", module: appConstants.PERIPHERAL_MANAGEMENT, action: appConstants.ADD_SCANNER_DETAILS}))
                 )
               )
             )
           )
           ));
-
+         
       title = _("Add Scanner");
       break;
     case "cancel_exception":
         component = [];
         component.push((
-          React.createElement("div", null,
-            React.createElement("div", {className: "row"},
-              React.createElement("div", {className: "col-md-12"},
+          React.createElement("div", null, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-md-12"}, 
                 React.createElement("div", {className: "title-textbox"}, _("Are you sure you want to cancel the exception?"))
               )
-            ),
-            React.createElement("div", {className: "modal-footer removeBorder"},
-              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"},
-                React.createElement("div", {className: "row removeBorder"},
-                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})),
+            ), 
+            React.createElement("div", {className: "modal-footer removeBorder"}, 
+              React.createElement("div", {className: "buttonContainer center-block chklstButtonContainer"}, 
+                React.createElement("div", {className: "row removeBorder"}, 
+                  React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("Yes"), color: "orange", module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER})), 
                   React.createElement("div", {className: "col-md-6"}, React.createElement(Button1, {disabled: false, text: _("No"), color: "black", module: appConstants.PRE_PUT, action: appConstants.CLOSE_CANCEL_EXCEPTION}))
                 )
               )
             )
           )
           ));
-      title = _("Cancel Exception");
+      title = _("Cancel Exception");    
       break;
 
     default:
@@ -40794,9 +40817,9 @@ var Modal = React.createClass({displayName: "Modal",
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
-    });*/
+    });*/      
   },
-
+ 
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -40806,12 +40829,12 @@ var Modal = React.createClass({displayName: "Modal",
   onChange: function(){
     this.setState(getStateData());
   },
-  render: function () {
-    return (React.createElement("div", {className: "modal1 fade"},
-        React.createElement("div", {className: "modal-dialog"},
-          React.createElement("div", {className: "modal-content"},
-            React.createElement(ModalHeader, {title: title}),
-             React.createElement("div", {className: "modal-body"},
+  render: function () {      
+    return (React.createElement("div", {className: "modal1 fade"}, 
+        React.createElement("div", {className: "modal-dialog"}, 
+          React.createElement("div", {className: "modal-content"}, 
+            React.createElement(ModalHeader, {title: title}), 
+             React.createElement("div", {className: "modal-body"}, 
               component
             )
 
@@ -40841,8 +40864,8 @@ var React = require('react');
 var ModalHeader = React.createClass({displayName: "ModalHeader",
   render: function () {
     return (
-      React.createElement("div", {className: "modal-header"},
-      	React.createElement("div", {className: "modal-title"},
+      React.createElement("div", {className: "modal-header"}, 
+      	React.createElement("div", {className: "modal-title"}, 
         this.props.title
         )
       )
@@ -40869,43 +40892,43 @@ var ActiveNavigation = React.createClass({displayName: "ActiveNavigation",
         if(compData.level == null){
             level ='' ;
         }else{
-            level = (React.createElement("div", {className: "index"}, React.createElement("span", null, compData.level)));
+            level = (React.createElement("div", {className: "index"}, React.createElement("span", null, compData.level))); 
         }
         return (
-            	React.createElement("div", {className: "active-navigation"},
-
+            	React.createElement("div", {className: "active-navigation"}, 
+                    
                         (function(){
                             if(compData.showImage)
                             return (
-                                    React.createElement("div", {className: "nav-detail"},
-                                    level,
+                                    React.createElement("div", {className: "nav-detail"}, 
+                                    level, 
                                     (function(){
                                         if(navId !== appConstants.PUT_BACK_INVALID_TOTE_ITEM &&  navId !== appConstants.PPTL_MANAGEMENT && navId !== appConstants.SCANNER_MANAGEMENT)
                                             return exceptionImg;
                                     })()
                                     )
                                 );
-                        })(),
-
-            		React.createElement("div", {className: "action"},
+                        })(), 
+                    
+            		React.createElement("div", {className: "action"}, 
                     (function(){
                         if(navId == appConstants.PUT_BACK_INVALID_TOTE_ITEM || navId == appConstants.PPTL_MANAGEMENT || navId == appConstants.SCANNER_MANAGEMENT)
                             return (React.createElement("img", {className: "exceptionImg", src: compData.image}));
-                        })(),
+                        })(), 
             		(function(){
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
                             if(message_args[0] == undefined){
-                              return _(server_message);
+                              return _(server_message);  
                             }else{
                             var header_message = _.apply(null, message_args);
                             return _(header_message);
                             }
                         }
-
+                       
                         }
-                    )(),
-                    this.props.subMessage && React.createElement("div", {className: "sub-message"}, _(this.props.subMessage)),
+                    )(), 
+                    this.props.subMessage && React.createElement("div", {className: "sub-message"}, _(this.props.subMessage)), 
             		this.props.showSpinner
                     )
             	)
@@ -40920,11 +40943,11 @@ var React = require('react');
 var ActiveNavigation = require('./ActiveNavigation.react');
 var PassiveNavigation = require('./PassiveNavigation.react');
 
-var Navigation = React.createClass({displayName: "Navigation",
-
+var Navigation = React.createClass({displayName: "Navigation", 
+    
     render: function() {
         return (
-            React.createElement("div", {className: "navigation"},
+            React.createElement("div", {className: "navigation"}, 
                 this.props.navData.map(function(value,index){
                     if(value.type == "active"){
                         return (
@@ -40950,12 +40973,12 @@ var React = require('react');
 var PassiveNavigation = React.createClass({displayName: "PassiveNavigation",
     render: function() {
         return (
-            	React.createElement("div", {className: "passive-navigation"},
-                    React.createElement("div", {className: "nav-detail"},
-                        React.createElement("div", {className: "index"}, React.createElement("span", null, this.props.data.level)),
-                        React.createElement("div", {className: "image"},
+            	React.createElement("div", {className: "passive-navigation"}, 
+                    React.createElement("div", {className: "nav-detail"}, 
+                        React.createElement("div", {className: "index"}, React.createElement("span", null, this.props.data.level)), 
+                        React.createElement("div", {className: "image"}, 
                         React.createElement("img", {src: this.props.data.image})
-                        ),
+                        ), 
                         React.createElement("div", {className: "info"}, _(this.props.data.message))
                     )
                 )
@@ -41033,12 +41056,12 @@ var Notification = React.createClass({displayName: "Notification",
             else if(errorCode !== null){
                 return (
 
-                    React.createElement("div", {className: appendClass, role: "alert"},
-                        React.createElement("div", {className: appendClass1},
-                            React.createElement("div", {className: "border-glyp"},
+                    React.createElement("div", {className: appendClass, role: "alert"}, 
+                        React.createElement("div", {className: appendClass1}, 
+                            React.createElement("div", {className: "border-glyp"}, 
                                 React.createElement("span", {className: "glyphicon "+appendClass2})
                             )
-                        ),
+                        ), 
                         (function(){
                                 if(navMessagesJson != undefined){
                                     message_args.unshift(navMessagesJson[errorCode]);
@@ -41059,7 +41082,7 @@ var Notification = React.createClass({displayName: "Notification",
             }
         }
 
-
+        
 
     }
 });
@@ -41105,7 +41128,7 @@ var Operator = React.createClass({displayName: "Operator",
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
    this.setState(getState());
   },
   getSeatType:function(seat){
@@ -41126,13 +41149,13 @@ var Operator = React.createClass({displayName: "Operator",
           this._currentSeat = React.createElement(Audit, {navMessagesJson: this.state.navMessages});
         break;
       case appConstants.PRE_PUT:
-          this._currentSeat = React.createElement(PrePut, {navMessagesJson: this.state.navMessages});
+          this._currentSeat = React.createElement(PrePut, {navMessagesJson: this.state.navMessages});            
       default:
-        return true;
+        return true; 
       }
   },
 
-  render: function(data){
+  render: function(data){ 
      this.getSeatType(this.state.currentSeat);
       if(this.state.spinner === true){
        this._spinner = React.createElement(Spinner, null)
@@ -41141,21 +41164,21 @@ var Operator = React.createClass({displayName: "Operator",
       }
        if(this.state.systemIsIdle === true){
           return (
-            React.createElement("div", {className: "main"},
+            React.createElement("div", {className: "main"}, 
               this.state.isMobile?React.createElement(MobileSystemIdle, null):React.createElement(SystemIdle, null)
-            )
+            ) 
           )
         }else{
           return (
-            React.createElement("div", null,
-              this._spinner,
+            React.createElement("div", null, 
+              this._spinner, 
               this._currentSeat
-            )
+            ) 
 
           )
        }
-
-
+      
+     
   }
 });
 
@@ -41188,7 +41211,7 @@ var OrderDetails = React.createClass({displayName: "OrderDetails",
 			orderRowArr.push((React.createElement(OrderRow, {orderKey: k, orderValue: orderValue})))
 		}
 		return (
-				React.createElement("div", {className: "orderDetailsWrapper"},
+				React.createElement("div", {className: "orderDetailsWrapper"}, 
 					orderRowArr
 				)
 			);
@@ -41203,17 +41226,17 @@ var resourceConstants = require('../../constants/resourceConstants');
 
 var OrderRow = React.createClass({displayName: "OrderRow",
 	render : function(){
-
+		
 		return (
-				React.createElement("ul", {className: "orderDetails"},
-				React.createElement("li", {className: "orderParam"},
+				React.createElement("ul", {className: "orderDetails"}, 
+				React.createElement("li", {className: "orderParam"}, 
 				_(resourceConstants[this.props.orderKey]), ":"
-				),
-				React.createElement("li", {className: "orderValue"},
+				), 
+				React.createElement("li", {className: "orderValue"}, 
 					this.props.orderValue
 				)
 				)
-
+					
 			);
 	}
 });
@@ -41231,7 +41254,7 @@ var Pallet = React.createClass({displayName: "Pallet",
 
     render: function(){
 
-        return (React.createElement("div", {className: "palletWrapper"},
+        return (React.createElement("div", {className: "palletWrapper"}, 
             React.createElement("img", {src: allSvgConstants.pallet})
         ))
 
@@ -41279,10 +41302,10 @@ var PickBack = React.createClass({displayName: "PickBack",
     }
     mainstore.addChangeListener(this.onChange);
   },
-  componentWillUnmount: function(){
+  componentWillUnmount: function(){ 
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
     this.setState(getStateData());
     if(this.state.PickBackToteDetails != null){
         this.showModal(this.state.PickBackToteDetails)
@@ -41292,11 +41315,11 @@ var PickBack = React.createClass({displayName: "PickBack",
       var _rightComponent = '';
       this._navigation = '';
       return (
-              React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PickBackExceptionData, action: true}),
-                React.createElement("div", {className: "exception-right"}),
-                React.createElement("div", {className: "cancel-scan"},
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PickBackExceptionData, action: true}), 
+                React.createElement("div", {className: "exception-right"}), 
+                React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
               )
@@ -41330,14 +41353,14 @@ var PickBack = React.createClass({displayName: "PickBack",
             binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId, seatType: this.state.SeatType}))
           }else{
             binComponent =(
-                           React.createElement("div", {className: "main-container"},
+                           React.createElement("div", {className: "main-container"}, 
                             React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
                             )
                            )
           }
           this._component = (
-              React.createElement("div", {className: "grid-container"},
-                React.createElement(Modal, null),
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
                binComponent
               )
             );
@@ -41352,13 +41375,13 @@ var PickBack = React.createClass({displayName: "PickBack",
           if (this.state.OrigBinUse){
             binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId, seatType: this.state.SeatType}));
           }else{
-            binComponent = (React.createElement("div", {className: "main-container"},
+            binComponent = (React.createElement("div", {className: "main-container"}, 
                               React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
                             ));
           }
           this._component = (
-              React.createElement("div", {className: "grid-container"},
-                React.createElement(Modal, null),
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(Modal, null), 
                 binComponent
               )
             );
@@ -41373,56 +41396,56 @@ var PickBack = React.createClass({displayName: "PickBack",
           this.getExceptionAction(screen_id);
           this._navigation = '';
           if (this.state.OrigBinUse){
-            binComponent = (React.createElement("div", {className: "exception1"},
+            binComponent = (React.createElement("div", {className: "exception1"}, 
                             React.createElement(BinsFlex, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId, seatType: this.state.SeatType})
                             ));
           }else{
-            binComponent = (React.createElement("div", {className: "main-container exception1"},
+            binComponent = (React.createElement("div", {className: "main-container exception1"}, 
                             React.createElement(Bins, {binsData: this.state.PickBackBinData, screenId: this.state.PickBackScreenId})
                             ));
-          }
+          } 
           this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                  React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PickBackExceptionData}),
-                React.createElement("div", {className: "exception-right"},
-                   React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}),
-                    binComponent,
-                  React.createElement("div", {className: "finish-damaged-barcode"},
+              React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                   React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData}), 
+                    binComponent, 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
                     this._exceptionAction
                   )
-                ),
-                React.createElement("div", {className: "cancel-scan"},
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
-        break;
+        break; 
 
       case appConstants.PICK_BACK_REPRINT_TOTE:
           this.getExceptionAction(screen_id);
           this._navigation = '';
           this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                  React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PickBackExceptionData}),
-                React.createElement("div", {className: "exception-right"},
+              React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PickBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
                    React.createElement(ExceptionHeader, {data: this.state.PickBackServerNavData})
-                ),
-                React.createElement("div", {className: "cancel-scan"},
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
-        break;
-
+        break; 
+          
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PickBackNavData, serverNavData: this.state.PickBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PickBackScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"},
-                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}),
+            _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
                           React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
                       ))
           }
@@ -41430,29 +41453,29 @@ var PickBack = React.createClass({displayName: "PickBack",
             _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
-              React.createElement("div", {className: "grid-container audit-reconcilation"},
-                  React.createElement("div", {className: "row scannerHeader"},
-                    React.createElement("div", {className: "col-md-6"},
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
                       React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickBackPpsMode.toUpperCase(), " ")
-                    ),
-                    React.createElement("div", {className: "col-md-6"},
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
                       React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PickBackSeatType.toUpperCase())
                     )
-                  ),
-                  React.createElement(TabularData, {data: this.state.utility}),
-                  _button,
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
                   React.createElement(Modal, null)
               )
             );
-        break;
+        break;  
 
       default:
-        return true;
+        return true; 
     }
   },
-  showModal: function(data) {
+  showModal: function(data) { 
 
-    if(data.tote_status === true && !$('.modal').hasClass('in')){
+    if(data.tote_status === true && !$('.modal').hasClass('in')){ 
       setTimeout((function(){CommonActions.showModal({
               data:data,
               type:'scan_bin_barcode'
@@ -41460,7 +41483,7 @@ var PickBack = React.createClass({displayName: "PickBack",
       $('.modal').modal();
       return false;
       }),0)
-    }else if(data.tote_status === false && $('.modal').hasClass('in')){
+    }else if(data.tote_status === false && $('.modal').hasClass('in')){ 
       $('.modal').modal('hide');
     }
   },
@@ -41486,13 +41509,13 @@ var PickBack = React.createClass({displayName: "PickBack",
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PickBackScreenId);
       return (
-        React.createElement("div", {className: "main"},
-          React.createElement(Header, null),
-          this._navigation,
-          this._component,
+        React.createElement("div", {className: "main"}, 
+          React.createElement(Header, null), 
+          this._navigation, 
+          this._component, 
           this._notification
-        )
-
+        ) 
+       
       )
   }
 });
@@ -41565,7 +41588,7 @@ var PickFront = React.createClass({displayName: "PickFront",
     },
     getNotificationComponent: function () {
         if (this.state.PickFrontNotification != undefined)
-            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification,
+            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, 
                                                navMessagesJson: this.props.navMessagesJson})
         else{
             if($(".modal.notification-error").is(":visible")){
@@ -41625,12 +41648,12 @@ var PickFront = React.createClass({displayName: "PickFront",
         var _rightComponent = '';
         this._navigation = '';
         return (
-            React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PickFrontExceptionData, action: true}),
-                React.createElement("div", {className: "exception-right"}),
-                React.createElement("div", {className: "cancel-scan"},
-                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT,
+            React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PickFrontExceptionData, action: true}), 
+                React.createElement("div", {className: "exception-right"}), 
+                React.createElement("div", {className: "cancel-scan"}, 
+                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
                              action: appConstants.CANCEL_EXCEPTION, color: "black"})
                 )
             )
@@ -41641,13 +41664,13 @@ var PickFront = React.createClass({displayName: "PickFront",
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
-                            React.createElement("div", {className: "main-container"},
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
                         )
@@ -41660,19 +41683,19 @@ var PickFront = React.createClass({displayName: "PickFront",
             case appConstants.PICK_FRONT_LOCATION_SCAN:
                 var locationBtnEnable = this.state.PickFrontLocationButtonEnable ? false : true;
                 var locationButton = (
-                    React.createElement(Button1, {disabled: locationBtnEnable, text: _("Confirm"), module: appConstants.PICK_FRONT,
+                    React.createElement(Button1, {disabled: locationBtnEnable, text: _("Confirm"), module: appConstants.PICK_FRONT, 
                              action: appConstants.CONFIRM_LOCATION, color: "orange"}));
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
-                            React.createElement("div", {className: "main-container"},
-                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType,
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
                                       rackData: this.state.PickFrontRackDetails})
-                            ),
+                            ), 
                             locationButton
                         )
                     );
@@ -41683,15 +41706,15 @@ var PickFront = React.createClass({displayName: "PickFront",
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
-                            React.createElement("div", {className: "main-container"},
-                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType,
-                                      rackData: this.state.PickFrontRackDetails, putDirection: this.state.PickFrontPickDirection}),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails, putDirection: this.state.PickFrontPickDirection}), 
                                 React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                             )
                         )
@@ -41701,19 +41724,19 @@ var PickFront = React.createClass({displayName: "PickFront",
                 }
                 break;
 
-
+        
 
 
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
-                            React.createElement("div", {className: "main-container"},
-                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
                                 React.createElement(Rack, {rackData: this.state.PickFrontRackDetails, slotType: this.state.SlotType})
                             )
                         )
@@ -41729,30 +41752,30 @@ var PickFront = React.createClass({displayName: "PickFront",
                 var cancelScanFlag = this.state.PrintCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                   var binComponent;
-                  this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                  this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
-                 binComponent=(React.createElement("div", {className: "main-container"},
-                    React.createElement("div", {className: "printImage"}),
+                 binComponent=(React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "printImage"}), 
                     React.createElement(KQ, {scanDetails: this.state.PrintScanDetails, disable: true})
-                    )
+                    ) 
                     );
                    this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                       React.createElement(Modal, null),
-                              this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails,
-                                    screenClass: "putFrontFlow"}),
+                        React.createElement("div", {className: "grid-container"}, 
+                       React.createElement(Modal, null), 
+                              this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "putFrontFlow"}), 
 
-                              React.createElement("div", {className: "single-bin "+(this.state.SplitScreenFlag?' gor-fixed-position':'fix-top')},
-            React.createElement(Bins, {binsData: this.state.PickCurrentBin, screenId: this.state.PickFrontScreenId}),
+                              React.createElement("div", {className: "single-bin "+(this.state.SplitScreenFlag?' gor-fixed-position':'fix-top')}, 
+            React.createElement(Bins, {binsData: this.state.PickCurrentBin, screenId: this.state.PickFrontScreenId}), 
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
-            ),
-                            binComponent,
-                             React.createElement(Button1, {text: _("Confirm"), disabled: false, module: appConstants.PICK_FRONT, action: appConstants.PRINT_CONFIRM,
-                             color: "orange"}),
-                            React.createElement("div", {className: "actions"},
-                                React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"),
-                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN_MODAL,
+            ), 
+                            binComponent, 
+                             React.createElement(Button1, {text: _("Confirm"), disabled: false, module: appConstants.PICK_FRONT, action: appConstants.PRINT_CONFIRM, 
+                             color: "orange"}), 
+                            React.createElement("div", {className: "actions"}, 
+                                React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN_MODAL, 
                                          color: "black"})
                             )
                        )
@@ -41762,45 +41785,45 @@ var PickFront = React.createClass({displayName: "PickFront",
 else {
                     this._component = this.getExceptionComponent();
                 }
-
-
-            break;
+              
+                                    
+            break;  
 
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
             case appConstants.PICK_FRONT_WORKING_TABLE:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
-                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT,
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
                                      action: appConstants.EDIT_DETAILS, color: "orange"}) );
                     } else {
                         var editButton = '';
                     }
-                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT,
+                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
                                             action: appConstants.BIN_FULL, color: "black"}) );
                     var binComponent = "";
 
         if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
      if (this.state.OrigBinUse)
      {
-     binComponent=(React.createElement("div", {className: "binsFlexWrapperContainer"},
-        React.createElement("div", {className: "workingTableFlex"}),
-        React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails,
-                                              productDetails: this.state.PickFrontProductDetails,
+     binComponent=(React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+        React.createElement("div", {className: "workingTableFlex"}), 
+        React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
                                               itemUid: this.state.PickFrontItemUid})
                                               ))
  }
  else
  {
-    binComponent=(React.createElement("div", {className: "main-container"},
-        React.createElement("div", {className: "workingTable"}),
-    React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails,
-                                     productDetails: this.state.PickFrontProductDetails,
+    binComponent=(React.createElement("div", {className: "main-container"}, 
+        React.createElement("div", {className: "workingTable"}), 
+    React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
                                      itemUid: this.state.PickFrontItemUid})
                                      ));
  }
@@ -41808,42 +41831,42 @@ else {
         else
         {
                     if (this.state.OrigBinUse) {
-                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"},
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData,
-                                      screenId: screen_id, seatType: this.state.SeatType}),
-                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails,
-                                              productDetails: this.state.PickFrontProductDetails,
+                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                      screenId: screen_id, seatType: this.state.SeatType}), 
+                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
                                               itemUid: this.state.PickFrontItemUid})
                         ))
                     } else {
-                        binComponent = (React.createElement("div", {className: "main-container"},
-                            React.createElement(Bins, {binsData: this.state.PickFrontBinData,
-                                  screenId: screen_id}),
-                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails,
-                                     productDetails: this.state.PickFrontProductDetails,
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: screen_id}), 
+                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
                                      itemUid: this.state.PickFrontItemUid})
                         ));
                     }
 
 }
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
 
-                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}),
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
 
                             this.state.SplitScreenFlag &&
-                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails,
-                                    screenClass: "frontFlow"}),
-                            binComponent,
-                            React.createElement("div", {className: "actions"},
-                                React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"),
-                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN,
-                                         color: "black"}),
-                                editButton,
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+                                React.createElement(Button1, {disabled: cancelScanDisabled, text: _("Cancel Scan"), 
+                                         module: appConstants.PICK_FRONT, action: appConstants.CANCEL_SCAN, 
+                                         color: "black"}), 
+                                editButton, 
 
                                 (this.state.PickFrontScreenId!==appConstants.PICK_FRONT_WORKING_TABLE && this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
-
+                            
                             )
 
                         )
@@ -41857,23 +41880,23 @@ else {
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 var cancelButton;
-                var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT,
+                var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
                                         action: appConstants.BIN_FULL, color: "black"}) );
                 if (this.state.PickFrontExceptionStatus == false) {
 
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
-                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT,
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
                                      action: appConstants.EDIT_DETAILS, color: "orange"}) );
                     } else {
                         var editButton = '';
                     }
                     if (!cancelScanDisabled) {
                         cancelButton = (
-                            React.createElement("div", null, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT,
+                            React.createElement("div", null, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, 
                                            action: appConstants.CANCEL_SCAN, color: "black"}), " ", editButton));
                     }
                     else {
@@ -41883,30 +41906,30 @@ else {
                     if (this.state.OrigBinUse) {
 
                         binComponent = (
-                                React.createElement("div", {className: "main-container"},
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData,
-                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS,
+                                React.createElement("div", {className: "main-container"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS, 
                                                   seatType: this.state.SeatType})
 
                                                   ));
                     } else {
-                        binComponent = (React.createElement("div", {className: "main-container"},
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
                             React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                                      ));
 
-
+                        
                     }
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
 
-                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}),
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                             this.state.SplitScreenFlag &&
-                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails,
-                                    screenClass: "frontFlow"}),
-                            binComponent,
-                            React.createElement("div", {className: "actions"},
-                                cancelButton,
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
+                                cancelButton, 
                                 (this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''
 
                             )
@@ -41918,13 +41941,13 @@ else {
                 break;
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
-                            React.createElement("div", {className: "main-container"},
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
                                 React.createElement(Spinner, null)
                             )
                         )
@@ -41938,39 +41961,39 @@ else {
                 var _button;
                 if(!this.state.GetIRTScanStatus)
           {
-                    _button = (React.createElement("div", {className: "staging-action"},
-                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"),
-                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS,
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Confirm"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
                              color: "orange"})
                 ));
 
           }
       else
       {
-                    _button = (React.createElement("div", {className: "staging-action"},
-                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Next"),
-                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS,
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                    React.createElement(Button1, {disabled: this.state.PickFrontExceptionFlag, text: _("Next"), 
+                             module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS, 
                              color: "orange"})
                 ));
       }
 
-
+                
 
                 this._component = (
-                    React.createElement("div", {className: "grid-container exception"},
-                        React.createElement(Modal, null),
-                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                        React.createElement("div", {className: "exception-right"},
-                            React.createElement("div", {className: "main-container"},
-                                React.createElement("div", {className: "kq-exception"},
-                                    React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")),
-                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height width-extra "}),
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement("div", {className: "kq-exception"}, 
+                                    React.createElement("div", {className: "kq-header"}, _("Scan damaged entity")), 
+                                    React.createElement(TabularData, {data: this.state.PickFrontDamagedItems, className: "limit-height width-extra "}), 
                                     _button
                                 )
                             )
-                        ),
-                        React.createElement("div", {className: "cancel-scan"},
-                            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT,
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, 
                                      action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -41979,49 +42002,49 @@ else {
             case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
                 var buttonActivateFlag = mainstore.getExeptionQuanity();
                 this._component = (
-                    React.createElement("div", {className: "grid-container exception"},
-                        React.createElement(Modal, null),
-                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                        React.createElement("div", {className: "exception-right"},
-                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}),
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
 
-                            React.createElement("div", {className: "main-container exception1 displayBlocked"},
+                            React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
-                                ),
+                                ), 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
-                                ),
+                                ), 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
-                                ),
+                                ), 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")),
-                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                                     React.createElement("hr", null)
                                 )
 
-                            ),
-                            React.createElement("div", {className: "finish-damaged-barcode padding"},
-                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange",
-                                         module: appConstants.PICK_FRONT,
+                            ), 
+                            React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", 
+                                         module: appConstants.PICK_FRONT, 
                                          action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
 
                             )
-                        ),
-                        React.createElement("div", {className: "cancel-scan"},
-                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT,
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
                                      action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -42032,48 +42055,48 @@ else {
             case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
                 var buttonActivateFlag = mainstore.getExeptionQuanity();
                 this._component = (
-                    React.createElement("div", {className: "grid-container exception"},
-                        React.createElement(Modal, null),
-                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                        React.createElement("div", {className: "exception-right"},
-                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}),
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
 
-                            React.createElement("div", {className: "main-container exception1 displayBlocked"},
+                            React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Bad barcode on pack")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Bad barcode on pack")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.BAD_BARCODE_PACK})
-                                ),
+                                ), 
 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Pack missing")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Pack missing")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.PACK_MISSING})
-                                ),
+                                ), 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged pack")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged pack")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_PACK})
-                                ),
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Good pack")),
-                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_PACK}),
+                                ), 
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.GOOD_PACK}), 
                                     React.createElement("hr", null)
                                 )
-                            ),
-                            React.createElement("div", {className: "finish-damaged-barcode padding"},
-                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange",
-                                         module: appConstants.PICK_FRONT,
+                            ), 
+                            React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", 
+                                         module: appConstants.PICK_FRONT, 
                                          action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
 
                             )
-                        ),
-                        React.createElement("div", {className: "cancel-scan"},
-                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT,
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
                                      action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -42083,48 +42106,48 @@ else {
             case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
                 var buttonActivateFlag = mainstore.getExeptionQuanity();
                 this._component = (
-                    React.createElement("div", {className: "grid-container exception"},
-                        React.createElement(Modal, null),
-                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                        React.createElement("div", {className: "exception-right"},
-                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}),
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
+                            React.createElement(ExceptionHeader, {data: this.state.PickFrontServerNavData}), 
 
-                            React.createElement("div", {className: "main-container exception1 displayBlocked"},
+                            React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Bad barcode on sub pack")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Bad barcode on sub pack")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.BAD_BARCODE_SUB_PACK})
-                                ),
+                                ), 
 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Sub pack missing")),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Sub pack missing")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.SUB_PACK_MISSING})
-                                ),
+                                ), 
 
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged sub pack")),
-                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_SUB_PACK}),
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Damaged sub pack")), 
+                                    React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_SUB_PACK}), 
                                     React.createElement("hr", null)
-                                ),
-                                React.createElement("div", {className: "gor-NI-wrapper"},
-                                    React.createElement("hr", null),
-                                    React.createElement("div", {className: "exception-qty-title"}, _("Good sub pack")),
+                                ), 
+                                React.createElement("div", {className: "gor-NI-wrapper"}, 
+                                    React.createElement("hr", null), 
+                                    React.createElement("div", {className: "exception-qty-title"}, _("Good sub pack")), 
                                     React.createElement(NumericIndicator, {execType: appConstants.GOOD_SUB_PACK})
                                 )
-                            ),
-                            React.createElement("div", {className: "finish-damaged-barcode padding"},
-                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange",
-                                         module: appConstants.PICK_FRONT,
+                            ), 
+                            React.createElement("div", {className: "finish-damaged-barcode padding"}, 
+                                React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", 
+                                         module: appConstants.PICK_FRONT, 
                                          action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
 
                             )
-                        ),
-                        React.createElement("div", {className: "cancel-scan"},
-                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT,
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, 
                                      action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -42137,9 +42160,9 @@ else {
           if(!this.state.GetIRTScanStatus)
           {
                   selected_screen=(
-                   React.createElement("div", {className: "gor-exception-align"},
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")),
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"},
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FINISH_EXCEPTION_ENTITY})
                   )
                   )
@@ -42147,19 +42170,19 @@ else {
               }
               else{
                 selected_screen=(
-                   React.createElement("div", {className: "gor-exception-align"},
+                   React.createElement("div", {className: "gor-exception-align"}, 
                     React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
                   )
           );
               }
                 this._component = (
-                    React.createElement("div", {className: "grid-container exception"},
-                        React.createElement(Modal, null),
-                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                        React.createElement("div", {className: "exception-right"},
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
                         selected_screen
-                        ),
-                        React.createElement("div", {className: "cancel-scan"},
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
                             React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -42168,24 +42191,24 @@ else {
 
   case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
             var selected_screen;
-
+         
                 selected_screen=(
-                   React.createElement("div", {className: "gor-exception-align"},
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Press print button to reprint label for current item")),
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"},
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Press print button to reprint label for current item")), 
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Reprint"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FRONT_REPRINT})
                   )
                   )
           );
-
+              
                 this._component = (
-                    React.createElement("div", {className: "grid-container exception"},
-                        React.createElement(Modal, null),
-                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                        React.createElement("div", {className: "exception-right"},
+                    React.createElement("div", {className: "grid-container exception"}, 
+                        React.createElement(Modal, null), 
+                        React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                        React.createElement("div", {className: "exception-right"}, 
                         selected_screen
-                        ),
-                        React.createElement("div", {className: "cancel-scan"},
+                        ), 
+                        React.createElement("div", {className: "cancel-scan"}, 
                             React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
@@ -42197,53 +42220,53 @@ else {
                 this._navigation = '';
                 if (this.state.PickFrontExceptionScreen == "box_serial") {
                     this._component = (
-                        React.createElement("div", {className: "grid-container exception"},
-                            React.createElement(Modal, null),
-                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                            React.createElement("div", {className: "exception-right"},
-                                React.createElement("div", {className: "main-container"},
-                                    React.createElement("div", {className: "kq-exception"},
-                                        React.createElement("div", {className: "kq-header"}, _("Missing Boxes")),
+                        React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                            React.createElement("div", {className: "exception-right"}, 
+                                React.createElement("div", {className: "main-container"}, 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {className: "kq-header"}, _("Missing Boxes")), 
                                         React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails})
-                                    ),
-                                    React.createElement("div", {className: "kq-exception"},
-                                        React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")),
-                                        React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity,
-                                                            type: appConstants.UNSCANNABLE,
+                                    ), 
+                                    React.createElement("div", {className: "kq-exception"}, 
+                                        React.createElement("div", {className: "kq-header"}, _("Unscannable Boxes")), 
+                                        React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PickFrontDamagedQuantity, 
+                                                            type: appConstants.UNSCANNABLE, 
                                                             action: appConstants.UNSCANNABLE})
                                     )
-                                ),
-                                React.createElement("div", {className: "finish-damaged-barcode"},
-                                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange",
+                                ), 
+                                React.createElement("div", {className: "finish-damaged-barcode"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", 
                                              module: appConstants.PICK_FRONT, action: appConstants.CONFIRM_FROM_USER})
                                 )
-                            ),
-                            React.createElement("div", {className: "cancel-scan"},
-                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT,
+                            ), 
+                            React.createElement("div", {className: "cancel-scan"}, 
+                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
                                          action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                             )
                         )
                     );
                 } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
                     this._component = (
-                        React.createElement("div", {className: "grid-container exception"},
-                            React.createElement(Modal, null),
-                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}),
-                            React.createElement("div", {className: "exception-right"},
-                                React.createElement("div", {className: "main-container exception2"},
-                                    React.createElement("div", {className: "kq-exception"},
+                        React.createElement("div", {className: "grid-container exception"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement(Exception, {data: this.state.PickFrontExceptionData}), 
+                            React.createElement("div", {className: "exception-right"}, 
+                                React.createElement("div", {className: "main-container exception2"}, 
+                                    React.createElement("div", {className: "kq-exception"}, 
                                         React.createElement("div", {
                                             className: "kq-header"}, "Are You sure Given Boxes are not present in Slot ? ")
                                     )
-                                ),
-                                React.createElement("div", {className: "finish-damaged-barcode"},
-                                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange",
-                                             module: appConstants.PICK_FRONT,
+                                ), 
+                                React.createElement("div", {className: "finish-damaged-barcode"}, 
+                                    React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", 
+                                             module: appConstants.PICK_FRONT, 
                                              action: appConstants.SEND_MISSING_BOX_EXCEPTION})
                                 )
-                            ),
-                            React.createElement("div", {className: "cancel-scan"},
-                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT,
+                            ), 
+                            React.createElement("div", {className: "cancel-scan"}, 
+                                React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, 
                                          action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                             )
                         )
@@ -42254,36 +42277,36 @@ else {
             case appConstants.PPTL_MANAGEMENT:
             case appConstants.SCANNER_MANAGEMENT:
                 this._navigation = (
-                    React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData,
+                    React.createElement(Navigation, {navData: this.state.PickFrontNavData, serverNavData: this.state.PickFrontServerNavData, 
                                 navMessagesJson: this.props.navMessagesJson}))
                 var _button;
                 if (this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT) {
-                    _button = (React.createElement("div", {className: "staging-action"},
-                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT,
-                                 status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}),
-                        React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT,
+                    _button = (React.createElement("div", {className: "staging-action"}, 
+                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                 status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
+                        React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, 
                                  status: true, action: appConstants.ADD_SCANNER, color: "orange"})
                     ))
                 }
                 else {
-                    _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"),
-                                                                        module: appConstants.PERIPHERAL_MANAGEMENT,
-                                                                        status: true, action: appConstants.CANCEL_PPTL,
+                    _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), 
+                                                                        module: appConstants.PERIPHERAL_MANAGEMENT, 
+                                                                        status: true, action: appConstants.CANCEL_PPTL, 
                                                                         color: "black"})))
                 }
                 this._component = (
-                    React.createElement("div", {className: "grid-container audit-reconcilation"},
-                        React.createElement("div", {className: "row scannerHeader"},
-                            React.createElement("div", {className: "col-md-6"},
+                    React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                        React.createElement("div", {className: "row scannerHeader"}, 
+                            React.createElement("div", {className: "col-md-6"}, 
                                 React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PickFrontPpsMode.toUpperCase(), " ")
-                            ),
-                            React.createElement("div", {className: "col-md-6"},
+                            ), 
+                            React.createElement("div", {className: "col-md-6"}, 
                                 React.createElement("div", {className: "seatType"}, " Seat Type" + ' ' +
                                     ": ", this.state.PickFrontSeatType.toUpperCase())
                             )
-                        ),
-                        React.createElement(TabularData, {data: this.state.utility}),
-                        _button,
+                        ), 
+                        React.createElement(TabularData, {data: this.state.utility}), 
+                        _button, 
                         React.createElement(Modal, null)
                     )
                 );
@@ -42291,28 +42314,28 @@ else {
 
             case appConstants.PICK_FRONT_PACKING_BOX:
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
 
                     var binComponent = "";
                     if (this.state.OrigBinUse) {
 
-                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData,
-                                                  screenId: appConstants.PICK_FRONT_PACKING_BOX,
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PACKING_BOX, 
                                                   seatType: this.state.SeatType}))
                     } else {
-                        binComponent = (React.createElement("div", {className: "main-container"},
-                            React.createElement(Bins, {binsData: this.state.PickFrontBinData,
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
                                   screenId: appConstants.PICK_FRONT_PACKING_BOX})
                         ))
                     }
                     this._component = (
 
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
-                            React.createElement("div", {className: "main-container"},
-                                binComponent,
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
+                                binComponent, 
 
                                 React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
                             )
@@ -42325,24 +42348,24 @@ else {
                 break;
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
-                    var _button = (React.createElement("div", {className: "staging-action"},
-                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PICK_FRONT, status: true,
-                                 action: appConstants.CANCEL_BOX_FULL, color: "black"}),
-                        React.createElement(Button1, {disabled: false, text: _("Box Full"), module: appConstants.PICK_FRONT, status: true,
+                    var _button = (React.createElement("div", {className: "staging-action"}, 
+                        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PICK_FRONT, status: true, 
+                                 action: appConstants.CANCEL_BOX_FULL, color: "black"}), 
+                        React.createElement(Button1, {disabled: false, text: _("Box Full"), module: appConstants.PICK_FRONT, status: true, 
                                  action: appConstants.BOX_FULL, color: "black"})
                     ));
                     this._component = (
 
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
 
-                            React.createElement("div", {className: "main-container"},
-                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType,
-                                      rackData: this.state.PickFrontRackDetails}),
-                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}),
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, 
+                                      rackData: this.state.PickFrontRackDetails}), 
+                                React.createElement(BoxSerial, {boxData: this.state.PickFrontBoxDetails}), 
                                 React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails})
                             )
 
@@ -42354,34 +42377,34 @@ else {
                 break;
             case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
                 if (this.state.PickFrontExceptionStatus == false) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
-                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT,
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
                                      action: appConstants.EDIT_DETAILS, color: "orange"}) );
                     } else {
                         var editButton = '';
                     }
-                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT,
+                    var BinFull = (React.createElement(Button1, {disabled: false, text: _("Bin full"), module: appConstants.PICK_FRONT, 
                                             action: appConstants.BIN_FULL, color: "black"}) );
                     var binComponent = "";
                     if (this.state.OrigBinUse) {
-                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"},
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData,
-                                      screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}),
-                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails,
-                                              productDetails: this.state.PickFrontProductDetails,
+                        binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                      screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN, seatType: this.state.SeatType}), 
+                            React.createElement(WrapperSplitRoll, {scanDetails: this.state.PickFrontScanDetails, 
+                                              productDetails: this.state.PickFrontProductDetails, 
                                               itemUid: this.state.PickFrontItemUid})
 
                         ))
                     } else {
-                        binComponent = (React.createElement("div", {className: "main-container"},
-                            React.createElement(Bins, {binsData: this.state.PickFrontBinData,
-                                  screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}),
-                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails,
-                                     productDetails: this.state.PickFrontProductDetails,
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
+                            React.createElement(Bins, {binsData: this.state.PickFrontBinData, 
+                                  screenId: appConstants.PICK_FRONT_MORE_ITEM_SCAN}), 
+                            React.createElement(Wrapper, {scanDetails: this.state.PickFrontScanDetails, 
+                                     productDetails: this.state.PickFrontProductDetails, 
                                      itemUid: this.state.PickFrontItemUid})
 
                         ));
@@ -42393,29 +42416,29 @@ else {
                         btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
                         action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
                         actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
-                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT,
+                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, 
                                               action: action, color: "black"}))
                     }
                     if (cancelButtonStatus) {
                         cancelButton =
-                            React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT,
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PICK_FRONT, 
                                      action: appConstants.CANCEL_SCAN, color: "black"})
                     }
                     this._component = (
-                        React.createElement("div", {className: "grid-container gor-pck-itm-scn"},
-                            React.createElement(Modal, null),
+                        React.createElement("div", {className: "grid-container gor-pck-itm-scn"}, 
+                            React.createElement(Modal, null), 
 
-                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}),
-                            React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails}),
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
+                            React.createElement(OrderDetails, {orderData: this.state.PickFrontBoxOrderDetails}), 
                             this.state.SplitScreenFlag &&
-                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails,
-                                    screenClass: "frontFlow"}),
-                            binComponent,
-                            React.createElement("div", {className: "actions"},
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
+                            React.createElement("div", {className: "actions"}, 
 
-                                cancelButton,
-                                actionBtn,
-                                editButton,
+                                cancelButton, 
+                                actionBtn, 
+                                editButton, 
                                 this.state.PickFrontBinFullStatus && BinFull
                             )
 
@@ -42433,20 +42456,20 @@ else {
 
                 if (this.state.PickFrontExceptionStatus == false) {
 
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
-                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT,
+                            React.createElement(Button1, {disabled: false, text: _("Edit Details"), module: appConstants.PICK_FRONT, 
                                      action: appConstants.EDIT_DETAILS, color: "orange"}) );
                     } else {
                         var editButton = '';
                     }
                     if (!cancelScanDisabled) {
-                        cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"),
-                                                                              module: appConstants.PICK_FRONT,
-                                                                              action: appConstants.CANCEL_SCAN,
+                        cancelButton = (React.createElement("div", {className: "cancel-scan"}, React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), 
+                                                                              module: appConstants.PICK_FRONT, 
+                                                                              action: appConstants.CANCEL_SCAN, 
                                                                               color: "black"}), " ", editButton));
                     }
                     else {
@@ -42455,11 +42478,11 @@ else {
                     var binComponent = "";
                     if (this.state.OrigBinUse) {
 
-                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData,
-                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS,
+                        binComponent = (React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
+                                                  screenId: appConstants.PICK_FRONT_PPTL_PRESS, 
                                                   seatType: this.state.SeatType}))
                     } else {
-                        binComponent = (React.createElement("div", {className: "main-container"},
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
                             React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
                         ))
                     }
@@ -42468,20 +42491,20 @@ else {
                         btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
                         action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
                         actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
-                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT,
+                        actionBtn = (React.createElement(Button1, {disabled: actionBtnStatus, text: btnName, module: appConstants.PICK_FRONT, 
                                               action: action, color: "black"}))
                     }
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
 
-                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}),
+                            React.createElement(CurrentSlot, {slotDetails: this.state.PickFrontSlotDetails}), 
                             this.state.SplitScreenFlag &&
-                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails,
-                                    screenClass: "frontFlow"}),
-                            binComponent,
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "frontFlow"}), 
+                            binComponent, 
 
-                            cancelButton,
+                            cancelButton, 
                             actionBtn
                         )
                     );
@@ -42495,26 +42518,26 @@ else {
                 if (!this.state.PickFrontExceptionStatus) {
                     if (this.state.OrigBinUse) {
                         binComponent = (
-                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: screen_id,
+                            React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, screenId: screen_id, 
                                       seatType: this.state.SeatType}));
                     } else {
-                        binComponent = (React.createElement("div", {className: "main-container"},
+                        binComponent = (React.createElement("div", {className: "main-container"}, 
                             React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: screen_id})
                         ))
                     }
-                    reprintButton=this.state.PickFrontScreenId===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT?(React.createElement(Button1, {disabled: false, text: _("Reprint"), module: appConstants.PICK_FRONT,
+                    reprintButton=this.state.PickFrontScreenId===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT?(React.createElement(Button1, {disabled: false, text: _("Reprint"), module: appConstants.PICK_FRONT, 
                              action: appConstants.REPRINT, color: "black"})):'';
 
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
                     this._component = (
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
                             this.state.SplitScreenFlag &&
-                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails,
-                                    screenClass: "putFrontFlow"}),
-                            binComponent,
+                            React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, 
+                                    screenClass: "putFrontFlow"}), 
+                            binComponent, 
                             reprintButton
                         )
 
@@ -42526,17 +42549,17 @@ else {
 
             case appConstants.PICK_FRONT_SCAN_PACKS:
                 if (!this.state.PickFrontExceptionStatus) {
-                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData,
-                                                    serverNavData: this.state.PickFrontServerNavData,
+                    this._navigation = (React.createElement(Navigation, {navData: this.state.PickFrontNavData, 
+                                                    serverNavData: this.state.PickFrontServerNavData, 
                                                     navMessagesJson: this.props.navMessagesJson}));
 
 
                     this._component = (
 
-                        React.createElement("div", {className: "grid-container"},
-                            React.createElement(Modal, null),
-                            React.createElement("div", {className: "main-container"},
-                                React.createElement(Pallet, null),
+                        React.createElement("div", {className: "grid-container"}, 
+                            React.createElement(Modal, null), 
+                            React.createElement("div", {className: "main-container"}, 
+                                React.createElement(Pallet, null), 
                                 React.createElement(PrdtDetails, {productInfo: this.state.PickFrontProductDetails})
                             )
 
@@ -42559,10 +42582,10 @@ else {
         this.getScreenComponent(this.state.PickFrontScreenId);
 
         return (
-            React.createElement("div", {className: "main"},
-                React.createElement(Header, null),
-                this._navigation,
-                this._component,
+            React.createElement("div", {className: "main"}, 
+                React.createElement(Header, null), 
+                this._navigation, 
+                this._component, 
                 this._notification
             )
         )
@@ -42589,12 +42612,12 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
         if(language_locale == 'null' || language_locale == null){
           locale = 'en-US';
         }else{
-          locale = JSON.parse(language_locale)["data"]["locale"];
+          locale = JSON.parse(language_locale)["data"]["locale"]; 
         }
         data.map(function(value, index){
           var keyValue ="";
           var imageKey;
-          for (var key in value[0]) {
+          for (var key in value[0]) { 
             if (key === "product_dimensions") {
               var dimension = value[0][key];
               for (var i = 0; i < dimension.length; i++) {
@@ -42605,7 +42628,7 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
                   keyValue = keyValue + " X " + dimension[i]
                 }
               }
-
+              
             }
             else if(key != 'display_data' && key != 'product_local_image_url' ){
               keyValue = value[0][key] + ' ';
@@ -42623,22 +42646,22 @@ var ProductDetails = React.createClass({displayName: "ProductDetails",
               if(data_locale.display_name == 'product_local_image_url' ){
                   image_url[data_locale.display_name] = imageKey;
               }
-
+            
             }
 
           )
-
+          
         });
-
+      
     },
     render: function() {
         this.displayLocale(this.props.productInfo);
         return (
-            React.createElement("div", {className: "productTableInfo"},
-				React.createElement(ProductImage, {srcURL: image_url.product_local_image_url}),
-                React.createElement("div", {className: "productHeader"},
+            React.createElement("div", {className: "productTableInfo"}, 
+				React.createElement(ProductImage, {srcURL: image_url.product_local_image_url}), 
+                React.createElement("div", {className: "productHeader"}, 
                     _("Details")
-                ),
+                ), 
                 React.createElement(ProductInfo, {infoDetails: product_info_locale})
 			)
         );
@@ -42656,13 +42679,13 @@ var ProductImage = React.createClass({displayName: "ProductImage",
 		var details = this.props.details;
 		if(srcURL !=undefined)
 		return(
-			React.createElement("div", {className: "productImage"},
+			React.createElement("div", {className: "productImage"}, 
 				React.createElement("img", {className: "img-responsive", src: srcURL})
 			)
 			);
 		else
 			return(
-				React.createElement("div", {className: "productImage holder"},
+				React.createElement("div", {className: "productImage holder"}, 
 					 React.createElement("span", {className: "glyphicon glyphicon-picture"})
 				)
 			);
@@ -42680,8 +42703,8 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
         var arr1 = [];
         $.each(infoDetails, function(key, value) {
             return arr1.push(
-                React.createElement("tr", null,
-	  				React.createElement("td", {className: "key"}, " ", key, " "),
+                React.createElement("tr", null, 
+	  				React.createElement("td", {className: "key"}, " ", key, " "), 
 	  				React.createElement("td", {className: "value"}, value, " ")
   				)
 
@@ -42689,9 +42712,9 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
         });
 
         return (
-            React.createElement("div", {className: "table-wrapper"},
-				React.createElement("table", {className: "table"},
-					React.createElement("tbody", null,
+            React.createElement("div", {className: "table-wrapper"}, 
+				React.createElement("table", {className: "table"}, 									
+					React.createElement("tbody", null, 
 						arr1
 					)
 				)
@@ -42738,7 +42761,7 @@ var PrePut = React.createClass({displayName: "PrePut",
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
      if(this.refs.prePut){
       this.setState(getStateData());
     }
@@ -42747,11 +42770,11 @@ var PrePut = React.createClass({displayName: "PrePut",
       var _rightComponent = '';
       this._navigation = '';
       return (
-              React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}),
-                React.createElement("div", {className: "exception-right"}),
-                React.createElement("div", {className: "cancel-scan"},
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PrePutExceptionData, action: true}), 
+                React.createElement("div", {className: "exception-right"}), 
+                React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
@@ -42766,16 +42789,16 @@ var PrePut = React.createClass({displayName: "PrePut",
           if (this.state.OrigBinUse){
             binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}));
           }else{
-              binComponent = ( React.createElement("div", {className: "main-container"},
+              binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
                 ));
-          }
+          }    
           this._component = (
-              React.createElement("div", {className: "grid-container"},
-               React.createElement(MtuNavigation, {data: this.state.MtuDetails}),
-                React.createElement(Modal, null),
-               binComponent,
-                React.createElement("div", {className: "staging-action"},
+              React.createElement("div", {className: "grid-container"}, 
+               React.createElement(MtuNavigation, {data: this.state.MtuDetails}), 
+                React.createElement(Modal, null), 
+               binComponent, 
+                React.createElement("div", {className: "staging-action"}, 
                   React.createElement(Button, {disabled: !this.state.ReleaseActive, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
                 )
               )
@@ -42791,20 +42814,20 @@ var PrePut = React.createClass({displayName: "PrePut",
           if (this.state.OrigBinUse){
             binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}));
           }else{
-              binComponent = ( React.createElement("div", {className: "main-container"},
+              binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
                 ));
-          }
+          }    
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
-              React.createElement("div", {className: "grid-container"},
-                React.createElement(MtuNavigation, {data: this.state.MtuDetails}),
-                React.createElement(Modal, null),
-                binComponent,
-                React.createElement("div", {className: "staging-action"},
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(MtuNavigation, {data: this.state.MtuDetails}), 
+                React.createElement(Modal, null), 
+                binComponent, 
+                React.createElement("div", {className: "staging-action"}, 
                   React.createElement(Button, {disabled: !this.state.ReleaseActive, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
-                ),
-                React.createElement("div", {className: "cancel-scan"},
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button, {disabled: false, text: _("Cancel Scan"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_SCAN, barcode: this.state.PrePutToteid, color: "black"})
                 )
               )
@@ -42819,17 +42842,17 @@ var PrePut = React.createClass({displayName: "PrePut",
           if (this.state.OrigBinUse){
             binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId, seatType: this.state.SeatType}))
           }else{
-              binComponent = ( React.createElement("div", {className: "main-container"},
+              binComponent = ( React.createElement("div", {className: "main-container"}, 
                     React.createElement(Bins, {binsData: this.state.PrePutBinData, screenId: this.state.PrePutScreenId})
                 ))
-          }
+          }    
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}));
           this._component = (
-              React.createElement("div", {className: "grid-container"},
-                React.createElement(MtuNavigation, {data: this.state.MtuDetails}),
-                React.createElement(Modal, null),
-                binComponent,
-                React.createElement("div", {className: "staging-action"},
+              React.createElement("div", {className: "grid-container"}, 
+                React.createElement(MtuNavigation, {data: this.state.MtuDetails}), 
+                React.createElement(Modal, null), 
+                binComponent, 
+                React.createElement("div", {className: "staging-action"}, 
                   React.createElement(Button, {disabled: false, text: _("Release MTU"), module: appConstants.PRE_PUT, action: appConstants.RELEASE_MTU, color: "orange"})
                 )
               )
@@ -42837,57 +42860,57 @@ var PrePut = React.createClass({displayName: "PrePut",
         }else{
           this._component = this.getExceptionComponent();
         }
-        break;
+        break; 
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
           this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PrePutExceptionData}),
-                React.createElement("div", {className: "exception-right"},
-                  React.createElement("div", {className: "main-container exception2"},
-                    React.createElement("div", {className: "kq-exception"},
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container exception2"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, _("Please scan tote which has excess item"))
                     )
                   )
-                ),
-                 React.createElement("div", {className: "cancel-scan"},
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
-          );
-        break;
+          );      
+        break; 
       case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
           var _button;
-          _button = (React.createElement("div", {className: "staging-action"},
+          _button = (React.createElement("div", {className: "staging-action"}, 
                           React.createElement(Button, {disabled: this.state.PrePutExceptionFlag, text: _("Confirm"), module: appConstants.PRE_PUT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
                     ));
           this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PrePutExceptionData}),
-                React.createElement("div", {className: "exception-right"},
-                  React.createElement("div", {className: "main-container"},
-                    React.createElement("div", {className: "kq-exception"},
-                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")),
-                      React.createElement(TabularData, {data: this.state.PrePutExcessItems, className: "limit-height width-extra "}),
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PrePutExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+                      React.createElement(TabularData, {data: this.state.PrePutExcessItems, className: "limit-height width-extra "}), 
                       _button
                     )
                   )
-                ),
-                 React.createElement("div", {className: "cancel-scan"},
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button, {disabled: false, text: _("Cancel exception"), module: appConstants.PRE_PUT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
-          );
-        break;
+          );      
+        break; 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
           console.log(this.state.PrePutNavData,this.state.PrePutServerNavData);
           this._navigation = (React.createElement(Navigation, {navData: this.state.PrePutNavData, serverNavData: this.state.PrePutServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PrePutScreenId == appConstants.SCANNER_MANAGEMENT){
-          _button = (React.createElement("div", {className: "staging-action"},
-                          React.createElement(Button, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}),
+          _button = (React.createElement("div", {className: "staging-action"}, 
+                          React.createElement(Button, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
                           React.createElement(Button, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
                       ))
           }
@@ -42895,23 +42918,23 @@ var PrePut = React.createClass({displayName: "PrePut",
             _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
-              React.createElement("div", {className: "grid-container audit-reconcilation"},
-                  React.createElement("div", {className: "row scannerHeader"},
-                    React.createElement("div", {className: "col-md-6"},
+              React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+                  React.createElement("div", {className: "row scannerHeader"}, 
+                    React.createElement("div", {className: "col-md-6"}, 
                       React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PrePutPpsMode.toUpperCase(), " ")
-                    ),
-                    React.createElement("div", {className: "col-md-6"},
+                    ), 
+                    React.createElement("div", {className: "col-md-6"}, 
                       React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PrePutSeatType.toUpperCase())
                     )
-                  ),
-                  React.createElement(TabularData, {data: this.state.utility}),
-                  _button,
+                  ), 
+                  React.createElement(TabularData, {data: this.state.utility}), 
+                  _button, 
                   React.createElement(Modal, null)
               )
             );
-        break;
+        break;              
       default:
-        return true;
+        return true; 
     }
   },
 
@@ -42933,17 +42956,17 @@ var PrePut = React.createClass({displayName: "PrePut",
         this._notification = "";
     }
   },
-  render: function(data){
+  render: function(data){ 
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PrePutScreenId);
       return (
-        React.createElement("div", {ref: "prePut", className: "main"},
-          React.createElement(Header, null),
-          this._navigation,
-          this._component,
+        React.createElement("div", {ref: "prePut", className: "main"}, 
+          React.createElement(Header, null), 
+          this._navigation, 
+          this._component, 
           this._notification
-        )
-
+        ) 
+       
       )
   }
 });
@@ -43097,10 +43120,10 @@ var KQ = React.createClass({displayName: "KQ",
           }
 
             var data = {};
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE ||
-                mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||
-                mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  ||
-                mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE ||
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || 
+                mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || 
+                mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  || 
+                mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || 
                 mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ||
                 mainstore.getScreenId() == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION ||
                 mainstore.getScreenId() == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
@@ -43166,10 +43189,10 @@ var KQ = React.createClass({displayName: "KQ",
         if (this._enableDecrement === true && _keypress == false ) {
             if (parseInt(_updatedQty) >= 0 ) {
                 var data = {};
-                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE ||
-                    mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||
-                    mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||
-                    mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE ||
+                 if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || 
+                    mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || 
+                    mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || 
+                    mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || 
                     mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION||
                 mainstore.getScreenId() == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION ||
                 mainstore.getScreenId() == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
@@ -43298,8 +43321,8 @@ var KQ = React.createClass({displayName: "KQ",
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
                 } else  {
                     var data = {};
-                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||
-                        mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE ||
+                     if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  
+                        mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || 
                         mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||
                         mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE ||
                          mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ||
@@ -43308,7 +43331,7 @@ var KQ = React.createClass({displayName: "KQ",
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
                          return true;
                     }
-
+                    
                       if(mainstore.getScreenId() ==appConstants.AUDIT_SCAN_SR){
                  data = {
                     "event_name": appConstants.QUANTITY_UPDATE_AUDIT_SEAT,
@@ -43379,7 +43402,7 @@ var KQ = React.createClass({displayName: "KQ",
   },
   checkKqAllowed : function(){
     if(_scanDetails.kq_allowed === true){
-
+        
       if((parseInt(_updatedQty) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){
 
           if((mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK) && (parseInt(_updatedQty) == 1) ){
@@ -43446,15 +43469,15 @@ var KQ = React.createClass({displayName: "KQ",
 
     if(_scanDetails.total_qty != 0 || mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
         this._qtyComponent = (
-          React.createElement("div", {id: !this.props.disable?'textbox':'textbox-counter'},
-            React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null,"keyboard")}),
-            React.createElement("span", {className: "separator"}, "/"),
+          React.createElement("div", {id: !this.props.disable?'textbox':'textbox-counter'}, 
+            React.createElement("input", {id: "keyboard", className: "current-quantity", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null,"keyboard")}), 
+            React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
         );
     }else{
         this._qtyComponent = (
-          React.createElement("div", {id: "textbox"},
+          React.createElement("div", {id: "textbox"}, 
             React.createElement("input", {id: "keyboard", key: "text_1", value: _updatedQty, onClick: this.openNumpad.call(null,"keyboard")})
           )
         );
@@ -43475,18 +43498,18 @@ var KQ = React.createClass({displayName: "KQ",
             _scanDetails = this.props.scanDetailsGood;
             this.checkKqAllowed();
             this.handleTotalQty();
-
+            
         }
 
 
-        return ( React.createElement("div", {className: !this.props.disable? "kq-wrapper":"kq-wrapper-counter"},
-            !this.props.disable?React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue},
-            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "):'',
+        return ( React.createElement("div", {className: !this.props.disable? "kq-wrapper":"kq-wrapper-counter"}, 
+            !this.props.disable?React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "):'', 
 
-            this._qtyComponent,
-            !this.props.disable?React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue},
+            this._qtyComponent, 
+            !this.props.disable?React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " "):''
-
+            
             )
         )
 
@@ -43511,7 +43534,7 @@ var KQ = React.createClass({displayName: "KQ",
     _qtyComponent : null,
     _appendClassDown: '',
     _appendClassUp: '',
-    virtualKeyboard: null,
+    virtualKeyboard: null, 
     _id : 'keyboard',
     changeValueIncrement : function(){
         if( parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
@@ -43519,40 +43542,40 @@ var KQ = React.createClass({displayName: "KQ",
             return false;
         }
         _updatedQtyDamaged ++;
-        this.handleIncrement();
+        this.handleIncrement();             
        // $("#"+this._id).val(_updatedQty);
     },
     incrementValue: function(event){
        var self = this;
        var interval;
-        if (_scanDetails.kq_allowed === true) {
+        if (_scanDetails.kq_allowed === true) {  
            if( event.type == "mousedown"){
-                interval = setInterval(this.changeValueIncrement, 300);
+                interval = setInterval(this.changeValueIncrement, 300);           
             }
             else if(event.type == 'click'){
                 _updatedQtyDamaged ++;
             }
-
+            
             $('.topArrow').mouseup(function() {
                 clearInterval(interval);
             });
             $('.topArrow').mouseout(function(event) {
                 clearInterval(interval);
             });
-
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE
+         
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
                 || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
                 || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-
-
+          
+               
             }
             else if(parseInt(_updatedQtyDamaged ) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
-               _updatedQtyDamaged  = _updatedQtyDamaged  - 1;
+               _updatedQtyDamaged  = _updatedQtyDamaged  - 1; 
             }
             self.handleIncrement();
         }
-
-    },
+                                  
+    },  
     changeValueDecrement : function(){
 
         if(_updatedQtyDamaged  <= 0 ){
@@ -43560,29 +43583,29 @@ var KQ = React.createClass({displayName: "KQ",
         }else{
             _updatedQtyDamaged --;
         }
-        if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
+        if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
             _updatedQtyDamaged  = 1;
         }
-        this.handleDecrement();
+        this.handleDecrement();        
        // $("#"+this._id).val(_updatedQty);
     },
     decrementValue: function(event){
         var self = this;
         var interval;
-        if (_scanDetails.kq_allowed === true) {
-
-            if( event.type == "mousedown" ){
-                interval = setInterval(this.changeValueDecrement, 300);
-
+        if (_scanDetails.kq_allowed === true) { 
+    
+            if( event.type == "mousedown" ){     
+                interval = setInterval(this.changeValueDecrement, 300);                
+            
             }else if(event.type == 'click') {
                if(_updatedQtyDamaged  <= 0){
                 _updatedQtyDamaged  = 0;
                 }else{
                 _updatedQtyDamaged --;
                 }
-
+    
             }
             $('.downArrow').mouseup(function() {
                 clearInterval(interval);
@@ -43591,23 +43614,23 @@ var KQ = React.createClass({displayName: "KQ",
             $('.downArrow').mouseout(function(event) {
                 clearInterval(interval);
             });
-             if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
+             if((_updatedQtyDamaged  === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
                 _updatedQtyDamaged  = 1;
             }
 
-
+          
             self.handleDecrement();
         }
-
-    },
-
-    handleIncrement: function(event, qty) {
-        if (_scanDetails.kq_allowed === true ) {
+                          
+    },                    
+    
+    handleIncrement: function(event, qty) { 
+        if (_scanDetails.kq_allowed === true ) {           
           if((parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
-          }
-
+          }          
+                      
             var data = {};
             if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() === appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
                 CommonActions.updateKQQuantity(parseInt(_updatedQtyDamaged ));
@@ -43641,7 +43664,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "quantity": parseInt(_updatedQtyDamaged )
                     }
                 };
-            }
+            } 
             else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
@@ -43651,7 +43674,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "event":mainstore.getExceptionType()
                     }
                 };
-            }
+            }  
             else {
                 data = {
                     "event_name": "quantity_update_from_gui",
@@ -43708,7 +43731,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "event":mainstore.getExceptionType()
                     }
                 };
-                }
+                }   
                 else {
                     data = {
                         "event_name": "quantity_update_from_gui",
@@ -43723,7 +43746,7 @@ var KQ = React.createClass({displayName: "KQ",
         }
     },
   componentDidMount: function() {
-    mainstore.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);    
 
   },
   componentWillMount: function(){
@@ -43744,7 +43767,7 @@ var KQ = React.createClass({displayName: "KQ",
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
-            alwaysOpen: false,
+            alwaysOpen: false,          
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
@@ -43770,7 +43793,7 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
+               }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
                      mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
@@ -43787,20 +43810,20 @@ var KQ = React.createClass({displayName: "KQ",
                     $('.ui-keyboard-preview').val(parseInt(keypressed.last.val));
                     }
                 }
-
+                
             },
             accepted: function(e, keypressed, el) {
                 if (e.target.value === '' ) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQtyDamaged ));
-                } else  {
+                } else  {  
                     var data = {};
                      if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));                         
                          return true;
                     }else if(mainstore.getScreenId() === appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
                     {
                         _updatedQtyDamaged=parseInt(e.target.value);
-                        CommonActions.updateKQQuantity(parseInt(e.target.value));
+                        CommonActions.updateKQQuantity(parseInt(e.target.value));        
                         return true;
                     }
                     if(mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY ){
@@ -43816,7 +43839,7 @@ var KQ = React.createClass({displayName: "KQ",
                                 case "DAMAGED":
                                     CommonActions.updateDamagedQuantity(parseInt(e.target.value));
                                 break;
-
+                              
                                 default:
                             }
                         }
@@ -43840,7 +43863,7 @@ var KQ = React.createClass({displayName: "KQ",
                                 "event":mainstore.getExceptionType()
                             }
                         };
-                    }
+                    }   
                     else {
                         data = {
                             "event_name": "quantity_update_from_gui",
@@ -43857,7 +43880,7 @@ var KQ = React.createClass({displayName: "KQ",
     }
 
   },
-  componentWillUnmount: function(){
+  componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
     /*
     if(this.virtualKeyboard != null){
@@ -43865,14 +43888,14 @@ var KQ = React.createClass({displayName: "KQ",
     }
     */
   },
-  onChange: function(){
+  onChange: function(){ 
   },
-  checkKqAllowed : function(){
-    if(_scanDetails.kq_allowed === true){
-      if((parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){
-
+  checkKqAllowed : function(){    
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQtyDamaged ) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
+          
           this._appendClassUp = 'topArrow disable';
-          this._appendClassDown = 'downArrow enable';
+          this._appendClassDown = 'downArrow enable';          
       }
       else{
           this._appendClassUp = 'topArrow enable';
@@ -43881,14 +43904,14 @@ var KQ = React.createClass({displayName: "KQ",
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
-                }
+                } 
             }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() === appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX){
 
                 if(_updatedQtyDamaged  == 0){
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
-                }
+                }   
             }
             else{
                 if(_updatedQtyDamaged  == 1){
@@ -43902,21 +43925,21 @@ var KQ = React.createClass({displayName: "KQ",
     else{
         this._appendClassUp = 'topArrow disable';
         this._appendClassDown = 'downArrow disable';
-    }
+    }    
   },
   handleTotalQty : function(){
-
+ 
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
-          React.createElement("div", {id: "textbox"},
-            React.createElement("input", {id: "damaged_keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null,"damaged_keyboard")}),
-            React.createElement("span", {className: "separator"}, "/"),
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "damaged_keyboard", className: "current-quantity", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null,"damaged_keyboard")}), 
+            React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
         );
     }else{
         this._qtyComponent = (
-          React.createElement("div", {id: "textbox"},
+          React.createElement("div", {id: "textbox"}, 
             React.createElement("input", {id: "damaged_keyboard", value: _updatedQtyDamaged, onClick: this.openNumpad.call(null,"damaged_keyboard")})
           )
         );
@@ -43931,12 +43954,12 @@ var KQ = React.createClass({displayName: "KQ",
         console.log(_updatedQtyDamaged);
         this.checkKqAllowed();
         this.handleTotalQty();
-
-
-        return ( React.createElement("div", {className: "kq-wrapper"},
-            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue},
-            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent,
-            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue},
+     
+        
+        return ( React.createElement("div", {className: "kq-wrapper"}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
             )
         )
@@ -43960,7 +43983,7 @@ var KQ = React.createClass({displayName: "KQ",
     _qtyComponent : null,
     _appendClassDown: '',
     _appendClassUp: '',
-    virtualKeyboard: null,
+    virtualKeyboard: null, 
     _id : 'keyboard',
     changeValueIncrement : function(){
         if( parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") )
@@ -43968,40 +43991,40 @@ var KQ = React.createClass({displayName: "KQ",
             return false;
         }
         _updatedQtyMissing++;
-        this.handleIncrement();
+        this.handleIncrement();             
        // $("#"+this._id).val(_updatedQty);
     },
     incrementValue: function(event){
        var self = this;
        var interval;
-        if (_scanDetails.kq_allowed === true) {
+        if (_scanDetails.kq_allowed === true) {  
            if( event.type == "mousedown"){
-                interval = setInterval(this.changeValueIncrement, 300);
+                interval = setInterval(this.changeValueIncrement, 300);           
             }
             else if(event.type == 'click'){
                 _updatedQtyMissing++;
             }
-
+            
             $('.topArrow').mouseup(function() {
                 clearInterval(interval);
             });
             $('.topArrow').mouseout(function(event) {
                 clearInterval(interval);
             });
-
-            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE
+         
+            if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE 
                 || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION
                 || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ){
-
-
+          
+               
             }
             else if(parseInt(_updatedQtyMissing) > parseInt(_scanDetails.total_qty) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0" )) {
-               _updatedQtyMissing = _updatedQtyMissing - 1;
+               _updatedQtyMissing = _updatedQtyMissing - 1; 
             }
             self.handleIncrement();
         }
-
-    },
+                                  
+    },  
     changeValueDecrement : function(){
 
         if(_updatedQtyMissing <= 0 ){
@@ -44009,29 +44032,29 @@ var KQ = React.createClass({displayName: "KQ",
         }else{
             _updatedQtyMissing--;
         }
-        if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
+        if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
             _updatedQtyMissing = 1;
         }
-        this.handleDecrement();
+        this.handleDecrement();        
        // $("#"+this._id).val(_updatedQtyMissing);
     },
     decrementValue: function(event){
         var self = this;
         var interval;
-        if (_scanDetails.kq_allowed === true) {
-
-            if( event.type == "mousedown" ){
-                interval = setInterval(this.changeValueDecrement, 300);
-
+        if (_scanDetails.kq_allowed === true) { 
+    
+            if( event.type == "mousedown" ){     
+                interval = setInterval(this.changeValueDecrement, 300);                
+            
             }else if(event.type == 'click') {
                if(_updatedQtyMissing <= 0){
                 _updatedQtyMissing = 0;
                 }else{
                 _updatedQtyMissing--;
                 }
-
+    
             }
             $('.downArrow').mouseup(function() {
                 clearInterval(interval);
@@ -44040,23 +44063,23 @@ var KQ = React.createClass({displayName: "KQ",
             $('.downArrow').mouseout(function(event) {
                 clearInterval(interval);
             });
-             if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
+             if((_updatedQtyMissing === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN || 
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)){
                 _updatedQtyMissing = 1;
             }
 
-
+          
             self.handleDecrement();
         }
-
-    },
-
-    handleIncrement: function(event, qty) {
-        if (_scanDetails.kq_allowed === true ) {
+                          
+    },                    
+    
+    handleIncrement: function(event, qty) { 
+        if (_scanDetails.kq_allowed === true ) {           
           if((parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0")){
-          }
-
+          }          
+                      
             var data = {};
             if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 CommonActions.updateKQQuantity(parseInt(_updatedQtyMissing));
@@ -44072,7 +44095,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "quantity": parseInt(_updatedQtyMissing)
                     }
                 };
-            }
+            } 
             else if (mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS) {
                 data = {
                     "event_name": "put_back_exception",
@@ -44082,7 +44105,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "event":mainstore.getExceptionType()
                     }
                 };
-            }
+            }  
             else {
                 data = {
                     "event_name": "quantity_update_from_gui",
@@ -44104,7 +44127,7 @@ var KQ = React.createClass({displayName: "KQ",
                     CommonActions.updateKQQuantity(parseInt(_updatedQtyMissing) );
                      return true;
                 }
-
+               
                 if (mainstore.getCurrentSeat() == "audit_front") {
                     data = {
                         "event_name": "audit_actions",
@@ -44123,7 +44146,7 @@ var KQ = React.createClass({displayName: "KQ",
                         "event":mainstore.getExceptionType()
                     }
                 };
-                }
+                }   
                 else {
                     data = {
                         "event_name": "quantity_update_from_gui",
@@ -44138,7 +44161,7 @@ var KQ = React.createClass({displayName: "KQ",
         }
     },
   componentDidMount: function() {
-    mainstore.removeChangeListener(this.onChange);
+    mainstore.removeChangeListener(this.onChange);    
 
   },
   componentWillMount: function(){
@@ -44159,7 +44182,7 @@ var KQ = React.createClass({displayName: "KQ",
                 'default': ['1 2 3', '4 5 6', '7 8 9', '. 0 {b}', '{a} {c}']
             },
             reposition: true,
-            alwaysOpen: false,
+            alwaysOpen: false,         
             initialFocus: true,
             visible: function(e, keypressed, el) {
                 $(".ui-keyboard-button.ui-keyboard-46").prop('disabled', true);
@@ -44186,7 +44209,7 @@ var KQ = React.createClass({displayName: "KQ",
                     data["level"] = 'error';
                     CommonActions.generateNotification(data);
                     $('.ui-keyboard-preview').val(9999);
-               }else if((parseInt(keypressed.last.val) == 0) &&  ( mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
+               }else if((parseInt(keypressed.last.val) == 0) &&  ( mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&  
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
                      mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
                       mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
@@ -44203,13 +44226,13 @@ var KQ = React.createClass({displayName: "KQ",
             accepted: function(e, keypressed, el) {
                 if (e.target.value === '' ) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQtyMissing));
-                } else  {
+                } else  {  
                     var data = {};
                      if( mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                         CommonActions.updateKQQuantity(parseInt(e.target.value));
                          return true;
                     }
-
+                    
                  if (mainstore.getCurrentSeat() == "audit_front") {
                         data = {
                             "event_name": "audit_actions",
@@ -44228,7 +44251,7 @@ var KQ = React.createClass({displayName: "KQ",
                                 "event":mainstore.getExceptionType()
                             }
                         };
-                    }
+                    }   
                     else {
                         data = {
                             "event_name": "quantity_update_from_gui",
@@ -44245,7 +44268,7 @@ var KQ = React.createClass({displayName: "KQ",
     }
 
   },
-  componentWillUnmount: function(){
+  componentWillUnmount: function(){    
     mainstore.removeChangeListener(this.onChange);
     /*
     if(this.virtualKeyboard != null){
@@ -44253,14 +44276,14 @@ var KQ = React.createClass({displayName: "KQ",
     }
     */
   },
-  onChange: function(){
+  onChange: function(){ 
   },
-  checkKqAllowed : function(){
-    if(_scanDetails.kq_allowed === true){
-      if((parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){
-
+  checkKqAllowed : function(){    
+    if(_scanDetails.kq_allowed === true){        
+      if((parseInt(_updatedQtyMissing) >= parseInt(_scanDetails.total_qty)) && (parseInt(_scanDetails.total_qty) != 0 || _scanDetails.total_qty != "0") ){          
+          
           this._appendClassUp = 'topArrow disable';
-          this._appendClassDown = 'downArrow enable';
+          this._appendClassDown = 'downArrow enable';          
       }
       else{
           this._appendClassUp = 'topArrow enable';
@@ -44269,13 +44292,13 @@ var KQ = React.createClass({displayName: "KQ",
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
-                }
+                } 
             }else if(mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE || mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION){
                 if(_updatedQtyMissing == 0){
                   this._appendClassDown = 'downArrow disable';
                 }else{
                   this._appendClassDown = 'downArrow enable';
-                }
+                }   
             }
             else{
                 if(_updatedQtyMissing == 1){
@@ -44289,21 +44312,21 @@ var KQ = React.createClass({displayName: "KQ",
     else{
         this._appendClassUp = 'topArrow disable';
         this._appendClassDown = 'downArrow disable';
-    }
+    }    
   },
   handleTotalQty : function(){
-
+ 
     if(_scanDetails.total_qty != 0 ){
         this._qtyComponent = (
-          React.createElement("div", {id: "textbox"},
-            React.createElement("input", {id: "missing-keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"missing-keyboard")}),
-            React.createElement("span", {className: "separator"}, "/"),
+          React.createElement("div", {id: "textbox"}, 
+            React.createElement("input", {id: "missing-keyboard", className: "current-quantity", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"missing-keyboard")}), 
+            React.createElement("span", {className: "separator"}, "/"), 
             React.createElement("span", {className: "total-quantity"}, parseInt(_scanDetails.total_qty))
           )
         );
     }else{
         this._qtyComponent = (
-          React.createElement("div", {id: "textbox"},
+          React.createElement("div", {id: "textbox"}, 
             React.createElement("input", {id: "missing_keyboard", value: _updatedQtyMissing, onClick: this.openNumpad.call(null,"missing_keyboard")})
           )
         );
@@ -44316,13 +44339,13 @@ var KQ = React.createClass({displayName: "KQ",
 
         this.checkKqAllowed();
         this.handleTotalQty();
-
-
-
-        return ( React.createElement("div", {className: "kq-wrapper"},
-            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue},
-            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent,
-            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue},
+       
+     
+        
+        return ( React.createElement("div", {className: "kq-wrapper"}, 
+            React.createElement("a", {href: "#", className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue}, 
+            React.createElement("span", {className: "glyphicon glyphicon-menu-up"}, " "), " "), " ", this._qtyComponent, 
+            React.createElement("a", {href: "#", className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}, 
             React.createElement("span", {className: "glyphicon glyphicon-menu-down"}, " "), " ")
             )
         )
@@ -44481,7 +44504,7 @@ updateStore: function(event, qty) {
         break;
         default:
         CommonActions.updateKQQuantity(parseInt(this._qty));
-
+        
     }
     return true;
 
@@ -44531,11 +44554,11 @@ decrementValue: function(event){
         if( event.type === "mousedown" ){
             this.changeValueDecrement(event);
         }
-
+        
         self.updateStore();
     }
 
-},
+}, 
 componentDidMount(){
         (function(self){
             $(".gor_"+self.props.execType).keyboard({
@@ -44627,10 +44650,10 @@ componentDidMount(){
     render: function(data) {
         this.checkKqAllowed();
         return (
-            React.createElement("div", {className: this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"},
-            React.createElement("div", null,
-            React.createElement("span", {className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}),
-            React.createElement("input", {id: "keyboard", value: this.state.value, type: "text", name: "quantity", className: "gor-quantity-text gor_"+this.props.execType}),
+            React.createElement("div", {className: this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"}, 
+            React.createElement("div", null, 
+            React.createElement("span", {className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}), 
+            React.createElement("input", {id: "keyboard", value: this.state.value, type: "text", name: "quantity", className: "gor-quantity-text gor_"+this.props.execType}), 
             React.createElement("span", {className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue})
             )
             )
@@ -44643,36 +44666,36 @@ module.exports = NumericIndicator;
 
 },{"../../actions/CommonActions":233,"../../constants/appConstants":299,"../../constants/resourceConstants":301,"../../stores/mainstore":318,"react":230}],274:[function(require,module,exports){
 var React = require('react');
-var PopUp = React.createClass({displayName: "PopUp",
-
+var PopUp = React.createClass({displayName: "PopUp", 
+  
   componentWillMount: function(){
   },
   componentWillUnmount: function(){
   },
-  onChange: function(){
+  onChange: function(){ 
   },
 
 
-  render: function(data){
+  render: function(data){ 
       var productInfo=  this.props.popupData;
       var details = [];
       for (var key in productInfo) {
         if (productInfo.hasOwnProperty(key)) {
            details.push((React.createElement("div", null, React.createElement("div", {className: "col-md-6"}, key, " "), React.createElement("div", {className: "col-md-6"}, productInfo[key]))));
-
+            
         }
       }
       return (
-          React.createElement("div", {className: "container1 " + (this.props.popupVisible ? 'active' : '')},
-            React.createElement("div", {className: "modal fade", id: "myModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel", "data-backdrop": "static", "data-keyboard": "false"},
-              React.createElement("div", {className: "modal-dialog", role: "document"},
-                React.createElement("div", {className: "modal-content"},
-                  React.createElement("div", {className: "modal-header"},
+          React.createElement("div", {className: "container1 " + (this.props.popupVisible ? 'active' : '')}, 
+            React.createElement("div", {className: "modal fade", id: "myModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel", "data-backdrop": "static", "data-keyboard": "false"}, 
+              React.createElement("div", {className: "modal-dialog", role: "document"}, 
+                React.createElement("div", {className: "modal-content"}, 
+                  React.createElement("div", {className: "modal-header"}, 
                     React.createElement("h4", {className: "modal-title"}, "Product Details")
-                  ),
-                  React.createElement("div", {className: "modal-body"},
-                    React.createElement("table", null,
-                      React.createElement("tbody", null,
+                  ), 
+                  React.createElement("div", {className: "modal-body"}, 
+                    React.createElement("table", null, 
+                      React.createElement("tbody", null, 
                         details
                       )
                     )
@@ -44680,7 +44703,7 @@ var PopUp = React.createClass({displayName: "PopUp",
                 )
               )
             )
-        )
+        ) 
       )
   }
 });
@@ -44697,7 +44720,7 @@ var allresourceConstants = require('../../constants/resourceConstants');
 
 
 function getPopUpState(){
-  return {
+  return {        
         popupVisible : mainstore.getPopUpVisible()
   };
 }
@@ -44718,7 +44741,7 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
     if(this.state.popupVisible === false){
         CommonActions.updateCardVisible(true);
     }
-    else
+    else 
       CommonActions.updateCardVisible(false);
 
   },
@@ -44728,15 +44751,15 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
     this.setState(getPopUpState());
   },
    showPopUp: function(){
     if(this.state.popupVisible === false)
         CommonActions.updatePopupVisible(true);
-    else
+    else 
       CommonActions.updatePopupVisible(false);
-
+    
   },
   displayLocale : function(data){
     product_info_locale = {};
@@ -44746,12 +44769,12 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
     if(language_locale == 'null' || language_locale == null){
       locale = 'en-US';
     }else{
-      locale = JSON.parse(language_locale)["data"]["locale"];
-    }
+      locale = JSON.parse(language_locale)["data"]["locale"]; 
+    } 
     data.map(function(value, index){
       var keyValue;
       var imageKey
-      for (var key in value[0]) {
+      for (var key in value[0]) { 
         if(key != 'display_data' && key != 'product_local_image_url' ){
           keyValue = value[0][key] + ' ';
          }else if(key != 'display_data' && key == 'product_local_image_url' ){
@@ -44768,22 +44791,22 @@ var ProductInfo = React.createClass({displayName: "ProductInfo",
           if(data_locale.display_name == 'product_local_image_url' ){
               image_url[data_locale.display_name] = imageKey;
           }
-
+        
         }
 
       )
-
+      
     });
   },
-  render: function(data){
+  render: function(data){ 
     this.displayLocale(this.props.productDetails);
-    return (
-            React.createElement("div", {className: "product-details-wrapper"},
-              React.createElement("div", {className: "img-container"},
+    return (       
+            React.createElement("div", {className: "product-details-wrapper"}, 
+              React.createElement("div", {className: "img-container"}, 
                   React.createElement("img", {className: "img-responsive", src: image_url.product_local_image_url})
-              ),
-              React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,product_info_locale,"product-detail")},
-                React.createElement("span", null, " ", _(allresourceConstants.VIEW_MORE), " "),
+              ), 
+              React.createElement("div", {className: "view-more-link", "data-toggle": "modal", "data-target": "#myModal", onClick: this.showModal.bind(this,product_info_locale,"product-detail")}, 
+                React.createElement("span", null, " ", _(allresourceConstants.VIEW_MORE), " "), 
                 React.createElement("i", {className: "glyphicon glyphicon-info-sign"})
               )
             )
@@ -44803,7 +44826,7 @@ var PopUp = require('./PopUp');
 var Wrapper = React.createClass({displayName: "Wrapper",
   getInitialState: function(){
     return {
-
+       
     }
   },
   componentWillMount: function(){
@@ -44812,14 +44835,14 @@ var Wrapper = React.createClass({displayName: "Wrapper",
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
   },
   render: function(data){
       return (
-        React.createElement("div", {className: "rightWrapper"},
-            this.props.productDetails && this.props.productDetails.length ? (React.createElement(ProductInfo, {productDetails: this.props.productDetails})):(React.createElement("div", {className: "product-details-empty"})),
+        React.createElement("div", {className: "rightWrapper"}, 
+            this.props.productDetails && this.props.productDetails.length ? (React.createElement(ProductInfo, {productDetails: this.props.productDetails})):(React.createElement("div", {className: "product-details-empty"})), 
             React.createElement(KQ, {scanDetails: this.props.scanDetails, itemUid: this.props.itemUid})
-        )
+        )    
       )
   }
 });
@@ -44836,7 +44859,7 @@ var PopUp = require('./PopUp');
 var Wrapper = React.createClass({displayName: "Wrapper",
   getInitialState: function(){
     return {
-
+       
     }
   },
   componentWillMount: function(){
@@ -44845,14 +44868,14 @@ var Wrapper = React.createClass({displayName: "Wrapper",
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
   },
   render: function(data){
       return (
-        React.createElement("div", {className: "wrapper-flexible"},
-            this.props.productDetails && this.props.productDetails.length?(React.createElement(ProductInfo, {productDetails: this.props.productDetails})):(React.createElement("div", {className: "product-details-empty"})),
+        React.createElement("div", {className: "wrapper-flexible"}, 
+            this.props.productDetails && this.props.productDetails.length?(React.createElement(ProductInfo, {productDetails: this.props.productDetails})):(React.createElement("div", {className: "product-details-empty"})), 
             React.createElement(KQ, {scanDetails: this.props.scanDetails, itemUid: this.props.itemUid})
-        )
+        )    
       )
   }
 });
@@ -44906,7 +44929,7 @@ var PutBack = React.createClass({displayName: "PutBack",
     //PutBackStore.removeChangeListener(this.onChange);
     mainstore.addChangeListener(this.onChange);
   },
-  onChange: function(){
+  onChange: function(){ 
     this.setState(getStateData());
   },
   openKeyboard: function() {
@@ -44923,7 +44946,7 @@ var PutBack = React.createClass({displayName: "PutBack",
             },
             reposition: true,
             alwaysOpen: false,
-            initialFocus: true,
+            initialFocus: true,           
             visible : function(e, keypressed, el){
                 el.value = '';
             },
@@ -44941,23 +44964,23 @@ var PutBack = React.createClass({displayName: "PutBack",
             }
         })
         $('#invoiceNumber').data('keyboard').reveal();
-    },
+    },    
   getExceptionComponent:function(){
     var _rightComponent = '';
     this._navigation = '';
     return (
-      React.createElement("div", {className: "grid-container exception"},
-      React.createElement(Modal, null),
-      React.createElement(Exception, {data: this.state.PutBackExceptionData, action: true}),
-      React.createElement("div", {className: "exception-right"}),
-      React.createElement("div", {className: "cancel-scan"},
+      React.createElement("div", {className: "grid-container exception"}, 
+      React.createElement(Modal, null), 
+      React.createElement(Exception, {data: this.state.PutBackExceptionData, action: true}), 
+      React.createElement("div", {className: "exception-right"}), 
+      React.createElement("div", {className: "cancel-scan"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION, color: "black"})
       )
       )
       );
   },
 
-
+  
 
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -44972,21 +44995,21 @@ var PutBack = React.createClass({displayName: "PutBack",
         if (this.state.OrigBinUse){
           binComponent =(  React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType}))
         }else{
-          binComponent = ( React.createElement("div", {className: "main-container"},
+          binComponent = ( React.createElement("div", {className: "main-container"}, 
             React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
             ))
         }
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"",
-          React.createElement(Modal, null),
-          binComponent,
-          React.createElement("div", {className: "staging-action"},
-          React.createElement(Button1, {disabled: !this.state.StageActive, text: _("Stage"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}),
+          React.createElement("div", {className: "grid-container"}, 
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
+          React.createElement(Modal, null), 
+          binComponent, 
+          React.createElement("div", {className: "staging-action"}, 
+          React.createElement(Button1, {disabled: !this.state.StageActive, text: _("Stage"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ONE_BIN, color: "orange"}), 
           React.createElement(Button1, {disabled: !this.state.StageAllActive, text: _("Stage All"), module: appConstants.PUT_BACK, action: appConstants.STAGE_ALL, color: "black"})
-          ),
+          ), 
           (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) && (!(screen_id===appConstants.PUT_BACK_STAGE && this.state.ToteId))?
-          React.createElement("div", {className: "cancel-scan"},
+          React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: utils.frntStringTransform("FRNT.PBI.02",invoiceStringArgExitBtn), module: appConstants.PUT_BACK, action: appConstants.EXIT_INVOICE, color: "black"})
           ):""
           )
@@ -45000,12 +45023,12 @@ var PutBack = React.createClass({displayName: "PutBack",
       case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
       this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
       this._component = (
-          React.createElement("div", {className: "grid-container"},
-          React.createElement("div", {className: "main-container"},
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement("div", {className: "main-container"}, 
             React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
             )
           )
-          );
+          );         
       break;
 
       case appConstants.PUT_BACK_INVOICE:
@@ -45014,11 +45037,11 @@ var PutBack = React.createClass({displayName: "PutBack",
       var componentModalString = utils.frntStringTransform("FRNT.PBI.01",invoiceStringArg);
       this._navigation = '';
       this._component = (
-        React.createElement("div", {className: "grid-container gor-invoice-wrap"},
-            React.createElement(Modal, null),
-          React.createElement("div", {className: "gor-invoice-input-wrap"},
-            React.createElement("div", {className: "gor-invoice-h1-wrap"}, componentModalString),
-            React.createElement("div", {className: "gor-invoice-input-keyboard-wrap", onClick: this.openKeyboard},
+        React.createElement("div", {className: "grid-container gor-invoice-wrap"}, 
+            React.createElement(Modal, null), 
+          React.createElement("div", {className: "gor-invoice-input-wrap"}, 
+            React.createElement("div", {className: "gor-invoice-h1-wrap"}, componentModalString), 
+            React.createElement("div", {className: "gor-invoice-input-keyboard-wrap", onClick: this.openKeyboard}, 
                 React.createElement("input", {type: "text", className: "form-control gor-invoice-input-box-wrap", id: "invoiceNumber", placeholder: componentModalString, ref: "invoiceNumber"})
             )
           )
@@ -45030,26 +45053,26 @@ var PutBack = React.createClass({displayName: "PutBack",
       if(this.state.PutBackExceptionStatus == false){
         var binComponent = "";
         if(this.state.OrigBinUse){
-           binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"},
-            React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType}),
+           binComponent = (React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+            React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType}), 
             React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
             ));
         }else{
 
-          binComponent = (React.createElement("div", {className: "main-container"},
-            React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}),
+          binComponent = (React.createElement("div", {className: "main-container"}, 
+            React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId}), 
             React.createElement(Wrapper, {scanDetails: this.state.PutBackScanDetails, productDetails: this.state.PutBackProductDetails, itemUid: this.state.PutBackItemUid})
             ));
 
         }
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"",
-          React.createElement(Modal, null),
-          binComponent,
+          React.createElement("div", {className: "grid-container"}, 
+          (this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(React.createElement("div", {className: "gor-invoice-put-back"}, utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg), " ", React.createElement("span", {className: "gor-invoice-put-back-h2"}, this.state.InvoiceRequired.invoiceId))):"", 
+          React.createElement(Modal, null), 
+          binComponent, 
 
-          React.createElement("div", {className: "cancel-scan"},
+          React.createElement("div", {className: "cancel-scan"}, 
           React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_SCAN, barcode: this.state.PutBackItemUid, color: "black"})
           )
           )
@@ -45071,8 +45094,8 @@ var PutBack = React.createClass({displayName: "PutBack",
         };
         if(this.state.PutBackReconciliation["tableRows"].length > 1 )
           subComponent=(
-            React.createElement("div", {className: "main-container"},
-            React.createElement("div", {className: "audit-reconcile-left"},
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement("div", {className: "audit-reconcile-left"}, 
             React.createElement(TabularData, {data: this.state.PutBackReconciliation})
             )
             )
@@ -45083,11 +45106,11 @@ var PutBack = React.createClass({displayName: "PutBack",
             );
         messageType = "small";
         this._component = (
-          React.createElement("div", {className: "grid-container audit-reconcilation"},
-              React.createElement(Modal, null),
-          subComponent,
-          React.createElement("div", {className: "staging-action"},
-          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}),
+          React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+              React.createElement(Modal, null), 
+          subComponent, 
+          React.createElement("div", {className: "staging-action"}, 
+          React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: false, action: appConstants.CANCEL_TOTE, color: "black"}), 
           React.createElement(Button1, {disabled: false, text: _("CLOSE"), module: appConstants.PUT_BACK, toteId: this.state.PutBackToteId, status: true, action: appConstants.CLOSE_TOTE, color: "orange"})
           )
           )
@@ -45098,129 +45121,129 @@ var PutBack = React.createClass({displayName: "PutBack",
       break;
       case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
       this._navigation = '';
-
+      
       if(this.state.PutBackExceptionScreen == "damaged")
         this._component = (
-          React.createElement("div", {className: "grid-container exception"},
-              React.createElement(Modal, null),
-          React.createElement(Exception, {data: this.state.PutBackExceptionData}),
-          React.createElement("div", {className: "exception-right"},
-          React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}),
-          React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}),
-          React.createElement("div", {className: "finish-damaged-barcode"},
+          React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+          React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+          React.createElement("div", {className: "exception-right"}, 
+          React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+          React.createElement(KQ, {scanDetailsGood: this.state.PutBackKQDetails}), 
+          React.createElement("div", {className: "finish-damaged-barcode"}, 
           React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_DAMAGED_ENTITY_DATA})
           )
-          ),
-          React.createElement("div", {className: "cancel-scan"},
+          ), 
+          React.createElement("div", {className: "cancel-scan"}, 
           React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
           )
           )
           );
-      break;
+      break; 
        case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
           this._navigation = '';
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                  React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}),
-                React.createElement("div", {className: "exception-right"},
-                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}),
-                  React.createElement("div", {className: "main-container exception1"},
-                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}),
+              React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
 
-                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}),
+                     React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
 
                     React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
-                  ),
-                  React.createElement("div", {className: "finish-damaged-barcode"},
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
                     React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED})
                   )
-                ),
-                React.createElement("div", {className: "cancel-scan"},
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
                 )
               )
             );
-        break;
+        break; 
        case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
           this._navigation = '';
           if(this.state.PutBackExceptionScreen == "oversized")
           this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                  React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}),
-                React.createElement("div", {className: "exception-right"},
-                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}),
-                  React.createElement("div", {className: "main-container exception1"},
-                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}),
-          React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}),
+              React.createElement("div", {className: "grid-container exception"}, 
+                  React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+                  React.createElement("div", {className: "main-container exception1"}, 
+                    React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
+          React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
 
           React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
-          ),
-          React.createElement("div", {className: "finish-damaged-barcode"},
+          ), 
+          React.createElement("div", {className: "finish-damaged-barcode"}, 
           React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED})
           )
-          ),
-          React.createElement("div", {className: "cancel-scan"},
+          ), 
+          React.createElement("div", {className: "cancel-scan"}, 
           React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
           )
           )
           );
-      break;
+      break; 
       case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
       this._navigation = '';
       var binComponent="";
       if(this.state.OrigBinUse){
-        binComponent=(React.createElement("div", {className: "exception1"},
+        binComponent=(React.createElement("div", {className: "exception1"}, 
           React.createElement(BinsFlex, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId, seatType: this.state.SeatType})
           ))
       }else{
-       binComponent=(React.createElement("div", {className: "main-container exception1"},
+       binComponent=(React.createElement("div", {className: "main-container exception1"}, 
         React.createElement(Bins, {binsData: this.state.PutBackBinData, screenId: this.state.PutBackScreenId})
         ))
      }
      this._component = (
-      React.createElement("div", {className: "grid-container exception"},
-          React.createElement(Modal, null),
-      React.createElement(Exception, {data: this.state.PutBackExceptionData}),
-      React.createElement("div", {className: "exception-right"},
-      React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}),
-      binComponent,
-      React.createElement("div", {className: "finish-damaged-barcode"},
+      React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
+      React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+      React.createElement("div", {className: "exception-right"}, 
+      React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+      binComponent, 
+      React.createElement("div", {className: "finish-damaged-barcode"}, 
       React.createElement(Button1, {disabled: this.state.PutBackNextButtonState, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.SEND_EXCESS_ITEMS_BIN})
       )
-      ),
-      React.createElement("div", {className: "cancel-scan"},
+      ), 
+      React.createElement("div", {className: "cancel-scan"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
       )
       )
       );
-     break;
+     break; 
      case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
      this._navigation = '';
      if(this.state.PutBackExceptionScreen == "extra_quantity")
       this._component = (
-        React.createElement("div", {className: "grid-container exception"},
-            React.createElement(Modal, null),
-        React.createElement(Exception, {data: this.state.PutBackExceptionData}),
-        React.createElement("div", {className: "exception-right"},
-        React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}),
-        React.createElement("div", {className: "main-container exception1"},
-        React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}),
-        React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}),
+        React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+        React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+        React.createElement("div", {className: "exception-right"}, 
+        React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+        React.createElement("div", {className: "main-container exception1"}, 
+        React.createElement(Img, {srcURL: this.state.PutBackExceptionProductDetails.image_url}), 
+        React.createElement(TabularData, {data: this.state.PutBackExceptionProductDetails}), 
         React.createElement(KQ, {scanDetails: this.state.PutBackKQDetails})
-        ),
-        React.createElement("div", {className: "finish-damaged-barcode"},
+        ), 
+        React.createElement("div", {className: "finish-damaged-barcode"}, 
         React.createElement(Button1, {disabled: this.state.PutBackKQDetails.current_qty==0, text: _("NEXT"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.FINISH_EXCEPTION_EXTRA_ITEM})
         )
-        ),
-        React.createElement("div", {className: "cancel-scan"},
+        ), 
+        React.createElement("div", {className: "cancel-scan"}, 
         React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
         )
         )
         );
-    break;
+    break; 
 
          case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
           var selected_screen;
@@ -45249,10 +45272,10 @@ var PutBack = React.createClass({displayName: "PutBack",
           if(!this.state.GetIRTScanStatus)
           {
         selected_screen=(
-  React.createElement("div", {className: "exception-right"},
-                   React.createElement("div", {className: "gor-exception-align"},
-                    messageIRTdisable,
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"},
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    messageIRTdisable, 
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
                   )
@@ -45261,19 +45284,19 @@ var PutBack = React.createClass({displayName: "PutBack",
       }else
       {
          selected_screen=(
-  React.createElement("div", {className: "exception-right"},
-                   React.createElement("div", {className: "gor-exception-align"},
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
                     messageIRTenable
                   )
               )
           );
       }
             this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-              React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PutBackExceptionData}),
-                  selected_screen,
-              React.createElement("div", {className: "cancel-scan"},
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+                  selected_screen, 
+              React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
@@ -45284,16 +45307,16 @@ var PutBack = React.createClass({displayName: "PutBack",
     case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
     this._navigation = '';
     this._component = (
-      React.createElement("div", {className: "grid-container exception"},
-          React.createElement(Modal, null),
-      React.createElement(Exception, {data: this.state.PutBackExceptionData}),
-      React.createElement("div", {className: "exception-right"},
-      React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}),
-      React.createElement("div", {className: "finish-damaged-barcode"},
+      React.createElement("div", {className: "grid-container exception"}, 
+          React.createElement(Modal, null), 
+      React.createElement(Exception, {data: this.state.PutBackExceptionData}), 
+      React.createElement("div", {className: "exception-right"}, 
+      React.createElement(ExceptionHeader, {data: this.state.PutBackServerNavData}), 
+      React.createElement("div", {className: "finish-damaged-barcode"}, 
       React.createElement(Button1, {disabled: false, text: _("FINISH"), color: "orange", module: appConstants.PUT_BACK, action: appConstants.CONFIRM_ITEM_PLACE_IN_IRT})
       )
-      ),
-      React.createElement("div", {className: "cancel-scan"},
+      ), 
+      React.createElement("div", {className: "cancel-scan"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_BACK, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
       )
       )
@@ -45302,13 +45325,13 @@ var PutBack = React.createClass({displayName: "PutBack",
 
     case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
     this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
-
+    
     this._component = (
-      React.createElement("div", {className: "grid-container audit-reconcilation"},
-          React.createElement(Modal, null),
-      React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}),
-      React.createElement("div", {className: "staging-action"},
-      React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}),
+      React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+          React.createElement(Modal, null), 
+      React.createElement(Reconcile, {navMessagesJson: this.props.navMessagesJson, message: this.state.PutBackToteException}), 
+      React.createElement("div", {className: "staging-action"}, 
+      React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_BACK, status: true, action: appConstants.CANCEL_TOTE_EXCEPTION, color: "black"}), 
       React.createElement(Button1, {disabled: false, text: _("Confirm"), module: appConstants.PUT_BACK, status: true, action: appConstants.CONFIRM_TOTE_EXCEPTION, color: "orange"})
       )
       )
@@ -45319,8 +45342,8 @@ var PutBack = React.createClass({displayName: "PutBack",
     this._navigation = (React.createElement(Navigation, {navData: this.state.PutBackNavData, serverNavData: this.state.PutBackServerNavData, navMessagesJson: this.props.navMessagesJson}))
     var _button;
     if(this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT){
-      _button = (React.createElement("div", {className: "staging-action"},
-        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}),
+      _button = (React.createElement("div", {className: "staging-action"}, 
+        React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
         React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
         ))
     }
@@ -45328,23 +45351,23 @@ var PutBack = React.createClass({displayName: "PutBack",
       _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
     }
     this._component = (
-      React.createElement("div", {className: "grid-container audit-reconcilation"},
-      React.createElement("div", {className: "row scannerHeader"},
-      React.createElement("div", {className: "col-md-6"},
+      React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+      React.createElement("div", {className: "row scannerHeader"}, 
+      React.createElement("div", {className: "col-md-6"}, 
       React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutBackPpsMode.toUpperCase(), " ")
-      ),
-      React.createElement("div", {className: "col-md-6"},
+      ), 
+      React.createElement("div", {className: "col-md-6"}, 
       React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutBackSeatType.toUpperCase())
       )
-      ),
-      React.createElement(TabularData, {data: this.state.utility}),
-      _button,
+      ), 
+      React.createElement(TabularData, {data: this.state.utility}), 
+      _button, 
       React.createElement(Modal, null)
       )
       );
-    break;
+    break;      
     default:
-    return true;
+    return true; 
   }
 },
 
@@ -45366,17 +45389,17 @@ getNotificationComponent:function(){
       this._notification = "";
   }
 },
-render: function(data){
+render: function(data){ 
   this.getNotificationComponent();
   this.getScreenComponent(this.state.PutBackScreenId);
   return (
-    React.createElement("div", {className: "main"},
-    React.createElement(Header, null),
-    this._navigation,
-    this._component,
+    React.createElement("div", {className: "main"}, 
+    React.createElement(Header, null), 
+    this._navigation, 
+    this._component, 
     this._notification
-    )
-
+    ) 
+    
     )
 }
 });
@@ -45413,7 +45436,7 @@ var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
- return mainstore.getScreenData();
+  return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({displayName: "PutFront",
@@ -45458,11 +45481,11 @@ var PutFront = React.createClass({displayName: "PutFront",
     var _rightComponent = '';
     this._navigation = '';
     return (
-      React.createElement("div", {className: "grid-container exception"},
-      React.createElement(Modal, null),
-      React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}),
-      React.createElement("div", {className: "exception-right"}),
-      React.createElement("div", {className: "cancel-scan"},
+      React.createElement("div", {className: "grid-container exception"}, 
+      React.createElement(Modal, null), 
+      React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
+      React.createElement("div", {className: "exception-right"}), 
+      React.createElement("div", {className: "cancel-scan"}, 
       React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
       )
       )
@@ -45475,9 +45498,9 @@ var PutFront = React.createClass({displayName: "PutFront",
       if(this.state.PutFrontExceptionStatus == false){
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, showSpinner: this.state.MobileFlag}));
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-            React.createElement(Modal, null),
-          React.createElement("div", {className: "main-container"},
+          React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+          React.createElement("div", {className: "main-container"}, 
           this.state.MobileFlag?React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup}):React.createElement(Spinner, null)
           )
           )
@@ -45489,23 +45512,23 @@ var PutFront = React.createClass({displayName: "PutFront",
       break;
       case appConstants.PUT_FRONT_SCAN:
       if(this.state.PutFrontExceptionStatus == false){
-       if (this.state.OrigBinUse){
-        binComponent = ( React.createElement("div", {className: "binsFlexWrapperContainer"},
-          React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}),
+       if (this.state.OrigBinUse || this.state.PutFrontBinCoordinatePlotting){
+         binComponent = ( React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+          React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType, binCoordinatePlotting: true}), 
           React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
           ))
-
-      }else{
-        binComponent =(React.createElement("div", {className: "main-container"},
-          React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}),
+      }
+      else{
+        binComponent =(React.createElement("div", {className: "main-container"}, 
+          React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
           React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
           ))
       }
       this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
       this._component = (
-        React.createElement("div", {className: "grid-container"},
-        React.createElement(Modal, null),
-        this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}),
+        React.createElement("div", {className: "grid-container"}, 
+        React.createElement(Modal, null), 
+        this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
         binComponent
         )
         );
@@ -45513,11 +45536,11 @@ var PutFront = React.createClass({displayName: "PutFront",
       var _rightComponent = '';
         this._navigation = '';
       this._component =(
-          React.createElement("div", {className: "grid-container exception"},
-            React.createElement(Modal, null),
-              React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}),
-              React.createElement("div", {className: "exception-right"}),
-              React.createElement("div", {className: "cancel-scan"},
+          React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData, action: true}), 
+              React.createElement("div", {className: "exception-right"}), 
+              React.createElement("div", {className: "cancel-scan"}, 
               React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
               )
               )
@@ -45529,18 +45552,18 @@ var PutFront = React.createClass({displayName: "PutFront",
       this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           //need to check this case, if we need flexible bins here?
           this._component = (
-            React.createElement("div", {className: "grid-container"},
-            React.createElement(Modal, null),
-            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}),
-            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':'')+(this.state.SplitScreenFlag?'':' fix-top')},
-            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}),
+            React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':'')+(this.state.SplitScreenFlag?'':' fix-top')}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
-            ),
-            React.createElement("div", {className: "main-container"},
-            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails, putDirection: this.state.PutFrontPutDirection}),
+            ), 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails, putDirection: this.state.PutFrontPutDirection}), 
             React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-            ),
-            React.createElement("div", {className: "cancel-scan"},
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: _("Cancel Scan"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
             )
 
@@ -45554,9 +45577,9 @@ var PutFront = React.createClass({displayName: "PutFront",
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.UNDOCK_PUSH}));
           this._component = (
-            React.createElement("div", {className: "grid-container"},
-              React.createElement(Modal, null),
-            React.createElement("div", {className: "main-container"},
+            React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
+            React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, undockAwaited: this.state.UndockAwaited, docked: this.state.DockedGroup})
             )
             )
@@ -45570,9 +45593,9 @@ var PutFront = React.createClass({displayName: "PutFront",
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson, subMessage: allresourceConstants.WRONG_UNDOCK}));
           this._component = (
-            React.createElement("div", {className: "grid-container"},
-              React.createElement(Modal, null),
-            React.createElement("div", {className: "main-container"},
+            React.createElement("div", {className: "grid-container"}, 
+              React.createElement(Modal, null), 
+            React.createElement("div", {className: "main-container"}, 
             React.createElement(SplitPPS, {groupInfo: this.state.BinMapDetails, wrongUndock: this.state.WrongUndock})
             )
             )
@@ -45589,11 +45612,11 @@ var PutFront = React.createClass({displayName: "PutFront",
           if(!this.state.GetIRTScanStatus)
           {
           selected_screen= (
-            React.createElement("div", null,
-           React.createElement("div", {className: "kq-exception"},
+            React.createElement("div", null, 
+           React.createElement("div", {className: "kq-exception"}, 
           React.createElement("div", {className: "gor-info-text"}, _("Empty the rollcage to undock"))
-          ),
-          React.createElement("div", {className: "staging-action"},
+          ), 
+          React.createElement("div", {className: "staging-action"}, 
           React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.WAREHOUSEFULL_EXCEPTION, color: "orange"})
           )
           ));
@@ -45601,15 +45624,15 @@ var PutFront = React.createClass({displayName: "PutFront",
          else
          {
         selected_screen=  (
-        React.createElement("div", {className: "kq-exception"},
+        React.createElement("div", {className: "kq-exception"}, 
           React.createElement("div", {className: "gor-info-text"}, _("Please put remaining entities in IRT bin and scan the bin"))
           )
           );
          }
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-            React.createElement(Modal, null),
-          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}),
+          React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
         selected_screen
           )
           );
@@ -45620,15 +45643,15 @@ var PutFront = React.createClass({displayName: "PutFront",
          if (this.state.OrigBinUse){
           binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
         }else{
-          binComponent =(React.createElement("div", {className: "main-container"},
+          binComponent =(React.createElement("div", {className: "main-container"}, 
             React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
             ))
         }
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-          React.createElement(Modal, null),
-          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}),
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
           binComponent
           )
           );
@@ -45644,15 +45667,15 @@ var PutFront = React.createClass({displayName: "PutFront",
          if (this.state.OrigBinUse){
           binComponent = (React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}));
         }else{
-          binComponent =(React.createElement("div", {className: "main-container"},
+          binComponent =(React.createElement("div", {className: "main-container"}, 
             React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId})
             ))
         }
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
         this._component = (
-          React.createElement("div", {className: "grid-container"},
-          React.createElement(Modal, null),
-          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}),
+          React.createElement("div", {className: "grid-container"}, 
+          React.createElement(Modal, null), 
+          this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
           binComponent
           )
           );
@@ -45665,15 +45688,15 @@ var PutFront = React.createClass({displayName: "PutFront",
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           //need to check this case, if we need flexible bins here?
           this._component = (
-            React.createElement("div", {className: "grid-container"},
-            React.createElement(Modal, null),
-            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}),
-            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':' fix-top')},
-            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}),
+            React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':' fix-top')}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
-            ),
-            React.createElement("div", {className: "main-container"},
-            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}),
+            ), 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
             React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
             )
             )
@@ -45687,18 +45710,18 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           //need to check this case, if we need flexible bins here?
           this._component = (
-            React.createElement("div", {className: "grid-container"},
-            React.createElement(Modal, null),
-            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}),
-            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')},
-            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}),
+            React.createElement("div", {className: "grid-container"}, 
+            React.createElement(Modal, null), 
+            this.state.SplitScreenFlag && React.createElement(BinMap, {mapDetails: this.state.BinMapDetails, selectedGroup: this.state.BinMapGroupDetails, screenClass: "putFrontFlow"}), 
+            React.createElement("div", {className: "single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}, 
+            React.createElement(Bins, {binsData: this.state.PutFrontCurrentBin, screenId: this.state.PutFrontScreenId}), 
             React.createElement("div", {className: "text"}, _("CURRENT BIN"))
-            ),
-            React.createElement("div", {className: "main-container"},
-            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}),
+            ), 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement(Rack, {isDrawer: this.state.isDrawer, slotType: this.state.SlotType, rackData: this.state.PutFrontRackDetails}), 
             React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
-            ),
-            React.createElement("div", {className: "cancel-scan"},
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: _("Cancel"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_SCAN, barcode: this.state.PutFrontItemUid, color: "black"})
             )
 
@@ -45711,7 +45734,7 @@ var PutFront = React.createClass({displayName: "PutFront",
         case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
           var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
           confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
-          _button = (React.createElement("div", {className: "staging-action"},
+          _button = (React.createElement("div", {className: "staging-action"}, 
                           React.createElement(Button1, {disabled: confirmDisabled, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.UNMARKED_DAMAGED, color: "orange"})
                     ));
           if(isUnmarked){
@@ -45721,28 +45744,28 @@ var PutFront = React.createClass({displayName: "PutFront",
             kqHeadMessage = _("Damaged Quantity");
           }
           else{
-            unmarkedContainer = (React.createElement("div", null,
+            unmarkedContainer = (React.createElement("div", null, 
                React.createElement(TabularData, {data: this.state.PutFrontDamagedItems, className: "limit-height width-extra "})
             ))
             kqHeadMessage = _("Scan damaged entity");
           }
           this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-                React.createElement("div", {className: "exception-right"},
-                  React.createElement("div", {className: "main-container"},
-                    React.createElement("div", {className: "kq-exception"},
-                      React.createElement("div", {className: "kq-header"}, kqHeadMessage),
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement("div", {className: "main-container"}, 
+                    React.createElement("div", {className: "kq-exception"}, 
+                      React.createElement("div", {className: "kq-header"}, kqHeadMessage), 
                      unmarkedContainer
 
                     )
-                  ),
-                  React.createElement("div", {className: "finish-damaged-barcode"},
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode"}, 
                   _button
                   )
-                ),
-                 React.createElement("div", {className: "cancel-scan"},
+                ), 
+                 React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
@@ -45753,9 +45776,9 @@ var PutFront = React.createClass({displayName: "PutFront",
             var UnscannableNI;
             if(!this.state.UnmarkedContainer)
             {
-              UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"},
-                     React.createElement("hr", null),
-                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")),
+              UnscannableNI=( React.createElement("div", {className: "gor-NI-wrapper"}, 
+                     React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Unscannable quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.UNSCANNABLE_QUANTITY})
                     ));
             }
@@ -45764,42 +45787,42 @@ var PutFront = React.createClass({displayName: "PutFront",
               UnscannableNI=(React.createElement("div", null));
             }
            this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-              React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-                React.createElement("div", {className: "exception-right"},
-                  React.createElement(ExceptionHeader, {data: this.state.PutFrontServerNavData}),
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                React.createElement("div", {className: "exception-right"}, 
+                  React.createElement(ExceptionHeader, {data: this.state.PutFrontServerNavData}), 
 
-                  React.createElement("div", {className: "main-container exception1 displayBlocked"},
+                  React.createElement("div", {className: "main-container exception1 displayBlocked"}, 
 
-                    React.createElement("div", {className: "gor-NI-wrapper"},
-                    React.createElement("hr", null),
-                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")),
+                    React.createElement("div", {className: "gor-NI-wrapper"}, 
+                    React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Good quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
-                    ),
+                    ), 
 
-                     React.createElement("div", {className: "gor-NI-wrapper"},
-                     React.createElement("hr", null),
-                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")),
+                     React.createElement("div", {className: "gor-NI-wrapper"}, 
+                     React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Missing quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.MISSING_QUANTITY})
-                    ),
+                    ), 
 
-                    UnscannableNI,
+                    UnscannableNI, 
 
-                    React.createElement("div", {className: "gor-NI-wrapper"},
-                     React.createElement("hr", null),
-                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")),
-                  React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}),
+                    React.createElement("div", {className: "gor-NI-wrapper"}, 
+                     React.createElement("hr", null), 
+                  React.createElement("div", {className: "exception-qty-title"}, _("Damaged quantity")), 
+                  React.createElement(NumericIndicator, {execType: appConstants.DAMAGED_QUANTITY}), 
                    React.createElement("hr", null)
                     )
 
-                  ),
-                  React.createElement("div", {className: "finish-damaged-barcode padding"},
+                  ), 
+                  React.createElement("div", {className: "finish-damaged-barcode padding"}, 
                     React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
 
                   )
-                ),
-                React.createElement("div", {className: "cancel-scan"},
+                ), 
+                React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
@@ -45810,11 +45833,11 @@ var PutFront = React.createClass({displayName: "PutFront",
           if(!this.state.GetIRTScanStatus)
           {
         selected_screen=(
-  React.createElement("div", {className: "exception-right"},
-                   React.createElement("div", {className: "gor-exception-align"},
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")),
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
 
-                  React.createElement("div", {className: "finish-damaged-barcode align-button"},
+                  React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
                   )
@@ -45823,8 +45846,8 @@ var PutFront = React.createClass({displayName: "PutFront",
       }else
       {
          selected_screen=(
-  React.createElement("div", {className: "exception-right"},
-                   React.createElement("div", {className: "gor-exception-align"},
+  React.createElement("div", {className: "exception-right"}, 
+                   React.createElement("div", {className: "gor-exception-align"}, 
                     React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in IRT bin and scan the bin"))
                   )
               )
@@ -45832,11 +45855,11 @@ var PutFront = React.createClass({displayName: "PutFront",
       }
 
             this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-              React.createElement(Modal, null),
-                React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-                  selected_screen,
-              React.createElement("div", {className: "cancel-scan"},
+              React.createElement("div", {className: "grid-container exception"}, 
+              React.createElement(Modal, null), 
+                React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                  selected_screen, 
+              React.createElement("div", {className: "cancel-scan"}, 
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
@@ -45846,41 +45869,41 @@ var PutFront = React.createClass({displayName: "PutFront",
           case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
           if(this.state.PutFrontExceptionScreen == "take_item_from_bin"){
             this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-              React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-              React.createElement("div", {className: "exception-right"},
-              React.createElement("div", {className: "main-container exception2"},
-              React.createElement("div", {className: "kq-exception"},
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+              React.createElement("div", {className: "exception-right"}, 
+              React.createElement("div", {className: "main-container exception2"}, 
+              React.createElement("div", {className: "kq-exception"}, 
               React.createElement("div", {className: "kq-header"}, _("Take the Items out from the Slot"))
               )
-              ),
-              React.createElement("div", {className: "finish-damaged-barcode"},
+              ), 
+              React.createElement("div", {className: "finish-damaged-barcode"}, 
               React.createElement(Button1, {disabled: false, text: _("NEXT"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.GET_REVISED_QUANTITY})
               )
-              ),
-              React.createElement("div", {className: "cancel-scan"},
+              ), 
+              React.createElement("div", {className: "cancel-scan"}, 
               React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
               )
               )
               );
           }else if(this.state.PutFrontExceptionScreen == "revised_quantity"){
             this._component = (
-              React.createElement("div", {className: "grid-container exception"},
-                React.createElement(Modal, null),
-              React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-              React.createElement("div", {className: "exception-right"},
-              React.createElement("div", {className: "main-container"},
-              React.createElement("div", {className: "kq-exception"},
-              React.createElement("div", {className: "kq-header"}, _("Space Available For")),
+              React.createElement("div", {className: "grid-container exception"}, 
+                React.createElement(Modal, null), 
+              React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+              React.createElement("div", {className: "exception-right"}, 
+              React.createElement("div", {className: "main-container"}, 
+              React.createElement("div", {className: "kq-exception"}, 
+              React.createElement("div", {className: "kq-header"}, _("Space Available For")), 
               React.createElement(KQ, {scanDetailsGood: this.state.PutFrontKQQuantity})
               )
-              ),
-              React.createElement("div", {className: "finish-damaged-barcode"},
+              ), 
+              React.createElement("div", {className: "finish-damaged-barcode"}, 
               React.createElement(Button1, {disabled: false, text: _("CONFIRM"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER})
               )
-              ),
-              React.createElement("div", {className: "cancel-scan"},
+              ), 
+              React.createElement("div", {className: "cancel-scan"}, 
               React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_TO_SERVER, color: "black"})
               )
               )
@@ -45890,17 +45913,17 @@ var PutFront = React.createClass({displayName: "PutFront",
           break;
           case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
             this._component = (
-                  React.createElement("div", {className: "grid-container exception"},
-                    React.createElement(Modal, null),
-                    React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-                    React.createElement("div", {className: "exception-right"},
-                      React.createElement("div", {className: "main-container exception2"},
-                        React.createElement("div", {className: "kq-exception"},
+                  React.createElement("div", {className: "grid-container exception"}, 
+                    React.createElement(Modal, null), 
+                    React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+                    React.createElement("div", {className: "exception-right"}, 
+                      React.createElement("div", {className: "main-container exception2"}, 
+                        React.createElement("div", {className: "kq-exception"}, 
                           React.createElement("div", {className: "kq-header"}, _("Please scan bin which has excess item"))
                         )
                       )
-                    ),
-                     React.createElement("div", {className: "cancel-scan"},
+                    ), 
+                     React.createElement("div", {className: "cancel-scan"}, 
                        React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                     )
                   )
@@ -45908,17 +45931,17 @@ var PutFront = React.createClass({displayName: "PutFront",
             break;
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
-            React.createElement("div", {className: "grid-container exception"},
-            React.createElement(Modal, null),
-            React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-            React.createElement("div", {className: "exception-right"},
-            React.createElement("div", {className: "main-container exception2"},
-            React.createElement("div", {className: "kq-exception"},
+            React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+            React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+            React.createElement("div", {className: "exception-right"}, 
+            React.createElement("div", {className: "main-container exception2"}, 
+            React.createElement("div", {className: "kq-exception"}, 
             React.createElement("div", {className: "kq-header"}, _("Please scan tote which has excess item"))
             )
             )
-            ),
-            React.createElement("div", {className: "cancel-scan"},
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
@@ -45926,23 +45949,23 @@ var PutFront = React.createClass({displayName: "PutFront",
           break;
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
-          _button = (React.createElement("div", {className: "staging-action"},
+          _button = (React.createElement("div", {className: "staging-action"}, 
             React.createElement(Button1, {disabled: this.state.PutFrontExceptionFlag, text: _("Next"), module: appConstants.PUT_FRONT, action: appConstants.SEND_EXCESS_ITEMS_BIN, color: "orange"})
             ));
           this._component = (
-            React.createElement("div", {className: "grid-container exception"},
-            React.createElement(Modal, null),
-            React.createElement(Exception, {data: this.state.PutFrontExceptionData}),
-            React.createElement("div", {className: "exception-right"},
-            React.createElement("div", {className: "main-container"},
-            React.createElement("div", {className: "kq-exception"},
-            React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")),
-            React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height width-extra "}),
+            React.createElement("div", {className: "grid-container exception"}, 
+            React.createElement(Modal, null), 
+            React.createElement(Exception, {data: this.state.PutFrontExceptionData}), 
+            React.createElement("div", {className: "exception-right"}, 
+            React.createElement("div", {className: "main-container"}, 
+            React.createElement("div", {className: "kq-exception"}, 
+            React.createElement("div", {className: "kq-header"}, _("Scan excess item quantity")), 
+            React.createElement(TabularData, {data: this.state.PutFrontExcessItems, className: "limit-height width-extra "}), 
             _button
             )
             )
-            ),
-            React.createElement("div", {className: "cancel-scan"},
+            ), 
+            React.createElement("div", {className: "cancel-scan"}, 
             React.createElement(Button1, {disabled: false, text: _("Cancel exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
@@ -45953,8 +45976,8 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
           var _button;
           if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (React.createElement("div", {className: "staging-action"},
-              React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}),
+            _button = (React.createElement("div", {className: "staging-action"}, 
+              React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_ADD_SCANNER, color: "black"}), 
               React.createElement(Button1, {disabled: false, text: _("Add Scanner"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.ADD_SCANNER, color: "orange"})
               ))
           }
@@ -45962,17 +45985,17 @@ var PutFront = React.createClass({displayName: "PutFront",
             _button = (React.createElement("div", {className: "staging-action"}, React.createElement(Button1, {disabled: false, text: _("BACK"), module: appConstants.PERIPHERAL_MANAGEMENT, status: true, action: appConstants.CANCEL_PPTL, color: "black"})))
           }
           this._component = (
-            React.createElement("div", {className: "grid-container audit-reconcilation"},
-            React.createElement("div", {className: "row scannerHeader"},
-            React.createElement("div", {className: "col-md-6"},
+            React.createElement("div", {className: "grid-container audit-reconcilation"}, 
+            React.createElement("div", {className: "row scannerHeader"}, 
+            React.createElement("div", {className: "col-md-6"}, 
             React.createElement("div", {className: "ppsMode"}, " PPS Mode : ", this.state.PutFrontPpsMode.toUpperCase(), " ")
-            ),
-            React.createElement("div", {className: "col-md-6"},
+            ), 
+            React.createElement("div", {className: "col-md-6"}, 
             React.createElement("div", {className: "seatType"}, " Seat Type : ", this.state.PutFrontSeatType.toUpperCase())
             )
-            ),
-            React.createElement(TabularData, {data: this.state.utility}),
-            _button,
+            ), 
+            React.createElement(TabularData, {data: this.state.utility}), 
+            _button, 
             React.createElement(Modal, null)
             )
             );
@@ -45987,10 +46010,10 @@ var PutFront = React.createClass({displayName: "PutFront",
         this.getNotificationComponent();
         this.getScreenComponent(this.state.PutFrontScreenId);
         return (
-          React.createElement("div", {className: "main"},
-          React.createElement(Header, null),
-          this._navigation,
-          this._component,
+          React.createElement("div", {className: "main"}, 
+          React.createElement(Header, null), 
+          this._navigation, 
+          this._component, 
           this._notification
           )
 
@@ -46009,7 +46032,7 @@ var DrawerSlot = require('./DrawerSlot');
  * React component to plot a single drawer row
  */
 var DrawerRow = React.createClass({displayName: "DrawerRow",
-
+	
 	_processData:function(){
 		var drawerSlotData = this.props.drawerSlotData
 		var totalDrawerHeight= this.props.totalDrawerHeight;
@@ -46021,29 +46044,29 @@ var DrawerRow = React.createClass({displayName: "DrawerRow",
 		var x = Math.round((slot[3]/totalDrawerHeight)*100);
 		isSelected = slot[0][0] === selectedSlot ? true :false;
 		rackRowHeight = {
-
+			
 			flexGrow : x.toString()
 		};
-
+		
 		return(
-				React.createElement("div", {className: "rackRow", style: rackRowHeight},
+				React.createElement("div", {className: "rackRow", style: rackRowHeight}, 
 				React.createElement(DrawerSlot, {selectedSlot: isSelected, selectedDrawerSlot: selectedSlot, key: index})
 				)
 			);
-
+		
 	});
 		return eachSlot
 	},
 	render: function(){
-
-	var html = this._processData();
-
-	return (React.createElement("div", {className: "drawers drawRack", id: "drSlot"},
+		
+	var html = this._processData();	
+		
+	return (React.createElement("div", {className: "drawers drawRack", id: "drSlot"}, 
 			html.reverse()
 		))
-
-
-
+				
+				
+		
 	}
 });
 DrawerRow.propTypes = {
@@ -46062,27 +46085,27 @@ var React = require('react');
 
 var DrawerSlot = React.createClass({displayName: "DrawerSlot",
 	render : function(){
-
+		
 		var slotWidth = {
 				width : 100 + '%'
 			};
 		var slotHTML;
 		if(this.props.selectedSlot){
-			slotHTML = (React.createElement("div", {className: "singleslot " + (this.props.selectedSlot ? 'activeSlot' : '')},
+			slotHTML = (React.createElement("div", {className: "singleslot " + (this.props.selectedSlot ? 'activeSlot' : '')}, 
 				this.props.selectedDrawerSlot
 			))
 		}
 		else{
 			slotHTML = (React.createElement("div", {className: "singleslot " + (this.props.selectedSlot ? 'activeSlot' : '')}
-
+				
 			))
 		}
 
 		return (
-			React.createElement("div", {className: "rackSlot", style: slotWidth},
+			React.createElement("div", {className: "rackSlot", style: slotWidth}, 
 				slotHTML
 			)
-
+			
 			);
 	}
 });
@@ -46114,8 +46137,8 @@ var MsuRack = React.createClass({displayName: "MsuRack",
             var eachRowHeight = rackDetails.map(function(row,index){
                 return row[1][0][2];
             });
-            for(var i in eachRowHeight) {
-                totalHeight += eachRowHeight[i];
+            for(var i in eachRowHeight) { 
+                totalHeight += eachRowHeight[i]; 
             }
                return totalHeight;
         },
@@ -46140,13 +46163,13 @@ var MsuRack = React.createClass({displayName: "MsuRack",
 
     },
     /*
-        Since performing DOM manipulations hence
+        Since performing DOM manipulations hence 
         placing the code to draw line in componentDidUpdate
      */
-
+    
     componentDidUpdate:function(){
         /*
-            Calling the line function only if the drawerLineDrawn is false
+            Calling the line function only if the drawerLineDrawn is false 
             and the slot type is drawer.
             drawerLineDrawn is set true once the line is created
          */
@@ -46157,7 +46180,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         if(strEl && endEl){
         this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
       }
-
+    
   }
   if(this.props.putDirection && this.props.putDirection.length>0 && document.getElementsByClassName("LineDirection").length===0){
     var start = (document.querySelectorAll("#rack .activeSlot")[0]);
@@ -46171,7 +46194,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
         Args- startEl(HTML node), endEl (HTML node),
         color (Hexadecimal color), thickness(Integer)
      */
-
+    
     connect:function(startEl, endEl, color, thickness,className) {
     var off1 = this.getOffset(startEl);
     var off2 = this.getOffset(endEl);
@@ -46191,7 +46214,7 @@ var MsuRack = React.createClass({displayName: "MsuRack",
     // make hr
 
  var htmlLine = "<div class="+className+" style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-    document.getElementById('app').innerHTML += htmlLine;
+    document.getElementById('app').innerHTML += htmlLine; 
     this.drawerLineDrawn = true;
 },
 getOffset( el ) {
@@ -46225,7 +46248,7 @@ getOffset( el ) {
             compartmentArr = compartment_details[0].split(".");
             slotStart = parseInt((compartmentArr[3]).replace(/^0+/, ''));
             slotEnd = parseInt((compartmentArr[3]).replace(/^0+/, ''));
-            selectedRackRow =compartmentArr[2];
+            selectedRackRow =compartmentArr[2]; 
             selectedDrawerSlot = compartmentArr[4];
         }
         else if(compartment_details.length === 2){
@@ -46234,17 +46257,17 @@ getOffset( el ) {
             compartmentArr = compartment_details[0].split(".");
             slotStart = parseInt((compartmentArr[3]).replace(/^0+/, ''));
             slotEnd = parseInt((compartment_details[compartment_details.length - 1].split(".")[3]).replace(/^0+/, ''));
-            selectedRackRow =compartmentArr[2];
+            selectedRackRow =compartmentArr[2]; 
             selectedDrawerSlot = compartmentArr[4];
         }
-
-
+        
+        
         for (i = slotStart; i <= slotEnd; i++) {
             slotIndexList.push(i);
         };
-
+       
         var rackRange = selectedRackRow;
-        var totalRackHeight = this.totalRackHeight();
+        var totalRackHeight = this.totalRackHeight(); 
         var totalDrawerHeight;
         var drawerSlotData,filteredDrawerSlotData;
         var eachRowHeight = this.eachRowHeight();
@@ -46255,7 +46278,7 @@ getOffset( el ) {
                 "justify-content": "center",
                 "flex-grow": 1,
                 "flex-wrap": "nowrap",
-                "box-sizing": "border-box",
+                "box-sizing": "border-box",               
                 overflow: "hidden"
 
             }
@@ -46263,7 +46286,7 @@ getOffset( el ) {
         eachRow = rackDetails.map(function(row,index){
             if(row[0] == selectedRackRow){
                 drawerSlotData = row[1];
-
+                
                 return (
                         React.createElement(RackRow, {rowTotalWidth: row[1].reduce(function(height,slot){return height+slot[1]},0), slots: row[1], key: index, slotIndexArray: slotIndexList, rackRange: rackRange, noOfRows: rackDetails.length, totalRackHeight: totalRackHeight, eachRowHeight: eachRowHeight, type: type!=undefined?type:"", slotType: slotType})
                     );
@@ -46285,11 +46308,11 @@ getOffset( el ) {
                     break;
                 }
            }
-
+        
             totalDrawerHeight = filteredDrawerSlotData[3];
             drawerCompartmentArr = filteredDrawerSlotData[4];
             /**
-             * Needed this self invoking function to bypass JSX
+             * Needed this self invoking function to bypass JSX 
              * requirement to wrap elements
              */
             drawerCompartment = (function(){
@@ -46307,13 +46330,13 @@ getOffset( el ) {
         orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
         }
         else if(putDirection.orientation_preference && stackCount>=1){
-        orientation="orientation";
+        orientation="orientation";  
         orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
         }
         else
         {
            orientation="containerHide";
-        }
+        }             
         stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
         stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
         fragileClass=putDirection.fragile?"fragile":"containerHide";
@@ -46322,26 +46345,26 @@ getOffset( el ) {
 
     }
 		return (
-				React.createElement("div", {className: "drawWrap", style: wrapStyle},
-                React.createElement("div", {className: "drawRack", id: "rack", style: this.props.type=="small" ? drawRackStyle:{}},
-					eachRow.reverse(),
+				React.createElement("div", {className: "drawWrap", style: wrapStyle}, 
+                React.createElement("div", {className: "drawRack", id: "rack", style: this.props.type=="small" ? drawRackStyle:{}}, 
+					eachRow.reverse(), 
                     React.createElement("div", {className: "lastRow", style: this.props.type=="small" ?  lastSlot:{}})
-
-				),
+               
+				), 
                 putDirection?(
-                React.createElement("div", {className: "specialContainer"},
-                React.createElement("img", {className: orientation, src: orientationClass}),
-                React.createElement("div", {className: stackClass},
-                        React.createElement("span", {className: stackicon}),
-                        React.createElement("span", {className: "stackText"}, stackText),
+                React.createElement("div", {className: "specialContainer"}, 
+                React.createElement("img", {className: orientation, src: orientationClass}), 
+                React.createElement("div", {className: stackClass}, 
+                        React.createElement("span", {className: stackicon}), 
+                        React.createElement("span", {className: "stackText"}, stackText), 
                         React.createElement("span", {className: "stackCount"}, count)
-                ),
-                 React.createElement("div", {className: fragileClass},
-                        React.createElement("span", {className: "fragileicons"}),
+                ), 
+                 React.createElement("div", {className: fragileClass}, 
+                        React.createElement("span", {className: "fragileicons"}), 
                         React.createElement("span", {className: "fragileText"}, _("FRAGILE"))
                  )
                  )
-):"",
+):"", 
                 drawerCompartment
                 )
 			);
@@ -46357,33 +46380,33 @@ var RackSlot = require('./RackSlot');
 
 var RackRow = React.createClass({displayName: "RackRow",
 	render: function(){
-
+		
 		var rackRange = this.props.rackRange;
 		var slotIndexArray = this.props.slotIndexArray;
 		var slotData = this.props.slots;
 		var totalRackHeight= this.props.totalRackHeight;
-		var noOfRows = this.props.noOfRows;
+		var noOfRows = this.props.noOfRows;	
 		var eachRowHeight = this.props.eachRowHeight;
 		var slotType = this.props.slotType;
-		var eachSlot =[];
+		var eachSlot =[];	
 		var type = this.props.type;
 		var rowTotalWidth=this.props.rowTotalWidth
         /*var calculateHeight = (eachRowHeight/totalRackHeight)*100;
         var rackRowHeight = {
-
+				
 				height : calculateHeight + "%",
 			};*/
 			var rackRowHeight;
 		eachSlot = slotData.map(function(slot,index){
 			var x = Math.round((slot[2]/totalRackHeight)*100);
 			rackRowHeight = {
-
+				
 				flexGrow : x.toString()
 			};
 			if(slotIndexArray!==undefined  && slotIndexArray.indexOf(index+1) >= 0)
 			return(
 					React.createElement(RackSlot, {rowTotalWidth: +rowTotalWidth, totalRackHeight: totalRackHeight, noOfRows: noOfRows, selectedSlot: true, slotHeightData: slot[2], slotWidthData: slot[0], noOfSlotsInRow: slotData.length, slotWidthDataLength: +slot[1], key: index, slotIndexArrays: slotIndexArray, rackRange: rackRange, type: type, slotType: slotType})
-
+					
 				);
 			else
 				return(
@@ -46391,7 +46414,7 @@ var RackRow = React.createClass({displayName: "RackRow",
 					);
 		});
 		return (
-				React.createElement("div", {className: "rackRow", style: rackRowHeight},
+				React.createElement("div", {className: "rackRow", style: rackRowHeight}, 
 					eachSlot
 				)
 			);
@@ -46419,8 +46442,8 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 				width : calculateWidth + '%',
 				//height : calculateHeight/4 + "vh",
 			};
-
-
+		
+		
 		var singleSlot = this.props.slotWidthData.map(function(singSlot,index){
 			//if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(singSlot%10) >= 0)
 				if(slotIndexArrays!==undefined && slotIndexArrays.indexOf(parseInt(singSlot.replace(/^0+/, ''))) >= 0)
@@ -46431,11 +46454,11 @@ var RackSlot = React.createClass({displayName: "RackSlot",
 				return(
 						React.createElement(SingleSlot, {key: index, rackRange: rackRange, type: type, slotType: slotType})
 					);
-
+			
 		});
 
 		return (
-			React.createElement("div", {className: "rackSlot", style: slotWidth},
+			React.createElement("div", {className: "rackSlot", style: slotWidth}, 
 				singleSlot
 			)
 			);
@@ -46463,8 +46486,8 @@ var SingleSlot = React.createClass({displayName: "SingleSlot",
 			slotContent = slotText;
 		}
 		return (
-			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : ''), style: this.props.type=="small"?fontSize:{}},
-				this.props.selected && slotContent,
+			React.createElement("div", {className: "singleslot " + (this.props.selected ? 'activeSlot' : ''), style: this.props.type=="small"?fontSize:{}}, 
+				this.props.selected && slotContent, 
 				this.props.selected && this.props.slotType === "hanger" && hangerIcon
 			)
 			);
@@ -46479,32 +46502,32 @@ var Header = require('./Header');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var ReconcileStatus = React.createClass({displayName: "ReconcileStatus",
-	render:function(){
+	render:function(){		
 		var server_message = this.props.message.description;
-        var navMessagesJson = this.props.navMessagesJson;
+        var navMessagesJson = this.props.navMessagesJson;		
 		var message_args  = this.props.message.details.slice(0);
         var errorCode = this.props.message.code
 		return (
-				React.createElement("div", {className: "reconcileWrapper"},
-					React.createElement("div", {className: "reconcileStatus"},
+				React.createElement("div", {className: "reconcileWrapper"}, 
+					React.createElement("div", {className: "reconcileStatus"}, 
 					(function(){
                         if(navMessagesJson != undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
                             if(message_args[0] == undefined){
-                              return server_message;
+                              return server_message;  
                             }else{
                             var header_message = _.apply(null, message_args);
                             return header_message;
                             }
                         }
-
+                       
                         }
                     )()
-					)
+					)				
 				)
-
-
-
+				
+					
+				
 			);
 	}
 });
@@ -46519,7 +46542,7 @@ var LoaderButler = React.createClass({displayName: "LoaderButler",
 	render:function(){
 		return (
 
-			React.createElement("div", {className: "loaderButler"},
+			React.createElement("div", {className: "loaderButler"}, 
 				React.createElement(SpinnerButler, null)
 			)
 			);
@@ -46537,7 +46560,7 @@ var Overlay = React.createClass({displayName: "Overlay",
 	render:function(){
 		return (
 
-			React.createElement("div", {className: "overlay"},
+			React.createElement("div", {className: "overlay"}, 
 				React.createElement(LoaderButler, null)
 			)
 			);
@@ -46566,7 +46589,7 @@ var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var SplitPPS = React.createClass({displayName: "SplitPPS",
-
+	
 	processData: function(){
 		var data =  Object.assign({},(this.props.groupInfo || {}));
 		var leftCol = [],dockedGroup = this.props.docked||[],
@@ -46576,83 +46599,83 @@ var SplitPPS = React.createClass({displayName: "SplitPPS",
 
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
-
+				
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
 
 					if(dockedGroup.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"},
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "docked spriteIcons"})
 							));
 					}
 					else if(undockAwaited.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"},
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "undock left spriteIcons"})
 							));
 					}
 					else if(wrongUndock.indexOf(k) >= 0){
-						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"},
+						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "wrongUndock left spriteIcons"})
 							));
 					}
 					else{
 						leftCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
 					}
-
+					
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
 					if(dockedGroup.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"},
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "docked spriteIcons"})
 							));
 					}
 					else if(undockAwaited.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"},
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "undock right spriteIcons"})
 							));
 					}else if(wrongUndock.indexOf(k) >= 0){
-						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"},
+						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}, 
 							React.createElement("span", {className: "wrongUndock right spriteIcons"})
 							));
 					}
 					else{
 						rightCol.push(React.createElement("li", {key: k, className: "spriteIcons"}));
 					}
-
+					
 				}
 
 			}
 		}
-
+	
 
 		return {
 			leftCol:leftCol,
 			rightCol:rightCol
 		}
 	},
-	render:function(){
-
-		var mapStructure = this.processData();
-
+	render:function(){		
+		
+		var mapStructure = this.processData();	
+		
 		return (
-				React.createElement("div", {className: "splitPPSWrapper"},
-					React.createElement("div", {className: "mapCont"},
-					React.createElement("div", {className: "col1 three"},
-					React.createElement("ul", null,
+				React.createElement("div", {className: "splitPPSWrapper"}, 
+					React.createElement("div", {className: "mapCont"}, 
+					React.createElement("div", {className: "col1 three"}, 
+					React.createElement("ul", null, 
 					mapStructure.leftCol
 					)
-					),
+					), 
 					React.createElement("div", {className: "col2 spriteIcons"}
-					),
-					React.createElement("div", {className: "col3 three"},
-					React.createElement("ul", null,
+					), 
+					React.createElement("div", {className: "col3 three"}, 
+					React.createElement("ul", null, 
 					mapStructure.rightCol
 					)
 					)
 					)
 				)
-
-
-
+						
+					
+				
 			);
 	}
 });
@@ -46667,9 +46690,9 @@ var allresourceConstants = require('../constants/resourceConstants');
 var SystemIdle = React.createClass({displayName: "SystemIdle",
 	render:function(){
 		return (
-				React.createElement("div", {className: "systemIdle"},
-					React.createElement(Header, null),
-					React.createElement("div", {className: "idleScreen"},
+				React.createElement("div", {className: "systemIdle"}, 
+					React.createElement(Header, null), 
+					React.createElement("div", {className: "idleScreen"}, 
 						_(allresourceConstants.SYS_IDLE)
 					)
 				)
@@ -46687,9 +46710,9 @@ var allresourceConstants = require('../constants/resourceConstants');
 var SystemIdleHeader = React.createClass({displayName: "SystemIdleHeader",
 	render: function(){
 		return (
-		React.createElement("div", null,
-          React.createElement(Header, null),
-          React.createElement("div", {className: "systemIdleHeader"},
+		React.createElement("div", null, 
+          React.createElement(Header, null), 
+          React.createElement("div", {className: "systemIdleHeader"}, 
             _(allresourceConstants.SYS_IDLE)
           )
 		)
@@ -46703,7 +46726,7 @@ var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
 
-var TableFooter = React.createClass({displayName: "TableFooter",
+var TableFooter = React.createClass({displayName: "TableFooter", 
 	_component:[],
     getComponent:function(data){
     	var comp = [];
@@ -46731,7 +46754,7 @@ var TableFooter = React.createClass({displayName: "TableFooter",
     render: function() {
     	this.getComponent(this.props.data);
         return (
-            React.createElement("div", {className: "table-footer"},
+            React.createElement("div", {className: "table-footer"}, 
                this._component
       		)
         );
@@ -46745,7 +46768,7 @@ var React = require('react');
 var IconButton = require('./Button/IconButton');
 var appConstants = require('../constants/appConstants');
 
-var TableHeader = React.createClass({displayName: "TableHeader",
+var TableHeader = React.createClass({displayName: "TableHeader", 
 	_component:[],
     getComponent:function(data){
     	var comp = [];
@@ -46773,7 +46796,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
     render: function() {
     	this.getComponent(this.props.data);
         return (
-            React.createElement("div", {className: "table-header"},
+            React.createElement("div", {className: "table-header"}, 
                this._component
       		)
         );
@@ -46789,11 +46812,11 @@ var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 
-var TableRow = React.createClass({displayName: "TableRow",
+var TableRow = React.createClass({displayName: "TableRow", 
 	_component:[],
     peripheralAction : function(action, inc){
         if(action == _('Update') || action == _('Add')){
-            CommonActions.convertTextBox(action, inc)
+            CommonActions.convertTextBox(action, inc)     
         }else if(action == _('Finish')){
             var data = {
                 "peripheral_id": document.getElementById("peripheralId").value,
@@ -46817,7 +46840,7 @@ var TableRow = React.createClass({displayName: "TableRow",
             console.log(data);
             CommonActions.updateData(data, 'DELETE' , inc)
         }
-
+        
     },
     openKeyboard_peripheral: function(id){
         setTimeout(function(){ $('#'+id).keyboard({
@@ -46831,16 +46854,16 @@ var TableRow = React.createClass({displayName: "TableRow",
           },
           reposition: true,
           alwaysOpen: false,
-          initialFocus: true,
+          initialFocus: true,             
           visible : function(e, keypressed, el){
             el.value = '';
-            //$(".authNotify").css("display","none");
+            //$(".authNotify").css("display","none"); 
           },
-
+          
           accepted: function(e, keypressed, el) {
           }
         });  }, 0);
-
+        
     },
     getComponent:function(){
         var peripheralAction = this.peripheralAction;
@@ -46886,7 +46909,7 @@ var TableRow = React.createClass({displayName: "TableRow",
     render: function() {
     	this.getComponent();
         return (
-            React.createElement("div", {className: "table-row"},
+            React.createElement("div", {className: "table-row"}, 
                this._component
       		)
         );
@@ -46901,7 +46924,7 @@ var TableRow = require('./TableRow');
 var TableHeader = require('./TableHeader');
 var TableFooter = require('./TableFooter');
 
-var TabularData = React.createClass({displayName: "TabularData",
+var TabularData = React.createClass({displayName: "TabularData", 
     _tableRows:[],
     getTableRows:function(){
     	var comp =[];
@@ -46919,11 +46942,11 @@ var TabularData = React.createClass({displayName: "TabularData",
         var size = this.props.size=="double"?classes = classes + "double ":"";
         var size = this.props.size=="triple"?classes = classes + "triple ":"";
         return (
-            React.createElement("div", {className: classes},
-                React.createElement(TableHeader, {data: this.props.data.header}),
-                React.createElement("div", {className: "overflow "+(this.props.data.footer?'negate-flex':'')},
+            React.createElement("div", {className: classes}, 
+                React.createElement(TableHeader, {data: this.props.data.header}), 
+                React.createElement("div", {className: "overflow "+(this.props.data.footer?'negate-flex':'')}, 
                     this._tableRows
-      		    ),
+      		    ), 
       		    this.props.data.footer && React.createElement(TableFooter, {data: this.props.data.footer})
             )
         );
@@ -46937,32 +46960,32 @@ var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var MtuNavigation = React.createClass({displayName: "MtuNavigation",
-
+	
 
 	processData: function(){
 		var data =  this.props.data, navData=[];
 		for (var i = 0; i < data.length; i++) {
 			if(data[i] === true) {
-				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i},
+				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i}, 
 								React.createElement("div", {className: "gor-mtu-block-sel"})
 							 ))
 			}
 
 			else {
-				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i},
+				navData.push(React.createElement("div", {className: "gor-single-mtu-wrap", key: i}, 
 								React.createElement("div", {className: "gor-mtu-block-not-sel"})
 							 ))
 			}
 		}
-
+		
 
 		return navData;
 	},
-
-	render:function(){
+	
+	render:function(){		
 		var mapStructure = this.processData();
 		return (
-				React.createElement("div", {className: "mtuWrapper"},
+				React.createElement("div", {className: "mtuWrapper"}, 
 					mapStructure
 				)
 			);
@@ -47362,7 +47385,7 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [
+        [ 
         {
         "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
@@ -47400,7 +47423,7 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [
+        [ 
           {
         "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
@@ -47436,10 +47459,10 @@ var navData = {
             "code": "Common.000",
             "image": svgConstants.stage,
             "message": "Scan tote",
-            "showImage": true,
+            "showImage": true,            
             "level": 1,
             "type": 'passive'
-        },
+        }, 
         {
         "screen_id": "pre_put_scan",
         "code": "Common.001",
@@ -47449,7 +47472,7 @@ var navData = {
         "level": 2,
         "type": 'passive'
         }],
-        [
+        [ 
         {
         "screen_id": "pre_put_release",
         "code": "Common.000",
@@ -47695,10 +47718,10 @@ var appConstants = {
 	PUT_FRONT_WRONG_UNDOCK : 'put_front_wrong_undock',
 	PRE_PUT_STAGE : "pre_put_stage",
 	PRE_PUT_SCAN : "pre_put_scan",
-	PRE_PUT_RELEASE : "pre_put_release",
+	PRE_PUT_RELEASE : "pre_put_release",	
 	PRE_PUT : "pre_put_back",
 	PRE_PUT_EXCEPTION_EXCESS_TOTE:"pre_put_excess_items_tote",
-	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",
+	PRE_PUT_EXCEPTION_EXCESS_ITEMS:"pre_put_excess_items",	
 	RELEASE_MTU : "release_mtu",
 	BIN_FULL : "bin_full",
 	BIN_FULL_REQUEST:"bin_full_request",
@@ -47801,7 +47824,7 @@ var resourceConstants = {
 	CLIENTCODE_400 : "CLIENTCODE_400",
 	CLIENTCODE_MODE_CHANGED:"CLIENTCODE_MODE_CHANGED"
 
-
+ 
 };
 module.exports = resourceConstants;
 
@@ -47831,7 +47854,7 @@ module.exports = allSvgConstants;
 var Dispatcher = require('flux').Dispatcher;
 var AppDispatcher = new Dispatcher();
 
-AppDispatcher.handleAction = function(action){
+AppDispatcher.handleAction = function(action){ 
   this.dispatch({
     source: 'VIEW_ACTION',
     action: action
@@ -47847,7 +47870,7 @@ global.jQuery = global.$ = require("jquery");
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var LoginForm = require('./components/LoginPage/LoginPage');
+var LoginForm = require('./components/LoginPage/LoginPage'); 
 var Operator = require('./components/Operator');
 
 var App = React.createClass({displayName: "App",
@@ -47856,7 +47879,7 @@ var App = React.createClass({displayName: "App",
   },
   render: function(){
     return (
-      React.createElement("div", {className: "body-container"},
+      React.createElement("div", {className: "body-container"}, 
         React.createElement(LoginForm, null)
       )
     );
@@ -48939,7 +48962,7 @@ module.exports = japanese;
 
 },{}],310:[function(require,module,exports){
 var serverMessages = {
-    "PtB.B.001": "Scan item / Stage PPS Bin",
+    "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
     "PtB.H.003": "Are You Sure You Want to Close Tote?",
@@ -48964,14 +48987,14 @@ var serverMessages = {
     "PtB.E.011" : "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL",
     "PtB.E.012" : "No free bins. Please scan later",
     "PtB.E.013" : "Wrong PPTL pressed. Please try another",
-    "PtB.E.014" : "{0} excess entities found in tote. Please put entities in exception area and confirm",
+    "PtB.E.014" : "{0} excess entities found in tote. Please put entities in exception area and confirm", 
     "PtB.E.015" : "Entity not expected in tote. Please put entity in exception area and confirm",
     "PtB.E.016" : "Wrong bin chosen.Try selecting another bin",
     "PtB.E.017" : "Please scan same SKU to complete this exception",
-    "PtB.E.018" : "Expecting tote closure.",
+    "PtB.E.018" : "Expecting tote closure.",  
     "PtB.E.019" : "Tote not present in database.",
     "PtB.E.020" : "Tote matched .",
-    "PtB.E.021" : "Entity already scanned.Confirm exception",
+    "PtB.E.021" : "Entity already scanned.Confirm exception", 
     "PtB.E.023" : "Scan not Allowed. PPS close/force close or profile change requested.",
     "PtB.E.024" : "Length of {0} should not be greater than {1}",
     "PtF.H.001" : "Place Entity in Slot and Scan More",
@@ -49146,7 +49169,7 @@ var serverMessages = {
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
     "PkF.I.007" : "Data capture valid",
-    "PkF.E.012" : "Data capture failed at item {0}",
+    "PkF.E.012" : "Data capture failed at item {0}",       
     "PkF.I.002" : "Location scan successful",
     "PkF.I.003" : "Box scan successful",
     "PkF.I.004" : "Item scan successful",
@@ -49179,7 +49202,7 @@ var serverMessages = {
     "PkB.E.004" : "No tote associated. Please keep a tote in bin and scan",
     "PkB.E.005" : "Wrong PPTL pressed",
     "PkB.E.006" : "Tote association failed. Repeat scan operation",
-    "PkB.E.007" : "Totes are anyway not required.Please proceed further",
+    "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
     "PkB.E.008": "Tote already associated with bin {0}",
     "PkB.E.009": "Entity Scan not expected. Press PPTL",
     "PkB.I.001" : "Exception cancelled",
@@ -49204,8 +49227,8 @@ var serverMessages = {
     "PtF.E.004" : "Expected quantity exceeded.",
     "PtF.E.005" : "Wrong scan! Entity scan expected but slot barcode scanned.",
     "PtF.E.006" : "Total Quantity Expected {0}. Quantity entered {1}",
-    "PtF.E.007" : "Actual put quantity less than than revised quantity.",
-    "PtF.E.008" : "Wrong slot scanned",
+    "PtF.E.007" : "Actual put quantity less than than revised quantity.", 
+    "PtF.E.008" : "Wrong slot scanned", 
     "PtF.E.010" : "Wrong ppsbin button pressed",
     "PtF.E.011" : "Tote scanned is not opened",
     "PtF.E.012" : "Scan tote first and then scan item",
@@ -49280,7 +49303,7 @@ var serverMessages = {
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
     "PtB.H.012" : "Scan or Enter {0} number",
-    "PtB.I.019" : "STN scan successful", // not generic from backend
+    "PtB.I.019" : "STN scan successful", // not generic from backend 
     //codes for front end
     "FRNT.PBI.01" : "Please scan or enter {0} number",
     "FRNT.PBI.02" : "Exit {0}",
@@ -50132,16 +50155,16 @@ var PickBackStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-
+ 
   getNavData : function () {
     _NavData = navConfig.pickBack;
     navConfig.pickBack.map(function(data,index){
        if(_PickBackData.screen_id === data.screen_id ){
-          _NavData[index].type = 'active';
-          _NavData[index].showImage = true;
+          _NavData[index].type = 'active'; 
+          _NavData[index].showImage = true; 
         }else{
           _NavData[index].type = 'passive';
-          _NavData[index].showImage = false;
+          _NavData[index].showImage = false; 
         }
     });
     return _NavData;
@@ -50158,7 +50181,7 @@ var PickBackStore = assign({}, EventEmitter.prototype, {
   },
 
 
-  getNotificationData : function() {
+  getNotificationData : function() { 
       return _PickBackData.notification_list[0];
   },
 
@@ -50190,7 +50213,7 @@ var PickBackStore = assign({}, EventEmitter.prototype, {
   }
 
 
-
+  
 });
 
 PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
@@ -50200,7 +50223,7 @@ PickBackStore.dispatchToken = AppDispatcher.register(function(action) {
       PickBackStore.setPickBackData(action.action.data);
       PickBackStore.emitChange();
       break;
-
+    
     default:
       // do nothing
   }
@@ -50241,7 +50264,7 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
             _NavData = navConfig.pickFront[0];
             _NavData[0].type = 'active';
         }
-
+        
         else {
             _NavData = navConfig.pickFront[1];
             _NavData.map(function(data, index) {
@@ -50281,14 +50304,14 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
         else
             return null;
     },
-    getServerNavData : function(){
+    getServerNavData : function(){ 
         if(_PickFrontData.header_msge_list.length > 0){
             _serverNavData = _PickFrontData.header_msge_list[0];
             return _serverNavData;
         }
         else{
-            return null;
-        }
+            return null;   
+        } 
     },
     getBinData: function() {
         var binData = {};
@@ -50317,34 +50340,34 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     },
 
      getChecklistDetails:function(){
-        if(_PickFrontData.hasOwnProperty('checklist_details')){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
             console.log(_PickFrontData.checklist_details.pick_checklist.length + "jindal");
             if(_PickFrontData.checklist_details.pick_checklist.length > 0){
                 return _PickFrontData.checklist_details.pick_checklist;
             }
             else{
                 return [];
-            }
-
+            }     
+            
         }else{
             return [];
         }
     },
     getChecklistIndex:function(){
-        if(_PickFrontData.hasOwnProperty('checklist_details')){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
             if(_PickFrontData.checklist_details.checklist_index!= null){
                 return _PickFrontData.checklist_details.checklist_index;
-            }
+            } 
             else{
                 return null;
-            }
-
+            }    
+            
         }else{
             return null;
         }
     },
     getChecklistOverlayStatus:function(){
-        if(_PickFrontData.hasOwnProperty('checklist_details')){
+        if(_PickFrontData.hasOwnProperty('checklist_details')){ 
             return _PickFrontData.checklist_details.display_checklist_overlay;
           }else{
             return null;
@@ -50369,8 +50392,8 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
     getItemUid : function(){
         return _PickFrontData.item_uid;
     },
-    getCurrentSlot : function(){
-        if(_PickFrontData.hasOwnProperty('rack_details')){
+    getCurrentSlot : function(){        
+        if(_PickFrontData.hasOwnProperty('rack_details')){       
             return _PickFrontData.rack_details.slot_barcodes;
         }else{
             return null;
@@ -50460,25 +50483,25 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
             return flag;
         }
     },
-    getNavData: function() {
-        _NavData = navConfig.putBack;
-        _NavData.map(function(data, index) {
+    getNavData: function() {        
+        _NavData = navConfig.putBack;        
+        _NavData.map(function(data, index) {            
             if (data.screen_id instanceof Array) {
                 if (data.screen_id.indexOf(_PutBackData.screen_id) != -1) {
-                    if(_PutBackData.screen_id === AppConstants.PUT_BACK_TOTE_CLOSE){
+                    if(_PutBackData.screen_id === AppConstants.PUT_BACK_TOTE_CLOSE){                       
                         _NavData[index].image = SVGConstants.tote;
                     }
                     else
                         _NavData[index].image = SVGConstants.scan;
-                    _NavData[index].type = 'active';
+                    _NavData[index].type = 'active';                    
                 } else {
-                    _NavData[index].type = 'passive';
+                    _NavData[index].type = 'passive';                    
                 }
-            }
+            }             
             else if (_PutBackData.screen_id === data.screen_id) {
-                _NavData[index].type = 'active';
+                _NavData[index].type = 'active';                
             } else {
-                _NavData[index].type = 'passive';
+                _NavData[index].type = 'passive';                
             }
         });
 
@@ -50596,7 +50619,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
     },
 
 
-
+    
 
     getItemDetailsData: function() {
         var data = {};
@@ -50694,7 +50717,7 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
             _NavData[0].type = 'active';
         } else {
             _NavData = navConfig.putFront[1];
-            _NavData.map(function(data, index) {
+            _NavData.map(function(data, index) { 
                 if (_PutFrontData.screen_id === data.screen_id) {console.log(_PutFrontData);
                     _NavData[index].type = 'active';
                 }else{
@@ -50704,14 +50727,14 @@ var PutFrontStore = assign({}, EventEmitter.prototype, {
         }
         return _NavData;
     },
-    getServerNavData : function(){
+    getServerNavData : function(){ 
         if(_PutFrontData.header_msge_list.length > 0){
             _serverNavData = _PutFrontData.header_msge_list[0];
             return _serverNavData;
         }
         else{
-            return null;
-        }
+            return null;   
+        } 
     },
     getNotificationData: function() {
         return _PutFrontData.notification_list[0];
@@ -50822,22 +50845,22 @@ function getCurrentLang(){
 }
 function listPpsSeat(seat){
     if(seat === null){
-      currentSeat.length = 0;
+      currentSeat.length = 0; 
       $.ajax({
         type: 'GET',
         url: configConstants.INTERFACE_IP+appConstants.PPS_SEATS,
         dataType : "json",
-        beforeSend : xhrConfig
+        beforeSend : xhrConfig 
         }).done(function(response) {
           currentSeat = response.pps_seats;
-          loginstore.emit(CHANGE_EVENT);
+          loginstore.emit(CHANGE_EVENT); 
         }).fail(function(jqXhr) {
-
+                     
       }).success(function(data){
         console.log("success");
       });
     }else{
-      loginstore.emit(CHANGE_EVENT);
+      loginstore.emit(CHANGE_EVENT); 
     }
 }
 
@@ -50846,7 +50869,7 @@ function checkLang(){             //Ajax call to get language from api
         type: 'GET',
         url: configConstants.INTERFACE_IP+appConstants.API+appConstants.COMPONENT+appConstants.LANG,
         dataType : "json",
-        beforeSend : xhrConfig
+        beforeSend : xhrConfig 
         }).done(function(response) {
           currentLang = response.data[0].locale;
           CommonActions.changeLanguage(currentLang);
@@ -50870,13 +50893,13 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   removeChangeListener: function(cb){
     this.removeListener(CHANGE_EVENT, cb);
   },
-  getFlag : function(){
+  getFlag : function(){ 
     return flag;
   },
   setFlag:function(val){
     flag = val;
   },
-  seatList : function(){
+  seatList : function(){ 
     return currentSeat;
   },
   getLang : function(){            //get language
@@ -50888,8 +50911,8 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   sessionLogout: function(data){
     utils.sessionLogout(data);
   },
-  getErrorMessage: function(){
-   return _errMsg;
+  getErrorMessage: function(){    
+   return _errMsg; 
   },
   showErrorMessage : function(data){
     _errMsg = data;
@@ -50919,18 +50942,18 @@ AppDispatcher.register(function(payload){
       loginstore.sessionLogout(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.OPERATOR_SEAT:
+    case appConstants.OPERATOR_SEAT: 
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
-    case appConstants.LOGIN_SEAT:
+    case appConstants.LOGIN_SEAT: 
       loginstore.setFlag(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
     case appConstants.SHOW_ERROR_MESSAGE:
       loginstore.showErrorMessage(action.data);
-      loginstore.emitChange();
-      break;
+      loginstore.emitChange(); 
+      break; 
     default:
       return true;
   }
@@ -53147,6 +53170,11 @@ setCurrentSeat: function (data) {
         }
     },
 
+    getBinCoordinatePlotting: function() {
+      if (_seatData.hasOwnProperty('bin_coordinate_plotting'))
+        return _seatData.bin_coordinate_plotting;
+    },
+
     getScreenData: function () {
         var data = {};
 
@@ -53337,6 +53365,7 @@ setCurrentSeat: function (data) {
             data["PutFrontNotification"] = this.getNotificationData();
             data["PutFrontExceptionStatus"] = this.getExceptionStatus();
             data["PutFrontItemUid"] = this.getItemUid();
+            data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting();
             break;
             case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
             data["PutFrontNavData"] = this.getNavData();
@@ -54125,10 +54154,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         },
         reposition: true,
         alwaysOpen: false,
-        initialFocus: true,
+        initialFocus: true,      
         visible : function(e, keypressed, el){
             el.value = '';
-        //$(".authNotify").css("display","none");
+        //$(".authNotify").css("display","none"); 
     },
 
     accepted: function(e, keypressed, el) {
@@ -54137,12 +54166,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
           $('#loginBtn').prop('disabled', false);
       }else{
-          $('#loginBtn').prop('disabled', true);
-      }
+          $('#loginBtn').prop('disabled', true); 
+      }    
   }
-});
+}); 
     },
-    connectToWebSocket: function(data) {
+    connectToWebSocket: function(data) { 
         self= this;
         ws = new WebSocket(configConstants.WEBSOCKET_IP);
         if ("WebSocket" in window) {
@@ -54152,7 +54181,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 utils.checkSessionStorage();
                 clearTimeout(utils.connectToWebSocket)
             };
-            ws.onmessage = function(evt) {
+            ws.onmessage = function(evt) { 
              if(evt.data == "CLIENTCODE_409" || evt.data == "CLIENTCODE_412"|| evt.data == "CLIENTCODE_401" || evt.data == "CLIENTCODE_400" || evt.data == "CLIENTCODE_503" || evt.data == "CLIENTCODE_403"){
                 var msgCode = evt.data;
                 CommonActions.showErrorMessage(serverMessages[msgCode]);
@@ -54179,7 +54208,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 }catch(err){
                     //intentionally left blank
                 }
-
+                
 
                 CommonActions.setServerMessages();
             }
@@ -54198,12 +54227,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                 setTimeout(utils.connectToWebSocket, 100);
             };
         } else {
-            alert("WebSocket NOT supported by your Browser!");
+            alert("WebSocket NOT supported by your Browser!");            
         }
     },
     checkSessionStorage : function(){
         var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
-        if(sessionData === null){
+        if(sessionData === null){  
         }else{
             var webSocketData = {
                 'data_type': 'auth',
@@ -54212,10 +54241,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                     "seat_name" : sessionData.data.seat_name
                 }
             };
-            utils.postDataToWebsockets(webSocketData);
+            utils.postDataToWebsockets(webSocketData); 
         }
     },
-    postDataToWebsockets: function(data) {
+    postDataToWebsockets: function(data) { 
         console.log(JSON.stringify(data));
         ws.send(JSON.stringify(data));
         setTimeout(CommonActions.operatorSeat, 0, true);
@@ -54319,8 +54348,8 @@ getPeripheralData : function(type, seat_name, status, method){
             'Authentication-Token' : authentication_token
         }
     }).done(function(response) {
-        CommonActions.updateSeatData(response.data, type, status, method);
-    }).fail(function(jqXhr) {
+        CommonActions.updateSeatData(response.data, type, status, method);  
+    }).fail(function(jqXhr) {    
 
     });
 },
@@ -54349,11 +54378,11 @@ updatePeripherals : function(data, method, seat_name){
                     utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
 
             //utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
-           // CommonActions.updateSeatData(response.data, data.peripheral_type);
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
        }*/
    }).done(function(response,statusText,xhr) {
     utils.getPeripheralData(data.peripheral_type, seat_name , 'success', method)
-           // CommonActions.updateSeatData(response.data, data.peripheral_type);
+           // CommonActions.updateSeatData(response.data, data.peripheral_type); 
        }).fail(function(jqXhr) {
         if(jqXhr.status == 409)
             utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
@@ -54393,9 +54422,9 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
-
+    
     console.log(data);
-
+    
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
         CommonActions.setPutBackData(data.state_data);

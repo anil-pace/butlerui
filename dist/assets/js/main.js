@@ -37342,7 +37342,7 @@ var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
 var BinMap = React.createClass({displayName: "BinMap",
-	
+
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,rightCol=[];
@@ -37398,9 +37398,9 @@ var BinMap = React.createClass({displayName: "BinMap",
 			rightColCount:rightColCount
 		}
 	},
-	render:function(){		
-		
-		var mapStructure = this.processData();	
+	render:function(){
+
+		var mapStructure = this.processData();
 		return (
 				React.createElement("div", {className: "binMapWrapper "+this.props.screenClass}, 
 					React.createElement("div", {className: "mapCont"}, 
@@ -37418,9 +37418,9 @@ var BinMap = React.createClass({displayName: "BinMap",
 					)
 					)
 				)
-						
-					
-				
+
+
+
 			);
 	}
 });
@@ -38441,11 +38441,11 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
                 tote = (React.createElement("div", {className: "tote"}, 
-                    React.createElement("span", {className: "bin-icon tote-icon"}), 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
-                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                        )
-                ));
+                          React.createElement("span", {className: "bin-icon tote-icon"}), 
+                          React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                            onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
+                          )
+                        ));
             }
             return (
                 React.createElement("div", {
@@ -38486,11 +38486,8 @@ var Bin = React.createClass({displayName: "Bin",
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
                 tote = (React.createElement("div", {className: "tote"}, 
-                    React.createElement("span", {className: "bin-icon tote-icon"}), 
-                    React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
-                          onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                        )
-                ));
+                          React.createElement("span", {className: "bin-icon tote-icon"})
+                        ));
             }
             return (
                 React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
@@ -49288,7 +49285,12 @@ var serverMessages = {
     "PkF.H.018":"Scan {0} sub packs",
     "PkF.H.019":"Scan {0} more packs and place in bin {1}",
     "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
+    "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
     "PkF.H.022":"Waiting for roll cage to be docked",
+    "PkF.H.026":"Scan Box",
+    "PkF.H.027":"Scan Small Box",
+    "PkF.H.028":"Scan {0} Box and Place in Bin {1}",
+    "PkF.H.029":"Scan {0} Small Box and Place in Bin {1}"
 };
 
 

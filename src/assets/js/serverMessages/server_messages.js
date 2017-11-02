@@ -351,7 +351,12 @@ var serverMessages = {
     "PkF.H.018":"Scan {0} sub packs",
     "PkF.H.019":"Scan {0} more packs and place in bin {1}",
     "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
+    "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
     "PkF.H.022":"Waiting for roll cage to be docked",
+    "PkF.H.026":"Scan Box",
+    "PkF.H.027":"Scan Small Box",
+    "PkF.H.028":"Scan {0} Box and Place in Bin {1}",
+    "PkF.H.029":"Scan {0} Small Box and Place in Bin {1}"
 };
 
 

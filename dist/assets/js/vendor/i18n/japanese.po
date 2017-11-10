@@ -1846,7 +1846,7 @@ msgid "Bin full"
 msgstr "ビン満杯"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:465
-msgid "Please put entities which have issues in exception area"
+msgid "Please put entities which has issues in exception area"
 msgstr "該当商品を例外商品用エリアに保管してください。"
 
 
@@ -1926,3 +1926,7 @@ msgstr "損傷したエンティティをスキャンする"
 #: src/assets/js/serverMessages/server_messages_lang.js:485
 msgid "Warehouse Full"
 msgstr "格納できません"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Please put exception entities in IRT bin and scan the bin"
+msgstr "例外エンティティをIRTビンに入れ、ビンをスキャンしてください"

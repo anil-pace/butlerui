@@ -1997,7 +1997,7 @@ setCurrentSeat: function (data) {
                 data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
                 data["event_data"]["quantity"]["missing"] = _missingQuantity;
                 data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
-                _goodQuantity = 0;
+                _goodQuantity = _goodQuantity;
                 _damagedQuantity = 0;
                 _missingQuantity = 0;
                 _unscannableQuantity = 0;

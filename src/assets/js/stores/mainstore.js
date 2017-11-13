@@ -196,6 +196,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
+    getGoodQuantity: function () {
+        if (_seatData.hasOwnProperty("good_quantity")){
+            _goodQuantity = _seatData.good_quantity;
+            return _goodQuantity;
+        }
+    },
     setShowModal: function (data) {
         showModal = false;
     },
@@ -1974,7 +1980,7 @@ setCurrentSeat: function (data) {
             }
             if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
                 _putFrontExceptionScreen = "good";
-                _goodQuantity = 0;
+                _goodQuantity = _goodQuantity;
                 _damagedQuantity = 0;
                 _missingQuantity = 0;
             }

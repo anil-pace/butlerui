@@ -488,7 +488,7 @@ function server_messages_list() {
     _("Last item scan will be cancelled. Do you want to continue?");
     _("Continue");
     _("Bin full");
-    _("Please put entities which have issues in exception area");
+    _("Please put entities which has issues in exception area");
     _("Unscannable");
     _("Invalid Event.Expecting PPTL button press");
     _("Remove Tote from bin & Press PPTL to confirm no Items Remaining");

@@ -408,14 +408,19 @@ var Bin = React.createClass({
         }
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
+            var applyClassNameOnTote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (<div className="tote">
-                          <span className="bin-icon tote-icon"></span>
-                          <span className="glyphicon glyphicon-info-sign info-icon"
-                            onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
-                          </span>
-                        </div>);
+              applyClassNameOnTote = 'bin-icon tote-icon'
             }
+            if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
+              applyClassNameOnTote = 'bin-icon tote-icon bin-coordinate-plotting-enabled'
+            }
+            tote = (<div className="tote">
+                      <span className={applyClassNameOnTote}></span>
+                      <span className="glyphicon glyphicon-info-sign info-icon"
+                        onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
+                      </span>
+                    </div>);
             return (
                 <div
                     className={(compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
@@ -453,11 +458,16 @@ var Bin = React.createClass({
             );
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
+            var applyClassNameOnTote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (<div className="tote">
-                          <span className="bin-icon tote-icon"></span>
-                        </div>);
+              applyClassNameOnTote = 'bin-icon tote-icon'
             }
+            if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
+              applyClassNameOnTote = 'bin-icon tote-icon bin-coordinate-plotting-enabled'
+            }
+            tote = (<div className="tote">
+                      <span className={applyClassNameOnTote}></span>
+                    </div>);
             return (
                 <div className={"bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>

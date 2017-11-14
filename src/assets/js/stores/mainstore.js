@@ -301,17 +301,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 }
                 else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_ITEM_SCAN))
                 {
-                    _NavData = navConfig.pickFront[10]; 
+                    _NavData = navConfig.pickFront[10];
                 }
                 else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) || (_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS))
                 {
-                     _NavData = navConfig.pickFront[11];     
+                     _NavData = navConfig.pickFront[11];
                 }
                 else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
                 {
-                    _NavData = navConfig.print[0];     
+                    _NavData = navConfig.print[0];
                 }
-              
+
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
@@ -720,7 +720,7 @@ getOrderID: function () {
         var bSelected = false;
         var bDisabled = false;
         _seatData.exception_allowed.map(function (value, index) {
-            //all exception items should be enabled and unselected first hence putting disabled = false 
+            //all exception items should be enabled and unselected first hence putting disabled = false
             bDisabled = false;
             bSelected = false;
             if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) ||
@@ -1315,7 +1315,7 @@ var data={
                 "current_qty": _seatData.per_item_print.print_done,
                  "kq_allowed":false,
                 "total_qty": _seatData.per_item_print.print_required
-                
+
             }
 }
 return data.scan_details;
@@ -1960,8 +1960,8 @@ setCurrentSeat: function (data) {
         }
         if (flag) {
             if (_seatData.notification_list.length == 0) {
-                var data = {};              
-                data["code"] = binFullQty?resourceConstants.CLIENTCODE_012: (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);                
+                var data = {};
+                data["code"] = binFullQty?resourceConstants.CLIENTCODE_012: (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 data["level"] = "error";
                 data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [details];
@@ -2206,6 +2206,11 @@ setCurrentSeat: function (data) {
         }
     },
 
+    getBinCoordinatePlotting: function() {
+      if (_seatData.hasOwnProperty('bin_coordinate_plotting'))
+        return _seatData.bin_coordinate_plotting;
+    },
+
     getScreenData: function () {
         var data = {};
 
@@ -2322,7 +2327,7 @@ setCurrentSeat: function (data) {
             data["PutBackNotification"] = this.getNotificationData();
             data["GetIRTScanStatus"] = this.getIRTScanStatus();
             data["GetExceptionType"] = this.getExceptionType();
-            break;    
+            break;
             case appConstants.PRE_PUT_STAGE:
             data["PrePutBinData"] = this.getBinData();
             data["PrePutScreenId"] = this.getScreenId();
@@ -2396,6 +2401,7 @@ setCurrentSeat: function (data) {
             data["PutFrontNotification"] = this.getNotificationData();
             data["PutFrontExceptionStatus"] = this.getExceptionStatus();
             data["PutFrontItemUid"] = this.getItemUid();
+            data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting();
             break;
             case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
             data["PutFrontNavData"] = this.getNavData();
@@ -2589,7 +2595,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
-          
+
             break;
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
@@ -2607,7 +2613,7 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
-            
+
             break;
 
             break;

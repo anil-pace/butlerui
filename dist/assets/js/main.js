@@ -38439,14 +38439,19 @@ var Bin = React.createClass({displayName: "Bin",
         }
         else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK || this.props.screenId == appConstants.PICK_FRONT_SCAN_ITEM_AND_PLACE_IN_BIN )) {
             var tote = '';
+            var applyClassNameOnTote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"}, 
-                          React.createElement("span", {className: "bin-icon tote-icon"}), 
-                          React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
-                            onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
-                          )
-                        ));
+              applyClassNameOnTote = 'bin-icon tote-icon'
             }
+            if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
+              applyClassNameOnTote = 'bin-icon tote-icon bin-coordinate-plotting-enabled'
+            }
+            tote = (React.createElement("div", {className: "tote"}, 
+                      React.createElement("span", {className: applyClassNameOnTote}), 
+                      React.createElement("span", {className: "glyphicon glyphicon-info-sign info-icon", 
+                        onClick: this.showModal.bind(this, compData.bin_info, "bin-info")}
+                      )
+                    ));
             return (
                 React.createElement("div", {
                     className: (compData.ppsbin_count > 0 ? "bin selected " : "bin empty ") + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
@@ -38484,11 +38489,16 @@ var Bin = React.createClass({displayName: "Bin",
             );
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
+            var applyClassNameOnTote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                tote = (React.createElement("div", {className: "tote"}, 
-                          React.createElement("span", {className: "bin-icon tote-icon"})
-                        ));
+              applyClassNameOnTote = 'bin-icon tote-icon'
             }
+            if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
+              applyClassNameOnTote = 'bin-icon tote-icon bin-coordinate-plotting-enabled'
+            }
+            tote = (React.createElement("div", {className: "tote"}, 
+                      React.createElement("span", {className: applyClassNameOnTote})
+                    ));
             return (
                 React.createElement("div", {className: "bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : ''), 
                      style: compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}, 
@@ -38588,11 +38598,11 @@ var Bins = React.createClass({displayName: "Bins",
             //no bins found
             return;
          }
-     
+
         var totalBins = aBins.length;
         var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={};
 
-    
+
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
             if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
                 return oBinCurr;
@@ -38627,22 +38637,22 @@ var Bins = React.createClass({displayName: "Bins",
         }
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, binCoordinatePlotting) {
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
          }
          var aHTMLBins =[];
          // since the total width would be 100% but the bins would be divided into
-         // ratios, hence each of the bin would have to have the factor into % of the 
+         // ratios, hence each of the bin would have to have the factor into % of the
          // .bins container.
          // for reference orig_coordinate[0] === x axis and orig_coordinate[1] === y axis
          var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)));
          var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.breadth)));
-         
+
          var totalPpsWidth = Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)
-         
-         
+
+
          for (var i =0; i<aBins.length ;i++){
                 var binWidth = aBins[i].length * horFactor +'%';
                 var binHeight = aBins[i].breadth * vertFactor +'%';
@@ -38651,19 +38661,37 @@ var Bins = React.createClass({displayName: "Bins",
 
                 // if the seat type is front then we have to modify the x co-ordinate as per the formula:
                 // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
-                
-                ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'): 
+
+                ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'):
                     (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
                 itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
-                aHTMLBins.push(
-                                 React.createElement("div", {className: "bin-container", style: {
-                                width: binWidth,height:binHeight,
-                    
-                                top: itop,
-                                left:ileft}}, 
-                                     React.createElement(Bin, {binData: aBins[i], screenId: screenId})
-                                 )
-                                 )
+
+                if(binCoordinatePlotting == true || binCoordinatePlotting == "true"){
+                  aHTMLBins.push(
+                                   React.createElement("div", {className: "bin-container", 
+                                     style: {
+                                        width: binWidth,
+                                        height:binHeight,
+                                        top: itop,
+                                        left:ileft
+                                      }}, 
+                                      React.createElement(Bin, {binData: aBins[i], screenId: screenId, binCoordinatePlotting: true})
+                                   )
+                                   )
+                }
+                else{
+                  aHTMLBins.push(
+                                   React.createElement("div", {className: "bin-container", 
+                                      style: {
+                                        width: binWidth,
+                                        height:binHeight,
+                                        top: itop,
+                                        left:ileft
+                                      }}, 
+                                      React.createElement(Bin, {binData: aBins[i], screenId: screenId})
+                                   )
+                                   )
+                }
               }
         return aHTMLBins;
     },
@@ -38671,12 +38699,13 @@ var Bins = React.createClass({displayName: "Bins",
     render: function() {
 
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
-                                               this.state.lastHBin, 
+                                               this.state.lastHBin,
                                                this.state.lastVBin,
 
                                                this.props.seatType,
 
-                                               this.props.screenId);
+                                               this.props.screenId,
+                                               this.props.binCoordinatePlotting);
         var self = this;
         return (
                  React.createElement("div", {className: "bins-flex", style: {width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}, 
@@ -45407,7 +45436,7 @@ var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
- return mainstore.getScreenData();
+  return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({displayName: "PutFront",
@@ -45423,10 +45452,10 @@ var PutFront = React.createClass({displayName: "PutFront",
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){ 
+  onChange: function(){
     this.setState(getStateData());
   },
-  
+
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
@@ -45462,7 +45491,7 @@ var PutFront = React.createClass({displayName: "PutFront",
       )
       );
   },
-  
+
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
@@ -45483,13 +45512,13 @@ var PutFront = React.createClass({displayName: "PutFront",
       break;
       case appConstants.PUT_FRONT_SCAN:
       if(this.state.PutFrontExceptionStatus == false){
-       if (this.state.OrigBinUse){
-        binComponent = ( React.createElement("div", {className: "binsFlexWrapperContainer"}, 
-          React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType}), 
+       if (this.state.OrigBinUse || this.state.PutFrontBinCoordinatePlotting){
+         binComponent = ( React.createElement("div", {className: "binsFlexWrapperContainer"}, 
+          React.createElement(BinsFlex, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId, seatType: this.state.SeatType, binCoordinatePlotting: true}), 
           React.createElement(WrapperSplitRoll, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
           ))
-
-      }else{
+      }
+      else{
         binComponent =(React.createElement("div", {className: "main-container"}, 
           React.createElement(Bins, {binsData: this.state.PutFrontBinData, screenId: this.state.PutFrontScreenId}), 
           React.createElement(Wrapper, {scanDetails: this.state.PutFrontScanDetails, productDetails: this.state.PutFrontProductDetails, itemUid: this.state.PutFrontItemUid})
@@ -45578,7 +45607,7 @@ var PutFront = React.createClass({displayName: "PutFront",
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
         var selected_screen;
-        
+
         this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}));
           if(!this.state.GetIRTScanStatus)
           {
@@ -45608,7 +45637,7 @@ var PutFront = React.createClass({displayName: "PutFront",
           )
           );
         break;
-        
+
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -45632,7 +45661,7 @@ var PutFront = React.createClass({displayName: "PutFront",
       break;
 
         case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
-        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
 
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -45709,7 +45738,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                           React.createElement(Button1, {disabled: confirmDisabled, text: _("Confirm"), module: appConstants.PUT_FRONT, action: appConstants.UNMARKED_DAMAGED, color: "orange"})
                     ));
           if(isUnmarked){
-            unmarkedContainer = (                           
+            unmarkedContainer = (
                          React.createElement(KQExceptionDamaged, {scanDetailsDamaged: this.state.PutFrontDamagedQuantity, action: "DAMAGED"})
                     )
             kqHeadMessage = _("Damaged Quantity");
@@ -45729,7 +45758,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                     React.createElement("div", {className: "kq-exception"}, 
                       React.createElement("div", {className: "kq-header"}, kqHeadMessage), 
                      unmarkedContainer
-                      
+
                     )
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode"}, 
@@ -45740,7 +45769,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                    React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                 )
               )
-          );      
+          );
         break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
              var buttonActivateFlag=mainstore.getExeptionQuanity();
@@ -45771,7 +45800,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   React.createElement("div", {className: "exception-qty-title"}, _("Good Quantity")), 
                   React.createElement(NumericIndicator, {execType: appConstants.GOOD_QUANTITY})
                     ), 
-              
+
                      React.createElement("div", {className: "gor-NI-wrapper"}, 
                      React.createElement("hr", null), 
                   React.createElement("div", {className: "exception-qty-title"}, _("Missing Quantity")), 
@@ -45790,7 +45819,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                   ), 
                   React.createElement("div", {className: "finish-damaged-barcode padding"}, 
                     React.createElement(Button1, {disabled: buttonActivateFlag, text: _("Validate and Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER})
-              
+
                   )
                 ), 
                 React.createElement("div", {className: "cancel-scan"}, 
@@ -45798,7 +45827,7 @@ var PutFront = React.createClass({displayName: "PutFront",
                 )
               )
             );
-        break; 
+        break;
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
           var selected_screen;
           if(!this.state.GetIRTScanStatus)
@@ -45807,7 +45836,7 @@ var PutFront = React.createClass({displayName: "PutFront",
   React.createElement("div", {className: "exception-right"}, 
                    React.createElement("div", {className: "gor-exception-align"}, 
                     React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Please put exception entities in exception area")), 
-                   
+
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Confirm"), color: "orange", module: appConstants.PUT_FRONT, action: appConstants.PUT_FINISH_EXCEPTION_ENTITY})
                   )
@@ -45824,7 +45853,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
           );
       }
-          
+
             this._component = (
               React.createElement("div", {className: "grid-container exception"}, 
               React.createElement(Modal, null), 
@@ -45880,7 +45909,7 @@ var PutFront = React.createClass({displayName: "PutFront",
               )
               );
           }
-          
+
           break;
           case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
             this._component = (
@@ -45898,8 +45927,8 @@ var PutFront = React.createClass({displayName: "PutFront",
                        React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                     )
                   )
-              );      
-            break; 
+              );
+            break;
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
             React.createElement("div", {className: "grid-container exception"}, 
@@ -45916,8 +45945,8 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
-            );      
-          break;         
+            );
+          break;
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
           _button = (React.createElement("div", {className: "staging-action"}, 
@@ -45940,8 +45969,8 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
             )
             )
-            );      
-          break; 
+            );
+          break;
           case appConstants.PPTL_MANAGEMENT:
           case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (React.createElement(Navigation, {navData: this.state.PutFrontNavData, serverNavData: this.state.PutFrontServerNavData, navMessagesJson: this.props.navMessagesJson}))
@@ -45970,10 +45999,10 @@ var PutFront = React.createClass({displayName: "PutFront",
             React.createElement(Modal, null)
             )
             );
-          break;  
+          break;
 
           default:
-          return true; 
+          return true;
         }
       },
 
@@ -45986,8 +46015,8 @@ var PutFront = React.createClass({displayName: "PutFront",
           this._navigation, 
           this._component, 
           this._notification
-          ) 
-          
+          )
+
           );
       }
 
@@ -51338,17 +51367,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 }
                 else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_ITEM_SCAN))
                 {
-                    _NavData = navConfig.pickFront[10]; 
+                    _NavData = navConfig.pickFront[10];
                 }
                 else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) || (_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS))
                 {
-                     _NavData = navConfig.pickFront[11];     
+                     _NavData = navConfig.pickFront[11];
                 }
                 else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
                 {
-                    _NavData = navConfig.print[0];     
+                    _NavData = navConfig.print[0];
                 }
-              
+
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
@@ -51757,7 +51786,7 @@ getOrderID: function () {
         var bSelected = false;
         var bDisabled = false;
         _seatData.exception_allowed.map(function (value, index) {
-            //all exception items should be enabled and unselected first hence putting disabled = false 
+            //all exception items should be enabled and unselected first hence putting disabled = false
             bDisabled = false;
             bSelected = false;
             if ((_seatData["exception_type"] != undefined && value.event == _seatData["exception_type"]) ||
@@ -52352,7 +52381,7 @@ var data={
                 "current_qty": _seatData.per_item_print.print_done,
                  "kq_allowed":false,
                 "total_qty": _seatData.per_item_print.print_required
-                
+
             }
 }
 return data.scan_details;
@@ -52997,8 +53026,8 @@ setCurrentSeat: function (data) {
         }
         if (flag) {
             if (_seatData.notification_list.length == 0) {
-                var data = {};              
-                data["code"] = binFullQty?resourceConstants.CLIENTCODE_012: (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);                
+                var data = {};
+                data["code"] = binFullQty?resourceConstants.CLIENTCODE_012: (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 data["level"] = "error";
                 data["type"] =  appConstants.CLIENT_NOTIFICATION;
                 data["details"] = [details];
@@ -53243,6 +53272,11 @@ setCurrentSeat: function (data) {
         }
     },
 
+    getBinCoordinatePlotting: function() {
+      if (_seatData.hasOwnProperty('bin_coordinate_plotting'))
+        return _seatData.bin_coordinate_plotting;
+    },
+
     getScreenData: function () {
         var data = {};
 
@@ -53359,7 +53393,7 @@ setCurrentSeat: function (data) {
             data["PutBackNotification"] = this.getNotificationData();
             data["GetIRTScanStatus"] = this.getIRTScanStatus();
             data["GetExceptionType"] = this.getExceptionType();
-            break;    
+            break;
             case appConstants.PRE_PUT_STAGE:
             data["PrePutBinData"] = this.getBinData();
             data["PrePutScreenId"] = this.getScreenId();
@@ -53433,6 +53467,7 @@ setCurrentSeat: function (data) {
             data["PutFrontNotification"] = this.getNotificationData();
             data["PutFrontExceptionStatus"] = this.getExceptionStatus();
             data["PutFrontItemUid"] = this.getItemUid();
+            data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting();
             break;
             case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
             data["PutFrontNavData"] = this.getNavData();
@@ -53626,7 +53661,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
-          
+
             break;
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
@@ -53644,7 +53679,7 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
-            
+
             break;
 
             break;

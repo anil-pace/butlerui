@@ -27,7 +27,7 @@ var SplitPPS = require('./SplitPPS');
 
 
 function getStateData(){
- return mainstore.getScreenData();
+  return mainstore.getScreenData();
 };
 
 var PutFront = React.createClass({
@@ -43,10 +43,10 @@ var PutFront = React.createClass({
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
   },
-  onChange: function(){ 
+  onChange: function(){
     this.setState(getStateData());
   },
-  
+
 
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined)
@@ -82,7 +82,7 @@ var PutFront = React.createClass({
       </div>
       );
   },
-  
+
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_FRONT_WAITING_FOR_RACK:
@@ -103,13 +103,13 @@ var PutFront = React.createClass({
       break;
       case appConstants.PUT_FRONT_SCAN:
       if(this.state.PutFrontExceptionStatus == false){
-       if (this.state.OrigBinUse){
-        binComponent = ( <div className="binsFlexWrapperContainer">
-          <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType}/>
+       if (this.state.OrigBinUse || this.state.PutFrontBinCoordinatePlotting){
+         binComponent = ( <div className="binsFlexWrapperContainer">
+          <BinsFlex binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId} seatType = {this.state.SeatType} binCoordinatePlotting={true}/>
           <WrapperSplitRoll scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
           </div>)
-
-      }else{
+      }
+      else{
         binComponent =(<div className='main-container'>
           <Bins binsData={this.state.PutFrontBinData} screenId = {this.state.PutFrontScreenId}/>
           <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid}/>
@@ -198,7 +198,7 @@ var PutFront = React.createClass({
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
         var selected_screen;
-        
+
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           if(!this.state.GetIRTScanStatus)
           {
@@ -207,7 +207,7 @@ var PutFront = React.createClass({
            <div className = "kq-exception">
           <div className="gor-info-text">{_("Empty the rollcage to undock")}</div>
           </div>
-          <div className = "staging-action">                          
+          <div className = "staging-action">
           <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.WAREHOUSEFULL_EXCEPTION} color={"orange"} />
           </div>
           </div>);
@@ -228,7 +228,7 @@ var PutFront = React.createClass({
           </div>
           );
         break;
-        
+
         case appConstants.PUT_FRONT_PPTL_PRESS:
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -252,7 +252,7 @@ var PutFront = React.createClass({
       break;
 
         case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
-        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN: 
+        case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
 
         if(this.state.PutFrontExceptionStatus == false){
          if (this.state.OrigBinUse){
@@ -325,11 +325,11 @@ var PutFront = React.createClass({
         case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
           var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
           confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
-          _button = (<div className = "staging-action">                          
+          _button = (<div className = "staging-action">
                           <Button1 disabled = {confirmDisabled} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.UNMARKED_DAMAGED} color={"orange"} />
                     </div>);
           if(isUnmarked){
-            unmarkedContainer = (                           
+            unmarkedContainer = (
                          <KQExceptionDamaged scanDetailsDamaged = {this.state.PutFrontDamagedQuantity} action={"DAMAGED"} />
                     )
             kqHeadMessage = _("Damaged Quantity");
@@ -349,7 +349,7 @@ var PutFront = React.createClass({
                     <div className = "kq-exception">
                       <div className="kq-header">{kqHeadMessage}</div>
                      {unmarkedContainer}
-                      
+
                     </div>
                   </div>
                   <div className = "finish-damaged-barcode">
@@ -360,7 +360,7 @@ var PutFront = React.createClass({
                    <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                 </div>
               </div>
-          );      
+          );
         break;
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
              var buttonActivateFlag=mainstore.getExeptionQuanity();
@@ -391,14 +391,14 @@ var PutFront = React.createClass({
                   <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType = {appConstants.GOOD_QUANTITY}/>
                     </div>
-              
+
                      <div className="gor-NI-wrapper">
                      <hr/>
                   <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType = {appConstants.MISSING_QUANTITY} />
                     </div>
 
-                    {UnscannableNI} 
+                    {UnscannableNI}
 
                     <div className="gor-NI-wrapper">
                      <hr/>
@@ -410,7 +410,7 @@ var PutFront = React.createClass({
                   </div>
                   <div className = "finish-damaged-barcode padding">
                     <Button1 disabled = {buttonActivateFlag} text = {_("Validate and Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
-              
+
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
@@ -418,7 +418,7 @@ var PutFront = React.createClass({
                 </div>
               </div>
             );
-        break; 
+        break;
           case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
           var selected_screen;
           if(!this.state.GetIRTScanStatus)
@@ -427,9 +427,9 @@ var PutFront = React.createClass({
   <div className="exception-right">
                    <div className="gor-exception-align">
                     <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>
-                   
+
                   <div className = "finish-damaged-barcode align-button">
-                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />  
+                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.PUT_FINISH_EXCEPTION_ENTITY} />
                   </div>
                   </div>
               </div>
@@ -444,7 +444,7 @@ var PutFront = React.createClass({
               </div>
           );
       }
-          
+
             this._component = (
               <div className='grid-container exception'>
               <Modal />
@@ -470,7 +470,7 @@ var PutFront = React.createClass({
               </div>
               </div>
               <div className = "finish-damaged-barcode">
-              <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_REVISED_QUANTITY} />  
+              <Button1 disabled = {false} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.GET_REVISED_QUANTITY} />
               </div>
               </div>
               <div className = 'cancel-scan'>
@@ -491,7 +491,7 @@ var PutFront = React.createClass({
               </div>
               </div>
               <div className = "finish-damaged-barcode">
-              <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER} />  
+              <Button1 disabled = {false} text = {_("CONFIRM")} color={"orange"} module ={appConstants.PUT_FRONT} action={appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER} />
               </div>
               </div>
               <div className = 'cancel-scan'>
@@ -500,7 +500,7 @@ var PutFront = React.createClass({
               </div>
               );
           }
-          
+
           break;
           case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
             this._component = (
@@ -518,8 +518,8 @@ var PutFront = React.createClass({
                        <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                     </div>
                   </div>
-              );      
-            break; 
+              );
+            break;
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
           this._component = (
             <div className='grid-container exception'>
@@ -536,11 +536,11 @@ var PutFront = React.createClass({
             <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
             </div>
             </div>
-            );      
-          break;         
+            );
+          break;
           case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
           var _button;
-          _button = (<div className = "staging-action">                          
+          _button = (<div className = "staging-action">
             <Button1 disabled = {this.state.PutFrontExceptionFlag} text = {_("Next")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_EXCESS_ITEMS_BIN} color={"orange"} />
             </div>);
           this._component = (
@@ -560,14 +560,14 @@ var PutFront = React.createClass({
             <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
             </div>
             </div>
-            );      
-          break; 
+            );
+          break;
           case appConstants.PPTL_MANAGEMENT:
           case appConstants.SCANNER_MANAGEMENT:
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson}/>)
           var _button;
           if(this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT){
-            _button = (<div className = 'staging-action' >                          
+            _button = (<div className = 'staging-action' >
               <Button1 disabled = {false} text = {_("BACK")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
               <Button1 disabled = {false} text = {_("Add Scanner")} module ={appConstants.PERIPHERAL_MANAGEMENT} status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
               </div>)
@@ -585,15 +585,15 @@ var PutFront = React.createClass({
             <div className="seatType"> Seat Type : {this.state.PutFrontSeatType.toUpperCase()}</div>
             </div>
             </div>
-            <TabularData data = {this.state.utility}/>                  
-            {_button}                  
-            <Modal /> 
+            <TabularData data = {this.state.utility}/>
+            {_button}
+            <Modal />
             </div>
             );
-          break;  
+          break;
 
           default:
-          return true; 
+          return true;
         }
       },
 
@@ -606,8 +606,8 @@ var PutFront = React.createClass({
           {this._navigation}
           {this._component}
           {this._notification}
-          </div> 
-          
+          </div>
+
           );
       }
 

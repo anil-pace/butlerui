@@ -1926,3 +1926,16 @@ msgstr "損傷したエンティティをスキャンする"
 #: src/assets/js/serverMessages/server_messages_lang.js:485
 msgid "Warehouse Full"
 msgstr "格納できません"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:485
+msgid "Paste Printout on the item and confirm"
+msgstr "アイテムにプリントアウトを貼り付けて確認する"
+
+#: src/assets/js/serverMessages/server_messages_lang.js:485
+msgid "Scan {0} items and place on the table"
+msgstr "{0}個のアイテムをスキャンしてテーブルに置く"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js:485
+msgid "Press PPTL"
+msgstr "プレスPPTL"

@@ -49023,7 +49023,13 @@ var japanese = {
    "{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",
    "{0} number :": "{0}\u756a\u53f7: :",
    "{0} oversized entities recorded.WMS notified": "\u30b5\u30a4\u30ba\u30aa\u30fc\u30d0\u30fc\u5546\u54c1 {0} \u500b",
-   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b"
+   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b",
+   "Paste Printout on the item and confirm": "\u30a2\u30a4\u30c6\u30e0\u306b\u30d7\u30ea\u30f3\u30c8\u30a2\u30a6\u30c8\u3092\u8cbc\u308a\u4ed8\u3051\u3066\u78ba\u8a8d\u3059\u308b",
+   "Scan {0} items and place on the table": "{0}\u500b\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30c6\u30fc\u30d6\u30eb\u306b\u7f6e\u304f",
+   "Press PPTL": "\u30d7\u30ec\u30b9PPTL"
+
+
+
 }
 module.exports = japanese;
 

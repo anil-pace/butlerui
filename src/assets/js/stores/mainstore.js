@@ -1980,7 +1980,6 @@ setCurrentSeat: function (data) {
             }
             if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
                 _putFrontExceptionScreen = "good";
-                _goodQuantity = _goodQuantity;
                 _damagedQuantity = 0;
                 _missingQuantity = 0;
             }
@@ -1997,7 +1996,6 @@ setCurrentSeat: function (data) {
                 data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
                 data["event_data"]["quantity"]["missing"] = _missingQuantity;
                 data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
-                _goodQuantity = _goodQuantity;
                 _damagedQuantity = 0;
                 _missingQuantity = 0;
                 _unscannableQuantity = 0;

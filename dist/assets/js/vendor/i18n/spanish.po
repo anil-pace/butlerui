@@ -1299,7 +1299,7 @@ msgstr "Por favor, deposite las entidades dañadas en la zona de excepción"
 msgid "Please put entities in IRT and Scan IRT Bin"
 msgstr "Por favor, deposite las entidades dañadas en IRT y escanee el Contenedor IRT"
 
-msgid "Please put entities which have issues in exception area"
+msgid "Please put entities which has issues in exception area"
 msgstr "Por favor, deposite las entidades que tienen problemas en la zona de excepción"
 
 msgid "Please put entities with issues, in exception area"

@@ -229,7 +229,7 @@ var spanish = {
 	"Please put damaged entities in exception area": "Por favor, deposite las entidades da\u00f1adas en la zona de excepci\u00f3n",
 	"Please put entities in IRT and Scan IRT Bin": "Por favor, deposite las entidades da\u00f1adas en IRT y escanee el Contenedor IRT",
 	"Please put entities in exception area and confirm": "Por favor, ponga los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
-	"Please put entities which have issues in exception area": "Por favor, deposite las entidades que tienen problemas en la zona de excepci\u00f3n",
+	"Please put entities which has issues in exception area": "Por favor, deposite las entidades que tienen problemas en la zona de excepci\u00f3n",
 	"Please put entities with issues, in exception area": "Por favor, deposite las entidades con problemas en la zona de excepci\u00f3n",
 	"Please put entity in exception area and confirm": "Por favor, ubique los art\u00edculos en el \u00e1rea de excepci\u00f3n y confirme",
 	"Please put exception entities in IRT bin and scan the bin": "Por favor, deposite las entidades de excepci\u00f3n en el contenedor IRT y escanee el contenedor",

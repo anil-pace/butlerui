@@ -44350,7 +44350,10 @@ var NumericIndicator = React.createClass({displayName: "NumericIndicator",
    _qty:0,
    getInitialState: function() {
     this._qty=this.props.execType===appConstants.DEFAULT?this.props.scanDetails.current_qty:0;
-    return {value: this._qty}
+    return{
+        goodQuantity: mainstore.getGoodQuantity(),
+        value: this._qty
+    }
 },
 self:this,
 
@@ -44619,16 +44622,30 @@ componentDidMount(){
         }(this))
     },
     render: function(data) {
-        this.checkKqAllowed();
-        return (
-            React.createElement("div", {className: this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"}, 
-            React.createElement("div", null, 
-            React.createElement("span", {className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}), 
-            React.createElement("input", {id: "keyboard", value: this.state.value, type: "text", name: "quantity", className: "gor-quantity-text gor_"+this.props.execType}), 
-            React.createElement("span", {className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue})
+        if(this.props.execType===appConstants.GOOD_QUANTITY){
+            return (
+                React.createElement("div", {className: this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"}, 
+                    React.createElement("div", null, 
+                        React.createElement("span", {className: this._appendClassDown + " hideMe", action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}), 
+                        React.createElement("input", {disabled: true, id: "keyboard", value: this.state.goodQuantity, type: "text", name: "quantity", className: "gor-quantity-text gor_"+this.props.execType}), 
+                        React.createElement("span", {className: this._appendClassUp + " hideMe", action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue})
+                    )
+                )
             )
-            )
-            )
+        }
+        else{
+            this.checkKqAllowed();  
+            return (
+                React.createElement("div", {className: this.props.Formattingclass? "indicator-wrapper "+this.props.Formattingclass:"indicator-wrapper"}, 
+                    React.createElement("div", null, 
+                        React.createElement("span", {className: this._appendClassDown, action: this.props.action, onClick: this.decrementValue, onMouseDown: this.decrementValue}), 
+                        React.createElement("input", {id: "keyboard", value: this.state.value, type: "text", name: "quantity", className: "gor-quantity-text gor_"+this.props.execType}), 
+                        React.createElement("span", {className: this._appendClassUp, action: this.props.action, onClick: this.incrementValue, onMouseDown: this.incrementValue})
+                    )
+                )
+                )
+            }
+
 
     }
 });
@@ -51264,6 +51281,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty("put_quantity"))
             return _seatData.put_quantity;
     },
+    getGoodQuantity: function () {
+        if (_seatData.hasOwnProperty("good_quantity")){
+            _goodQuantity = _seatData.good_quantity;
+            return _goodQuantity;
+        }
+    },
     setShowModal: function (data) {
         showModal = false;
     },
@@ -53042,7 +53065,6 @@ setCurrentSeat: function (data) {
             }
             if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
                 _putFrontExceptionScreen = "good";
-                _goodQuantity = 0;
                 _damagedQuantity = 0;
                 _missingQuantity = 0;
             }
@@ -53059,7 +53081,6 @@ setCurrentSeat: function (data) {
                 data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
                 data["event_data"]["quantity"]["missing"] = _missingQuantity;
                 data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
-                _goodQuantity = 0;
                 _damagedQuantity = 0;
                 _missingQuantity = 0;
                 _unscannableQuantity = 0;

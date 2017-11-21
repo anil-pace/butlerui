@@ -2423,6 +2423,22 @@ msgstr "アイテムにプリントアウトを貼り付けて確認する"
 msgid "Scan {0} items and place on the table"
 msgstr "{0}個のアイテムをスキャンしてテーブルに置く"
 
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Scan box from MSU slot"
+msgstr "MSUスロットからのスキャンボックス"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Scan Entity From Bin {0}"
+msgstr "Bin {0}からエンティティをスキャンする"
+
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Place {0} items in bin {0} and press PPTL to confirm"
+msgstr "ビン{0}に{0}個のアイテムを置き、PPTLを押して確認します"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Press print button to reprint label for current item"
+msgstr "印刷ボタンを押すと、現在のアイテムのラベルが再印刷されます。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:485
 msgid "Press PPTL"

@@ -111,7 +111,7 @@ var appConstants = {
 	PPTL_PRESS : 'PPTL_PRESS',
 	SET_PICK_FRONT_DATA:"SET_PICK_FRONT_DATA",
 	PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:"put_front_exception_warehouse_full",
-	GOOD_QUANTITY:"good_quntity",
+	GOOD_QUANTITY:"good_quantity",
 	MISSING_QUANTITY:"Missing_quntity",
 	UNSCANNABLE_QUANTITY:"Unscannable_quntity",
 	UNSCANNABLE:"UNSCANNABLE",

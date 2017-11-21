@@ -1,9 +1,17 @@
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
+var mainstore = require('../../stores/mainstore');
 var Modal = require('../Modal/Modal');
 
 var Notification = React.createClass({
+
+    getInitialState: function() {
+        return{
+            errorPopupDisabled: mainstore.getErrorPopupDisabledStatus()
+        }
+    },
+
     render: function() {
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.notification;
@@ -19,9 +27,35 @@ var Notification = React.createClass({
             var appendClass2 = 'glyphicon-ok';
         }
 
-        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
+        var notificationMessage = (
+            <div className={appendClass} role="alert">
+                <div className={appendClass1}>
+                    <div className="border-glyp">
+                        <span className={"glyphicon "+appendClass2}></span>
+                    </div>
+                </div>
+                {(function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                                return _(compData.description);
+                            }else{
+                                var notification_message = _.apply(null, message_args);
+                                return _(notification_message);
+                            }
+                        }
 
-            if(!$(".modal.notification-error").is(":visible")){
+                    }
+                )()}
+            </div>
+        );
+
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
+            if(this.state.errorPopupDisabled === true || this.state.errorPopupDisabled === undefined || this.state.errorPopupDisabled === null){
+                return notificationMessage;
+            }
+            else{
+                if(!$(".modal.notification-error").is(":visible")){
                 let message=(function(){
                         if(navMessagesJson !== undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
@@ -46,10 +80,8 @@ var Notification = React.createClass({
                     $('.modal.notification-error').data('bs.modal').options.backdrop = 'static';
                 }),0)
             }
-
             return null
-
-
+            }
         }else {
             if($(".modal.notification-error").is(":visible")){
                 setTimeout((function(){
@@ -63,29 +95,7 @@ var Notification = React.createClass({
                 return null
             }
             else if(errorCode !== null){
-                return (
-
-                    <div className={appendClass} role="alert">
-                        <div className={appendClass1}>
-                            <div className="border-glyp">
-                                <span className={"glyphicon "+appendClass2}></span>
-                            </div>
-                        </div>
-                        {(function(){
-                                if(navMessagesJson != undefined){
-                                    message_args.unshift(navMessagesJson[errorCode]);
-                                    if(message_args[0] == undefined){
-                                        return _(compData.description);
-                                    }else{
-                                        var notification_message = _.apply(null, message_args);
-                                        return _(notification_message);
-                                    }
-                                }
-
-                            }
-                        )()}
-                    </div>
-                );
+                return notificationMessage;
             }else{
                 return null;
             }

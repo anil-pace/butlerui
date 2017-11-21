@@ -34,6 +34,7 @@ _clearNotification = false,
 _enableButton = true,
 _putBackExceptionScreen,
 _finishAuditFlag = true;
+_errorPopupDisabled = false;
 
 var modalContent = {
     data: "",
@@ -202,6 +203,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _goodQuantity;
         }
     },
+
+    getErrorPopupDisabledStatus: function(){
+        if (_seatData.hasOwnProperty("error_popup_disabled")){
+            _errorPopupDisabled = _seatData.error_popup_disabled;
+            return _errorPopupDisabled;
+        }
+    },
+
     setShowModal: function (data) {
         showModal = false;
     },

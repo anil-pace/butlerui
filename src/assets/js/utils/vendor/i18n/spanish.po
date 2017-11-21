@@ -1397,3 +1397,15 @@ msgstr "Sí"
 
 msgid "{0} Physically damaged entity recorded.WMS notified"
 msgstr "{0} Entidad físicamente dañada registrada. WMS notificado"
+
+msgid "Scan box from MSU slot"
+msgstr "Escanear el recuadro desde la ranura MSU"
+
+msgid "Scan Entity From Bin {0}"
+msgstr "Escanear entidad de la papelera {0}"
+
+msgid "Place {0} items in bin {0} and press PPTL to confirm"
+msgstr "{0} Coloque {0} elementos en bin {0} y presione PPTL para confirmar"
+
+msgid "Press print button to reprint label for current item"
+msgstr "Presione el botón de imprimir para reimprimir la etiqueta del elemento actual"

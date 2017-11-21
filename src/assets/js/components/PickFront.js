@@ -666,10 +666,10 @@ else {
 
   case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
             var selected_screen;
-         
+            
                 selected_screen=(
                    <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Press print button to reprint label for current item")}</div>
+                    <div className="gor-exceptionConfirm-text">{_("Press reprint button to reprint label for current item")}</div>
                   <div className = "finish-damaged-barcode align-button">
                     <Button1 disabled = {false} text = {_("Reprint")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FRONT_REPRINT} />  
                   </div>
@@ -684,7 +684,7 @@ else {
                         {selected_screen}
                         </div>
                         <div className='cancel-scan'>
-                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
                         </div>
                     </div>
                 );

@@ -49077,7 +49077,13 @@ var japanese = {
    "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b",
    "Paste Printout on the item and confirm": "\u30a2\u30a4\u30c6\u30e0\u306b\u30d7\u30ea\u30f3\u30c8\u30a2\u30a6\u30c8\u3092\u8cbc\u308a\u4ed8\u3051\u3066\u78ba\u8a8d\u3059\u308b",
    "Scan {0} items and place on the table": "{0}\u500b\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u30c6\u30fc\u30d6\u30eb\u306b\u7f6e\u304f",
-   "Press PPTL": "\u30d7\u30ec\u30b9PPTL"
+   "Press PPTL": "\u30d7\u30ec\u30b9PPTL",
+   "Scan box from MSU slot": "MSU\u30b9\u30ed\u30c3\u30c8\u304b\u3089\u306e\u30b9\u30ad\u30e3\u30f3\u30dc\u30c3\u30af\u30b9",
+   "Scan Entity From Bin {0}": "Bin {0}\u304b\u3089\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b",
+   "Place {0} items in bin {0} and press PPTL to confirm": "\u30d3\u30f3{0}\u306b{0}\u500b\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u7f6e\u304d\u3001PPTL\u3092\u62bc\u3057\u3066\u78ba\u8a8d\u3057\u307e\u3059",
+   "Press print button to reprint label for current item": "\u5370\u5237\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u3068\u3001\u73fe\u5728\u306e\u30a2\u30a4\u30c6\u30e0\u306e\u30e9\u30d9\u30eb\u304c\u518d\u5370\u5237\u3055\u308c\u307e\u3059\u3002"
+
+
 }
 module.exports = japanese;
 
@@ -49909,7 +49915,11 @@ var spanish = {
 	"{0} oversized entities recorded.WMS notified": "{0} art\u00edculos extra grandes registrados. WMS notificado",
 	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado",
 	"Error": "Error",
-	"No": "No"
+	"No": "No",
+	"Scan box from MSU slot": "Escanear el recuadro desde la ranura MSU",
+	"Scan Entity From Bin {0}": "Escanear entidad de la papelera {0}",
+	"Place {0} items in bin {0} and press PPTL to confirm": "{0} Coloque {0} elementos en bin {0} y presione PPTL para confirmar",
+	"Press print button to reprint label for current item": "Presione el bot\u00f3n de imprimir para reimprimir la etiqueta del elemento actual"
 }
 module.exports = spanish;
 

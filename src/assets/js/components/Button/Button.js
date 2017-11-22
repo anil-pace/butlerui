@@ -226,8 +226,7 @@ switch (module) {
                                 break;    
                             case appConstants.CANCEL_SCAN_MODAL:
                                 this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
-                               break;    
-                            
+                               break;      
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
@@ -372,7 +371,7 @@ switch (module) {
 
                              case appConstants.CLOSE_CANCEL_SCAN:
                                closeModalBox(); 
-                               break;                   
+                               break;                    
                             default:
                                 return true;
                         }

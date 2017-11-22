@@ -38957,8 +38957,7 @@ switch (module) {
                                 break;    
                             case appConstants.CANCEL_SCAN_MODAL:
                                 this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
-                               break;    
-                            
+                               break;      
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
                                 var checkList = this.props.checkListData;
@@ -39103,7 +39102,7 @@ switch (module) {
 
                              case appConstants.CLOSE_CANCEL_SCAN:
                                closeModalBox(); 
-                               break;                   
+                               break;                    
                             default:
                                 return true;
                         }
@@ -42162,10 +42161,10 @@ else {
 
   case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
             var selected_screen;
-         
+            
                 selected_screen=(
                    React.createElement("div", {className: "gor-exception-align"}, 
-                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Press print button to reprint label for current item")), 
+                    React.createElement("div", {className: "gor-exceptionConfirm-text"}, _("Press reprint button to reprint label for current item")), 
                   React.createElement("div", {className: "finish-damaged-barcode align-button"}, 
                     React.createElement(Button1, {disabled: false, text: _("Reprint"), color: "orange", module: appConstants.PICK_FRONT, action: appConstants.PICK_FRONT_REPRINT})
                   )
@@ -42180,7 +42179,7 @@ else {
                         selected_screen
                         ), 
                         React.createElement("div", {className: "cancel-scan"}, 
-                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PICK_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
+                            React.createElement(Button1, {disabled: false, text: _("Cancel Exception"), module: appConstants.PUT_FRONT, action: appConstants.CANCEL_EXCEPTION_MODAL, color: "black"})
                         )
                     )
                 );

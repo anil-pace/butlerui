@@ -207,8 +207,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getErrorPopupDisabledStatus: function(){
         if (_seatData.hasOwnProperty("error_popup_disabled")){
             _errorPopupDisabled = _seatData.error_popup_disabled;
-            return _errorPopupDisabled;
         }
+        return _errorPopupDisabled;
     },
 
     setShowModal: function (data) {

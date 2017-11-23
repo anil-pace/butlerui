@@ -40962,9 +40962,17 @@ module.exports = PassiveNavigation;
 var React = require('react');
 var ActionCreators = require('../../actions/CommonActions');
 var appConstants = require('../../constants/appConstants');
+var mainstore = require('../../stores/mainstore');
 var Modal = require('../Modal/Modal');
 
 var Notification = React.createClass({displayName: "Notification",
+
+    getInitialState: function() {
+        return{
+            errorPopupDisabled: mainstore.getErrorPopupDisabledStatus()
+        }
+    },
+
     render: function() {
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.notification;
@@ -40980,9 +40988,35 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass2 = 'glyphicon-ok';
         }
 
-        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
+        var notificationMessage = (
+            React.createElement("div", {className: appendClass, role: "alert"}, 
+                React.createElement("div", {className: appendClass1}, 
+                    React.createElement("div", {className: "border-glyp"}, 
+                        React.createElement("span", {className: "glyphicon "+appendClass2})
+                    )
+                ), 
+                (function(){
+                        if(navMessagesJson != undefined){
+                            message_args.unshift(navMessagesJson[errorCode]);
+                            if(message_args[0] == undefined){
+                                return _(compData.description);
+                            }else{
+                                var notification_message = _.apply(null, message_args);
+                                return _(notification_message);
+                            }
+                        }
 
-            if(!$(".modal.notification-error").is(":visible")){
+                    }
+                )()
+            )
+        );
+
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
+            if(this.state.errorPopupDisabled === true || this.state.errorPopupDisabled === undefined || this.state.errorPopupDisabled === null){
+                return notificationMessage;
+            }
+            else{
+                if(!$(".modal.notification-error").is(":visible")){
                 let message=(function(){
                         if(navMessagesJson !== undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
@@ -41007,10 +41041,8 @@ var Notification = React.createClass({displayName: "Notification",
                     $('.modal.notification-error').data('bs.modal').options.backdrop = 'static';
                 }),0)
             }
-
             return null
-
-
+            }
         }else {
             if($(".modal.notification-error").is(":visible")){
                 setTimeout((function(){
@@ -41024,29 +41056,7 @@ var Notification = React.createClass({displayName: "Notification",
                 return null
             }
             else if(errorCode !== null){
-                return (
-
-                    React.createElement("div", {className: appendClass, role: "alert"}, 
-                        React.createElement("div", {className: appendClass1}, 
-                            React.createElement("div", {className: "border-glyp"}, 
-                                React.createElement("span", {className: "glyphicon "+appendClass2})
-                            )
-                        ), 
-                        (function(){
-                                if(navMessagesJson != undefined){
-                                    message_args.unshift(navMessagesJson[errorCode]);
-                                    if(message_args[0] == undefined){
-                                        return _(compData.description);
-                                    }else{
-                                        var notification_message = _.apply(null, message_args);
-                                        return _(notification_message);
-                                    }
-                                }
-
-                            }
-                        )()
-                    )
-                );
+                return notificationMessage;
             }else{
                 return null;
             }
@@ -41059,7 +41069,7 @@ var Notification = React.createClass({displayName: "Notification",
 
 module.exports = Notification;
 
-},{"../../actions/CommonActions":233,"../../constants/appConstants":299,"../Modal/Modal":252,"react":230}],260:[function(require,module,exports){
+},{"../../actions/CommonActions":233,"../../constants/appConstants":299,"../../stores/mainstore":318,"../Modal/Modal":252,"react":230}],260:[function(require,module,exports){
 var React = require('react');
 var mainstore = require('../stores/mainstore');
 var PutBack = require('./PutBack');
@@ -51128,6 +51138,7 @@ _clearNotification = false,
 _enableButton = true,
 _putBackExceptionScreen,
 _finishAuditFlag = true;
+_errorPopupDisabled = false;
 
 var modalContent = {
     data: "",
@@ -51296,6 +51307,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _goodQuantity;
         }
     },
+
+    getErrorPopupDisabledStatus: function(){
+        if (_seatData.hasOwnProperty("error_popup_disabled")){
+            _errorPopupDisabled = _seatData.error_popup_disabled;
+        }
+        return _errorPopupDisabled;
+    },
+
     setShowModal: function (data) {
         showModal = false;
     },

@@ -339,7 +339,8 @@ var french = {
 	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} entit\u00e9s exc\u00e9dentaires trouv\u00e9es dans le sac. Veuillez mettre les entit\u00e9s dans la zone d'exception et confirmez",
 	"{0} extra entities recorded in bin. WMS notified": "{0} Entit\u00e9s suppl\u00e9mentaires enregistr\u00e9es dans la corbeille. WMS notifi\u00e9",
 	"{0} oversized entities recorded.WMS notified": "{0} entit\u00e9s surdimensionn\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
-	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9"
+	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
+	"Take {0} Printout and Press PPTL": "Prendre {0} impression et appuyez sur PPTL"
 }
 
 module.exports = french;

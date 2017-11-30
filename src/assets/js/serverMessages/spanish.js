@@ -355,7 +355,7 @@ var spanish = {
 	"System is Idle": "El sistema est\u00e1 inactivo",
 	"System not configured for totes": "Sistema no configurado para bolsas",
 	"TOTE": "BOLSA",
-	"Take Printout and Press PPTL": "Seleccione la opci\u00f3n de imprimir  y pulse PPT",
+	"Take {0} Printout and Press PPTL": "Tome {0} Impresi\u00f3n y presione PPT",
 	"Take out the tote from bin {0} and scan entity": "Saque el bolso del contenedor {0} y escanee entida",
 	"Take the Items out from the Slot": "Sacque los art\u00edculos de la Vacante",
 	"Testing configuration {0} and {1}": "Prueba de configuraci\u00f3n {0} y {1}",

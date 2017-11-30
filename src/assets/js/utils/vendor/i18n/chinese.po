@@ -1057,3 +1057,6 @@ msgstr "座位種類"
 
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
 msgstr "良好數量不可等於總數量"
+
+msgid "Take {0} Printout and Press PPTL"
+msgstr "以{0}打印输出并按PPTL"

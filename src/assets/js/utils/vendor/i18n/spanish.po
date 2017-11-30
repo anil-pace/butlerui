@@ -1157,8 +1157,8 @@ msgstr	"Escanee el bolso que haya sobrepasado el límite de artículos
 msgid "Slot barcode scan successful" 
 msgstr	"Código de barra de la vacante escaneado con éxito
 
-msgid "Take Printout and Press PPTL" 
-msgstr	"Seleccione la opción de imprimir  y pulse PPTL
+msgid "Take {0} Printout and Press PPTL" 
+msgstr	"Tome {0} Impresión y presione PPTL
 
 msgid "Take out the tote from bin {0} and scan entity" 
 msgstr	"Saque el bolso del contenedor {0} y escanee entidad

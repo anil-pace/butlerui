@@ -335,7 +335,7 @@ var serverMessages = {
     "PkF.H.010":"Scan a packing box and keep in bin {0}",
     "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
     "PkF.H.015":"Enter Quantity",
-    "PkF.H.016":"Take Printout and Press PPTL",
+    "PkF.H.016":"Take {0} Printout and Press PPTL",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",

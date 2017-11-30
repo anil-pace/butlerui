@@ -1761,10 +1761,10 @@ msgstr "項目をスキャン{0}してビン{0}に置いてください"
 
 msgid "Slot barcode scan successful"
 msgstr "スロットのバーコードスキャンが成功しました"
-
-msgid "Take Printout and Press PPTL"
-msgstr "ピッキングリストをビンに入れて、PPTLボタンを押す"
-
+ 
+msgid "Take {0} Printout and Press PPTL"
+msgstr "{0}印字をとり、PPTLを押す"
+ 
 msgid "Take out the tote from bin {0} and scan entity"
 msgstr "ビン {0} からトートを取り出して商品をスキャンしてください"
 

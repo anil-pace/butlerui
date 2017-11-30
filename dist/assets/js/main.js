@@ -47896,7 +47896,8 @@ var chinese = {
     "Press PpsBin Button Or Scan a Tote": "\u6309PpsBin\u6309\u94ae\u6216\u626b\u63cf\u624b\u63d0\u5305",
     "Scan Tote to associate with Bin": "\u626b\u63cf\u624b\u63d0\u5305\u4e0e\u5bbe\u5173\u8054",
     "Scan item / Stage pps bin": "\u626b\u63cf\u9879\u76ee/\u821e\u53f0PPS\u658c",
-    "User Name": "\u7528\u6237\u540d"
+    "User Name": "\u7528\u6237\u540d",
+    "Take {0} Printout and Press PPTL": "\u4ee5{0}\u6253\u5370\u8f93\u51fa\u5e76\u6309PPTL",
 };
 
 module.exports = chinese;
@@ -48250,7 +48251,8 @@ var french = {
 	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} entit\u00e9s exc\u00e9dentaires trouv\u00e9es dans le sac. Veuillez mettre les entit\u00e9s dans la zone d'exception et confirmez",
 	"{0} extra entities recorded in bin. WMS notified": "{0} Entit\u00e9s suppl\u00e9mentaires enregistr\u00e9es dans la corbeille. WMS notifi\u00e9",
 	"{0} oversized entities recorded.WMS notified": "{0} entit\u00e9s surdimensionn\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
-	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9"
+	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
+	"Take {0} Printout and Press PPTL": "Prendre {0} impression et appuyez sur PPTL"
 }
 
 module.exports = french;
@@ -48604,7 +48606,8 @@ var german = {
 	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} \u00fcberz\u00e4hlige Einheiten in der Tasche gefunden. Legen Sie bitte die Einheiten in den Ausnahmebereich und best\u00e4tigen Sie diese.",
 	"{0} extra entities recorded in bin. WMS notified": "{0} extra Einheiten wurden im Beh\u00e4lter aufgezeichnet. WMS benachrichtigt.",
 	"{0} oversized entities recorded.WMS notified": "{0} \u00fcbergro\u00dfe Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
-	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt."
+	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
+	"Take {0} Printout and Press PPTL": "Nehmen Sie {0} Ausdruck und dr\u00fccken Sie PPTL"
 }
 
 module.exports = german;
@@ -48981,7 +48984,7 @@ var japanese = {
    "System is Idle": "\u5f85\u6a5f\u4e2d",
    "System not configured for totes": "\u30c8\u30fc\u30c8\u304c\u30b7\u30b9\u30c6\u30e0\u306b\u672a\u767b\u9332",
    "TOTE": "\u30c8\u30fc\u30c8",
-   "Take Printout and Press PPTL": "\u30d4\u30c3\u30ad\u30f3\u30b0\u30ea\u30b9\u30c8\u3092\u30d3\u30f3\u306b\u5165\u308c\u3066\u3001PPTL\u30dc\u30bf\u30f3\u3092\u62bc\u3059",
+   "Take {0} Printout and Press PPTL": "{0}\u5370\u5b57\u3092\u3068\u308a\u3001PPTL\u3092\u62bc\u3059",
    "Take out the tote from bin {0} and scan entity": "\u30d3\u30f3 {0} \u304b\u3089\u30c8\u30fc\u30c8\u3092\u53d6\u308a\u51fa\u3057\u3066\u5546\u54c1\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u3066\u304f\u3060\u3055\u3044",
    "Take the Items out from the Slot": "\u30d3\u30f3\u306b\u5546\u54c1\u3092\u623b\u3057\u3066\u304f\u3060\u3055\u3044",
    "Testing configuration {0} and {1}": "\u8a2d\u5b9a\u30c6\u30b9\u30c8\u4e2d {0} \u3068 {1}",
@@ -49434,7 +49437,7 @@ var serverMessages = {
     "PkF.H.010":"Scan a packing box and keep in bin {0}",
     "PkF.H.012":"Pick box from MSU and press PPTL on Bin {0}",
     "PkF.H.015":"Enter Quantity",
-    "PkF.H.016":"Take Printout and Press PPTL",
+    "PkF.H.016":"Take {0} Printout and Press PPTL",
     "PpB.E.009" : "Scan tote first and then scan item",
     "PpB.E.010" : "Invalid tote scan",
     "PpB001" : "Excess quantity",
@@ -49819,7 +49822,7 @@ var spanish = {
 	"System is Idle": "El sistema est\u00e1 inactivo",
 	"System not configured for totes": "Sistema no configurado para bolsas",
 	"TOTE": "BOLSA",
-	"Take Printout and Press PPTL": "Seleccione la opci\u00f3n de imprimir  y pulse PPT",
+	"Take {0} Printout and Press PPTL": "Tome {0} Impresi\u00f3n y presione PPT",
 	"Take out the tote from bin {0} and scan entity": "Saque el bolso del contenedor {0} y escanee entida",
 	"Take the Items out from the Slot": "Sacque los art\u00edculos de la Vacante",
 	"Testing configuration {0} and {1}": "Prueba de configuraci\u00f3n {0} y {1}",

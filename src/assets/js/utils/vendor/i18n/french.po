@@ -1042,4 +1042,7 @@ msgstr "Type de Siège"
  
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
 msgstr "La bonne quantité ne peut pas être égale à la quantité totale"
+
+msgid "Take {0} Printout and Press PPTL"
+msgstr "Prendre {0} impression et appuyez sur PPTL"
  

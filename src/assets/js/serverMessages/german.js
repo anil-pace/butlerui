@@ -346,7 +346,8 @@ var german = {
 	"{0} excess entities found in tote. Please put entities in exception area and confirm": "{0} \u00fcberz\u00e4hlige Einheiten in der Tasche gefunden. Legen Sie bitte die Einheiten in den Ausnahmebereich und best\u00e4tigen Sie diese.",
 	"{0} extra entities recorded in bin. WMS notified": "{0} extra Einheiten wurden im Beh\u00e4lter aufgezeichnet. WMS benachrichtigt.",
 	"{0} oversized entities recorded.WMS notified": "{0} \u00fcbergro\u00dfe Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
-	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt."
+	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
+	"Take {0} Printout and Press PPTL": "Nehmen Sie {0} Ausdruck und dr\u00fccken Sie PPTL"
 }
 
 module.exports = german;

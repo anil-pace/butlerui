@@ -437,7 +437,7 @@ function server_messages_list() {
     _("Press PPTL to confirm no Items Remaining in Bin {0}");
     _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
     _("Entities cannot be accommodated!");
-    _("Take Printout and Press PPTL");
+    _("Take {0} Printout and Press PPTL");    
     _("PPS is Closed");
     _("Place box in MSU slot and confirm");
     _("Wrong Undock");

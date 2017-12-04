@@ -163,6 +163,7 @@ var serverMessages = {
     "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
     "AdF.H.001" : "Scan Box or Items",
+    "AdF.H.002" : "Scan Remaining Items in Box",
     "AdF.H.010" : "Scan MPU",
     "AdF.H.011" : "Scan Pack or Sub-Packs",
     "AdF.H.012" : "Continue scanning Sub-Packs and Pack",

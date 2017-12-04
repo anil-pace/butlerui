@@ -1045,4 +1045,7 @@ msgstr "La bonne quantité ne peut pas être égale à la quantité totale"
 
 msgid "Take {0} Printout and Press PPTL"
 msgstr "Prendre {0} impression et appuyez sur PPTL"
+
+msgid "Scan Remaining Items in Box"
+msgstr "Numériser les éléments restants dans la boîte"
  

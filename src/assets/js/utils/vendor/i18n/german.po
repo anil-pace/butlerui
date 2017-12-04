@@ -1066,3 +1066,6 @@ msgstr ""
 
    msgid "Take {0} Printout and Press PPTL"
    msgstr "Nehmen Sie {0} Ausdruck und drücken Sie PPTL"
+
+   msgid "Scan Remaining Items in Box"
+   msgstr "Scannen Sie die restlichen Objekte in der Box"

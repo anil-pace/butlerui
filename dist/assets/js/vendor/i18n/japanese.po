@@ -2444,3 +2444,7 @@ msgstr "印刷ボタンを押すと、現在のアイテムのラベルが再印
 msgid "Press PPTL"
 msgstr "プレスPPTL"
 
+#: src/assets/js/serverMessages/server_messages.js
+msgid "Scan Remaining Items in Box"
+msgstr "残りのアイテムをボックスでスキャンする"
+

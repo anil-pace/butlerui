@@ -40988,36 +40988,7 @@ var Notification = React.createClass({displayName: "Notification",
             var appendClass2 = 'glyphicon-ok';
         }
 
-        var notificationMessage = (
-            React.createElement("div", {className: appendClass, role: "alert"}, 
-                React.createElement("div", {className: appendClass1}, 
-                    React.createElement("div", {className: "border-glyp"}, 
-                        React.createElement("span", {className: "glyphicon "+appendClass2})
-                    )
-                ), 
-                (function(){
-                        if(navMessagesJson != undefined){
-                            message_args.unshift(navMessagesJson[errorCode]);
-                            if(message_args[0] == undefined){
-                                return _(compData.description);
-                            }else{
-                                var notification_message = _.apply(null, message_args);
-                                return _(notification_message);
-                            }
-                        }
-
-                    }
-                )()
-            )
-        );
-
-        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
-            if(this.state.errorPopupDisabled === true || this.state.errorPopupDisabled === undefined || this.state.errorPopupDisabled === null){
-                return notificationMessage;
-            }
-            else{
-                if(!$(".modal.notification-error").is(":visible")){
-                let message=(function(){
+        let message=(function(){
                         if(navMessagesJson !== undefined){
                             message_args.unshift(navMessagesJson[errorCode]);
                             if(message_args[0] == undefined){
@@ -41029,7 +41000,26 @@ var Notification = React.createClass({displayName: "Notification",
                         }
 
                     }
-                )()
+                )();
+
+        var notificationMessage = (
+            React.createElement("div", {className: appendClass, role: "alert"}, 
+                React.createElement("div", {className: appendClass1}, 
+                    React.createElement("div", {className: "border-glyp"}, 
+                        React.createElement("span", {className: "glyphicon "+appendClass2})
+                    )
+                ), 
+                message
+            )
+        );
+
+        if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
+            if(this.state.errorPopupDisabled === true || this.state.errorPopupDisabled === undefined || this.state.errorPopupDisabled === null){
+                return notificationMessage;
+            }
+            else{
+                if(!$(".modal.notification-error").is(":visible")){
+                {message}
                 setTimeout((function(){ActionCreators.showModal({
                     data:message,
                     type:appConstants.ERROR_NOTIFICATION

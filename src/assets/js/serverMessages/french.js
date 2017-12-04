@@ -340,7 +340,8 @@ var french = {
 	"{0} extra entities recorded in bin. WMS notified": "{0} Entit\u00e9s suppl\u00e9mentaires enregistr\u00e9es dans la corbeille. WMS notifi\u00e9",
 	"{0} oversized entities recorded.WMS notified": "{0} entit\u00e9s surdimensionn\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
 	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
-	"Take {0} Printout and Press PPTL": "Prendre {0} impression et appuyez sur PPTL"
+	"Take {0} Printout and Press PPTL": "Prendre {0} impression et appuyez sur PPTL",
+	"Scan Remaining Items in Box": "Num\u00e9riser les \u00e9l\u00e9ments restants dans la bo\u00eete"
 }
 
 module.exports = french;

@@ -464,6 +464,7 @@ var spanish = {
 	"Scan box from MSU slot": "Escanear el recuadro desde la ranura MSU",
 	"Scan Entity From Bin {0}": "Escanear entidad de la papelera {0}",
 	"Place {0} items in bin {0} and press PPTL to confirm": "{0} Coloque {0} elementos en bin {0} y presione PPTL para confirmar",
-	"Press print button to reprint label for current item": "Presione el bot\u00f3n de imprimir para reimprimir la etiqueta del elemento actual"
+	"Press print button to reprint label for current item": "Presione el bot\u00f3n de imprimir para reimprimir la etiqueta del elemento actual",
+	"Scan Remaining Items in Box": "Escanee los art\u00edculos restantes en el cuadro"
 }
 module.exports = spanish;

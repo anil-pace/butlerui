@@ -27,15 +27,8 @@ var Notification = React.createClass({
             var appendClass2 = 'glyphicon-ok';
         }
 
-        var notificationMessage = (
-            <div className={appendClass} role="alert">
-                <div className={appendClass1}>
-                    <div className="border-glyp">
-                        <span className={"glyphicon "+appendClass2}></span>
-                    </div>
-                </div>
-                {(function(){
-                        if(navMessagesJson != undefined){
+        let message=(function(){
+                        if(navMessagesJson){
                             message_args.unshift(navMessagesJson[errorCode]);
                             if(message_args[0] == undefined){
                                 return _(compData.description);
@@ -46,7 +39,16 @@ var Notification = React.createClass({
                         }
 
                     }
-                )()}
+                )();
+
+        var notificationMessage = (
+            <div className={appendClass} role="alert">
+                <div className={appendClass1}>
+                    <div className="border-glyp">
+                        <span className={"glyphicon "+appendClass2}></span>
+                    </div>
+                </div>
+                {message}
             </div>
         );
 
@@ -56,19 +58,7 @@ var Notification = React.createClass({
             }
             else{
                 if(!$(".modal.notification-error").is(":visible")){
-                let message=(function(){
-                        if(navMessagesJson !== undefined){
-                            message_args.unshift(navMessagesJson[errorCode]);
-                            if(message_args[0] == undefined){
-                                return _(compData.description);
-                            }else{
-                                var notification_message = _.apply(null, message_args);
-                                return _(notification_message);
-                            }
-                        }
-
-                    }
-                )()
+                {message}
                 setTimeout((function(){ActionCreators.showModal({
                     data:message,
                     type:appConstants.ERROR_NOTIFICATION

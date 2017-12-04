@@ -40989,7 +40989,7 @@ var Notification = React.createClass({displayName: "Notification",
         }
 
         let message=(function(){
-                        if(navMessagesJson !== undefined){
+                        if(navMessagesJson){
                             message_args.unshift(navMessagesJson[errorCode]);
                             if(message_args[0] == undefined){
                                 return _(compData.description);

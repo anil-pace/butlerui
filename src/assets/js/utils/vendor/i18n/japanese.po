@@ -472,10 +472,6 @@ msgstr "スロットをスキャン"
 msgid "Wait for MSU"
 msgstr "MSU移動中"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:116
-msgid "Scan Entity From Bin {0}"
-msgstr "ビン {0} の商品をスキャン"
-
 #: src/assets/js/serverMessages/server_messages_lang.js:117
 msgid "Enter Good Quantity to be Put into Slot"
 msgstr "良品数入力"
@@ -999,10 +995,6 @@ msgstr "完了"
 msgid "Back"
 msgstr "戻る"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:234
-#: src/assets/js/serverMessages/server_messages_lang.js:236
-msgid "OK"
-msgstr "OK"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:235
 #: src/assets/js/serverMessages/server_messages_lang.js:237
@@ -1589,10 +1581,6 @@ msgstr "PPSモード"
 msgid "Seat Type"
 msgstr "シートタイプ"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:382
-msgid "Good Quantity Cannot be Equal to the Total Quantity"
-msgstr "良い数量は合計数量と等しくない"
-
 #: src/assets/js/serverMessages/server_messages_lang.js:423
 msgid "Please scan or enter {0} number"
 msgstr "シートタイプ"
@@ -1636,29 +1624,9 @@ msgstr "過剰数量を入力してください"
 msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
 msgstr "格納できません！全ての商品を取出しPPTLボタンを押してください"
 
-msgid "Entity Damaged"
-msgstr "商品破損"
 
 msgid "Entity already scanned.Confirm exception"
 msgstr "既にスキャンされた商品です。例外登録を確認してください"
-
-msgid "Exception entry successful"
-msgstr "例外入力が成功しました"
-
-msgid "Exception finished"
-msgstr "例外入力が終了しました"
-
-msgid "Exception with entity reported"
-msgstr "例外商品を登録しました。"
-
-msgid "Excess quantity"
-msgstr "過剰数量"
-
-msgid "Exit {0}"
-msgstr "終了{0}"
-
-msgid "Gently push roll cage away from the frame"
-msgstr "ロールケージをフレームから離れて押してください"
 
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
 msgstr "良品数と合計数は同じにできません"
@@ -1677,9 +1645,6 @@ msgstr "商品に問題"
 
 msgid "No"
 msgstr "いいえ"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "PPS is Closed"
 msgstr "PPSが閉じられています"
@@ -1928,68 +1893,16 @@ msgid "Warehouse Full"
 msgstr "格納できません"
 
 
-msgid " items"
-msgstr " 項目"
-
-msgid "Are you sure you want to cancel the exception?"
-msgstr "例外をキャンセルしたいですか"
-
-msgid "Are you sure you want to exit from {0} invoice and stage all bins"
-msgstr " {0} 請求書から退場して全てのビンをステージしたいですか"
-
-msgid "Are you sure you want to exit from {0} {1} and stage all bins"
-msgstr " {0} {1}から退場して全てのビンをステージしたいですか"
-
 msgid "Bin Already Scanned"
 msgstr "ビンが既にスキャンされました"
 
-msgid "Bin full"
-msgstr "ビンがいっぱいです"
-
-msgid "Bin scan successful"
-msgstr "ビンのスキャンが成功しました"
-
-msgid "Container Already Scanned."
-msgstr "コンテナが既にスキャンされました"
-
-msgid "Continue"
-msgstr "続けます"
 
 msgid "DO NOT STACK"
 msgstr "スタックしてはいけません"
 
-msgid "Damaged Quantity"
-msgstr "数量が破損されています"
-
-msgid "Dock roll cage back to proceed the operation"
-msgstr "操作を進めるためにドックロールケージを戻してください"
-
-msgid "English"
-msgstr "英語"
-
-msgid "Enter Quantity"
-msgstr "数量を入力してください"
-
-msgid "Enter excess item quantity"
-msgstr "余分な項目の数量を入力してください"
 
 msgid "Entities cannot be accommodated!"
 msgstr "エンティティが収容できません!"
-
-msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
-msgstr "エンティティが収容できません！全てのエンティティをビンから削除してPPTLを押してください。"
-
-msgid "Entity Damaged"
-msgstr "エンティティが破損されています"
-
-msgid "Entity already scanned.Confirm exception"
-msgstr "エンティティが既にスキャンされました。例外を確認してください"
-
-msgid "Entity entry successful"
-msgstr "エンティティの入力が成功しました"
-
-msgid "Error"
-msgstr "エラー"
 
 msgid "Exception entry successful"
 msgstr "例外入力が成功しました"
@@ -2009,38 +1922,11 @@ msgstr "終了{0}"
 msgid "Extra details entered are incorrect.Please enter correct details"
 msgstr "入力された詳細が間違っています。正しい詳細を入力してください"
 
-msgid "Extra entity scan found."
-msgstr "余分なエンティティのスキャンが見つかりました."
-
 msgid "FRAGILE"
 msgstr "割れ物注意"
 
 msgid "Gently push roll cage away from the frame"
 msgstr "ロールケージをフレームから離れて押してください"
-
-msgid "Good Quantity Cannot be Equal to the Total Quantity"
-msgstr "良い数量は合計数量と同様であることはできません"
-
-msgid "Invalid Entity Scanned."
-msgstr "無効なエンティティがスキャンされました。"
-
-msgid "Invalid Event.Expecting PPTL button press"
-msgstr "無効なイベント。PPTLボタンを押してください "
-
-msgid "Invalid Slot scanned"
-msgstr "無効なスロットがスキャンされました"
-
-msgid "Invalid tote scanned"
-msgstr "無効なトートがスキャンされました"
-
-msgid "Invoice number: {0}"
-msgstr "請求書番号: {0}"
-
-msgid "Issues with entity"
-msgstr "エンティティとの問題"
-
-msgid "Last item scan will be cancelled. Do you want to continue?"
-msgstr "最後の項目のスキャンはキャンセルされます。続けますか"
 
 msgid "Length of {0} should not be greater than {1}"
 msgstr "{0}の長さは{1}より大きくてはいけません"
@@ -2051,53 +1937,11 @@ msgstr "ネストマックス"
 msgid "Next"
 msgstr "次"
 
-msgid "No"
-msgstr "いいえ"
-
-msgid "OK"
-msgstr "OK"
-
-msgid "PPS is Closed"
-msgstr "PPSが閉じられています"
-
-msgid "PPS is closed"
-msgstr "PPSが閉じられています"
-
 msgid "Packing box scan failed"
 msgstr "パッキングボックスのスキャンが失敗しました"
 
-msgid "Physically Damaged Reported should equal Scanned Quantity"
-msgstr "報告された物理的に故障しているエンティティはスキャン数と同様になります"
-
-msgid "Physically Damaged entity reported."
-msgstr "物理的に故障しているエンティティが報告されました。"
-
 msgid "Pick box from MSU and press PPTL on Bin {0}"
 msgstr "MSUからボックスを選択して、Bin {0}のPPTLを押してください"
-
-msgid "Place"
-msgstr "置いてください"
-
-msgid "Place box in MSU slot and confirm"
-msgstr "MSUスロットにボックスを置いて確認してください"
-
-msgid "Place container in MSU slot and confirm"
-msgstr "MSUスロットにコンテナを置いて確認してください"
-
-msgid "Place the tote back in bin {0} and press pptl"
-msgstr "トートをビン{0}に戻してpptlを押してください"
-
-msgid "Place {0} boxes from bin {2}"
-msgstr "ビン{2}から{0}ボックスを置いてください"
-
-msgid "Place {0} boxes with {1} items from bin {2}"
-msgstr "ビン{2}から{1}の項目を{0}のボックスと置いてください"
-
-msgid "Please Scan tote which has excess item"
-msgstr "余分な項目があるトートをスキャンしてください"
-
-msgid "Please enter a quantity greater than 0"
-msgstr "0以上の数量を入力してください"
 
 msgid "Please put damaged entities in IRT bin and scan the bin"
 msgstr "故障されたエンティティをIRTビンに入れてビンをスキャンしてください"
@@ -2111,11 +1955,6 @@ msgstr "エンティティをIRTビンに入れてビンをスキャンしてく
 msgid "Please put entities which have issues in exception area"
 msgstr "例外領域に問題のあるエンティティを入れてください"
 
-msgid "Please put entities with issues, in exception area"
-msgstr "例外領域に問題のあるエンティティを入れてください"
-
-msgid "Please put exception entities in IRT bin and scan the bin"
-msgstr "例外エンティティをIRTビンに入れてビンをスキャンしてください"
 
 msgid "Please put exception entities in exception area"
 msgstr "例外エンティティを例外領域に入れてください"
@@ -2138,164 +1977,31 @@ msgstr "スキャンできないエンティティをIRTビンに入れてビン
 msgid "Please put unscannable entities in exception area"
 msgstr "スキャンできないエンティティを例外領域に入れてください"
 
-msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
-msgstr "Bin {0}に項目が残っていないことを確認するためにPPTLを押してください"
-
-msgid "Press bin PPTL to remove entities"
-msgstr "エンティティを削除するためにビンPPTLを押してください"
-
-msgid "Processing Next Pick from Rack "
-msgstr "ラックから次のピッキングを処理しています "
-
-msgid "Quantity of Physically damaged entities scanned is less."
-msgstr "スキャンされた物理的に故障しているエンティティの数量は少ないです。"
-
-msgid "Release MTU"
-msgstr "MTUを解放してください"
-
-msgid "Remove Tote from bin & Press PPTL to confirm no Items Remaining"
-msgstr "残っている項目を確認するためにビンからトートを外してPPTLを押してください。"
-
-msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
-msgstr "残っている項目を確認するためにビン{0}からトートを外してPPTLを押してください。"
-
-msgid "SKU not present in Database."
-msgstr "SKUはデータベースに存在していません。"
-
-msgid "SKU not present in database. Put into IRT bin."
-msgstr "SKUはデータベースに存在していません。IRTビンに入れてください."
-
 msgid "STACK MAX"
 msgstr "スタックマックス"
-
-msgid "STN scan successful"
-msgstr "STNのスキャンが成功しました"
-
-msgid "Scan Damaged Entity"
-msgstr "スキャンが破壊されたエンティティ"
 
 msgid "Scan IRT Bin"
 msgstr "IRTビンをスキャンしてください"
 
-msgid "Scan Tote first and then scan rack"
-msgstr "最初にトートをスキャンして、そのあと、ラックをスキャンしてください"
-
 msgid "Scan a packing box and keep in bin {0}"
 msgstr "パッキングボックスをスキャンしてビン{0}に保管してください"
-
-msgid "Scan damaged entity"
-msgstr "スキャンが破壊されたエンティティ"
-
-msgid "Scan excess item"
-msgstr "余分な項目をスキャンしてください"
-
-msgid "Scan excess item quantity"
-msgstr "余分な項目数量をスキャンしてください"
-
-msgid "Scan or Enter the tote barcode to reprint"
-msgstr "再版するためにスキャンまたはトートバーコードを入力してください"
-
-msgid "Scan or Enter {0} number"
-msgstr "スキャンまたは{0}の数字を入力してください"
-
-msgid "Scan slot to confirm"
-msgstr "確認するためにスロットをスキャンしてください"
-
-msgid "Scan tote and place it in the slot"
-msgstr "トートをスキャンしてスロットに置いてください"
-
-msgid "Scan tote first and then scan item"
-msgstr "最初にトートをスキャンして、そのあと、項目をスキャンしてください"
-
-msgid "Scan tote which has excess item"
-msgstr "余分な項目を持っているトートをスキャンしてください"
-
-msgid "Scan {0} Items and Place in Bin {0}"
-msgstr "項目をスキャン{0}してビン{0}に置いてください"
-
-msgid "Slot barcode scan successful"
-msgstr "スロットのバーコードスキャンが成功しました"
-
-msgid "Sum of good, missing and damaged should be equal to {0}"
-msgstr "品物の合計、欠落、破損は{0}と同様になります"
 
 msgid "Take Printout and Press PPTL"
 msgstr "プリントアウトしてPPTLを押してください"
 
-msgid "Take out the tote from bin {0} and scan entity"
-msgstr "ビン{0}からトートを取り出してエンティティをスキャンしてください"
-
-msgid "Total "
-msgstr "合計"
-
-msgid "Tote already associated with slot.Scan empty slot"
-msgstr "トートはすでにスロットと関連されています。空のスロットをスキャンしてください"
-
-msgid "Tote already scanned"
-msgstr "トートはすでにスキャンされました"
-
-msgid "Tote scan cancelled."
-msgstr "トートスキャンがキャンセルされました."
-
-msgid "Tote scan successful."
-msgstr "トートスキャンが成功しました."
-
-msgid "Tote scanned is not idle"
-msgstr "スキャンされたトートはアイドル状態ではありません"
-
-msgid "Tote scanned is not opened"
-msgstr "スキャンされたトートは開放していません"
-
-msgid "Undock Roll Cage if no items remaining"
-msgstr "項目が残っていない場合はロールケージをアンドックしてください"
-
-msgid "Unexpected entity scanned"
-msgstr "意外のエンティティがスキャンされました"
-
-msgid "Unscannable"
-msgstr "スキャンできない"
-
-msgid "Validate and Confirm"
-msgstr "検証して確認してください"
-
-msgid "Waiting for Bins to be Cleared at Pick Front"
-msgstr "ピックフロントでビンがクリアされるのを待っています"
-
-msgid "Warehouse Full"
-msgstr "ウェアハウスがいっぱいです"
-
 msgid "Warehouse Full Remove all entities from bin & press PPTL"
 msgstr "ウェアハウスがいっぱいです。ビンからすべてのエンティティを取り除いてPPTLを押してください"
 
-msgid "Wrong Scan. Entity not present in Database"
-msgstr "間違ったスキャン.データベースに存在しないエンティティ"
 
 msgid "Wrong Scan. IRT bin scan expected"
 msgstr "間違ったスキャン.IRTビンのスキャンが予想されています"
 
-msgid "Wrong Scan. Unrecognized barcode."
-msgstr "間違ったスキャン.無認識されたバーコード."
-
-msgid "Wrong Undock"
-msgstr "間違ったアンドック"
 
 msgid "Wrong entity Scanned. Bin Scan Expected."
 msgstr "間違ったエンティティがスキャンされました.ビンのスキャンが予想されています."
 
-msgid "Wrong entity scan.Please scan the correct entity"
-msgstr "間違ったエンティティスキャン.正しいエンティティをスキャンしてください"
-
-msgid "Wrong ppsbin button pressed"
-msgstr "間違ったppsbinボタンが押されました"
-
-msgid "Yes"
-msgstr "Yes"
-
 msgid "{0} Physically damaged entity recorded.WMS notified"
 msgstr "{0}物理的に故障されたエンティティが記録されました.WMSが通知されました"
-
-msgid "{0} number :"
-msgstr "{0} 番号 :"
 
 
 msgid "All scan and print will be cancelled. Confirm to cancel?"
@@ -2431,7 +2137,6 @@ msgstr "MSUスロットからのスキャンボックス"
 msgid "Scan Entity From Bin {0}"
 msgstr "Bin {0}からエンティティをスキャンする"
 
-
 #: src/assets/js/serverMessages/server_messages_lang.js
 msgid "Place {0} items in bin {0} and press PPTL to confirm"
 msgstr "ビン{0}に{0}個のアイテムを置き、PPTLを押して確認します"
@@ -2440,11 +2145,6 @@ msgstr "ビン{0}に{0}個のアイテムを置き、PPTLを押して確認し�
 msgid "Press print button to reprint label for current item"
 msgstr "印刷ボタンを押すと、現在のアイテムのラベルが再印刷されます。"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:485
-msgid "Press PPTL"
-msgstr "プレスPPTL"
-
 #: src/assets/js/serverMessages/server_messages.js
 msgid "Scan Remaining Items in Box"
 msgstr "残りのアイテムをボックスでスキャンする"
-

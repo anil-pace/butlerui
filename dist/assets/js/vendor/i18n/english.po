@@ -2038,3 +2038,8 @@ msgstr ""
 msgid "Put Pack list in trolley and press PPTL to confirm"
 msgstr ""
 
+
+#: src/assets/js/serverMessages/server_messages_lang.js:548
+msgid "Scan Remaining Items in Box"
+msgstr ""
+

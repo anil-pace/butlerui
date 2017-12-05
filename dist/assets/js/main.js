@@ -47888,6 +47888,7 @@ var chinese = {
     "Scan item / Stage pps bin": "\u626b\u63cf\u9879\u76ee/\u821e\u53f0PPS\u658c",
     "User Name": "\u7528\u6237\u540d",
     "Take {0} Printout and Press PPTL": "\u4ee5{0}\u6253\u5370\u8f93\u51fa\u5e76\u6309PPTL",
+    "Scan Remaining Items in Box": "\u626b\u63cf\u7bb1\u4e2d\u7684\u5269\u4f59\u7269\u54c1"
 };
 
 module.exports = chinese;
@@ -48242,7 +48243,8 @@ var french = {
 	"{0} extra entities recorded in bin. WMS notified": "{0} Entit\u00e9s suppl\u00e9mentaires enregistr\u00e9es dans la corbeille. WMS notifi\u00e9",
 	"{0} oversized entities recorded.WMS notified": "{0} entit\u00e9s surdimensionn\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
 	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
-	"Take {0} Printout and Press PPTL": "Prendre {0} impression et appuyez sur PPTL"
+	"Take {0} Printout and Press PPTL": "Prendre {0} impression et appuyez sur PPTL",
+	"Scan Remaining Items in Box": "Num\u00e9riser les \u00e9l\u00e9ments restants dans la bo\u00eete"
 }
 
 module.exports = french;
@@ -48597,7 +48599,8 @@ var german = {
 	"{0} extra entities recorded in bin. WMS notified": "{0} extra Einheiten wurden im Beh\u00e4lter aufgezeichnet. WMS benachrichtigt.",
 	"{0} oversized entities recorded.WMS notified": "{0} \u00fcbergro\u00dfe Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
 	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
-	"Take {0} Printout and Press PPTL": "Nehmen Sie {0} Ausdruck und dr\u00fccken Sie PPTL"
+	"Take {0} Printout and Press PPTL": "Nehmen Sie {0} Ausdruck und dr\u00fccken Sie PPTL",
+	"Scan Remaining Items in Box": "Scannen Sie die restlichen Objekte in der Box"
 }
 
 module.exports = german;
@@ -49083,7 +49086,8 @@ var japanese = {
    "Scan box from MSU slot": "MSU\u30b9\u30ed\u30c3\u30c8\u304b\u3089\u306e\u30b9\u30ad\u30e3\u30f3\u30dc\u30c3\u30af\u30b9",
    "Scan Entity From Bin {0}": "Bin {0}\u304b\u3089\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u30b9\u30ad\u30e3\u30f3\u3059\u308b",
    "Place {0} items in bin {0} and press PPTL to confirm": "\u30d3\u30f3{0}\u306b{0}\u500b\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u7f6e\u304d\u3001PPTL\u3092\u62bc\u3057\u3066\u78ba\u8a8d\u3057\u307e\u3059",
-   "Press print button to reprint label for current item": "\u5370\u5237\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u3068\u3001\u73fe\u5728\u306e\u30a2\u30a4\u30c6\u30e0\u306e\u30e9\u30d9\u30eb\u304c\u518d\u5370\u5237\u3055\u308c\u307e\u3059\u3002"
+   "Press print button to reprint label for current item": "\u5370\u5237\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u3068\u3001\u73fe\u5728\u306e\u30a2\u30a4\u30c6\u30e0\u306e\u30e9\u30d9\u30eb\u304c\u518d\u5370\u5237\u3055\u308c\u307e\u3059\u3002",
+   "Scan Remaining Items in Box": "\u6b8b\u308a\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u30dc\u30c3\u30af\u30b9\u3067\u30b9\u30ad\u30e3\u30f3\u3059\u308b"
 
 
 }
@@ -49255,6 +49259,7 @@ var serverMessages = {
     "AdF.A.007" :"This box belongs to some other SKU in the slot.Put it back.Scan next box.",
     "AdF.A.008" :"This box does not belong to this slot. Remove the box and put in exception area.",
     "AdF.H.001" : "Scan Box or Items",
+    "AdF.H.002" : "Scan Remaining Items in Box",
     "AdF.H.010" : "Scan MPU",
     "AdF.H.011" : "Scan Pack or Sub-Packs",
     "AdF.H.012" : "Continue scanning Sub-Packs and Pack",
@@ -49921,7 +49926,8 @@ var spanish = {
 	"Scan box from MSU slot": "Escanear el recuadro desde la ranura MSU",
 	"Scan Entity From Bin {0}": "Escanear entidad de la papelera {0}",
 	"Place {0} items in bin {0} and press PPTL to confirm": "{0} Coloque {0} elementos en bin {0} y presione PPTL para confirmar",
-	"Press print button to reprint label for current item": "Presione el bot\u00f3n de imprimir para reimprimir la etiqueta del elemento actual"
+	"Press print button to reprint label for current item": "Presione el bot\u00f3n de imprimir para reimprimir la etiqueta del elemento actual",
+	"Scan Remaining Items in Box": "Escanee los art\u00edculos restantes en el cuadro"
 }
 module.exports = spanish;
 

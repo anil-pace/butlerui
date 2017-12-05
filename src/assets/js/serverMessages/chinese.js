@@ -5,6 +5,7 @@ var chinese = {
     "Scan item / Stage pps bin": "\u626b\u63cf\u9879\u76ee/\u821e\u53f0PPS\u658c",
     "User Name": "\u7528\u6237\u540d",
     "Take {0} Printout and Press PPTL": "\u4ee5{0}\u6253\u5370\u8f93\u51fa\u5e76\u6309PPTL",
+    "Scan Remaining Items in Box": "\u626b\u63cf\u7bb1\u4e2d\u7684\u5269\u4f59\u7269\u54c1"
 };
 
 module.exports = chinese;

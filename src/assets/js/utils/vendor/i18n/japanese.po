@@ -472,10 +472,6 @@ msgstr "スロットをスキャン"
 msgid "Wait for MSU"
 msgstr "MSU移動中"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:116
-msgid "Scan Entity From Bin {0}"
-msgstr "ビン {0} の商品をスキャン"
-
 #: src/assets/js/serverMessages/server_messages_lang.js:117
 msgid "Enter Good Quantity to be Put into Slot"
 msgstr "良品数入力"
@@ -999,10 +995,6 @@ msgstr "完了"
 msgid "Back"
 msgstr "戻る"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:234
-#: src/assets/js/serverMessages/server_messages_lang.js:236
-msgid "OK"
-msgstr "OK"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:235
 #: src/assets/js/serverMessages/server_messages_lang.js:237
@@ -1589,10 +1581,6 @@ msgstr "PPSモード"
 msgid "Seat Type"
 msgstr "シートタイプ"
 
-#: src/assets/js/serverMessages/server_messages_lang.js:382
-msgid "Good Quantity Cannot be Equal to the Total Quantity"
-msgstr "良い数量は合計数量と等しくない"
-
 #: src/assets/js/serverMessages/server_messages_lang.js:423
 msgid "Please scan or enter {0} number"
 msgstr "シートタイプ"
@@ -1927,6 +1915,235 @@ msgstr "損傷したエンティティをスキャンする"
 msgid "Warehouse Full"
 msgstr "格納できません"
 
+
+msgid "Bin Already Scanned"
+msgstr "ビンが既にスキャンされました"
+
+
+msgid "DO NOT STACK"
+msgstr "スタックしてはいけません"
+
+
+msgid "Entities cannot be accommodated!"
+msgstr "エンティティが収容できません!"
+
+msgid "Exception entry successful"
+msgstr "例外入力が成功しました"
+
+msgid "Exception finished"
+msgstr "例外が終了しました"
+
+msgid "Exception with entity reported"
+msgstr "エンティティによる例外が報告されています"
+
+msgid "Excess quantity"
+msgstr "過剰数量"
+
+msgid "Exit {0}"
+msgstr "終了{0}"
+
+msgid "Extra details entered are incorrect.Please enter correct details"
+msgstr "入力された詳細が間違っています。正しい詳細を入力してください"
+
+msgid "FRAGILE"
+msgstr "割れ物注意"
+
+msgid "Gently push roll cage away from the frame"
+msgstr "ロールケージをフレームから離れて押してください"
+
+msgid "Length of {0} should not be greater than {1}"
+msgstr "{0}の長さは{1}より大きくてはいけません"
+
+msgid "NEST MAX"
+msgstr "ネストマックス"
+
+msgid "Next"
+msgstr "次"
+
+msgid "Packing box scan failed"
+msgstr "パッキングボックスのスキャンが失敗しました"
+
+msgid "Pick box from MSU and press PPTL on Bin {0}"
+msgstr "MSUからボックスを選択して、Bin {0}のPPTLを押してください"
+
+msgid "Please put damaged entities in IRT bin and scan the bin"
+msgstr "故障されたエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put damaged entities in exception area"
+msgstr "故障されたエンティティを例外領域に入れてください"
+
+msgid "Please put entities in IRT and Scan IRT Bin"
+msgstr "エンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put entities which have issues in exception area"
+msgstr "例外領域に問題のあるエンティティを入れてください"
+
+
+msgid "Please put exception entities in exception area"
+msgstr "例外エンティティを例外領域に入れてください"
+
+msgid "Please put extra entities in IRT bin and scan the bin"
+msgstr "余分なエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put extra entities in exception area"
+msgstr "余分なエンティティを例外領域に入れてください"
+
+msgid "Please put oversized entities in IRT bin and scan the bin"
+msgstr "大型のエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put oversized entities in exception area"
+msgstr "大型のエンティティを例外領域に入れてください"
+
+msgid "Please put unscannable entities in IRT bin and scan the bin"
+msgstr "スキャンできないエンティティをIRTビンに入れてビンをスキャンしてください"
+
+msgid "Please put unscannable entities in exception area"
+msgstr "スキャンできないエンティティを例外領域に入れてください"
+
+msgid "STACK MAX"
+msgstr "スタックマックス"
+
+msgid "Scan IRT Bin"
+msgstr "IRTビンをスキャンしてください"
+
+msgid "Scan a packing box and keep in bin {0}"
+msgstr "パッキングボックスをスキャンしてビン{0}に保管してください"
+
+msgid "Take Printout and Press PPTL"
+msgstr "プリントアウトしてPPTLを押してください"
+
+msgid "Warehouse Full Remove all entities from bin & press PPTL"
+msgstr "ウェアハウスがいっぱいです。ビンからすべてのエンティティを取り除いてPPTLを押してください"
+
+
+msgid "Wrong Scan. IRT bin scan expected"
+msgstr "間違ったスキャン.IRTビンのスキャンが予想されています"
+
+
+msgid "Wrong entity Scanned. Bin Scan Expected."
+msgstr "間違ったエンティティがスキャンされました.ビンのスキャンが予想されています."
+
+msgid "{0} Physically damaged entity recorded.WMS notified"
+msgstr "{0}物理的に故障されたエンティティが記録されました.WMSが通知されました"
+
+
+msgid "All scan and print will be cancelled. Confirm to cancel?"
+msgstr "すべてのスキャンと印刷がキャンセルされます。キャンセルすることを確認しますか？"
+
+msgid "Bad barcode on pack"
+msgstr "パックのバーコードが間違っています"
+
+msgid "Bad barcode on sub pack"
+msgstr "サブパックのバーコードが正しくありません"
+
+msgid "Continue scanning Sub-Packs and Pack"
+msgstr "サブパックとパックをスキャンし続ける"
+
+msgid "Damage Barcode"
+msgstr "ダメージバーコード"
+
+msgid "Damaged sub pack"
+msgstr "破損したサブパック"
+
+msgid "Enter Quantity of Unscannable Pack"
+msgstr "Unscannable Packの数量を入力してください"
+
+msgid "Enter Quantity of Unscannable Sub-Pack"
+msgstr "スキャン不能なサブパックの数量を入力してください"
+
+msgid "Good pack"
+msgstr "良いパック"
+
+msgid "Good sub pack"
+msgstr "良いサブパック"
+
+msgid "Issue with MPU"
+msgstr "MPUの問題"
+
+msgid "Issue with Pack"
+msgstr "パックに関する問題"
+
+msgid "Issue with Sub pack"
+msgstr "サブパックの問題"
+
+msgid "No Sub-Packs to reconcile"
+msgstr "調整するサブパックはありません"
+
+msgid "Pack Scan Successful"
+msgstr "パックスキャン成功"
+
+msgid "Pack Unscannable"
+msgstr "スキャン不能なパック"
+
+msgid "Pack missing"
+msgstr "パックがありません"
+
+msgid "Pack scan successfully"
+msgstr "パックを正常にスキャン"
+
+msgid "Packs"
+msgstr "パック"
+
+msgid "Press PPTL"
+msgstr "プレスPPTL"
+
+msgid "Put Pack list in trolley and press PPTL to confirm"
+msgstr "パッキングリストをトロリーに入れ、PPTLを押して確定する"
+
+msgid "Scan MPU"
+msgstr "スキャンMPU"
+
+msgid "Scan Pack or Sub-Packs"
+msgstr "スキャンパックまたはサブパック"
+
+msgid "Scan Small Box"
+msgstr "小さな箱をスキャンする"
+
+msgid "Scan not Allowed. PPS close/force close or profile change requested."
+msgstr "スキャンは許可されません。 PPSのクローズ/強制クローズまたはプロファイルの変更が要求されました。"
+
+msgid "Scan {0} Box and Place in Bin {1}"
+msgstr "{0}箱をスキャンして箱に入れる{1}"
+
+msgid "Scan {0} Small Box and Place in Bin {1}"
+msgstr "{0}小箱をスキャンして箱に入れる{1}"
+
+msgid "Scan {0} more packs and place in bin {1}"
+msgstr "より多くのパックをスキャンして{1}ビンに置く"
+
+msgid "Scan {0} more sub packs and place in bin {1}"
+msgstr "{0}個のサブパックをスキャンしてビン{1}に置く"
+
+msgid "Scan {0} packs"
+msgstr "{0}個のパックをスキャンする"
+
+msgid "Scan {0} sub packs"
+msgstr "{0}個のサブパックをスキャンする"
+
+msgid "Space not available"
+msgstr "スペースは利用できません"
+
+msgid "Sub pack missing"
+msgstr "サブパックがありません"
+
+msgid "Sub-Pack Unscannable"
+msgstr "スキャン不能なサブパック"
+
+msgid "Sub-Pack scan successfully"
+msgstr "サブパックスキャンに成功"
+
+msgid "Sub-Packs"
+msgstr "サブパック"
+
+msgid "Unexpected pack"
+msgstr "予期せぬパック"
+
+msgid "Wait for MPU"
+msgstr "MPUを待つ"
+
+msgid "Please put exception entities in IRT bin and scan the bin"
+msgstr "例外エンティティをIRTビンに入れ、ビンをスキャンしてください"
+
 #: src/assets/js/serverMessages/server_messages_lang.js:485
 msgid "Paste Printout on the item and confirm"
 msgstr "アイテムにプリントアウトを貼り付けて確認する"
@@ -1943,7 +2160,6 @@ msgstr "MSUスロットからのスキャンボックス"
 msgid "Scan Entity From Bin {0}"
 msgstr "Bin {0}からエンティティをスキャンする"
 
-
 #: src/assets/js/serverMessages/server_messages_lang.js
 msgid "Place {0} items in bin {0} and press PPTL to confirm"
 msgstr "ビン{0}に{0}個のアイテムを置き、PPTLを押して確認します"
@@ -1955,4 +2171,3 @@ msgstr "印刷ボタンを押すと、現在のアイテムのラベルが再印
 #: src/assets/js/serverMessages/server_messages.js
 msgid "Scan Remaining Items in Box"
 msgstr "残りのアイテムをボックスでスキャンする"
-

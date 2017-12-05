@@ -1409,3 +1409,7 @@ msgstr "{0} Coloque {0} elementos en bin {0} y presione PPTL para confirmar"
 
 msgid "Press print button to reprint label for current item"
 msgstr "Presione el botón de imprimir para reimprimir la etiqueta del elemento actual"
+
+msgid "Scan Remaining Items in Box"
+msgstr "Escanee los artículos restantes en el cuadro"
+

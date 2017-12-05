@@ -1952,3 +1952,7 @@ msgstr "ビン{0}に{0}個のアイテムを置き、PPTLを押して確認し�
 msgid "Press print button to reprint label for current item"
 msgstr "印刷ボタンを押すと、現在のアイテムのラベルが再印刷されます。"
 
+#: src/assets/js/serverMessages/server_messages.js
+msgid "Scan Remaining Items in Box"
+msgstr "残りのアイテムをボックスでスキャンする"
+

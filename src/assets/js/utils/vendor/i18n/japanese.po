@@ -472,6 +472,10 @@ msgstr "スロットをスキャン"
 msgid "Wait for MSU"
 msgstr "MSU移動中"
 
+#: src/assets/js/serverMessages/server_messages_lang.js:116
+msgid "Scan Entity From Bin {0}"
+msgstr "ビン {0} の商品をスキャン"
+
 #: src/assets/js/serverMessages/server_messages_lang.js:117
 msgid "Enter Good Quantity to be Put into Slot"
 msgstr "良品数入力"
@@ -740,7 +744,7 @@ msgstr "スキャンが誤っています。正しい商品をスキャン"
 #: src/assets/js/serverMessages/server_messages_lang.js:184
 #: src/assets/js/serverMessages/server_messages_lang.js:186
 msgid "Waiting for MSU scan. Please scan entity later."
-msgstr "スキャンが誤っています。正しいスロットをスキャン"
+msgstr "過剰スキャンです。商品を確認してください。"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:185
 #: src/assets/js/serverMessages/server_messages_lang.js:187
@@ -995,6 +999,10 @@ msgstr "完了"
 msgid "Back"
 msgstr "戻る"
 
+#: src/assets/js/serverMessages/server_messages_lang.js:234
+#: src/assets/js/serverMessages/server_messages_lang.js:236
+msgid "OK"
+msgstr "OK"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:235
 #: src/assets/js/serverMessages/server_messages_lang.js:237
@@ -1447,7 +1455,7 @@ msgstr "ログインできません。既にログインしています"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:343
 msgid "Place Item in slot and scan more"
-msgstr "スロットに置き、商品スキャン"
+msgstr "スロットに置き商品スキャン"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "PPTL"
@@ -1598,7 +1606,7 @@ msgid "Entity Damaged"
 msgstr "ダメージ商品"
 
 msgid " items"
-msgstr " 商品"
+msgstr " 項目"
  
 msgid "Are you sure you want to cancel the exception?"
 msgstr "例外処理をキャンセルしますか？"
@@ -1623,18 +1631,12 @@ msgstr "過剰数量を入力してください"
  
 msgid "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
 msgstr "格納できません！全ての商品を取出しPPTLボタンを押してください"
- 
-msgid "Entity Damaged"
-msgstr "商品破損"
- 
+  
 msgid "Entity already scanned.Confirm exception"
 msgstr "既にスキャンされた商品です。例外登録を確認してください"
  
 msgid "Exception entry successful"
 msgstr "例外入力が成功しました"
- 
-msgid "Exception finished"
-msgstr "例外入力が終了しました"
  
 msgid "Exception with entity reported"
 msgstr "例外商品を登録しました。"
@@ -1665,10 +1667,7 @@ msgstr "商品に問題"
  
 msgid "No"
 msgstr "いいえ"
- 
-msgid "OK"
-msgstr "OK"
- 
+  
 msgid "PPS is Closed"
 msgstr "PPSが閉じられています"
  
@@ -1801,10 +1800,6 @@ msgstr "はい"
 msgid "{0} number :"
 msgstr "{0}番号: :"
 
-msgid "OK"
-msgstr "はい"
-
-
 #: src/assets/js/serverMessages/server_messages_lang.js:337
 msgid "Sum of good and exception quantity should be equal to {0}"
 msgstr "良品数と例外登録数の合計は {0} でなければいけません。"
@@ -1844,7 +1839,7 @@ msgstr "スキャン不可"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:467
 msgid "Invalid Event.Expecting PPTL button press"
-msgstr "操作が誤っています。PPTLボタンを押してください。"
+msgstr "過剰スキャンです。商品を確認してください。"
 
 
 #: src/assets/js/serverMessages/server_messages_lang.js:468
@@ -1927,29 +1922,11 @@ msgstr "スタックしてはいけません"
 msgid "Entities cannot be accommodated!"
 msgstr "エンティティが収容できません!"
 
-msgid "Exception entry successful"
-msgstr "例外入力が成功しました"
-
-msgid "Exception finished"
-msgstr "例外が終了しました"
-
-msgid "Exception with entity reported"
-msgstr "エンティティによる例外が報告されています"
-
-msgid "Excess quantity"
-msgstr "過剰数量"
-
-msgid "Exit {0}"
-msgstr "終了{0}"
-
 msgid "Extra details entered are incorrect.Please enter correct details"
 msgstr "入力された詳細が間違っています。正しい詳細を入力してください"
 
 msgid "FRAGILE"
 msgstr "割れ物注意"
-
-msgid "Gently push roll cage away from the frame"
-msgstr "ロールケージをフレームから離れて押してください"
 
 msgid "Length of {0} should not be greater than {1}"
 msgstr "{0}の長さは{1}より大きくてはいけません"
@@ -1974,9 +1951,6 @@ msgstr "故障されたエンティティを例外領域に入れてください
 
 msgid "Please put entities in IRT and Scan IRT Bin"
 msgstr "エンティティをIRTビンに入れてビンをスキャンしてください"
-
-msgid "Please put entities which have issues in exception area"
-msgstr "例外領域に問題のあるエンティティを入れてください"
 
 
 msgid "Please put exception entities in exception area"
@@ -2156,9 +2130,6 @@ msgstr "{0}個のアイテムをスキャンしてテーブルに置く"
 msgid "Scan box from MSU slot"
 msgstr "MSUスロットからのスキャンボックス"
 
-#: src/assets/js/serverMessages/server_messages_lang.js
-msgid "Scan Entity From Bin {0}"
-msgstr "Bin {0}からエンティティをスキャンする"
 
 #: src/assets/js/serverMessages/server_messages_lang.js
 msgid "Place {0} items in bin {0} and press PPTL to confirm"

@@ -29,7 +29,7 @@ msgstr "トートをスキャンしてビンに紐付け"
 msgid "Press PpsBin Button Or Scan a Tote"
 msgstr "ビンのボタンを押すか、トートをスキャン"
 
-msgid "user Name"
+msgid "User Name"
 msgstr "ユーザー名"
 
 msgid "Password"
@@ -1606,7 +1606,7 @@ msgstr "過剰スキャンです。商品を確認してください。"
 
 
 msgid "Remove Tote from bin & Press PPTL to confirm no Items Remaining"
-msgstr "ビンからトートを取り出し、PPTLを押して残りのアイテムを確認します"
+msgstr "ビンからトートを取り出し、PPTLを押して残りの商品を確認します"
 
 
 msgid "Wrong entity scan.Please scan the correct entity"
@@ -1906,12 +1906,44 @@ msgstr "MSUスロットからコンテナをスキャン"
 
 
 msgid "Place {0} items in bin {1} and press PPTL to confirm"
-msgstr "ビン{0}に{1}個のアイテムを置き、PPTLを押して確認します"
+msgstr "ビン{1}に{0}個の商品を置き、PPTLを押して確認します"
 
 
 msgid "Press print button to reprint label for current item"
 msgstr "印刷ボタンを押すと、現在の商品ラベルが再印刷されます。"
 
-#: src/assets/js/serverMessages/server_messages.js
-msgid "Scan Remaining Items in Box"
-msgstr "残りのアイテムをボックスでスキャンする"
+
+msgid "Press reprint button to reprint label for current item"
+msgstr "再印刷ボタンを押すと、現在の商品ラベルが再印刷されます。"
+
+
+msgid "Missing/Unscanable Box"
+msgstr "不足/スキャン不可 コンテナ"
+
+
+msgid "Missing Boxes"
+msgstr "不足コンテナ"
+
+
+msgid "Unscannable Boxes"
+msgstr "スキャン不可コンテナ"
+
+
+msgid "Are You sure Given Boxes are not present in Slot ?"
+msgstr "コンテナがスロットに存在しないことを確認してください"
+
+
+msgid "KQ number of items kept in the bin and confirm?"
+msgstr "ビンに入っている商品数量を入力してください"
+
+
+msgid "Bin Full"
+msgstr "ビン満杯"
+
+
+msgid "Scan Remaining Items In Box"
+msgstr "コンテナの残り商品をスキャン"
+
+
+msgid "Scan {0} Items"
+msgstr "商品を {0} 個スキャン"

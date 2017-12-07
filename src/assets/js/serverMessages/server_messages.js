@@ -151,6 +151,7 @@ var serverMessages = {
     "Common.010": "Wrong Scan. Unrecognized barcode.",
     "Common.011": "Wrong Scan. IRT bin scan expected",
     "AdF.I.003" : "Item scan successful",
+    "AdF.I.004" : "Box Completed",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
     "AdF.I.010" : "Exception Finished",

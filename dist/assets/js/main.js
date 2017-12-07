@@ -49117,7 +49117,9 @@ var japanese = {
    "{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",
    "{0} number :": "{0} \u756a\u53f7 :",
    "{0} oversized entities recorded.WMS notified": "\u30b5\u30a4\u30ba\u30aa\u30fc\u30d0\u30fc\u5546\u54c1 {0} \u500b",
-   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b"
+   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b",
+   "Box Completed": "\u30dc\u30c3\u30af\u30b9\u5b8c\u6210",
+   "Done": "\u5b8c\u4e86"
 }
 module.exports = japanese;
 
@@ -49275,6 +49277,7 @@ var serverMessages = {
     "Common.010": "Wrong Scan. Unrecognized barcode.",
     "Common.011": "Wrong Scan. IRT bin scan expected",
     "AdF.I.003" : "Item scan successful",
+    "AdF.I.004" : "Box Completed",
     "AdF.I.006" : "Extra Box",
     "AdF.I.008" : "Cancel audit successful.Audit Restarted",
     "AdF.I.010" : "Exception Finished",
@@ -51562,7 +51565,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                 data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Action"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, false, true, false, true));
             _finishAuditFlag = true;
             var d = [];
 

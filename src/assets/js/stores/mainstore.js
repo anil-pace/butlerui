@@ -431,7 +431,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
                 data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
-            data["header"].push(new this.tableCol(_("Action"), "header", false, "small", false, false, true, false, true));
+            data["header"].push(new this.tableCol(_("Actions"), "header", false, "small", false, false, true, false, true));
             _finishAuditFlag = true;
             var d = [];
 

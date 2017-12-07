@@ -1947,3 +1947,15 @@ msgstr "コンテナの残り商品をスキャン"
 
 msgid "Scan {0} Items"
 msgstr "商品を {0} 個スキャン"
+
+
+msgid "Scan Remaining Items in Box"
+msgstr "残りのアイテムをボックスでスキャンする"
+
+
+msgid "Box Completed"
+msgstr "ボックス完成"
+
+
+msgid "Done"
+msgstr "完了"

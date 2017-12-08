@@ -59,6 +59,12 @@ var Notification = React.createClass({
 
                 return null
             }
+            else if($(".modal.in").is(":visible")){
+                 setTimeout((function(){
+                    $('.modal.in').data('bs.modal').options.backdrop='static';
+                }),0)
+                return null
+            }
             else if(errorCode !== null){
                 return (
 

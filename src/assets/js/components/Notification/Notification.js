@@ -81,7 +81,14 @@ var Notification = React.createClass({
                     $(".modal").removeClass("notification-error")
 
                 }),0)
+                return null
+            }
+            // condition for handling of Modal with notification_list=> level: "info"
+            if($(".modal.in").is(":visible")){
+                setTimeout((function(){
+                    $('.modal.in').data('bs.modal').options.backdrop='static';
 
+                }),0)
                 return null
             }
             else if(errorCode !== null){

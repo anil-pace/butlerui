@@ -63,8 +63,13 @@ var Notification = React.createClass({
                 return null
             }
             else if(errorCode !== null){
+                if($(".modal.in").is(":visible")){
+                    setTimeout((function(){
+                        $('.modal.in').data('bs.modal').options.backdrop='static';
+                    }),0)
+                    return null
+                }
                 return (
-
                     <div className={appendClass} role="alert">
                         <div className={appendClass1}>
                             <div className="border-glyp">

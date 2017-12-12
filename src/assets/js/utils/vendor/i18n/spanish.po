@@ -1397,3 +1397,6 @@ msgstr "Sí"
 
 msgid "{0} Physically damaged entity recorded.WMS notified"
 msgstr "{0} Entidad físicamente dañada registrada. WMS notificado"
+
+msgid "Scan box from MSU slot"
+msgstr "Escanear el recuadro desde la ranura MSU"

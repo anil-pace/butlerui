@@ -460,6 +460,7 @@ var spanish = {
 	"{0} oversized entities recorded.WMS notified": "{0} art\u00edculos extra grandes registrados. WMS notificado",
 	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado",
 	"Error": "Error",
-	"No": "No"
+	"No": "No",
+	"Scan box from MSU slot": "Escanear el recuadro desde la ranura MSU"
 }
 module.exports = spanish;

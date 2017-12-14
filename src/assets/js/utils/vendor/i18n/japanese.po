@@ -2305,3 +2305,8 @@ msgstr "間違ったスキャン. IRTビンのスキャンが予想されてい�
 #: src/assets/js/serverMessages/server_messages_lang.js:86
 msgid "{0} Physically damaged entity recorded.WMS notified"
 msgstr "{0}物理的に故障されたエンティティが記録されました.WMSが通知されました"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Scan box from MSU slot"
+msgstr “MSUスロットからのスキャンボックス"
+

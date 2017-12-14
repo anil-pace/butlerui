@@ -48412,7 +48412,8 @@ var japanese = {
    "{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",
    "{0} number :": "{0}\u756a\u53f7: :",
    "{0} oversized entities recorded.WMS notified": "\u30b5\u30a4\u30ba\u30aa\u30fc\u30d0\u30fc\u5546\u54c1 {0} \u500b",
-   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b"
+   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b",
+   "Scan box from MSU slot": "MSU\u30b9\u30ed\u30c3\u30c8\u304b\u3089\u306e\u30b9\u30ad\u30e3\u30f3\u30dc\u30c3\u30af\u30b9"
 }
 module.exports = japanese;
 
@@ -49220,7 +49221,8 @@ var spanish = {
 	"{0} oversized entities recorded.WMS notified": "{0} art\u00edculos extra grandes registrados. WMS notificado",
 	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado",
 	"Error": "Error",
-	"No": "No"
+	"No": "No",
+	"Scan box from MSU slot": "Escanear el recuadro desde la ranura MSU"
 }
 module.exports = spanish;
 

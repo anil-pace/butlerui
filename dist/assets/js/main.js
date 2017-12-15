@@ -41058,26 +41058,26 @@ var Notification = React.createClass({displayName: "Notification",
                 }),0)
                 return null
             }
+            // BSS-5937: condition for clicking outside of Modal with notification_list=> level: "info"
+            else if($(".modal.in").is(":visible")){
+                setTimeout((function(){
+                    if($('.modal.in').find("div").hasClass("modal-footer")){
+                        //check when errorcode is true and modal has buttons
+                        $('.modal.in').data('bs.modal').options.backdrop='static';
+                    }
+                    else{
+                        //check when errorcode is true and modal has NO buttons
+                        $('.modal.in').data('bs.modal').options.backdrop=true;
+                    }
+                }),0)
+                return null
+            }
             else if(errorCode !== null){
-                if($(".modal.in").is(":visible")){
-                    setTimeout((function(){
-                        if($('.modal.in').find("div").hasClass("modal-footer")){
-                            //check when errorcode is true and modal has buttons
-                            $('.modal.in').data('bs.modal').options.backdrop='static';
-                        }
-                        else{
-                            //check when errorcode is true and modal has NO buttons
-                            $('.modal.in').data('bs.modal').options.backdrop=true;
-                        }
-                    }),0)
-                    return null
-                }
                 return notificationMessage;
             }else{
                 return null;
             }
         }
-
     }
 });
 

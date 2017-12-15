@@ -37197,10 +37197,36 @@ var Audit = React.createClass({displayName: "Audit",
     }
   },
   getNotificationComponent:function(){
-    if(this.state.AuditNotification != undefined)
-      this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+      if(this.state.AuditNotification != undefined){
+        this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
+      }
+      else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){
     this.getNotificationComponent();
@@ -40833,16 +40859,23 @@ var Notification = React.createClass({displayName: "Notification",
                     $('.modal.notification-error').modal("hide");
                     $(".modal").removeClass("notification-error")
                 }),0)
-
+                return null
+            }
+            // BSS-5937: condition for clicking outside of Modal with notification_list=> level: "info"
+            else if($(".modal.in").is(":visible")){
+                setTimeout((function(){
+                    if($('.modal.in').find("div").hasClass("modal-footer")){
+                        //check when errorcode is true and modal has buttons
+                        $('.modal.in').data('bs.modal').options.backdrop='static';
+                    }
+                    else{
+                        //check when errorcode is true and modal has NO buttons
+                        $('.modal.in').data('bs.modal').options.backdrop=true;
+                    }
+                }),0)
                 return null
             }
             else if(errorCode !== null){
-                if($(".modal.in").is(":visible")){
-                    setTimeout((function(){
-                        $('.modal.in').data('bs.modal').options.backdrop='static';
-                    }),0)
-                    return null
-                }
                 return (
                     React.createElement("div", {className: appendClass, role: "alert"}, 
                         React.createElement("div", {className: appendClass1}, 
@@ -40870,9 +40903,6 @@ var Notification = React.createClass({displayName: "Notification",
             }
 
         }
-
-        
-
     }
 });
 
@@ -41256,10 +41286,36 @@ var PickBack = React.createClass({displayName: "PickBack",
     }
   },
   getNotificationComponent:function(){
-    if(this.state.PickBackNotification != undefined)
+    if(this.state.PickBackNotification != undefined){
       this._notification = React.createElement(Notification, {notification: this.state.PickBackNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    }
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){
     this.getNotificationComponent();
@@ -41342,11 +41398,36 @@ var PickFront = React.createClass({displayName: "PickFront",
         }
     },
     getNotificationComponent: function () {
-        if (this.state.PickFrontNotification != undefined)
-            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, 
-                                               navMessagesJson: this.props.navMessagesJson})
-        else
+        if (this.state.PickFrontNotification != undefined){
+            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, navMessagesJson: this.props.navMessagesJson})
+        }
+        else{
+            if($(".modal.notification-error").is(":visible")){
+                setTimeout((function(){
+                    $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                    $(".modal-backdrop").remove()
+                    $(".modal.notification-error").modal("hide");
+                    $(".modal").removeClass("notification-error")
+
+                }),0)
+
+                return null
+            }
+            else if($(".modal.in").is(":visible")){
+                setTimeout((function(){
+                  if($('.modal.in').find("div").hasClass("modal-footer")){
+                      //check when errorcode is true and modal has buttons
+                      $('.modal.in').data('bs.modal').options.backdrop='static';
+                  }
+                  else{
+                      //check when errorcode is true and modal has NO buttons
+                      $('.modal.in').data('bs.modal').options.backdrop=true;
+                  }
+              }),0)
+                return null
+            }
             this._notification = "";
+        }
     },
     showModal: function (data, index, manual) {
         if (manual == true)
@@ -42420,10 +42501,36 @@ var PrePut = React.createClass({displayName: "PrePut",
   },
 
   getNotificationComponent:function(){
-    if(this.state.PrePutNotification != undefined)
+    if(this.state.PrePutNotification != undefined){
       this._notification = React.createElement(Notification, {notification: this.state.PrePutNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    }
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){ 
     this.getNotificationComponent();
@@ -44757,10 +44864,36 @@ var PutBack = React.createClass({displayName: "PutBack",
 },
 
 getNotificationComponent:function(){
-  if(this.state.PutBackNotification != undefined)
+  if(this.state.PutBackNotification != undefined){
     this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification, navMessagesJson: this.props.navMessagesJson})
-  else
-    this._notification = "";
+  }
+  else{
+      if($(".modal.notification-error").is(":visible")){
+          setTimeout((function(){
+              $('.modal.notification-error').data('bs.modal').options.backdrop=true
+              $(".modal-backdrop").remove()
+              $(".modal.notification-error").modal("hide");
+              $(".modal").removeClass("notification-error")
+
+          }),0)
+
+          return null
+      }
+      else if($(".modal.in").is(":visible")){
+        setTimeout((function(){
+            if($('.modal.in').find("div").hasClass("modal-footer")){
+                //check when errorcode is true and modal has buttons
+                $('.modal.in').data('bs.modal').options.backdrop='static';
+            }
+            else{
+                //check when errorcode is true and modal has NO buttons
+                $('.modal.in').data('bs.modal').options.backdrop=true;
+            }
+        }),0)
+        return null
+        }
+      this._notification = "";
+  }
 },
 render: function(data){ 
   this.getNotificationComponent();
@@ -44831,10 +44964,36 @@ var PutFront = React.createClass({displayName: "PutFront",
   
 
   getNotificationComponent:function(){
-    if(this.state.PutFrontNotification != undefined)
+    if(this.state.PutFrontNotification != undefined){
       this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification, navMessagesJson: this.props.navMessagesJson})
-    else
-      this._notification = "";
+    }
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
+        }
+        this._notification = "";
+    }
   },
 
   getExceptionComponent:function(){

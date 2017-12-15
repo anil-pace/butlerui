@@ -211,10 +211,36 @@ var PrePut = React.createClass({
   },
 
   getNotificationComponent:function(){
-    if(this.state.PrePutNotification != undefined)
+    if(this.state.PrePutNotification != undefined){
       this._notification = <Notification notification={this.state.PrePutNotification} navMessagesJson={this.props.navMessagesJson}/>
-    else
-      this._notification = "";
+    }
+    else{
+        if($(".modal.notification-error").is(":visible")){
+            setTimeout((function(){
+                $('.modal.notification-error').data('bs.modal').options.backdrop=true
+                $(".modal-backdrop").remove()
+                $(".modal.notification-error").modal("hide");
+                $(".modal").removeClass("notification-error")
+
+            }),0)
+
+            return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
+        }
+        this._notification = "";
+    }
   },
   render: function(data){ 
     this.getNotificationComponent();

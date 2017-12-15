@@ -487,8 +487,9 @@ var PutBack = React.createClass({
 },
 
 getNotificationComponent:function(){
-  if(this.state.PutBackNotification != undefined)
+  if(this.state.PutBackNotification != undefined){
     this._notification = <Notification notification={this.state.PutBackNotification} navMessagesJson={this.props.navMessagesJson}/>
+  }
   else{
       if($(".modal.notification-error").is(":visible")){
           setTimeout((function(){
@@ -501,6 +502,19 @@ getNotificationComponent:function(){
 
           return null
       }
+      else if($(".modal.in").is(":visible")){
+        setTimeout((function(){
+            if($('.modal.in').find("div").hasClass("modal-footer")){
+                //check when errorcode is true and modal has buttons
+                $('.modal.in').data('bs.modal').options.backdrop='static';
+            }
+            else{
+                //check when errorcode is true and modal has NO buttons
+                $('.modal.in').data('bs.modal').options.backdrop=true;
+            }
+        }),0)
+        return null
+        }
       this._notification = "";
   }
 },

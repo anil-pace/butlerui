@@ -83,11 +83,17 @@ var Notification = React.createClass({
                 }),0)
                 return null
             }
-            // condition for handling of Modal with notification_list=> level: "info"
-            if($(".modal.in").is(":visible")){
+            // BSS-5937: condition for clicking outside of Modal with notification_list=> level: "info"
+            else if($(".modal.in").is(":visible")){
                 setTimeout((function(){
-                    $('.modal.in').data('bs.modal').options.backdrop='static';
-
+                    if($('.modal.in').find("div").hasClass("modal-footer")){
+                        //check when errorcode is true and modal has buttons
+                        $('.modal.in').data('bs.modal').options.backdrop='static';
+                    }
+                    else{
+                        //check when errorcode is true and modal has NO buttons
+                        $('.modal.in').data('bs.modal').options.backdrop=true;
+                    }
                 }),0)
                 return null
             }
@@ -97,9 +103,6 @@ var Notification = React.createClass({
                 return null;
             }
         }
-
-        
-
     }
 });
 

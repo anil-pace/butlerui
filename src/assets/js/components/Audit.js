@@ -428,8 +428,9 @@ if(this.state.AuditExceptionScreen == "first_screen"){
       }
     },
     getNotificationComponent:function(){
-      if(this.state.AuditNotification != undefined)
+      if(this.state.AuditNotification != undefined){
         this._notification = <Notification notification={this.state.AuditNotification} navMessagesJson={this.props.navMessagesJson} />
+      }
       else{
         if($(".modal.notification-error").is(":visible")){
           setTimeout((function(){
@@ -440,6 +441,19 @@ if(this.state.AuditExceptionScreen == "first_screen"){
 
           }),0)
 
+          return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
           return null
         }
         this._notification = "";

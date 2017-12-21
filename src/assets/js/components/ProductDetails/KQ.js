@@ -341,7 +341,7 @@ var KQ = React.createClass({
                 }
             },
             accepted: function(e, keypressed, el) {
-                if (e.target.value === '' || isNaN(e.target.value)) {
+                if (e.target.value === '' || isNaN(e.target.value) || e.target.value < 0) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
                 } else  {
                     var data = {};

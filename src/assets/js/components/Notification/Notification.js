@@ -97,7 +97,6 @@ var Notification = React.createClass({
                     }),0)
                     return null
                 }
-                console.log("coming inside RETURN NOTIFICATION");
                 return notificationMessage;
             }else{
                 return null;

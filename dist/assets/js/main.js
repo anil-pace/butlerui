@@ -37303,8 +37303,9 @@ if(this.state.AuditExceptionScreen == "first_screen"){
       }
     },
     getNotificationComponent:function(){
-      if(this.state.AuditNotification != undefined)
+      if(this.state.AuditNotification != undefined){
         this._notification = React.createElement(Notification, {notification: this.state.AuditNotification, navMessagesJson: this.props.navMessagesJson})
+      }
       else{
         if($(".modal.notification-error").is(":visible")){
           setTimeout((function(){
@@ -37315,6 +37316,19 @@ if(this.state.AuditExceptionScreen == "first_screen"){
 
           }),0)
 
+          return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
           return null
         }
         this._notification = "";
@@ -41468,8 +41482,9 @@ var PickBack = React.createClass({displayName: "PickBack",
     }
   },
   getNotificationComponent:function(){
-    if(this.state.PickBackNotification != undefined)
+    if(this.state.PickBackNotification != undefined){
       this._notification = React.createElement(Notification, {notification: this.state.PickBackNotification, navMessagesJson: this.props.navMessagesJson})
+    }
     else{
         if($(".modal.notification-error").is(":visible")){
             setTimeout((function(){
@@ -41481,6 +41496,19 @@ var PickBack = React.createClass({displayName: "PickBack",
             }),0)
 
             return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
         }
         this._notification = "";
     }
@@ -41567,9 +41595,9 @@ var PickFront = React.createClass({displayName: "PickFront",
         }
     },
     getNotificationComponent: function () {
-        if (this.state.PickFrontNotification != undefined)
-            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, 
-                                               navMessagesJson: this.props.navMessagesJson})
+        if (this.state.PickFrontNotification != undefined){
+            this._notification = React.createElement(Notification, {notification: this.state.PickFrontNotification, navMessagesJson: this.props.navMessagesJson})
+        }
         else{
             if($(".modal.notification-error").is(":visible")){
                 setTimeout((function(){
@@ -41580,6 +41608,19 @@ var PickFront = React.createClass({displayName: "PickFront",
 
                 }),0)
 
+                return null
+            }
+            else if($(".modal.in").is(":visible")){
+                setTimeout((function(){
+                  if($('.modal.in').find("div").hasClass("modal-footer")){
+                      //check when errorcode is true and modal has buttons
+                      $('.modal.in').data('bs.modal').options.backdrop='static';
+                  }
+                  else{
+                      //check when errorcode is true and modal has NO buttons
+                      $('.modal.in').data('bs.modal').options.backdrop=true;
+                  }
+              }),0)
                 return null
             }
             this._notification = "";
@@ -42919,8 +42960,9 @@ var PrePut = React.createClass({displayName: "PrePut",
   },
 
   getNotificationComponent:function(){
-    if(this.state.PrePutNotification != undefined)
+    if(this.state.PrePutNotification != undefined){
       this._notification = React.createElement(Notification, {notification: this.state.PrePutNotification, navMessagesJson: this.props.navMessagesJson})
+    }
     else{
         if($(".modal.notification-error").is(":visible")){
             setTimeout((function(){
@@ -42932,6 +42974,19 @@ var PrePut = React.createClass({displayName: "PrePut",
             }),0)
 
             return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
         }
         this._notification = "";
     }
@@ -45369,8 +45424,9 @@ var PutBack = React.createClass({displayName: "PutBack",
 },
 
 getNotificationComponent:function(){
-  if(this.state.PutBackNotification != undefined)
+  if(this.state.PutBackNotification != undefined){
     this._notification = React.createElement(Notification, {notification: this.state.PutBackNotification, navMessagesJson: this.props.navMessagesJson})
+  }
   else{
       if($(".modal.notification-error").is(":visible")){
           setTimeout((function(){
@@ -45383,6 +45439,19 @@ getNotificationComponent:function(){
 
           return null
       }
+      else if($(".modal.in").is(":visible")){
+        setTimeout((function(){
+            if($('.modal.in').find("div").hasClass("modal-footer")){
+                //check when errorcode is true and modal has buttons
+                $('.modal.in').data('bs.modal').options.backdrop='static';
+            }
+            else{
+                //check when errorcode is true and modal has NO buttons
+                $('.modal.in').data('bs.modal').options.backdrop=true;
+            }
+        }),0)
+        return null
+        }
       this._notification = "";
   }
 },
@@ -45455,8 +45524,9 @@ var PutFront = React.createClass({displayName: "PutFront",
   
 
   getNotificationComponent:function(){
-    if(this.state.PutFrontNotification != undefined)
+    if(this.state.PutFrontNotification != undefined){
       this._notification = React.createElement(Notification, {notification: this.state.PutFrontNotification, navMessagesJson: this.props.navMessagesJson})
+    }
     else{
         if($(".modal.notification-error").is(":visible")){
             setTimeout((function(){
@@ -45468,6 +45538,19 @@ var PutFront = React.createClass({displayName: "PutFront",
             }),0)
 
             return null
+        }
+        else if($(".modal.in").is(":visible")){
+          setTimeout((function(){
+              if($('.modal.in').find("div").hasClass("modal-footer")){
+                  //check when errorcode is true and modal has buttons
+                  $('.modal.in').data('bs.modal').options.backdrop='static';
+              }
+              else{
+                  //check when errorcode is true and modal has NO buttons
+                  $('.modal.in').data('bs.modal').options.backdrop=true;
+              }
+          }),0)
+          return null
         }
         this._notification = "";
     }

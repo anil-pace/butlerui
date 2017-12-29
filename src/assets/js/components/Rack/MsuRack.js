@@ -1,69 +1,240 @@
 var React = require('react');
-//var Bin = require('../Bins/BinsFlex.react');
+var Bin = require('../Bins/BinsFlex.react');
 
+var xyz = [
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "1",
+    "orig_coordinate": [
+      0,
+      0
+    ],
+    "length": "1100",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      1,
+      1
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "6",
+    "orig_coordinate": [
+      1100,
+      600
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      2,
+      1
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "2",
+    "orig_coordinate": [
+      1100,
+      0
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      1,
+      2
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "7",
+    "orig_coordinate": [
+      1770,
+      600
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      2,
+      2
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "3",
+    "orig_coordinate": [
+      1770,
+      0
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      1,
+      3
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "8",
+    "orig_coordinate": [
+      2440,
+      600
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      2,
+      3
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "4",
+    "orig_coordinate": [
+      2440,
+      0
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      1,
+      4
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "9",
+    "orig_coordinate": [
+      3110,
+      600
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      2,
+      4
+    ],
+    "group_id": "1"
+  },
+  {
+    "breadth": "710",
+    "direction": "left",
+    "bin_info": [],
+    "ppsbin_id": "5",
+    "orig_coordinate": [
+      3110,
+      0
+    ],
+    "length": "670",
+    "selected_state": false,
+    "ppsbin_state": "empty",
+    "ppsbin_count": "0",
+    "coordinate": [
+      1,
+      5
+    ],
+    "group_id": "1"
+  }
+];
 
 var MsuRack = React.createClass({
 
-    // getInitialState: function(){
-    //     return this._sortBins([1,2,3],false);
-    // },
-    // componentWillReceiveProps: function() {
-    //     this._sortBins([1,2,3],true);
-    // },
+    getInitialState: function(){
+        return this._sortBins(xyz,false);
+    },
+    componentWillReceiveProps: function() {
+        this._sortBins(xyz,true);
+    },
 
-    // _sortBins:function (aBins,shouldSetState){
-    //      if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
-    //         //no bins found
-    //         return;
-    //      }
+      _sortBins:function (aBins,shouldSetState){
+         if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
+            //no bins found
+            return;
+         }
 
-    //     var totalBins = aBins.length;
-    //     var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={};
+        var totalBins = aBins.length;
+        var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={};
 
 
-    //     lastHBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-    //         console.log("==============================>");
-    //         console.log(index);
-    //         if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
-    //             return oBinCurr;
-    //         }else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]){
-    //             return oBinCurr;
-    //         }else{
-    //             return oBinPrev;
-    //         }
-    //     });
-    //     console.log(lastHBin);
-    //     lastVBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-    //         console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
-    //         console.log(index);
-    //         if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]){
-    //             return oBinCurr;
-    //         }else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]){
-    //             return oBinCurr;
-    //         }else{
-    //             return oBinPrev;
-    //         }
-    //     });
-    //     console.log(lastVBin);
-    //     if(shouldSetState){
-    //         this.setState({
-    //             aBins:aBins,
-    //             lastHBin:lastHBin,
-    //             lastVBin: lastVBin,
-    //         });
-    //     }
-    //     else{
-    //         return{
-    //              aBins:aBins,
-    //             lastHBin:lastHBin,
-    //             lastVBin: lastVBin
-    //         }
-    //     }
-    // },
+        lastHBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
+            console.log("==============================>");
+            console.log(index);
+            if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
+                return oBinCurr;
+            }else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]){
+                return oBinCurr;
+            }else{
+                return oBinPrev;
+            }
+        });
+        console.log(lastHBin);
+        lastVBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
+            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
+            console.log(index);
+            if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]){
+                return oBinCurr;
+            }else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]){
+                return oBinCurr;
+            }else{
+                return oBinPrev;
+            }
+        });
+        console.log(lastVBin);
+        if(shouldSetState){
+            this.setState({
+                aBins:aBins,
+                lastHBin:lastHBin,
+                lastVBin: lastVBin,
+            });
+        }
+        else{
+            return{
+                 aBins:aBins,
+                lastHBin:lastHBin,
+                lastVBin: lastVBin
+            }
+        }
+    },
 
     _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, binCoordinatePlotting) {
-        console.log(" ==================>");
-        console.log(" coming inside CREATE BIN LAYOUT FUNCTION ");
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
@@ -101,6 +272,7 @@ var MsuRack = React.createClass({
                                         top: itop,
                                         left:ileft
                                       }}>
+                                      <Bin binData={aBins[i]} screenId={screenId} binCoordinatePlotting={true}/>
                                    </div>
                                    )
                 }
@@ -113,6 +285,7 @@ var MsuRack = React.createClass({
                                         top: itop,
                                         left:ileft
                                       }}>
+                                      <Bin binData={aBins[i]} screenId={screenId} />
                                    </div>
                                    )
                 }
@@ -121,13 +294,18 @@ var MsuRack = React.createClass({
     },
 
     render: function() {
-        console.log(" ==========>");
-        console.log(" coming inside NEW MSU RACK ");
-         var aHTMLBins = this._createBinLayouts(0,0,0,0,0,0);
+        var aHTMLBins = this._createBinLayouts(this.state.aBins,
+                                               this.state.lastHBin,
+                                               this.state.lastVBin,
+
+                                               this.props.seatType,
+
+                                               this.props.screenId,
+                                               this.props.binCoordinatePlotting);
         var self = this;
         return (
-                 <div className="bins-flex">hello
-                        
+                 <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}>
+                        {aHTMLBins}
                  </div>
         );
     }

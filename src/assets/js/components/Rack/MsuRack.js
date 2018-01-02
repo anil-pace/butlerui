@@ -269,7 +269,8 @@ var MsuRack = React.createClass({
                                         width: binWidth,
                                         height:binHeight,
                                         top: itop,
-                                        left:ileft
+                                        left:ileft,
+                                        border: "1px solid blue"
                                       }}>
                                       <MsuSlot binData={aBins[i]} screenId={screenId} />
                                    </div>
@@ -289,7 +290,7 @@ var MsuRack = React.createClass({
                                                );
         var self = this;
         return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}>
+                 <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2, border: "1px solid blue"}}>
                         {aHTMLBins}
                  </div>
         );

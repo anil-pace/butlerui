@@ -22,8 +22,6 @@ var Bins = React.createClass({
 
 
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-            console.log("==============================>");
-            console.log(index);
             if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]){
@@ -32,10 +30,7 @@ var Bins = React.createClass({
                 return oBinPrev;
             }
         });
-        console.log(lastHBin);
         lastVBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
-            console.log(index);
             if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]){
@@ -44,7 +39,6 @@ var Bins = React.createClass({
                 return oBinPrev;
             }
         });
-        console.log(lastVBin);
         if(shouldSetState){
             this.setState({
                 aBins:aBins,

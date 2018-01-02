@@ -195,8 +195,8 @@ var MsuRack = React.createClass({
 
 
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-            console.log("==============================>");
-            console.log(index);
+            //console.log("==============================>");
+            //console.log(index);
             if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]){
@@ -205,10 +205,10 @@ var MsuRack = React.createClass({
                 return oBinPrev;
             }
         });
-        console.log(lastHBin);
+        //console.log(lastHBin);
         lastVBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
-            console.log(index);
+            //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
+            //console.log(index);
             if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]){
@@ -217,7 +217,7 @@ var MsuRack = React.createClass({
                 return oBinPrev;
             }
         });
-        console.log(lastVBin);
+        //console.log(lastVBin);
         if(shouldSetState){
             this.setState({
                 aBins:aBins,
@@ -234,7 +234,7 @@ var MsuRack = React.createClass({
         }
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, binCoordinatePlotting) {
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
@@ -262,21 +262,7 @@ var MsuRack = React.createClass({
                 ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'):
                     (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
                 itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
-
-                if(binCoordinatePlotting == true || binCoordinatePlotting == "true"){
-                  aHTMLBins.push(
-                                   <div className="bin-container"
-                                     style={{
-                                        width: binWidth,
-                                        height:binHeight,
-                                        top: itop,
-                                        left:ileft
-                                      }}>
-                                      <MsuSlot binData={aBins[i]} screenId={screenId} binCoordinatePlotting={true}/>
-                                   </div>
-                                   )
-                }
-                else{
+                
                   aHTMLBins.push(
                                    <div className="bin-container"
                                       style={{
@@ -288,7 +274,6 @@ var MsuRack = React.createClass({
                                       <MsuSlot binData={aBins[i]} screenId={screenId} />
                                    </div>
                                    )
-                }
               }
         return aHTMLBins;
     },
@@ -300,8 +285,8 @@ var MsuRack = React.createClass({
 
                                                this.props.seatType,
 
-                                               this.props.screenId,
-                                               this.props.binCoordinatePlotting);
+                                               this.props.screenId
+                                               );
         var self = this;
         return (
                  <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}>

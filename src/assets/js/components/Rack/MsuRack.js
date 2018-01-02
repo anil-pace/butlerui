@@ -1,5 +1,5 @@
 var React = require('react');
-var Bin = require('../Bins/BinsFlex.react');
+var MsuSlot = require('./MsuSlot');
 
 var xyz = [
   {
@@ -272,7 +272,7 @@ var MsuRack = React.createClass({
                                         top: itop,
                                         left:ileft
                                       }}>
-                                      <Bin binData={aBins[i]} screenId={screenId} binCoordinatePlotting={true}/>
+                                      <MsuSlot binData={aBins[i]} screenId={screenId} binCoordinatePlotting={true}/>
                                    </div>
                                    )
                 }
@@ -285,7 +285,7 @@ var MsuRack = React.createClass({
                                         top: itop,
                                         left:ileft
                                       }}>
-                                      <Bin binData={aBins[i]} screenId={screenId} />
+                                      <MsuSlot binData={aBins[i]} screenId={screenId} />
                                    </div>
                                    )
                 }

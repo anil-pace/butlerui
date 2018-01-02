@@ -1,300 +1,257 @@
 var React = require('react');
-var MsuSlot = require('./MsuSlot');
+var RackRow = require('./RackRow');
+var DrawerRow = require('./DrawerRow');
+var MsuRackFlex = require('./MsuRackFlex');
 
-var xyz = [
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "1",
-    "orig_coordinate": [
-      0,
-      0
-    ],
-    "length": "1100",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      1,
-      1
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "6",
-    "orig_coordinate": [
-      1100,
-      600
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      2,
-      1
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "2",
-    "orig_coordinate": [
-      1100,
-      0
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      1,
-      2
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "7",
-    "orig_coordinate": [
-      1770,
-      600
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      2,
-      2
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "3",
-    "orig_coordinate": [
-      1770,
-      0
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      1,
-      3
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "8",
-    "orig_coordinate": [
-      2440,
-      600
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      2,
-      3
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "4",
-    "orig_coordinate": [
-      2440,
-      0
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      1,
-      4
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "9",
-    "orig_coordinate": [
-      3110,
-      600
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      2,
-      4
-    ],
-    "group_id": "1"
-  },
-  {
-    "breadth": "710",
-    "direction": "left",
-    "bin_info": [],
-    "ppsbin_id": "5",
-    "orig_coordinate": [
-      3110,
-      0
-    ],
-    "length": "670",
-    "selected_state": false,
-    "ppsbin_state": "empty",
-    "ppsbin_count": "0",
-    "coordinate": [
-      1,
-      5
-    ],
-    "group_id": "1"
-  }
-];
+var drawRackStyle = {
+    flexGrow:"1",
+    flexBasis:"0",
+    width:"50%"};
+
+var lastSlot = {
+    flexBasis:"4vh"};
 
 var MsuRack = React.createClass({
 
-    getInitialState: function(){
-        return this._sortBins(xyz,false);
-    },
-    componentWillReceiveProps: function() {
-        this._sortBins(xyz,true);
-    },
-
-      _sortBins:function (aBins,shouldSetState){
-         if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
-            //no bins found
-            return;
-         }
-
-        var totalBins = aBins.length;
-        var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={};
-
-
-        lastHBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-            //console.log("==============================>");
-            //console.log(index);
-            if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]){
-                return oBinCurr;
-            }else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]){
-                return oBinCurr;
-            }else{
-                return oBinPrev;
-            }
-        });
-        //console.log(lastHBin);
-        lastVBin = aBins.reduce(function(oBinPrev,oBinCurr, index){
-            //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
-            //console.log(index);
-            if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]){
-                return oBinCurr;
-            }else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]){
-                return oBinCurr;
-            }else{
-                return oBinPrev;
-            }
-        });
-        //console.log(lastVBin);
-        if(shouldSetState){
-            this.setState({
-                aBins:aBins,
-                lastHBin:lastHBin,
-                lastVBin: lastVBin,
+     totalRackHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var totalHeight = 0;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][2];
             });
-        }
-        else{
-            return{
-                 aBins:aBins,
-                lastHBin:lastHBin,
-                lastVBin: lastVBin
+            for(var i in eachRowHeight) { 
+                totalHeight += eachRowHeight[i]; 
             }
+               return totalHeight;
+        },
+
+        eachRowHeight: function(){
+            var rackDetails = this.props.rackData.rack_type_rec;
+            var eachRowHeight=[];
+            var eachRowHeight = rackDetails.map(function(row,index){
+                return row[1][0][2];
+            });
+            return eachRowHeight;
+        },
+    componentWillUnmount:function(){
+        var lines = document.getElementsByClassName("drawerLine");
+        var directionLine = document.getElementsByClassName("LineDirection");
+        if(lines.length){
+            lines[0].remove();
         }
+        if(directionLine.length){
+            directionLine[0].remove();
+        }
+
     },
+    /*
+        Since performing DOM manipulations hence 
+        placing the code to draw line in componentDidUpdate
+     */
+    
+    componentDidUpdate:function(){
+        /*
+            Calling the line function only if the drawerLineDrawn is false 
+            and the slot type is drawer.
+            drawerLineDrawn is set true once the line is created
+         */
+        if(!this.drawerLineDrawn && this.props.isDrawer){
+        var strEl = (document.querySelectorAll("#rack .activeSlot")[0]);
+        strEl = strEl ? strEl.parentNode : null;
+        var endEl  = document.querySelectorAll("#drSlot .activeSlot")[0];
+        if(strEl && endEl){
+        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
+      }
+    
+  }
+  if(this.props.putDirection && this.props.putDirection.length>0 && document.getElementsByClassName("LineDirection").length===0){
+    var start = (document.querySelectorAll("#rack .activeSlot")[0]);
+    start = start ? start.parentNode : null;
+    var end  = (document.querySelectorAll(".specialContainer")[0]);
+    this.connect(start, end, "#6d6d6d", 3,"LineDirection");
+}
+    },
+    /*
+        function to create line between 2 points
+        Args- startEl(HTML node), endEl (HTML node),
+        color (Hexadecimal color), thickness(Integer)
+     */
+    
+    connect:function(startEl, endEl, color, thickness,className) {
+    var off1 = this.getOffset(startEl);
+    var off2 = this.getOffset(endEl);
+    // bottom right
+    var x1 = off1.left + off1.width;
+    var y1 = off1.top + off1.height/2;
+    // top right
+    var x2 = off2.left ;
+    var y2 = off2.top+ off2.height/2;
+    // distance
+    var length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+    // center
+    var cx = ((x1 + x2) / 2) - (length / 2);
+    var cy = ((y1 + y2) / 2) - (thickness / 2);
+    // angle
+    var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
+    // make hr
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {
-        if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
-            //no bins found
-            return;
-         }
-         var aHTMLBins =[];
-         // since the total width would be 100% but the bins would be divided into
-         // ratios, hence each of the bin would have to have the factor into % of the
-         // .bins container.
-         // for reference orig_coordinate[0] === x axis and orig_coordinate[1] === y axis
-         var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)));
-         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.breadth)));
+ var htmlLine = "<div class="+className+" style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+    document.getElementById('app').innerHTML += htmlLine; 
+    this.drawerLineDrawn = true;
+},
+getOffset( el ) {
+    var rect = el.getBoundingClientRect();
+    return {
+        left: rect.left + window.pageXOffset,
+        top: rect.top + window.pageYOffset,
+        width: rect.width || el.offsetWidth,
+        height: rect.height || el.offsetHeight
+    };
+},
+	render: function(){
+        console.log(" =======================================>");
+        console.log(" coming inside OLD MSU RACK ");
+        var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
+        var putDirection = this.props.putDirection;
+        var type = this.props.type;
+        var isDrawer = this.props.isDrawer;
+        var rackDetails = this.props.rackData.rack_type_rec;
+        var compartment_details = this.props.rackData.slot_barcodes;
+        var slotStart,slotEnd,i;
+        var slotIndexList = [];
+        var eachRow =[];
+        var compartmentArr;
+        var selectedDrawerSlot;
+        var drawerCompartment=null;
+        var drawerRows;
+        var drawerCompartmentArr;
+        var slotType = this.props.slotType;
+        if(compartment_details.length === 1){
+            //slotStart = (compartment_details[0].split(".")[3])%10;
+            //slotEnd = (compartment_details[0].split(".")[3])%10;
+            compartmentArr = compartment_details[0].split(".");
+            slotStart = parseInt((compartmentArr[3]).replace(/^0+/, ''));
+            slotEnd = parseInt((compartmentArr[3]).replace(/^0+/, ''));
+            selectedRackRow =compartmentArr[2]; 
+            selectedDrawerSlot = compartmentArr[4];
+        }
+        else if(compartment_details.length === 2){
+            //slotStart = (compartment_details[0].split(".")[3])%10;
+            //slotEnd = (compartment_details[compartment_details.length - 1].split(".")[3])%10;
+            compartmentArr = compartment_details[0].split(".");
+            slotStart = parseInt((compartmentArr[3]).replace(/^0+/, ''));
+            slotEnd = parseInt((compartment_details[compartment_details.length - 1].split(".")[3]).replace(/^0+/, ''));
+            selectedRackRow =compartmentArr[2]; 
+            selectedDrawerSlot = compartmentArr[4];
+        }
+        
+        
+        for (i = slotStart; i <= slotEnd; i++) {
+            slotIndexList.push(i);
+        };
+       
+        var rackRange = selectedRackRow;
+        var totalRackHeight = this.totalRackHeight(); 
+        var totalDrawerHeight;
+        var drawerSlotData,filteredDrawerSlotData;
+        var eachRowHeight = this.eachRowHeight();
+        var wrapStyle={
+                position: "relative",
+                display: "flex",
+                "flex-flow": "row",
+                "justify-content": "center",
+                "flex-grow": 1,
+                "flex-wrap": "nowrap",
+                "box-sizing": "border-box",               
+                overflow: "hidden"
 
-         var totalPpsWidth = Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)
+            }
 
-
-         for (var i =0; i<aBins.length ;i++){
-                var binWidth = aBins[i].length * horFactor +'%';
-                var binHeight = aBins[i].breadth * vertFactor +'%';
-                var ileft=0;
-                var itop=0;
-
-                // if the seat type is front then we have to modify the x co-ordinate as per the formula:
-                // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
-
-                ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'):
-                    (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
-                itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
+        eachRow = rackDetails.map(function(row,index){
+            if(row[0] == selectedRackRow){
+                drawerSlotData = row[1];
                 
-                  aHTMLBins.push(
-                                   <div className="bin-container"
-                                      style={{
-                                        width: binWidth,
-                                        height:binHeight,
-                                        top: itop,
-                                        left:ileft,
-                                        border: "1px solid blue"
-                                      }}>
-                                      <MsuSlot binData={aBins[i]} screenId={screenId} />
-                                   </div>
-                                   )
-              }
-        return aHTMLBins;
-    },
+                return (
+                        <RackRow rowTotalWidth={row[1].reduce(function(height,slot){return height+slot[1]},0)} slots={row[1]} key={index} slotIndexArray={slotIndexList} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
+                    );
+            }
 
-    render: function() {
-        var aHTMLBins = this._createBinLayouts(this.state.aBins,
-                                               this.state.lastHBin,
-                                               this.state.lastVBin,
+            else{
+                return (
+        				<RackRow rowTotalWidth={row[1].reduce(function(height,slot){return height+slot[1]},0)} slots={row[1]} key={index} rackRange={rackRange} noOfRows={rackDetails.length} totalRackHeight={totalRackHeight} eachRowHeight={eachRowHeight} type={type!=undefined?type:""} slotType={slotType} />
+        			);
+            }
+        	});
+        /**
+         * Logic to draw drawer slots when slot_type is drawer
+         */
+        if(isDrawer){
+           for(var i = 0,len =drawerSlotData.length ; i < len ; i++){
+                if(drawerSlotData[i][0].indexOf(selectedDrawerSlot) > -1){
+                    filteredDrawerSlotData = drawerSlotData[i];
+                    break;
+                }
+           }
+        
+            totalDrawerHeight = filteredDrawerSlotData[3];
+            drawerCompartmentArr = filteredDrawerSlotData[4];
+            /**
+             * Needed this self invoking function to bypass JSX 
+             * requirement to wrap elements
+             */
+            drawerCompartment = (function(){
+                return(
+                        <DrawerRow totalDrawerHeight={totalDrawerHeight} drawerSlotData={drawerCompartmentArr} selectedSlot={selectedDrawerSlot} />
+                )
+            }())
+        }
+       if(putDirection){
+        nestable_count=putDirection.nestable_count;
+        nestable_direction=putDirection.nestable_direction;
+        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
+         if(putDirection.orientation_preference && nestable_count>1){
+        orientation="orientation";
+        orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
+        }
+        else if(putDirection.orientation_preference && stackCount>=1){
+        orientation="orientation";  
+        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
+        }
+        else
+        {
+           orientation="containerHide";
+        }             
+        stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
+        stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
+        fragileClass=putDirection.fragile?"fragile":"containerHide";
+        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
+        count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
 
-                                               this.props.seatType,
-
-                                               this.props.screenId
-                                               );
-        var self = this;
-        return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2, border: "1px solid blue"}}>
-                        {aHTMLBins}
-                 </div>
-        );
     }
+		return (
+				<div className="drawWrap" style={wrapStyle}>
+                <MsuRackFlex />
+
+                {putDirection?(
+                    <div className="specialContainer">
+                    <div style={{border: "1px solid red"}}> SHOW ACTIVE SUB SLOT</div>
+                    <img className={orientation} src={orientationClass}></img>   
+                    <div className={stackClass}>
+                            <span className={stackicon}></span>
+                            <span className="stackText">{stackText}</span>
+                            <span className="stackCount">{count}</span>
+                    </div> 
+                     <div className={fragileClass}>
+                            <span className="fragileicons"></span>
+                            <span className="fragileText">{_("FRAGILE")}</span>  
+                     </div> 
+                     </div>
+                ):""}
+                {drawerCompartment}
+                </div>
+			);
+	}
 });
 
 module.exports = MsuRack;

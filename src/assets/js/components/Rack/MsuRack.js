@@ -232,7 +232,6 @@ getOffset( el ) {
 		return (
 				<div className="drawWrap" style={wrapStyle}>
                 <MsuRackFlex />
-
                 {putDirection?(
                     <div className="specialContainer">
                     <div style={{border: "1px solid red"}}> SHOW ACTIVE SUB SLOT</div>

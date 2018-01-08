@@ -22,6 +22,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	CLOSE_MODAL:'CLOSE_MODAL',
 	PRINT_CONFIRM:'PRINT_CONFIRM',
 	CHANGE_AUDIT_EXCEPTION_SCREEN:"CHANGE_AUDIT_EXCEPTION_SCREEN",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",

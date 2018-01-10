@@ -234,7 +234,6 @@ getOffset( el ) {
                 <MsuRackFlex />
                 {putDirection?(
                     <div className="specialContainer">
-                    <div style={{border: "1px solid red"}}> SHOW ACTIVE SUB SLOT</div>
                     <img className={orientation} src={orientationClass}></img>   
                     <div className={stackClass}>
                             <span className={stackicon}></span>

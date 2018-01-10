@@ -265,6 +265,9 @@ var MsuRackFlex = React.createClass({
          var totalPpsWidth = Number(lastHBin.orig_coordinates[0]) + Number(lastHBin.length);
          var totalPpsHeight = Number(lastVBin.orig_coordinates[1]) + Number(lastVBin.height);
 
+         console.log("TotAL PPS WIDTH is "+ totalPpsWidth);
+         console.log("TotAL PPS HEIGHT is "+ totalPpsHeight);
+
          var lastTop = "0%";
          var lastHeight=0;
 
@@ -272,7 +275,7 @@ var MsuRackFlex = React.createClass({
                 var binWidth = aBins[i].length * horFactor+'%';
                 var binHeight = aBins[i].height * vertFactor +'%';
                 var ileft=0;
-                var itop=0;
+                var itop=0; //current top
                 
                 // if the seat type is front then we have to modify the x co-ordinate as per the formula:
                 // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
@@ -284,17 +287,14 @@ var MsuRackFlex = React.createClass({
                 if( Number(lastTop.substring(0,lastTop.length-1)) - Number(itop.substring(0,itop.length-1)) > 0){
                   var difference =  Number(lastTop.substring(0,lastTop.length-1)) - Number(itop.substring(0,itop.length-1));
 
-                // if( Number(itop.substring(0,itop.length-1)) - Number(lastTop.substring(0,lastTop.length-1)) > 0){
-                //   var difference =  Number(itop.substring(0,itop.length-1)) - Number(lastTop.substring(0,lastTop.length-1));
                   aHTMLBins.push(
                                    <div className="gap-container"
                                       style={{
-                                        background: "black",
+                                        background: "#939598",
                                         top: Number(itop.substring(0,itop.length-1)) + Number(binHeight.substring(0,binHeight.length-1)) + '%',
                                         position: "absolute",
                                         width: "100%",
                                         left: "0%",
-                                        background: "black",
                                         height: (difference-Number(binHeight.substring(0,binHeight.length-1)))+'%',
                                       }}>
                                    </div>
@@ -302,6 +302,19 @@ var MsuRackFlex = React.createClass({
                   
                   console.log("There is a gap. difference is " + difference);
                 }
+
+                /* Check for BORDER of bins-flex - START*/
+
+                if(ileft === "0%") var borderLeft="0.625vw solid #939598";
+                  else borderLeft = "1px solid #939598";
+
+                if(itop === "0%") var borderTop="0.625vw solid #939598";
+                  else borderTop = "1px solid #939598";
+
+                if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
+                  else borderRight = "1px solid #939598";
+                  
+                /* END **********************************/
 
                 if(i===1){
                   aHTMLBins.push(
@@ -311,8 +324,10 @@ var MsuRackFlex = React.createClass({
                                         height: binHeight,
                                         top: itop,
                                         left:ileft,
-                                        background: "grey",
-                                        border: "1px solid grey",
+                                        background: "#6d6d6d",
+                                        borderLeft: borderLeft,
+                                        borderTop: borderTop,
+                                        borderRight: borderRight
                                       }}>{selectedSlot}
                                    </div>
                                    
@@ -326,14 +341,18 @@ var MsuRackFlex = React.createClass({
                                         height: binHeight,
                                         top: itop,
                                         left:ileft,
-                                        border: "1px solid grey",
+                                        borderLeft: borderLeft,
+                                        borderTop: borderTop,
+                                        borderRight: borderRight,
+                                        borderBottom: "1px solid #939598"
                                       }}>
                                       
                                    </div>
                                    )
                 }
 
-                lastTop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
+                //lastTop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
+                lastTop = itop;
                 lastHeight = binHeight;
                 console.log("lastTop lasttop" + lastTop);
               }
@@ -342,6 +361,12 @@ var MsuRackFlex = React.createClass({
 
     render: function() {
       
+      console.log("============================>");
+      console.log("document width is" + document.body.clientWidth);
+      console.log("document height is" + document.body.clientHeight);
+      console.log("lastHBin" + this.state.lastHBin.orig_coordinates[0]);
+      console.log("lastVBin" + this.state.lastVBin.orig_coordinates[1]);
+
       var type = this.props.type;
       
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
@@ -354,8 +379,9 @@ var MsuRackFlex = React.createClass({
                                                );
         var self = this;
         return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth/4, height:document.body.clientHeight/2, borderTop: "5px solid grey", borderLeft: "5px solid grey", borderRight: "5px solid grey"}}>
+                 <div className="bins-flex" style={{width:document.body.clientWidth/4, height:document.body.clientHeight/2}}>
                         {aHTMLBins}
+
                       <div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.slotToHighlight}</div>
                  </div>
         );

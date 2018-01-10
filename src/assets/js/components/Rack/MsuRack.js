@@ -230,7 +230,7 @@ getOffset( el ) {
 
     }
 		return (
-				<div className="drawWrap" style={wrapStyle}>
+				<div className="drawWrap" style={{width:document.body.clientWidth/4, height:document.body.clientHeight/2, marginRight: "20%"}} >
                 <MsuRackFlex />
                 {putDirection?(
                     <div className="specialContainer">

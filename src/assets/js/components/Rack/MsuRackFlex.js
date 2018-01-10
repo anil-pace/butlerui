@@ -357,6 +357,7 @@ var MsuRackFlex = React.createClass({
                 //lastHeight = binHeight;
                 console.log("prevTop lasttop" + prevTop);
               }
+              aHTMLBins.push(<div style={{top:"90%", position: "absolute", height:"15vh", width:"100%", marginLeft: "-20%", borderLeft:"0.625vw solid #939598", borderRight:"0.625vw solid #939598"}}> </div>);
         return aHTMLBins;
     },
 
@@ -380,10 +381,9 @@ var MsuRackFlex = React.createClass({
                                                );
         var self = this;
         return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth/4, height:document.body.clientHeight/2}}>
+                 <div className="bins-flex" style={{height:"90%", width: "100%"}}>
                         {aHTMLBins}
-
-                      <div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.slotToHighlight}</div>
+                      {/*<div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.slotToHighlight}</div>*/}
                  </div>
         );
     }

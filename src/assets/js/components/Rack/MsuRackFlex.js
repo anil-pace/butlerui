@@ -268,8 +268,8 @@ var MsuRackFlex = React.createClass({
          console.log("TotAL PPS WIDTH is "+ totalPpsWidth);
          console.log("TotAL PPS HEIGHT is "+ totalPpsHeight);
 
-         var lastTop = "0%";
-         var lastHeight=0;
+         var prevTop = "0%";
+         //var lastHeight=0;
 
          for (var i =0; i<aBins.length ;i++){
                 var binWidth = aBins[i].length * horFactor+'%';
@@ -284,8 +284,9 @@ var MsuRackFlex = React.createClass({
                 itop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
                 console.log("currentNewTop itop" + itop);
                 
-                if( Number(lastTop.substring(0,lastTop.length-1)) - Number(itop.substring(0,itop.length-1)) > 0){
-                  var difference =  Number(lastTop.substring(0,lastTop.length-1)) - Number(itop.substring(0,itop.length-1));
+                /* Logic for coloring of Gaps between two floors  -START */
+                if( Number(prevTop.substring(0,prevTop.length-1)) - Number(itop.substring(0,itop.length-1)) > 0){
+                  var difference =  Number(prevTop.substring(0,prevTop.length-1)) - Number(itop.substring(0,itop.length-1));
 
                   aHTMLBins.push(
                                    <div className="gap-container"
@@ -302,9 +303,10 @@ var MsuRackFlex = React.createClass({
                   
                   console.log("There is a gap. difference is " + difference);
                 }
+                /* ****************************** - END */
+
 
                 /* Check for BORDER of bins-flex - START*/
-
                 if(ileft === "0%") var borderLeft="0.625vw solid #939598";
                   else borderLeft = "1px solid #939598";
 
@@ -313,8 +315,7 @@ var MsuRackFlex = React.createClass({
 
                 if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
                   else borderRight = "1px solid #939598";
-                  
-                /* END **********************************/
+                /* ********************************** - END */
 
                 if(i===1){
                   aHTMLBins.push(
@@ -351,10 +352,10 @@ var MsuRackFlex = React.createClass({
                                    )
                 }
 
-                //lastTop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
-                lastTop = itop;
-                lastHeight = binHeight;
-                console.log("lastTop lasttop" + lastTop);
+                //prevTop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
+                prevTop = itop;
+                //lastHeight = binHeight;
+                console.log("prevTop lasttop" + prevTop);
               }
         return aHTMLBins;
     },

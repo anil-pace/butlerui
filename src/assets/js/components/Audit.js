@@ -68,12 +68,10 @@ function getStateData(){
               var self = this;
               this.state.AuditShowModal["showModal"] = false;
               var r = self.state.AuditShowModal.message;
-              var b= self.state.AuditShowModal.button;
               setTimeout((function(){
                 ActionCreators.showModal({
                   data:{
-                    "message":r,
-                    "button":true
+                    "message":r
                   },
                   type:"message"
                 });

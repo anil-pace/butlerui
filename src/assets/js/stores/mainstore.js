@@ -403,8 +403,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             showModal = false;
             return {
                 "showModal": true,
-                "message": _("Place extra entity in Exception area."),
-                "button":true
+                "message": _("Place extra entity in Exception area.")
             }
         }
 

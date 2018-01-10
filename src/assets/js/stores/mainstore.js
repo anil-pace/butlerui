@@ -999,7 +999,7 @@ getOrderID: function () {
            _seatData.Extra_box_list.map(function(value, index) {
             if(value.Type===appConstants.OUTER_PACK){
                 extraPackSerials = extraPackSerials + value.Box_serial + " ";
-                extraPackCounts++;
+                extraPackCounts=value.Box_Actual_Qty+extraPackCounts;
             }
         });
 
@@ -1055,7 +1055,7 @@ getOrderID: function () {
        _seatData.Extra_box_list.map(function(value, index) {
         if(value.Type===appConstants.INNER_SUBPACK){
             extraSubPackSerials = extraSubPackSerials + value.Box_serial + " ";
-            extraSubPackCounts++;
+            extraSubPackCounts=value.Box_Actual_Qty+extraSubPackCounts;
         }
 
     });
@@ -1079,7 +1079,7 @@ getOrderID: function () {
          if(extraSubPackSerials){
             data["tableRows"].push([new self.tableCol(extraSubPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
+                new self.tableCol(extraSubPackCounts, "enabled", false, "large", true, false, false, false, true)
                 ]);
 
         }

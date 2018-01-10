@@ -7,8 +7,7 @@ var lastSlot = {
 
 var xyz = [
   {
-    "barcodes": ["A.01", "A.02", "A.03"],
-    "height": "33",
+    "height": "10",
     "orig_coordinates": [
       0,
       5
@@ -16,7 +15,6 @@ var xyz = [
     "length": "32",
   },
   {
-    "barcodes": ["B.01", "B.02", "B.03"],
     "height": "33",
     "orig_coordinates": [
       32,
@@ -25,8 +23,7 @@ var xyz = [
     "length": "32",
   },
   {
-    "barcodes": ["C.01", "B.02", "B.03"],
-    "height": "33",
+    "height": "20",
     "orig_coordinates": [
       64,
       5
@@ -42,7 +39,7 @@ var xyz = [
     "length": "32",
   },
   {
-    "height": "33",
+    "height": "20",
     "orig_coordinates": [
       32,
       43
@@ -66,7 +63,7 @@ var xyz = [
     "length": "32",
   },
   {
-    "height": "33",
+    "height": "20",
     "orig_coordinates": [
       32,
       81
@@ -74,64 +71,57 @@ var xyz = [
     "length": "32",
   },
   {
-    "height": "33",
+    "height": "10",
     "orig_coordinates": [
       64,
       81
     ],
     "length": "32",
   },
+ 
   {
-    "height": "33",
+    "height": "18",
     "orig_coordinates": [
       0,
-      119
+      20
     ],
     "length": "32",
   },
   {
-    "height": "33",
+    "height": "8",
     "orig_coordinates": [
       32,
-      119
+      68
     ],
     "length": "32",
   },
   {
-    "height": "33",
-    "orig_coordinates": [
-      64,
-      119
-    ],
-    "length": "32",
-  },
-  {
-    "height": "33",
-    "orig_coordinates": [
-      0,
-      157
-    ],
-    "length": "32",
-  },
-  {
-    "height": "33",
+    "height": "8",
     "orig_coordinates": [
       32,
-      157
+      106
     ],
     "length": "32",
   },
   {
-    "height": "33",
+    "height": "18",
     "orig_coordinates": [
       64,
-      157
+      96
+    ],
+    "length": "32",
+  },{
+    "height": "18",
+    "orig_coordinates": [
+      64,
+      30
     ],
     "length": "32",
   },
-  // "slot_barcodes":["003.1.A.01", "003.1.A.02", "003.1.A.03"],
-  // "slot_type":"slot"
+
 ];
+
+
 
 var xyz_barcodes = [
         {
@@ -181,7 +171,7 @@ var MsuRackFlex = React.createClass({
         this._sortBins(xyz,true);
     },
 
-      _sortBins:function (aBins,shouldSetState, a,b){
+      _sortBins:function (aBins,shouldSetState){
          if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
             //no bins found
             return;
@@ -208,6 +198,8 @@ var MsuRackFlex = React.createClass({
         });
 
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
+            //console.log("==============================>");
+            //console.log(index);
             if (oBinPrev.orig_coordinates[0] < oBinCurr.orig_coordinates[0]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinates[0] === oBinCurr.orig_coordinates[0]){
@@ -218,6 +210,8 @@ var MsuRackFlex = React.createClass({
         });
         console.log(lastHBin);
         lastVBin = aBins.reduce(function(oBinPrev,oBinCurr){
+            //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
+            //console.log(index);
             if (oBinPrev.orig_coordinates[1] < oBinCurr.orig_coordinates[1]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinates[1] === oBinCurr.orig_coordinates[1]){
@@ -259,54 +253,31 @@ var MsuRackFlex = React.createClass({
          // for reference orig_coordinates[0] === x axis and orig_coordinates[1] === y axis
           var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinates[0]) + Number(lastHBin.length)));
           var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinates[1]) + Number(lastVBin.height)));
-           // var horFactor = 1;
-           // var vertFactor = 1;
+          // var horFactor = 1;
+          // var vertFactor = 1;
 
          var totalPpsWidth = Number(lastHBin.orig_coordinates[0]) + Number(lastHBin.length);
          var totalPpsHeight = Number(lastVBin.orig_coordinates[1]) + Number(lastVBin.height);
-
-         console.log("TotAL PPS WIDTH is "+ totalPpsWidth);
-         console.log("TotAL PPS HEIGHT is "+ totalPpsHeight);
-
-         var prevTop = "0%";
-         //var lastHeight=0;
 
          for (var i =0; i<aBins.length ;i++){
                 var binWidth = aBins[i].length * horFactor+'%';
                 var binHeight = aBins[i].height * vertFactor +'%';
                 var ileft=0;
-                var itop=0; //current top
+                var itop=0;
                 
+               
+
                 // if the seat type is front then we have to modify the x co-ordinate as per the formula:
                 // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
 
                 ileft = (totalPpsWidth - aBins[i].orig_coordinates[0] - aBins[i].length) * horFactor +'%';
-                itop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
-                console.log("currentNewTop itop" + itop);
+                itop = (aBins[i].orig_coordinates[1] * vertFactor+'%');
+
+                // itop = (seatType ==='back')? (aBins[i].orig_coordinates[1] * vertFactor+'%'):
+                //     (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
                 
-                /* Logic for coloring of Gaps between two floors  -START */
-                if( Number(prevTop.substring(0,prevTop.length-1)) - Number(itop.substring(0,itop.length-1)) > 0){
-                  var difference =  Number(prevTop.substring(0,prevTop.length-1)) - Number(itop.substring(0,itop.length-1));
-
-                  aHTMLBins.push(
-                                   <div className="gap-container"
-                                      style={{
-                                        background: "#939598",
-                                        top: Number(itop.substring(0,itop.length-1)) + Number(binHeight.substring(0,binHeight.length-1)) + '%',
-                                        position: "absolute",
-                                        width: "100%",
-                                        left: "0%",
-                                        height: (difference-Number(binHeight.substring(0,binHeight.length-1)))+'%',
-                                      }}>
-                                   </div>
-                                   )
-                  
-                  console.log("There is a gap. difference is " + difference);
-                }
-                /* ****************************** - END */
-
-
                 /* Check for BORDER of bins-flex - START*/
+
                 if(ileft === "0%") var borderLeft="0.625vw solid #939598";
                   else borderLeft = "1px solid #939598";
 
@@ -315,7 +286,8 @@ var MsuRackFlex = React.createClass({
 
                 if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
                   else borderRight = "1px solid #939598";
-                /* ********************************** - END */
+                  
+                /* END **********************************/
 
                 if(i===1){
                   aHTMLBins.push(
@@ -325,13 +297,12 @@ var MsuRackFlex = React.createClass({
                                         height: binHeight,
                                         top: itop,
                                         left:ileft,
-                                        background: "#6d6d6d",
+                                        //background: "#6d6d6d",
                                         borderLeft: borderLeft,
                                         borderTop: borderTop,
                                         borderRight: borderRight
                                       }}>{selectedSlot}
                                    </div>
-                                   
                                    )
                 }
                 else{
@@ -345,30 +316,26 @@ var MsuRackFlex = React.createClass({
                                         borderLeft: borderLeft,
                                         borderTop: borderTop,
                                         borderRight: borderRight,
-                                        borderBottom: "1px solid #939598"
+                                        borderBottom: "1px solid #939598",
+                                        background: "white",
                                       }}>
                                       
                                    </div>
                                    )
                 }
-
-                //prevTop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
-                prevTop = itop;
-                //lastHeight = binHeight;
-                console.log("prevTop lasttop" + prevTop);
               }
               aHTMLBins.push(<div style={{top:"90%", position: "absolute", height:"15vh", width:"100%", marginLeft: "-20%", borderLeft:"0.625vw solid #939598", borderRight:"0.625vw solid #939598"}}> </div>);
         return aHTMLBins;
     },
 
     render: function() {
-      
+
       console.log("============================>");
       console.log("document width is" + document.body.clientWidth);
       console.log("document height is" + document.body.clientHeight);
       console.log("lastHBin" + this.state.lastHBin.orig_coordinates[0]);
       console.log("lastVBin" + this.state.lastVBin.orig_coordinates[1]);
-
+      
       var type = this.props.type;
       
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
@@ -381,7 +348,7 @@ var MsuRackFlex = React.createClass({
                                                );
         var self = this;
         return (
-                 <div className="bins-flex" style={{height:"90%", width: "100%"}}>
+                 <div className="bins-flex" style={{height:"90%", width: "100%", background:"#939598"}}>
                         {aHTMLBins}
                       {/*<div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.slotToHighlight}</div>*/}
                  </div>

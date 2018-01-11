@@ -7,168 +7,135 @@ var lastSlot = {
 
 var xyz = [
   {
-    "height": "10",
-    "orig_coordinates": [
-      0,
-      5
-    ],
-    "length": "32",
+  "rack_type_rec":[
+    {
+      "height": "10",
+      "orig_coordinates": [
+        0,
+        5
+      ],
+      "length": "32",
+      "barcodes":["A.01", "A.02"]
+    },
+    {
+      "height": "33",
+      "orig_coordinates": [
+        32,
+        5
+      ],
+      "length": "32",
+      "barcodes":["A.03", "A.04"]
+    },
+    {
+      "height": "20",
+      "orig_coordinates": [
+        64,
+        5
+      ],
+      "length": "32",
+      "barcodes":["A.05", "A.06"]
+    },
+    {
+      "height": "33",
+      "orig_coordinates": [
+        0,
+        43
+      ],
+      "length": "32",
+    },
+    {
+      "height": "20",
+      "orig_coordinates": [
+        32,
+        43
+      ],
+      "length": "32",
+    },
+    {
+      "height": "33",
+      "orig_coordinates": [
+        64,
+        43
+      ],
+      "length": "32",
+    },
+    {
+      "height": "33",
+      "orig_coordinates": [
+        0,
+        81
+      ],
+      "length": "32",
+    },
+    {
+      "height": "20",
+      "orig_coordinates": [
+        32,
+        81
+      ],
+      "length": "32",
+    },
+    {
+      "height": "10",
+      "orig_coordinates": [
+        64,
+        81
+      ],
+      "length": "32",
+    },
+    {
+      "height": "18",
+      "orig_coordinates": [
+        0,
+        20
+      ],
+      "length": "32",
+    },
+    {
+      "height": "8",
+      "orig_coordinates": [
+        32,
+        68
+      ],
+      "length": "32",
+    },
+    {
+      "height": "8",
+      "orig_coordinates": [
+        32,
+        106
+      ],
+      "length": "32",
+    },
+    {
+      "height": "18",
+      "orig_coordinates": [
+        64,
+        96
+      ],
+      "length": "32",
+    },
+    {
+      "height": "8",
+      "orig_coordinates": [
+        64,
+        30
+      ],
+      "length": "32",
+    }
+    ]
   },
-  {
-    "height": "33",
-    "orig_coordinates": [
-      32,
-      5
-    ],
-    "length": "32",
-  },
-  {
-    "height": "20",
-    "orig_coordinates": [
-      64,
-      5
-    ],
-    "length": "32",
-  },
-  {
-    "height": "33",
-    "orig_coordinates": [
-      0,
-      43
-    ],
-    "length": "32",
-  },
-  {
-    "height": "20",
-    "orig_coordinates": [
-      32,
-      43
-    ],
-    "length": "32",
-  },
-  {
-    "height": "33",
-    "orig_coordinates": [
-      64,
-      43
-    ],
-    "length": "32",
-  },
-  {
-    "height": "33",
-    "orig_coordinates": [
-      0,
-      81
-    ],
-    "length": "32",
-  },
-  {
-    "height": "20",
-    "orig_coordinates": [
-      32,
-      81
-    ],
-    "length": "32",
-  },
-  {
-    "height": "10",
-    "orig_coordinates": [
-      64,
-      81
-    ],
-    "length": "32",
-  },
- 
-  {
-    "height": "18",
-    "orig_coordinates": [
-      0,
-      20
-    ],
-    "length": "32",
-  },
-  {
-    "height": "8",
-    "orig_coordinates": [
-      32,
-      68
-    ],
-    "length": "32",
-  },
-  {
-    "height": "8",
-    "orig_coordinates": [
-      32,
-      106
-    ],
-    "length": "32",
-  },
-  {
-    "height": "18",
-    "orig_coordinates": [
-      64,
-      96
-    ],
-    "length": "32",
-  },{
-    "height": "8",
-    "orig_coordinates": [
-      64,
-      30
-    ],
-    "length": "32",
-  },
-
+  {"slot_barcodes":["003.1.A.19", "003.1.A.04"]}
 ];
 
-
-
-var xyz_barcodes = [
-        {
-          "barcodes": ["A.01", "A.09"],
-          "height": "33",
-          "orig_coordinates": [
-            0,
-            5
-          ],
-          "length": "32",
-        },
-        {
-          "barcodes": ["A.03", "A.04"],
-          "height": "33",
-          "orig_coordinates": [
-            32,
-            5
-          ],
-          "length": "32",
-        },
-        {
-          "barcodes": ["A.03", "A.04"],
-          "height": "33",
-          "orig_coordinates": [
-            64,
-            5
-          ],
-          "length": "32",
-        },
-        {
-          "barcodes": ["A.19", "A.04"],
-          "height": "33",
-          "orig_coordinates": [
-            0,
-            43
-          ],
-          "length": "32",
-        }
-      ]; 
 
 var MsuRackFlex = React.createClass({
 
     getInitialState: function(){
-        return this._sortBins(xyz,false);
+        return this._sortBins(xyz[0].rack_type_rec,false);
     },
     componentWillReceiveProps: function() {
-        this._sortBins(xyz,true);
+        this._sortBins(xyz[0].rack_type_rec,true);
     },
 
       _sortBins:function (aBins,shouldSetState){
@@ -182,20 +149,39 @@ var MsuRackFlex = React.createClass({
         var selectedSlot;
 
 
-        var slot_barcodes = ["003.1.A.19", "003.1.A.04"];
+        //var slot_barcodes = ["003.1.A.19", "003.1.A.04"];
+         var slotsToHighlight = xyz[1].slot_barcodes;
+
+        // var y = slotsToHighlight.map(function(item,idx){
+        //   var compartment = item.split(".");
+        //   var slotPostTrim = compartment[2]+"."+compartment[3];
+        //   console.log("===================================>");
+        // console.log("slotsToHighlight post Truncation " + slotPostTrim);
+        // });
+
         
-        var compartment_details = slot_barcodes[0].split(".");
 
-        let slotToHighlight = compartment_details[2]+"."+compartment_details[3];
 
-        let x = xyz_barcodes.map(function(item, idx){
-          let eachSlot = item.barcodes;
-          if(eachSlot.indexOf(slotToHighlight)>0){
-          //if(slotToHighlight === eachSlot[0]){
-            selectedSlot = idx;
-            console.log("INDEX is " + idx);
-          }
-        });
+        // var x = ["003.1.A.19", "003.1.A.04"].map(function(eachSlot, index){
+        //   var eachSlotBarcode = eachSlot.barcodes;
+        //   if(eachSlotBarcode.length === slotsToHighlight.length){
+        //       console.log("length of both the arrays is same");
+
+        //   }
+        // });
+        
+        // var compartment_details = slot_barcodes[0].split(".");
+
+        // let slotToHighlight = compartment_details[2]+"."+compartment_details[3];
+
+        // let x = xyz_barcodes.map(function(item, idx){
+        //   let eachSlot = item.barcodes;
+        //   if(eachSlot.indexOf(slotToHighlight)>0){
+        //   //if(slotToHighlight === eachSlot[0]){
+        //     selectedSlot = idx;
+        //     console.log("INDEX is " + idx);
+        //   }
+        // });
 
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
             //console.log("==============================>");
@@ -226,8 +212,8 @@ var MsuRackFlex = React.createClass({
                 aBins:aBins,
                 lastHBin:lastHBin,
                 lastVBin: lastVBin,
-                selectedSlot: selectedSlot,
-                slotToHighlight: slotToHighlight
+                // selectedSlot: selectedSlot,
+                // slotToHighlight: slotToHighlight
             });
         }
         else{
@@ -235,13 +221,13 @@ var MsuRackFlex = React.createClass({
                 aBins:aBins,
                 lastHBin:lastHBin,
                 lastVBin: lastVBin,
-                selectedSlot: selectedSlot,
-                slotToHighlight: slotToHighlight
+                // selectedSlot: selectedSlot,
+                // slotToHighlight: slotToHighlight
             }
         }
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, selectedSlot, slotToHighlight) {
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
@@ -279,8 +265,8 @@ var MsuRackFlex = React.createClass({
                 var totalHeight = totalPpsHeight * vertFactor;
                 
 
-                console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>");
-                console.log("condition check is " + totalHeight);
+                // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>");
+                // console.log("condition check is " + totalHeight);
 
                 let sum= Number(ibottom.substring(0,ibottom.length-1)) + Number(binHeight.substring(0,binHeight.length-1));
 
@@ -290,14 +276,14 @@ var MsuRackFlex = React.createClass({
 
                 /* Check for BORDER of bins-flex - START*/
 
-                if(ileft === "0%") var borderLeft="0.625vw solid green";
+                if(ileft === "0%") var borderLeft="0.625vw solid #939598";
                   else borderLeft = "1px solid #939598";
 
 
-                if( totalHeight === sum || (totalHeight - sum) > 0 && (totalHeight - sum) <0.5) var borderTop="0.625vw solid purple";
+                if( totalHeight === Math.round(sum) ) var borderTop="0.625vw solid #939598";
                   else borderTop = "1px solid #939598";
 
-                if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid red";
+                if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
                   else borderRight = "1px solid #939598";
                   
                 /* END **********************************/
@@ -315,7 +301,7 @@ var MsuRackFlex = React.createClass({
                                         borderRight: borderRight,
                                         background: "white",
                                         borderBottom: "1px solid #939598",
-                                      }}>{selectedSlot}
+                                      }}>
                                    </div>
                                    )
                 }
@@ -355,13 +341,13 @@ var MsuRackFlex = React.createClass({
                                                this.state.lastHBin,
                                                this.state.lastVBin,
                                                this.props.seatType,
-                                               this.props.screenId,
-                                               this.state.selectedSlot,
-                                               this.state.slotToHighlight
+                                               this.props.screenId
+                                               //this.state.selectedSlot,
+                                               //this.state.slotToHighlight
                                                );
         var self = this;
         return (
-                 <div className="bins-flex" style={{height:"85%", width: "100%", background:"#939598"}}>
+                 <div className="bins-flex" style={{height:"85%", width: "100%", background:"#66686a"}}>
                         {aHTMLBins}
                       {/*<div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.slotToHighlight}</div>*/}
                  </div>

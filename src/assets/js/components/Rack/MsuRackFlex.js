@@ -259,11 +259,14 @@ var MsuRackFlex = React.createClass({
          var totalPpsWidth = Number(lastHBin.orig_coordinates[0]) + Number(lastHBin.length);
          var totalPpsHeight = Number(lastVBin.orig_coordinates[1]) + Number(lastVBin.height);
 
+         console.log("TotalPPSWidth is" + totalPpsWidth);
+         console.log("totalPpsHeight is" + totalPpsHeight);
+
          for (var i =0; i<aBins.length ;i++){
                 var binWidth = aBins[i].length * horFactor+'%';
                 var binHeight = aBins[i].height * vertFactor +'%';
                 var ileft=0;
-                var itop=0;
+                var ibottom=0;
                 
                
 
@@ -271,17 +274,30 @@ var MsuRackFlex = React.createClass({
                 // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
 
                 ileft = (aBins[i].orig_coordinates[0] * horFactor +'%'); // 0 on x-axis should start from bottom-left towards right.
-                itop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%'; // 0 on y-axis should start from bottom-left towards up.
+                ibottom = (aBins[i].orig_coordinates[1]) * vertFactor +'%'; // 0 on y-axis should start from bottom-left towards up.
+
+                var totalHeight = totalPpsHeight * vertFactor;
+                
+
+                console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>");
+                console.log("condition check is " + totalHeight);
+
+                let sum= Number(ibottom.substring(0,ibottom.length-1)) + Number(binHeight.substring(0,binHeight.length-1));
+
+                console.log("========================>");
+                console.log("ibottom + binHeight " + sum);
+
 
                 /* Check for BORDER of bins-flex - START*/
 
-                if(ileft === "0%") var borderLeft="0.625vw solid #939598";
+                if(ileft === "0%") var borderLeft="0.625vw solid green";
                   else borderLeft = "1px solid #939598";
 
-                if(itop === "0%") var borderTop="0.625vw solid #939598";
+
+                if( totalHeight === sum || (totalHeight - sum) > 0 && (totalHeight - sum) <0.5) var borderTop="0.625vw solid purple";
                   else borderTop = "1px solid #939598";
 
-                if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
+                if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid red";
                   else borderRight = "1px solid #939598";
                   
                 /* END **********************************/
@@ -292,7 +308,7 @@ var MsuRackFlex = React.createClass({
                                       style={{
                                         width: binWidth,
                                         height: binHeight,
-                                        top: itop,
+                                        bottom: ibottom,
                                         left:ileft,
                                         borderLeft: borderLeft,
                                         borderTop: borderTop,
@@ -309,7 +325,7 @@ var MsuRackFlex = React.createClass({
                                       style={{
                                         width: binWidth,
                                         height: binHeight,
-                                        top: itop,
+                                        bottom: ibottom,
                                         left:ileft,
                                         borderLeft: borderLeft,
                                         borderTop: borderTop,
@@ -321,7 +337,7 @@ var MsuRackFlex = React.createClass({
                                    )
                 }
               }
-              aHTMLBins.push(<div style={{top:"90%", position: "absolute", height:"15vh", width:"100%", marginLeft: "-20%", borderLeft:"0.625vw solid #939598", borderRight:"0.625vw solid #939598"}}> </div>);
+              aHTMLBins.push(<div style={{top:"100%", position: "absolute", height:"15vh", width:"100%", marginLeft: "-20%", borderLeft:"0.625vw solid #939598", borderRight:"0.625vw solid #939598"}}> </div>);
         return aHTMLBins;
     },
 

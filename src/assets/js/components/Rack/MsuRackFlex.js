@@ -111,7 +111,7 @@ var xyz = [
     ],
     "length": "32",
   },{
-    "height": "18",
+    "height": "8",
     "orig_coordinates": [
       64,
       30
@@ -270,12 +270,9 @@ var MsuRackFlex = React.createClass({
                 // if the seat type is front then we have to modify the x co-ordinate as per the formula:
                 // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
 
-                ileft = (totalPpsWidth - aBins[i].orig_coordinates[0] - aBins[i].length) * horFactor +'%';
-                itop = (aBins[i].orig_coordinates[1] * vertFactor+'%');
+                ileft = (aBins[i].orig_coordinates[0] * horFactor +'%'); // 0 on x-axis should start from bottom-left towards right.
+                itop = (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%'; // 0 on y-axis should start from bottom-left towards up.
 
-                // itop = (seatType ==='back')? (aBins[i].orig_coordinates[1] * vertFactor+'%'):
-                //     (totalPpsHeight - aBins[i].orig_coordinates[1] - aBins[i].height) * vertFactor +'%';
-                
                 /* Check for BORDER of bins-flex - START*/
 
                 if(ileft === "0%") var borderLeft="0.625vw solid #939598";
@@ -297,10 +294,11 @@ var MsuRackFlex = React.createClass({
                                         height: binHeight,
                                         top: itop,
                                         left:ileft,
-                                        //background: "#6d6d6d",
                                         borderLeft: borderLeft,
                                         borderTop: borderTop,
-                                        borderRight: borderRight
+                                        borderRight: borderRight,
+                                        background: "white",
+                                        borderBottom: "1px solid #939598",
                                       }}>{selectedSlot}
                                    </div>
                                    )
@@ -319,7 +317,6 @@ var MsuRackFlex = React.createClass({
                                         borderBottom: "1px solid #939598",
                                         background: "white",
                                       }}>
-                                      
                                    </div>
                                    )
                 }
@@ -348,7 +345,7 @@ var MsuRackFlex = React.createClass({
                                                );
         var self = this;
         return (
-                 <div className="bins-flex" style={{height:"90%", width: "100%", background:"#939598"}}>
+                 <div className="bins-flex" style={{height:"85%", width: "100%", background:"#939598"}}>
                         {aHTMLBins}
                       {/*<div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.slotToHighlight}</div>*/}
                  </div>

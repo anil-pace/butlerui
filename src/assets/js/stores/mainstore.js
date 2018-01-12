@@ -491,7 +491,8 @@ getPackData: function () {
     _seatData.Box_qty_list.map(function (value, index) {
         d = [];
         if(value.Type===appConstants.OUTER_PACK)
-            {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+            {                
+        d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
             d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
         d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
@@ -499,11 +500,13 @@ getPackData: function () {
     }
 });
     _seatData.Extra_box_list.map(function (value, index){
+        d = [];
         if(value.Type===appConstants.OUTER_PACK)
-            {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+            {                
+        d.push(new self.tableCol(value.Box_serial, "extraqt", false, "large", false, true, false, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
-        d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Box_Expected_Qty, "extraqt", false, "large", true, false, false, false, true));
+        d.push(new self.tableCol(value.Box_Actual_Qty, "extraqt",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
         data["tableRows"].push(d);
     }
 });
@@ -537,11 +540,13 @@ getSubPackData: function () {
 
     });
     _seatData.Extra_box_list.map(function (value, index){
+          d = [];
         if(value.Type===appConstants.INNER_SUBPACK)
-            {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+            {                
+        d.push(new self.tableCol(value.Box_serial, "extraqt", false, "large", false, true, false, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
-        d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Box_Expected_Qty, "extraqt", false, "large", true, false, false, false, true));
+        d.push(new self.tableCol(value.Box_Actual_Qty, "extraqt",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
         data["tableRows"].push(d);
     }
 });
@@ -993,7 +998,7 @@ getOrderID: function () {
            _seatData.Extra_box_list.map(function(value, index) {
             if(value.Type===appConstants.OUTER_PACK){
                 extraPackSerials = extraPackSerials + value.Box_serial + " ";
-                extraPackCounts++;
+                extraPackCounts=value.Box_Actual_Qty+extraPackCounts;
             }
         });
 
@@ -1049,7 +1054,7 @@ getOrderID: function () {
        _seatData.Extra_box_list.map(function(value, index) {
         if(value.Type===appConstants.INNER_SUBPACK){
             extraSubPackSerials = extraSubPackSerials + value.Box_serial + " ";
-            extraSubPackCounts++;
+            extraSubPackCounts=value.Box_Actual_Qty+extraSubPackCounts;
         }
 
     });
@@ -1073,7 +1078,7 @@ getOrderID: function () {
          if(extraSubPackSerials){
             data["tableRows"].push([new self.tableCol(extraSubPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
+                new self.tableCol(extraSubPackCounts, "enabled", false, "large", true, false, false, false, true)
                 ]);
 
         }

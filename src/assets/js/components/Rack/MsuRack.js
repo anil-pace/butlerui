@@ -11,6 +11,8 @@ var drawRackStyle = {
 var lastSlot = {
     flexBasis:"4vh"};
 
+var selectedSlotIds = "";
+
 var MsuRack = React.createClass({
 
      totalRackHeight: function(){
@@ -109,9 +111,11 @@ getOffset( el ) {
         height: rect.height || el.offsetHeight
     };
 },
+
+    getSelectedSlotsIds: function(selectedSlotIds){
+        selectedSlotIds = selectedSlotIds;
+    },
 	render: function(){
-        console.log(" =======================================>");
-        console.log(" coming inside OLD MSU RACK ");
         var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
         var putDirection = this.props.putDirection;
         var type = this.props.type;
@@ -165,7 +169,6 @@ getOffset( el ) {
                 "flex-wrap": "nowrap",
                 "box-sizing": "border-box",               
                 overflow: "hidden"
-
             }
 
         eachRow = rackDetails.map(function(row,index){
@@ -231,7 +234,8 @@ getOffset( el ) {
     }
 		return (
 				<div className="drawWrap" style={{width:document.body.clientWidth/4, height:document.body.clientHeight/2, marginRight: "20%"}} >
-                <MsuRackFlex />
+                <MsuRackFlex getSelectedSlotsIds={this.getSelectedSlotsIds}/>
+                <div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + selectedSlotIds}</div>
                 {putDirection?(
                     <div className="specialContainer">
                     <img className={orientation} src={orientationClass}></img>   

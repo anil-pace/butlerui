@@ -24,7 +24,7 @@ var xyz = [
         5
       ],
       "length": "32",
-      "barcodes":["A.03", "A.04"]
+      "barcodes":["N.01", "N.02", "N.03"]
     },
     {
       "height": "20",
@@ -33,7 +33,7 @@ var xyz = [
         5
       ],
       "length": "32",
-      "barcodes":["A.05", "A.06"]
+      "barcodes":["M.01", "M.02"]
     },
     {
       "height": "33",
@@ -42,6 +42,7 @@ var xyz = [
         43
       ],
       "length": "32",
+      "barcodes":["L.01", "L.02"]
     },
     {
       "height": "20",
@@ -50,6 +51,7 @@ var xyz = [
         43
       ],
       "length": "32",
+      "barcodes":["K.01", "K.02"]
     },
     {
       "height": "33",
@@ -58,6 +60,7 @@ var xyz = [
         43
       ],
       "length": "32",
+      "barcodes":["J.01", "J.02"]
     },
     {
       "height": "33",
@@ -66,6 +69,7 @@ var xyz = [
         81
       ],
       "length": "32",
+      "barcodes":["I.01", "I.02"]
     },
     {
       "height": "20",
@@ -74,6 +78,7 @@ var xyz = [
         81
       ],
       "length": "32",
+      "barcodes":["H.01", "H.02"]
     },
     {
       "height": "10",
@@ -82,6 +87,7 @@ var xyz = [
         81
       ],
       "length": "32",
+      "barcodes":["G.01", "G.02"]
     },
     {
       "height": "18",
@@ -90,6 +96,7 @@ var xyz = [
         20
       ],
       "length": "32",
+      "barcodes":["F.01", "F.02"]
     },
     {
       "height": "8",
@@ -98,6 +105,7 @@ var xyz = [
         68
       ],
       "length": "32",
+      "barcodes":["E.01", "E.02"]
     },
     {
       "height": "8",
@@ -106,6 +114,7 @@ var xyz = [
         106
       ],
       "length": "32",
+      "barcodes":["D.01", "D.02"]
     },
     {
       "height": "18",
@@ -114,6 +123,7 @@ var xyz = [
         96
       ],
       "length": "32",
+      "barcodes":["C.01", "C.02"]
     },
     {
       "height": "8",
@@ -122,10 +132,11 @@ var xyz = [
         30
       ],
       "length": "32",
+      "barcodes":["B.01", "B.02"]
     }
     ]
   },
-  {"slot_barcodes":["003.1.A.19", "003.1.A.04"]}
+  {"slot_barcodes":["003.1.N.01", "003.1.N.02", "003.1.N.03"]}
 ];
 
 
@@ -146,46 +157,42 @@ var MsuRackFlex = React.createClass({
 
         var totalBins = aBins.length;
         var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={}; 
-        var selectedSlot;
+        var selectedSlotIdx;
 
 
         //var slot_barcodes = ["003.1.A.19", "003.1.A.04"];
-         var slotsToHighlight = xyz[1].slot_barcodes;
 
-        // var y = slotsToHighlight.map(function(item,idx){
-        //   var compartment = item.split(".");
-        //   var slotPostTrim = compartment[2]+"."+compartment[3];
-        //   console.log("===================================>");
-        // console.log("slotsToHighlight post Truncation " + slotPostTrim);
-        // });
+        var newBarcodes = []; // for storing post truncation data
+        var selectedSlotIds = "";
 
+        var y = xyz[1].slot_barcodes.map(function(barcodes,idx){
+          var barcodesSplit = barcodes.split(".");
+          var barcodeId = barcodesSplit[2]+"."+barcodesSplit[3];
+
+          console.log("===================================>");
+          console.log("slotsToHighlight post Truncation " + barcodeId);
+          newBarcodes.push(barcodeId);
+        });
+
+        console.log(newBarcodes);
+        selectedSlotIds =newBarcodes[0].replace(".",'')+"-"+newBarcodes[newBarcodes.length-1].replace(".",'');
+        this.props.getSelectedSlotsIds(selectedSlotIds);
         
 
-
-        // var x = ["003.1.A.19", "003.1.A.04"].map(function(eachSlot, index){
-        //   var eachSlotBarcode = eachSlot.barcodes;
-        //   if(eachSlotBarcode.length === slotsToHighlight.length){
-        //       console.log("length of both the arrays is same");
-
-        //   }
-        // });
+        var x = aBins.map(function(eachSlot, index){
+           var eachSlotBarcodes = eachSlot.barcodes;
+           console.log("eachSlotBarcodes" + eachSlotBarcodes);
+          if(eachSlotBarcodes.length === newBarcodes.length){
+              console.log("length of both the arrays is same");
+              if( JSON.stringify(newBarcodes)==JSON.stringify(eachSlotBarcodes) ){
+                 selectedSlotIdx = index;
+              }
+          }
+        });
         
         // var compartment_details = slot_barcodes[0].split(".");
 
-        // let slotToHighlight = compartment_details[2]+"."+compartment_details[3];
-
-        // let x = xyz_barcodes.map(function(item, idx){
-        //   let eachSlot = item.barcodes;
-        //   if(eachSlot.indexOf(slotToHighlight)>0){
-        //   //if(slotToHighlight === eachSlot[0]){
-        //     selectedSlot = idx;
-        //     console.log("INDEX is " + idx);
-        //   }
-        // });
-
         lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            //console.log("==============================>");
-            //console.log(index);
             if (oBinPrev.orig_coordinates[0] < oBinCurr.orig_coordinates[0]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinates[0] === oBinCurr.orig_coordinates[0]){
@@ -194,10 +201,8 @@ var MsuRackFlex = React.createClass({
                 return oBinPrev;
             }
         });
-        console.log(lastHBin);
+
         lastVBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$>");
-            //console.log(index);
             if (oBinPrev.orig_coordinates[1] < oBinCurr.orig_coordinates[1]){
                 return oBinCurr;
             }else if (oBinPrev.orig_coordinates[1] === oBinCurr.orig_coordinates[1]){
@@ -206,14 +211,15 @@ var MsuRackFlex = React.createClass({
                 return oBinPrev;
             }
         });
-        //console.log(lastVBin);
+        
+
         if(shouldSetState){
             this.setState({
                 aBins:aBins,
                 lastHBin:lastHBin,
                 lastVBin: lastVBin,
-                // selectedSlot: selectedSlot,
-                // slotToHighlight: slotToHighlight
+                selectedSlotIdx: selectedSlotIdx,
+                selectedSlotIds: selectedSlotIds
             });
         }
         else{
@@ -221,13 +227,14 @@ var MsuRackFlex = React.createClass({
                 aBins:aBins,
                 lastHBin:lastHBin,
                 lastVBin: lastVBin,
-                // selectedSlot: selectedSlot,
-                // slotToHighlight: slotToHighlight
+                selectedSlotIdx: selectedSlotIdx,
+                selectedSlotIds: selectedSlotIds
             }
         }
+        
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId) {
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, selectedSlotIdx, selectedSlotIds) {
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
@@ -288,7 +295,7 @@ var MsuRackFlex = React.createClass({
                   
                 /* END **********************************/
 
-                if(i===1){
+                if(i===selectedSlotIdx){
                   aHTMLBins.push(
                                    <div className="bin-container"
                                       style={{
@@ -301,7 +308,12 @@ var MsuRackFlex = React.createClass({
                                         borderRight: borderRight,
                                         background: "white",
                                         borderBottom: "1px solid #939598",
-                                      }}>
+                                        background: "#939598",
+                                        color:"white",
+                                        fontSize: "1.5em",
+                                        textAlign: "center",
+                                        fontWeight: "bold"
+                                      }}>{selectedSlotIds}
                                    </div>
                                    )
                 }
@@ -341,15 +353,15 @@ var MsuRackFlex = React.createClass({
                                                this.state.lastHBin,
                                                this.state.lastVBin,
                                                this.props.seatType,
-                                               this.props.screenId
-                                               //this.state.selectedSlot,
-                                               //this.state.slotToHighlight
+                                               this.props.screenId,
+                                               this.state.selectedSlotIdx,
+                                               this.state.selectedSlotIds
                                                );
         var self = this;
         return (
                  <div className="bins-flex" style={{height:"85%", width: "100%", background:"#66686a"}}>
                         {aHTMLBins}
-                      {/*<div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.slotToHighlight}</div>*/}
+                    {/*<div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.selectedSlotIds}</div> */}
                  </div>
         );
     }

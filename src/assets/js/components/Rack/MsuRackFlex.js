@@ -1,9 +1,5 @@
 var React = require('react');
-var MsuSlot = require('./MsuSlot');
 
-var lastSlot = {
-  flexBasis:"4vh"
-};
 
 var xyz = [
   {
@@ -143,137 +139,159 @@ var xyz = [
 var MsuRackFlex = React.createClass({
 
     getInitialState: function(){
-        return this._sortBins(xyz[0].rack_type_rec,false);
+        return this._sortSlots(xyz[0].rack_type_rec);
     },
     componentWillReceiveProps: function() {
-        this._sortBins(xyz[0].rack_type_rec,true);
+        this._sortSlots(xyz[0].rack_type_rec);
     },
 
-      _sortBins:function (aBins,shouldSetState){
-         if (!aBins || (aBins.constructor !== Array && aBins.length < 1)){
-            //no bins found
-            return;
-         }
+    componentDidUpdate:function(){
+        /*
+            Calling the line function only if the drawerLineDrawn is false 
+            and the slot type is drawer.
+            drawerLineDrawn is set true once the line is created
+         */
+        var strEl = document.querySelectorAll("#selectedSlot")[0];
+        strEl = strEl ? strEl.parentNode : null;
+        var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
+        if(strEl && endEl){
+        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
 
-        var totalBins = aBins.length;
-        var totalWidth =0, totalHeight=0, lastHBin = {}, lastVBin={}; 
-        var selectedSlotIdx;
+      }
+    },
+
+    _sortSlots:function (vSlots,shouldSetState){
+       if (!vSlots || (vSlots.constructor !== Array && vSlots.length < 1)){
+          //no slots found
+          return;
+       }
+
+      var totalSlots = vSlots.length;
+      var totalWidth =0, totalHeight=0;
+      var lastHSlot = {}, lastVSlot={}; 
+      var selectedSlotIndex;
 
 
-        //var slot_barcodes = ["003.1.A.19", "003.1.A.04"];
+      var newBarcodes = []; // for storing post truncation data
+      var selectedSlotIds = "";
 
-        var newBarcodes = []; // for storing post truncation data
-        var selectedSlotIds = "";
+      var y = xyz[1].slot_barcodes.map(function(slotBarcodes,idx){
+        var barcodesSplit = slotBarcodes.split(".");
+        var barcodeId = barcodesSplit[2]+"."+barcodesSplit[3];
 
-        var y = xyz[1].slot_barcodes.map(function(barcodes,idx){
-          var barcodesSplit = barcodes.split(".");
-          var barcodeId = barcodesSplit[2]+"."+barcodesSplit[3];
+        console.log("===================================>");
+        console.log("slotsToHighlight post Truncation " + barcodeId);
+        newBarcodes.push(barcodeId);
+      });
 
-          console.log("===================================>");
-          console.log("slotsToHighlight post Truncation " + barcodeId);
-          newBarcodes.push(barcodeId);
-        });
+      console.log(newBarcodes);
+      selectedSlotIds =newBarcodes[0].replace(".",'')+" - "+newBarcodes[newBarcodes.length-1].replace(".",'');
+      
 
-        console.log(newBarcodes);
-        selectedSlotIds =newBarcodes[0].replace(".",'')+"-"+newBarcodes[newBarcodes.length-1].replace(".",'');
-        this.props.getSelectedSlotsIds(selectedSlotIds);
-        
-
-        var x = aBins.map(function(eachSlot, index){
-           var eachSlotBarcodes = eachSlot.barcodes;
-           console.log("eachSlotBarcodes" + eachSlotBarcodes);
-          if(eachSlotBarcodes.length === newBarcodes.length){
-              console.log("length of both the arrays is same");
-              if( JSON.stringify(newBarcodes)==JSON.stringify(eachSlotBarcodes) ){
-                 selectedSlotIdx = index;
-              }
+      var x = vSlots.map(function(eachSlot, index){
+         var eachSlotBarcodes = eachSlot.barcodes;
+         console.log("eachSlotBarcodes" + eachSlotBarcodes);
+        if(eachSlotBarcodes.length === newBarcodes.length){
+            console.log("length of both the arrays is same");
+            if( JSON.stringify(newBarcodes)==JSON.stringify(eachSlotBarcodes) ){
+               selectedSlotIndex = index;
+            }
+        }
+      });
+      
+      lastHSlot = vSlots.reduce(function(prevSlot,currSlot){
+          if (prevSlot.orig_coordinates[0] < currSlot.orig_coordinates[0]){
+              return currSlot;
+          }else if (prevSlot.orig_coordinates[0] === currSlot.orig_coordinates[0]){
+              return currSlot;
+          }else{
+              return prevSlot;
           }
-        });
-        
-        // var compartment_details = slot_barcodes[0].split(".");
+      });
 
-        lastHBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            if (oBinPrev.orig_coordinates[0] < oBinCurr.orig_coordinates[0]){
-                return oBinCurr;
-            }else if (oBinPrev.orig_coordinates[0] === oBinCurr.orig_coordinates[0]){
-                return oBinCurr;
-            }else{
-                return oBinPrev;
-            }
-        });
+      lastVSlot = vSlots.reduce(function(prevSlot,currSlot){
+          if (prevSlot.orig_coordinates[1] < currSlot.orig_coordinates[1]){
+              return currSlot;
+          }else if (prevSlot.orig_coordinates[1] === currSlot.orig_coordinates[1]){
+              return currSlot;
+          }else{
+              return prevSlot;
+          }
+      });
 
-        lastVBin = aBins.reduce(function(oBinPrev,oBinCurr){
-            if (oBinPrev.orig_coordinates[1] < oBinCurr.orig_coordinates[1]){
-                return oBinCurr;
-            }else if (oBinPrev.orig_coordinates[1] === oBinCurr.orig_coordinates[1]){
-                return oBinCurr;
-            }else{
-                return oBinPrev;
-            }
-        });
-        
 
-        if(shouldSetState){
-            this.setState({
-                aBins:aBins,
-                lastHBin:lastHBin,
-                lastVBin: lastVBin,
-                selectedSlotIdx: selectedSlotIdx,
-                selectedSlotIds: selectedSlotIds
-            });
-        }
-        else{
-            return{
-                aBins:aBins,
-                lastHBin:lastHBin,
-                lastVBin: lastVBin,
-                selectedSlotIdx: selectedSlotIdx,
-                selectedSlotIds: selectedSlotIds
-            }
-        }
-        
+      return{
+          vSlots:vSlots,
+          lastHSlot:lastHSlot,
+          lastVSlot: lastVSlot,
+          selectedSlotIndex: selectedSlotIndex,
+          selectedSlotIds: selectedSlotIds
+      }
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, selectedSlotIdx, selectedSlotIds) {
-        if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
+    connect:function(startEl, endEl, color, thickness) {
+      var off1 = this.getOffset(startEl);
+      var off2 = this.getOffset(endEl);
+      // bottom right
+      var x1 = off1.left + off1.width;
+      var y1 = off1.top + off1.height/2;
+      // top right
+      var x2 = off2.left ;
+      var y2 = off2.top+ off2.height/2;
+      // distance
+      var length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+      // center
+      var cx = ((x1 + x2) / 2) - (length / 2);
+      var cy = ((y1 + y2) / 2) - (thickness / 2);
+      // angle
+      var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
+      // make hr
+
+      var htmlLine = "<div style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+      document.getElementById('app').innerHTML += htmlLine; 
+    },
+
+    getOffset( el ) {
+        var rect = el.getBoundingClientRect();
+        return {
+            left: rect.left + window.pageXOffset,
+            top: rect.top + window.pageYOffset,
+            width: rect.width || el.offsetWidth,
+            height: rect.height || el.offsetHeight
+        };
+    },
+    _createSlotLayouts: function(vSlots, lastHSlot, lastVSlot, selectedSlotIndex, selectedSlotIds) {
+        if ((vSlots.constructor !== Array && vSlots.length < 1) || !(lastHSlot.length) || !(lastVSlot.length)){
             //no bins found
             return;
          }
-         var aHTMLBins =[];
+         var vHTMLSlots =[];
          // since the total width would be 100% but the bins would be divided into
          // ratios, hence each of the bin would have to have the factor into % of the
          // .bins container.
+
          // for reference orig_coordinates[0] === x axis and orig_coordinates[1] === y axis
-          var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinates[0]) + Number(lastHBin.length)));
-          var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinates[1]) + Number(lastVBin.height)));
-          // var horFactor = 1;
-          // var vertFactor = 1;
+          var horFactor = parseFloat(100/(Number(lastHSlot.orig_coordinates[0]) + Number(lastHSlot.length)));
+          var vertFactor = parseFloat(100/(Number(lastVSlot.orig_coordinates[1]) + Number(lastVSlot.height)));
 
-         var totalPpsWidth = Number(lastHBin.orig_coordinates[0]) + Number(lastHBin.length);
-         var totalPpsHeight = Number(lastVBin.orig_coordinates[1]) + Number(lastVBin.height);
+         var totalRackWidth = Number(lastHSlot.orig_coordinates[0]) + Number(lastHSlot.length);
+         var totalRackHeight = Number(lastVSlot.orig_coordinates[1]) + Number(lastVSlot.height);
 
-         console.log("TotalPPSWidth is" + totalPpsWidth);
-         console.log("totalPpsHeight is" + totalPpsHeight);
+         console.log("TotalPPSWidth is" + totalRackWidth);
+         console.log("totalRackHeight is" + totalRackHeight);
 
-         for (var i =0; i<aBins.length ;i++){
-                var binWidth = aBins[i].length * horFactor+'%';
-                var binHeight = aBins[i].height * vertFactor +'%';
+         for (var i =0; i<vSlots.length ;i++){
+                var binWidth = vSlots[i].length * horFactor+'%';
+                var binHeight = vSlots[i].height * vertFactor +'%';
                 var ileft=0;
                 var ibottom=0;
-                
-               
 
-                // if the seat type is front then we have to modify the x co-ordinate as per the formula:
-                // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
 
-                ileft = (aBins[i].orig_coordinates[0] * horFactor +'%'); // 0 on x-axis should start from bottom-left towards right.
-                ibottom = (aBins[i].orig_coordinates[1]) * vertFactor +'%'; // 0 on y-axis should start from bottom-left towards up.
 
-                var totalHeight = totalPpsHeight * vertFactor;
-                
+                ileft = (vSlots[i].orig_coordinates[0] * horFactor +'%'); // 0 on x-axis should start from bottom-left towards right.
+                ibottom = (vSlots[i].orig_coordinates[1]) * vertFactor +'%'; // 0 on y-axis should start from bottom-left towards up.
 
-                // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>");
-                // console.log("condition check is " + totalHeight);
+                var vRackHeight = totalRackHeight * vertFactor; //rack height in ratio
 
                 let sum= Number(ibottom.substring(0,ibottom.length-1)) + Number(binHeight.substring(0,binHeight.length-1));
 
@@ -287,56 +305,57 @@ var MsuRackFlex = React.createClass({
                   else borderLeft = "1px solid #939598";
 
 
-                if( totalHeight === Math.round(sum) ) var borderTop="0.625vw solid #939598";
+                if( vRackHeight === Math.round(sum) ) var borderTop="0.625vw solid #939598";
                   else borderTop = "1px solid #939598";
 
-                if(ileft === lastHBin.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
+                if(ileft === lastHSlot.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
                   else borderRight = "1px solid #939598";
                   
                 /* END **********************************/
 
-                if(i===selectedSlotIdx){
-                  aHTMLBins.push(
-                                   <div className="bin-container"
+                if(i===selectedSlotIndex){
+                  vHTMLSlots.push(
+                                   <div className="subSlot"
                                       style={{
                                         width: binWidth,
                                         height: binHeight,
                                         bottom: ibottom,
                                         left:ileft,
-                                        borderLeft: borderLeft,
                                         borderTop: borderTop,
                                         borderRight: borderRight,
-                                        background: "white",
                                         borderBottom: "1px solid #939598",
+                                        borderLeft: borderLeft,
                                         background: "#939598",
                                         color:"white",
                                         fontSize: "1.5em",
                                         textAlign: "center",
                                         fontWeight: "bold"
-                                      }}>{selectedSlotIds}
+                                      }}>
+                                      <div id="selectedSlot"></div>
                                    </div>
                                    )
                 }
                 else{
-                  aHTMLBins.push(
-                                   <div className="bin-container"
+                  vHTMLSlots.push(
+                                   <div className="subSlot"
                                       style={{
                                         width: binWidth,
                                         height: binHeight,
                                         bottom: ibottom,
                                         left:ileft,
-                                        borderLeft: borderLeft,
                                         borderTop: borderTop,
                                         borderRight: borderRight,
                                         borderBottom: "1px solid #939598",
-                                        background: "white",
+                                        borderLeft: borderLeft,
+                                        background: "white"
                                       }}>
                                    </div>
                                    )
                 }
               }
-              aHTMLBins.push(<div style={{top:"100%", position: "absolute", height:"15vh", width:"100%", marginLeft: "-20%", borderLeft:"0.625vw solid #939598", borderRight:"0.625vw solid #939598"}}> </div>);
-        return aHTMLBins;
+              //attach legs to Rack
+              vHTMLSlots.push(<div className="legsSpaceContainer"> </div>);
+        return vHTMLSlots;
     },
 
     render: function() {
@@ -344,26 +363,23 @@ var MsuRackFlex = React.createClass({
       console.log("============================>");
       console.log("document width is" + document.body.clientWidth);
       console.log("document height is" + document.body.clientHeight);
-      console.log("lastHBin" + this.state.lastHBin.orig_coordinates[0]);
-      console.log("lastVBin" + this.state.lastVBin.orig_coordinates[1]);
+      console.log("lastHSlot" + this.state.lastHSlot.orig_coordinates[0]);
+      console.log("lastVSlot" + this.state.lastVSlot.orig_coordinates[1]);
+
+
       
-      var type = this.props.type;
-      
-        var aHTMLBins = this._createBinLayouts(this.state.aBins,
-                                               this.state.lastHBin,
-                                               this.state.lastVBin,
-                                               this.props.seatType,
-                                               this.props.screenId,
-                                               this.state.selectedSlotIdx,
+      var vHTMLSlots = this._createSlotLayouts(this.state.vSlots,
+                                               this.state.lastHSlot,
+                                               this.state.lastVSlot,
+                                               this.state.selectedSlotIndex,
                                                this.state.selectedSlotIds
-                                               );
-        var self = this;
-        return (
-                 <div className="bins-flex" style={{height:"85%", width: "100%", background:"#66686a"}}>
-                        {aHTMLBins}
-                    {/*<div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + this.state.selectedSlotIds}</div> */}
-                 </div>
-        );
+                                             );
+      return(
+              <div className="slotsFlexContainer">
+                  {vHTMLSlots}
+                  <div id="slotDisplayArea" className="slotDisplayArea">{"SLOT " + this.state.selectedSlotIds}</div>
+              </div>
+      );
     }
 });
 

@@ -11,7 +11,6 @@ var drawRackStyle = {
 var lastSlot = {
     flexBasis:"4vh"};
 
-var selectedSlotIds = "";
 
 var MsuRack = React.createClass({
 
@@ -112,9 +111,6 @@ getOffset( el ) {
     };
 },
 
-    getSelectedSlotsIds: function(selectedSlotIds){
-        selectedSlotIds = selectedSlotIds;
-    },
 	render: function(){
         var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
         var putDirection = this.props.putDirection;
@@ -233,24 +229,23 @@ getOffset( el ) {
 
     }
 		return (
-				<div className="drawWrap" style={{width:document.body.clientWidth/4, height:document.body.clientHeight/2, marginRight: "20%"}} >
-                <MsuRackFlex getSelectedSlotsIds={this.getSelectedSlotsIds}/>
-                <div style={{fontSize:"2em", position: "absolute", background: "grey", color: "white", marginLeft:"70%", paddingLeft: "15%", width: "100%"}}>{"SLOT " + selectedSlotIds}</div>
-                {putDirection?(
-                    <div className="specialContainer">
-                    <img className={orientation} src={orientationClass}></img>   
-                    <div className={stackClass}>
-                            <span className={stackicon}></span>
-                            <span className="stackText">{stackText}</span>
-                            <span className="stackCount">{count}</span>
-                    </div> 
-                     <div className={fragileClass}>
-                            <span className="fragileicons"></span>
-                            <span className="fragileText">{_("FRAGILE")}</span>  
-                     </div> 
-                     </div>
-                ):""}
-                {drawerCompartment}
+				<div className="drawRackWrapper">
+                    <MsuRackFlex />
+                    {putDirection?(
+                        <div className="specialContainer">
+                        <img className={orientation} src={orientationClass}></img>   
+                        <div className={stackClass}>
+                                <span className={stackicon}></span>
+                                <span className="stackText">{stackText}</span>
+                                <span className="stackCount">{count}</span>
+                        </div> 
+                         <div className={fragileClass}>
+                                <span className="fragileicons"></span>
+                                <span className="fragileText">{_("FRAGILE")}</span>  
+                         </div> 
+                         </div>
+                    ):""}
+                    {drawerCompartment}
                 </div>
 			);
 	}

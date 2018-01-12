@@ -39170,6 +39170,9 @@ switch (module) {
                                 data["event_data"]["type"] = "cancel_audit";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CLOSE_MODAL:
+                                closeModalBox();
+                                break;    
                             case appConstants.GENERATE_REPORT:
                                 data["event_data"]["type"] = "generate_report";
                                 ActionCreators.postDataToInterface(data);
@@ -40216,6 +40219,7 @@ function loadComponent(modalType,modalData){
     case "message":
       component = [];
       component.push((React.createElement("div", {className: "col-md-12 value"}, modalData["message"], " ")));
+      component.push(React.createElement("div", {className: "extraEntity"}, React.createElement(Button1, {disabled: false, text: _("Confirm"), module: appConstants.AUDIT, action: appConstants.CLOSE_MODAL, color: "orange"})));
       title = _("Extra Entity Found");
     break;
     case "pick_checklist":
@@ -46965,6 +46969,8 @@ var TableRow = React.createClass({displayName: "TableRow",
             var complete = value.status == "complete" ? classes = classes + "complete ":"";
             var missing = value.status == "missing" ? classes = classes + "missing ":"";
             var extra = value.status == "extra" && value.selected == false ? classes = classes + "extra ":"";
+            var extraqt = value.status == "extraqt" && value.selected == false ? classes = classes + "extraqt ":"";
+            
             var borderBottom = value.borderBottom == false ? classes = classes + "remove-border ":"";
             //var borderBottom = value.borderBottom == false ? classes = classes + "":"";
             var text_decoration = value.text_decoration == true ? classes = classes + "text_decoration ":"";
@@ -47602,6 +47608,7 @@ var appConstants = {
 	PUT_BACK : "put_back",
 	PUT_FRONT : "put_front",
 	PICK : "pick",
+	CLOSE_MODAL:'CLOSE_MODAL',
 	PRINT_CONFIRM:'PRINT_CONFIRM',
 	CHANGE_AUDIT_EXCEPTION_SCREEN:"CHANGE_AUDIT_EXCEPTION_SCREEN",
 	AUDIT_LOCATION_SCAN:"audit_front_waiting_for_location_scan",
@@ -47855,7 +47862,7 @@ module.exports = appConstants;
 },{}],300:[function(require,module,exports){
 var configConstants = {
 WEBSOCKET_IP : "wss://localhost/wss",
-	INTERFACE_IP : "https://localhost"
+INTERFACE_IP : "https://localhost"
 };
 module.exports = configConstants;
 
@@ -51718,7 +51725,8 @@ getPackData: function () {
     _seatData.Box_qty_list.map(function (value, index) {
         d = [];
         if(value.Type===appConstants.OUTER_PACK)
-            {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+            {                
+        d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
             d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
         d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
@@ -51726,11 +51734,13 @@ getPackData: function () {
     }
 });
     _seatData.Extra_box_list.map(function (value, index){
+        d = [];
         if(value.Type===appConstants.OUTER_PACK)
-            {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+            {                
+        d.push(new self.tableCol(value.Box_serial, "extraqt", false, "large", false, true, false, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
-        d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Box_Expected_Qty, "extraqt", false, "large", true, false, false, false, true));
+        d.push(new self.tableCol(value.Box_Actual_Qty, "extraqt",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
         data["tableRows"].push(d);
     }
 });
@@ -51764,11 +51774,13 @@ getSubPackData: function () {
 
     });
     _seatData.Extra_box_list.map(function (value, index){
+          d = [];
         if(value.Type===appConstants.INNER_SUBPACK)
-            {                d.push(new self.tableCol(value.Box_serial, "complete", false, "large", false, true, false, false));
+            {                
+        d.push(new self.tableCol(value.Box_serial, "extraqt", false, "large", false, true, false, false));
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-            d.push(new self.tableCol(value.Box_Expected_Qty, "complete", false, "large", true, false, false, false, true));
-        d.push(new self.tableCol(value.Box_Actual_Qty, "complete",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
+            d.push(new self.tableCol(value.Box_Expected_Qty, "extraqt", false, "large", true, false, false, false, true));
+        d.push(new self.tableCol(value.Box_Actual_Qty, "extraqt",(_seatData.Current_box_details.length > 0) ? _seatData.Current_box_details[0]["Box_serial"] == value.Box_serial : false, "large", true, false, false, false, true));
         data["tableRows"].push(d);
     }
 });
@@ -52220,7 +52232,7 @@ getOrderID: function () {
            _seatData.Extra_box_list.map(function(value, index) {
             if(value.Type===appConstants.OUTER_PACK){
                 extraPackSerials = extraPackSerials + value.Box_serial + " ";
-                extraPackCounts++;
+                extraPackCounts=value.Box_Actual_Qty+extraPackCounts;
             }
         });
 
@@ -52276,7 +52288,7 @@ getOrderID: function () {
        _seatData.Extra_box_list.map(function(value, index) {
         if(value.Type===appConstants.INNER_SUBPACK){
             extraSubPackSerials = extraSubPackSerials + value.Box_serial + " ";
-            extraSubPackCounts++;
+            extraSubPackCounts=value.Box_Actual_Qty+extraSubPackCounts;
         }
 
     });
@@ -52300,7 +52312,7 @@ getOrderID: function () {
          if(extraSubPackSerials){
             data["tableRows"].push([new self.tableCol(extraSubPackSerials, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(_seatData.Extra_box_list.length, "enabled", false, "large", true, false, false, false, true)
+                new self.tableCol(extraSubPackCounts, "enabled", false, "large", true, false, false, false, true)
                 ]);
 
         }
@@ -54693,7 +54705,9 @@ logError: function(data) {
 
 var putSeatData = function(data) {
     
-    console.log(data);
+
+
+    console.log(data);        
     
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

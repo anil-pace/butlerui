@@ -425,6 +425,9 @@ switch (module) {
                                 data["event_data"]["type"] = "cancel_audit";
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CLOSE_MODAL:
+                                closeModalBox();
+                                break;    
                             case appConstants.GENERATE_REPORT:
                                 data["event_data"]["type"] = "generate_report";
                                 ActionCreators.postDataToInterface(data);

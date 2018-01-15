@@ -1,148 +1,160 @@
 var React = require('react');
 
 
-var xyz = [
-  {
-  "rack_type_rec":[
-    {
-      "height": "10",
-      "orig_coordinates": [
-        0,
-        5
-      ],
-      "length": "32",
-      "barcodes":["A.01", "A.02"]
-    },
-    {
-      "height": "33",
-      "orig_coordinates": [
-        32,
-        5
-      ],
-      "length": "32",
-      "barcodes":["N.01", "N.02", "N.03"]
-    },
-    {
-      "height": "20",
-      "orig_coordinates": [
-        64,
-        5
-      ],
-      "length": "32",
-      "barcodes":["M.01", "M.02"]
-    },
-    {
-      "height": "33",
-      "orig_coordinates": [
-        0,
-        43
-      ],
-      "length": "32",
-      "barcodes":["L.01", "L.02"]
-    },
-    {
-      "height": "20",
-      "orig_coordinates": [
-        32,
-        43
-      ],
-      "length": "32",
-      "barcodes":["K.01", "K.02"]
-    },
-    {
-      "height": "33",
-      "orig_coordinates": [
-        64,
-        43
-      ],
-      "length": "32",
-      "barcodes":["J.01", "J.02"]
-    },
-    {
-      "height": "33",
-      "orig_coordinates": [
-        0,
-        81
-      ],
-      "length": "32",
-      "barcodes":["I.01", "I.02"]
-    },
-    {
-      "height": "20",
-      "orig_coordinates": [
-        32,
-        81
-      ],
-      "length": "32",
-      "barcodes":["H.01", "H.02"]
-    },
-    {
-      "height": "10",
-      "orig_coordinates": [
-        64,
-        81
-      ],
-      "length": "32",
-      "barcodes":["G.01", "G.02"]
-    },
-    {
-      "height": "18",
-      "orig_coordinates": [
-        0,
-        20
-      ],
-      "length": "32",
-      "barcodes":["F.01", "F.02"]
-    },
-    {
-      "height": "8",
-      "orig_coordinates": [
-        32,
-        68
-      ],
-      "length": "32",
-      "barcodes":["E.01", "E.02"]
-    },
-    {
-      "height": "8",
-      "orig_coordinates": [
-        32,
-        106
-      ],
-      "length": "32",
-      "barcodes":["D.01", "D.02"]
-    },
-    {
-      "height": "18",
-      "orig_coordinates": [
-        64,
-        96
-      ],
-      "length": "32",
-      "barcodes":["C.01", "C.02"]
-    },
-    {
-      "height": "8",
-      "orig_coordinates": [
-        64,
-        30
-      ],
-      "length": "32",
-      "barcodes":["B.01", "B.02"]
-    }
-    ]
-  },
-  {"slot_barcodes":["003.1.N.01", "003.1.N.02", "003.1.N.03"]}
-];
+// var xyz = [
+//   {
+//   "rack_type_rec":[
+//     {
+//     "height": "33",
+//     "orig_coordinates": [
+//       0,
+//       5
+//     ],
+//     "length": "32",
+//     "barcodes":["A.01", "A.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       32,
+//       5
+//     ],
+//     "length": "32",
+//     "barcodes":["B.01", "B.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       64,
+//       5
+//     ],
+//     "length": "32",
+//     "barcodes":["C.01", "C.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       0,
+//       43
+//     ],
+//     "length": "32",
+//     "barcodes":["D.01", "D.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       32,
+//       43
+//     ],
+//     "length": "32",
+//     "barcodes":["E.01", "E.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       64,
+//       43
+//     ],
+//     "length": "32",
+//     "barcodes":["F.01", "F.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       0,
+//       81
+//     ],
+//     "length": "32",
+//     "barcodes":["G.01", "G.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       32,
+//       81
+//     ],
+//     "length": "32",
+//     "barcodes":["H.01", "H.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       64,
+//       81
+//     ],
+//     "length": "32",
+//     "barcodes":["I.01", "I.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       0,
+//       119
+//     ],
+//     "length": "32",
+//     "barcodes":["J.01", "J.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       32,
+//       119
+//     ],
+//     "length": "32",
+//     "barcodes":["K.01", "K.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       64,
+//       119
+//     ],
+//     "length": "32",
+//     "barcodes":["L.01", "L.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       0,
+//       157
+//     ],
+//     "length": "32",
+//     "barcodes":["M.01", "M.02"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       32,
+//       157
+//     ],
+//     "length": "32",
+//     "barcodes":["N.01", "N.02", "N.03"]
+//   },
+//   {
+//     "height": "33",
+//     "orig_coordinates": [
+//       64,
+//       157
+//     ],
+//     "length": "32",
+//     "barcodes":["O.01", "O.02"]
+//   }
+
+//     ]
+//   },
+//   {"slot_barcodes":["003.1.N.01", "003.1.N.02", "003.1.N.03"]}
+// ];
 
 
 var MsuRackFlex = React.createClass({
 
     getInitialState: function(){
-        return this._sortSlots(xyz[0].rack_type_rec);
+        //return this._sortSlots(xyz[0].rack_type_rec);
+        return this._sortSlots(this.props.rackDetails);
     },
     componentWillReceiveProps: function() {
-        this._sortSlots(xyz[0].rack_type_rec);
+        //this._sortSlots(xyz[0].rack_type_rec);
+        this._sortSlots(this.props.rackDetails);
     },
 
     componentDidUpdate:function(){
@@ -155,12 +167,24 @@ var MsuRackFlex = React.createClass({
         strEl = strEl ? strEl.parentNode : null;
         var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
         if(strEl && endEl){
-        this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
-
-      }
+          //this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
+        }
+        
     },
 
-    _sortSlots:function (vSlots,shouldSetState){
+    componentWillUnmount:function(){
+       // var lines = document.getElementsByClassName("drawerLine");
+       //  var directionLine = document.getElementsByClassName("LineDirection");
+       //  if(lines.length){
+       //      lines[0].remove();
+       //  }
+       //  if(directionLine.length){
+       //      directionLine[0].remove();
+       //  }
+
+    },
+
+    _sortSlots:function (vSlots){
        if (!vSlots || (vSlots.constructor !== Array && vSlots.length < 1)){
           //no slots found
           return;
@@ -175,28 +199,40 @@ var MsuRackFlex = React.createClass({
       var newBarcodes = []; // for storing post truncation data
       var selectedSlotIds = "";
 
-      var y = xyz[1].slot_barcodes.map(function(slotBarcodes,idx){
-        var barcodesSplit = slotBarcodes.split(".");
-        var barcodeId = barcodesSplit[2]+"."+barcodesSplit[3];
+      //var y = xyz[1].slot_barcodes.map(function(slotBarcodes,idx){
+        //{"slot_barcodes":["003.1.N.01", "003.1.N.02", "003.1.N.03"]}
+        var y = this.props.slotBarcodes.map(function(slotBarcodes,idx){
+        // var barcodesSplit = slotBarcodes.split(".");
+        // var barcodeId = barcodesSplit[2]+"."+barcodesSplit[3];
 
-        console.log("===================================>");
-        console.log("slotsToHighlight post Truncation " + barcodeId);
-        newBarcodes.push(barcodeId);
-      });
+        // console.log("===================================>");
+        // console.log("slotsToHighlight post Truncation " + barcodeId);
+
+          var str = slotBarcodes,
+          delimiter = '.',
+          start = 2,
+          tokens = str.split(delimiter).slice(start);
+          if(tokens.length > 1) result = tokens.join("."); //take extra care when we have 3rd "." as delimiter
+          else result = tokens;
+
+          newBarcodes.push(result);
+        });
 
       console.log(newBarcodes);
-      selectedSlotIds =newBarcodes[0].replace(".",'')+" - "+newBarcodes[newBarcodes.length-1].replace(".",'');
+      //selectedSlotIds =newBarcodes[0].replace(".",'')+" - "+newBarcodes[newBarcodes.length-1].replace(".",'');
+        selectedSlotIds = newBarcodes;
       
 
-      var x = vSlots.map(function(eachSlot, index){
+      vSlots.map(function(eachSlot, index){
          var eachSlotBarcodes = eachSlot.barcodes;
-         console.log("eachSlotBarcodes" + eachSlotBarcodes);
-        if(eachSlotBarcodes.length === newBarcodes.length){
-            console.log("length of both the arrays is same");
-            if( JSON.stringify(newBarcodes)==JSON.stringify(eachSlotBarcodes) ){
-               selectedSlotIndex = index;
-            }
-        }
+         if(!eachSlotBarcodes) return;
+          console.log("eachSlotBarcodes" + eachSlotBarcodes);
+          if(eachSlotBarcodes.length === newBarcodes.length){
+              console.log("length of both the arrays is same");
+              if( JSON.stringify(newBarcodes)==JSON.stringify(eachSlotBarcodes) ){
+                 selectedSlotIndex = index;
+              }
+          }
       });
       
       lastHSlot = vSlots.reduce(function(prevSlot,currSlot){
@@ -247,7 +283,7 @@ var MsuRackFlex = React.createClass({
       var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
       // make hr
 
-      var htmlLine = "<div style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+      var htmlLine = "<div class='connectingLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
       document.getElementById('app').innerHTML += htmlLine; 
     },
 

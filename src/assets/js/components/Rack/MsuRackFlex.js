@@ -178,7 +178,7 @@ var MsuRackFlex = React.createClass({
     componentWillUnmount:function(){
        var lines = document.getElementsByClassName("connectingLine");
         if(lines.length){
-            lines[0].remove();
+          lines[0].remove();
         }
     },
 
@@ -212,6 +212,9 @@ var MsuRackFlex = React.createClass({
           tokens = str.split(delimiter).slice(start);
           if(tokens.length > 1) result = tokens.join("."); //take extra care when we have 3rd "." as delimiter
           else result = tokens;
+
+          // "qwe.fs.xczv.xcv.xcv.x".replace(/([^\.]*\.){3}/, '');
+          // "xcv.xcv.x"
 
           newBarcodes.push(result);
         });
@@ -348,7 +351,13 @@ var MsuRackFlex = React.createClass({
                 /* END **********************************/
 
                 if(i===selectedSlotIndex){
-                  vHTMLSlots.push(
+                  var setSlotBackground="#939598";
+                  var drawALine=(<div id="selectedSlot"></div>);
+                }
+                else 
+                  var setSlotBackground="white";
+
+                vHTMLSlots.push(
                                    <div className="subSlot"
                                       style={{
                                         width: binWidth,
@@ -359,33 +368,50 @@ var MsuRackFlex = React.createClass({
                                         borderRight: borderRight,
                                         borderBottom: "1px solid #939598",
                                         borderLeft: borderLeft,
-                                        background: "#939598",
-                                        color:"white",
-                                        fontSize: "1.5em",
-                                        textAlign: "center",
-                                        fontWeight: "bold"
-                                      }}>
-                                      <div id="selectedSlot"></div>
+                                        background: setSlotBackground
+                                      }}>{drawALine}
                                    </div>
                                    )
-                }
-                else{
-                  vHTMLSlots.push(
-                                   <div className="subSlot"
-                                      style={{
-                                        width: binWidth,
-                                        height: binHeight,
-                                        bottom: ibottom,
-                                        left:ileft,
-                                        borderTop: borderTop,
-                                        borderRight: borderRight,
-                                        borderBottom: "1px solid #939598",
-                                        borderLeft: borderLeft,
-                                        background: "white"
-                                      }}>
-                                   </div>
-                                   )
-                }
+
+                // if(i===selectedSlotIndex){
+                //   vHTMLSlots.push(
+                //                    <div className="subSlot"
+                //                       style={{
+                //                         width: binWidth,
+                //                         height: binHeight,
+                //                         bottom: ibottom,
+                //                         left:ileft,
+                //                         borderTop: borderTop,
+                //                         borderRight: borderRight,
+                //                         borderBottom: "1px solid #939598",
+                //                         borderLeft: borderLeft,
+                //                         background: "#939598",
+                //                         color:"white",
+                //                         fontSize: "1.5em",
+                //                         textAlign: "center",
+                //                         fontWeight: "bold"
+                //                       }}>
+                //                       <div id="selectedSlot"></div>
+                //                    </div>
+                //                    )
+                // }
+                // else{
+                //   vHTMLSlots.push(
+                //                    <div className="subSlot"
+                //                       style={{
+                //                         width: binWidth,
+                //                         height: binHeight,
+                //                         bottom: ibottom,
+                //                         left:ileft,
+                //                         borderTop: borderTop,
+                //                         borderRight: borderRight,
+                //                         borderBottom: "1px solid #939598",
+                //                         borderLeft: borderLeft,
+                //                         background: "white"
+                //                       }}>
+                //                    </div>
+                //                    )
+                // }
               }
               //attach legs to Rack
               vHTMLSlots.push(<div className="legsSpaceContainer"> </div>);

@@ -3,42 +3,42 @@ var React = require('react');
 var MsuRackFlex = React.createClass({
 
     getInitialState: function(){
-        return this._sortSlots(this.props.rackDetails);
+      return this._getMaxXMaxYCoords(this.props.rackDetails);
     },
     componentWillReceiveProps: function() {
-        this._sortSlots(this.props.rackDetails);
+      this._getMaxXMaxYCoords(this.props.rackDetails);
     },
 
     componentDidUpdate:function(){
-        /*
-            Calling the line function only if the drawerLineDrawn is false 
-            and the slot type is drawer.
-            drawerLineDrawn is set true once the line is created
-         */
+      /*
+          Calling the line function only if the drawerLineDrawn is false 
+          and the slot type is drawer.
+          drawerLineDrawn is set true once the line is created
+       */
 
-         var lines = document.getElementsByClassName("connectingLine");
-         if(lines.length===0){
-            var strEl = document.querySelectorAll("#selectedSlot")[0];
-            strEl = strEl ? strEl.parentNode : null;
-            var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
-            if(strEl && endEl){
-             this.connect(strEl, endEl, "#6d6d6d", 3);
-            }
-        }
+       var lines = document.getElementsByClassName("connectingLine");
+       if(lines.length===0){
+          var strEl = document.querySelectorAll("#selectedSlot")[0];
+          strEl = strEl ? strEl.parentNode : null;
+          var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
+          if(strEl && endEl){
+           this.connect(strEl, endEl, "#6d6d6d", 3);
+          }
+      }
     },
 
     componentWillUnmount:function(){
-       var lines = document.getElementsByClassName("connectingLine");
-        if(lines.length){
-          lines[0].remove();
-        }
+      var lines = document.getElementsByClassName("connectingLine");
+      if(lines.length){
+        lines[0].remove();
+      }
     },
 
-    _sortSlots:function (vSlots){
-       if (!vSlots || (vSlots.constructor !== Array && vSlots.length < 1)){
-          //no slots found
-          return;
-       }
+    _getMaxXMaxYCoords:function (vSlots){
+      if (!vSlots || (vSlots.constructor !== Array && vSlots.length < 1)){
+        //no slots found
+        return;
+      }
 
       var totalSlots = vSlots.length;
       var totalWidth =0, totalHeight=0;
@@ -60,7 +60,7 @@ var MsuRackFlex = React.createClass({
           newBarcodes.push(result);
       });
       selectedSlotIds = newBarcodes;
-      
+    
 
       vSlots.map(function(eachSlot, index){
         var eachSlotBarcodes = eachSlot.barcodes;
@@ -71,7 +71,7 @@ var MsuRackFlex = React.createClass({
           }
         }
       });
-      
+    
       lastHSlot = vSlots.reduce(function(prevSlot,currSlot){
           if (prevSlot.orig_coordinates[0] < currSlot.orig_coordinates[0]){
               return currSlot;
@@ -137,74 +137,74 @@ var MsuRackFlex = React.createClass({
         if ((vSlots.constructor !== Array && vSlots.length < 1) || !(lastHSlot.length) || !(lastVSlot.length)){
             //no bins found
             return;
-         }
-         var vHTMLSlots =[];
+        }
+        var vHTMLSlots =[];
          // since the total width would be 100% but the bins would be divided into
          // ratios, hence each of the bin would have to have the factor into % of the
          // .bins container.
 
          // for reference orig_coordinates[0] === x axis and orig_coordinates[1] === y axis
-          var horFactor = parseFloat(100/(Number(lastHSlot.orig_coordinates[0]) + Number(lastHSlot.length)));
-          var vertFactor = parseFloat(100/(Number(lastVSlot.orig_coordinates[1]) + Number(lastVSlot.height)));
+        var horFactor = parseFloat(100/(Number(lastHSlot.orig_coordinates[0]) + Number(lastHSlot.length)));
+        var vertFactor = parseFloat(100/(Number(lastVSlot.orig_coordinates[1]) + Number(lastVSlot.height)));
 
-         var totalRackWidth = Number(lastHSlot.orig_coordinates[0]) + Number(lastHSlot.length);
-         var totalRackHeight = Number(lastVSlot.orig_coordinates[1]) + Number(lastVSlot.height);
+        var totalRackWidth = Number(lastHSlot.orig_coordinates[0]) + Number(lastHSlot.length);
+        var totalRackHeight = Number(lastVSlot.orig_coordinates[1]) + Number(lastVSlot.height);
 
          for (var i =0; i<vSlots.length ;i++){
-                var binWidth = vSlots[i].length * horFactor+'%';
-                var binHeight = vSlots[i].height * vertFactor +'%';
-                var ileft=0;
-                var ibottom=0;
+            var binWidth = vSlots[i].length * horFactor+'%';
+            var binHeight = vSlots[i].height * vertFactor +'%';
+            var ileft=0;
+            var ibottom=0;
 
 
 
-                ileft = (vSlots[i].orig_coordinates[0] * horFactor +'%'); // 0 on x-axis should start from bottom-left towards right.
-                ibottom = (vSlots[i].orig_coordinates[1]) * vertFactor +'%'; // 0 on y-axis should start from bottom-left towards up.
+            ileft = (vSlots[i].orig_coordinates[0] * horFactor +'%'); // 0 on x-axis should start from bottom-left towards right.
+            ibottom = (vSlots[i].orig_coordinates[1]) * vertFactor +'%'; // 0 on y-axis should start from bottom-left towards up.
 
-                var vRackHeight = totalRackHeight * vertFactor; //rack height in ratio
+            var vRackHeight = totalRackHeight * vertFactor; //rack height in ratio
 
-                let sum= Number(ibottom.substring(0,ibottom.length-1)) + Number(binHeight.substring(0,binHeight.length-1));
+            let sum= Number(ibottom.substring(0,ibottom.length-1)) + Number(binHeight.substring(0,binHeight.length-1));
 
-                /* Check for BORDER of bins-flex - START*/
+            /* Check for BORDER of bins-flex - START*/
 
-                if(ileft === "0%") var borderLeft="0.625vw solid #939598";
-                  else borderLeft = "1px solid #939598";
+            if(ileft === "0%") var borderLeft="0.625vw solid #939598";
+              else borderLeft = "1px solid #939598";
 
 
-                if( vRackHeight === Math.round(sum) ) var borderTop="0.625vw solid #939598";
-                  else borderTop = "1px solid #939598";
+            if( vRackHeight === Math.round(sum) ) var borderTop="0.625vw solid #939598";
+              else borderTop = "1px solid #939598";
 
-                if(ileft === lastHSlot.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
-                  else borderRight = "1px solid #939598";
-                  
-                /* END **********************************/
+            if(ileft === lastHSlot.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
+              else borderRight = "1px solid #939598";
+              
+            /* END **********************************/
 
-                if(i===selectedSlotIndex){
-                  var setSlotBackground="#939598";
-                  var drawALine=(<div id="selectedSlot"></div>);
-                }
-                else 
-                  var setSlotBackground="white";
+            if(i===selectedSlotIndex){
+              var setSlotBackground="#939598";
+              var drawALine=(<div id="selectedSlot"></div>);
+            }
+            else 
+              var setSlotBackground="white";
 
-                vHTMLSlots.push(
-                               <div className="subSlot"
-                                  style={{
-                                    width: binWidth,
-                                    height: binHeight,
-                                    bottom: ibottom,
-                                    left:ileft,
-                                    borderTop: borderTop,
-                                    borderRight: borderRight,
-                                    borderBottom: "1px solid #939598",
-                                    borderLeft: borderLeft,
-                                    background: setSlotBackground
-                                  }}>{drawALine}
-                               </div>
-                              )
+            vHTMLSlots.push(
+                           <div className="subSlot"
+                              style={{
+                                width: binWidth,
+                                height: binHeight,
+                                bottom: ibottom,
+                                left:ileft,
+                                borderTop: borderTop,
+                                borderRight: borderRight,
+                                borderBottom: "1px solid #939598",
+                                borderLeft: borderLeft,
+                                background: setSlotBackground
+                              }}>{drawALine}
+                           </div>
+                          )
 
-              }
-              //attach legs to Rack
-              vHTMLSlots.push(<div className="legsSpaceContainer"> </div>);
+          }
+          //attach legs to Rack
+          vHTMLSlots.push(<div className="legsSpaceContainer"> </div>);
         return vHTMLSlots;
     },
 
@@ -217,10 +217,10 @@ var MsuRackFlex = React.createClass({
                                                this.state.selectedSlotIds
                                              );
       return(
-              <div className="slotsFlexContainer">
-                  {vHTMLSlots}
-                  <div id="slotDisplayArea" className="slotDisplayArea">{"SLOT " + this.state.selectedSlotIds}</div>
-              </div>
+        <div className="slotsFlexContainer">
+            {vHTMLSlots}
+            <div id="slotDisplayArea" className="slotDisplayArea">{"SLOT " + this.state.selectedSlotIds}</div>
+        </div>
       );
     }
 });

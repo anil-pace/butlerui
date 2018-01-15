@@ -163,25 +163,23 @@ var MsuRackFlex = React.createClass({
             and the slot type is drawer.
             drawerLineDrawn is set true once the line is created
          */
-        var strEl = document.querySelectorAll("#selectedSlot")[0];
-        strEl = strEl ? strEl.parentNode : null;
-        var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
-        if(strEl && endEl){
-          //this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
+
+         var lines = document.getElementsByClassName("connectingLine");
+         if(lines.length==0){
+          var strEl = document.querySelectorAll("#selectedSlot")[0];
+          strEl = strEl ? strEl.parentNode : null;
+          var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
+          if(strEl && endEl){
+           this.connect(strEl, endEl, "#6d6d6d", 3,"drawerLine");
+          }
         }
-        
     },
 
     componentWillUnmount:function(){
-       // var lines = document.getElementsByClassName("drawerLine");
-       //  var directionLine = document.getElementsByClassName("LineDirection");
-       //  if(lines.length){
-       //      lines[0].remove();
-       //  }
-       //  if(directionLine.length){
-       //      directionLine[0].remove();
-       //  }
-
+       var lines = document.getElementsByClassName("connectingLine");
+        if(lines.length){
+            lines[0].remove();
+        }
     },
 
     _sortSlots:function (vSlots){

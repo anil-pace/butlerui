@@ -118,6 +118,7 @@ var MsuRack = React.createClass({
         // var isDrawer = this.props.isDrawer;
         var rackDetails = this.props.rackData.rack_type_rec;
         var compartment_details = this.props.rackData.slot_barcodes;
+        var rackWidth = this.props.rackData.rack_width;
        //  var slotStart,slotEnd,i;
        //  var slotIndexList = [];
        //  var eachRow =[];
@@ -230,7 +231,7 @@ var MsuRack = React.createClass({
     //}
 		return (
 				<div className="drawRackWrapper">
-                    <MsuRackFlex rackDetails={this.props.rackData.rack_type_rec} slotBarcodes={this.props.rackData.slot_barcodes}/>
+                    <MsuRackFlex rackDetails={this.props.rackData.rack_type_rec} slotBarcodes={this.props.rackData.slot_barcodes} rackWidth={this.props.rackData.rackWidth} />
                     {/*
                     {putDirection?(
                         <div className="specialContainer">

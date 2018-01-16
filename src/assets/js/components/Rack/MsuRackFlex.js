@@ -22,7 +22,7 @@ var MsuRackFlex = React.createClass({
           strEl = strEl ? strEl.parentNode : null;
           var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
           if(strEl && endEl){
-           this.connect(strEl, endEl, "#6d6d6d", 3);
+           this.connect(strEl, endEl, "#626262", 3);
           }
       }
     },
@@ -59,7 +59,7 @@ var MsuRackFlex = React.createClass({
 
           newBarcodes.push(result);
       });
-      selectedSlotIds = newBarcodes;
+      selectedSlotIds = newBarcodes.join(', ');
     
 
       vSlots.map(function(eachSlot, index){
@@ -164,7 +164,7 @@ var MsuRackFlex = React.createClass({
             var vRackHeight = totalRackHeight * vertFactor; //rack height in ratio
 
             let sum= Number(ibottom.substring(0,ibottom.length-1)) + Number(binHeight.substring(0,binHeight.length-1));
-
+            let sumH= Number(ileft.substring(0,ileft.length-1)) + Number(binWidth.substring(0,binWidth.length-1));
             /* Check for BORDER of bins-flex - START*/
 
             if(ileft === "0%") var borderLeft="0.625vw solid #939598";
@@ -174,17 +174,18 @@ var MsuRackFlex = React.createClass({
             if( vRackHeight === Math.round(sum) ) var borderTop="0.625vw solid #939598";
               else borderTop = "1px solid #939598";
 
+            //if(ileft === lastHSlot.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
             if(ileft === lastHSlot.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
               else borderRight = "1px solid #939598";
               
             /* END **********************************/
 
             if(i===selectedSlotIndex){
-              var setSlotBackground="#939598";
+              var setSlotBackground="#bbbbbb";
               var drawALine=(<div id="selectedSlot"></div>);
             }
             else 
-              var setSlotBackground="white";
+              var setSlotBackground="#e8e8e8";
 
             vHTMLSlots.push(
                            <div className="subSlot"

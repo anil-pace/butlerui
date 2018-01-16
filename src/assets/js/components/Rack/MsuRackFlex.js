@@ -55,7 +55,7 @@ var MsuRackFlex = React.createClass({
           start = 2,
           tokens = str.split(delimiter).slice(start);
           if(tokens.length > 1) result = tokens.join("."); //take extra care when we have 3rd "." as delimiter
-          else result = tokens;
+          else result = tokens.toString();
 
           newBarcodes.push(result);
       });

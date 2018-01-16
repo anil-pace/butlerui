@@ -394,12 +394,9 @@ else {
                     if (this.state.OrigBinUse) {
 
                         binComponent = (
-                                <div className='main-container'>
                             <BinsFlex binsData={this.state.PickFrontBinData}
                                                   screenId={appConstants.PICK_FRONT_PPTL_PRESS}
-                                                  seatType={this.state.SeatType}/>
-
-                                                  </div>);
+                                                  seatType={this.state.SeatType}/>);
                     } else {
                         binComponent = (<div className='main-container'>
                             <Bins binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_PPTL_PRESS}/>

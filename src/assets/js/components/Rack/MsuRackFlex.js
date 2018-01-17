@@ -172,7 +172,7 @@ var MsuRackFlex = React.createClass({
 
 
             if( vRackHeight === Math.round(sum) ) var borderTop="0.625vw solid #939598";
-              else borderTop = "1px solid #939598";
+              else borderTop = "0.16vw solid #939598";
 
             //if(ileft === lastHSlot.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
             if(ileft === lastHSlot.orig_coordinates[0] * horFactor + '%') var borderRight="0.625vw solid #939598";
@@ -220,7 +220,10 @@ var MsuRackFlex = React.createClass({
       return(
         <div className="slotsFlexContainer">
             {vHTMLSlots}
-            <div id="slotDisplayArea" className="slotDisplayArea">{"SLOT " + this.state.selectedSlotIds}</div>
+            <div id="slotDisplayArea" className="slotDisplayArea">
+              <img style={{paddingLeft: "5%"}} src='./assets/images/slot.png'></img>
+              <span style={{marginLeft: "8%"}}>{"SLOT " + this.state.selectedSlotIds}</span>
+            </div>
         </div>
       );
     }

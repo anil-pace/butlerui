@@ -41931,12 +41931,9 @@ else {
                     if (this.state.OrigBinUse) {
 
                         binComponent = (
-                                React.createElement("div", {className: "main-container"}, 
                             React.createElement(BinsFlex, {binsData: this.state.PickFrontBinData, 
                                                   screenId: appConstants.PICK_FRONT_PPTL_PRESS, 
-                                                  seatType: this.state.SeatType})
-
-                                                  ));
+                                                  seatType: this.state.SeatType}));
                     } else {
                         binComponent = (React.createElement("div", {className: "main-container"}, 
                             React.createElement(Bins, {binsData: this.state.PickFrontBinData, screenId: appConstants.PICK_FRONT_PPTL_PRESS})
@@ -47861,8 +47858,8 @@ module.exports = appConstants;
 
 },{}],300:[function(require,module,exports){
 var configConstants = {
-WEBSOCKET_IP : "wss://localhost/wss",
-INTERFACE_IP : "https://localhost"
+WEBSOCKET_IP : "wss://192.168.8.101/wss",
+ INTERFACE_IP : "https://192.168.8.101"
 };
 module.exports = configConstants;
 

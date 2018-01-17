@@ -3,14 +3,6 @@ var RackRow = require('./RackRow');
 var DrawerRow = require('./DrawerRow');
 var MsuRackFlex = require('./MsuRackFlex');
 
-// var drawRackStyle = {
-//     flexGrow:"1",
-//     flexBasis:"0",
-//     width:"50%"};
-
-// var lastSlot = {
-//     flexBasis:"4vh"};
-
 var MsuRack = React.createClass({
 
 	render: function(){

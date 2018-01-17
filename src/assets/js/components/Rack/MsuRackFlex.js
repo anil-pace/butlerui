@@ -133,7 +133,6 @@ var MsuRackFlex = React.createClass({
       };
     },
     _createSlotLayouts: function(vSlots, lastHSlot, lastVSlot, selectedSlotIndex, selectedSlotIds) {
-      console.log(this.props.rackWidth);
         if ((vSlots.constructor !== Array && vSlots.length < 1) || !(lastHSlot.length) || !(lastVSlot.length)){
             //no bins found
             return;

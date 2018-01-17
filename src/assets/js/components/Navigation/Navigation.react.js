@@ -15,7 +15,7 @@ var Navigation = React.createClass({
                     }
                     else{
                         return (
-                                <PassiveNavigation data={value} />
+                                <PassiveNavigation key={index} data={value} />
                             );
                     }
                 },this)}

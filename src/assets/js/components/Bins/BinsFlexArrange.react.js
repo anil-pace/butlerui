@@ -115,7 +115,7 @@ var Bins = React.createClass({
     },
 
     render: function() {
-
+        
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
                                                this.state.lastHBin,
                                                this.state.lastVBin,

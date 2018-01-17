@@ -30,10 +30,10 @@ var Bins = React.createClass({
                             var list = [];
                             var i = 0;
                             for( i = i ; i<compData.structure[1] ; i++){
-                                list.push(<Bin binData={compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)]} screenId={scrnId} />);
+                                list.push(<Bin key={scrnId} binData={compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)]} screenId={scrnId} />);
                             }
                             l.push((
-                                <div className="bin-row">
+                                <div key={"bin-row"} className="bin-row">
                                     {list}
                                 </div>
                                 ));

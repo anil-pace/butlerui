@@ -148,6 +148,7 @@ var MsuRackFlex = React.createClass({
 
 
         var totalRackHeight = Number(lastVSlot.orig_coordinates[1]) + Number(lastVSlot.height);
+        var borderLeft, borderTop, borderRight;
 
          for (var i =0; i<vSlots.length ;i++){
             var binWidth = vSlots[i].length * horFactor+'%';
@@ -162,10 +163,24 @@ var MsuRackFlex = React.createClass({
             let sumV= vSlots[i].orig_coordinates[1] + vSlots[i].height;
             /* Check for BORDER of bins-flex - START*/
 
-            if(Number(vSlots[i].orig_coordinates[0]) === 0) var borderLeft="0.625vw solid #939598";
-            if(Number(totalRackHeight) === sumV) var borderTop="0.625vw solid #939598";
-            if(this.props.rackWidth === sumH) var borderRight="0.625vw solid #939598";
-              else borderRight = "0.16vw solid #939598";
+            if(Number(vSlots[i].orig_coordinates[0]) === 0){
+              borderLeft="0.625vw solid #939598";
+            }
+            else{
+              borderLeft="1px solid #939598";
+            }
+            if(Number(totalRackHeight) === sumV){
+              borderTop="0.625vw solid #939598";
+            }
+            else{
+              borderTop="1px solid #939598";
+            }
+            if(this.props.rackWidth === sumH) {
+               borderRight="0.625vw solid #939598";
+            }
+            else{
+              borderRight = "0.16vw solid #939598";
+            }
               
             /* END **********************************/
 

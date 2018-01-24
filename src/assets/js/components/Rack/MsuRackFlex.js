@@ -213,21 +213,65 @@ var MsuRackFlex = React.createClass({
     },
 
     render: function() {
-
+      var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
+      var putDirection = this.props.putDirectionFlex;
       var vHTMLSlots = this._createSlotLayouts(this.state.vSlots,
                                                this.state.lastHSlot,
                                                this.state.lastVSlot,
                                                this.state.selectedSlotIndex,
                                                this.state.selectedSlotIds
                                              );
+
+            if(putDirection){
+        nestable_count=putDirection.nestable_count;
+        nestable_direction=putDirection.nestable_direction;
+        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
+         if(putDirection.orientation_preference && nestable_count>1){
+        orientation="orientation";
+        orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
+        }
+        else if(putDirection.orientation_preference && stackCount>=1){
+        orientation="orientation";  
+        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
+        }
+        else
+        {
+           orientation="containerHide";
+        }             
+        stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
+        stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
+        fragileClass=putDirection.fragile?"fragile":"containerHide";
+        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
+        count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
+
+    }
       return(
+        <div  className="parent-container">
         <div className="slotsFlexContainer">
             {vHTMLSlots}
-            <div id="slotDisplayArea" className="slotDisplayArea">
+
+       </div>
+        <div className="right-container">
+          <div id="slotDisplayArea" className="slotDisplayArea">
               <img style={{paddingLeft:"5%"}} src='./assets/images/slot.png'></img>
               <span style={{marginLeft:"8%"}}>{"SLOT " + this.state.selectedSlotIds}</span>
             </div>
-        </div>
+            {putDirection?(
+                <div className="specialContainer">
+                <img className={orientation} src={orientationClass}></img>   
+                <div className={stackClass}>
+                        <span className={stackicon}></span>
+                        <span className="stackText">{stackText}</span>
+                        <span className="stackCount">{count}</span>
+                </div> 
+                 <div className={fragileClass}>
+                        <span className="fragileicons"></span>
+                        <span className="fragileText">{_("FRAGILE")}</span>  
+                 </div> 
+                 </div>
+):""}
+            </div>
+ </div>
       );
     }
 });

@@ -3,6 +3,8 @@
     flex-direction: row;
     width: 50vw;
 
+.parent-container{
+            width: 100%;
     .slotsFlexContainer{
         display: flex;
         flex-flow:column;
@@ -10,9 +12,10 @@
         width: 50%;
         background: #979797;
         position: relative;
+        float: left;
         .subSlot{
             position: absolute;
-        }
+        }       
         .legsSpaceContainer{
             position: absolute;
             top: 100%; 
@@ -22,25 +25,30 @@
             border-left: 0.625vw solid #939598;
             border-right: 0.625vw solid #939598;
         }
-        .slotDisplayArea{
-            position: absolute;
+      
+    }
+
+        }
+
+        .right-container{
+          .slotDisplayArea{
             font-size: 2em;
             background: #575757;
             color: white;
-            margin-left: 116%;
             width: 350px;
             height: 80px;
             line-height: 80px;
+            margin-left: 25%;
         }
+             width: 50%;
+             float:right;
+            
+        .specialContainer  { 
+        margin-left: 25%;
+        
     }
+        }
+
     
-     .specialContainer  { 
-        position: absolute;
-        top: 10%;
-        margin-left:32.5%;
-        overflow:auto;
-        display: table;
-        width: 350px;
-        border:1px solid red;
-    }
+    
 }

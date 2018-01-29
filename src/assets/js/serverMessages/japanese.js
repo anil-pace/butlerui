@@ -38,6 +38,7 @@ var japanese = {
    "Bin {0} items removed successfully": "\u30d3\u30f3 {0} \u306e\u5546\u54c1\u306e\u53d6\u308a\u51fa\u3057\u5b8c\u4e86",
    "Bin {0} selected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u307e\u3057\u305f",
    "Bin {0} unselected": "\u30d3\u30f3 {0} \u304c\u9078\u629e\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+   "Box Completed": "\u30dc\u30c3\u30af\u30b9\u5b8c\u6210",
    "Box Scan successful": "\u30dc\u30c3\u30af\u30b9\u30b9\u30ad\u30e3\u30f3\u5b8c\u4e86",
    "Box Serial Numbers": "\u30dc\u30c3\u30af\u30b9\u30b7\u30ea\u30a2\u30eb\u756a\u53f7",
    "Box Unscannable": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u30dc\u30c3\u30af\u30b9",
@@ -82,6 +83,7 @@ var japanese = {
    "Dock roll cage back to proceed the operation": "\u64cd\u4f5c\u3092\u9032\u3081\u308b\u305f\u3081\u306b\u30c9\u30c3\u30af\u30ed\u30fc\u30eb\u30b1\u30fc\u30b8\u3092\u623b\u3057\u3066\u304f\u3060\u3055\u3044",
    "Documents printed Successfully": "\u5370\u5237\u5b8c\u4e86",
    "Documents printed successfully": "\u5370\u5237\u5b8c\u4e86",
+   "Done": "\u5b8c\u4e86",
    "EXCEPTION": "\u4f8b\u5916\u767b\u9332",
    "Edit Details": "\u8a73\u7d30\u7de8\u96c6",
    "English": "\u82f1\u8a9e",
@@ -508,8 +510,6 @@ var japanese = {
    "{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",
    "{0} number :": "{0}\u756a\u53f7: :",
    "{0} oversized entities recorded.WMS notified": "\u30b5\u30a4\u30ba\u30aa\u30fc\u30d0\u30fc\u5546\u54c1 {0} \u500b",
-   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b",
-   "Box Completed": "\u30dc\u30c3\u30af\u30b9\u5b8c\u6210",
-   "Done": "\u5b8c\u4e86"
+   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b"
 }
 module.exports = japanese;

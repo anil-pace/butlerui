@@ -42,13 +42,13 @@ for srcfile in args:
 				count = count + 1;
 				if count > 1:
 					count = 0;
-					print("Duplicate found %s" % entry1.msgid)
+					print("Duplicate found: %s" % entry1.msgid)
 					duplicateEntries.append(entry.msgid);
 		xlate_map[entry.msgid] = entry.msgstr;
 	if len(duplicateEntries)> 1:
 		for entry in duplicateEntries:			
 			print("Total number of duplicate entries %d" %len(duplicateEntries));
-			exit();
+			break;
 
 	dest = open(destfile, "w")
 	print("No duplicate entries found");

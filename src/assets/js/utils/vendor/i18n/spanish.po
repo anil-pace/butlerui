@@ -646,9 +646,6 @@ msgstr "Terminar"
 msgid "Back"
 msgstr "Atrás"
 
-msgid "OK"
-msgstr "OK"
-
 msgid "FINISH"
 msgstr "TERMINAR"
 
@@ -786,9 +783,6 @@ msgstr "Cantidad Real"
 
 msgid "Missing"
 msgstr "Faltante"
-
-msgid "Extra"
-msgstr "Extra"
 
 msgid "Barcode Damage"
 msgstr "Código de barras dañado"
@@ -1083,13 +1077,11 @@ msgid "Invoice number: {0}"
 msgstr	"Número de la factura : {0}
 
 msgid "OK" 
-msgstr	"OK
+msgstr	"OK"
 
 msgid "PPS is Closed" 
 msgstr	"PPS ses ha sido Cerrado 
 
-msgid "PPTL" 
-msgstr	"PPTL
 
 msgid "Place" 
 msgstr	"Colocar
@@ -1193,8 +1185,6 @@ msgstr	"Una Entidad inesperada ha sido escaneada
 msgid "Wrong ppsbin button pressed" 
 msgstr	"Un botón ppsbin ha sido pulsado incorrectamente
 
-msgid "product_sku" 
-msgstr	"Producto_sku
 
 msgid "{0} number :"	
 msgstr "{0} numero  :"
@@ -1401,9 +1391,6 @@ msgstr "{0} Entidad físicamente dañada registrada. WMS notificado"
 msgid "Scan box from MSU slot"
 msgstr "Escanear el recuadro desde la ranura MSU"
 
-msgid "Scan Entity From Bin {0}"
-msgstr "Escanear entidad de la papelera {0}"
-
 msgid "Place {0} items in bin {0} and press PPTL to confirm"
 msgstr "{0} Coloque {0} elementos en bin {0} y presione PPTL para confirmar"
 
@@ -1413,3 +1400,143 @@ msgstr "Presione el botón de imprimir para reimprimir la etiqueta del elemento 
 msgid "Scan Remaining Items in Box"
 msgstr "Escanee los artículos restantes en el cuadro"
 
+msgid "All scan and print will be cancelled. Confirm to cancel?"
+msgstr "Se cancelarán todos los escaneos e impresiones. ¿Confirmar para cancelar?"
+
+msgid "Bad barcode on pack"
+msgstr "Código de barras incorrecto en el paquete"
+
+msgid "Bad barcode on sub pack"
+msgstr "Código de barras incorrecto en el paquete secundario"
+
+msgid "Bin Already Scanned"
+msgstr "Contenedor ya escaneado"
+
+msgid "Continue scanning Sub-Packs and Pack"
+msgstr "Continuar escaneando paquetes principales y paquetes secundarios"
+
+msgid "Damage Barcode"
+msgstr "Código de barras dañado"
+
+msgid "Damaged sub pack"
+msgstr "Paquete secundario dañado"
+
+msgid "Enter Quantity of Unscannable Pack"
+msgstr "Introducir cantidad del paquete no apto para escaneo"
+
+msgid "Enter Quantity of Unscannable Sub-Pack"
+msgstr "Introducir cantidad del paquete secundario no apto para escaneo"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Extra details entered are incorrect.Please enter correct details"
+msgstr "Los detalles adicionales introducidos son incorrectos. Introduzca los detalles correctos."
+
+msgid "Good pack"
+msgstr "Paquete en buen estado"
+
+msgid "Good sub pack"
+msgstr "Paquete secundario en buen estado"
+
+msgid "Issue with MPU"
+msgstr "Problema con la MPU"
+
+msgid "Issue with Pack"
+msgstr "Problema con el paquete"
+
+msgid "Issue with Sub pack"
+msgstr "Problema con el paquete secundario"
+
+msgid "No"
+msgstr "No"
+
+msgid "No Sub-Packs to reconcile"
+msgstr "Sin paquetes secundarios para conciliar"
+
+msgid "Pack Scan Successful"
+msgstr "Escaneo del paquete realizado correctamente"
+
+msgid "Pack Unscannable"
+msgstr "No es posible escanear este paquete"
+
+msgid "Pack missing"
+msgstr "Falta el paquete"
+
+msgid "Pack scan successfully"
+msgstr "Escaneo del paquete realizado correctamente"
+
+msgid "Packing box scan failed"
+msgstr "Error al escanear la caja de embalaje"
+
+msgid "Packs"
+msgstr "Paquetes"
+
+msgid "Pick box from MSU and press PPTL on Bin {0}"
+msgstr "Seleccione el cuadro de MSU y presione PPTL en el contenedor {0}"
+
+msgid "Please put entities which have issues in exception area"
+msgstr "Coloque las entidades que tienen problemas en el área de excepción"
+
+msgid "Press PPTL"
+msgstr "Presione PPTL"
+
+msgid "Put Pack list in trolley and press PPTL to confirm"
+msgstr "Coloque la lista de paquetes en el carro y presione PPTL para confirmar"
+
+msgid "Put pack list in trolley and press PPTL to confirm"
+msgstr "Coloque la lista de paquetes en el carro y presione PPTL para confirmar"
+
+msgid "Scan MPU"
+msgstr "Escanear MPU"
+
+msgid "Scan Pack or Sub-Packs"
+msgstr "Escanear paquete o paquetes secundarios"
+
+msgid "Scan Small Box"
+msgstr "Escanear una caja pequeña"
+
+msgid "Scan a packing box and keep in bin {0}"
+msgstr "Escanear una caja de embalaje y mantenerla en el contenedor {0}"
+
+msgid "Scan {0} Box and Place in Bin {1}"
+msgstr "Escanear {0} una caja y colocarla en el contenedor {1}"
+
+msgid "Scan {0} Small Box and Place in Bin {1}"
+msgstr "Escanear {0} una caja pequeña y colocarla en el contenedor {1}"
+
+msgid "Scan {0} more packs and place in bin {1}"
+msgstr "Escanear {0} más paquetes y colocarlos en el contenedor {1}"
+
+msgid "Scan {0} more sub packs and place in bin {1}"
+msgstr "Escanear {0} más paquetes secundarios y colocarlos en el contenedor {1}"
+
+msgid "Scan {0} packs"
+msgstr "Escanear {0} paquetes"
+
+msgid "Scan {0} sub packs"
+msgstr "Escanear {0} paquetes secundarios"
+
+msgid "Space not available"
+msgstr "Espacio no disponible"
+
+msgid "Sub pack missing"
+msgstr "Falta el paquete secundario"
+
+msgid "Sub-Pack Unscannable"
+msgstr "No es posible escanear este paquete secundario"
+
+msgid "Sub-Pack scan successfully"
+msgstr "Escaneo del paquete secundario realizado correctamente"
+
+msgid "Sub-Packs"
+msgstr "Paquetes secundarios"
+
+msgid "Unexpected pack"
+msgstr "Paquete inesperado"
+
+msgid "Wait for MPU"
+msgstr "Espere a MPU"
+
+msgid "Wrong entity Scanned. Bin Scan Expected."
+msgstr "Escaneada una entidad incorrecta. Se espera el escaneo del contenedor."

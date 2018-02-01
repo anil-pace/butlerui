@@ -364,7 +364,7 @@ else {
                 }
                 break;
 
-            case appConstants.PICK_FRONT_PPTL_PRESS:
+                case appConstants.PICK_FRONT_PPTL_PRESS:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 var cancelButton;

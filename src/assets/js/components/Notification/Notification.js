@@ -21,7 +21,14 @@ var Notification = React.createClass({
             var appendClass = 'notify-error';
             var appendClass1 = 'error-icon';
             var appendClass2 = 'glyphicon-remove';
-        }else{
+        }
+         
+        else if(this.props.notification.level==="warning"){
+             var appendClass = 'notify-warning';
+             var appendClass1 = 'warning-icon';
+             var appendClass2 = 'glyphicon-alert';
+         }
+        else{
             var appendClass = 'notify';
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';

@@ -531,10 +531,10 @@ function server_messages_list() {
     _("Pack scan successfully");
     _("Sub-Pack scan successfully");
     _("Scan MPU");
-    _("Scan Pack or Sub-Packs");
-    _("Continue scanning Sub-Packs and Pack");
-    _("Enter Quantity of Unscannable Pack");
-    _("Enter Quantity of Unscannable Sub-Pack");
+    _("Scan {0} or {1}");
+    _("Continue scanning {0} and {1}");
+    _("Enter Quantity of Unscannable {0}");
+    _("Enter Quantity of Unscannable {0}");
     _("Wait for MPU");
     _("No Sub-Packs to reconcile");
     _("Pack Unscannable");

@@ -3,6 +3,6 @@ module.exports={
 	"ja_JP":"japanese",
 	"en_US":"english",
 	"fr":"french",
-	"de_DE":"german",
+	"de":"german",
 	"es":"spanish"
 }

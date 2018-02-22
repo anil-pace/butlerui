@@ -2150,3 +2150,19 @@ msgstr "ボックス完成"
 #: src/assets/js/serverMessages/server_messages_lang.js
 msgid "Done"
 msgstr "完了"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Exception finished"
+msgstr "例外が終了しました"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "OK"
+msgstr "OK"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "OK"
+msgstr "OK"
+
+#: src/assets/js/serverMessages/server_messages_lang.js
+msgid "Put pack list in trolley and press PPTL to confirm"
+msgstr "パックのリストをトロリーに入れ、PPTLを押して確認する"

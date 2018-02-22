@@ -1540,4 +1540,4 @@ msgid "{0} number :"
 msgstr "{0}-Nummer:"
 
 msgid "Done"
-msgstr ""
+msgstr "Erledigt"

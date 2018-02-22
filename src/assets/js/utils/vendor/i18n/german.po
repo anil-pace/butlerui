@@ -509,7 +509,7 @@ msgstr "Falscher Strichcode gescannt."
 msgid "Please scan the tote first and then scan PPTL barcode"
 msgstr "Scannen Sie bitte zuerst die Tasche und dann den PPTL-Strichcode."
  
-msgid "Override Tote Exception' cannot be raised for bins with totes associated"
+msgid "Override Tote Exception cannot be raised for bins with totes associated"
 msgstr "Taschenausnahme überschreiben kann nicht für Behälter, die mit Taschen verbunden sind, durchgeführt werden."
  
 msgid "PPTL scan not allowed. System not configured for tote"
@@ -1538,3 +1538,6 @@ msgstr "{0} äußerlich beschädigte Einheit gemeldet. WMS benachrichtigt"
  
 msgid "{0} number :"
 msgstr "{0}-Nummer:"
+
+msgid "Done"
+msgstr ""

@@ -481,7 +481,7 @@ getPackData: function () {
     data["header"] = [];
     data["tableRows"] = [];
     var self = this;
-    data["header"].push(new this.tableCol(_("Pack"), "header", false, "small", false, true, true, false));
+    data["header"].push(new this.tableCol(_(_seatData.Possible_Container_Names.container_level_2), "header", false, "small", false, true, true, false));
     if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
     {
         data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
@@ -520,7 +520,8 @@ getSubPackData: function () {
     data["header"] = [];
     data["tableRows"] = [];
     var self = this;
-    data["header"].push(new this.tableCol(_("Sub-Pack"), "header", false, "small", false, true, true, false));
+
+    data["header"].push(new this.tableCol(_(_seatData.Possible_Container_Names.container_level_1), "header", false, "small", false, true, true, false));
     if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
     {
         data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));

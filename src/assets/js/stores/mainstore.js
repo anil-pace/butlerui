@@ -2224,6 +2224,21 @@ setCurrentSeat: function (data) {
         }
     },
 
+    getKQQuantity:function(){
+        if (_seatData["scan_details"] == undefined) {
+            var data = {
+                "scan_details": {
+                    "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Actual_qty:0,
+                    "total_qty": 0,
+                    "kq_allowed": _seatData.enable_kq?true:false
+
+                }
+            };
+            return data.scan_details;
+        } else {
+            return _seatData["scan_details"];
+        }
+    },
     getBinCoordinatePlotting: function() {
       if (_seatData.hasOwnProperty('bin_coordinate_plotting'))
         return _seatData.bin_coordinate_plotting;
@@ -2900,7 +2915,7 @@ setCurrentSeat: function (data) {
             data["AuditItemDetailsData"] = this.getItemDetailsData();
             data["AuditScanDetails"] = this.getScanDetails();
             data["AuditFinishFlag"] = this.getFinishAuditFlag();
-
+            data["AuditKQQuantity"]=this.getKQQuantity();
             break;
 
 

@@ -200,7 +200,7 @@ function getStateData(){
       <TabularData data = {this.state.AuditItemDetailsData}/>
       </div>
       <div className="audit-scan-right">
-      
+      <KQ scanDetailsGood={this.state.AuditKQQuantity}/>
       <div className = 'finish-scan'>
       <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
       </div>

@@ -13,9 +13,32 @@ var virtualkeyboard = require('virtual-keyboard');
 var utils = require('../../utils/utils.js');
 var component,title;
 
+
 function getStateData(){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
+  
+  
+
+  for( let i = 0;i < modalData.length ; i++){
+    modalData[i]={
+      "type":modalData[i].type,
+      "product_sku":modalData[i].product_sku,
+      "serial":modalData[i].serial,
+      "quantity":modalData[i].quantity
+    }
+    if(modalData[i].serial.length===0){
+      modalData[i].serial="--";
+    }
+    else{
+      for( let j = 0;j < modalData[i].serial.length; j++){
+        if(modalData[i].serial[j].length>10){
+             modalData[i].serial[j]=modalData[i].serial[j].slice(0,5)+"..."+modalData[i].serial[j].slice(-5);
+          }
+
+        }
+    }
+  }
   loadComponent(modalType,modalData);
   return {
       data:modalData,
@@ -90,9 +113,14 @@ function loadComponent(modalType,modalData){
 
     case "bin-info":
       component = [];
+      
+
+
       var headerArray = [];
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
+          keys=mainstore.getServerMessages();
+          key=keys[key];
            //component.push((<div className="col-md-4 heading">{key} </div>));
            headerArray.push(              
               <th>{_(key)}</th>              
@@ -102,10 +130,22 @@ function loadComponent(modalType,modalData){
       var tr = [];    
       modalData.map(function(value,index){
         var rowData = [];
-           for (var key in value) {        
+        var serialNumbers = [];
+           for (var key in value) {  
+            
+
             if (value.hasOwnProperty(key)) {
+
+              if(value[key].constructor.name ==='Array'){
+                value[key].map(function(val,id){ 
+                    serialNumbers.push(<div>{val}</div>)
+                    
+                    });
+
+            }
+            
               rowData.push(
-                <td>{value[key]}</td>
+                <td>{value[key].constructor.name ==='Array'?serialNumbers:value[key]}</td>
               )
             }                    
           }

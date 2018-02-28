@@ -757,7 +757,7 @@ getOrderID: function () {
             "text": value.exception_name,
             "selected": bSelected,
             "exception_id": value.exception_id,
-            "details": [],
+            "details": value.details,
             "disabled": bDisabled,
             "event": value["event"] != undefined ? value["event"] : ""
         });

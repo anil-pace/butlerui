@@ -444,7 +444,7 @@ function server_messages_list() {
     _("Dock roll cage back to proceed the operation");
     _("Excess quantity");
     _("Entity Damaged");
-    _("Issues with entity");
+    _("Issues with {0}");
     _("Validate and Confirm");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");

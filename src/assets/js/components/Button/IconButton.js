@@ -17,7 +17,8 @@ var IconButton = React.createClass({
     performAction:function(module,action){
         var data = {
                     "event_name": "",
-                    "event_data": {}
+                    "event_data": {},
+                    "source": "ui"
                 };
         switch(module){
             case appConstants.AUDIT:

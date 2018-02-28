@@ -16,7 +16,8 @@ var ExceptionListItem = React.createClass({
 	setCurrentException:function(data){
      var data1 = {
         "event_name": "",
-        "event_data": {}
+        "event_data": {},
+        "source": "ui"
     };
     data1["event_name"] = "exception";
     data1["event_data"]["event"] = data["event"];

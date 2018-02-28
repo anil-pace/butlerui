@@ -140,7 +140,8 @@ var KQ = React.createClass({
                     "event_data": {
                         "item_uid": this.props.itemUid,
                         "quantity_updated": parseInt(_updatedQtyMissing)
-                    }
+                    },
+                    "source": "ui"
                 };
             }
             mainstore.setShowModal(false);
@@ -172,7 +173,8 @@ var KQ = React.createClass({
                         "action": "confirm_quantity_update",
                         "quantity": parseInt(_updatedQtyMissing),
                         "event":mainstore.getExceptionType()
-                    }
+                    },
+                    "source": "ui"
                 };
                 }   
                 else {
@@ -181,7 +183,8 @@ var KQ = React.createClass({
                         "event_data": {
                             "item_uid": this.props.itemUid,
                             "quantity_updated": parseInt(_updatedQtyMissing)
-                        }
+                        },
+                        "source" : "ui"
                     };
                 }
                 CommonActions.postDataToInterface(data);
@@ -286,7 +289,8 @@ var KQ = React.createClass({
                            "event_data": {
                                 "item_uid": itemUid,
                                 "quantity_updated": parseInt(e.target.value)
-                            }
+                            },
+                            "source" : "ui"
                         };
                     }
                     CommonActions.postDataToInterface(data);

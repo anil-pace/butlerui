@@ -690,6 +690,7 @@ getOrderID: function () {
                     data["event_name"] = "stage_ppsbin";
                     data["event_data"] = {};
                     data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+                    data["source"] = "ui";
                 }
             });
 
@@ -729,6 +730,7 @@ getOrderID: function () {
         var data = {};
         data["event_name"] = "stage_all";
         data["event_data"] = '';
+        data["source"] = "ui";
         utils.postDataToInterface(data, _seatData.seat_name);
     },
 
@@ -2011,6 +2013,7 @@ setCurrentSeat: function (data) {
                 data["event_data"]["quantity"]["unscannable"] = _unscannableQuantity;
                 data["event_data"]["quantity"]["missing"] = _missingQuantity;
                 data["event_data"]["quantity"]["damaged"] = _damagedQuantity;
+                data["source"] = "ui";
                 _damagedQuantity = 0;
                 _missingQuantity = 0;
                 _unscannableQuantity = 0;
@@ -2022,6 +2025,7 @@ setCurrentSeat: function (data) {
                 data["event_name"] =appConstants.CONFIRM_BIN_FULL_REQUEST;
                 data["event_data"] = {};
                 data["event_data"]["quantity"]=mainstore.getkQQuanity();
+                data["source"] = "ui";
                 utils.postDataToInterface(data, _seatData.seat_name);
             }
         }
@@ -2054,6 +2058,7 @@ setCurrentSeat: function (data) {
             data["event_data"]["action"] = "confirm_quantity_update";
             data["event_data"]["event"] = _seatData.exception_type;
             data["event_data"]["quantity"] = _KQQty;
+            data["source"] = "ui";
             this.showSpinner();
             utils.postDataToInterface(data, _seatData.seat_name);
         }
@@ -2085,12 +2090,14 @@ setCurrentSeat: function (data) {
                 data["event_data"]["action"] = "confirm_quantity_update";
                 data["event_data"]["event"] = _seatData.exception_type;
                 data["event_data"]["quantity"] = _damagedQuantity;
+                data["source"] = "ui";
             }
             else {
                 data["event_name"] = "put_front_exception";
                 data["event_data"] = {};
                 data["event_data"]["action"] = "finish_exception";
                 data["event_data"]["event"] = _seatData.exception_type;
+                data["source"] = "ui";
             }
 
             this.showSpinner();
@@ -3083,6 +3090,7 @@ AppDispatcher.register(function (payload) {
         break;
         case appConstants.HIDE_SPINNER:
         mainstore.hideSpinner();
+        mainstore.emit(CHANGE_EVENT);
         break;
         case appConstants.POST_DATA_TO_INTERFACE:
         mainstore.showSpinner();

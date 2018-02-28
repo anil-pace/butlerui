@@ -127,6 +127,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
                     data["event_name"] = "stage_ppsbin";
                     data["event_data"] = {};
                     data["event_data"]["ppsbin_id"] = value.ppsbin_id;
+                    data["source"] = "ui";
                 }
             });
 
@@ -151,6 +152,7 @@ var PutBackStore = assign({}, EventEmitter.prototype, {
         var data = {};
         data["event_name"] = "stage_all";
         data["event_data"] = '';
+        data["source"] = "ui";
         utils.postDataToInterface(data, _PutBackData.seat_name);
     },
     scanDetails: function() {

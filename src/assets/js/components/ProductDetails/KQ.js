@@ -202,7 +202,8 @@ var KQ = React.createClass({
                     "event_data": {
                         "item_uid": this.props.itemUid,
                         "quantity_updated": parseInt(_updatedQty)
-                    }
+                    },
+                    "source": "ui"
                 };
             }
             mainstore.setShowModal(false);
@@ -269,7 +270,8 @@ var KQ = React.createClass({
                         "event_data": {
                             "item_uid": this.props.itemUid,
                             "quantity_updated": parseInt(_updatedQty)
-                        }
+                        },
+                        "source": "ui"
                     };
                 }
                 CommonActions.postDataToInterface(data);
@@ -401,7 +403,8 @@ var KQ = React.createClass({
                            "event_data": {
                                 "item_uid": itemUid,
                                 "quantity_updated": parseInt(e.target.value)
-                            }
+                            },
+                            "source": "ui"
                         };
                     }
                     CommonActions.postDataToInterface(data);

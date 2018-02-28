@@ -35,7 +35,8 @@ switch (module) {
             "event_name": "remove_gui_alert",
             "event_data": {
                 "ui_event":mainstore.getScreenEvent()
-            }
+            },
+            "source": "ui"
         }
         if(notification_data && notification_data.type!== appConstants.CLIENT_NOTIFICATION){
             ActionCreators.postDataToInterface(data);

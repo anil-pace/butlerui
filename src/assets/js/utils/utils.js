@@ -183,7 +183,8 @@ postDataToInterface: function(data, seat_name) {
         }
     }).done(function(response) {
         CommonActions.hideSpinner();
-    }).fail(function(jqXhr) { console.log(jqXhr);
+    }).fail(function(jqXhr) {
+        console.log(jqXhr);
         CommonActions.hideSpinner();
         if(jqXhr.status == 401 || jqXhr.status == 403 ){
             var msgCode = (jqXhr.status == 401)? "CLIENTCODE_401":"CLIENTCODE_403";

@@ -72,7 +72,8 @@ var PutBack = React.createClass({
                         "event_name": "process_barcode",
                         "event_data": {
                             "barcode": e.target.value.trim(),
-                        }
+                        },
+                        "source" : "ui"
                     }
                     CommonActions.postDataToInterface(data);
                 }

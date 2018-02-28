@@ -13,12 +13,14 @@ var Bin = React.createClass({
     pressPptl: function (bin_id, binState) {
         var data = {
             "event_name": "",
-            "event_data": {}
+            "event_data": {},
+            "source": ""
         };
         data["event_name"] = "process_ppsbin_event";
         data["event_data"]["ppsbin_id"] = bin_id;
         data["event_data"]["ppsbin_state"] = binState;
         data["event_data"]["ppsbin_event"] = MainStore.getPPTLEvent();
+        data["source"] = "ui";
         ActionCreators.postDataToInterface(data);
     },
     showModal: function (data, type, e) {

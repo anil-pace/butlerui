@@ -11,15 +11,15 @@
             width: auto;
             border-radius: 0;
             float:left;
-             min-width: 40%;
+             min-width: 50%;
              max-width:70%;
             .modal-header {
-                background: @kq-arrow-disabled;
-                box-shadow: 0 2px 4px -1px #dcdcdc;
+                background: #efefef;
+                border-bottom: 2px solid #ccc;
                 .modal-title {
                     font-size: @font-size-body-medium;
-                    font-weight: @font-weight-semi-bold;
                     color: @passive-nav-bck;
+                    padding:20px;
                 }
             }
 
@@ -28,7 +28,10 @@
                 max-height: 500px;
                 overflow-y: auto;
                 overflow-x: hidden;
-                padding: 20px;
+                padding-top: 27px;
+                padding-bottom: 27px;
+                padding-left: 50px;
+                padding-right:50px;
                 font-size: @font-size-body-small;
                     .extraEntity {
                        float:right;
@@ -95,8 +98,10 @@
                 }
                 .heading{
                     padding: 15px;
-                    border-right: 1px solid @kq-border-color;
-                    background: @kq-border-color;
+                    font-size: 24px;
+                    font-weight: 600;
+                    font-family: SourceSansPro;
+                    border-bottom:  2px solid #666666;
                 }
                 .value{
                     padding: 15px;                                    
@@ -105,11 +110,17 @@
                      th{
                         padding:15px;
                         border-bottom:none;
-                        font-weight:normal;
+                        font-weight:600;
+                        font-size:24px;
+                        color:#666666;
                      }
                      td{
-                       padding:15px;
+                       padding:25px;
                        border-top:none;
+                       border-bottom: 2px solid #cccccc;
+                       font-size: 24px;
+                       font-weight:normal;
+                       color:#666666;
                      }                    
                 }
                 .modalContent{

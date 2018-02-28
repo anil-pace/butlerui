@@ -4,6 +4,10 @@
     cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep Ev "({|})" | sed 's/$/);/g'
  */
 function server_messages_list() {
+    _("Product SKU"),
+    _("Type"),
+    _("Serial Number"),
+    _("Quantity"),
     _("Scan item / Stage PPS Bin");
     _("Scan Tote to associate with Bin");
     _("Press PpsBin Button Or Scan a Tote");
@@ -444,7 +448,7 @@ function server_messages_list() {
     _("Dock roll cage back to proceed the operation");
     _("Excess quantity");
     _("Entity Damaged");
-    _("Issues with entity");
+    _("Issues with {0}");
     _("Validate and Confirm");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
@@ -547,6 +551,8 @@ function server_messages_list() {
     _("Scan {0} Small Box and Place in Bin {1}");
     _("Put Pack list in trolley and press PPTL to confirm");
     _("Done");
+    _("Scan {0} {1}");
+    _("Scan {0} {1} and place in Bin {2}");
 
 }
 

@@ -1,4 +1,8 @@
 var serverMessages = {
+    "product_sku": "Product SKU",
+    "type": "Type",
+    "serial": "Serial Number",
+    "quantity": "Quantity",
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
@@ -298,7 +302,7 @@ var serverMessages = {
     "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
-    "PkF001" : "Issues with entity",
+    "PkF001" : "Issues with {0}",
     "PkF005" : "Missing/Unscannable Box",
     "PkF006" : "Entity Damaged",
     "PkB007" : "Disassociate Tote",
@@ -349,16 +353,10 @@ var serverMessages = {
     "FRNT.PBI.03" : "{0} number :",
     "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
     //SR PICK FLOW
-    "PkF.H.017":"Scan {0} packs",
-    "PkF.H.018":"Scan {0} sub packs",
-    "PkF.H.019":"Scan {0} more packs and place in bin {1}",
-    "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
+    "PkF.H.017":"Scan {0} {1}",
+    "PkF.H.018":"Scan {0} {1} and place in Bin {2}",
     "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
-    "PkF.H.022":"Waiting for roll cage to be docked",
-    "PkF.H.026":"Scan Box",
-    "PkF.H.027":"Scan Small Box",
-    "PkF.H.028":"Scan {0} Box and Place in Bin {1}",
-    "PkF.H.029":"Scan {0} Small Box and Place in Bin {1}"
+    "PkF.H.022":"Waiting for roll cage to be docked"
 };
 
 

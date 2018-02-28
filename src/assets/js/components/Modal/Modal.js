@@ -13,13 +13,9 @@ var virtualkeyboard = require('virtual-keyboard');
 var utils = require('../../utils/utils.js');
 var component,title;
 
-
 function getStateData(){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
-  
-  
-
   for( let i = 0;i < modalData.length ; i++){
     modalData[i]={
       "type":modalData[i].type,
@@ -113,9 +109,6 @@ function loadComponent(modalType,modalData){
 
     case "bin-info":
       component = [];
-      
-
-
       var headerArray = [];
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
@@ -139,11 +132,8 @@ function loadComponent(modalType,modalData){
               if(value[key].constructor.name ==='Array'){
                 value[key].map(function(val,id){ 
                     serialNumbers.push(<div>{val}</div>)
-                    
                     });
-
             }
-            
               rowData.push(
                 <td>{value[key].constructor.name ==='Array'?serialNumbers:value[key]}</td>
               )

@@ -10,7 +10,8 @@ fs.readdirSync(fileLoc).forEach(file => {
 
     if (file.split(".")[1] === "po" && !fs.lstatSync(fileLoc + file).isDirectory()) {
         let contents = fs.readFileSync(fileLoc + file);
-        let jsonData = getTextParser.po.parse(contents)
+        let jsonData = getTextParser.po.parse(contents);
+        console.log(file.split(".")[0]);
         if (languageMap[file.split(".")[0]]) {
             let stream = fs.createWriteStream("src/assets/js/serverMessages/" + languageMap[file.split(".")[0]] + ".js");
             stream.once('open', function(fd) {

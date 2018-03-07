@@ -547,7 +547,6 @@ function server_messages_list() {
     _("Scan {0} Small Box and Place in Bin {1}");
     _("Put Pack list in trolley and press PPTL to confirm");
     _("Done");
-    _("asdf");
 
 }
 

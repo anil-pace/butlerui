@@ -24,6 +24,7 @@ var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
+var utils = require('../utils/utils.js');
 
 
 function getStateData(){
@@ -352,7 +353,7 @@ var PutFront = React.createClass({
             unmarkedContainer = (<div>
                <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height width-extra ' />
             </div>)
-            kqHeadMessage = _("Scan damaged entity");
+            kqHeadMessage = remainingEntitiesToBeScanned !== 0 ? utils.frntStringTransform("PtF.H.022",[remainingEntitiesToBeScanned]) : _("No more entities to be scanned");
           }
           this._component = (
               <div className='grid-container exception'>

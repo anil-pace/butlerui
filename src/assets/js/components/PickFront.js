@@ -27,7 +27,8 @@ var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
 var OrderDetails = require('./OrderDetails/OrderDetails.js');
-var Pallet=require("./Pallet/pallet")
+var Pallet=require("./Pallet/pallet");
+var utils = require('../utils/utils.js');
 
 var checkListOpen = false;
 
@@ -444,6 +445,7 @@ else {
 
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
                 var _button;
+                var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(-1)[0]
                 if(!this.state.GetIRTScanStatus)
           {
                     _button = (<div className="staging-action">
@@ -471,7 +473,7 @@ else {
                         <div className="exception-right">
                             <div className="main-container">
                                 <div className="kq-exception">
-                                    <div className="kq-header">{_("Scan damaged entity")}</div>
+                                    <div className="kq-header">{remainingEntitiesToBeScanned!==0 ? utils.frntStringTransform("PkF.H.013",[remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
                                     <TabularData data={this.state.PickFrontDamagedItems} className='limit-height width-extra '/>
                                     {_button}
                                 </div>

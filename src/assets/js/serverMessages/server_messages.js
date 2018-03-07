@@ -57,6 +57,7 @@ var serverMessages = {
     "PtF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
     "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
     "PtF.H.021" : "Scan IRT Bin",
+    "PtF.H.022" : "Scan {0} damaged entities",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",

@@ -141,6 +141,7 @@ var PutBack = React.createClass({
       this._component = (
           <div className='grid-container'>
           <div className='main-container'>
+          <Modal/>
             <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
             </div>
           </div>

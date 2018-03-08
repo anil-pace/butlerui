@@ -1,1995 +1,2095 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Himanshu Saraswat <himanshusara@gmail.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-08 06:42+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-02-22 12:12+0000\n"
+"Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"X-Generator: Zanata 4.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:7
 msgid "Scan item / Stage PPS Bin"
-msgstr ""
+msgstr "Escanee el artículo / Organice el recipiente pps "
 
 #: src/assets/js/serverMessages/server_messages_lang.js:8
 msgid "Scan Tote to associate with Bin"
-msgstr ""
+msgstr "Escaneee la Bolsa para Asociarla al Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:9
 msgid "Press PpsBin Button Or Scan a Tote"
-msgstr ""
+msgstr "Pulse el botón PpsBin o Escanee la Bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:10
 #: src/assets/js/serverMessages/server_messages_lang.js:264
 msgid "User Name"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:11
 #: src/assets/js/serverMessages/server_messages_lang.js:265
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:12
 msgid "Are you sure you want to close Tote"
-msgstr ""
+msgstr "Está seguro que desea cerrar la Bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:13
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:14
 msgid "Scan {0} items"
-msgstr ""
+msgstr "Escanee {0} artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:15
 msgid "Scan box barcode"
-msgstr ""
+msgstr "Escanee el código de barras de la caja"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:16
 msgid "Press PpsBin {0} to remove items"
-msgstr ""
+msgstr "Pulse PpsBin {0} para eliminar los artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:17
 msgid "Tote is already scanned.Expecting pptl scan."
-msgstr ""
+msgstr "La bolsa ya está escaneada. Esperando escaneo pptl."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:18
 msgid "Totes are not required.Please don't scan tote barcode"
 msgstr ""
+"No se requieren bolsas. Por favor no escanee el código de barras de la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:19
 msgid "Wrong PPS bin scanned"
-msgstr ""
+msgstr "Se ha escaneado el recipiente PPS equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:20
 msgid "Please scan the tote first and then scan pptl barcode"
 msgstr ""
+"Por favor, primero escanee la bolsa y luego escanee el código de barras pptl"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:21
 msgid "Tote scanned.Expecting pptl scan."
-msgstr ""
+msgstr "La bolsa ya está escaneada. Esperando escaneo pptl."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:22
 msgid "Pptl scan not allowed. Totes are not required"
-msgstr ""
+msgstr "El escaneo PPTL no está permitido. Las Bolsas no son necesarias"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:23
 #: src/assets/js/serverMessages/server_messages_lang.js:163
 msgid "Tote didn't get associated"
-msgstr ""
+msgstr "La Bolsa no fue asociada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:24
 msgid "After scannning tote barcode, please scan pptl barcode"
 msgstr ""
+"Después de escanear el código de barras de la bolsa, por favor, escanee el "
+"código de barras pptl"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:25
 msgid ""
 "Wrong Ppsbin button pressed.Please press those buttons having color blue"
 msgstr ""
+"Se ha pulsado el botón de Ppsbin equivocado. Por favor pulse los botones con "
+"color azul"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:26
 msgid "Please complete pickback for pending bin and then proceed"
 msgstr ""
+"Por favor complete pickback para el recipiente pendiente y luego proceda"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:27
 msgid "No totes associated. Pease keep totes in the Bin and then scan"
 msgstr ""
+"No hay bolsas asociadas. Por favor, mantenga las bolsas en el Recipiente y "
+"luego escanee"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:28
 msgid "Documents printed Successfully"
-msgstr ""
+msgstr "Los documentos se imprimieron Exitosamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:29
 #: src/assets/js/serverMessages/server_messages_lang.js:178
 msgid "No tote scanned"
-msgstr ""
+msgstr "No se escaneo ninguna bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:30
 msgid "Tote cancelled"
-msgstr ""
+msgstr "Bolsa cancelada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:31
 msgid "Tote already associated with ppsbin"
-msgstr ""
+msgstr "La Bolsa ya ha sido asociada con la ppsbin"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:32
 msgid "Incorrect tote barcode scanned. Please try again"
 msgstr ""
+"Se escaneo un código de barra de bolsa incorrecto. Por favor, inténtelo de "
+"nuevo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:33
 msgid "Please press PPTL button which does not have any totes associated"
-msgstr ""
+msgstr "Por favor, pulse el botón PPTL que no tiene ninguna bolsa asociada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:34
 msgid "Tote assigned successfully to ppsbin {0}"
-msgstr ""
+msgstr "Bolsa asignada exitosamente a ppsbin {0} "
 
 #: src/assets/js/serverMessages/server_messages_lang.js:35
 msgid "Bin {0} items removed successfully"
-msgstr ""
+msgstr "Recipiente {0} se han quitado los artículos exitosamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:36
 msgid "Totes are not required"
-msgstr ""
+msgstr "Las Bolsas no son necesarias"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:37
 msgid "Wrong Barcode scanned"
-msgstr ""
+msgstr "Se ha escaneado el Código de Barras equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:38
 msgid "Tote could not be reserved as already reserved"
-msgstr ""
+msgstr "La bolsa no se pudo reservar como se habia reservado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:39
 msgid "Exception invalid as totes are not required with this PPS"
 msgstr ""
+"Excepción no válida como ya que las bolsas no son necesarias con este PPS"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:40
 msgid "Override tote not possible"
-msgstr ""
+msgstr "No es posible invalidar la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:41
 msgid "Scanning pptl barcode not allowed"
-msgstr ""
+msgstr "No está permitido escanear el código de barras"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:42
 msgid "Please press those buttons having color blink_blue"
-msgstr ""
+msgstr "Por favor, pulse los botones que parpadeen en azul"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:43
 msgid "Unhandled event ocurred"
-msgstr ""
+msgstr "Ocurrió un evento no controlado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:44
 msgid "Barcode didn't match with current tote barcode"
 msgstr ""
+"El Código de barras no coincide con el código de barras actual de la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:45
 msgid "Testing configuration {0} and {1}"
-msgstr ""
+msgstr "Prueba de configuración {0} y {1}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:46
 msgid "Processing. Please wait and scan later"
-msgstr ""
+msgstr "Procesando. Por favor, espere y escanee más adelante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:47
 msgid "Waiting for rack"
-msgstr ""
+msgstr "A la espera de estante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:48
 msgid "Current PPS mode does not support back seat. Please logout."
 msgstr ""
+"El modo actual de PPS no dispone de asiento trasero. Por favor, cierre de "
+"sesión."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:49
 msgid "Scan items and place in bin {0}"
-msgstr ""
+msgstr "Analice los elementos y coloque en el recipiente {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:50
 msgid "Stage Bin or Scan Entity"
-msgstr ""
+msgstr "Organice el Recipiente o Escanee el artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:51
 msgid "Place Entity in Bin and Press PPTL"
-msgstr ""
+msgstr "Ubique el Artículo en el Recipiente y Pulse  PPTL "
 
 #: src/assets/js/serverMessages/server_messages_lang.js:52
 msgid "Are You Sure You Want to Close Tote?"
-msgstr ""
+msgstr "¿Está seguro que desea cerrar la Bolsa?"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:53
 msgid "Scan Tote or Stage PPS Bin"
-msgstr ""
+msgstr "Escanee la Bolsa u Organice el recipiente PPS"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:54
 msgid "Item Not Expected in Tote"
-msgstr ""
+msgstr "El Artículo no se Espera en la Bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:55
 msgid "Tote already opened. Scan some other tote"
-msgstr ""
+msgstr "Bolsa ya abierta. Escanee alguna otra bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:56
 msgid "Tote already closed. Scan some other tote"
-msgstr ""
+msgstr "La Bolsa ya ha sido cerrada. Escanee alguna otra bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:57
 msgid "No matching tote found"
-msgstr ""
+msgstr "No se que encontró la bolsa correspondiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:58
 msgid "Wrong entity scanned. Please scan tote"
-msgstr ""
+msgstr "Se escaneo el artículo equivocado. Por favor, escanee la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:59
 msgid "No entities added yet. Scan entities and then press PPTL"
 msgstr ""
+"No hay artículos añadidos aún. Escanee los artículos y luego pulse PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:60
 msgid "Wrong entity scanned. Please scan Container/Item."
 msgstr ""
+"Se escaneo el artículo equivocado. Por favor, escanee el Recipiente/Artículo."
+""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:61
 msgid "Cannot cancel scan. No scanned box found"
-msgstr ""
+msgstr "No es posible cancelar el escaneo. No se ha encontrado caja escaneada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:62
 msgid "Entity scan not expected. Waiting for PPTL press"
-msgstr ""
+msgstr "No se esperaba el escaneo del artículo. Esperando que pulse PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:63
 msgid "Bin selected for put. Cannot be staged"
-msgstr ""
+msgstr "Recipiente seleccionado para colocar. No se puede organizar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:64
 msgid "SKU not present in database. Put into IRT bin."
-msgstr ""
+msgstr "SKU no está presente en la base de datos. Poner en el recipiente IRT."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:65
 msgid "No free bins. Please scan later"
-msgstr ""
+msgstr "No hay recipientes libres. Por favor, escanee después"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:66
 msgid "Wrong PPTL pressed. Please try another"
-msgstr ""
+msgstr "Se ha presionado el PPTL equivocado. Por favor, intente con otro"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:67
 #: src/assets/js/serverMessages/server_messages_lang.js:112
 msgid "Please put entities in exception area and confirm"
-msgstr ""
+msgstr "Por favor, ponga los artículos en el área de excepción y confirme"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:68
 msgid "Wrong bin chosen.Try selecting another bin"
 msgstr ""
+"Se ha escogido la papelera equivocada. Pruebe seleccionando otro recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:69
 msgid "Please scan same SKU to complete this exception"
-msgstr ""
+msgstr "Por favor, escanee el mismo SKU para completar esta excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:70
 msgid "Entity scan not expected."
-msgstr ""
+msgstr "No se esperaba el escaneo del artículo."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:71
 msgid "Tote not present in database."
-msgstr ""
+msgstr "La bolsa no está presente en la base de datos."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:72
 msgid ""
 "Tote has been opened.Scan all items in tote and then scan tote again to "
 "close it"
 msgstr ""
+"La bolsa se ha abierto. Escanee todos los artículos en la bolsa y luego "
+"escanee la bolsa nuevamente para cerrarla"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:73
 msgid "PPS is in paused mode. Cannot process new entity. Try after some time"
 msgstr ""
+"PPS está en modo de pausa. No se puede procesar el nuevo artículo. Pruebe "
+"después de un tiempo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:74
 msgid "Cancel scan successful."
-msgstr ""
+msgstr "Escaneo de cancelación exitoso."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:75
 msgid "Tote close successful."
-msgstr ""
+msgstr "Cierre de bolsa exitoso."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:76
 msgid "Tote not closed."
-msgstr ""
+msgstr "La Bolsa no ha sido cerrada."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:77
 msgid "Entity scan successful."
-msgstr ""
+msgstr "Escaneo de artículo exitoso."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:78
 #: src/assets/js/serverMessages/server_messages_lang.js:141
 msgid "PPTL press successful"
-msgstr ""
+msgstr "Presionado de PPTL exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:79
 msgid "Data capture valid"
-msgstr ""
+msgstr "Captura de datos válidos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:80
 msgid "Excess item in tote recorded. Now press PPTL"
-msgstr ""
+msgstr "Artículo sobrante registrado en la bolsa. Ahora pulse PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:81
 msgid "Excess item in tote recorded."
-msgstr ""
+msgstr "Artículo sobrante registrado en la bolsa."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:82
 msgid "{0} unscannable entities recorded. WMS notified"
-msgstr ""
+msgstr "{0} artículos no escaneables registrados. WMS notificado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:83
 msgid "{0} extra entities recorded in bin. WMS notified"
-msgstr ""
+msgstr "{0} artículos sobrantes registrados en el recipiente. WMS notificado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:84
 msgid "{0} oversized entities recorded.WMS notified"
-msgstr ""
+msgstr "{0} artículos extra grandes registrados. WMS notificado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:85
 msgid "{0} Physically damaged entity recorded.WMS notified"
-msgstr ""
+msgstr "{0} Entidad físicamente dañada registrada. WMS notificado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:86
 #: src/assets/js/serverMessages/server_messages_lang.js:165
 #: src/assets/js/serverMessages/server_messages_lang.js:399
 msgid "Exception cancelled"
-msgstr ""
+msgstr "Excepción cancelada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:87
 msgid "Box with same serial number already exists in the warehouse"
-msgstr ""
+msgstr "Una caja con el mismo número de serie ya existe en el almacén"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:88
 msgid "Entity already scanned.Waiting for PPTL press"
-msgstr ""
+msgstr "Artículo ya escaneado. A la espera de prensionar PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:89
 msgid "No bins available to stage"
-msgstr ""
+msgstr "No hay recipientes disponibles para organizar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:90
 msgid "Bin already staged. Ignoring event"
-msgstr ""
+msgstr "El recipiente ya ha sido organizado. Haciendo caso omiso del evento"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:91
 msgid "Bin empty. Cannot be staged"
-msgstr ""
+msgstr "Recipiente vacío. No se puede organizar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:92
 msgid "Scan Box/Items from Slot"
-msgstr ""
+msgstr "Escanear Caja/ Artículos del Hueco"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:93
 msgid "Scan Remaining Item In Box"
-msgstr ""
+msgstr "Escanee el Resto de los Artículos en la Caja"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:94
 msgid "Last Box Scan Completed! Scan Remaining Box/Items"
 msgstr ""
+"¡Último Escaneo de Caja Terminada! Escanee las Cajas Restantes/Artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:95
 msgid "Status To Reconcile"
-msgstr ""
+msgstr "Estado Para Conciliar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:96
 msgid ""
 "This box belongs to some other SKU in the slot.Put it back.Scan next box."
 msgstr ""
+"Este cuadro pertenece a algunos otros SKU en el hueco. Devuélvalo. Escanee "
+"la caja siguiente."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:97
 msgid ""
 "This box does not belong to this slot. Remove the box and put in exception "
 "area."
 msgstr ""
+"Esta caja no pertenece a este hueco. Retire la caja y póngala en a zona de "
+"excepción."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:98
 msgid "Waiting for MSU"
-msgstr ""
+msgstr "A la espera de MSU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:99
 msgid "Wrong Barcode"
-msgstr ""
+msgstr "Código de barras Equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:100
 msgid "Box Scan successful"
-msgstr ""
+msgstr "Escaneo de caja exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:101
 msgid "Item Scan successful"
-msgstr ""
+msgstr "Escaneo de artículo exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:102
 #: src/assets/js/serverMessages/server_messages_lang.js:139
 msgid "Item scan successful"
-msgstr ""
+msgstr "Escaneo de artículo exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:103
 msgid "Data capture failed at item {0}"
-msgstr ""
+msgstr "La captura de datos falló en el artículo {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:104
 msgid "Bin {0} selected"
-msgstr ""
+msgstr "Recipiente {0} seleccionado "
 
 #: src/assets/js/serverMessages/server_messages_lang.js:105
 msgid "Bin {0} unselected"
-msgstr ""
+msgstr "Recipiente {0} no seleccionado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:106
 msgid "Connection is closed. Connecting..."
-msgstr ""
+msgstr "La conexión está cerrada. Conectandose..."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:107
 msgid "Extra item found please put back item in Exception bin"
 msgstr ""
+"Artículo adicional encontrado, por favor, deuelválo al recipiente de "
+"excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:108
 msgid "Enter Unscannable Entity Quantity"
-msgstr ""
+msgstr "Especifique la Cantidad de Artículos no Escaneables"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:109
 msgid "Scan Oversized Entity Quantity"
-msgstr ""
+msgstr "Cantidad de Artículos Extra Grandes Escaneados"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:110
 msgid "Please Select The Bin With Excess Entity"
-msgstr ""
+msgstr "Por favor, Seleccione el Recipiente con Artículos Sobrantes"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:111
 msgid "Enter Quantity of Excess Entities"
-msgstr ""
+msgstr "Especificarla Cantidad de Artículos Sobrantes"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:113
 msgid "Place Entity in Slot and Scan More"
-msgstr ""
+msgstr "Ubique el Artículo en la Vacante y Escanee Más"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:114
 msgid "Scan Slot to Confirm"
-msgstr ""
+msgstr "Confirme para Escanear Vacante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:115
 #: src/assets/js/serverMessages/server_messages_lang.js:119
 msgid "Wait for MSU"
-msgstr ""
+msgstr "Espere por MSU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:116
 msgid "Scan Entity From Bin {0}"
-msgstr ""
+msgstr "Escanee Artículo del Recipiente {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:117
 msgid "Enter Good Quantity to be Put into Slot"
-msgstr ""
+msgstr "Entre una Cantidad Correcta Para Ubicar en la Vacante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:118
 msgid "Put Back Entities in the PPS Bin"
-msgstr ""
+msgstr "Devuelva los Artículos al Recipiente PPS"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:120
 msgid "Confirm MSU Release"
-msgstr ""
+msgstr "Confirme la Liberación de MSU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:121
 msgid "Scan Slot"
-msgstr ""
+msgstr "Escanee la Vacante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:122
 msgid "Scan {0} Items"
-msgstr ""
+msgstr "Escanee {0} Artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:123
 msgid "Cancel audit successful.Audit Restarted"
-msgstr ""
+msgstr "Cancelación de la auditoría exitosa. La Auditoría se ha Reiniciado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:124
 msgid "Scan Box"
-msgstr ""
+msgstr "Escanee la Caja"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:125
 msgid "Scan {0} Items and Place in Bin {0}"
-msgstr ""
+msgstr "Escanee {0} Artículos y ubiquelos en el Recipiente {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:126
 msgid "Press PPTL to confirm"
-msgstr ""
+msgstr "Prensione PPTL para confirmar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:127
 msgid "Scan Tote to Associate with Bin"
-msgstr ""
+msgstr "Escaneee la Bolsa para Asociarla al Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:128
 msgid "Press PPTL or Scan a Tote"
-msgstr ""
+msgstr "Pulse PPTL o Escanee la Bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:129
 msgid "Press bin PPTL to remove entities"
-msgstr ""
+msgstr "Pulse contenedor PPTL  para eliminar entidades"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:130
 msgid "Press bin PPTL"
-msgstr ""
+msgstr "Pulse Recipiente PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:131
 msgid "Press PPTL for bin {0} to confirm"
-msgstr ""
+msgstr "Pulse PPTL para confirmar el recipiente {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:132
 msgid "Press print button to proceed"
-msgstr ""
+msgstr "Pulse el botón Imprimir para proceder"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:133
 msgid "Select Bin to skip print"
-msgstr ""
+msgstr "Seleccione Recipiente para omitir impresión"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:134
 msgid "Select Bin which does not require tote"
-msgstr ""
+msgstr "Seleccione Recipiente que no requiera de bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:135
 msgid "Select Bin to disassociate tote"
-msgstr ""
+msgstr "Seleccione Recipiente para desvincular la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:136
 msgid "Pick complete. Waiting for next rack."
-msgstr ""
+msgstr "Selección completa. A la espera del próximo estante."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:137
 msgid "Location scan successful"
-msgstr ""
+msgstr "Escaneo de localización exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:138
 msgid "Box scan successful"
-msgstr ""
+msgstr "Escaneo de caja exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:140
 #: src/assets/js/serverMessages/server_messages_lang.js:196
 msgid "Cancel scan successful"
-msgstr ""
+msgstr "Escaneo de cancelación exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:142
 msgid "Expecting MSU release confirmation from GUI, got invalid event."
 msgstr ""
+"Esperando la confirmación de liberación MSU de GUI, tiene evento no válido."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:143
 msgid "Data capture failed at item"
-msgstr ""
+msgstr "La captura de datos falló en el artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:144
 msgid "Wrong slot location scanned. Please try again"
-msgstr ""
+msgstr "Ubicación de vacante mal escaneada. Por favor, inténtelo de nuevo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:145
 msgid "Wrong box scanned. Please try again"
-msgstr ""
+msgstr "Se escaneo la caja equivocada. Por favor, inténtelo de nuevo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:146
 msgid "Scan a box first"
-msgstr ""
+msgstr "Escanee la caja primero"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:147
 msgid "Wrong PPTL pressed. Please press correct PPTL"
 msgstr ""
+"Se ha presionado el PPTL equivocado. Por favo,r presione PPTL correcto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:148
 msgid "Picked quantity more than expected. Put extra items back in MSU"
 msgstr ""
+"Seleccionó una cantidad mayor de la esperada. Devuelva los elementos "
+"sobrantes al MSU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:149
 msgid "Wrong item quantity update"
-msgstr ""
+msgstr "Actualización equivocada de la cantidad de objetos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:150
 msgid "Wrong item scanned. Please scan correct item"
 msgstr ""
+"Se escaneo el artículo equivocado. Por favor, escanee el artículo correcto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:151
 msgid "Waiting for MSU. Please wait and scan later"
-msgstr ""
+msgstr "A la espera de MSU. Por favor, espere y escanee más adelante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:152
 msgid "System Error. Scanned entity details not available at this time"
 msgstr ""
+"Error del Sistema. La información del artículo escaneado no está disponible "
+"en este momento"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:153
 msgid "No PPS bins empty. Please empty them from Pickback"
-msgstr ""
+msgstr "No hay recipientes PPS vacíos. Por favor, vacíelos desde Pickback"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:154
 msgid "PPS mode change requested:scan not allowed"
-msgstr ""
+msgstr "Solicitó cambio de modo PPS: escaneo no permitido"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:155
 msgid "PPS mode change requested:auto staging all bins"
-msgstr ""
+msgstr "Cambio de modo PPS solicitado: auto organizando todos los recipientes"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:156
 msgid "PPTL press not expected"
-msgstr ""
+msgstr "Pulsado de PPTL no esperado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:157
 msgid "Scan not expected"
-msgstr ""
+msgstr "Escaneo no esperado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:158
 msgid "Barcode didn't match the current tote barcode"
 msgstr ""
+"El Código de barras no coincidió con el código de barras actual de la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:159
 msgid "System not configured for totes"
-msgstr ""
+msgstr "Sistema no configurado para bolsas"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:160
 msgid "Invalid Exception for this configuration"
-msgstr ""
+msgstr "Excepción no válida para esta configuración"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:161
 msgid "No tote associated. Please keep a tote in bin and scan"
 msgstr ""
+"No hay bolsas asociadas. Por favor, mantenga una bolsa en el recipiente y "
+"escanee"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:162
 msgid "Wrong PPTL pressed"
-msgstr ""
+msgstr "Se ha pulsado el PPTL equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:164
 msgid "Totes are anyway not required.Please proceed further"
 msgstr ""
+"Las bolsas de todas formas no son necesarias. Por favor, siga adelante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:166
 msgid "Tote scan cancelled"
-msgstr ""
+msgstr "Escaneo de la bolsa cancelado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:167
 msgid "Documents printed successfully"
-msgstr ""
+msgstr "Los documentos se imprimieron exitosamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:168
 msgid "Order removed successfully from bin {0}"
-msgstr ""
+msgstr "Orden retirada con éxito del recipiente {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:169
 msgid "Tote assigned successfully to bin"
-msgstr ""
+msgstr "Bolsa asignada con éxito al recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:170
 msgid "Tote association failed. Repeat scan operation"
-msgstr ""
+msgstr "Ha fallado la asociación de la bolsa. Repita la operación de escaneo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:171
 msgid "Tote associated with another bin"
-msgstr ""
+msgstr "Bolsa asociada con otro recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:172
 msgid "Please scan PPTL barcode"
-msgstr ""
+msgstr "Por favor, escanee el código de barras PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:173
 msgid "Tote disassociated from Bin"
-msgstr ""
+msgstr "La Bolsa está desvinculada del Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:174
 msgid "Please complete process for pending bin and then proceed"
 msgstr ""
+"Por favor, complete el procesopara el recipiente pendiente y luego proceda"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:175
 msgid "Tote already reserved"
-msgstr ""
+msgstr "Bolsa ya reservada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:176
 #: src/assets/js/serverMessages/server_messages_lang.js:409
 msgid "Wrong barcode scanned"
-msgstr ""
+msgstr "Se ha escaneado el código de barras equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:177
 msgid "Please scan the tote first and then scan PPTL barcode"
 msgstr ""
+"Por favor, primero escanee la bolsa y luego escanee el código de barras PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:179
-msgid "Override Tote Exception cannot be raised for bins with totes associated"
+msgid ""
+"Override Tote Exception cannot be raised for bins with totes associated"
 msgstr ""
+"La Excepción de la Bolsa Anulada no se puede llevar a los recipientes con "
+"bolsas asociadas"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:180
 msgid "PPTL scan not allowed. System not configured for tote"
-msgstr ""
+msgstr "El escaneo PPTL no está permitido. Sistema no configurado para bolsas"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:181
 msgid "PPTL scan not allowed"
-msgstr ""
+msgstr "El escaneo PPTL no está permitido."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:182
 msgid "Tote scan expected"
-msgstr ""
+msgstr "Escaneo de la bolsa esperado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:183
 msgid "Entity scanned is not from bin {0}. Replace and scan from bin {1}"
 msgstr ""
+"El artículo escaneado no es del recipiente {0}. Reemplace y escanee desde el "
+"recipiente {1}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:184
 msgid "Wrong entity scanned"
-msgstr ""
+msgstr "Se escaneo el artículo equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:185
 msgid "Waiting for MSU scan. Please scan entity later."
-msgstr ""
+msgstr "A la espera del escaneo MSU. Por favor, escanee el artículo después."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:186
 msgid "Expected quantity exceeded."
-msgstr ""
+msgstr "Cantidad esperada excedida."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:187
 msgid "Wrong scan! Entity scan expected but slot barcode scanned."
 msgstr ""
+"¡Escaneo equivocado! Escaneo del artículo esperado pero se ha escaneado el "
+"código de barras de la ranura."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:188
 msgid ""
 "Actual put quantity not equal to the sum of Good and Expection quantity."
 msgstr ""
+"La cantidad real ubicada no es igual a la suma de la cantidad Correcta y "
+"Esperada."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:189
 msgid "Actual put quantity less than than revised quantity."
-msgstr ""
+msgstr "La cantidad real ubicada es menor que la cantidad revisada."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:190
 msgid "Wrong slot scanned"
-msgstr ""
+msgstr "Se ha escaneado la vacante equivocada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:191
 msgid "Entity scan successful"
-msgstr ""
+msgstr "Escaneo de artículo exitoso."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:192
 #: src/assets/js/serverMessages/server_messages_lang.js:193
 msgid "Slot scan successful"
-msgstr ""
+msgstr "Escaneo de la vacante exitoso"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:194
 msgid "Damaged and missing entity recorded."
-msgstr ""
+msgstr "Artículos dañados y faltantes registrados."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:195
 msgid "Space unavailable recorded."
-msgstr ""
+msgstr "Espacio no disponible registrado."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:197
 msgid "Please put entity in exception area and confirm"
-msgstr ""
+msgstr "Por favor, ubique los artículos en el área de excepción y confirme"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:198
 msgid ""
 "Entity not expected in tote. Please put entity in exception area and confirm"
 msgstr ""
+"El Artículo no se espera en la bolsa Por favor, ubique los artículos en el "
+"área de excepción y confirme"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:199
 msgid ""
 "{0} excess entities found in tote. Please put entities in exception area and "
 "confirm"
 msgstr ""
+"{0} Artículos sobrantes encontrados en la bolsa. Por favor, ponga los "
+"artículos en el área de excepción y confirme"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:200
 msgid "Cancelled excess entity in tote"
-msgstr ""
+msgstr "Artículos sobrantes cancelados en la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:201
 msgid "Cancelled invalid entity in tote"
-msgstr ""
+msgstr "Artículo no válido cancelado en la bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:202
 msgid "Invalid entity in tote recorded"
-msgstr ""
+msgstr "Artículo no válido registrado en la bolsa."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:203
 msgid "Wrong enitity scanned. Expecting scan from bin {0}"
 msgstr ""
+"Artículo equivocado escaneado. Esperando el escaneo desde el recipiente {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:204
 msgid "PPTL Management"
-msgstr ""
+msgstr "Gestión PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:205
 msgid "Scanner Management"
-msgstr ""
+msgstr "Gestión de Escáner"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:206
 msgid "Entity Oversized"
-msgstr ""
+msgstr "Artículo Extra Grande"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:207
 #: src/assets/js/serverMessages/server_messages_lang.js:304
 msgid "Entity Unscannable"
-msgstr ""
+msgstr "Artículo no escaneable"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:208
 #: src/assets/js/serverMessages/server_messages_lang.js:305
 msgid "Extra Entities in Bin"
-msgstr ""
+msgstr "Artículos Extra en Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:209
 #: src/assets/js/serverMessages/server_messages_lang.js:211
 #: src/assets/js/serverMessages/server_messages_lang.js:306
 msgid "Entity Missing / Unscannable"
-msgstr ""
+msgstr "Artículo Faltante / No Escaneable"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:210
 #: src/assets/js/serverMessages/server_messages_lang.js:307
 msgid "Space Not Available"
-msgstr ""
+msgstr "Espacio No Disponible"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:212
 msgid "Mising Box"
-msgstr ""
+msgstr "Caja Faltante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:213
 #: src/assets/js/serverMessages/server_messages_lang.js:239
 #: src/assets/js/serverMessages/server_messages_lang.js:310
 msgid "Disassociate Tote"
-msgstr ""
+msgstr "Bolsa Desvinculada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:214
 msgid "Overide Tote Required"
-msgstr ""
+msgstr "Bolsa Inválida Requerida"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:215
 #: src/assets/js/serverMessages/server_messages_lang.js:312
 #: src/assets/js/serverMessages/server_messages_lang.js:530
 msgid "Reprint"
-msgstr ""
+msgstr "Reimpresión"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:216
 #: src/assets/js/serverMessages/server_messages_lang.js:313
 msgid "Skip Print"
-msgstr ""
+msgstr "Omitir Impresión"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:217
 msgid "Peripheral added successfully"
-msgstr ""
+msgstr "Se ha agregado el Periférico correctamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:218
 msgid "Peripheral not added"
-msgstr ""
+msgstr "El Periférico no se ha agregado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:219
 msgid "Scan Box or Items"
-msgstr ""
+msgstr "Escanee Caja o Artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:220
 msgid "Check Count"
-msgstr ""
+msgstr "Verificar la Cuenta"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:221
 msgid "You cannot enter value more than 9999"
-msgstr ""
+msgstr "Usted no puede entrar un valor mayor de 9999"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:222
 msgid "Please enter a quantity greater than 0"
-msgstr ""
+msgstr "Por favor entre una cantidad más de 0"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:223
 msgid "Place extra entity in Exception area."
-msgstr ""
+msgstr "Ubique los artículos extra en la zona de Excepción."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:224
 msgid "Sum of missing, good and damaged should be equal to {0}"
-msgstr ""
+msgstr "La suma de faltantes, buenos y dañado deben ser iguales a {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:225
 msgid "Scan excess item quantity"
-msgstr ""
+msgstr "Escanear la cantidad excedida de artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:226
 msgid "Quantity should be less than or equal to {0}"
-msgstr ""
+msgstr "La cantidad debe ser menor o igual a {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:227
 msgid ""
 "You are not allowed to keyed in the quantity from the numpad. Force Scan is "
 "required."
 msgstr ""
+"No se le permite ingresar la cantidad desde el teclado numérico. El Escaneo "
+"Forzado es necesario."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:228
 msgid "Waiting for Bins to be Cleared at Pick Back"
 msgstr ""
+"A la espera de que los Recipientes sean Despejados para Elegir de Nuevo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:229
 msgid "Peripheral deleted successfully"
-msgstr ""
+msgstr "Se ha borraddo el Periférico correctamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:230
 msgid "Peripheral not deleted successfully"
-msgstr ""
+msgstr "Periférico no eliminado con éxito"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:231
 msgid "Cancel Exception"
-msgstr ""
+msgstr "Excepción Cancelada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:232
 msgid "Cancel Scan"
-msgstr ""
+msgstr "Escaneo Cancelado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:233
 #: src/assets/js/serverMessages/server_messages_lang.js:279
 msgid "Finish"
-msgstr ""
+msgstr "Terminar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:234
 msgid "Back"
-msgstr ""
+msgstr "Atrás"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:235
 msgid "OK"
-msgstr ""
+msgstr "DE ACUERDO"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:236
 msgid "FINISH"
-msgstr ""
+msgstr "TERMINAR"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:237
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:238
 msgid "Skip Printing"
-msgstr ""
+msgstr "Omitir Impresión"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:240
 msgid "Override"
-msgstr ""
+msgstr "Reemplazar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:241
 #: src/assets/js/serverMessages/server_messages_lang.js:275
 msgid "Add Scanner"
-msgstr ""
+msgstr "Agregar el Escáner"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:242
 msgid "Edit Details"
-msgstr ""
+msgstr "Edite los Detalles"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:243
 msgid "NEXT"
-msgstr ""
+msgstr "SIGUIENTE"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:244
 msgid "CONFIRM"
-msgstr ""
+msgstr "CONFIRMAR"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:245
 msgid "Stage"
-msgstr ""
+msgstr "Organizar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:246
 msgid "Stage All"
-msgstr ""
+msgstr "Organizar Todo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:247
 msgid "BACK"
-msgstr ""
+msgstr "ATRÁS"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:248
 msgid "CLOSE"
-msgstr ""
+msgstr "CERRAR"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:249
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:250
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:251
 #: src/assets/js/serverMessages/server_messages_lang.js:375
 msgid "TOTE"
-msgstr ""
+msgstr "BOLSA"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:252
 msgid "Clear All"
-msgstr ""
+msgstr "Borrar Todo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:253
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:254
 msgid "Exceptions"
-msgstr ""
+msgstr "Excepciones"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:255
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:256
 msgid "Bin"
-msgstr ""
+msgstr "Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:257
 msgid "Selected"
-msgstr ""
+msgstr "Seleccionado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:258
 msgid "Unselected"
-msgstr ""
+msgstr "No seleccionado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:259
 msgid "System is Idle"
-msgstr ""
+msgstr "El sistema está inactivo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:260
 #: src/assets/js/serverMessages/server_messages_lang.js:368
 msgid "CURRENT SLOT"
-msgstr ""
+msgstr "RANURA ACTUAL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:261
 #: src/assets/js/serverMessages/server_messages_lang.js:276
 #: src/assets/js/serverMessages/server_messages_lang.js:287
 msgid "Box Serial Numbers"
-msgstr ""
+msgstr "Números de Serie de la Caja"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:262
 msgid "No Items To Reconcile"
-msgstr ""
+msgstr "No Hay Artículos Para Conciliar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:263
 msgid "List Of Items To Reconcile"
-msgstr ""
+msgstr "Lista de los pArtículos a Conciliar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:266
 msgid "View More"
-msgstr ""
+msgstr "Ver Más"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:267
 msgid "Please put exception entities in exception area"
 msgstr ""
+"Por favor, deposite las entidades de excepción en la zona de excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:268
 msgid "Please put exception entities in IRT bin and scan the bin"
 msgstr ""
+"Por favor, deposite las entidades de excepción en el contenedor IRT y "
+"escanee el contenedor"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:269
 msgid "Product Information"
-msgstr ""
+msgstr "Información del Producto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:270
 msgid "Bin Info"
-msgstr ""
+msgstr "Información del Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:271
 msgid "Associate tote with bin"
-msgstr ""
+msgstr "Asocie la bolsa con el recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:272
 msgid "Extra Entity Found"
-msgstr ""
+msgstr "Artículo Extra Encontrado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:273
 msgid "Perform Action"
-msgstr ""
+msgstr "Realizar la Acción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:274
 msgid "Input Extra Details"
-msgstr ""
+msgstr "Detalles Adicionales de Entrada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:277
 msgid "Expected"
-msgstr ""
+msgstr "Esperado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:278
 msgid "Actual"
-msgstr ""
+msgstr "Real"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:280
 msgid "Bin ID"
-msgstr ""
+msgstr "Identificación del recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:281
 msgid "Barcode"
-msgstr ""
+msgstr "Código de barras"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:282
 msgid "Peripheral ID"
-msgstr ""
+msgstr "Identificación de periférico"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:283
 #: src/assets/js/serverMessages/server_messages_lang.js:285
 msgid "Actions"
-msgstr ""
+msgstr "Acciones"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:284
 msgid "Scanner ID"
-msgstr ""
+msgstr "Identificación del escáner"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:286
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:288
 #: src/assets/js/serverMessages/server_messages_lang.js:300
 msgid "Product SKU"
-msgstr ""
+msgstr "SKU del Producto "
 
 #: src/assets/js/serverMessages/server_messages_lang.js:289
 msgid "Expected Quantity"
-msgstr ""
+msgstr "Cantidad Esperada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:290
 msgid "Actual Quantity"
-msgstr ""
+msgstr "Cantidad Real"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:291
 msgid "Missing"
-msgstr ""
+msgstr "Faltante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:292
 msgid "Extra"
-msgstr ""
+msgstr "Extra"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:293
 msgid "Barcode Damage"
-msgstr ""
+msgstr "Código de barras dañado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:294
 msgid "Item in Box Serial Numbers"
-msgstr ""
+msgstr " Números de serie del Artículo en la Caja"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:295
 msgid "Loose Items"
-msgstr ""
+msgstr "Artículos Sueltos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:296
 msgid "Loose Items Serial Numbers"
-msgstr ""
+msgstr "Números de Serie de Artículos Sueltos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:297
 msgid "Product Details"
-msgstr ""
+msgstr "Detalles del Producto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:298
 msgid "Product Name"
-msgstr ""
+msgstr "Nombre de Producto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:299
 msgid "Product Desc"
-msgstr ""
+msgstr "Descripción del Producto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:301
 msgid "Product Type"
-msgstr ""
+msgstr "Tipo de Producto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:302
 msgid "Tote already associated with bin {0}"
-msgstr ""
+msgstr "La Bolsa ya ha sido desvinculada del recipiente {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:303
 msgid "Entity Scan not expected. Press PPTL"
-msgstr ""
+msgstr "No se esperaba el escaneo del artículo. Pulse PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:308
 msgid "Item Missing/Unscannable"
-msgstr ""
+msgstr "Artículo faltante/No escaneable"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:309
 msgid "Missing Box"
-msgstr ""
+msgstr "Caja Faltante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:311
 msgid "Override Tote Required"
-msgstr ""
+msgstr "Bolsa Invalidad Requerida"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:314
 msgid "Items In Box Unscannable"
-msgstr ""
+msgstr "Artículos en la Caja no Escaneables"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:315
 msgid "Box Unscannable"
-msgstr ""
+msgstr "Caja no Escaneable"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:316
 msgid "Loose Items Unscannable"
-msgstr ""
+msgstr "Artículos Sueltos no Escaneables"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:317
 msgid "Please put unscannable entities in exception area."
 msgstr ""
+"Por favor, ponga los artículos no escaneables en la zona de excepción."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:318
 msgid "Please put oversized entities in exception area."
-msgstr ""
+msgstr "Por favor, ponga los artículos extra grandes en la zona de excepción."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:319
 msgid "Take the Items out from the Slot"
-msgstr ""
+msgstr "Sacque los artículos de la Vacante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:320
 msgid "Pptl press not expected."
-msgstr ""
+msgstr "Pulsado de PPTL  no esperado."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:321
 msgid "Scan not expected."
-msgstr ""
+msgstr "Escaneo no esperado."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:322
 msgid "Wrong scan.Expecting item scan."
-msgstr ""
+msgstr "Escaneo equivocado. Esperando el el escaneo del artículo."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:323
 msgid "Wrong scan.Expecting container scan."
-msgstr ""
+msgstr "Escaneo equivocado. Esperando el el escaneo del recipiente."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:324
 msgid "Wrong scan.Expecting location scan."
-msgstr ""
+msgstr "Escaneo equivocado. Esperando el el escaneo del lugar."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:325
 msgid "Scan Excess Entity Quantity"
-msgstr ""
+msgstr "Cantidad de Artículos Sobrantes Escaneados"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:326
 #: src/assets/js/serverMessages/server_messages_lang.js:327
 msgid "Entity already scanned.Confirm exception"
-msgstr ""
+msgstr "El artículo ya ha sido escaneado. Confirme la excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:328
 msgid "Exception"
-msgstr ""
+msgstr "Excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:329
 msgid "Logout"
-msgstr ""
+msgstr "Cierre de sesión"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:330
 msgid "Utility"
-msgstr ""
+msgstr "Utilidad"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:331
 msgid "EXCEPTION"
-msgstr ""
+msgstr "EXCEPCIÓN"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:332
 msgid "Good Quantity"
-msgstr ""
+msgstr "Cantidad Correcta"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:333
 msgid "Missing Quantity"
-msgstr ""
+msgstr "Cantidad Faltante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:334
 msgid "Unscannable Quantity"
-msgstr ""
+msgstr "Cantidad no Escaneable"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:335
 msgid "Remove Item"
-msgstr ""
+msgstr "Elimine Artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:336
 msgid "Item Missing/Bad Barcode"
-msgstr ""
+msgstr "Artículo Faltante/Código de Barra Equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:337
 msgid "Sum of missing and good quantity should be equal to {0}"
 msgstr ""
+"La suma de la cantidad faltante y de la cantidad correcta deben ser iguales "
+"a {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:338
 msgid "Login"
-msgstr ""
+msgstr "Inicio de sesión"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:339
 msgid "Enter Username"
-msgstr ""
+msgstr "Ingrese el Nombre de Usuario"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:340
 msgid "Enter Password"
-msgstr ""
+msgstr "Escriba la Contraseña"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:341
 msgid "Invalid credentials"
-msgstr ""
+msgstr "Credenciales Inválidas"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:342
 msgid "Login not allowed. You're already logged in"
-msgstr ""
+msgstr "El Inicio de sesión no es permitido. Usted ya ha iniciado sesión"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:344
 msgid "Place Item in slot and scan more"
-msgstr ""
+msgstr "Ubique el artículo en la vacante y escanee más"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:345
 msgid "PPTL"
-msgstr ""
+msgstr "PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:346
 msgid "Scan Slot Barcode"
-msgstr ""
+msgstr "Escanear el Código de Barras de la Vacante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:347
 msgid "Unexpected Item"
-msgstr ""
+msgstr "Artículo Inesperado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:348
 msgid "Stage Bin or Scan Item"
-msgstr ""
+msgstr "Organice el Recipiente o Escanee el Artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:349
 msgid "Scan & Confirm"
-msgstr ""
+msgstr "Escanee y Confirme"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:350
 msgid "Scan Item From Bin"
-msgstr ""
+msgstr "Escanee el Artículo Desde el Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:351
 msgid "Scan Tote"
-msgstr ""
+msgstr "Escanee la Bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:352
 msgid "Scan MSU Barcode"
-msgstr ""
+msgstr "Escanee el Código de Barras del MSU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:353
 msgid "Scan Items"
-msgstr ""
+msgstr "Escanee los Artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:354
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:355
 msgid "Could not connect to PPS.Please try again."
-msgstr ""
+msgstr "No se pudo conectar a PPS. Por favor, inténtelo de nuevo."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:357
 msgid "product_sku"
-msgstr ""
+msgstr "product_sku"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:358
 msgid "type"
-msgstr ""
+msgstr "tipo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:359
 msgid "quantity"
-msgstr ""
+msgstr "cantidad"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:360
 msgid "item"
-msgstr ""
+msgstr "artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:361
 msgid "box"
-msgstr ""
+msgstr "caja"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:362
 msgid "SKU not present in Database.Put in exception area"
 msgstr ""
+"SKU no está presente en la Base de Datos. Ubique en la zona de excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:363
 msgid "Please put extra entities in exception area."
 msgstr ""
+"Por favor, ponga los artículos no escaneables en la zona de excepción."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:364
 msgid "Space Available For"
-msgstr ""
+msgstr "Espacio Disponible Para"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:365
 msgid "Tote Details"
-msgstr ""
+msgstr "Detalles de la Bolsa"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:366
 msgid "Close current tote first"
-msgstr ""
+msgstr "Cierre primero la bolsa actual"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:367
 msgid "CURRENT BIN"
-msgstr ""
+msgstr "RECIPIENTE ACTUAL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:369
 msgid "Bad Barcode Quantity"
-msgstr ""
+msgstr "Cantidad de Código de Barras "
 
 #: src/assets/js/serverMessages/server_messages_lang.js:370
 msgid "Enter Scanner Id"
-msgstr ""
+msgstr "Introducir la Identificación del Escáner"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:371
 msgid "Back seat not supported for this mode"
-msgstr ""
+msgstr "El asiento trasero no es compatible con este modo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:372
 msgid "Bad Data"
-msgstr ""
+msgstr "Datos Equivocados"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:373
 msgid "Peripheral already added"
-msgstr ""
+msgstr "El Periférico ya se ha agregado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:374
 msgid "Scan Bin Barcode"
-msgstr ""
+msgstr "Escanear el Código de Barras del Recipiente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:376
 msgid "Update"
-msgstr ""
+msgstr "Actualización"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:377
 msgid "Japanese"
-msgstr ""
+msgstr "Japonés"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:378
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:379
 msgid "Exception Finished"
-msgstr ""
+msgstr "Excepción Terminada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:380
 msgid "PPS Mode"
-msgstr ""
+msgstr "Modo de PPS"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:381
 msgid "Seat Type"
-msgstr ""
+msgstr "Tipo de Asiento"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:382
 msgid "Good Quantity Cannot be Equal to the Total Quantity"
-msgstr ""
+msgstr "La Cantidad Correcta no Puede ser Igual a la Cantidad Total"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:384
 msgid "Undock Roll Cage if no items remaining"
-msgstr ""
+msgstr "Desacople la jaula de seguridad si no queda ningún artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:385
 msgid "Gently push roll cage away from the frame"
-msgstr ""
+msgstr "Mueva la jaula de seguridad cuidadosamente lejos del marco"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:387
 msgid "Scan tote and place it in the slot"
-msgstr ""
+msgstr "Escanee el bolso y colóquelo en la vacante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:388
 msgid "Scan slot to confirm"
-msgstr ""
+msgstr "Escanee vacante para confirmar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:389
 msgid "Release MTU"
-msgstr ""
+msgstr "Suelte MTU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:390
 msgid "Tote scan successful."
-msgstr ""
+msgstr "El escaneo de bolso escaneado con éxito"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:391
 msgid "Slot barcode scan successful"
-msgstr ""
+msgstr "Código de barra de la vacante escaneado con éxito"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:392
 #: src/assets/js/serverMessages/server_messages_lang.js:402
 msgid "Tote already scanned"
-msgstr ""
+msgstr "El Bolso ya ha sido escaneado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:393
 #: src/assets/js/serverMessages/server_messages_lang.js:403
 msgid "Tote scanned is not idle"
-msgstr ""
+msgstr "El escaneo de bolso no está ocupado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:394
 #: src/assets/js/serverMessages/server_messages_lang.js:404
 msgid "Tote scanned is not opened"
-msgstr ""
+msgstr "El escaneo de bolso no está abierto"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:395
 #: src/assets/js/serverMessages/server_messages_lang.js:405
 msgid "Scan Tote first and then scan rack"
-msgstr ""
+msgstr "Escanee bolso primero y luego escanee estante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:396
 #: src/assets/js/serverMessages/server_messages_lang.js:406
 msgid "Invalid Slot scanned"
-msgstr ""
+msgstr "Una vacante no válida ha sido escaneada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:397
 #: src/assets/js/serverMessages/server_messages_lang.js:407
 msgid "Tote already associated with slot.Scan empty slot"
-msgstr ""
+msgstr "El bolso ya ha sido asociado con la vacante. Escanee la vacante vacía"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:398
 msgid "Please Scan tote which has excess item"
 msgstr ""
+"Por favor escanee el bolso que haya sobrepasado el límite de artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:400
 msgid "Tote scan cancelled."
-msgstr ""
+msgstr "El escaneo de bolso ha sido anulado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:401
 msgid "Exception finished"
-msgstr ""
+msgstr "La excepción ha sido terminada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:408
 msgid "Unexpected entity scanned"
-msgstr ""
+msgstr "Una Entidad inesperada ha sido escaneada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:410
 msgid "Enter excess item quantity"
-msgstr ""
+msgstr "Entre la cantidad de artículos excedentes"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:411
 msgid " items"
-msgstr ""
+msgstr "artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:412
 msgid "Wrong ppsbin button pressed"
-msgstr ""
+msgstr "Un botón ppsbin ha sido pulsado incorrectamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:413
 msgid "Total "
-msgstr ""
+msgstr "Total"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:414
 msgid "Place the tote back in bin {0} and press pptl"
-msgstr ""
+msgstr "Coloque el bolso  nuevamente en el contenedor  {0} y pulse pptl"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:415
 msgid "Take out the tote from bin {0} and scan entity"
-msgstr ""
+msgstr "Saque el bolso del contenedor {0} y escanee entidad"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:416
 msgid "Scan tote first and then scan item"
-msgstr ""
+msgstr "Escanee primero el bolso y luego escanee artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:417
 msgid "Scan excess item"
-msgstr ""
+msgstr "Escanee articulo excedente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:418
 msgid "Scan tote which has excess item"
-msgstr ""
+msgstr "Escanee el bolso que haya sobrepasado el límite de artículos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:419
 msgid "Invalid tote scanned"
-msgstr ""
+msgstr "Un bolso no válido ha sido escaneado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:420
 msgid "Exception entry successful"
-msgstr ""
+msgstr "La entrada a excepción con éxito"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:421
 msgid "Are you sure you want to exit from {0} invoice and stage all bins"
 msgstr ""
+"Está seguro de que quiere salir de {0} la factura y montar todos los "
+"contenedores"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:422
 msgid "Invoice number: {0}"
-msgstr ""
+msgstr "Número de la factura : {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:423
 msgid "Scan or Enter {0} number"
-msgstr ""
+msgstr "Escanee o entre {0} numero"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:424
 msgid "Please scan or enter {0} number"
-msgstr ""
+msgstr "Por favor escanee o entre {0} número"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:425
 msgid "STN scan successful"
-msgstr ""
+msgstr "STN escaneado con éxito’"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:426
 msgid "Exit {0}"
-msgstr ""
+msgstr "Salir {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:427
 msgid "{0} number :"
-msgstr ""
+msgstr "{0} numero  :"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:428
 msgid "Are you sure you want to exit from {0} {1} and stage all bins"
 msgstr ""
+"Está seguro de que quiere salir de {0} {1} y montar todos los contenedores"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:429
 msgid "Scan or Enter the tote barcode to reprint"
-msgstr ""
+msgstr "Escanee o Entre código de barra del bolso para reimprimir"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:431
 msgid "Place container in MSU slot and confirm"
-msgstr ""
+msgstr "Coloque el contenedor en la ranura de  MSU y confirmar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:433
 msgid "Place {0} boxes with {1} items from bin {2}"
-msgstr ""
+msgstr "Coloque {0} cajones con {1} artículos del contenedor {2}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:434
 msgid "Place {0} boxes from bin {2}"
-msgstr ""
+msgstr "Coloque {0} cajones del contenedor {2}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:435
 msgid "Place"
-msgstr ""
+msgstr "Colocar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:436
 msgid "Remove Tote from bin {0} & Press PPTL to confirm no Items Remaining"
 msgstr ""
+"Elimine bolso del contenedor  {0} y pulse PPTL para confirmar no queda "
+"ningún artículo"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:437
 #: src/assets/js/serverMessages/server_messages_lang.js:495
 msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
 msgstr ""
+"Pulse PPTL para confirmar que ningún artículo se quede en Contenedor {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:438
 msgid ""
 "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
+""
 msgstr ""
+"Entidades no se pueden caber!  Elimine todas las entidades del contenedor y "
+"pulse PPTL."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:439
 msgid "Entities cannot be accommodated!"
-msgstr ""
+msgstr "¡Las entidades no pueden ser introducidas!"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:440
 msgid "Take {0} Printout and Press PPTL"
-msgstr ""
+msgstr "Tome {0} Impresión y presione PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:441
 msgid "PPS is Closed"
-msgstr ""
+msgstr "PPS ses ha sido Cerrado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:442
 msgid "Place box in MSU slot and confirm"
-msgstr ""
+msgstr "Coloque la caja en la ranura MSU y confirme"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:443
 msgid "Wrong Undock"
-msgstr ""
+msgstr "Undock equivocado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:444
 msgid "Dock roll cage back to proceed the operation"
-msgstr ""
+msgstr "Retirar la jaula de rodillos para continuar la operación"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:445
 msgid "Excess quantity"
-msgstr ""
+msgstr "Cantidad excesiva"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:446
 #: src/assets/js/serverMessages/server_messages_lang.js:459
 #: src/assets/js/serverMessages/server_messages_lang.js:485
 msgid "Entity Damaged"
-msgstr ""
+msgstr "Entidad dañada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:447
 msgid "Issues with entity"
-msgstr ""
+msgstr "Problemas con entidad"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:448
 msgid "Validate and Confirm"
-msgstr ""
+msgstr "Validar y Confirmar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:449
 msgid "Wrong Scan. IRT bin scan expected"
-msgstr ""
+msgstr "Escaneo incorrecto. Escaneo de contenedor IRT en espera"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:450
 msgid "Scan IRT Bin"
-msgstr ""
+msgstr "Escanear Contenedor IRT"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:451
 msgid "Please put damaged entities in IRT bin and scan the bin"
 msgstr ""
+"Por favor, deposite las entidades dañadas en el contenedor IRT y escanee el "
+"contenedor"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:452
 msgid "Please put damaged entities in exception area"
-msgstr ""
+msgstr "Por favor, deposite las entidades dañadas en la zona de excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:453
 msgid "Please put extra entities in IRT bin and scan the bin"
 msgstr ""
+"Por favor, deposite las entidades adicionales en el contenedor IRT y escanee "
+"el contenedor"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:454
 msgid "Please put extra entities in exception area"
-msgstr ""
+msgstr "Por favor, deposite las entidades adicionales en la zona de excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:455
 msgid "Please put unscannable entities in IRT bin and scan the bin"
 msgstr ""
+"Por favor, deposite las entidades no escaneables en el contenedor IRT y "
+"escanee el contenedor"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:456
 msgid "Please put unscannable entities in exception area"
 msgstr ""
+"Por favor, deposite las entidades no escaneables en la zona de excepció"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:457
 msgid "Please put oversized entities in IRT bin and scan the bin"
 msgstr ""
+"Por favor, deposite las entidades extra grandes en el contenedor IRT y "
+"escanee el contenedor"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:458
 msgid "Please put oversized entities in exception area"
 msgstr ""
+"Por favor, deposite las entidades extra grandes en la zona de excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:460
 msgid "Warehouse Full Remove all entities from bin & press PPTL"
 msgstr ""
+"Depósito Lleno. Eliminar todas las entidades del contenedor y pulsar PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:461
 msgid "Enter Quantity"
-msgstr ""
+msgstr "Introducir cantidad"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:462
 msgid "Are you sure you want to cancel the exception?"
-msgstr ""
+msgstr "¿Está seguro de querer cancelar la excepción?"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:463
 msgid "All scan and print will be cancelled. Confirm to cancel?"
 msgstr ""
+"Se cancelarán todos los escaneos e impresiones. ¿Confirmar para cancelar?"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:464
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:465
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:466
 msgid "Exception with entity reported"
-msgstr ""
+msgstr "Excepción con entidad reportada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:467
 msgid "Please put entities with issues, in exception area"
 msgstr ""
+"Por favor, deposite las entidades con problemas en la zona de excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:468
 msgid "Please put entities in IRT and Scan IRT Bin"
 msgstr ""
+"Por favor, deposite las entidades dañadas en IRT y escanee el Contenedor IRT"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:469
 msgid "Wrong Scan. Unrecognized barcode."
-msgstr ""
+msgstr "Escaneo incorrecto. Código de barras no recocido."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:470
 msgid "PPS is closed"
-msgstr ""
+msgstr "PPS está cerrado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:471
 msgid "NEST MAX"
-msgstr ""
+msgstr "SET MAX"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:472
 msgid "STACK MAX"
-msgstr ""
+msgstr "PILA MAX"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:473
 msgid "DO NOT STACK"
-msgstr ""
+msgstr "NO APILE"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:474
 msgid "FRAGILE"
-msgstr ""
+msgstr "FRÁGIL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:475
 msgid "Length of {0} should not be greater than {1}"
-msgstr ""
+msgstr "La longitud de {0} no debería mayor a {1}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:476
 msgid "Scan {0} packs"
-msgstr ""
+msgstr "Escanear {0} paquetes"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:477
 msgid "Scan {0} sub packs"
-msgstr ""
+msgstr "Escanear {0} paquetes secundarios"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:478
 msgid "Press PPTL"
-msgstr ""
+msgstr "Presione PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:479
 msgid "Pack Scan Successful"
-msgstr ""
+msgstr "Escaneo del paquete realizado correctamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:480
 msgid "Scan {0} more packs and place in bin {1}"
-msgstr ""
+msgstr "Escanear {0} más paquetes y colocarlos en el contenedor {1}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:481
 msgid "Scan {0} more sub packs and place in bin {1}"
 msgstr ""
+"Escanear {0} más paquetes secundarios y colocarlos en el contenedor {1}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:482
 msgid "Put pack list in trolley and press PPTL to confirm"
 msgstr ""
+"Coloque la lista de paquetes en el carro y presione PPTL para confirmar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:483
 msgid "Scan damaged entity"
-msgstr ""
+msgstr "Escanear entidad dañada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:484
 msgid "Damaged Quantity"
-msgstr ""
+msgstr "Cantidad dañada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:486
 msgid "Wrong Scan. Entity not present in Database"
-msgstr ""
+msgstr "Escaneo incorrecto. Entidad no presente en la Base de Datos"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:487
 msgid "Sum of good, missing and damaged should be equal to {0}"
-msgstr ""
+msgstr "La suma de artículos, desapariciones y daños debe ser igual a {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:488
 msgid "Last item scan will be cancelled. Do you want to continue?"
-msgstr ""
+msgstr "El último escaneo de artículo será cancelado. ¿Desea continuar?"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:489
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:490
 msgid "Bin full"
-msgstr ""
+msgstr "Contenedor lleno"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:491
 msgid "Please put entities which have issues in exception area"
-msgstr ""
+msgstr "Coloque las entidades que tienen problemas en el área de excepción"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:492
 msgid "Unscannable"
-msgstr ""
+msgstr "No escaneable"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:493
 msgid "Invalid Event.Expecting PPTL button press"
-msgstr ""
+msgstr "Prueba inválida. Esperando pulsar tecla PPTL"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:494
 msgid "Remove Tote from bin & Press PPTL to confirm no Items Remaining"
 msgstr ""
+"Eliminar Totalizador del contenedor y Pulsar PPTL para confirmar que no hay "
+"Elementos Restantes"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:496
 msgid "Wrong entity scan.Please scan the correct entity"
 msgstr ""
+"Escaneo de entidad incorrecto.Por favor, escanee la entidad correctamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:497
 msgid "Physically Damaged entity reported."
-msgstr ""
+msgstr "Daño físico de la entidad reportado."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:498
 msgid "Entity entry successful"
-msgstr ""
+msgstr "Entrada de entidad realizada con éxito"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:499
 msgid "Bin scan successful"
-msgstr ""
+msgstr "Escaneo de contenedor realizado con éxito"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:500
 msgid "Physically Damaged Reported should equal Scanned Quantity"
 msgstr ""
+"El daño físico reportado debería ser equivalente a la cantidad escaneada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:501
 msgid "SKU not present in Database."
-msgstr ""
+msgstr "SKU no está presente en la Base de Datos."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:502
 msgid "Extra entity scan found."
-msgstr ""
+msgstr "Escaneo de entidad adicional encontrada."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:503
 msgid "Container Already Scanned."
-msgstr ""
+msgstr "Contenedor ya escaneado."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:504
 msgid "Invalid Entity Scanned."
-msgstr ""
+msgstr "Entidad Inválida Escaneada."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:505
 msgid "Quantity of Physically damaged entities scanned is less."
-msgstr ""
+msgstr "La cantidad escaneada de las entidades dañadas físicamente es menor"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:506
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:507
 msgid "Waiting for Bins to be Cleared at Pick Front"
-msgstr ""
+msgstr "Esperando Contenedores para despejado en Parte Delantera"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:508
 msgid "Processing Next Pick from Rack "
-msgstr ""
+msgstr "Procesando la Selección Siguiente de Estante"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:509
 msgid "Scan Damaged Entity"
-msgstr ""
+msgstr "Escanear Entidad Dañada"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:510
 msgid "Warehouse Full"
-msgstr ""
+msgstr "Depósito lleno"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:511
 msgid "Scan a packing box and keep in bin {0}"
-msgstr ""
+msgstr "Escanear una caja de embalaje y mantenerla en el contenedor {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:512
 msgid "Pick box from MSU and press PPTL on Bin {0}"
-msgstr ""
+msgstr "Seleccione el cuadro de MSU y presione PPTL en el contenedor {0}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:513
 msgid "Extra details entered are incorrect.Please enter correct details"
 msgstr ""
+"Los detalles adicionales introducidos son incorrectos. Introduzca los "
+"detalles correctos."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:514
 msgid "Packing box scan failed"
-msgstr ""
+msgstr "Error al escanear la caja de embalaje"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:515
 msgid "Wrong entity Scanned. Bin Scan Expected."
 msgstr ""
+"Escaneada una entidad incorrecta. Se espera el escaneo del contenedor."
 
 #: src/assets/js/serverMessages/server_messages_lang.js:516
 msgid "Bin Already Scanned"
-msgstr ""
+msgstr "Contenedor ya escaneado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:517
 msgid "Issue with Pack"
-msgstr ""
+msgstr "Problema con el paquete"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:518
 msgid "Issue with Sub pack"
-msgstr ""
+msgstr "Problema con el paquete secundario"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:519
 msgid "Issue with MPU"
-msgstr ""
+msgstr "Problema con la MPU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:520
 msgid "Space not available"
-msgstr ""
+msgstr "Espacio no disponible"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:521
 msgid "Bad barcode on pack"
-msgstr ""
+msgstr "Código de barras incorrecto en el paquete"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:522
 msgid "Bad barcode on sub pack"
-msgstr ""
+msgstr "Código de barras incorrecto en el paquete secundario"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:523
 msgid "Unexpected pack"
-msgstr ""
+msgstr "Paquete inesperado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:524
 msgid "Pack missing"
-msgstr ""
+msgstr "Falta el paquete"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:525
 msgid "Sub pack missing"
-msgstr ""
+msgstr "Falta el paquete secundario"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:526
 msgid "Damaged sub pack"
-msgstr ""
+msgstr "Paquete secundario dañado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:527
 msgid "Good pack"
-msgstr ""
+msgstr "Paquete en buen estado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:528
 msgid "Good sub pack"
-msgstr ""
+msgstr "Paquete secundario en buen estado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:529
 msgid "Scan not Allowed. PPS close/force close or profile change requested."
 msgstr ""
+"Escaneo no permitido. Cerrar/forzar cierre PPS o cambio de perfil solicitado."
+""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:531
 msgid "Pack scan successfully"
-msgstr ""
+msgstr "Escaneo del paquete realizado correctamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:532
 msgid "Sub-Pack scan successfully"
-msgstr ""
+msgstr "Escaneo del paquete secundario realizado correctamente"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:533
 msgid "Scan MPU"
-msgstr ""
+msgstr "Escanear MPU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:534
 msgid "Scan {0} or {1}"
@@ -2006,48 +2106,49 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:538
 msgid "Wait for MPU"
-msgstr ""
+msgstr "Espere a MPU"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:539
 msgid "No Sub-Packs to reconcile"
-msgstr ""
+msgstr "Sin paquetes secundarios para conciliar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:540
 msgid "Pack Unscannable"
-msgstr ""
+msgstr "No es posible escanear este paquete"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:541
 msgid "Sub-Pack Unscannable"
-msgstr ""
+msgstr "No es posible escanear este paquete secundario"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:542
 msgid "Damage Barcode"
-msgstr ""
+msgstr "Código de barras dañado"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:543
 msgid "Packs"
-msgstr ""
+msgstr "Paquetes"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:544
 msgid "Sub-Packs"
-msgstr ""
+msgstr "Paquetes secundarios"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:545
 msgid "Scan Small Box"
-msgstr ""
+msgstr "Escanear una caja pequeña"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:546
 msgid "Scan {0} Box and Place in Bin {1}"
-msgstr ""
+msgstr "Escanear {0} una caja y colocarla en el contenedor {1}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:547
 msgid "Scan {0} Small Box and Place in Bin {1}"
-msgstr ""
+msgstr "Escanear {0} una caja pequeña y colocarla en el contenedor {1}"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:548
 msgid "Put Pack list in trolley and press PPTL to confirm"
 msgstr ""
+"Coloque la lista de paquetes en el carro y presione PPTL para confirmar"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:549
 msgid "Done"
-msgstr ""
+msgstr "Hecho"

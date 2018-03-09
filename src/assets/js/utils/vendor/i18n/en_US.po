@@ -1,21 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Himanshu Saraswat <himanshusara@gmail.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-09 06:30+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-02-22 10:16+0000\n"
+"Last-Translator: Himanshu Saraswat <himanshusara@gmail.com>\n"
+"Language-Team: English (United States)\n"
+"Language: en_US\n"
+"X-Generator: Zanata 4.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/assets/js/serverMessages/server_messages_lang.js:7
 msgid "Scan item / Stage PPS Bin"
@@ -696,7 +693,8 @@ msgid "Please scan the tote first and then scan PPTL barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:179
-msgid "Override Tote Exception cannot be raised for bins with totes associated"
+msgid ""
+"Override Tote Exception cannot be raised for bins with totes associated"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:180
@@ -1623,6 +1621,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:438
 msgid ""
 "Entities cannot be accommodated! Remove all entities from bin and press PPTL."
+""
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:439

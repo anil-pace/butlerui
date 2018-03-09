@@ -26,4 +26,5 @@ fs.readdirSync(fileLoc).forEach(file => {
     }
 })
 //git add src/assets/js/serverMessages/ &&
-child_process.execSync("git commit -m 'Commit from Jenkins Job' -- src/assets/js/serverMessages/");
+//child_process.execSync("git commit -m 'Commit from Jenkins Job' -- src/assets/js/serverMessages/");
+child_process.execSync("sh gitCommit.sh");

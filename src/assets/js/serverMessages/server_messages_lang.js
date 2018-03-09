@@ -486,6 +486,7 @@ function server_messages_list() {
     _("Scan {0} more packs and place in bin {1}");
     _("Scan {0} more sub packs and place in bin {1}");
     _("Put pack list in trolley and press PPTL to confirm");
+    _("Scan damaged entity");
     _("Scan {0} damaged entities");
     _("Damaged Quantity");
     _("Entity Damaged");
@@ -512,7 +513,7 @@ function server_messages_list() {
     _("Error");
     _("Waiting for Bins to be Cleared at Pick Front");
     _("Processing Next Pick from Rack ");
-    _("Scan {0} damaged entities");
+    _("Scan Damaged Entity");
     _("Scan {0} damaged entities");
     _("Warehouse Full");
     _("Scan a packing box and keep in bin {0}");

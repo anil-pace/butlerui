@@ -29,11 +29,6 @@ fs.readdirSync(fileLoc).forEach(file => {
 try {
     child_process.execSync("git commit -m 'Commit from Jenkins Job' -- src/assets/js/serverMessages/");;
 } catch (err) {
-    console.log(err.stdout);
-    console.log(err.stderr);
-    console.log(err.pid);
-    console.log(err.signal);
-    console.log(err.status);
     console.log(err);
 
 }

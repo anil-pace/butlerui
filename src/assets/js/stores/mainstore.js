@@ -1841,28 +1841,45 @@ setCurrentSeat: function (data) {
         var data = {};
         data["header"] = [];
         data["footer"] = [];
-        data["header"].push(new this.tableCol(_("Product SKU"), "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol(_("Damaged Quantity"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Type"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("SKU"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Serial"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Quantity"), "header", false, "small", false, true, true, false));
+        
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
         var self = this;
         if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
+             type = _seatData.physically_damaged_items[0].type;
+            serial = _seatData.physically_damaged_items[0].serial;
+                if(serial.length===0){
+                    serial="-";
+                }
+                else{
+                    for( let j = 0;j < serial.length; j++){
+                        if(serial[j].length>10){
+                            serial[j]=serial[j].slice(0,5)+"..."+serial[j].slice(-5);
+                    }
+                }
+            }
 
-            var product_details, product_sku, quantity, total_damaged = 0;
+            var product_details, product_sku, type, serial, quantity, total_damaged = 0;
             _seatData.physically_damaged_items.map(function (value, index) {
                 value.product_info.map(function (product_details, index) {
                     if (product_details[0].product_sku) {
                         product_sku = product_details[0].product_sku;
                         quantity = value.qty;
                         total_damaged += quantity
-                        data["tableRows"].push([new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                        data["tableRows"].push([new self.tableCol(type, "enabled", false, "small", false, true, false, false), new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(serial, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
                     }
                 });
             });
             data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
         } else {
-            data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
+            data["tableRows"].push([new self.tableCol(_("-"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("-", "enabled", false, "small", false, true, false, false),
                 new self.tableCol("-", "enabled", false, "small", false, true, false, false)
                 ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));

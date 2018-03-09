@@ -24,6 +24,7 @@ var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
+var utils = require('../utils/utils.js');
 
 
 function getStateData(){
@@ -338,6 +339,7 @@ var PutFront = React.createClass({
         break;
         case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
           var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
+           var remainingEntitiesToBeScanned = this.state.PutFrontServerNavData.details.slice(-1)[0];
           confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
           _button = (<div className = "staging-action">
                           <Button1 disabled = {confirmDisabled} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.UNMARKED_DAMAGED} color={"orange"} />
@@ -352,7 +354,7 @@ var PutFront = React.createClass({
             unmarkedContainer = (<div>
                <TabularData data={this.state.PutFrontDamagedItems}  className='limit-height width-extra ' />
             </div>)
-            kqHeadMessage = _("Scan damaged entity");
+            kqHeadMessage = remainingEntitiesToBeScanned !== 0 ? utils.frntStringTransform("PtF.H.022",[remainingEntitiesToBeScanned]) : _("No more entities to be scanned");
           }
           this._component = (
               <div className='grid-container exception'>

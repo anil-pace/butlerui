@@ -126,11 +126,8 @@ function loadComponent(modalType,modalData){
       modalData.map(function(value,index){
         var rowData = [];
         var serialNumbers = [];
-           for (var key in value) {  
-            
-
+           for (var key in value) { 
             if (value.hasOwnProperty(key)) {
-
               if(value[key].constructor.name ==='Array'){
                 value[key].map(function(val,id){ 
                     serialNumbers.push(<div>{val}</div>)

@@ -1561,3 +1561,6 @@ msgstr "PPTL"
 
 msgid "product_sku"
 msgstr "product_sku"
+
+msgid "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking."
+msgstr "Papelera incorrecta escaneada. Se espera el escaneo de la jaula del rollo listo para desacoplar."

@@ -504,7 +504,8 @@ var german = {
 	"{0} extra entities recorded in bin. WMS notified": "{0} extra Einheiten wurden im Beh\u00e4lter aufgezeichnet. WMS benachrichtigt.",
 	"{0} number :": "{0}-Nummer:",
 	"{0} oversized entities recorded.WMS notified": "{0} \u00fcbergro\u00dfe Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
-	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt."
+	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
+	"Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.": "Falscher Beh\u00e4lter gescannt. Scan Erwartet f\u00fcr Rollcage, die zum Abdocken bereit ist.",
 }
 
 module.exports = german;

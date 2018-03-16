@@ -1541,3 +1541,6 @@ msgstr "{0}-Nummer:"
 
 msgid "Done"
 msgstr "Erledigt"
+
+msgid "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking."
+msgstr "Falscher Behälter gescannt. Scan Erwartet für Rollcage, die zum Abdocken bereit ist."

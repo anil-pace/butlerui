@@ -1048,4 +1048,7 @@ msgstr "Prendre {0} impression et appuyez sur PPTL"
 
 msgid "Scan Remaining Items in Box"
 msgstr "Numériser les éléments restants dans la boîte"
+
+msgid "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking."
+msgstr "Mauvaise poubelle scannée. Scan prévu pour Roll Cage prêt pour le désamarrage."
  

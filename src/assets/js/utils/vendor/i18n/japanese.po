@@ -2166,3 +2166,6 @@ msgstr "OK"
 #: src/assets/js/serverMessages/server_messages_lang.js
 msgid "Put pack list in trolley and press PPTL to confirm"
 msgstr "パックのリストをトロリーに入れ、PPTLを押して確認する"
+
+msgid "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking."
+msgstr "間違った箱がスキャンされました。スキャンは、ロールケージがドッキング解除できる状態になることが予想されます。"

@@ -1069,3 +1069,6 @@ msgstr ""
 
    msgid "Scan Remaining Items in Box"
    msgstr "Scannen Sie die restlichen Objekte in der Box"
+
+   msgid "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking."
+   msgstr "Falscher Behälter gescannt. Scan Erwartet für Rollcage, die zum Abdocken bereit ist."

@@ -341,7 +341,8 @@ var french = {
 	"{0} oversized entities recorded.WMS notified": "{0} entit\u00e9s surdimensionn\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
 	"{0} unscannable entities recorded. WMS notified": "{0} entit\u00e9s non scann\u00e9es enregistr\u00e9es. WMS notifi\u00e9",
 	"Take {0} Printout and Press PPTL": "Prendre {0} impression et appuyez sur PPTL",
-	"Scan Remaining Items in Box": "Num\u00e9riser les \u00e9l\u00e9ments restants dans la bo\u00eete"
+	"Scan Remaining Items in Box": "Num\u00e9riser les \u00e9l\u00e9ments restants dans la bo\u00eete",
+	"Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.": "Mauvaise poubelle scann\u00e9e. Scan pr\u00e9vu pour Roll Cage pr\u00eat pour le d\u00e9samarrage.",
 }
 
 module.exports = french;

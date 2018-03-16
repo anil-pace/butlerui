@@ -348,7 +348,8 @@ var german = {
 	"{0} oversized entities recorded.WMS notified": "{0} \u00fcbergro\u00dfe Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
 	"{0} unscannable entities recorded. WMS notified": "{0} nicht scanbare Einheiten wurden aufgezeichnet. WMS benachrichtigt.",
 	"Take {0} Printout and Press PPTL": "Nehmen Sie {0} Ausdruck und dr\u00fccken Sie PPTL",
-	"Scan Remaining Items in Box": "Scannen Sie die restlichen Objekte in der Box"
+	"Scan Remaining Items in Box": "Scannen Sie die restlichen Objekte in der Box",
+	"Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.": "Falscher Beh\u00e4lter gescannt. Scan Erwartet f\u00fcr Rollcage, die zum Abdocken bereit ist.",
 }
 
 module.exports = german;

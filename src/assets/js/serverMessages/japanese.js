@@ -510,6 +510,7 @@ var japanese = {
    "{0} extra entities recorded in bin. WMS notified": "\u8d85\u904e\u5546\u54c1 {0} \u500b",
    "{0} number :": "{0}\u756a\u53f7: :",
    "{0} oversized entities recorded.WMS notified": "\u30b5\u30a4\u30ba\u30aa\u30fc\u30d0\u30fc\u5546\u54c1 {0} \u500b",
-   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b"
+   "{0} unscannable entities recorded. WMS notified": "\u30b9\u30ad\u30e3\u30f3\u4e0d\u53ef\u5546\u54c1 {0} \u500b",
+   "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.": "\u9593\u9055\u3063\u305f\u7bb1\u304c\u30b9\u30ad\u30e3\u30f3\u3055\u308c\u307e\u3057\u305f\u3002\u30b9\u30ad\u30e3\u30f3\u306f\u3001\u30ed\u30fc\u30eb\u30b1\u30fc\u30b8\u304c\u30c9\u30c3\u30ad\u30f3\u30b0\u89e3\u9664\u3067\u304d\u308b\u72b6\u614b\u306b\u306a\u308b\u3053\u3068\u304c\u4e88\u60f3\u3055\u308c\u307e\u3059\u3002",
 }
 module.exports = japanese;

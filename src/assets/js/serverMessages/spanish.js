@@ -504,6 +504,7 @@ var spanish = {
 	"{0} extra entities recorded in bin. WMS notified": "{0} art\u00edculos sobrantes registrados en el recipiente. WMS notificado",
 	"{0} number :": "{0} numero  :",
 	"{0} oversized entities recorded.WMS notified": "{0} art\u00edculos extra grandes registrados. WMS notificado",
-	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado"
+	"{0} unscannable entities recorded. WMS notified": "{0} art\u00edculos no escaneables registrados. WMS notificado",
+	"Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.": "Papelera incorrecta escaneada. Se espera el escaneo de la jaula del rollo listo para desacoplar."
 }
 module.exports = spanish;

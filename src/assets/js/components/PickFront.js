@@ -37,6 +37,7 @@ function getStateData() {
     var splitPPSData = {
         groupInfo: mainstore._getBinMapDetails()
     }
+    
     return Object.assign({}, screenData, splitPPSData);
 };
 
@@ -62,6 +63,7 @@ var PickFront = React.createClass({
             this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
         }
     },
+    
     getNotificationComponent: function () {
         if (this.state.PickFrontNotification != undefined){
             this._notification = <Notification notification={this.state.PickFrontNotification} navMessagesJson={this.props.navMessagesJson}/>
@@ -444,6 +446,7 @@ else {
                 break;
 
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
+
                 var _button;
                  var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(-1)[0];
                 if(!this.state.GetIRTScanStatus)

@@ -182,6 +182,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
+    
+
     getStageAllActiveStatus: function () {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -769,6 +771,7 @@ getOrderID: function () {
     getExceptionAllowed: function () {
         return _seatData.exception_allowed;
     },
+    
 
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
@@ -819,7 +822,7 @@ getOrderID: function () {
         this.type = type;
         this.buttonType = buttonType;
         this.buttonStatus = buttonStatus;
-        this.borderBottom = borderBottom;
+        this.borderBottom = borderBottom; 
         this.mode = mode,
         this.text_decoration = text_decoration,
         this.color = color,
@@ -1787,6 +1790,7 @@ setCurrentSeat: function (data) {
     _getBinMapDetails: function () {
         return _seatData ? _seatData.group_info : null;
     },
+    
     _getMtuDetails: function () {
         var nSlots, mtuList, currentSlotId, selectedSlotId;
         nSlots = 0;
@@ -1850,6 +1854,7 @@ setCurrentSeat: function (data) {
         data["tableRows"] = [];
         data["image_url"] = null;
         var self = this;
+
         if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
              type = _seatData.physically_damaged_items[0].type;
             serial = _seatData.physically_damaged_items[0].serial;

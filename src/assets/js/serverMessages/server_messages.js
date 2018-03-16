@@ -286,6 +286,7 @@ var serverMessages = {
     "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
     "PtF.E.021" : "Bin Already Scanned",
     "PtF.E.022" : "Entities cannot be accommodated!",
+    "PtF.E.023" : "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.",
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",

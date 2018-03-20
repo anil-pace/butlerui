@@ -339,7 +339,7 @@ var PutFront = React.createClass({
         break;
         case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
           var _button,isUnmarked = this.state.isUnmarkedContainer,unmarkedContainer,confirmDisabled,kqHeadMessage;
-          var remainingEntitiesToBeScanned = this.state.PutFrontServerNavData.details.slice(-1)[0];
+           var remainingEntitiesToBeScanned = this.state.PutFrontServerNavData.details.slice(-1)[0];
           confirmDisabled = this.state.PutFrontDamagedQuantity.current_qty > 0 ? false :true;
           _button = (<div className = "staging-action">
                           <Button1 disabled = {confirmDisabled} text = {_("Confirm")} module ={appConstants.PUT_FRONT} action={appConstants.UNMARKED_DAMAGED} color={"orange"} />

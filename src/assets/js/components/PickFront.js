@@ -448,8 +448,7 @@ else {
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
 
                 var _button;
-                var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(-1)[0];
-                
+                 var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(-1)[0];
 
                 if(!this.state.GetIRTScanStatus)
           {

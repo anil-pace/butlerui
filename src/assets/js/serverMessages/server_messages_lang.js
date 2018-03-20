@@ -4,8 +4,7 @@
     cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep Ev "({|})" | sed 's/$/);/g'
  */
 function server_messages_list() {
-
-    _("No more entities to be scanned");
+   _("No more entities to be scanned");
     _("Product SKU");
     _("Type");
     _("Serial Number");

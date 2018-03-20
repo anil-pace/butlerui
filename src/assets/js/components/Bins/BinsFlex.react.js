@@ -412,10 +412,10 @@ var Bin = React.createClass({
             var tote = '';
             var applyClassNameOnTote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
-                applyClassNameOnTote = 'bin-icon tote-icon ';
+              applyClassNameOnTote = 'bin-icon tote-icon ';
             }
             if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
-                applyClassNameOnTote = applyClassNameOnTote + 'bin-coordinate-plotting-enabled';
+              applyClassNameOnTote = applyClassNameOnTote + 'bin-coordinate-plotting-enabled';
             }
             tote = (<div className="tote">
                       <span className={applyClassNameOnTote}></span>

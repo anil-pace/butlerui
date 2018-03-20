@@ -1850,14 +1850,13 @@ setCurrentSeat: function (data) {
         data["header"].push(new this.tableCol(_("Serial"), "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol(_("Quantity"), "header", false, "small", false, true, true, false));
         
-        
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
         var self = this;
 
         if (_seatData.physically_damaged_items && _seatData.physically_damaged_items.length > 0) {
-            type = _seatData.physically_damaged_items[0].type;
+             type = _seatData.physically_damaged_items[0].type;
             serial = _seatData.physically_damaged_items[0].serial;
                 if(serial.length===0){
                     serial="-";

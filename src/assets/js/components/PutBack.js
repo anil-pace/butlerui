@@ -248,7 +248,7 @@ var PutBack = React.createClass({
           <ExceptionHeader data={this.state.PutBackServerNavData} />
           <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
           <div className = "finish-damaged-barcode">
-          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(this.state.PutBackKQDetails.current_qty))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_DAMAGED_ENTITY_DATA} />  
+          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(Number(this.state.PutBackKQDetails.current_qty)))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_DAMAGED_ENTITY_DATA} />  
           </div>
           </div>
           <div className = 'cancel-scan'>
@@ -274,7 +274,7 @@ var PutBack = React.createClass({
                     <KQ scanDetails = {this.state.PutBackKQDetails} />
                   </div>
                   <div className = "finish-damaged-barcode">
-                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(this.state.PutBackKQDetails.current_qty))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />
+                    <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(Number(this.state.PutBackKQDetails.current_qty)))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED} />
                   </div>
                 </div>
                 <div className = 'cancel-scan'>
@@ -299,7 +299,7 @@ var PutBack = React.createClass({
           <KQ scanDetails = {this.state.PutBackKQDetails} />
           </div>
           <div className = "finish-damaged-barcode">
-          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(this.state.PutBackKQDetails.current_qty))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />
+          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(Number(this.state.PutBackKQDetails.current_qty)))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED} />
           </div>
           </div>
           <div className = 'cancel-scan'>
@@ -352,7 +352,7 @@ var PutBack = React.createClass({
         <KQ scanDetails = {this.state.PutBackKQDetails} />
         </div>
         <div className = "finish-damaged-barcode">
-        <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(this.state.PutBackKQDetails.current_qty))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_EXTRA_ITEM} />  
+        <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(Number(this.state.PutBackKQDetails.current_qty)))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_EXCEPTION_EXTRA_ITEM} />  
         </div>
         </div>
         <div className = 'cancel-scan'>

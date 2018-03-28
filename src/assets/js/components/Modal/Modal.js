@@ -16,6 +16,7 @@ var component,title;
 function getStateData(){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
+  if(modalData){
   for( let i = 0;i < modalData.length ; i++){
     if(modalData[i].type!==undefined && modalData[i].product_sku!==undefined && modalData[i].serial!==undefined && modalData[i].quantity!==undefined){
     modalData[i]={
@@ -36,6 +37,7 @@ function getStateData(){
         }
     }
   }
+}
 }
   loadComponent(modalType,modalData);
   return {

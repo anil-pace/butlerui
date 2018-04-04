@@ -295,6 +295,8 @@ switch (module) {
                                 break;
                             case appConstants.CANCEL_EXCEPTION:
                                 ActionCreators.enableException(false);
+                                data["event_name"] = "cancel_exception";
+                                ActionCreators.postDataToInterface(data);
                                 break;
                              case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                                 data["event_name"] = "cancel_exception";

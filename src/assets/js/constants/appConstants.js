@@ -138,6 +138,9 @@ var appConstants = {
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
+	//PUT BACK TOTE FLOW
+	PUT_BACK_PRESS_PPTL_TOTE:"put_back_press_pptl_tote",
+	PUT_BACK_NO_SCAN_TOTE:"put_back_no_scan_tote",
 	FINISH_EXCEPTION_ITEM_OVERSIZED:"FINISH_EXCEPTION_ITEM_OVERSIZED",
 	FINISH_EXCEPTION_ENTITY_DAMAGED:"FINISH_EXCEPTION_ENTITY_DAMAGED",
 	PUT_BACK_EXCEPTION_ENITY_IRT_BIN:"put_back_transfer_to_irt_bin",

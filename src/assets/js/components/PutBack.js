@@ -134,7 +134,69 @@ var PutBack = React.createClass({
         this._component = this.getExceptionComponent();
       }
       break;
+      //Put Back TOTE FLOW
+      case appConstants.PUT_BACK_PRESS_PPTL_TOTE:
+      if(this.state.PutBackExceptionStatus == false){
+        this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+       //need to add the step 1 hard code value
+        var binComponent ="";
+        if (this.state.OrigBinUse){
+          binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
+        }else{
+          binComponent = ( <div className='main-container'>
+            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+            </div>)
+        }
+        this._component = (
+          <div className='grid-container'>
+          {binComponent}
+          <div className = 'staging-action' >
+          <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
+          <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
+          </div>
+          <div className = 'cancel-scan'>
+          <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+          </div>
+          </div>
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
 
+      case appConstants.PUT_BACK_NO_SCAN_TOTE:
+      if(this.state.PutBackExceptionStatus == false){
+        this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        var binComponent ="";
+        if (this.state.OrigBinUse){
+          binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
+        }else{
+          binComponent = ( <div className='main-container'>
+            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+            </div>)
+        }
+        this._component = (
+          <div className='grid-container'>
+          {binComponent}
+          </div>
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
+
+      case appConstants.PUT_BACK_TRANSFER_TOTE_TO_IRT_BIN:
+      this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+      this._component = (
+          <div className='grid-container'>
+          <div className='main-container'>
+          <Modal/>
+            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+            </div>
+          </div>
+          );         
+      break;
+      
 
       case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
       this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
@@ -482,7 +544,9 @@ var PutBack = React.createClass({
       <Modal /> 
       </div>
       );
-    break;      
+    break; 
+    
+    
     default:
     return true; 
   }

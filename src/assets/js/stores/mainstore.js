@@ -2298,6 +2298,31 @@ setCurrentSeat: function (data) {
             data["InvoiceType"] = this.getInvoiceType();
             data["ToteId"] = this.getToteId();
             break;
+
+            case appConstants.PUT_BACK_PRESS_PPTL_TOTE:
+            data["PutBackBinData"] = this.getBinData();//
+            data["PutBackScreenId"] = this.getScreenId();//
+            data["StageActive"] = this.getStageActiveStatus();
+            data["StageAllActive"] = this.getStageAllActiveStatus();
+            data["PutBackNavData"] = this.getNavData();//
+            data["PutBackServerNavData"] = this.getServerNavData();//
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+            data["PutBackExceptionStatus"] = this.getExceptionStatus();//
+            data["ToteId"] = this.getToteId();
+            break;
+            case appConstants.PUT_BACK_NO_SCAN_TOTE:
+            data["PutBackBinData"] = this.getBinData();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutBackNavData"] = this.getNavData();//
+            data["PutBackServerNavData"] = this.getServerNavData();
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+            data["PutBackExceptionStatus"] = this.getExceptionStatus();//
+            break;
+
+
+
             case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
             data["PutBackNavData"] = this.getNavData();
             data["PutBackServerNavData"] = this.getServerNavData();

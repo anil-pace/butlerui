@@ -2,3 +2,7 @@
 /node_modules/
 *configConstants*
 *.*~
+.vscode/
+package-lock.json
+node_modules/
+dist/

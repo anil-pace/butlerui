@@ -186,15 +186,24 @@ var PutBack = React.createClass({
       break;
 
       case appConstants.PUT_BACK_TRANSFER_TOTE_TO_IRT_BIN:
-      this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+      //copy the scenario from below
       this._component = (
-          <div className='grid-container'>
-          <div className='main-container'>
-          <Modal/>
-            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
-            </div>
+        <div className='grid-container exception'>
+        <Exception data={this.state.PutFrontExceptionData}/>
+        <div className="exception-right">
+                   <div className="gor-exception-align">
+                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
+                  </div>
+              </div>
+        <div className = 'cancel-scan'>
+             <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
           </div>
-          );         
+        </div>
+      );        
+      break;
+
+      case appConstants.PUT_BACK_TOTE_UNSCANNABLE:
+
       break;
       
 

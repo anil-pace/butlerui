@@ -231,6 +231,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
             else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
                 _NavData = navConfig.putBack[2];
+                //raja
+            else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
+                _NavData = navConfig.putBack[2];    
             else
                 _NavData = navConfig.putBack[1];
             break;
@@ -2320,7 +2323,14 @@ setCurrentSeat: function (data) {
             data["PutBackNotification"] = this.getNotificationData();
             data["PutBackExceptionStatus"] = this.getExceptionStatus();//
             break;
-
+            case appConstants.PUT_BACK_TRANSFER_TOTE_TO_IRT_BIN:
+            data["PuuBackScreenId"] = this.getScreenId();
+            data["PutBackNavData"] = this.getNavData();
+            data["PutBackServerNavData"] = this.getServerNavData();
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+           // data["GetIRTScanStatus"] = this.getIRTScanStatus();
+            break;
 
 
             case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:

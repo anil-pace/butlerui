@@ -138,6 +138,7 @@ var MsuRackFlex = React.createClass({
             return;
         }
         var vHTMLSlots =[];
+        
          // since the total width would be 100% but the bins would be divided into
          // ratios, hence each of the bin would have to have the factor into % of the
          // .bins container.
@@ -151,6 +152,7 @@ var MsuRackFlex = React.createClass({
         var borderLeft, borderTop, borderRight;
 
          for (var i =0; i<vSlots.length ;i++){
+            var hangerIcon = "";
             var binWidth = vSlots[i].length * horFactor+'%';
             var binHeight = vSlots[i].height * vertFactor +'%';
             var ileft=0;
@@ -188,8 +190,14 @@ var MsuRackFlex = React.createClass({
               var setSlotBackground="#bbbbbb";
               var drawALine=(<div id="selectedSlot"></div>);
             }
-            else 
+            else {
               var setSlotBackground="#e8e8e8";
+            }
+
+            /* Show hanger icon when slot-type is hanger */ 
+            if(vSlots[i].type === "hanger"){
+              hangerIcon = (<div className='hanger-icon'></div>);
+            }
 
             vHTMLSlots.push(
                            <div key={i} className="subSlot"
@@ -203,6 +211,7 @@ var MsuRackFlex = React.createClass({
                                 borderLeft: borderLeft,
                                 background: setSlotBackground
                               }}>{drawALine}
+                              {hangerIcon}
                            </div>
                           )
 

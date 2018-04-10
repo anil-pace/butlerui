@@ -292,10 +292,6 @@ componentDidMount(){
             });
         }(this))
     },
-    componentDidMount:function(){
-        CommonActions.updateKQQuantity(parseInt(this.props.execType===appConstants.GOOD_QUANTITY ? this.state.goodQuantity:this.state.value));
-        
-    },
     render: function(data) {
         if(this.props.execType===appConstants.GOOD_QUANTITY){
             return (

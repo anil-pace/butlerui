@@ -795,6 +795,12 @@ getOrderID: function () {
             return _seatData.rack_details;
         }
     },
+    getRackType:function () {
+        if (_seatData.hasOwnProperty('rack_details')) {
+           if(_seatData.rack_details.rack_type==="mpsu"){
+           return true;}
+        }
+    },
     getDirectionDetails: function () {
         return _seatData.special_handling;
     },
@@ -2676,6 +2682,7 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
+            data["PickFrontRackTypeMPU"]=this.getRackType();
 
             break;
 
@@ -2767,6 +2774,7 @@ setCurrentSeat: function (data) {
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["PickFrontRackTypeMPU"]=this.getRackType();
             break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
             data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();

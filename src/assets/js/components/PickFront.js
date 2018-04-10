@@ -196,16 +196,26 @@ var PickFront = React.createClass({
                 break;
 
             case appConstants.PICK_FRONT_ITEM_SCAN:
+            var rackType="";
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
                                                     navMessagesJson={this.props.navMessagesJson}/>);
+                   
+                            if(this.state.PickFrontRackTypeMPU)
+                                 {
+                                     rackType=     <Pallet/>;
+                                 }
+                                else{
+                                rackType =   <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
+                                rackData={this.state.PickFrontRackDetails} putDirection={this.state.PickFrontPickDirection}/>
+                                }
+                   
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
-                                <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
-                                      rackData={this.state.PickFrontRackDetails} putDirection={this.state.PickFrontPickDirection}/>
+                            {rackType}
                                 <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
                             </div>
                         </div>
@@ -1038,19 +1048,26 @@ else {
                 break;
 
             case appConstants.PICK_FRONT_SCAN_PACKS:
+            var  rackType="";
                 if (!this.state.PickFrontExceptionStatus) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
                                                     navMessagesJson={this.props.navMessagesJson}/>);
 
-
+                if(this.state.PickFrontRackTypeMPU)
+                                {
+                                     rackType=     <Pallet/>;
+                                 }
+                else{
+                rackType =  <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
+                rackData={this.state.PickFrontRackDetails}/>
+                }
                     this._component = (
 
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
-                                <Pallet/>
-                                <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
+                            {rackType}
                             </div>
 
                         </div>

@@ -2685,8 +2685,6 @@ setCurrentSeat: function (data) {
             data["PickFrontRackTypeMPU"]=this.getRackType();
 
             break;
-
-            break;
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontBinData"] = this.getBinData();
@@ -2774,6 +2772,8 @@ setCurrentSeat: function (data) {
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["PickFrontRackDetails"] = this.getRackDetails();
+            data["PickFrontProductDetails"] = this.productDetails();
             data["PickFrontRackTypeMPU"]=this.getRackType();
             break;
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:

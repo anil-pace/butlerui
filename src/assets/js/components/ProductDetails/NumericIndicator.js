@@ -292,6 +292,14 @@ componentDidMount(){
             });
         }(this))
     },
+    componentWillMount:function(){
+        var self = this;
+        /*Using settimeout to overcome the flux issue of Invariant Violation 
+        when there are two simultaneous dispatches*/
+        setTimeout(function(){
+            CommonActions.updateKQQuantity(parseInt(self.props.execType===appConstants.GOOD_QUANTITY ? self.state.goodQuantity:self.state.value));
+        },0)
+    },
     render: function(data) {
         if(this.props.execType===appConstants.GOOD_QUANTITY){
             return (

@@ -1068,6 +1068,7 @@ else {
                             <Modal />
                             <div className='main-container'>
                             {rackType}
+                            <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
                             </div>
 
                         </div>

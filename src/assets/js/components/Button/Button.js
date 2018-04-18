@@ -74,13 +74,7 @@ switch (module) {
                             case appConstants.SEND_KQ_QTY_1:
                                 ActionCreators.changePutBackExceptionScreen("extra_quantity_update");
                                 break;
-                            case appConstants.FINISH_DAMAGED_ENTITY_DATA:
-                                data["event_name"] = "put_back_exception";
-                                data["event_data"]["action"] ="confirm_quantity_update";
-                                data["event_data"]["event"] = mainstore.getExceptionType();
-                                data["event_data"]["quantity"] = mainstore.getkQQuanity();
-                                ActionCreators.postDataToInterface(data);
-                                break;    
+                          
                             case appConstants.PUT_FINISH_EXCEPTION_ENTITY:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="finish_exception";
@@ -90,6 +84,7 @@ switch (module) {
                             case appConstants.FINISH_EXCEPTION_ENTITY_DAMAGED:
                             case appConstants.FINISH_EXCEPTION_ITEM_OVERSIZED:
                             case appConstants.FINISH_EXCEPTION_EXTRA_ITEM:
+                            case appConstants.EXCESS_ITEM_BIN:
                                   data["event_name"] = "put_back_exception";
                                   data["event_data"]["action"] ="confirm_button_press";
                                   data["event_data"]["event"] = mainstore.getExceptionType();
@@ -109,6 +104,8 @@ switch (module) {
                                 data["event_data"]["bin_id"] = mainstore.getSelectedBin();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                               
+                                
                             case appConstants.CONFIRM_ITEM_PLACE_IN_IRT:
                                 data["event_name"] = "put_back_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
@@ -116,6 +113,15 @@ switch (module) {
                                 data["event_data"]["quantity"] = mainstore.getkQQuanity();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                             
+                            case appConstants.UNSCANNABLE_TOTE_ENTITY_QUANTITY:
+                                data["event_name"] = "put_back_exception";
+                                data["event_data"]["action"] ="confirm_quantity_update";
+                                data["event_data"]["event"] = mainstore.getExceptionType();
+                                data["event_data"]["quantity"] = mainstore.getDamagedQuantity();
+                                ActionCreators.postDataToInterface(data);
+                                break;  
+                                 
                             case appConstants.CANCEL_TOTE:
                             case appConstants.CLOSE_TOTE:
                                 data["event_name"] = "confirm_close_tote";
@@ -385,6 +391,11 @@ switch (module) {
                             case appConstants.CANCEL_SCAN:
                                 data["event_name"] = "cancel_tote_scan";
                                 data["event_data"]["barcode"] = this.props.barcode;
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                            case appConstants.CANCEL_SCAN_TOTE:
+                                data["event_name"] = "cancel_tote_scan";
+                                data["event_data"]["barcode"] = mainstore.getToteDeatils();
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             case appConstants.CANCEL_EXCEPTION:

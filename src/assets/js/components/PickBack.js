@@ -79,6 +79,19 @@ var PickBack = React.createClass({
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PICK_BACK_BIN:
+      var cancelScanFlag = this.state.pickBackCancelButtonData;
+     var cancelButton;
+      if (cancelScanFlag) {
+        cancelButton = (
+            <div >
+              <div className = 'cancel-scan'>
+              <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN_TOTE}  color={"black"}/>
+          </div>
+      </div>);
+    }
+    else {
+        cancelButton = (<div ></div>);
+    }
        if(this.state.PickBackExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
@@ -95,6 +108,7 @@ var PickBack = React.createClass({
               <div className='grid-container'>
                 <Modal />
                {binComponent}
+               {cancelButton}
               </div>
             );
         }else{
@@ -102,6 +116,7 @@ var PickBack = React.createClass({
         }
         break;
       case appConstants.PICK_BACK_SCAN:
+      case appConstants.PICK_BACK_NO_SCAN:
          if(this.state.PickBackExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
           var binComponent = "";
@@ -122,6 +137,9 @@ var PickBack = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+       
+
+        
        case appConstants.PICK_BACK_EXCEPTION_REPRINT:
        case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
        case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:

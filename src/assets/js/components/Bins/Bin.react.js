@@ -86,6 +86,9 @@ var Bin = React.createClass({
                 </div>);
             }
         }
+       
+
+
         else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE) {
             var tote = '';
             if (compData["totes_associated"] != undefined && (compData.totes_associated == true || compData.totes_associated == "true"))
@@ -146,7 +149,7 @@ var Bin = React.createClass({
                 </div>);
             }
         }
-        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count > 0)
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && !compData.put_complete)
             return (
                 <div className={"bin no-excess-item " + (compData['pps_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
@@ -155,8 +158,8 @@ var Bin = React.createClass({
                          style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.ppsbin_count == 0 && compData.ppsbin_state != 'error')
-            return (
+        else if (this.props.screenId == appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS && compData.put_complete)  
+        return (
                 <div
                     className={"bin excess-item " + (compData["selected_for_staging"] ? "excess-select " : "") + (compData['pps_blink_state'] ? 'blink1 ' : '')}
                     onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
@@ -197,7 +200,7 @@ var Bin = React.createClass({
             );
 
 
-        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && ((compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )) {
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ||this.props.screenId == appConstants.PICK_BACK_NO_SCAN) && ((compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )) {
             var tote = '';
             var binClass = 'bin ';
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
@@ -218,7 +221,7 @@ var Bin = React.createClass({
         }
 
 
-        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ) && (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))) {
+        else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN || this.props.screenId == appConstants.PICK_BACK_NO_SCAN) && (compData["ppsbin_blue_state"] != undefined && (compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true"))) {
             var tote = '', binClass = '';
             binClass = compData.ppsbin_state == "error" ? " binError" : "";
             if ((compData.totes_associated == true || compData.totes_associated == "true"))
@@ -322,7 +325,7 @@ var Bin = React.createClass({
             );
         }
 
-        else if ((compData.selected_state == true || compData.selected_state == "true") && this.props.screenId == appConstants.PUT_BACK_SCAN) {
+        else if ((compData.selected_state == true || compData.selected_state == "true") && (this.props.screenId == appConstants.PUT_BACK_SCAN ||this.props.screenId == appConstants.PUT_BACK_PRESS_PPTL_TOTE) ) {
 
             return (
                 <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
@@ -495,19 +498,30 @@ var Bin = React.createClass({
             );
         }
         else if (compData.ppsbin_count == 0 || compData.ppsbin_state == "empty") {
-            var tote = '';
+            var tote = '',pptl='';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
                 tote = (<div className="tote">
                     <span className="bin-icon tote-icon"></span>
                 </div>);
+            }
+            if(compData.put_complete && (this.props.screenId === appConstants.PUT_BACK_SCAN_TOTE || this.props.screenId === appConstants.PUT_BACK_NO_SCAN_TOTE))
+            {
+                pptl=   <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')} onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}
+                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}
+                    
+                    </div>
+            }else{
+                pptl=   <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
+                style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}
+           
+           </div>
             }
             return (
                 <div className={"bin empty " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
                     {tote}
                     <div className="item-count">{compData.ppsbin_count<1?'-':compData.ppsbin_count}</div>
-                    <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
-                         style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
+                    {pptl}
                 </div>
             );
         }

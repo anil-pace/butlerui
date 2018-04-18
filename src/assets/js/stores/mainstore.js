@@ -231,7 +231,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
             else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
                 _NavData = navConfig.putBack[2];
-            else
+            else if(_seatData.screen_id ===appConstants.PUT_BACK_SCAN_TOTE)
+                _NavData = navConfig.putBack[3];
+            else if(_seatData.screen_id ===appConstants.PUT_BACK_PRESS_PPTL_TOTE)
+                _NavData = navConfig.putBack[4]; 
+            else if(_seatData.screen_id ===appConstants.PUT_BACK_NO_SCAN_TOTE)
+                _NavData = navConfig.putBack[2];        
+                else
                 _NavData = navConfig.putBack[1];
             break;
             case appConstants.PUT_FRONT:
@@ -272,8 +278,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 _NavData = navConfig.utility[1];
                 _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
             }
+           
+            else if(_seatData.screen_id === appConstants.PICK_BACK_NO_SCAN){
+                    _NavData = navConfig.pickBack[1];
+                }
+            else if(_seatData.screen_id === appConstants.PICK_BACK_SCAN ){
+                _NavData = navConfig.pickBack[2];
+            }    
             else
-                _NavData = navConfig.pickBack;
+                _NavData = navConfig.pickBack[0];
             break;
             case appConstants.PICK_FRONT:
             if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
@@ -571,6 +584,10 @@ getExceptionType:function () {
     if (_seatData.hasOwnProperty('exception_type'))
         return _seatData.exception_type;
 },
+getToteDeatils:function () {
+    if (_seatData.hasOwnProperty('tote_details'))
+        return _seatData.tote_details.tote_barcode;
+},
 getOrderDetails: function () {
     var orderDetailsinOrder = {};
     var orderDetails = _seatData['order_details'];
@@ -771,8 +788,6 @@ getOrderID: function () {
     getExceptionAllowed: function () {
         return _seatData.exception_allowed;
     },
-    
-
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
         return _scanDetails;
@@ -2279,7 +2294,10 @@ setCurrentSeat: function (data) {
       if (_seatData.hasOwnProperty('bin_coordinate_plotting'))
         return _seatData.bin_coordinate_plotting;
     },
-
+    getStageButtonHideStatus:function(){
+        if (_seatData.hasOwnProperty('auto_stage'))
+        return _seatData.auto_stage;
+    },
     getScreenData: function () {
         var data = {};
 
@@ -2303,6 +2321,7 @@ setCurrentSeat: function (data) {
             data["InvoiceRequired"] = this.getInvoiceStatus();
             data["InvoiceType"] = this.getInvoiceType();
             data["ToteId"] = this.getToteId();
+            data["StageButtonHideFlag"]=this.getStageButtonHideStatus();
             break;
             case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
             data["PutBackNavData"] = this.getNavData();
@@ -2353,16 +2372,7 @@ setCurrentSeat: function (data) {
             data["PutBackNotification"] = this.getNotificationData();
             data["PutBackExceptionStatus"] = this.getExceptionStatus();
             break;
-            case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
-            case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
-            data["PutBackScreenId"] = this.getScreenId();
-            data["PutBackKQDetails"] = this.getScanDetails();
-            data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
-            data["PutBackServerNavData"] = this.getServerNavData();
-            data["PutBackExceptionData"] = this.getExceptionData();
-            data["PutBackNotification"] = this.getNotificationData();
-            data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
-            break;
+           
             case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
             case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
             data["PutBackScreenId"] = this.getScreenId();
@@ -2397,6 +2407,48 @@ setCurrentSeat: function (data) {
             data["GetIRTScanStatus"] = this.getIRTScanStatus();
             data["GetExceptionType"] = this.getExceptionType();
             break;
+            case appConstants.PUT_BACK_PRESS_PPTL_TOTE:
+            data["PutBackBinData"] = this.getBinData();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutBackNavData"] = this.getNavData();
+            data["PutBackServerNavData"] = this.getServerNavData();
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+            data["PutBackExceptionStatus"] = this.getExceptionStatus();
+            data["ToteId"] = this.getToteId();
+            break;
+
+            case appConstants.PUT_BACK_NO_SCAN_TOTE:
+            data["PutBackBinData"] = this.getBinData();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutBackNavData"] = this.getNavData();
+            data["PutBackServerNavData"] = this.getServerNavData();
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+            data["PutBackExceptionStatus"] = this.getExceptionStatus();
+            break;
+
+            case appConstants.PUT_BACK_UNSCANNABLE:
+            data["PutBackKQDetails"] = this.getScanDetails();
+            data["PutBackNavData"] = this.getNavData();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutBackServerNavData"] = this.getServerNavData();
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+            data["PutBackDamagedQuantity"] = this.getDamagedScanDetails();
+            data["PutBackExceptionType"] = this.getExceptionType();
+            break;
+
+            case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutBackKQDetails"] = this.getScanDetails();
+            data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
+            data["PutBackServerNavData"] = this.getServerNavData();
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+            data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
+            break;
+
             case appConstants.PRE_PUT_STAGE:
             data["PrePutBinData"] = this.getBinData();
             data["PrePutScreenId"] = this.getScreenId();
@@ -2628,6 +2680,10 @@ setCurrentSeat: function (data) {
             data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
             data["isUnmarkedContainer"] = this._getUnmarkedContainerFlag();
             break;
+
+
+            
+
             case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
             case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
             data["PutFrontScreenId"] = this.getScreenId();
@@ -2643,6 +2699,17 @@ setCurrentSeat: function (data) {
             data["PutFrontExcessItems"] = this._getExcessItemsData();
             data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
             break;
+
+            case appConstants.PUT_BACK_SCAN_EXCESS_ITEM:
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutBackServerNavData"] = this.getServerNavData();
+            data["PutBackExceptionData"] = this.getExceptionData();
+            data["PutBackNotification"] = this.getNotificationData();
+            data["PutBackExcessItems"] = this._getExcessItemsData();
+            data["PutBackExceptionFlag"] = this._getExcessExceptionFlag();
+            break;
+
+
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
@@ -2901,16 +2968,18 @@ setCurrentSeat: function (data) {
             data["PickFrontBoxDetails"] = this.getBoxDetails();
             data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
             break;
+          
             case appConstants.PICK_BACK_BIN:
             case appConstants.PICK_BACK_SCAN:
+            case appConstants.PICK_BACK_NO_SCAN:
             data["PickBackNavData"] = this.getNavData();
             data["PickBackNotification"] = this.getNotificationData();
             data["PickBackBinData"] = this.getBinData();
             data["PickBackScreenId"] = this.getScreenId();
             data["PickBackServerNavData"] = this.getServerNavData();
-            data["PickBackToteDetails"] = this.getToteDetails();
             data["PickBackExceptionStatus"] = this.getExceptionStatus();
             data["PickBackExceptionData"] = this.getExceptionData();
+            data["pickBackCancelButtonData"]=this.cancelScanDetails();
             break;
             case appConstants.PICK_BACK_EXCEPTION_REPRINT:
             case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:

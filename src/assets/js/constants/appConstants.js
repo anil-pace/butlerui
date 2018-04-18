@@ -63,7 +63,7 @@ var appConstants = {
 	PHYSICALLY_DAMAGED:"physically_damaged",
 	EXTRA_ITEMS:"extra_items",
 	CANCEL_SCAN_MODAL:'CANCEL_SCAN_MODAL',
-	'CANCEL_SCAN_SEND_TO_SERVER_MODAL':'CANCEL_SCAN_SEND_TO_SERVER_MODAL',
+	CANCEL_SCAN_SEND_TO_SERVER_MODAL:'CANCEL_SCAN_SEND_TO_SERVER_MODAL',
 	PICK_FRONT_REPRINT:'PICK_FRONT_REPRINT',
 	ITEM_SCANNABLE:"item_unscannable",
 	ITEM_OVERSIZED:"item_oversized",
@@ -134,7 +134,6 @@ var appConstants = {
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	PICK_FRONT_NO_FREE_BIN : 'pick_front_no_free_bin',
-	PUT_BACK_EXCEPTION_DAMAGED_BARCODE:"put_back_item_unscannable",
 	PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:"put_back_item_oversized",
 	PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:"put_back_extra_item_bin_select",
 	PUT_BACK_INVALID_TOTE_ITEM : "put_back_invalid_tote_item",
@@ -268,7 +267,20 @@ var appConstants = {
 	PICK_FRONT_SCAN_PACKS:"pick_front_scan_packs",
 	ERROR_NOTIFICATION:"ERROR_NOTIFICATION",
 	HIDE_ERROR_NOTIFICATION:"HIDE_ERROR_NOTIFICATION",
-    CLIENT_NOTIFICATION:"client"
+	CLIENT_NOTIFICATION:"client",
+	PUT_BACK_PRESS_PPTL_TOTE:"put_back_pptl_press_tote",
+	PUT_BACK_NO_SCAN_TOTE:"put_back_no_scan_tote",
+	PUT_BACK_UNSCANNABLE:"put_back_unscannable",
+	PUT_BACK_SCAN_EXCESS_ITEM:"put_back_scan_excess_item",
+	UNSCANNABLE_TOTE_ENTITY_QUANTITY:"UNSCANNABLE_TOTE_ENTITY_QUANTITY",
+	TOTE_UNSCANNABLE:"tote_unscannable",
+	EXCESS_ITEM_BIN:"EXCESS_ITEM_BIN",
+	PICK_BACK_TOTE_BIN:"pick_back_tote_bin",
+	WAITING_ORDER_TO_COMPLETE_FRONT:"waiting_order_to_complete_front",
+	BIN_FULL_RAISED_FRONT:"bin_full_raised_front",
+	PRESS_PPTL_TO_CLEAR_BIN:"press_pptl_to_clear_bin",
+	CANCEL_SCAN_TOTE:"CANCEL_SCAN_TOTE",
+	PICK_BACK_NO_SCAN:"pick_back_no_scan"
 };
 
 module.exports = appConstants;

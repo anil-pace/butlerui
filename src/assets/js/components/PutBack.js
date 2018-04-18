@@ -24,6 +24,7 @@ var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
 var utils = require('../utils/utils.js');
+var NumericIndicator = require('./ProductDetails/NumericIndicator');
 function getStateData(){
   return mainstore.getScreenData();
 }
@@ -103,8 +104,15 @@ var PutBack = React.createClass({
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
       var invoiceStringArgExitBtn = [], invoiceStringArg = [];
+      var stageButtonobj="";
       invoiceStringArgExitBtn[0] = this.state.InvoiceType;
       invoiceStringArg[0] = this.state.InvoiceType;
+      if(!this.state.StageButtonHideFlag){
+        stageButtonobj=<div className = 'staging-action' >
+        <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
+        <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
+        </div>
+      }
       if(this.state.PutBackExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         var binComponent ="";
@@ -120,10 +128,7 @@ var PutBack = React.createClass({
           {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag)?(<div className="gor-invoice-put-back">{utils.frntStringTransform("FRNT.PBI.03",invoiceStringArg)} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>):""}
           <Modal/>
           {binComponent}
-          <div className = 'staging-action' >
-          <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
-          <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
-          </div>
+          {stageButtonobj}
           {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) && (!(screen_id===appConstants.PUT_BACK_STAGE && this.state.ToteId))?
           <div className = 'cancel-scan'>
             <Button1 disabled = {false} text = {utils.frntStringTransform("FRNT.PBI.02",invoiceStringArgExitBtn)} module ={appConstants.PUT_BACK} action={appConstants.EXIT_INVOICE} color={"black"}/>
@@ -236,27 +241,97 @@ var PutBack = React.createClass({
         this._component = this.getExceptionComponent();
       }
       break;
-      case appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE:
-      this._navigation = '';
+     
+      case appConstants.PUT_BACK_PRESS_PPTL_TOTE:
+            if(this.state.PutBackExceptionStatus === false){
+              this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+              var binComponent ="";
+              if (this.state.OrigBinUse){
+                binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
+              }else{
+                binComponent = ( <div className='main-container'>
+                  <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+                  </div>)
+              }
+              this._component = (
+                <div className='grid-container'>
+                {binComponent}
+              <div className = 'cancel-scan'>
+              <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN}  color={"black"}/>
+                </div>
+                </div>
+                );
+            }else{
+              this._component = this.getExceptionComponent();
+            }
+            break;
       
-      if(this.state.PutBackExceptionScreen == "damaged")
+      
+      case appConstants.PUT_BACK_NO_SCAN_TOTE:
+      if(this.state.PutBackExceptionStatus === false){
+        this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        var binComponent ="";
+        if (this.state.OrigBinUse){
+          binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
+        }else{
+          binComponent = ( <div className='main-container'>
+            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+            </div>)
+        }
         this._component = (
-          <div className='grid-container exception'>
-              <Modal/>
-          <Exception data={this.state.PutBackExceptionData}/>
-          <div className="exception-right">
-          <ExceptionHeader data={this.state.PutBackServerNavData} />
-          <KQ scanDetailsGood = {this.state.PutBackKQDetails} />
-          <div className = "finish-damaged-barcode">
-          <Button1 disabled = {this.state.PutBackKQDetails.current_qty==0 || (!Number.isInteger(Number(this.state.PutBackKQDetails.current_qty)))} text = {_("NEXT")} color={"orange"} module ={appConstants.PUT_BACK} action={appConstants.FINISH_DAMAGED_ENTITY_DATA} />  
-          </div>
-          </div>
-          <div className = 'cancel-scan'>
-          <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
-          </div>
+          <div className='grid-container'>
+          {binComponent}
           </div>
           );
-      break; 
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+      break;
+
+      case appConstants.PUT_BACK_UNSCANNABLE:
+      var buttonActivateFlag = mainstore.getExeptionQuanity();
+      var numericIndicator="";
+      if(this.state.PutBackExceptionType=="item_unscannable"){
+        numericIndicator=<div className="gor-NI-wrapper">
+        <hr/>
+        <div className="exception-qty-title">{_("Unscannable Entity")}</div>
+        <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
+    </div>
+      }else
+      {
+        numericIndicator=<div className="gor-NI-wrapper">
+        <hr/>
+        <div className="exception-qty-title">{_("Unscannable Tote")}</div>
+        <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
+    </div>
+      }
+      this._component = (
+          <div className='grid-container exception'>
+              <Modal />
+              <Exception data={this.state.PutBackExceptionData}/>
+              <div className="exception-right">
+                  <ExceptionHeader data={this.state.PutBackServerNavData}/>
+
+                  <div className="main-container exception1 displayBlocked">
+                      {numericIndicator}
+                  </div>
+                  <div className="finish-damaged-barcode padding">
+                      <Button1 disabled={buttonActivateFlag} text={_("Validate and Confirm")} color={"orange"}
+                               module={appConstants.PUT_BACK}
+                               action={appConstants.UNSCANNABLE_TOTE_ENTITY_QUANTITY}/>
+
+                  </div>
+              </div>
+              <div className='cancel-scan'>
+                  <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
+                           action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+              </div>
+          </div>
+      );
+
+      break;
+
+
        case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
           this._navigation = '';
           if(this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
@@ -332,7 +407,7 @@ var PutBack = React.createClass({
       </div>
       </div>
       <div className = 'cancel-scan'>
-      <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+      <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL}  color={"black"}/>
       </div>
       </div>
       );
@@ -362,6 +437,32 @@ var PutBack = React.createClass({
         );
     break; 
 
+   case appConstants.PUT_BACK_SCAN_EXCESS_ITEM:
+    var _button;
+    _button = (<div className = "staging-action">
+      <Button1 disabled = {this.state.PutBackExceptionFlag} text = {_("Next")} module ={appConstants.PUT_BACK} action={appConstants.EXCESS_ITEM_BIN} color={"orange"} />
+      </div>);
+    this._component = (
+      <div className='grid-container exception'>
+      <Modal />
+      <Exception data={this.state.PutBackExceptionData}/>
+      <div className="exception-right">
+      <div className="main-container">
+      <div className = "kq-exception">
+      <div className="kq-header">{_("Scan excess entities")}</div>
+      <TabularData data={this.state.PutBackExcessItems}  className='limit-height width-extra ' />
+      {_button}
+      </div>
+      </div>
+      </div>
+      <div className = 'cancel-scan'>
+      <Button1 disabled = {false} text = {_("Cancel Exception")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+      </div>
+      </div>
+      );
+      break;
+
+
          case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
           var selected_screen;
           var messageIRTenable,messageIRTdisable;
@@ -385,6 +486,12 @@ var PutBack = React.createClass({
               messageIRTenable=(<div className="gor-exceptionConfirm-text">{_("Please put oversized entities in IRT bin and scan the bin")}</div>);
               messageIRTdisable=(<div className="gor-exceptionConfirm-text">{_("Please put oversized entities in exception area")}</div>);
           }
+          else if(this.state.GetExceptionType==appConstants.TOTE_UNSCANNABLE)
+          {
+              messageIRTenable=(<div className="gor-exceptionConfirm-text">{_("Please put unscannable tote in IRT bin and scan the bin")}</div>);
+              messageIRTdisable=(<div className="gor-exceptionConfirm-text">{_("Please put unscannable tote in exception area")}</div>);
+          }
+
 
           if(!this.state.GetIRTScanStatus)
           {

@@ -472,6 +472,7 @@ function server_messages_list() {
     _("Exception with entity reported");
     _("Please put entities with issues, in exception area");
     _("Please put entities in IRT and Scan IRT Bin");
+    _("Enter Unscannable Tote Quantity");
     _("Wrong Scan. Unrecognized barcode.");
     _("PPS is closed");
     _("NEST MAX");
@@ -557,6 +558,10 @@ function server_messages_list() {
     _("Done");
     _("Scan {0} {1}");
     _("Scan {0} {1} and place in Bin {2}");
+    _("Place Tote in Bin {0} and Press PPTL");
+    _("Tote in use at front seat");
+    _("Waiting for Tote to be associated from back");
+    
 
 }
 

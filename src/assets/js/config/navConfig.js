@@ -49,13 +49,48 @@ var navData = {
             "type": 'passive'
         }],[
          {
-            "screen_id": "put_back_warehouse_full_irt_scan",
+            "screen_id": ["put_back_warehouse_full_irt_scan","put_back_no_scan"],
             "code": "PtF.H.015",
             "message": "Put item into IRT bin and scan the bin",
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],
+        [{
+            "screen_id": ["put_back_stage","put_back_scan_tote"],
+            "code": "Common.000",
+            "image": svgConstants.stage,
+            "message": "Stage Bin or Scan Item",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": ["put_back_scan","put_back_tote_close"],
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Press PPTL",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": ["put_back_stage","put_back_scan_tote"],
+            "code": "Common.000",
+            "image": svgConstants.stage,
+            "message": "Scan",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": ["put_back_pptl_press_tote"],
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Press PPTL",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
         }]
+
     ],
     "putFront": [
         [{
@@ -362,7 +397,8 @@ var navData = {
         ]
 
     ],
-    "pickBack": [ {
+    "pickBack": [
+    [ {
         "screen_id": "pick_back_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
@@ -373,12 +409,35 @@ var navData = {
     },{
         "screen_id": "pick_back_bin",
         "code": "Common.000",
-        "image": svgConstants.place,
         "message": "Remove Item",
         "showImage": true,
         "level": 2,
         "type": 'passive'
     }],
+    [{
+        "screen_id": "pick_back_no_scan",
+           "code": "PtF.H.015",
+           "message": "Put item into IRT bin and scan the bin",
+           "showImage": false,
+           "level": 1,
+           "type": 'passive'
+       }],
+       [ {
+        "screen_id": "pick_back_scan",
+        "code": "Common.001",
+        "image": svgConstants.scan,
+        "message": "Scan Tote",
+        "showImage": true,
+        "level": 1,
+        "type": 'passive'
+    },{
+        "screen_id": "pick_back_bin",
+        "code": "Common.000",
+        "message": "Scan Bin",
+        "level": 2,
+        "type": 'passive'
+    }]
+    ],
     "audit": [
         [{
             "screen_id": "audit_front_waiting_for_msu",

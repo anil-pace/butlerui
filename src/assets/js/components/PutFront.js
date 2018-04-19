@@ -195,21 +195,7 @@ var PutFront = React.createClass({
         }
         break;
 
-        case appConstants.PUT_FRONT_WRONG_UNDOCK:
-        if(this.state.PutFrontExceptionStatus == false){
-          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.WRONG_UNDOCK}/>);
-          this._component = (
-            <div className='grid-container'>
-              <Modal/>
-            <div className='main-container'>
-            <SplitPPS  groupInfo = {this.state.BinMapDetails} wrongUndock={this.state.WrongUndock}/>
-            </div>
-            </div>
-            );
-        }else{
-          this._component = this.getExceptionComponent();
-        }
-        break;
+       
 
         case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
         var selected_screen;
@@ -378,6 +364,25 @@ var PutFront = React.createClass({
               </div>
           );
         break;
+
+        case appConstants.PUT_FRONT_WRONG_UNDOCK:
+        if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.WRONG_UNDOCK}/>);
+          this._component = (
+            <div className='grid-container'>
+              <Modal/>
+            <div className='main-container'>
+            <SplitPPS  groupInfo = {this.state.BinMapDetails} wrongUndock={this.state.WrongUndock}/>
+            </div>
+            </div>
+            );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+
+
+
             case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
              var buttonActivateFlag=mainstore.getExeptionQuanity();
             var UnscannableNI;
@@ -393,6 +398,7 @@ var PutFront = React.createClass({
             {
               UnscannableNI=(<div></div>);
             }
+            this._navigation ="";
            this._component = (
               <div className='grid-container exception'>
               <Modal />

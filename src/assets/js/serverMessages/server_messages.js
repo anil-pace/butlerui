@@ -1,4 +1,8 @@
 var serverMessages = {
+    "product_sku": "Product SKU",
+    "type": "Type",
+    "serial": "Serial Number",
+    "quantity": "Quantity",
     "PtB.B.001": "Scan item / Stage PPS Bin", 
     "PtB.H.001" : "Stage Bin or Scan Entity",
     "PtB.H.002" : "Place Entity in Bin and Press PPTL",
@@ -53,6 +57,7 @@ var serverMessages = {
     "PtF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
     "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
     "PtF.H.021" : "Scan IRT Bin",
+    "PtF.H.022" : "Scan {0} damaged entities",
     "PkF.H.001" : "Wait for MSU",
     "PkF.H.002" : "Confirm MSU Release",
     "PkF.H.003" : "Scan Slot",
@@ -65,7 +70,7 @@ var serverMessages = {
     "PkF.H.010" : "Scan a packing box and keep in bin {0}",
     "PkF.H.011" : "Place box in MSU slot and confirm",
     "PkF.H.012" : "Pick box from MSU and press PPTL on Bin {0}",
-    "PkF.H.013" : "Scan Damaged Entity",
+    "PkF.H.013" : "Scan {0} damaged entities",
     "PkF.H.014" : "Waiting for Bins to be Cleared at Pick Front",
     "PkF.H.015" : "Enter Quantity",
     "PkF.H.023" : "Scan {0} items and place on the table",
@@ -281,6 +286,7 @@ var serverMessages = {
     "PtF.E.020" : "Wrong entity Scanned. Tote Scan Expected.",
     "PtF.E.021" : "Bin Already Scanned",
     "PtF.E.022" : "Entities cannot be accommodated!",
+    "PtF.E.023" : "Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.",
     "PtF.I.001" : "Entity scan successful",
     "PtF.I.002" : "Slot scan successful",
     "PtF.I.003" : "Slot scan successful",
@@ -298,7 +304,7 @@ var serverMessages = {
     "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",
     "PtF003" : "Excess quantity",
-    "PkF001" : "Issues with entity",
+    "PkF001" : "Issues with {0}",
     "PkF005" : "Missing/Unscannable Box",
     "PkF006" : "Entity Damaged",
     "PkB007" : "Disassociate Tote",
@@ -349,21 +355,14 @@ var serverMessages = {
     "FRNT.PBI.03" : "{0} number :",
     "FRNT.PBIM.01" : "Are you sure you want to exit from {0} {1} and stage all bins",
     //SR PICK FLOW
-    "PkF.H.017":"Scan {0} packs",
-    "PkF.H.018":"Scan {0} sub packs",
-    "PkF.H.019":"Scan {0} more packs and place in bin {1}",
-    "PkF.H.020":"Scan {0} more sub packs and place in bin {1}",
+    "PkF.H.017":"Scan {0} {1}",
+    "PkF.H.018":"Scan {0} {1} and place in Bin {2}",
     "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
-    "PkF.H.022":"Waiting for roll cage to be docked",
-    "PkF.H.026":"Scan Box",
-    "PkF.H.027":"Scan Small Box",
-    "PkF.H.028":"Scan {0} Box and Place in Bin {1}",
-    "PkF.H.029":"Scan {0} Small Box and Place in Bin {1}"
+    "PkF.H.022":"Waiting for roll cage to be docked"
 };
 
 
 module.exports = serverMessages;
-
 
 
 

@@ -4,6 +4,11 @@
     cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep Ev "({|})" | sed 's/$/);/g'
  */
 function server_messages_list() {
+   _("No more entities to be scanned");
+    _("Product SKU");
+    _("Type");
+    _("Serial Number");
+    _("Quantity");
     _("Scan item / Stage PPS Bin");
     _("Scan Tote to associate with Bin");
     _("Press PpsBin Button Or Scan a Tote");
@@ -437,6 +442,7 @@ function server_messages_list() {
     _("Press PPTL to confirm no Items Remaining in Bin {0}");
     _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
     _("Entities cannot be accommodated!");
+    _("Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.");
     _("Take {0} Printout and Press PPTL");    
     _("PPS is Closed");
     _("Place box in MSU slot and confirm");
@@ -444,7 +450,7 @@ function server_messages_list() {
     _("Dock roll cage back to proceed the operation");
     _("Excess quantity");
     _("Entity Damaged");
-    _("Issues with entity");
+    _("Issues with {0}");
     _("Validate and Confirm");
     _("Wrong Scan. IRT bin scan expected");
     _("Scan IRT Bin");
@@ -481,6 +487,7 @@ function server_messages_list() {
     _("Scan {0} more sub packs and place in bin {1}");
     _("Put pack list in trolley and press PPTL to confirm");
     _("Scan damaged entity");
+    _("Scan {0} damaged entities");
     _("Damaged Quantity");
     _("Entity Damaged");
     _("Wrong Scan. Entity not present in Database");
@@ -507,6 +514,7 @@ function server_messages_list() {
     _("Waiting for Bins to be Cleared at Pick Front");
     _("Processing Next Pick from Rack ");
     _("Scan Damaged Entity");
+    _("Scan {0} damaged entities");
     _("Warehouse Full");
     _("Scan a packing box and keep in bin {0}");
     _("Pick box from MSU and press PPTL on Bin {0}");
@@ -547,7 +555,7 @@ function server_messages_list() {
     _("Scan {0} Small Box and Place in Bin {1}");
     _("Put Pack list in trolley and press PPTL to confirm");
     _("Done");
-    _("Test String");
+    _("Scan {0} {1}");
+    _("Scan {0} {1} and place in Bin {2}");
 
 }
-

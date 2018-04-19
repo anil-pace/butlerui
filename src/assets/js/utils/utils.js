@@ -288,8 +288,6 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
-    
-
 
     console.log(data);        
     

@@ -6,14 +6,17 @@
     padding: 12px;
     position: absolute;
     left: 0;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+    .msuSpace{
+    	width: 100%;
+	  	background:#969696;
+	  	height:15px;
+   	}
+  
 	.col1{
 		display: inline-block;
 		vertical-align:middle;
+		width:33%;
+		
 		
 		ul{
 			margin: 0;
@@ -58,15 +61,18 @@
 	}
 	.col2{
 		display: inline-block;
-		width:39%;
 		height:64px;
 		overflow: hidden;
-		vertical-align:middle;
-		background-position: -110px -1px;
+		vertical-align:top;
+		width:33%;
+		background-position: -426px -1px;
 	}
 	.col3{
 		display: inline-block;
 		vertical-align:middle;
+		float:right;
+		height:160px;
+		width:33%;
 		ul{
 			margin: 0;
 		    padding: 0;
@@ -75,6 +81,7 @@
 		    font-size: 100%;
 		    vertical-align: baseline;
 		    background: transparent;
+		    float:right;
 		}
 		li{
 			background:#D8D8D8;
@@ -110,6 +117,7 @@
 	}
 	ul{
 		list-style:none;
+		height:160px;
 	}
 
    &.frontFlow{

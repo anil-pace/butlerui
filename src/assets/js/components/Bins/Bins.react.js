@@ -18,7 +18,8 @@ var Bins = React.createClass({
     },
     render: function() {
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
-        var compData = this.props.binsData; 
+        var compData = this.props.binsData;
+        var dataToDisassociateTote=this.props.dataToDisassociateTote
         var scrnId = this.props.screenId;
         var self = this;
         return (
@@ -30,7 +31,7 @@ var Bins = React.createClass({
                             var list = [];
                             var i = 0;
                             for( i = i ; i<compData.structure[1] ; i++){
-                                list.push(<Bin binData={compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)]} screenId={scrnId} />);
+                                list.push(<Bin dataToDisassociateTote={dataToDisassociateTote} binData={compData.ppsbin_list[self._findCoordinatesIndex(j+1,i+1)]} screenId={scrnId} />);
                             }
                             l.push((
                                 <div className="bin-row">

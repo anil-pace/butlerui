@@ -731,6 +731,13 @@ getOrderID: function () {
         return null;
     },
 
+    getDataToDisAssociateTote: function () {
+        if (_seatData.hasOwnProperty('tote_disassociation_data')) {
+            return _seatData['tote_disassociation_data'];
+        } else
+        return null;
+    },
+
     getCurrentState: function () {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var data = null;
@@ -2995,6 +3002,7 @@ setCurrentSeat: function (data) {
             data["PickBackToteDetails"] = this.getToteDetails();
             data["PickBackExceptionStatus"] = this.getExceptionStatus();
             data["PickBackSelectedBin"] = this.getSelectedBin();
+            data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
             break;
 
 

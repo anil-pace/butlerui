@@ -148,11 +148,11 @@ var PickBack = React.createClass({
           this._navigation = '';
           if (this.state.OrigBinUse){
             binComponent = (<div className="exception1">
-                            <BinsFlex binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} seatType = {this.state.SeatType}/>
+                            <BinsFlex dataToDisassociateTote={this.state.PickBackToteDisAssociationData} binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} seatType = {this.state.SeatType}/>
                             </div>);
           }else{
             binComponent = (<div className="main-container exception1">
-                            <Bins binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>
+                            <Bins dataToDisassociateTote={this.state.PickBackToteDisAssociationData} binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId}/>
                             </div>);
           } 
           this._component = (

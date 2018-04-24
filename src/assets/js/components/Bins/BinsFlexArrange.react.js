@@ -55,7 +55,7 @@ var Bins = React.createClass({
         }
     },
 
-    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, binCoordinatePlotting) {
+    _createBinLayouts: function(aBins, lastHBin, lastVBin,  seatType, screenId, binCoordinatePlotting,dataToDisassociateTote) {
         if ((aBins.constructor !== Array && aBins.length < 1) || !(lastHBin.length) || !(lastVBin.length)){
             //no bins found
             return;
@@ -93,7 +93,7 @@ var Bins = React.createClass({
                                         top: itop,
                                         left:ileft
                                       }}>
-                                      <Bin binData={aBins[i]} screenId={screenId} binCoordinatePlotting={true}/>
+                                      <Bin dataToDisassociateTote={dataToDisassociateTote} binData={aBins[i]} screenId={screenId} binCoordinatePlotting={true}/>
                                    </div>
                                    )
                 }
@@ -106,7 +106,7 @@ var Bins = React.createClass({
                                         top: itop,
                                         left:ileft
                                       }}>
-                                      <Bin binData={aBins[i]} screenId={screenId} />
+                                      <Bin dataToDisassociateTote={dataToDisassociateTote} binData={aBins[i]} screenId={screenId} />
                                    </div>
                                    )
                 }
@@ -123,7 +123,7 @@ var Bins = React.createClass({
                                                this.props.seatType,
 
                                                this.props.screenId,
-                                               this.props.binCoordinatePlotting);
+                                               this.props.binCoordinatePlotting,this.props.dataToDisassociateTote);
         var self = this;
         return (
                  <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}>

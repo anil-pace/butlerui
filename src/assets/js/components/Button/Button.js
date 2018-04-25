@@ -30,7 +30,8 @@ var Button1 = React.createClass({
 
 switch (module) {
     case appConstants.ERROR_NOTIFICATION:
-        var notification_data=mainstore.getNotificationData()
+        var notification_data=mainstore.getNotificationData();
+        var saltParamModule = (notification_data && notification_data.saltParams) ? notification_data.saltParams.module :null;
         var data = {
             "event_name": "remove_gui_alert",
             "event_data": {
@@ -38,9 +39,16 @@ switch (module) {
             },
             "source": "ui"
         }
-        if(notification_data && notification_data.type!== appConstants.CLIENT_NOTIFICATION){
+        if((notification_data && notification_data.type!== appConstants.CLIENT_NOTIFICATION) || (notification_data && saltParamModule === appConstants.BIN_FULL)){
+            if(saltParamModule === appConstants.BIN_FULL){
+                data = {};
+                data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
+                                data["event_data"]= null;
+            }
+            
             ActionCreators.postDataToInterface(data);
         }
+        
 
         ActionCreators.clearNotification()
         $('.modal.notification-error').data('bs.modal').options.backdrop=true

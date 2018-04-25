@@ -13,6 +13,7 @@ var Notification = React.createClass({
     },
 
     render: function() {
+        var _this = this;
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.notification;
         var message_args  = this.props.notification.details.slice(0);
@@ -68,7 +69,8 @@ var Notification = React.createClass({
                 {message}
                 setTimeout((function(){ActionCreators.showModal({
                     data:message,
-                    type:appConstants.ERROR_NOTIFICATION
+                    type:appConstants.ERROR_NOTIFICATION,
+                    saltParams:_this.props.notification.saltParams
                 });$(".modal-backdrop").each(function(element){
                     $(element).remove()
                 });

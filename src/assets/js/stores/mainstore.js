@@ -2021,7 +2021,10 @@ setCurrentSeat: function (data) {
                 _seatData.notification_list[0].code = binFullQty?resourceConstants.CLIENTCODE_012 : (type) ? resourceConstants.CLIENTCODE_017 : ((_seatData.screen_id === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY) ? resourceConstants.CLIENTCODE_018 : resourceConstants.CLIENTCODE_010);
                 _seatData.notification_list[0].details = [details];
                 _seatData.notification_list[0].level = "error";
-                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION;
+                _seatData.notification_list[0].type =  appConstants.CLIENT_NOTIFICATION,
+                _seatData.notification_list[0].saltParams = {
+                    "module": binFullQty ? appConstants.BIN_FULL : _seatData.screen_id
+                }
             }
             if (_seatData.screen_id != appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK && _seatData.screen_id != appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK) {
                 _putFrontExceptionScreen = "good";

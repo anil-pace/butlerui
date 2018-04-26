@@ -154,7 +154,7 @@ var LoginPage = React.createClass({
             if(data.hasOwnProperty('seat_type')){
                parseSeatID = null;
                return (
-                  <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_type} {data.pps_id}</option>
+                  <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_name.split("_").join(" ")}</option>
                 )
             }else{
               parseSeatID = data.split('_');
@@ -167,7 +167,7 @@ var LoginPage = React.createClass({
                 _seat_name = _seat_name.substr(0, _seat_name.length - 1);
               }
               return (
-                <header className="ppsSeat" key={'pps' + index}  >PPS {seat_name}</header>
+                <header className="ppsSeat" key={'pps' + index}  >PPS {data.split('_').join(" ")}</header>
               )
             }
           });

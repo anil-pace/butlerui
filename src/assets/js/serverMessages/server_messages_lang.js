@@ -537,8 +537,8 @@ function server_messages_list() {
     _("Good sub pack");
     _("Scan not Allowed. PPS close/force close or profile change requested.");
     _("Reprint");
-    _("Pack scan successfully");
-    _("Sub-Pack scan successfully");
+    _("{0} scan successfully");
+    _("{0} scan successfully");
     _("Scan MPU");
     _("Scan {0} or {1}");
     _("Continue scanning {0} and {1}");

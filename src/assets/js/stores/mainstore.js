@@ -1043,7 +1043,7 @@ getOrderID: function () {
 
 
             if (data["tableRows"].length > 0) {
-                data["header"].push(new this.tableCol(_("Pack"), "header", false, "small", false, true, true, false));
+                data["header"].push(new this.tableCol(_(_seatData.Possible_Container_Names.container_level_2), "header", false, "small", false, true, true, false));
                 data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
                 data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
             }
@@ -1097,7 +1097,7 @@ getOrderID: function () {
 
 
         if (data["tableRows"].length > 0) {
-            data["header"].push(new this.tableCol(_("SubPack"), "header", false, "small", false, true, true, false));
+            data["header"].push(new this.tableCol(_(_seatData.Possible_Container_Names.container_level_1), "header", false, "small", false, true, true, false));
             data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
             data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
         }
@@ -1789,6 +1789,13 @@ setCurrentSeat: function (data) {
     getCurrentSlot: function () {
         if (_seatData.hasOwnProperty('rack_details')) {
             return _seatData.rack_details.slot_barcodes;
+        } else {
+            return null;
+        }
+    },
+    getContainerNames: function () {
+        if (_seatData.hasOwnProperty('rack_details')) {
+            return _seatData.Possible_Container_Names;
         } else {
             return null;
         }
@@ -2977,6 +2984,7 @@ setCurrentSeat: function (data) {
             data["AuditReconcileSubPackData"] = this.getSubPackReconcileData();
             data["DamageReconcileData"] = this.getDamageReconcileData();
             data["AuditSlotDetails"] = this.getCurrentSlot();
+            data["AuditPossibleContainerNames"] =this.getContainerNames();
             break;
             case appConstants.AUDIT_LOCATION_SCAN:
             data["AuditNavData"] = this.getNavData();

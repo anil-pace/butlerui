@@ -283,6 +283,7 @@ if(this.state.AuditExceptionStatus == false){
   var DamageData='';
   var Slot='';
   var displayStyle;
+  var auditPossibleContainerNames= this.state.AuditPossibleContainerNames;
   var mm = {
     "details": [],
     "code": "Audit.A.012",
@@ -290,9 +291,9 @@ if(this.state.AuditExceptionStatus == false){
     "level": "info"
   };
   var SRmessage = {
-    "details": [],
+    "details": [auditPossibleContainerNames.container_level_1,auditPossibleContainerNames.container_level_2],
     "code": "AdF.B.004",
-    "description": "No Sub-Packs to reconcile",
+    "description": "No {0} or {1} to reconcile",
     "level": "info"
   };
   if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)

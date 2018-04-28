@@ -13,7 +13,7 @@ var virtualkeyboard = require('virtual-keyboard');
 var utils = require('../../utils/utils.js');
 var component,title;
 
-function getStateData(){
+function getStateData(ths){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
   if(modalData){
@@ -39,7 +39,7 @@ function getStateData(){
   }
 }
 }
-  loadComponent(modalType,modalData);
+  loadComponent(modalType,modalData,ths);
   return {
       data:modalData,
       type:modalType
@@ -99,7 +99,7 @@ function removeTextField(){
   $('.modal-body').find('input:text').val('');
 }
 
-function loadComponent(modalType,modalData){ 
+function loadComponent(modalType,modalData,ths){ 
   switch(modalType){
     case "product-detail":
       component = [];
@@ -290,7 +290,7 @@ function loadComponent(modalType,modalData){
             </div>
             <div className="modal-footer removeBorder fixedWidth">
               <div className="buttonContainer50 center-block fixedHeight">
-              <NumericIndicator Formattingclass={"widerComponent"} execType={appConstants.DEFAULT} scanDetails={mainstore.getScanDetails()}/>
+              {!ths.props.cancelClicked && <NumericIndicator Formattingclass={"widerComponent"} execType={appConstants.DEFAULT} scanDetails={mainstore.getScanDetails()}/>}
                 <div className="removeBorder fixedBottom">
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={appConstants.PICK_FRONT} action={appConstants.CANCEL_BIN_FULL_REQUEST}/></div>
                   <div className="col-md-6"><Button1 disabled = {false} text ={_("Continue")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.CONFIRM_BIN_FULL_REQUEST}/></div>
@@ -455,7 +455,7 @@ var Modal = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
-    this.setState(getStateData());
+    this.setState(getStateData(this));
   },
   render: function () {      
     return (<div className="modal">

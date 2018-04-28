@@ -35,6 +35,7 @@ _enableButton = true,
 _putBackExceptionScreen,
 _finishAuditFlag = true;
 _errorPopupDisabled = false;
+_cancelButtonClicked = false;
 
 var modalContent = {
     data: "",
@@ -1364,6 +1365,12 @@ getScanDetails: function () {
     } else {
         return _seatData["scan_details"];
     }
+},
+setCancelButtonStatus(status){
+    _cancelButtonClicked = status;
+},
+getCancelButtonStatus(){
+    return _cancelButtonClicked;
 },
 
 getQuantityDetails:function(){
@@ -3184,6 +3191,9 @@ AppDispatcher.register(function (payload) {
     var action = payload.action;
     switch (action.actionType) {
 
+        case appConstants.SET_CANCEL_BUTTON_STATUS:
+        mainstore.setCancelButtonStatus(action.data);
+        break;
         case appConstants.TOGGLE_BIN_SELECTION:
         mainstore.toggleBinSelection(action.bin_id);
         mainstore.emitChange();

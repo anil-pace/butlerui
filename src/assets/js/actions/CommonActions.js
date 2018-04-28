@@ -300,6 +300,12 @@ var commonActions = {
     AppDispatcher.handleAction({
       actionType : appConstants.CLEAR_NOTIFICATIONS,
     })
+   },
+   setCancelButtonStatus:function(data){
+    AppDispatcher.handleAction({
+      actionType:appConstants.SET_CANCEL_BUTTON_STATUS,
+      data:data
+    })
    }
 
 };

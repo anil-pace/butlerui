@@ -322,6 +322,7 @@ switch (module) {
                             case appConstants.BIN_FULL:
                                  data["event_name"] = appConstants.BIN_FULL_REQUEST;
                                  data["event_data"] = null;
+                                 ActionCreators.setCancelButtonStatus(false);
 -                                ActionCreators.postDataToInterface(data);
                                  this.showModal(null, appConstants.BIN_FULL);  
                                 break; 
@@ -340,10 +341,12 @@ switch (module) {
                             case appConstants.CANCEL_BIN_FULL_REQUEST:
                                 data["event_name"] = appConstants.CANCEL_BIN_FULL_REQUEST;
                                 data["event_data"]= null;
+                                ActionCreators.setCancelButtonStatus(true);
                                 ActionCreators.postDataToInterface(data);
-                            closeModalBox();
+                                closeModalBox();
                             break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
+                                 ActionCreators.setCancelButtonStatus(false);
                                  ActionCreators.validateAndSendDataToServer();
                             closeModalBox();
                             break; 

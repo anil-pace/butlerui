@@ -293,6 +293,7 @@ else {
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
             case appConstants.PICK_FRONT_WORKING_TABLE:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelClicked = mainstore.getCancelButtonStatus();
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
@@ -352,7 +353,7 @@ else {
 }
                     this._component = (
                         <div className='grid-container'>
-                            <Modal />
+                            <Modal cancelClicked={cancelClicked}/>
 
                             <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
 
@@ -381,6 +382,7 @@ else {
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 var cancelButton;
+                var cancelClicked = mainstore.getCancelButtonStatus();
                 var BinFull = (<Button1 disabled={false} text={_("Bin full")} module={appConstants.PICK_FRONT}
                                         action={appConstants.BIN_FULL} color={"black"}/> );
                 if (this.state.PickFrontExceptionStatus == false) {
@@ -419,7 +421,7 @@ else {
                     }
                     this._component = (
                         <div className='grid-container'>
-                            <Modal />
+                            <Modal cancelClicked={cancelClicked}/>
 
                             <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
                             {this.state.SplitScreenFlag &&
@@ -877,6 +879,7 @@ else {
                 }
                 break;
             case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
+                var cancelClicked = mainstore.getCancelButtonStatus();
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
@@ -927,7 +930,7 @@ else {
                     }
                     this._component = (
                         <div className='grid-container gor-pck-itm-scn'>
-                            <Modal />
+                            <Modal cancelClicked={cancelClicked}/>
 
                             <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
                             <OrderDetails orderData={this.state.PickFrontBoxOrderDetails}/>

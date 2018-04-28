@@ -71,7 +71,8 @@ var Notification = React.createClass({
                     data:message,
                     type:appConstants.ERROR_NOTIFICATION,
                     saltParams:_this.props.notification.saltParams
-                });$(".modal-backdrop").each(function(element){
+                });
+                $(".modal-backdrop").each(function(element){
                     $(element).remove()
                 });
                      $('.modal').modal({});

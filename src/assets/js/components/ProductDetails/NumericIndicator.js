@@ -203,7 +203,8 @@ decrementValue: function(event){
         self.updateStore();
     }
 
-}, 
+},
+
 componentDidMount(){
         (function(self){
             $(".gor_"+self.props.execType).keyboard({

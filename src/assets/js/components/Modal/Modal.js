@@ -286,7 +286,7 @@ function loadComponent(modalType,modalData,ths){
       component.push((
           <div>
             <div className="rowMiddle">
-              <p>{_("KQ number of items kept in the bin and confirm?")}</p>
+              <p>{_("Enter items that can fit in the bin")}</p>
             </div>
             <div className="modal-footer removeBorder fixedWidth">
               <div className="buttonContainer50 center-block fixedHeight">

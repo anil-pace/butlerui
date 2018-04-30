@@ -234,24 +234,24 @@ var MsuRackFlex = React.createClass({
             if(putDirection){
         nestable_count=putDirection.nestable_count;
         nestable_direction=putDirection.nestable_direction;
-        stackCount=putDirection.stacking_count? putDirection.stacking_count[putDirection.stacking_count.length-1]:0;
+        stackCount=putDirection.stacking_count?putDirection.stacking_count[putDirection.stacking_count.length-1]:null;
          if(putDirection.orientation_preference && nestable_count>1){
         orientation="orientation";
         orientationClass = './assets/images/'+ putDirection.nestable_direction+'Nesting.gif?q='+Math.random();
         }
-        else if(putDirection.orientation_preference && stackCount>=1){
+        else if(putDirection.orientation_preference){
         orientation="orientation";  
-        orientationClass=stackCount>1?'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random():'./assets/images/' + putDirection.stacking+'nonStackable.svg';
+        orientationClass=(stackCount && (stackCount===1))?'./assets/images/' + putDirection.stacking+'nonStackable.svg':'./assets/images/'+ putDirection.stacking+'Stackable.gif?q='+Math.random();
         }
         else
         {
            orientation="containerHide";
         }             
-        stackText=nestable_count>1? _("NEST MAX") : stackCount>1?_("STACK MAX") : _("DO NOT STACK");
-        stackicon=nestable_count>1? "stackicons nestingicon" : stackCount>1?"stackicons stackingicon" : "stackicons nonstackingicon";
+        stackText=nestable_count>1? _("NEST MAX") : (stackCount && stackCount>1)?_("STACK MAX") : _("DO NOT STACK");
+        stackicon=nestable_count>1? "stackicons nestingicon" : (stackCount && (stackCount===1)) ?  "stackicons nonstackingicon":"stackicons stackingicon";
         fragileClass=putDirection.fragile?"fragile":"containerHide";
-        stackClass=nestable_count>1? "stackSize" :stackCount>=1?"stackSize":"containerHide";
-        count=nestable_count>1?nestable_count:stackCount>1?stackCount:""
+        stackClass=nestable_count>1? "stackSize" :(stackCount && stackCount>=1)?"stackSize":"containerHide";
+        count=nestable_count>1?nestable_count:(stackCount && stackCount>1)?stackCount:null;
 
     }
       return(

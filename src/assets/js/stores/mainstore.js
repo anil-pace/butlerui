@@ -3084,6 +3084,10 @@ setCurrentSeat: function (data) {
             data["AuditExceptionStatus"] = this.getExceptionStatus();
             data["AuditShowModal"] = this.getModalStatus();
             data["AuditSRStatus"]=this.getSRStatus();
+            data["AuditRackTypeMPU"]=this.getRackType();
+            data["AuditPickDirection"] = this.getDirectionDetails();
+            data["isDrawer"] = this.getDrawerFlag();
+            data["SlotType"] = this.getSlotType();
             break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:

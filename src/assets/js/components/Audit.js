@@ -22,6 +22,7 @@ var KQ = require('./ProductDetails/KQ.js');
 var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
 var ExceptionHeader = require('./ExceptionHeader');
+var Pallet=require("./Pallet/pallet");
 
 
 function getStateData(){
@@ -133,12 +134,21 @@ function getStateData(){
 
 
       case appConstants.AUDIT_LOCATION_SCAN:
+      var rackType="";
+      if(this.state.AuditRackTypeMPU)
+      {
+        rackType=<Pallet/>;     
+      }                       
+    else{
+    rackType = <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
+    rackData={this.state.AuditRackDetails} putDirection={this.state.AuditPickDirection}/>
+    }
       if(this.state.AuditSRStatus){
         this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
           <div className='grid-container'>
           <Modal />
-          <div className="gor-mpu"/>                  
+          {rackType}
           </div>
           );
 
@@ -152,7 +162,7 @@ function getStateData(){
           <div className='grid-container'>
           <Modal />
           <div className='main-container'>
-          <Rack rackData = {this.state.AuditRackDetails}/>
+          {rackType}
           </div>
           </div>
           );

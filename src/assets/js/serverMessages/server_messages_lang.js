@@ -141,7 +141,7 @@ function server_messages_list() {
     _("Pick complete. Waiting for next rack.");
     _("Location scan successful");
     _("Box scan successful");
-    _("Item scan successful");
+    _("{0} scan successful");
     _("Cancel scan successful");
     _("PPTL press successful");
     _("Expecting MSU release confirmation from GUI, got invalid event.");

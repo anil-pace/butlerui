@@ -343,7 +343,7 @@ var KQ = React.createClass({
                 }
             },
             accepted: function(e, keypressed, el) {
-                if (!Number.isInteger(e.target.value) || e.target.value < 0 ) {
+                if (!Number.isInteger(parseInt(e.target.value)) || e.target.value < 0 ) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
                 } else  {
                     var data = {};

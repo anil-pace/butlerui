@@ -220,7 +220,7 @@ var serverMessages = {
     "PkF.E.012" : "Data capture failed at item {0}",       
     "PkF.I.002" : "Location scan successful",
     "PkF.I.003" : "Box scan successful",
-    "PkF.I.004" : "Item scan successful",
+    "PkF.I.004" : "{0} scan successful",
     "PkF.I.005" : "Cancel scan successful",
     "PkF.I.006" : "PPTL press successful",
     "PkF.I.007" : "Data capture valid so far",

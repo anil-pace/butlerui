@@ -343,7 +343,8 @@ var KQ = React.createClass({
                 }
             },
             accepted: function(e, keypressed, el) {
-                if (!Number.isInteger(e.target.value) || e.target.value < 0 ) {
+               var regex = /^[1-9]\d*$/g 
+               if (!regex.test(e.target.value)) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
                 } else  {
                     var data = {};

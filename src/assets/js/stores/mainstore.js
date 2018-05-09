@@ -237,7 +237,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             else if(_seatData.screen_id ===appConstants.PUT_BACK_PRESS_PPTL_TOTE)
                 _NavData = navConfig.putBack[4]; 
             else if(_seatData.screen_id ===appConstants.PUT_BACK_NO_SCAN_TOTE)
-                _NavData = navConfig.putBack[2];        
+                _NavData = navConfig.putBack[5];
                 else
                 _NavData = navConfig.putBack[1];
             break;

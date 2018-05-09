@@ -89,6 +89,14 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],[{
+            "screen_id": ["put_back_no_scan_tote"],
+            "code": "PtB.H.020",
+            "image": svgConstants.stage,
+            "message": "Scan",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
         }]
 
     ],

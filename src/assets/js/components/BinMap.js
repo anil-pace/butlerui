@@ -6,7 +6,7 @@ var BinMap = React.createClass({
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,
-		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null;
+		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
 		
 		for(var  key in data){
 			if(data[key] === allresourceConstants.BIN_GROUP_LEFT){
@@ -18,9 +18,10 @@ var BinMap = React.createClass({
 		}
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
 		maxBlockHeight = 70/maxBlockCount;
+		maxWidth = ((maxBlockHeight/100)*160);
 		style = {
 			height:maxBlockHeight+"%",
-			width:(maxBlockHeight/100)*160
+			width: maxWidth <= 38 ? maxWidth : 38
 		}
 
 		for(var  k in data){

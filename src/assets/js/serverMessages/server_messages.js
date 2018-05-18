@@ -110,8 +110,7 @@ var serverMessages = {
     "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
     "PtB.W.003" : "No bins available to stage",
     "PtB.W.004" : "Bin already staged. Ignoring event",
-    "PtB.W.005" : "Bin empty. Cannot be staged",    
-    "PtB.W.012" : "Tote in use at front seat",
+    "PtB.W.005" : "Bin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
     "PkF.D.010" :"Scan box barcode",
@@ -253,6 +252,7 @@ var serverMessages = {
     "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
     "PkB.E.008": "Tote already associated with bin {0}",
     "PkB.E.009": "Entity Scan not expected. Press PPTL",
+    "PkB.E.010" : "Tote in use at front seat",
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
@@ -260,6 +260,7 @@ var serverMessages = {
     "PkB.I.005" : "Tote assigned successfully to bin",
     "PkB.I.006" : "Please scan PPTL barcode",
     "PkB.I.007" : "Tote disassociated from Bin",
+    "PkB.I.008" : "Tote scan successful.",
     "PkB.W.001" : "Please complete pickback for pending bin and then proceed",
     "PkB.W.002" : "Tote associated with another bin",
     "PkB.W.003" : "Wrong barcode scanned",
@@ -363,7 +364,6 @@ var serverMessages = {
     "PkF.H.018":"Scan {0} {1} and place in Bin {2}",
     "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
     "PkF.H.022":"Waiting for roll cage to be docked",
-    "PtB.W.011" : "Tote scan successful.",
     "PtB.H.020":"Waiting for put_away to complete from front"
 };
 

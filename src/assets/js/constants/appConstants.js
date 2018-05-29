@@ -263,6 +263,8 @@ var appConstants = {
 		"green":"#4CAF50",
 		"pink":"#FF1BA5",
 		"white":"#FFFFFF",
+		"cyan":"#00FFFF",
+        "yellow":"#FFFF00"
 	},
 	PICK_FRONT_SCAN_PACKS:"pick_front_scan_packs",
 	ERROR_NOTIFICATION:"ERROR_NOTIFICATION",
